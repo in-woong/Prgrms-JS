@@ -32,15 +32,13 @@
     // new keyword check 함수 
     // 이렇게 체크하는게 맞는지 잘 모르겠네요 'ㅁ'
     function isInstance(instance, Class){
-      try {
-        return  Object.create(instance) instanceof Class
-      }
-      catch(error){
-        console.log('new Keyword로 함수를 실행하지 않았습니다')
-      }
+      return instance instanceof Class
     }
 
     function TodoList(data){
+      if(!isInstance(this,TodoList)){
+        throw Error('new 키워드로 함수를 실행해주세요')
+      }
       const el = '#todo-list';
       if(!isArray(data)) throw Error('data 형식이 올바르지 않습니다')
       this.data = data;
@@ -54,11 +52,11 @@
         }
       }
     }
-    const todoList = new TodoList(data);
+    // const todoList = new TodoList(data);
 
-    // test instance
+    // test new keyword로 함수 실행 안 했을시 
     // const todoList = TodoList(data);
-    // if(!isInstance(todoList)) throw Error('인스턴스가 아닙니다 생성자 함수로 실행 했는지 확인하세요');
+  
     todoList.render()
   </script>
 </body>
