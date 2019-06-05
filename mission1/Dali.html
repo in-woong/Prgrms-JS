@@ -9,7 +9,7 @@
 <body>
   <div id="todo-list"></div>
   <script>
-    var data = [
+    const data = [
       {
         text: 'JS 공부하기'
       },
@@ -17,47 +17,40 @@
         text: 'JS 복습하기'
       }
     ]
-    // 1. data 형식이 올바르지 않을 때 
+    // 1. data 형식이 올바르지 않을 때
     // var data = 'asdad'
-    
+
     // 2.new Keyword 안 붙이고 함수를 실행했을 떄 에러 발생시키기
-    
+
     // 이곳에서 코딩을 시작하세요!
     function isArray(data){
-       return Array.isArray(data) 
+       return Array.isArray(data)
     }
-    function isListRenderable(data, el){
-      return document.querySelector(el) && data.length;
-    }
-    // new keyword check 함수 
+    
+    // new keyword check 함수
     // 이렇게 체크하는게 맞는지 잘 모르겠네요 'ㅁ'
     function isInstance(instance, Class){
       return instance instanceof Class
     }
 
     function TodoList(data){
+      this.el = '#todo-list';
       if(!isInstance(this,TodoList)){
         throw Error('new 키워드로 함수를 실행해주세요')
       }
-      const el = '#todo-list';
-      if(!isArray(data)) throw Error('data 형식이 올바르지 않습니다')
+      if(!isArray(data)) throw Error('data 형식이 올바르지 않습니다');
       this.data = data;
       this.render = function(){
-        if(isListRenderable(data,el)){
-           const containerEl  = document.querySelector(el)
-          containerEl.innerHTML = this.data.reduce((acc,{text})=>{
-          if(!text) return acc;
-          else return acc+=`<div>${text}</div>`
-        },'')
-        }
+         const $containerEl  = document.querySelector(this.el);
+          $containerEl.innerHTML = this.data.map((({text = ''})=>`<div>${text}</div>`)).join('');
       }
     }
-    // const todoList = new TodoList(data);
+    const todoList = new TodoList(data);
 
-    // test new keyword로 함수 실행 안 했을시 
+    // test new keyword로 함수 실행 안 했을시
     // const todoList = TodoList(data);
-  
-    todoList.render()
+
+    todoList.render();
   </script>
 </body>
 </html>
