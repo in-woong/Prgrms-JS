@@ -1,0 +1,53 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list"></div>
+  <script>
+    var data = [{ text: "JS 공부하기" }, { text: "JS 복습하기" }];
+    var $ele = document.getElementById("todo-list");
+    var todoList = new TodoList(data, $ele);
+
+    // 이곳에서 코딩을 시작하세요!
+
+    /* 
+    * @param {text: string}[] todoList 할일 목록 data
+    * @param htmlElement      element  렌더링할 html요소
+    */
+    function TodoList(todoList, element) {
+      if (Array.isArray(todoList) && element instanceof Element) {
+        this.EMPTY_MSG = '데이터가 없습니다.'
+        this.todoList = todoList;
+
+        // data를 html tag가 포함된 형태로 변환한다.
+        this.makeTag = function () {
+          if (helper.isEmptyList(this.todoList)) return this.EMPTY_MSG;
+          else {
+            var listStr = this.todoList.map(
+              function (_) { return `<li>${_.text || ''}</li>`; }
+            ).join("")
+            return `<ul>${listStr}</ul>`
+          }
+        };
+
+        // htmltag를 dom element에 넣는다.
+        this.render = function () { element.innerHTML = this.makeTag(); };
+      } else helper.handleError('타입이 올바르지 않은 인자입니다.')
+    }
+
+    var helper = {
+      isEmptyList: function (list) { Array.isArray(list) ? list.length === 0 : false },
+      handleError: function (str) { throw new Error(str) }
+    }
+
+    if (todoList instanceof TodoList) todoList.render();
+    else helper.handleError('잘못된 형태입니다.')
+
+  </script>
+</body>
+
+</html>
