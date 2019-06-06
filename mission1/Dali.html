@@ -42,21 +42,23 @@
           };
         })();
 
-        function TodoList(data) {
-          this.el = "#todo-list";
+        function TodoList(data, todoEl) {
+          this.el = todoEl;
           this.data = data;
           this.validate = () => {
             if (!utils.isInstance(this, TodoList)) utils.throwError('"new 키워드로 함수를 실행해주세요"');
             if (!utils.isArray(data)) utils.throwError("data 형식이 올바르지 않습니다");
           };
           this.validate();
+          this.makeTempalte = function() {
+            return this.data.map(({ text = "" }) => `<div>${text}</div>`).join("");
+          };
           this.render = function() {
-            const $containerEl = document.querySelector(this.el);
-            $containerEl.innerHTML = this.data.map(({ text = "" }) => `<div>${text}</div>`).join("");
+            document.querySelector(this.el).innerHTML = this.makeTempalte();
           };
         }
         try {
-          const todoList = new TodoList(data);
+          const todoList = new TodoList(data, "#todo-list");
           todoList.render();
         } catch (error) {
           console.log(error);
