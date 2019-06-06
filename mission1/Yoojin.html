@@ -6,8 +6,13 @@
 </head>
 
 <body>
-  <div id="todo-list"></div>
+  <div id="todo-list">
+    <input id="todoInput" type="text">
+    <button id="todoBtn" onClick="todoList.append()">submit</button>
+    <ul id="todo"></ul>
+  </div>
   <script>
+
     var data = [
       {
         text: 'JS 공부하기'
@@ -17,6 +22,30 @@
       }
     ]
 	// 이곳에서 코딩을 시작하세요!
+  function TodoList(data){
+    this.data = data;
+    this.render = function(){ // 초기 render
+      for(let i = 0;i<this.data.length;i++){
+        this.addRender(this.data[i].text)
+      }
+    }
+    this.append = function(){ // 버튼으로 추가했을때
+        let input = document.getElementById('todoInput');
+        this.addRender(input.value);
+        input.value = '';
+    }
+    this.addRender = function(content){ // 실질적 data render 기능
+        this.content = content;
+        let child = document.createElement('li');
+        child.innerHTML = `<li>${this.content}</li>`;
+        document.querySelector('#todo').appendChild(child);
+
+    }
+  }
+
+var todoList = new TodoList(data);
+todoList.render();
+
   </script>
 </body>
 </html>
