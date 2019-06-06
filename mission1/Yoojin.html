@@ -23,6 +23,13 @@
     ]
 	// 이곳에서 코딩을 시작하세요!
   function TodoList(data){
+    if(!(this instanceof TodoList)){
+      // instanceof 연산자는 생성된 인스턴스 객체가 어떤 생성자 함수를 사용하여 생성되었는지 확인한다.
+      throw Error('!!!!!!!!!!!!!new를 이용해주세요!!!!!!!!!!!')
+      // throw를 사용하여 예외를 사용할 수 있다
+      // console 창에 예외문구가 나타남
+      // Error객체를 이용해서 사용자가 예외처리를 좀 더 용이하게 할 수 있따
+    }
     this.data = data;
     this.render = function(){ // 초기 render
       for(let i = 0;i<this.data.length;i++){
@@ -45,6 +52,8 @@
 
 var todoList = new TodoList(data);
 todoList.render();
+
+var bonus01 = TodoList(data);
 
   </script>
 </body>
