@@ -50,11 +50,11 @@
             if (!utils.isArray(data)) utils.throwError("data 형식이 올바르지 않습니다");
           };
           this.validate();
-          this.makeTempalte = function() {
+          this.makeTodoTemplate = function() {
             return this.data.map(({ text = "" }) => `<div>${text}</div>`).join("");
           };
           this.render = function() {
-            document.querySelector(this.el).innerHTML = this.makeTempalte();
+            document.querySelector(this.el).innerHTML = this.makeTodoTemplate();
           };
         }
         try {
