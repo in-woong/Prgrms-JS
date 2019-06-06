@@ -23,7 +23,7 @@
       this.data = data;
 
       // data를 html tag가 포함된 형태로 변환한다.
-      this.makeTag = function () {
+      this.makeHTMLString = function () {
         if (helper.isEmptyList(this.data)) return this.EMPTY_MSG;
         else {
           var listStr = this.data.map(
