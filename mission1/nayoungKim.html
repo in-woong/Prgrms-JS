@@ -27,7 +27,7 @@
         if (helper.isEmptyList(this.data)) return this.EMPTY_MSG;
         else {
           var listStr = this.data.map(
-            function (_) { return `<li>${helper.checkString(_.text)}</li>`; }
+            function (_) { return _ ? `<li>${helper.checkString(_.text)}</li>` : ''; }
           ).join("")
           return `<ul>${listStr}</ul>`
         }
