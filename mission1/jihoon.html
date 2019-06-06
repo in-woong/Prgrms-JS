@@ -1,0 +1,56 @@
+<html>
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+<body>
+  <div id="todo-list"></div>
+  <script>
+    var data = [
+      {
+        text: 'JS 공부하기'
+      },
+      {
+        text: 'JS 복습하기'
+      },
+      true,       // Boolean
+      null,       // Null
+      undefined,  // Undefined
+      1,          // Number
+      "1",        // String
+      Symbol(1),  // Symbol
+      [],         // Array
+      {           // Object without text property
+        foo: 'bar'
+      },
+      {           // 빈 데이터에도 빈 div를 표시
+        text: undefined
+      }
+    ];
+
+  	// 이곳에서 코딩을 시작하세요!
+    function TodoList(data) {
+      if (this.constructor !== TodoList) {
+        throw Error('new를 사용해서 호출하세요');
+      }
+      if (!Array.isArray(data)) {
+        throw Error('data의 type은 Array여야함');
+      }
+
+      this.data = data;
+      this.render = function() {
+        let html = this.data.filter(v => {
+          return v !== undefined 
+            && v !== null 
+            && (v.constructor === Object && v.hasOwnProperty('text'));
+        }).map(v => {
+          return `<div>${v.text || ''}</div>`;
+        }).join('');
+        document.querySelector('#todo-list').innerHTML = html; 
+      };
+    }
+    const todoList = new TodoList(data);
+    todoList.render();
+  </script>
+</body>
+</html>
