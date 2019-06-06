@@ -1,0 +1,63 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list"></div>
+  <script>
+   
+    var data = [
+      {
+        text: 'JS 공부하기'
+      },
+      {
+        text: 'JS 복습하기'
+      },
+      'a',
+      true,
+      1
+    ]
+    // 이곳에서 코딩을 시작하세요!
+
+    function TodoList (data){
+      if(!isConstructorObject(this,TodoList)){
+        throw new Error('invalid Class object');
+      }
+
+      if(isDataTypeArray(data)){
+        this.data = data;
+      }else{
+        throw new Error('invalid datatype');
+      }
+        this.render = function(){
+            let htmlStr = data.map((elm)=>{
+              // 배열 순회하여 배열에 text 프로퍼티가 있으면 text를 표현 
+               return elm.hasOwnProperty('text')? `<div>${elm.text}</div>` :'';
+            }).join("");
+            
+            const todoContainer = document.getElementById('todo-list');
+            if(todoContainer !== null){
+              todoContainer.innerHTML = htmlStr;
+            }            
+        }
+    }
+
+    function isDataTypeArray(data){
+      // 파라미터 데이터 타입 확인 
+      return data instanceof Array ? true : false;
+    }
+
+    function isConstructorObject(me,cls){
+      //new로 객체를 생성하지 않을때 확인
+      return me.constructor === cls ? true : false;
+    }
+
+    var todoList = new TodoList(data);
+    todoList.render();
+
+  </script>
+</body>
+</html>
