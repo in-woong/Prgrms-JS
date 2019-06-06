@@ -1,56 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Mission 1</title>
-</head>
-<body>
-  <div id="todo-list"></div>
-  <script>
-    const data = [
-      {
-        text: 'JS 공부하기'
-      },
-      {
-        text: 'JS 복습하기'
-      }
-    ]
-    // 1. data 형식이 올바르지 않을 때
-    // var data = 'asdad'
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Mission 1</title>
+  </head>
+  <body>
+    <div id="todo-list"></div>
+    <script>
+      const data = [
+        {
+          text: "JS 공부하기"
+        },
+        {
+          text: "JS 복습하기"
+        }
+      ];
+      // 1. data 형식이 올바르지 않을 때
+      //  var data = 'asdad'
 
-    // 2.new Keyword 안 붙이고 함수를 실행했을 떄 에러 발생시키기
+      // 2.new Keyword 안 붙이고 함수를 실행했을 떄 에러 발생시키기
 
-    // 이곳에서 코딩을 시작하세요!
-    function isArray(data){
-       return Array.isArray(data)
-    }
-    
-    // new keyword check 함수
-    // 이렇게 체크하는게 맞는지 잘 모르겠네요 'ㅁ'
-    function isInstance(instance, Class){
-      return instance instanceof Class
-    }
+      // 이곳에서 코딩을 시작하세요!
+      document.addEventListener("DOMContentLoaded", () => {
+        const utils = (function() {
+          function isArray(data) {
+            return Array.isArray(data);
+          }
+          function isInstance(instance, Class) {
+            return instance instanceof Class;
+          }
+          function throwError(msg) {
+            throw Errror(msg);
+          }
 
-    function TodoList(data){
-      this.el = '#todo-list';
-      if(!isInstance(this,TodoList)){
-        throw Error('new 키워드로 함수를 실행해주세요')
-      }
-      if(!isArray(data)) throw Error('data 형식이 올바르지 않습니다');
-      this.data = data;
-      this.render = function(){
-         const $containerEl  = document.querySelector(this.el);
-          $containerEl.innerHTML = this.data.map((({text = ''})=>`<div>${text}</div>`)).join('');
-      }
-    }
-    const todoList = new TodoList(data);
+          return {
+            isArray,
+            isInstance,
+            throwError
+          };
+        })();
 
-    // test new keyword로 함수 실행 안 했을시
-    // const todoList = TodoList(data);
-
-    todoList.render();
-  </script>
-</body>
+        function TodoList(data) {
+          this.el = "#todo-list";
+          this.data = data;
+          this.validate = () => {
+            if (!utils.isInstance(this, TodoList)) utils.throwError('"new 키워드로 함수를 실행해주세요"');
+            if (!utils.isArray(data)) utils.throwError("data 형식이 올바르지 않습니다");
+          };
+          this.validate();
+          this.render = function() {
+            const $containerEl = document.querySelector(this.el);
+            $containerEl.innerHTML = this.data.map(({ text = "" }) => `<div>${text}</div>`).join("");
+          };
+        }
+        try {
+          const todoList = new TodoList(data);
+          todoList.render();
+        } catch (error) {
+          console.log(error);
+        }
+      });
+    </script>
+  </body>
 </html>
