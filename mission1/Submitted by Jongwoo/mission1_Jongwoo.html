@@ -1,0 +1,68 @@
+<html>
+
+<head>
+    <title>Mission 1 </title>
+    <meta charset="utf-8" />
+</head>
+
+<body>
+    <div id="todo-list"></div>
+    <button id="button1" onclick="todoList.render()">객체 실행</button>
+
+    <script>
+        var data = [
+            {
+                text: 'JS 공부하기'
+            },
+            {
+                text: 'JS 복습하기'
+            }
+        ]
+
+/*          var data = '안녕'; */
+
+    // 이곳에서 코딩을 시작하세요!
+
+    function TodoList(array1){
+        if(this == window)  // new로 생성된 객체인지 확인
+        {
+            alert("new로 생성된 객체가 아닙니다.");
+            document.getElementById("button1").textContent="실행 불가능";
+        } else {
+            if(isArray(array1))
+            {
+                this.str = '<ul>';
+
+            /*  array1.forEach(element => {
+                    this.str += '<li>' + element.text + '</li>';
+                });  */
+                
+                for (var num1 in array1) {
+                    this.str += '<li>' + array1[num1].text + '</li>';
+                }
+                this.str += '</ul>';
+            } else {
+                this.str = '오류: data가 배열이 아닙니다.'
+            }
+
+            this.render = function(){
+                document.querySelector("#todo-list").innerHTML = this.str;
+            }
+        }
+    }
+ 
+    function isArray(array1){
+        var result = (Object.prototype.toString.call(array1) === '[object Array]')?true:false;
+        // array1.length > 0 && '0' in Object(array1) 비어있지 않은 배열유사개체
+        return result;
+    }
+
+    var todoList = TodoList(data);
+    
+    todoList(); // new로 생성된 객체인지 아닌지 확인하기 위해 함수 실행
+
+    </script>
+
+</body>
+
+</html>
