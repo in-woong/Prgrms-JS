@@ -29,7 +29,7 @@
     ];
 
   	// 이곳에서 코딩을 시작하세요!
-    function TodoList(data) {
+    function TodoList(data, selector) {
       if (this.constructor !== TodoList) {
         throw Error('new를 사용해서 호출하세요');
       }
@@ -38,18 +38,20 @@
       }
 
       this.data = data;
+      this.selector = selector;
       this.render = function() {
-        let html = this.data.filter(v => {
-          return v !== undefined 
-            && v !== null 
-            && (v.constructor === Object && v.hasOwnProperty('text'));
-        }).map(v => {
-          return `<div>${v.text || ''}</div>`;
-        }).join('');
-        document.querySelector('#todo-list').innerHTML = html; 
-      };
+        let $elem = document.querySelector(this.selector);
+        if ($elem === null) {
+          throw Error('element not found');
+        }
+        let html = this.data.filter(v => v && v.text && typeof v.text === 'string')
+                            .map(v => `<div>${v.text || ''}</div>`)
+                            .join('');
+        $elem.innerHTML = html;
+      }
     }
-    const todoList = new TodoList(data);
+    const selector = '#todo-list';
+    const todoList = new TodoList(data, selector);
     todoList.render();
   </script>
 </body>
