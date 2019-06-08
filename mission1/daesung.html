@@ -15,6 +15,14 @@
           text: "JS 복습하기"
         }
       ];
+      var data1 = [
+        {
+          text: "풀 리퀘스트 올리기"
+        },
+        {
+          text: "컨텍스트, 클로저 부분 다시 읽어보기"
+        }
+      ];
 
       var invalidData = [
         // Invalid key
@@ -47,19 +55,29 @@
 
         this.data = data;
 
+        this.setState = function(data) {
+          this.data = data;
+          this.render();
+        };
+
         this.render = function() {
           var html = "";
-          data.forEach(element => {
+          this.data.forEach(element => {
             if (!element.text) throw new Error(`no keyname 'text'`);
             html += `<div>${element.text}</div>`;
           });
+
           document.querySelector("#todo-list").innerHTML = html;
         };
       }
 
       var todoList = new TodoList(data);
-    //   var todoList = new TodoList(invalidData[1]);
+      //   var todoList = new TodoList(invalidData[1]);
       todoList.render();
+
+      setTimeout(() => {
+        todoList.setState(data1);
+      }, 3000);
     </script>
   </body>
 </html>
