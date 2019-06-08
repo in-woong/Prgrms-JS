@@ -57,20 +57,22 @@
             utils.throwErrorByFalsy(utils.isArray(data), "data 형식이 올바르지 않습니다");
           };
           this._validate(data);
-          this._makeTodoTemplate = function () {
-            return this.data.map(({text = ""}) => `<div>${text}</div>`).join("");
-          };
-          this._render = function () {
-            document.querySelector(this.el).innerHTML = this._makeTodoTemplate();
-          };
-          this.setState = function (data) {
-            this.data = data;
-            this._render();
-          }
           this.setState(data);
         };
+        TodoList.prototype._makeTodoTemplate = function () {
+          return this.data.map(({text = ""}) => `<div>${text}</div>`).join("");
+        };
+        TodoList.prototype._render = function () {
+          document.querySelector(this.el).innerHTML = this._makeTodoTemplate();
+        };
+        TodoList.prototype.setState = function (data) {
+          this.data = data;
+          this._render();
+        };
+
         try {
           const todoList = new TodoList(data, "#todo-list");
+          console.log(todoList);
           todoList.setState(
                   [
                     {text: '새로운 데이터다'},
