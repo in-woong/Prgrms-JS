@@ -48,11 +48,16 @@
                             .map(v => `<div>${v.text || ''}</div>`)
                             .join('');
         $elem.innerHTML = html;
-      }
+      };
+      this.setState = function(data) {
+        this.data = data;
+        this.render();
+      };
     }
     const selector = '#todo-list';
     const todoList = new TodoList(data, selector);
     todoList.render();
+    todoList.setState([{ text: '보너스 미션 수행하기' }]);
   </script>
 </body>
 </html>
