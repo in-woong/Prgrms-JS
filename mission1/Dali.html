@@ -39,6 +39,7 @@
           }
           function throwErrorByFalsy(val, message) {
             if (isNot(val)) throwError(message);
+            return this;
           }
           return {
             isArray,
@@ -51,22 +52,31 @@
 
         function TodoList(data, todoEl) {
           this.el = todoEl;
-          this.data = data;
-          this.validate = () => {
+          this._validate = function () {
             utils.throwErrorByFalsy(utils.isInstance(this, TodoList), "new 키워드로 함수를 실행해주세요");
             utils.throwErrorByFalsy(utils.isArray(data), "data 형식이 올바르지 않습니다");
           };
-          this.validate();
-          this.makeTodoTemplate = function() {
-            return this.data.map(({ text = "" }) => `<div>${text}</div>`).join("");
+          this._validate(data);
+          this._makeTodoTemplate = function () {
+            return this.data.map(({text = ""}) => `<div>${text}</div>`).join("");
           };
-          this.render = function() {
-            document.querySelector(this.el).innerHTML = this.makeTodoTemplate();
+          this._render = function () {
+            document.querySelector(this.el).innerHTML = this._makeTodoTemplate();
           };
-        }
+          this.setState = function (data) {
+            this.data = data;
+            this._render();
+          }
+          this.setState(data);
+        };
         try {
           const todoList = new TodoList(data, "#todo-list");
-          todoList.render();
+          todoList.setState(
+                  [
+                    {text: '새로운 데이터다'},
+                    {text: '공부해라 달리'}
+                  ]
+          )
         } catch (error) {
           console.log(error);
         }
