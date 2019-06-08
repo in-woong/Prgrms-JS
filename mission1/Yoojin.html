@@ -42,9 +42,8 @@
         input.value = '';
     }
     this.addRender = function(content){ // 실질적 data render 기능
-        this.content = content;
         let child = document.createElement('li');
-        child.innerHTML = `<li>${this.content}</li>`;
+        child.innerHTML = `<li>${content}</li>`;
         document.querySelector('#todo').appendChild(child);
 
     }
