@@ -28,7 +28,7 @@
           throw new Error('Invalid parameters');
         } else if (!(this instanceof TodoList)) {
           throw new Error('Call with New');
-        } else if (todoItemList.includes(item => !item || !item.text || typeof item.text === 'string')) {
+        } else if (!todoItemList.includes(item => item && item.text && typeof item.text === 'string')) {
           throw new Error('Invalid data');
         } else if ($container === null) {
           throw new Errror('Invalid dom seelctor');
