@@ -21,18 +21,19 @@
 
 
     function TodoList(todoItemList, selector) {
-
-      const invalidateParams = ((todoItemList, selector) => {
+      const $container = document.querySelector(selector);
+      
+      const invalidateParams = ((todoItemList, $container) => {
         if (todoItemList && !Array.isArray(todoItemList)) {
           throw new Error('Invalid parameters');
         } else if (!(this instanceof TodoList)) {
           throw new Error('Call with New');
         } else if (todoItemList.includes(item => !item || !item.text || typeof item.text === 'string')) {
           throw new Error('Invalid data');
-        } else if (document.querySelector(selector) === null) {
+        } else if ($container === null) {
           throw new Errror('Invalid dom seelctor');
         }
-      })(todoItemList, selector)
+      })(todoItemList, $container)
       
       this.todoItemList = data;
       
@@ -40,7 +41,7 @@
         const todoListContent = this.todoItemList
           .map(filteredItem => document.querySelector(selector).innherHtml = `<div>${filteredItem.text}</div>`)
           .join('');
-        document.querySelector(selector).innerHTML = todoListContent;
+          $container.innerHTML = todoListContent;
       }
 
       this.setState = function(data) {
