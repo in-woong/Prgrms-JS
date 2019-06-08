@@ -15,14 +15,42 @@
           text: "JS 복습하기"
         }
       ];
-      // 이곳에서 코딩을 시작하세요!
 
+      var invalidData = [
+        // Invalid key
+        [
+          {
+            t: "JS 공부하기"
+          },
+          {
+            t: "JS 복습하기"
+          }
+        ],
+
+        // Not Array
+        { text: "JS 공부하기" },
+
+        // Invalid Array
+        [1, 2, 3, 4, 5]
+      ];
+
+      // 이곳에서 코딩을 시작하세요!
       function TodoList(data) {
+        if (!(this instanceof TodoList)) {
+          // if without 'new' keyword, 'this' is 'window'(global)
+          throw new Error(`Have to create by 'new' keyword`);
+        }
+
+        if (!(data instanceof Array)) {
+          throw new Error(`'data' is not Array`);
+        }
+
         this.data = data;
 
         this.render = function() {
           var html = "";
           data.forEach(element => {
+            if (!element.text) throw new Error(`no keyname 'text'`);
             html += `<div>${element.text}</div>`;
           });
           document.querySelector("#todo-list").innerHTML = html;
@@ -30,6 +58,7 @@
       }
 
       var todoList = new TodoList(data);
+    //   var todoList = new TodoList(invalidData[1]);
       todoList.render();
     </script>
   </body>
