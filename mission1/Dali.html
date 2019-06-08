@@ -52,11 +52,11 @@
 
         function TodoList(data, todoEl) {
           this.el = todoEl;
-          this._validate = function () {
+          const validate = (data) => {
             utils.throwErrorByFalsy(utils.isInstance(this, TodoList), "new 키워드로 함수를 실행해주세요");
             utils.throwErrorByFalsy(utils.isArray(data), "data 형식이 올바르지 않습니다");
           };
-          this._validate(data);
+          validate(data);
           this.setState(data);
         };
         TodoList.prototype._makeTodoTemplate = function () {
