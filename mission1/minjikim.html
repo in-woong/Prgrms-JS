@@ -22,7 +22,7 @@
 
     function TodoList(todoItemList, selector) {
       const $container = document.querySelector(selector);
-      
+
       const invalidateParams = ((todoItemList, $container) => {
         if (todoItemList && !Array.isArray(todoItemList)) {
           throw new Error('Invalid parameters');
@@ -39,7 +39,7 @@
       
       this.render = function() {
         const todoListContent = this.todoItemList
-          .map(filteredItem => document.querySelector(selector).innherHtml = `<div>${filteredItem.text}</div>`)
+          .map(filteredItem => $container.innherHtml = `<div>${filteredItem.text}</div>`)
           .join('');
           $container.innerHTML = todoListContent;
       }
@@ -52,7 +52,8 @@
       }
     }
 
-    const todoList = new TodoList(data, selector);
+    const todoList = new TodoList(data, '#todo-list');
+    todoList.render();
    </script>
 </body>
 </html>
