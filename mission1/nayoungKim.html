@@ -44,7 +44,7 @@
     var helper = {
       isEmptyList: function (list) { Array.isArray(list) ? list.length === 0 : false },
       handleError: function (str) { throw new Error(str) },
-      checkString: function (str) { return typeof str === 'string' ? str : '' }
+      filterString: function (str) { return typeof str === 'string' ? str : '' }
     }
 
     var todoList = new TodoList($element);
