@@ -59,6 +59,7 @@
           validate(data);
           this.setState(data);
         };
+        // 메소드 프로토타입으로 분리
         TodoList.prototype._makeTodoTemplate = function () {
           return this.data.map(({text = ""}) => `<div>${text}</div>`).join("");
         };
