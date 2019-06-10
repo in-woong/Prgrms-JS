@@ -1,66 +1,64 @@
 <html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
 
-<head>
-  <title>Mission 1</title>
-  <meta charset="utf-8" />
-</head>
+  <body>
+    <div id="todo-list"></div>
+    <script>
+      var data = [
+        {
+          text: 'JS 공부하기',
+        },
+        {
+          text: 'JS 복습하기',
+        },
+      ]
+      var data2 = [
+        {
+          text: 'JS 공부하기2',
+        },
+        {
+          text: 'JS 복습하기2',
+        },
+      ]
 
-<body>
-  <div id="todo-list"></div>
-  <script>
-    var data = [
-      {
-        text: 'JS 공부하기'
-      },
-      {
-        text: 'JS 복습하기'
-      }
-    ]
-    var data2 = [
-      {
-        text: 'JS 공부하기2'
-      },
-      {
-        text: 'JS 복습하기2'
-      }
-    ]
-
-    function TodoList(data) {
-      if(this === window) {
-        throw new Error('please use \'new\' keyword')
-      }
-
-      if(!(data instanceof Array) || data === undefined || data === null) {
-        throw new Error('it is not valid')
-      }
-
-      data.forEach(item => {
-        if(!item.hasOwnProperty('text')) {
-          throw new Error('it has wrong data')
+      function TodoList(data) {
+        if (this === window) {
+          throw new Error("please use 'new' keyword")
         }
-      })
 
-      this.data = data
-      this.render = function() {
-        let html = ''
-        this.data.forEach(item => {
-          html += '<div>' + item.text + '</div>'
+        if (!(data instanceof Array) || data === undefined || data === null) {
+          throw new Error('it is not valid')
+        }
+
+        data.forEach(item => {
+          if (!item.hasOwnProperty('text')) {
+            throw new Error('it has wrong data')
+          }
         })
-        document.querySelector('#todo-list').innerHTML = html;
-      }
-      this.setState = function(data) {
+
         this.data = data
-        this.render()
+        this.render = function() {
+          let html = ''
+          this.data.forEach(item => {
+            html += '<div>' + item.text + '</div>'
+          })
+          document.querySelector('#todo-list').innerHTML = html
+        }
+        this.setState = function(data) {
+          this.data = data
+          this.render()
+        }
       }
-    }
 
-    var todoList = new TodoList(data)
-    todoList.render()
+      var todoList = new TodoList(data)
+      todoList.render()
 
-    setTimeout(function() {
-      todoList.setState(data2)
-    }, 2000)
-
-  </script>
-</body>
+      setTimeout(function() {
+        todoList.setState(data2)
+      }, 2000)
+    </script>
+  </body>
 </html>
