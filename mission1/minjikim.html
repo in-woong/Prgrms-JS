@@ -18,18 +18,26 @@
        }
      ]
      // 이곳에서 코딩을 시작하세요!
-
      function TodoList(data){
 
        this.data=data;
 
-       this.render=function(){ 
+       this.render=function(){
 
-         document.querySelector("#todo-list").innerHTML=`<p>${this.data[0].text}</p><p>${this.data[1].text}</p>`
+        if(this.data instanceof Object ===true){
 
-       }
+            this.data.forEach(function(item,inedex,object){
+
+               document.querySelector("#todo-list").innerHTML+=`<p>${this.data[inedex].text}</p>`;
+            });
+
+        }else{
+          Error();
+        }
+
+
+      }
      }
-
      var todoList= new TodoList(data);
 
      todoList.render();
