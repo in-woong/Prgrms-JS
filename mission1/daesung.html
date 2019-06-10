@@ -61,11 +61,9 @@
         };
 
         this.render = function() {
-          var html = "";
-          this.data.forEach(element => {
-            if (!element.text) throw new Error(`no keyname 'text'`);
-            html += `<div>${element.text}</div>`;
-          });
+          var html = this.data.map(element => {
+            return `<div>${element.text}</div>`;
+          }).join(' ');
 
           document.querySelector("#todo-list").innerHTML = html;
         };
