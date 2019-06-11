@@ -7,7 +7,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
   (function () {
     const searchResult = new SearchResult({
       data: config.data,
-      target: config.target
+      target: config.target,
+      search: config.search
     });
   })(SearchResult);
 });

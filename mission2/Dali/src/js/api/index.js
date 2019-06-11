@@ -1,6 +1,7 @@
 const baseUrl = `https://jjalbot.com/api/jjals`
 
 
+
 const getJJalByKeyWord = async (keyword)=> {
   try {
     const response = await fetch(`${baseUrl}?text=${keyword}`);
