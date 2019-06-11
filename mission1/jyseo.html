@@ -27,6 +27,10 @@
     var data3 = []
 
     function TodoList(data) {
+      if(this === window) {
+        throw new Error('please use \'new\' keyword')
+      }
+
       this.data = data
       this.render = function() {
         let html = ''
