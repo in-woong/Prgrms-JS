@@ -1,0 +1,21 @@
+body {
+    margin: 0;
+}
+li  {
+    list-style: none;
+}
+
+
+
+
+/**/
+.img-card-list {
+    display: flex;
+}
+.img-card {
+    width: 33.3333%;
+    height: auto;
+}
+.img-card-img {
+    max-width: 100%;
+}

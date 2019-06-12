@@ -1,4 +1,5 @@
 import { getJJalByKeyWord } from "./api/index.js";
+import Template from './template/index.js';
 import utils from './utils/index.js';
 import { ERROR_COMPONET } from './utils/errorMessage.js';
 /*
@@ -21,13 +22,11 @@ const SearchResult  = class {
     this.data = data;
     this.render();
   }
-  makeHtmlTemplate(){
-    return `${this.data.map(
-      d => `<img src="${d.imageUrl}" alt="">`
-    ).join('')}`;
+  static makeImagCardTemplate(data){
+    return Template.imgCardTemplate(data);
   }
   render(){
-    this.$resultEl.innerHTML = this.makeHtmlTemplate();
+    this.$resultEl.innerHTML = SearchResult.makeImagCardTemplate(this.data);
   }
   notifyNoResult(){
     this.$resultEl.innerHTML = `${this.searchedKeyword}로 검색 결과가 없습니다`
