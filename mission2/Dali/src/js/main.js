@@ -4,11 +4,15 @@ import config from './config.js';
 // data는 받아야 될까?
 
 const setView = (({config, SearchResult})=>{
-  const searchResult = new SearchResult({
-    data: config.data,
-    target: config.target,
-    search: config.search
-  });
+  try {
+    const searchResult = new SearchResult({
+      data: config.data,
+      target: config.target,
+      search: config.search
+    });
+  }catch (error) {
+      console.log(error);
+  }
 })({
   config,
   SearchResult

@@ -11,8 +11,8 @@ const getJJalByKeyWord = async (keyword)=> {
   catch(error){
     console.error('error:', error);
   }
-}
+};
 
 export {
   getJJalByKeyWord,
-}
+};
