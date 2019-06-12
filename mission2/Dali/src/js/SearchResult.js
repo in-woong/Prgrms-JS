@@ -22,11 +22,15 @@ const SearchResult  = class {
     this.data = data;
     this.render();
   }
-  static makeImagCardTemplate(data){
-    return Template.imgCardTemplate(data);
+  makeImagCardTemplate(){
+    if(this.searchedKeyword){
+       return `${Template.keyWordTemplate(this.searchedKeyword)}${Template.imgCardTemplate(this.data)}`
+    }else {
+      return Template.imgCardTemplate(this.data);
+    }
   }
   render(){
-    this.$resultEl.innerHTML = SearchResult.makeImagCardTemplate(this.data);
+    this.$resultEl.innerHTML = this.makeImagCardTemplate()
   }
   notifyNoResult(){
     this.$resultEl.innerHTML = `${this.searchedKeyword}로 검색 결과가 없습니다`

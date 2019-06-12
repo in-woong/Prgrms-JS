@@ -7,6 +7,9 @@ const imgCardTemplate = (data)=> {
   return imgCardsHtml && `<ul class="img-card-list">${imgCardsHtml}</ul>`;
 }
 
+const keyWordTemplate = keyword => `<p>${keyword}</p>`
+
 export default {
-  imgCardTemplate
+  imgCardTemplate,
+  keyWordTemplate
 }
