@@ -1,4 +1,7 @@
-const baseUrl = `https://jjalbot.com/api/jjals`
+import utils from '../utils/index.js';
+import { HTTPERROR } from '../utils/errorMessage.js';
+
+const baseUrl = `https://jjalbot.com/api/jjals`;
 
 
 
@@ -9,7 +12,7 @@ const getJJalByKeyWord = async (keyword)=> {
     return  jjalData;
   }
   catch(error){
-    console.error('error:', error);
+    console.log('error:', error);
   }
 };
 

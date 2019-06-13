@@ -24,20 +24,15 @@ const SearchResult  = class {
   }
   makeImagCardTemplate(){
     if(this.searchedKeyword){
-       return `${Template.keyWordTemplate(this.searchedKeyword)}${Template.imgCardTemplate(this.data)}`
-    }else {
-      return Template.imgCardTemplate(this.data);
+      return `${Template.keyWordTemplate(this.searchedKeyword, this.data.length)}${Template.imgCardTemplate(this.data)}`
     }
+    else return '';
   }
   render(){
     this.$resultEl.innerHTML = this.makeImagCardTemplate()
   }
-  notifyNoResult(){
-    this.$resultEl.innerHTML = `${this.searchedKeyword}로 검색 결과가 없습니다`
-  }
   handleJJalResult(data){
     this.setState(data);
-    if(!data.length) this.notifyNoResult();
   }
   renderErrorMessage(){
     this.$resultEl.innerHTML = `에러가 발생하였습니다 잠시후에 다시 시도해주세요`

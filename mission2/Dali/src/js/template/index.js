@@ -7,7 +7,17 @@ const imgCardTemplate = (data)=> {
   return imgCardsHtml && `<ul class="img-card-list">${imgCardsHtml}</ul>`;
 }
 
-const keyWordTemplate = keyword => `<p>${keyword}</p>`
+const countTemplate = count => {
+  if(!count) count =`결과가 없습니다.`
+  return `<span class="keyword-count">${count}</span>`;
+};
+
+const keyWordTemplate = (keyword, count) =>
+  `<p class="keyword-container">
+    <span class="keyword">${keyword}</span>
+    ${countTemplate(count)}
+    </p>`;
+
 
 export default {
   imgCardTemplate,

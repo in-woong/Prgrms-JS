@@ -3,10 +3,10 @@ const ERROR_COMPONET = {
 }
 
 const HTTPERROR = {
+  504: 'GATEWAY TIMEOUT',
   500: "서버에서 일시적인 오류가 발생하였습니다",
   404: "해당 페이지는 없습니다."
 };
-
 
 export {
   ERROR_COMPONET,
