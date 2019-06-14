@@ -1,7 +1,7 @@
 import { getJJalByKeyWord } from "./api/index.js";
 import Template from './template/index.js';
 import utils from './utils/index.js';
-import { ERROR_COMPONET } from './utils/errorMessage.js';
+import { ERROR_COMPONENT } from './utils/errorMessage.js';
 /*
   data: rendering data
   target: html string
@@ -16,7 +16,7 @@ const SearchResult  = class {
       this.init();
   }
   static validateData(data){
-    utils.throwErrorByFalsy(utils.isArray(data), ERROR_COMPONET.REQUIRED_ARRAY);
+    utils.throwErrorByFalsy(utils.isArray(data), ERROR_COMPONENT.REQUIRED_ARRAY);
   }
   setState(data){
     this.data = data;
@@ -35,18 +35,18 @@ const SearchResult  = class {
     this.setState(data);
   }
   renderErrorMessage(){
-    this.$resultEl.innerHTML = `에러가 발생하였습니다 잠시후에 다시 시도해주세요`
+    this.$resultEl.innerHTML = ERROR_COMPONENT.TRY_AGAIN_LATER
   }
   async handleKeyup(keyword){
     try {
       this.searchedKeyword = keyword;
       const jjalData = await  getJJalByKeyWord(keyword);
       console.log(JSON.stringify(jjalData, null, 2));
-      this.handleJJalResult(jjalData);
+      this.handleJJalResult(jjalData, () => this.renderErrorMessage());
     }
     catch(error){
       console.log('error:',error);
-      this.renderErrorMessage()
+      this.renderErrorMessage(error)
     }
   }
   init(){
