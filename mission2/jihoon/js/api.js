@@ -1,7 +1,19 @@
 const getJjals = async (keyword) => {
-  if (keyword.length < 1) {
+  if (keyword === undefined || keyword === null) {
+    throw new Error('invalid keyword');
+  }
+  if (typeof keyword !== 'string') {
+    throw new Error('invalid type of keyword');
+  }
+  const trimmedKeyword = keyword.trim();
+  if (trimmedKeyword.length < 1) {
     return [];
   }
-  const res = await fetch(`https://jjalbot.com/api/jjals?text=${keyword}`);
-  return res.status === 200 ? await res.json() : [];
+  try {
+    const res = await fetch(`https://jjalbot.com/api/jjals?text=${trimmedKeyword}`);
+    return res.status === 200 ? await res.json() : [];
+  } catch(e) {
+    alert('failed to fetch Jjals from server.');
+    throw new Error('failed to fetch Jjals from server');
+  }
 }
