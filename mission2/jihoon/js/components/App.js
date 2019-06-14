@@ -1,16 +1,18 @@
 class App {
-  constructor(rootId, inputId, resultId) {
-    this.rootId = rootId;
-    this.input = new SearchInput(inputId);
-    this.result = new SearchResult([], resultId);
+  constructor() {
+    this.id = '#app';
+    this.input = new SearchInput();
+    this.result = new SearchResult();
+    this.keyword = new FetchedKeyword();
   }
   render() {
-    const $root = document.querySelector(this.rootId);
-    const $searchInput = this.input.render();
-    const $searchResult = this.result.render();
-    $root.innerHTML = $searchInput + $searchResult;
+    const $root = document.querySelector(this.id);
+    const searchInputHTMLString = this.input.render();
+    const searchKeywordHTMLString = this.keyword.render();
+    const searchResultHTMLString = this.result.render();
+    $root.innerHTML = searchInputHTMLString + searchKeywordHTMLString + searchResultHTMLString;
   }
   listen() {
-    this.input.listen(this.result.setState.bind(this.result));
+    this.input.listen(this.result.setState.bind(this.result), this.keyword.setState.bind(this.keyword));
   }
 }

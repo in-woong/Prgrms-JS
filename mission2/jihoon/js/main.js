@@ -1,5 +1,5 @@
 (async function () {
-  const app = new App('#app', '#search-keyword', '#search-result');
+  const app = new App();
   app.render();
   app.listen();
 })();

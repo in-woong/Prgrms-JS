@@ -1,18 +1,21 @@
 class SearchInput {
-  constructor(target) {
-    this.target = target;
+  constructor() {
+    this.id = '#search-keyword';
   }
   render() {
-    return `<input id="${this.target.substr(1)}"/>`;
+    return `<input id="${this.id.substr(1)}"/>`;
   }
-  listen(fn) {
-    const $el = document.querySelector(this.target);
+  listen(resultFn, keywordFn) {
+    const $el = document.querySelector(this.id);
     let timer;
     $el.addEventListener('keyup', (e) => {
       if (timer) {
         clearTimeout(timer);
       }
-      timer = setTimeout(async () => fn(await getJjals(e.target.value), e.target.value), 1000);
+      timer = setTimeout(async () => {
+        resultFn(await getJjals(e.target.value));
+        keywordFn(e.target.value);
+      }, 1000);
     });
   }
 }
