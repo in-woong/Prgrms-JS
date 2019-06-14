@@ -8,8 +8,8 @@ const imgCardTemplate = (data)=> {
 }
 
 const countTemplate = count => {
-  if(!count) count =`결과가 없습니다.`
-  return `<span class="keyword-count">${count}</span>`;
+  if(!count) return  `<span class="has-no-result">검색 결과가 없습니다</span>`;
+  return `<span class="badge"><span class="keyword-count">${count}</span></span>`;
 };
 
 const keyWordTemplate = (keyword, count) =>

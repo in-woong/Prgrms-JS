@@ -34,18 +34,19 @@ const SearchResult  = class {
   handleJJalResult(data){
     this.setState(data);
   }
-  renderErrorMessage(){
-    this.$resultEl.innerHTML = ERROR_COMPONENT.TRY_AGAIN_LATER
+  renderErrorMessage(error){
+    console.log(error.message);
+    this.$resultEl.innerHTML = `${ERROR_COMPONENT.TRY_AGAIN_LATER}`
   }
   async handleKeyup(keyword){
     try {
       this.searchedKeyword = keyword;
-      const jjalData = await  getJJalByKeyWord(keyword);
+      const jjalData = await  getJJalByKeyWord(keyword, (error) => this.renderErrorMessage(error));
       console.log(JSON.stringify(jjalData, null, 2));
-      this.handleJJalResult(jjalData, () => this.renderErrorMessage());
+      this.handleJJalResult(jjalData);
     }
     catch(error){
-      console.log('error:',error);
+
       this.renderErrorMessage(error)
     }
   }

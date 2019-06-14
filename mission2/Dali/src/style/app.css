@@ -21,22 +21,38 @@ li  {
 }
 
 .search-input {
+    box-sizing: border-box;
     margin-top: 50px;
     height: 50px;
     width: 500px;
     font-size: 18px;
+    padding-left: 15px;
+}
+
+.badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: #f76707;
+    border-radius: 50%;
 }
 
 .keyword-container {
     display: flex;
 }
 .keyword {
-    font-size: 24px;
+    font-size: 28px;
     color: #333;
     margin-right: 5px;
 }
 .keyword-count {
-    font-size: 16px;
+    font-size: 12px;
+    color: #fff;
+}
+.s-no-result {
+    font-size: 18px;
 }
 
 
