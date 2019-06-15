@@ -20,8 +20,12 @@ const SearchResult  = class {
 
   }
   errorNotify(error){
-    console.log('error 에 따라서 어떻게 처리 할지 ', error);
+    console.dir(error);
     this.$resultEl.innerHTML = Template.ErrorNotifyTemplate(ERROR_TO_USER.TRY_AGAIN_LATER);
+  }
+  showRecentKeywords(recentKeywords){
+    // todo SearchInput 밑에 최근 검색어 Template 추가 예정
+    //this.$resultEl.innerHTML = JSON.stringify(recentKeywords);
   }
 };
 

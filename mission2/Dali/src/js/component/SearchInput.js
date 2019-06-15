@@ -21,9 +21,11 @@ const SearchInput  = class {
   bind(event, handler){
     switch (event) {
       case 'FETCH_RESULT':
-        this.$searchEl.addEventListener('keyup', (()=>evnetHelper.debounce(
+        return this.$searchEl.addEventListener('keyup', (()=>evnetHelper.debounce(
           ()=>handler(this.$searchEl.value)
         )));
+      case 'HANDLE_FOCUS':
+        return this.$searchEl.addEventListener('focus', handler);
     }
   }
   renderErrorMessage(error){
