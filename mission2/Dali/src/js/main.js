@@ -11,7 +11,6 @@ const setView = (({config, App, SearchResult, SearchInput})=>{
       searchInput: new SearchInput(config.search),
       searchResult: new SearchResult(config.result)
     });
-    console.log('jjalApp', jjalApp);
   }catch (error) {
       console.log(error);
   }

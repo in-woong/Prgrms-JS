@@ -1,5 +1,6 @@
 import { getJJalByKeyWord } from "../api/index.js";
 import eventHelper from '../utils/eventHelper.js';
+import { saveLocalStorage } from  '../utils/storage.js';
 
 const App = class {
   constructor({searchInput, searchResult, data=[]}){
@@ -23,14 +24,19 @@ const App = class {
           imageList,
           keyword,
         });
+        this.saveKeyWord(keyword)
       }
     } catch(error){
-      console.log('error', error)
+      console.log('error', error);
       this.renderErrorMessage(error);
     }
   }
   renderErrorMessage(error){
       this.searchResult.errorNotify(error)
+  }
+  saveKeyWord(keyword){
+    const RECENT_KEYWORDS = 'RECENT_KEYWORDS';
+    saveLocalStorage(RECENT_KEYWORDS, keyword);
   }
 };
 

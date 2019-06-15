@@ -17,9 +17,10 @@ const keyWordTemplate = (keyword, count) =>
     <span class="keyword">${keyword}</span>
     ${countTemplate(count)}
     </p>`;
-
+const ErrorNotifyTemplate = (message) => `<p class="error-message">${message}</p>`;
 
 export default {
   imgCardTemplate,
-  keyWordTemplate
+  keyWordTemplate,
+  ErrorNotifyTemplate,
 }

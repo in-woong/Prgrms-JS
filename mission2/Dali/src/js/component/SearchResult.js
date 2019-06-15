@@ -16,8 +16,12 @@ const SearchResult  = class {
   render(data){
     this.$resultEl.innerHTML = SearchResult.makeImagCardTemplate(data)
   }
+  checkErrorType(error){
+
+  }
   errorNotify(error){
-    console.log('error 에 따라서 어떻게 처리 할지 ')
+    console.log('error 에 따라서 어떻게 처리 할지 ', error);
+    this.$resultEl.innerHTML = Template.ErrorNotifyTemplate(ERROR_TO_USER.TRY_AGAIN_LATER);
   }
 };
 

@@ -9,7 +9,7 @@
 - [x] 각종 방어코드 추가 0.5 -> update
 ## Bonus - Hard
 - [x] `search-input` -> SearchInput 콤포넌트 제작 및 이 컴포넌트에 렌더에 대한 부분 고민
-- [ ] `App` 이라는 이름의 컴포넌트를 만들고 그 안에서 `SearchInput`, `SearchResult` 동작하도록 수정
+- [x] `App` 이라는 이름의 컴포넌트를 만들고 그 안에서 `SearchInput`, `SearchResult` 동작하도록 수정
 - [x] debounce 적용하기
 
 ### Tip 
@@ -34,11 +34,14 @@ App
 ### App 의 역할은 무엇일까?
 
 1. config를 받아서 -> 
-searchInput, SearchResult 가 역할을 하도록 준비시켜준다.
-2. searchInput에 이벤트로 받은 결과를 처리한다 
+searchInput, SearchResult 가 역할을 하도록 준비시켜준다. [x] 
+2. searchInput에 이벤트로 받은 결과를 처리한다 [x] 
 2.1 성공시 -> data update -> data가 업데이트 되면 galleries에 data를 전달한다.
 2.1.2 필요한 data만 정제할 필요도 있는 듯 
 2.2 Error 처리 -> 
+Error에 따라서 사용자에게 메시지를 보여주기도 하고 
+새로고침?
+에러에 따라서 몇가지 액션을 취하도록 설계 
 
 ### SearchInput 의 역할은 무엇일까? 
 
@@ -49,7 +52,7 @@ ux
 3. x버튼 느려고 했다가 많은 input창이 생각보다 x버튼이 또 없네? 필요 없으려나
 없는데: (naver, google, soundcloud,tumblr, faceboo )
 있는데 (airbnb) 
-x 버튼 대신에 esc로 clear 가능하게 하기 
+x 버튼 대신에 esc로 clear 가능하게 하기 [x] 
 
 ```js
 막상 타이핑을 해보니까  esc로 그냥 clear해주는 편이 좋은 ux일 것 같다 생각했다. 
@@ -64,8 +67,9 @@ x 버튼 대신에 esc로 clear 가능하게 하기
 
 ### SearchResult(Galleries) 에 역할은 무엇일까?
 
-1. 검색한 키워드를 보여주고 결과수를 보여준다.
-2. 검색 결과에 따른 이미지들을 카드로 렌더링한다. 
+감섹결과를 받아서 
+1. 검색한 키워드를 보여주고 결과수를 보여준다. [x] 
+2. 검색 결과에 따른 이미지들을 카드로 렌더링한다. [x] 
 
 UX + 그 외 데이터에 들어있는 많은 값들로 화면을 풍부하게 만들어봅시다.
 3. tags와 id
