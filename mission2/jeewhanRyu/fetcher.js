@@ -5,7 +5,11 @@ const fetcher = async keyword => {
 
   resource.searchParams.set(config.QUERY, keyword);
 
-  return (await fetch(resource.href)).json();
+  try {
+    return (await fetch(resource.href)).json();
+  } catch (error) {
+    throw error;
+  }
 };
 
 export default fetcher;

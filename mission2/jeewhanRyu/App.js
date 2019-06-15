@@ -25,13 +25,11 @@ const App = (() => {
     }
 
     [initialize]() {
-      [
-        ["afterbegin", `<input id="${types.SEARCH_KEYWORD_ID}" />`],
-        ["beforeend", `<span id="${types.SEARCH_KEYWORD_RESULT_ID}"></span>`],
-        ["beforeend", `<div id="${types.SEARCH_RESULT_ID}"></div>`]
-      ].forEach(([elementPosition, element]) =>
-        this.$target.insertAdjacentHTML(elementPosition, element)
-      );
+      this.$target.innerHTML = `<input id="${
+        types.SEARCH_KEYWORD_ID
+      }" /><span id="${types.SEARCH_KEYWORD_RESULT_ID}"></span><div id="${
+        types.SEARCH_RESULT_ID
+      }"></div>`;
 
       this.SearchInput = new SearchInput(
         this.$target,
