@@ -21,7 +21,7 @@ class SearchInput {
   constructor(controller) {
     this.controller = controller;
     this.$input = domUtil.newEl('input');
-    this.$input.addEventListener('keyup', e => this.controller.keyup(e.target.value));
+    this.$input.addEventListener('keyup', e => this.controller.onSearch(e.target.value));
   }
 }
 
@@ -49,7 +49,7 @@ class SearchResult {
     data.forEach(_ =>
       result += `<figure class="search__item">
                   <figcaption class="search__title">${_.title}</figcaption>
-                  <img src=${_.imageUrl} onerror='this.src="loadFail.jpg"'/>
+                  <img src=${_.imageUrl} onerror='this.src="asset/loadFail.jpg"'/>
                   <figcaption class="search__tag">${_.tags.map(tag => `<span>#${tag}</span>`).join(' ')}</figcaption>
                  </figure>`
     );

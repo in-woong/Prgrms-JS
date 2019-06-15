@@ -8,13 +8,13 @@ class SearchController {
     this.view.setResult(this.model.data)
   }
 
-  keyup = (value) => {
+  onSearch = (value) => {
     if (this.timer) clearTimeout(this.timer);
     this.timer = setTimeout(async () => {
       this.initModel();
       if (value) {
         this.view.setLoading(true);
-        const result = await this.onSearchList(value);
+        const result = await this.getJjalList(value);
         this.view.setLoading(false);
         this.updateModel(result);
       } else {
@@ -29,5 +29,5 @@ class SearchController {
     this.view.setResult(this.model.data);
   }
 
-  onSearchList = async (value) => await this.api.getJjalList(value)
+  getJjalList = async (value) => await this.api.getJjalList(value)
 }
