@@ -11,6 +11,7 @@ const SearchResult = function(data, selector) {
   this.createTemplate = function() {
     let template = '';
     template += `${this.isLoading ? '<div>Loading....</div>' : ''}`;
+    template += `${!this.result.length && !this.isLoading ? '<div>검색 결과가 없습니다</div>' : ''}`;
     template += this.result
       .map(item => `<div><img src="${item.imageUrl}" /></div>`)
       .join('');
