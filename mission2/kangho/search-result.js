@@ -1,6 +1,6 @@
 const SearchResult = function(data, selector) {
 
-  this.$container = document.querySelector(selector);
+  this.$container = null;
   this.result = data;
   this.isLoading = false;
 
@@ -18,6 +18,15 @@ const SearchResult = function(data, selector) {
     return template;
   }
 
+  this.init = function($host, selector) {
+    this.$container = document.createElement('div');
+    if (selector[0] === '#') {
+      this.$container.id = selector.slice(1);
+    } else if (selector[0] === '.') {
+      this.$container.class = selector.slice(1);
+    }
+    $host.append(this.$container);
+  }
 
 
   this.setState = function(data) {

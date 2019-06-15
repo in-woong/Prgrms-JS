@@ -3,22 +3,27 @@ const BASE_URL = 'https://jjalbot.com/api/jjals';
 const inputSelector = '#search-keyword';	
 const resultSelector = '#search-result';	
 
-const searchResult = new SearchResult([], resultSelector);
-const searchInput = new SearchInput(inputSelector);
+const searchResult = new SearchResult();
+const searchInput = new SearchInput();
 const api = new API(BASE_URL);	
-const inputNode = document.querySelector(inputSelector);	
 
 class App {	
-  constructor(searchResult, searchInput, api) {	
+  constructor(
+    searchResult,
+    searchInput,
+    api
+  ) {	
     this.searchResult = searchResult;	
     this.api = api;	
     this.searchInput = searchInput;
-    this.isLoading = false;	
+    this.isLoading = false;
+    this.$container = document.body;
   }	
 
-   init() {
-     this.searchInput.init();
-     this.searchInput.addEventListener('keyup', this.renderResult.bind(this));
+    init() {
+      this.searchInput.init(this.$container, inputSelector);
+      this.searchResult.init(this.$container, resultSelector);
+      this.searchInput.addEventListener('keyup', this.renderResult.bind(this));
    }	
 
    async renderResult(e) {	
