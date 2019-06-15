@@ -4,8 +4,8 @@ const SearchResult = function(data, selector) {
   this.result = data;
   this.isLoading = false;
 
-  this.render = function(template) {
-    this.$container.innerHTML = template;
+  this.render = function() {
+    this.$container.innerHTML = this.createTemplate();
   }
 
   this.createTemplate = function() {
@@ -17,13 +17,14 @@ const SearchResult = function(data, selector) {
     return template;
   }
 
+
+
   this.setState = function(data) {
     const { result, isLoading } = data;
     if (result !== this.result || isLoading !== this.isLoading) {
       this.result = result;
       this.isLoading = isLoading;
-      const template = this.createTemplate();
-      this.render(template);
+      this.render();
     }
   }
 }
