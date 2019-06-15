@@ -8,9 +8,9 @@
 - [ ] 그 외 데이터에 들어있는 많은 값들로 화면을 풍부하게 만들어봅시다.
 - [x] 각종 방어코드 추가 0.5 -> update
 ## Bonus - Hard
-- [ ] `search-input` -> SearchInput 콤포넌트 제작 및 이 컴포넌트에 렌더에 대한 부분 고민
+- [x] `search-input` -> SearchInput 콤포넌트 제작 및 이 컴포넌트에 렌더에 대한 부분 고민
 - [ ] `App` 이라는 이름의 컴포넌트를 만들고 그 안에서 `SearchInput`, `SearchResult` 동작하도록 수정
-- [ ] debounce 적용하기
+- [x] debounce 적용하기
 
 ### Tip 
 * 우선 작업해야하는 화면을 기준으로 컴포넌트 단위로 쪼갭니다.
@@ -42,8 +42,8 @@ searchInput, SearchResult 가 역할을 하도록 준비시켜준다.
 
 ### SearchInput 의 역할은 무엇일까? 
 
-1. keyEvent를 받아서 jjalApi로 보토 data를 얻어온다 
-2. data를 App에 전달시킨다. 
+1. keyEvent를 받아서 jjalApi로 보토 data를 얻어온다 [x] 
+2. data를 App에 전달시킨다.   [x] 
 
 ux 
 3. x버튼 느려고 했다가 많은 input창이 생각보다 x버튼이 또 없네? 필요 없으려나
@@ -68,7 +68,7 @@ ux
 
 UX + 그 외 데이터에 들어있는 많은 값들로 화면을 풍부하게 만들어봅시다.
 3. tags와 id
-3.1 동작-> 호버시 tag를 보여준다.
+3.1 동작-> 호버시 tag를 보여준다. , title도 보여주면 좋을 것 같음 
 4. 좋아요, 공유하기 버튼 호버시 
 5. api가 있을시 추가 구현 , 공유하기는 가능하려나? 찾아보기 
 6. 정렬 (좋아요값은 없지만) 날짜 최신 순으로 정렬

@@ -1,11 +1,6 @@
-import utils from '../utils/index.js';
-import { HTTP_ERROR } from '../utils/errorMessage.js';
-
 const baseUrl = `https://jjalbot.com/api/jjals`;
 
-
-
-const getJJalByKeyWord = async (keyword, errorHandler)=> {
+const getJJalByKeyWord = async (keyword, errorHandler) => {
   try {
     const response = await fetch(`${baseUrl}?text=${keyword}`);
     return  await response.json();

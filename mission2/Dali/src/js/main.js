@@ -1,21 +1,25 @@
-import SearchResult from './SearchResult.js';
+import SearchResult from './component/SearchResult.js';
+import SearchInput from './component/SearchInput.js';
+import App from './component/App.js';
 import config from './config.js';
-// 우선 searchResult가 render를 잘 하도록
-// data는 받아야 될까?
 
-const setView = (({config, SearchResult})=>{
+
+const setView = (({config, App, SearchResult, SearchInput})=>{
   try {
-    const searchResult = new SearchResult({
+    const jjalApp = new App({
       data: config.data,
-      target: config.target,
-      search: config.search
+      searchInput: new SearchInput(config.search),
+      searchResult: new SearchResult(config.result)
     });
+    console.log('jjalApp', jjalApp);
   }catch (error) {
       console.log(error);
   }
 })({
   config,
-  SearchResult
+  App,
+  SearchResult,
+  SearchInput,
 });
 
 document.addEventListener('DOMContentLoaded', setView);

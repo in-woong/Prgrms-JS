@@ -1,6 +1,6 @@
 const config = {
   data : [],
-  target: '#search-result',
+  result: '#search-result',
   search: '#search-keyword'
 };
 
