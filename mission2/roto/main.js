@@ -5,7 +5,10 @@
     fetch(`https://jjalbot.com/api/jjals?text=${e.target.value}`)
       .then(x => x.json())
       .then((data) => {
-        searchResult.setState(data);
+        searchResult.setState({
+          keyword: e.target.value,
+          images: data
+        });
       })
   });
 })();
