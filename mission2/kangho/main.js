@@ -1,6 +1,7 @@
 import SearchInput from './search-input.js';
 import SearchResult from './search-result.js';
 import API from './api.js';
+import * as _ from './utils.js';
 
 const BASE_URL = 'https://jjalbot.com/api/jjals';	
 
@@ -23,11 +24,11 @@ class App {
   init() {
     this.searchInput.init(this.$container, 'input', inputSelector);
     this.searchResult.init(this.$container, 'div', resultSelector);
-    const debouncedResult = _.debounce(this.renderResult.bind(this), 500);
+    const debounce = _.debounce(this.renderResult.bind(this), 500);
 
     this.searchInput.addEventListener('keyup', (e) => {
       this.searchResult.setState({data: [], isLoading: true });
-      debouncedResult(e.target.value);
+      debounce(e.target.value);
     });
   }	
 
