@@ -1,3 +1,4 @@
+
 const BASE_URL = 'https://jjalbot.com/api/jjals';	
 
 const inputSelector = '#search-keyword';	
@@ -20,15 +21,19 @@ class App {
     this.$container = document.body;
   }	
 
-    init() {
-      this.searchInput.init(this.$container, inputSelector);
-      this.searchResult.init(this.$container, resultSelector);
-      this.searchInput.addEventListener('keyup', this.renderResult.bind(this));
-   }	
+  init() {
+    this.searchInput.init(this.$container, inputSelector);
+    this.searchResult.init(this.$container, resultSelector);
+    const debouncedResult = _.debounce(this.renderResult.bind(this), 500);
 
-   async renderResult(e) {	
-    this.searchResult.setState({result: [], isLoading: true});	
-    const result = await this.api.httpGet(e.target.value) || [];	
+    this.searchInput.addEventListener('keyup', (e) => {
+      this.searchResult.setState({data: [], isLoading: true });
+      debouncedResult(e.target.value);
+    });
+  }	
+
+  async renderResult(value) {
+    const result = await this.api.httpGet(value) || [];	
     this.searchResult.setState({result, isLoaindg: false});	
   }	
 }	

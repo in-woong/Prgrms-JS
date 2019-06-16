@@ -32,7 +32,7 @@ const SearchResult = function(data, selector) {
   this.setState = function(data) {
     const { result, isLoading } = data;
     if (result !== this.result || isLoading !== this.isLoading) {
-      this.result = result;
+      this.result = result || [];
       this.isLoading = isLoading;
       this.render();
     }
