@@ -1,19 +1,25 @@
-// function api() {
-//       fetch(`https://jjalbot.com/api/jjals?text=${e.target.value}`)
-//       .then(x => x.json())
-//       .then((data) => {
-//         console.log(JSON.stringify(data, null, 2))      
-//         searchResult.setState(data);
-//       })
-// }
+export default class API {
+  
+  constructor(BASE_URL) {
+    this.BASE_URL = BASE_URL;
+  }
 
-function API(BASE_URL) {
-  this.BASE_URL = BASE_URL;
+  getQueryString(queryParams) {
+    const res = [];
+    Object.keys(queryParams)
+      .filter(paramsKey => queryParams[paramsKey])
+      .forEach(paramsKey => res.push(`${paramsKey}=${queryParams[paramsKey]}`));
+    return res.join('&');
+  }
 
-  this.httpGet = async function (value) {
-    const res = await fetch(`${this.BASE_URL}?text=${value}`);
-    const resJson = await res.json();
-    return resJson;
+  async httpGet(queryParams) {
+    try {
+      const res = await fetch(`${this.BASE_URL}?${this.getQueryString(queryParams)}`);
+      const resJson = await res.json();
+      return resJson;  
+    } catch (e) {
+
+    }
   }
   
 

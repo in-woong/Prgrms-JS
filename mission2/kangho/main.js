@@ -1,12 +1,11 @@
+import SearchInput from './search-input.js';
+import SearchResult from './search-result.js';
+import API from './api.js';
 
 const BASE_URL = 'https://jjalbot.com/api/jjals';	
 
 const inputSelector = '#search-keyword';	
 const resultSelector = '#search-result';	
-
-const searchResult = new SearchResult();
-const searchInput = new SearchInput();
-const api = new API(BASE_URL);	
 
 class App {	
   constructor(
@@ -22,8 +21,8 @@ class App {
   }	
 
   init() {
-    this.searchInput.init(this.$container, inputSelector);
-    this.searchResult.init(this.$container, resultSelector);
+    this.searchInput.init(this.$container, 'input', inputSelector);
+    this.searchResult.init(this.$container, 'div', resultSelector);
     const debouncedResult = _.debounce(this.renderResult.bind(this), 500);
 
     this.searchInput.addEventListener('keyup', (e) => {
@@ -33,10 +32,10 @@ class App {
   }	
 
   async renderResult(value) {
-    const result = await this.api.httpGet(value) || [];	
+    const result = await this.api.httpGet({text: value}) || [];	
     this.searchResult.setState({result, isLoaindg: false});	
   }	
 }	
 
-const app = new App(searchResult, searchInput, api);	
+const app = new App(new SearchResult(),  new SearchInput(), new API(BASE_URL));	
 app.init(); 
