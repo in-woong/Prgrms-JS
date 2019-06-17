@@ -24,7 +24,7 @@ export default class SearchInput {
         if (value) {
           this.timer = setTimeout(async () => {
             try {
-              this.handleChange(value, await fetcher(value));
+              this.handleChange(value, await fetcher([["text", value]]));
             } catch (error) {
               throw error;
             }

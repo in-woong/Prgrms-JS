@@ -1,9 +1,11 @@
 import config from "./config.js";
 
-const fetcher = async keyword => {
+const fetcher = async queries => {
   const resource = new URL(config.API_URL);
 
-  resource.searchParams.set(config.QUERY, keyword);
+  for (const [key, value] of queries) {
+    resource.searchParams.set(key, value);
+  }
 
   try {
     return (await fetch(resource.href)).json();
