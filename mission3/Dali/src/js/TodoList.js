@@ -4,42 +4,39 @@ const REMOVE_TODO_BTN = 'remove-todo';
 const TODO_TEXT = 'todo-text';
 
 export default class TodoList {
-  constructor({$target, data}){
+  constructor({$target}){
     this.$target = $target;
-    this.setState(data);
     this.init();
-  }
-  setState(data) {
-    this.data = data;
-    this.render();
+
+    // App이랑 묶일 함수들
+    this.bindRemoveTodo = null;
+    this.bindToggleTodoUpdate = null;
   }
   init() {
       // remove todo event
-      this.$target.addEventListener('click', ({target})=>{
-          if(target.dataset.id !== REMOVE_TODO_BTN) return;
-          const todoId = target.closest('li').dataset.id;
-          this.removeTodo(todoId)
-      });
+      this.$target.addEventListener('click', ({ target }) => this.handleRemoveTodo(target));
       // toggle todo event
-      this.$target.addEventListener('click', ({target})=> {
-        if (target.dataset.id!== TODO_TEXT) return;
-        const todoId = target.closest('li').dataset.id;
-        this.toggleTodo(todoId)
-      })
+      this.$target.addEventListener('click', ({ target }) => this.handleUpdateCompletedTodo(target));
+  }
+  static getTodoIdByListItem(target){
+    return target.closest('li').dataset.id;
+  }
+  handleRemoveTodo(target){
+    if(target.dataset.id !== REMOVE_TODO_BTN) return;
+    this.removeTodo(TodoList.getTodoIdByListItem(target));
+  }
+  handleUpdateCompletedTodo(target){
+    if (target.dataset.id !== TODO_TEXT) return;
+    this.toggleTodoUpdate(TodoList.getTodoIdByListItem(target));
   }
   removeTodo(deletedID){
-    const removedTodo = [...this.data].filter(({id}) => id !== Number(deletedID));
-    this.setState(removedTodo);
+    this.bindRemoveTodo(deletedID);
   }
-  toggleTodo(updatedID){
-    const updatedTodo = [...this.data];
-    const todo = updatedTodo.find(({id}) => id === Number(updatedID));
-    todo.isCompleted = !todo.isCompleted;
-    this.setState(updatedTodo);
+  toggleTodoUpdate(updatedID){
+    this.bindToggleTodoUpdate(updatedID);
   }
-  render(){
-    console.log(this);
-    const htmlString = this.data.map(todo => todoListTemplate(todo));
+  render(todoList){
+    const htmlString = todoList.map(todo => todoListTemplate(todo));
     this.$target.innerHTML = `<ul>${htmlString.join("")}</ul>`;
   }
 }

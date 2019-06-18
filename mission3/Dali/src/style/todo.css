@@ -1,0 +1,25 @@
+body {
+    margin: 0;
+}
+ul {
+    padding-left: 0;
+
+}
+li {
+    list-style: none;
+}
+
+#todo-list {
+    display: flex;
+    flex-direction: column;
+}
+#todo-list li {
+    display: flex;
+    align-items: center;
+}
+.todo-text {
+    margin-right: 10px;
+}
+.completed-todo {
+    text-decoration: line-through;
+}

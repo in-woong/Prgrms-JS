@@ -4,15 +4,17 @@
 
 ## Basic
 - [x] 삭제 버튼 추가히여 todoData 삭제 
-- [ ] 할 일 텍스트를 클릭하면 해당 Todo의 isCompleted 값을 toggle 시킵니다. 
+- [X] 할 일 텍스트를 클릭하면 해당 Todo의 isCompleted 값을 toggle 시킵니다. 
 -> 토글 시킬 때 html 변화는 본인이 선호하는 방법으로 적용하기 
 ex) 완료, strike 등 
  
 ## Bonus 
-- [ ] TodoInput 컴포넌트 제작
+- [X] TodoInput 컴포넌트 제작 -> Form으로 바로 제작 
 - [ ] TodoCount 컴포넌트 제작
-- [ ] App을 통해서 TodoInput, TodoCount, TodoList가 유기적으로 동작하도록 구성  
-- [ ] Event Delegation 적용하기 
+- 해당 컴포넌트는 총 Todo의 갯수, 완료처리된 Todo의 갯수를 표시합니다.
+  TodoList 컴포넌트 아래에 렌더링 되도록 합니다.
+- [X] App을 통해서 TodoInput, TodoCount, TodoList가 유기적으로 동작하도록 구성  
+- [X] Event Delegation 적용하기 
  
 ## Bonus - Hard
 - [ ] 커스텀 이벤트 활용
