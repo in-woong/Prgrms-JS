@@ -13,7 +13,6 @@ const getJjals = async (keyword) => {
     const res = await fetch(`https://jjalbot.com/api/jjals?text=${trimmedKeyword}`);
     return res.status === 200 ? await res.json() : [];
   } catch(e) {
-    alert('failed to fetch Jjals from server.');
     throw new Error('failed to fetch Jjals from server');
   }
 }
