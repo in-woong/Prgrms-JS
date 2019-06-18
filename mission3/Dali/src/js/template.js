@@ -2,7 +2,7 @@ const todoListTemplate = (todo)=> {
   return `<li class="todo-item-${todo.id}"
                 data-id="${todo.id}"
             >
-            ${todo.text}
+            <span data-id="todo-text">${todo.text}</span>
             <button
                 data-id="remove-todo" 
                 class="remove-todo-btn">삭제
