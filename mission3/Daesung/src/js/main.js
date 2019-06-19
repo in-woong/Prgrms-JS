@@ -9,7 +9,7 @@
     {
       id: 1,
       text: "로토에게 질문하기",
-      isCompleted: false
+      isCompleted: true
     }
     // {
     //   text: "Pull Request 만들기",

@@ -8,11 +8,12 @@
   - [x] 할 일 텍스트 뒤에 버튼을 하나 추가합니다. 
     - [x] 해당 버튼을 클릭하여 할 일이 삭제되게 만듭니다.
   - [ ] 할 일 텍스트를 클릭하면 해당 Todo의 `isCompleted` 값을 `true`로 만듭니다.
-    - [ ] `isCompleted`가 `true`인 경우와 `false`인 경우를 구분할 수 있도록 `TodoList`의 html string을 작성합니다.
-      - [ ] Todo Text 앞에 `(완료)` 라는 텍스트를 붙이는 방법
-      - [ ] 삭선 처리 하는 방법(`<strike>`태그로 감싸기)
-      - [ ] 그외 본인이 생각하기에 좋아보이는 방법을 써봅시다.
-- [ ] https://developer.mozilla.org/ko/docs/Web/API/EventTarget/addEventListener 문서를 참고하여 DOM 객체의 `addEventListener` 함수를 통해 이벤트를 등록합니다.
+    - [x] `isCompleted`가 `true`인 경우와 `false`인 경우를 구분할 수 있도록 `TodoList`의 html string을 작성합니다.
+      - [x] Todo Text 앞에 `(완료)` 라는 텍스트를 붙이는 방법
+      - [x] 삭선 처리 하는 방법(`<strike>`태그로 감싸기)
+      - [x] 그외 본인이 생각하기에 좋아보이는 방법을 써봅시다.
+        - [x] 체크박스 추가 
+- [x] https://developer.mozilla.org/ko/docs/Web/API/EventTarget/addEventListener 문서를 참고하여 DOM 객체의 `addEventListener` 함수를 통해 이벤트를 등록합니다.
 
 ## Bonus
 
@@ -54,3 +55,9 @@
   - id 비교하여 todo 삭제 
 - 삭제된 데이터가 todo 추가시 다시 살아나는 문제 수정 
   - main.js에서 input form을 이용해 todo 추가시 todoList.data 사용하도록 변경 
+
+
+
+### 폴더 구조 변경, isComplete 상태에 따라 표시 형식 변경 (6/19)
+- render html 수정
+- 완료 상태에 따라 표시 형식 변경 
