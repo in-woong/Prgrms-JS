@@ -1,6 +1,5 @@
 // import Todo from './Todo.js';
 
-import Observable from './Observable.js'
 export default class TodoApp {
   constructor({todoForm, todoList, todoCount, data}){
     // component
@@ -10,7 +9,6 @@ export default class TodoApp {
     // data
     this.init();
     this.setState(data);
-    this._observable = new Observable();
   }
   setState(data) {
     this.data = data;
@@ -24,14 +22,16 @@ export default class TodoApp {
     // updateComplete
     this.todoList.bindToggleTodoUpdate = this.toggleTodoUpdate.bind(this);
 
-    this.bindSubscribe()
-  }
-  bindSubscribe(){
-    this._observable.subscribe((data)=>this.todoList.setState(data));
-    this._observable.subscribe((data)=>this.todoCount.setState(data));
   }
   render(){
-   this._observable.fire(this.data)
+    this.todoList.render(this.data);
+    this.todoCount.render({
+      todoCount: this.data.length,
+      completedCount: this.getCompletedCount(),
+    });
+  }
+  getCompletedCount() {
+    return this.data.filter(todo=>todo.isCompleted).length;
   }
   removeTodo(deletedID){
     const removedTodo = [...this.data].filter(({id}) => id !== Number(deletedID));

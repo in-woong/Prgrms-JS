@@ -15,8 +15,11 @@ const todoListTemplate = (todo)=> {
           </li>`;
 };
 
-const todoCountTemplate = (todoCount)=> {
-  return `<span class="todo-count">할일 갯수 : ${todoCount}</span></span>`;
+const todoCountTemplate = (todoCount, completeCount)=> {
+  return `<p>
+            <span class="todo-count">할일 갯수 : ${todoCount}</span></span>
+            <span class="todo-complete-count">완료한 할 일 갯수 : ${completeCount}</span></span>
+          </p>`;
 };
 export {
   todoListTemplate,
