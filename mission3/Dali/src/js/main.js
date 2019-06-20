@@ -1,8 +1,8 @@
 import TodoList  from './TodoList.js'
 import TodoForm from './TodoForm.js';
 import TodoCount from './TodoCount.js';
+import TodoToolBar from './TodoToolBar.js';
 import TodoApp from './TodoApp.js';
-
 
 import config from './config.js';
 
@@ -18,6 +18,9 @@ import config from './config.js';
       todoCount: new TodoCount({
         $target: document.querySelector("#todo-count"),
       }),
-      data: config.data
+      todoToolBar: new TodoToolBar({
+      $target: document.querySelector("#todo-tool-bar"),
+    }),
+      data: []
   });
 })();
