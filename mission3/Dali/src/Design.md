@@ -10,7 +10,7 @@ ex) 완료, strike 등
  
 ## Bonus 
 - [X] TodoInput 컴포넌트 제작 -> Form으로 바로 제작 
-- [ ] TodoCount 컴포넌트 제작
+- [X] TodoCount 컴포넌트 제작
 - 해당 컴포넌트는 총 Todo의 갯수, 완료처리된 Todo의 갯수를 표시합니다.
   TodoList 컴포넌트 아래에 렌더링 되도록 합니다.
 - [X] App을 통해서 TodoInput, TodoCount, TodoList가 유기적으로 동작하도록 구성  
