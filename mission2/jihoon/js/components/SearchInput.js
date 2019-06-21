@@ -5,7 +5,7 @@ class SearchInput {
   render() {
     return `<input id="${this.id.substr(1)}"/>`;
   }
-  listen(resultFn, keywordFn) {
+  listen(callback, milli=1000) {
     const $el = document.querySelector(this.id);
     let timer;
     $el.addEventListener('keyup', (e) => {
@@ -13,9 +13,8 @@ class SearchInput {
         clearTimeout(timer);
       }
       timer = setTimeout(async () => {
-        resultFn(await getJjals(e.target.value));
-        keywordFn(e.target.value);
-      }, 1000);
+        callback(e.target.value);
+      }, milli);
     });
   }
 }

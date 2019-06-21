@@ -14,7 +14,7 @@ class SearchResult {
       $data.innerHTML = `${this.data.map((d) => `<div><img src="${d.imageUrl}"><div>Tags: ${d.tags.join('#')}</div>`).join('')}`;
     }
   }
-  setState(data, keyword) {
+  setState(data) {
     this.data = data;
     this.update();
   }
