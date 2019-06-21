@@ -4,7 +4,7 @@ class FetchedKeyword {
     this.data = '';
   }
   render() {
-    return `<div id=${this.id.substr(1)}></div>`;
+    return `<h3 id=${this.id.substr(1)}></h3>`;
   }
   update() {
     const $keyword = document.querySelector(this.id);
