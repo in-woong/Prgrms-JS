@@ -1,5 +1,6 @@
 import { getLocalStorage, saveLocalStorage } from "./localStorage.js";
 import coding from './config.js'
+import TODO from './TODO.js';
 
 const TODOS_KEY = 'TODOS_KEY';
 
@@ -60,12 +61,9 @@ export default class TodoApp {
     todo.isCompleted = !todo.isCompleted;
     this.setState(updatedTodo);
   }
+  // FIXME length로 id값을 주고 있다 .
   addTodo(todoText){
-    const newTodo = {
-      text: todoText,
-      isCompleted: false,
-      id: this.data.length
-    };
-    this.setState([...this.data, newTodo])
+
+    this.setState([...this.data, new TODO(todoText)])
   }
 }

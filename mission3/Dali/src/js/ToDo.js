@@ -6,10 +6,10 @@
     },
 */
 
-// export default class ToDo {
-//     constructor(text){
-//       this.text = text;
-//       this.isCompleted = false;
-//       this.id = new Date().toString();
-//     }
-// }
+export default class ToDo {
+    constructor(text) {
+      this.text = text;
+      this.isCompleted = false;
+      this.id = new Date().getTime();
+    }
+}
