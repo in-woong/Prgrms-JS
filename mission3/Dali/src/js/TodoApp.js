@@ -19,7 +19,6 @@ export default class TodoApp {
   }
   setState(data) {
     this.data = data;
-    // console.log('data', data);
     saveLocalStorage(TODOS_KEY, this.data);
     this.render();
   }
@@ -61,9 +60,7 @@ export default class TodoApp {
     todo.isCompleted = !todo.isCompleted;
     this.setState(updatedTodo);
   }
-  // FIXME length로 id값을 주고 있다 .
   addTodo(todoText){
-
     this.setState([...this.data, new TODO(todoText)])
   }
 }

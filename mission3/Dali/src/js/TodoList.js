@@ -13,21 +13,16 @@ export default class TodoList {
     this.bindToggleTodoUpdate = null;
   }
   init() {
-      // remove todo event
-      this.$target.addEventListener('click', ({ target }) => this.handleRemoveTodo(target));
-      // toggle todo event
-      this.$target.addEventListener('click', ({ target }) => this.handleUpdateCompletedTodo(target));
+      this.$target.addEventListener('click', ({ target }) => this.handleTodoItemClicked(target));
   }
   static getTodoIdByListItem(target){
     return target.closest('li').dataset.id;
   }
-  handleRemoveTodo(target){
-    if(target.dataset.id !== REMOVE_TODO_BTN) return;
-    this.removeTodo(TodoList.getTodoIdByListItem(target));
-  }
-  handleUpdateCompletedTodo(target){
-    if (target.dataset.id !== TODO_TEXT) return;
-    this.toggleTodoUpdate(TodoList.getTodoIdByListItem(target));
+  handleTodoItemClicked(target){
+    switch(target.dataset.id){
+      case REMOVE_TODO_BTN: return this.removeTodo(TodoList.getTodoIdByListItem(target));
+      case TODO_TEXT: return this.toggleTodoUpdate(TodoList.getTodoIdByListItem(target));
+    }
   }
   removeTodo(deletedID){
     this.bindRemoveTodo(deletedID);
