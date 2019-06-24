@@ -24,8 +24,8 @@
           let divOfTodos = ''
           data.map(todo => {
             divOfTodos += `<div>${todo.text}</div>`
-            document.querySelector('#todo-list').innerHTML = divOfTodos
           })
+          document.querySelector('#todo-list').innerHTML = divOfTodos
         }
       };
       var todoList = new TodoList(data)
