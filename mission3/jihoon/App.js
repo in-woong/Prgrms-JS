@@ -44,9 +44,6 @@ function App($target) {
         document.querySelector(`.${TODO_COUNT_CLASS_NAME}`)
       );
 
-      this.todoList.render(this.data);
-      this.todoCount.render(this.data);
-
       initialized = true;
     }
   };
@@ -54,11 +51,10 @@ function App($target) {
   this.render = function() {
     if (!initialized) {
       this.init();
-    } else {
-      this.todoList.render(this.data);
-      this.todoCount.render(this.data);
-      setItemIntoLocalStorage(LOCAL_STORAGE_KEY, this.data);
     }
+    this.todoList.render(this.data);
+    this.todoCount.render(this.data);
+    setItemIntoLocalStorage(LOCAL_STORAGE_KEY, this.data);
   };
 
   this.onSubmit = function(text) {
