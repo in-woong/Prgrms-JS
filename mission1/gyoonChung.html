@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list"></div>
+    <script>
+      var data = [
+        {
+          text: "JS 공부하기"
+        },
+        {
+          text: "JS 복습하기"
+        }
+      ];
+      function TodoList(data){
+        if (data === undefined){
+          throw new Error('please pass data array into TodoList function')
+        }
+        this.data = data
+        this.render = function(){
+          let divOfTodos = ''
+          data.map(todo => {
+            divOfTodos += `<div>${todo.text}</div>`
+            document.querySelector('#todo-list').innerHTML = divOfTodos
+          })
+        }
+      };
+      var todoList = new TodoList(data)
+      if (todoList === undefined){
+          throw new Error('todoList undefined - possibly caused by not initiating TodoList function with `new` keyword')
+      }
+      todoList.render()
+    </script>
+  </body>
+</html>
