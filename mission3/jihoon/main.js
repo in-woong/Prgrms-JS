@@ -19,20 +19,6 @@
     },
   ];
 
-  const todoList = new TodoList(document.querySelector("#todo-list"), data);
+  const app = new App(document.querySelector('.app'), data);
 
-  document
-    .querySelector("#add-todo-button")
-    .addEventListener("click", function() {
-      const todoText = document.querySelector("#todo-input").value;
-
-      if (todoText.length > 0) {
-        data.push({
-          text: todoText,
-          isCompleted: false,
-        });
-
-        todoList.setState(data);
-      }
-    });
 })();

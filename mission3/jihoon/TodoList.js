@@ -1,32 +1,32 @@
-function TodoList($target, data) {
+const REMOVE_BTN_CLASS_NAME = "remove-todo_btn";
+const TODO_ITEM_CLASS_NAME = "todo-item";
+
+function TodoList($target, onToggle, onRemove) {
   this.$target = $target;
-  this.data = data;
+  this.onToggle = onToggle;
+  this.onRemove = onRemove;
 
   this.init = function() {
     $target.addEventListener("click", function(e) {
       const id = parseInt(e.target.closest("li").dataset.id, 10);
       switch(e.target.className) {
-        case 'remove-todo-btn':
-          this.remove(id);
+        case REMOVE_BTN_CLASS_NAME:
+          this.onRemove(id);
           break;
         default:
-          this.toggle(id);
+          this.onToggle(id);
+          break;
       }
     }.bind(this));
   };
 
-  this.setState = function(data) {
-    this.data = data;
-    this.render();
-  };
-
-  this.render = function() {
-    const htmlString = this.data.map(function(todo, idx) {
+  this.render = function(data) {
+    const htmlString = data.map(function(todo, idx) {
       let todoItemString = todo.isCompleted ? `<strike>${todo.text}</strike>` : todo.text;
       return `
-        <li data-id=${idx} class="todo-item">
+        <li data-id=${idx} class="${TODO_ITEM_CLASS_NAME}">
           ${todoItemString}
-          <button class="remove-todo-btn">x</button>
+          <button class="${REMOVE_BTN_CLASS_NAME}">x</button>
         </li>
       `;
     });
@@ -34,22 +34,5 @@ function TodoList($target, data) {
     $target.innerHTML = `<ul>${htmlString.join("")}</ul>`;
   };
 
-  this.remove = function(id) {
-    if (this.data.length <= id || id < 0) {
-      throw new Error('Out of bound access');
-    }
-    this.data.splice(id, 1);
-    this.setState(this.data);
-  };
-
-  this.toggle = function(id) {
-    if (this.data.length <= id || id < 0) {
-      throw new Error('Out of bound access');
-    }
-    this.data[id].isCompleted = !this.data[id].isCompleted;
-    this.setState(this.data);
-  };
-
   this.init();
-  this.render();
 }
