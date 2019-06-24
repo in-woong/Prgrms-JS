@@ -1,35 +1,43 @@
-const ADD_TODO_BTN_CLASS_NAME = "add-todo-button";
-const TODO_INPUT_CLASS_NAME = "todo-input";
-const TODO_COUNT_CLASS_NAME = "todo-count"
-const TODO_LIST_CLASS_NAME = "todo-list";
-
-function App($target, data) {
+function App($target) {
   let initialized = false;
 
-  this.data = data;
+  this.data = null;
   this.todoInput = null;
   this.todoCount = null;
   this.todoList = null;
 
+  this.fetch = function() {
+    if (!window.localStorage) {
+      this.data = data;
+      return;
+    }
+    const dataFromLocalStorage = getItemFromLocalStorage(LOCAL_STORAGE_KEY);
+    this.data = dataFromLocalStorage.length > 0 ? dataFromLocalStorage : data;
+  };
+
   this.init = function() {
     if (!initialized) {
       $target.innerHTML = `
-        <input type="text" class="${TODO_INPUT_CLASS_NAME}"/>
-        <button type="button" class="${ADD_TODO_BTN_CLASS_NAME}"> Add </button>
+        <form>
+          <input type="text" class="${TODO_INPUT_CLASS_NAME}"/>
+          <button type="submit"> Add </button>
+        </form>
         <h3 class="${TODO_COUNT_CLASS_NAME}"></h3>
         <div class="${TODO_LIST_CLASS_NAME}"></div>
       `;
 
+      this.fetch();
+
       this.todoInput = new TodoInput(
         document.querySelector(`.${TODO_INPUT_CLASS_NAME}`),
-        document.querySelector(`.${ADD_TODO_BTN_CLASS_NAME}`),
         this.onSubmit.bind(this)
       );
 
       this.todoList = new TodoList(
         document.querySelector(`.${TODO_LIST_CLASS_NAME}`),
         this.onToggle.bind(this),
-        this.onRemove.bind(this)
+        this.onRemove.bind(this),
+        this.onRemoveAll.bind(this)
       );
 
       this.todoCount = new TodoCount(
@@ -49,14 +57,17 @@ function App($target, data) {
     } else {
       this.todoList.render(this.data);
       this.todoCount.render(this.data);
+      setItemIntoLocalStorage(LOCAL_STORAGE_KEY, this.data);
     }
   };
 
   this.onSubmit = function(text) {
+    if (text.trim().length < 1) return;
     this.data.push({
       text,
       isCompleted: false
     });
+    this.todoInput.reset();
     this.render();
   };
 
@@ -73,6 +84,11 @@ function App($target, data) {
       throw new Error('Out of bound access');
     }
     this.data.splice(idx, 1);
+    this.render();
+  };
+
+  this.onRemoveAll = function() {
+    this.data = [];
     this.render();
   };
 

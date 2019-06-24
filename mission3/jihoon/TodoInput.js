@@ -1,8 +1,14 @@
-function TodoInput($input, $btn, onSubmit) {
-  this.render = function() {
-    $btn.addEventListener("click", function(e) {
+function TodoInput($input, onSubmit) {
+  this.init = function() {
+    const $form = document.querySelector('form');
+    $form.addEventListener("submit", function(e) {
+      e.preventDefault();
       onSubmit($input.value);
     });
   };
-  this.render();
+
+  this.reset = function() {
+    $input.value = '';
+  }
+  this.init();
 }
