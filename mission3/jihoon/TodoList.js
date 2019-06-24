@@ -38,7 +38,7 @@ function TodoList($target, data) {
     if (this.data.length <= id || id < 0) {
       throw new Error('Out of bound access');
     }
-    id === 0 ? this.data.shift() : this.data.splice(id, 1);
+    this.data.splice(id, 1);
     this.setState(this.data);
   };
 
