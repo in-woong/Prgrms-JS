@@ -11,8 +11,7 @@ function App($target) {
       this.data = data;
       return;
     }
-    const dataFromLocalStorage = getItemFromLocalStorage(LOCAL_STORAGE_KEY);
-    this.data = dataFromLocalStorage ? dataFromLocalStorage : data;
+    this.data = LOCAL_STORAGE_KEY in localStorage ? getItemFromLocalStorage(LOCAL_STORAGE_KEY) : data;
   };
 
   this.init = function() {
