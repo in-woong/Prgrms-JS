@@ -8,6 +8,7 @@ const COMPLETED_ITEM_CLASS_NAME = "todo-item-completed";
 
 const LOCAL_STORAGE_KEY = "prgrms-fe-js";
 
+/*
 const data = [
   {
     text: "JavaScript 문서 읽기",
@@ -26,3 +27,4 @@ const data = [
     isCompleted: true,
   },
 ];
+*/

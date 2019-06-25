@@ -1,6 +1,6 @@
 function TodoInput($input, onSubmit) {
   this.init = function() {
-    const $form = document.querySelector('form');
+    const $form = document.querySelector("form");
     $form.addEventListener("submit", function(e) {
       e.preventDefault();
       onSubmit($input.value);
@@ -8,7 +8,7 @@ function TodoInput($input, onSubmit) {
   };
 
   this.reset = function() {
-    $input.value = '';
+    $input.value = "";
   }
   this.init();
 }

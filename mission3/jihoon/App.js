@@ -1,7 +1,7 @@
 function App($target) {
   let initialized = false;
 
-  this.data = null;
+  this.data = [];
   this.todoInput = null;
   this.todoCount = null;
   this.todoList = null;
@@ -67,16 +67,19 @@ function App($target) {
   };
 
   this.onToggle = function(idx) {
-    if (this.data.length <= idx || idx < 0) {
-      throw new Error('Out of bound access');
+    if (isOutBounds(this.data.length, idx)) {
+      throw new Error("Out of bound access");
+    }
+    if (!isValidItemShape(this.data[idx])) {
+      throw new Error("Invalid Shape of Item");
     }
     this.data[idx].isCompleted = !this.data[idx].isCompleted;
     this.render();
   };
 
   this.onRemove = function(idx) {
-    if (this.data.length <= idx || idx < 0) {
-      throw new Error('Out of bound access');
+    if (isOutBounds(this.data.length, idx)) {
+      throw new Error("Out of bound access");
     }
     this.data.splice(idx, 1);
     this.render();
