@@ -20,7 +20,7 @@ function TodoList($target, onToggle, onRemove, onRemoveAll) {
           this.onToggle(parseInt(e.target.closest("li").dataset.idx, 10));
           break;
         default:
-          throw new Error('Invalid Event triggered');
+          e.preventDefault();
       }
     }.bind(this));
 
