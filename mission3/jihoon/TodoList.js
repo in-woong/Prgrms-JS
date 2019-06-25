@@ -13,11 +13,11 @@ function TodoList($target, onToggle, onRemove, onRemoveAll) {
           e.target.dispatchEvent(removeAllEvent);
           break;
         case REMOVE_BTN_CLASS_NAME:
-          this.onRemove(parseInt(e.target.closest("li").dataset.id, 10));
+          this.onRemove(parseInt(e.target.closest("li").dataset.idx, 10));
           break;
         case ITEM_CLASS_NAME:
         case COMPLETED_ITEM_CLASS_NAME:
-          this.onToggle(parseInt(e.target.closest("li").dataset.id, 10));
+          this.onToggle(parseInt(e.target.closest("li").dataset.idx, 10));
           break;
         default:
           throw new Error('Invalid Event triggered');
@@ -31,7 +31,7 @@ function TodoList($target, onToggle, onRemove, onRemoveAll) {
     const htmlString = data.map(function(todo, idx) {
       let todoItemString = todo.isCompleted ? `<strike class="${COMPLETED_ITEM_CLASS_NAME}">${todo.text}</strike>` : todo.text;
       return `
-        <li data-id=${idx} class="${ITEM_CLASS_NAME}">
+        <li data-idx=${idx} class="${ITEM_CLASS_NAME}">
           ${todoItemString}
           <button class="${REMOVE_BTN_CLASS_NAME}">x</button>
         </li>

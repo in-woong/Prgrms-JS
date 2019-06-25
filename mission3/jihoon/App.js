@@ -12,7 +12,7 @@ function App($target) {
       return;
     }
     const dataFromLocalStorage = getItemFromLocalStorage(LOCAL_STORAGE_KEY);
-    this.data = dataFromLocalStorage.length > 0 ? dataFromLocalStorage : data;
+    this.data = dataFromLocalStorage ? dataFromLocalStorage : data;
   };
 
   this.init = function() {
