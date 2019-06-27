@@ -82,7 +82,7 @@ fetch('http://todo-api.roto.codes/roto/5d11cf671e050d3f7c583166', {
 
 ## Bonus
 
-- `http://todo-api.roto.codes/`를 `fetch` 해오면 `username` 목록을 얻을 수 있습니다.
+- `http://todo-api.roto.codes/users`를 `fetch` 해오면 `username` 목록을 얻을 수 있습니다.
   - `Users` 컴포넌트를 만들어서 사용자 목록을 보여주고
   - 특정 사용자를 클릭하여 그 사용자의 `todos`를 불러와서 화면에 뿌려지게 합니다.
   - 현재 뿌려진 `todos`가 누구의 `todos`인지 표시하는 부분이 들어가는 것도 좋겠죠?
