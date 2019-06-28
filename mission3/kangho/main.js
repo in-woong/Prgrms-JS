@@ -1,4 +1,5 @@
 import TodoList from './TodoList.js';
+import TodoInput from './TodoInput.js';
 
 const data = [
   {
@@ -20,32 +21,31 @@ const data = [
 ];
 
 class App {
-  constructor(todoList) {
+  constructor(todoList, todoInput, data) {
     this.todoList = todoList;
+    this.todoInput = todoInput;
+    this.data = data;
+
+    this.addList = this.addList.bind(this);
   }
 
   init() {
-    this.todoList.setState(data);
-    document
-      .querySelector("#add-todo-button")
-      .addEventListener("click", () => {
-        const todoText = document.querySelector("#todo-input").value;
-
-        if (todoText.length > 0) {
-          data.push({
-            text: todoText,
-            isCompleted: false,
-          });
-
-          this.todoList.setState(data);
-        }
-      });
+    this.todoList.init(this.data);
+    this.todoInput.init(this.addList)
   }
+
+  addList(todo) {
+    this.data.push(todo);
+    this.todoList.setState(this.data);
+  }
+  
 }
 
 
 const app = new App(
   new TodoList(document.querySelector("#todo-list")),
+  new TodoInput(document.querySelector('#todo-input'), document.querySelector('#add-todo-button')),
+  data,
 );
 
 app.init();

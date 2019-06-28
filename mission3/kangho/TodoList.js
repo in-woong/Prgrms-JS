@@ -1,7 +1,6 @@
 export default class TodoList {
-  constructor($target, data) {
+  constructor($target) {
     this.$target = $target;
-    this.data = data;  
   }
 
   setState(data) {
@@ -13,6 +12,14 @@ export default class TodoList {
     return this.data.map((todo) => {
       return `<li>${todo.text}</li>`;
     });
+  }
+
+  getData() {
+    return this.data; 
+  }
+
+  init(data) {
+    this.setState(data);
   }
 
   render() {
