@@ -20,6 +20,14 @@ export default class TodoList {
 
   init(data) {
     this.setState(data);
+    this.$target.addEventListener('click', (e) => {
+      this.$target.dispatchEvent(new CustomEvent('toggleTodo', {
+        bubbles: true,
+        detail: {
+          text: e.target.innerText,
+        }
+      }));  
+    })
   }
 
   render() {
