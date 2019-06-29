@@ -27,15 +27,21 @@ class App {
     this.data = data;
 
     this.addList = this.addList.bind(this);
+    this.removeAll = this.removeAll.bind(this);
   }
 
   init() {
     this.todoList.init(this.data);
-    this.todoInput.init(this.addList)
+    this.todoInput.init(this.addList, this.removeAll);
   }
 
   addList(todo) {
     this.data.push(todo);
+    this.todoList.setState(this.data);
+  }
+
+  removeAll() {
+    this.data = [];
     this.todoList.setState(this.data);
   }
   
@@ -44,7 +50,11 @@ class App {
 
 const app = new App(
   new TodoList(document.querySelector("#todo-list")),
-  new TodoInput(document.querySelector('#todo-input'), document.querySelector('#add-todo-button')),
+  new TodoInput(
+    document.querySelector('#todo-input'),
+    document.querySelector('#add-todo-button'),
+    document.querySelector('#remove-todo-button'),
+  ),
   data,
 );
 
