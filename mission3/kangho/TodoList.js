@@ -9,8 +9,13 @@ export default class TodoList {
   };
 
   createTemplate() {
-    return this.data.map((todo) => {
-      return `<li class=${todo.isCompleted ? 'completed' : '' }>${todo.text}</li>`;
+    return this.data.map((todo, idx) => {
+      return `
+        <li data-key=${idx} class=${todo.isCompleted ? 'completed' : '' } >
+          ${todo.text}
+          <button>remove</button>
+        </li>
+      `;
     });
   }
 
@@ -24,9 +29,15 @@ export default class TodoList {
       this.$target.dispatchEvent(new CustomEvent('toggleTodo', {
         bubbles: true,
         detail: {
-          text: e.target.innerText,
+          key: e.target.dataset.key,
         }
-      }));  
+      }));      
+      this.$target.dispatchEvent(new CustomEvent('removeTodo', {
+        bubbles: true,
+        detail: {
+          key: e.target.parentElement.dataset.key,
+        }
+      }))
     })
   }
 

@@ -32,6 +32,7 @@ class App {
     this.addTodo = this.addTodo.bind(this);
     this.removeAllTodo = this.removeAllTodo.bind(this);
     this.toggleTodo = this.toggleTodo.bind(this);
+    this.removeTodo = this.removeTodo.bind(this);
   }
 
   init() {
@@ -42,6 +43,7 @@ class App {
     this.$wrapper.addEventListener('removeAllTodo', this.removeAllTodo);
     this.$wrapper.addEventListener('addTodo', this.addTodo);
     this.$wrapper.addEventListener('toggleTodo', this.toggleTodo);
+    this.$wrapper.addEventListener('removeTodo', this.removeTodo);
   }
 
   filterList() {
@@ -64,20 +66,20 @@ class App {
   }
 
   removeTodo($event) {
-    const { text } = $event.detail;
-    this.data = this.data.filter(elem => elem.text !== text);
+    const { key } = $event.detail;
+    this.data = this.data.filter((elem, idx) => idx !== parseInt(key));
     this.todoCount.setState(this.filterList());
     this.todoList.setState(this.data);
   }
 
   toggleTodo($event) {
-    const { text } = $event.detail;
-    this.data.forEach((elem) => {
-      if (elem.text === text) {
+    const { key } = $event.detail;
+    this.data = this.data.map((elem, idx) => {
+      if (idx === parseInt(key)) {
         elem.isCompleted = !elem.isCompleted;
       }
+      return elem;
     });
-    this.data = [ ...this.data ];
     this.todoCount.setState(this.filterList());
     this.todoList.setState(this.data);
   }
