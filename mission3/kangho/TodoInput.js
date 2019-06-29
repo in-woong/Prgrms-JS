@@ -6,7 +6,7 @@ export default class TodoInput {
     this.todo = null;
   }
 
-  init(addTodo) {
+  init() {
     this.$button.addEventListener("click", () => {
       const todoText = this.$input.value;
 
