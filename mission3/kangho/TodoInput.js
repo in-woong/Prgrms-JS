@@ -6,21 +6,30 @@ export default class TodoInput {
     this.todo = null;
   }
 
-  init(addTodo, removeAll) {
+  init(addTodo) {
     this.$button.addEventListener("click", () => {
       const todoText = this.$input.value;
 
       if (todoText.length > 0) {
-        addTodo({
-          text: todoText,
-          isCompleted: true,
-        });
+        this.$button.dispatchEvent(new CustomEvent('addTodo', {
+          bubbles: true,
+          detail: { 
+            todo: {
+              text: this.$input.value,
+              isCompleted: false,
+            }
+          }
+        }));
         this.$input.value = '';
       }
     });
 
     this.$removeButton.addEventListener("click", () => {
-      removeAll();
+      this.$removeButton.dispatchEvent(new CustomEvent('removeAll', 
+        {
+          bubbles: true,
+        })
+      );
     });
 
   }
