@@ -10,7 +10,7 @@ export default class TodoList {
 
   createTemplate() {
     return this.data.map((todo) => {
-      return `<li>${todo.text}</li>`;
+      return `<li class=${todo.isCompleted ? 'completed' : '' }>${todo.text}</li>`;
     });
   }
 
