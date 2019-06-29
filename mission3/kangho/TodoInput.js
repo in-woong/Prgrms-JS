@@ -12,7 +12,7 @@ export default class TodoInput {
       if (todoText.length > 0) {
         fn({
           text: todoText,
-          isCompleted: false,
+          isCompleted: true,
         });
         this.$input.value = '';
       }
