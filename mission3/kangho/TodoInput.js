@@ -25,7 +25,7 @@ export default class TodoInput {
     });
 
     this.$removeButton.addEventListener("click", () => {
-      this.$removeButton.dispatchEvent(new CustomEvent('removeAll', 
+      this.$removeButton.dispatchEvent(new CustomEvent('removeAllTodo', 
         {
           bubbles: true,
         })
