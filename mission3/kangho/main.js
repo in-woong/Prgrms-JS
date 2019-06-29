@@ -1,5 +1,6 @@
 import TodoList from './TodoList.js';
 import TodoInput from './TodoInput.js';
+import TodoCount from './TodoCount.js';
 
 const data = [
   {
@@ -21,9 +22,10 @@ const data = [
 ];
 
 class App {
-  constructor(todoList, todoInput, data, $wrapper) {
+  constructor($wrapper, todoList, todoInput, todoCount) {
     this.todoList = todoList;
     this.todoInput = todoInput;
+    this.todoCount = todoCount;
     this.data = data;
     this.$wrapper = $wrapper;
 
@@ -34,18 +36,28 @@ class App {
   init() {
     this.todoList.init(this.data);
     this.todoInput.init();
+    this.todoCount.init(this.filterList());
 
     this.$wrapper.addEventListener('removeAll', this.removeAll);
     this.$wrapper.addEventListener('addTodo', this.addList);
   }
 
+  filterList() {
+    return {
+      totalTodo: this.data.length,
+      completedTodo: this.data.filter(elem => elem.isCompleted).length,
+    }
+  }
+
   addList($event) {
     this.data.push($event.detail.todo);
+    this.todoCount.setState(this.filterList());
     this.todoList.setState(this.data);
   }
 
   removeAll() {
     this.data = [];
+    this.todoCount.setState(this.filterList());
     this.todoList.setState(this.data);
   }
   
@@ -53,14 +65,16 @@ class App {
 
 
 const app = new App(
+  document.querySelector('#app'),
   new TodoList(document.querySelector("#todo-list")),
   new TodoInput(
     document.querySelector('#todo-input'),
     document.querySelector('#add-todo-button'),
     document.querySelector('#remove-todo-button'),
   ),
-  data,
-  document.querySelector('#app'),
+  new TodoCount(
+    document.querySelector('#todo-count'),
+  ),
 );
 
 app.init();
