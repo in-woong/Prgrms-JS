@@ -21,10 +21,11 @@ const data = [
 ];
 
 class App {
-  constructor(todoList, todoInput, data) {
+  constructor(todoList, todoInput, data, $wrapper) {
     this.todoList = todoList;
     this.todoInput = todoInput;
     this.data = data;
+    this.$wrapper = $wrapper;
 
     this.addList = this.addList.bind(this);
     this.removeAll = this.removeAll.bind(this);
@@ -32,11 +33,14 @@ class App {
 
   init() {
     this.todoList.init(this.data);
-    this.todoInput.init(this.addList, this.removeAll);
+    this.todoInput.init();
+
+    this.$wrapper.addEventListener('removeAll', this.removeAll);
+    this.$wrapper.addEventListener('addTodo', this.addList);
   }
 
-  addList(todo) {
-    this.data.push(todo);
+  addList($event) {
+    this.data.push($event.detail.todo);
     this.todoList.setState(this.data);
   }
 
@@ -56,6 +60,7 @@ const app = new App(
     document.querySelector('#remove-todo-button'),
   ),
   data,
+  document.querySelector('#app'),
 );
 
 app.init();
