@@ -92,7 +92,7 @@ const app = new App(
   new TodoList(document.querySelector("#todo-list")),
   new TodoInput(
     document.querySelector('#todo-input'),
-    document.querySelector('#add-todo-button'),
+    document.querySelector('#todo-form'),
     document.querySelector('#remove-todo-button'),
   ),
   new TodoCount(

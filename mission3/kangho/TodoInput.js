@@ -1,17 +1,17 @@
 export default class TodoInput {
-  constructor($input, $button, $removeButton) {
+  constructor($input, $form, $removeButton) {
     this.$input = $input;
-    this.$button = $button;
+    this.$form= $form;
     this.$removeButton = $removeButton;
     this.todo = null;
   }
 
   init() {
-    this.$button.addEventListener("click", () => {
+    this.$form.addEventListener("submit", (e) => {
       const todoText = this.$input.value;
-
+      e.preventDefault();
       if (todoText.length > 0) {
-        this.$button.dispatchEvent(new CustomEvent('addTodo', {
+        this.$form.dispatchEvent(new CustomEvent('addTodo', {
           bubbles: true,
           detail: { 
             todo: {
