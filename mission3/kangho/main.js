@@ -2,7 +2,7 @@ import TodoList from './TodoList.js';
 import TodoInput from './TodoInput.js';
 import TodoCount from './TodoCount.js';
 import { proxyState } from './utils.js';
-import LocalStorageService from './localStorageService.js';
+import LocalStorageService from './StorageService.js/index.js';
 
 const data = [
   {
@@ -112,7 +112,7 @@ class App {
   }
 }
 
-const localStorageService = new LocalStorageService();
+const localStorageService = new StorageService(window.localStorage);
 const app = new App(
   document.querySelector('#app'),
   localStorageService.get('todo-app'),
