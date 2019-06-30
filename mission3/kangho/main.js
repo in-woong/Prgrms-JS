@@ -26,7 +26,6 @@ class App {
     this.todoList = todoList;
     this.todoInput = todoInput;
     this.todoCount = todoCount;
-    this.data = data;
     this.$wrapper = $wrapper;
 
     this.state = {
@@ -38,11 +37,10 @@ class App {
     this.removeAllTodo = this.removeAllTodo.bind(this);
     this.toggleTodo = this.toggleTodo.bind(this);
     this.removeTodo = this.removeTodo.bind(this);
-
   }
 
   init() {
-    this.todoList.init(this.data);
+    this.todoList.init(this.state.todoListData);
     this.todoInput.init();
     this.todoCount.init(this.filterList());
 
@@ -56,7 +54,7 @@ class App {
         if (prop === 'todoListData') {
           console.log('render');
           this.todoList.setState(newval);
-          this.todoCount.setState(this.filterList());  
+          this.todoCount.setState(this.filterList(newval));  
         } 
         return true;
       }.bind(this)
@@ -78,7 +76,7 @@ class App {
   addTodo($event) {
     const { todo } = $event.detail;
     this.state.todoListData = [
-      ...this.data,
+      ...this.state.todoListData,
       todo,
     ];
   }
