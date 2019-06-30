@@ -1,34 +1,27 @@
+import TodoList from './TodoList.js'
+import Api from './Api.js'
+
+import config from './config.js'
 ;(async function() {
-  const username = 'cckn'
+  const api = new Api(config.baseURL, config.defaultUsername)
 
-  // const api = new Api('http://todo-api.roto.codes/', 'cckn')
+  const data = await api.getTodos()
 
-  async function fetchData() {
-    const res = await fetch(`http://todo-api.roto.codes/${username}`)
-    return await res.json()
+  const update = async () => {
+    const updatedData = await api.getTodos()
+    todoList.setState(updatedData)
   }
-  const data = await fetchData()
 
   const todoList = new TodoList({
     $target: document.querySelector('#todo-list'),
     data: data,
     onClick: async function(id) {
-      await fetch(`http://todo-api.roto.codes/${username}/${id}/toggle`, {
-        method: 'PUT',
-      })
-
-      // 데이터 추가 후 서버에서 목록 다시 불러서 다시 그리기
-      const updatedData = await fetchData()
-      todoList.setState(updatedData)
+      await api.toggleTodo(id)
+      update()
     },
     onRemove: async function(id) {
-      await fetch(`http://todo-api.roto.codes/${username}/${id}`, {
-        method: 'DELETE',
-      })
-
-      // 데이터 추가 후 서버에서 목록 다시 불러서 다시 그리기
-      const updatedData = await fetchData()
-      todoList.setState(updatedData)
+      await api.removeTodo(id)
+      update()
     },
   })
 
@@ -38,20 +31,8 @@
       const todoText = document.querySelector('#todo-input').value
 
       if (todoText.length > 0) {
-        // 데이터 추가하기
-        await fetch(`http://todo-api.roto.codes/${username}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            content: todoText,
-          }),
-        })
-
-        // 데이터 추가 후 서버에서 목록 다시 불러서 다시 그리기
-        const updatedData = await fetchData()
-        todoList.setState(updatedData)
+        await api.addTodo(todoText)
+        update()
       }
     })
 })()

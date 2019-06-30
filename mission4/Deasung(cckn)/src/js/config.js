@@ -1,4 +1,4 @@
-{
+export default { 
     "baseURL": "http://todo-api.roto.codes/", 
-    "defaultUserId": "cckn"
+    "defaultUsername": "cckn"
 }
