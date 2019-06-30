@@ -1,26 +1,31 @@
 export default class TodoCount {
   constructor($wrapper) {
     this.$wrapper = $wrapper;
-    this.data = {
+    this.state = {
       totalTodo: 0,
       completedTodo: 0,
     }
+
+    this.init();
   }
 
   setState(data) {
-    this.data = data;
+    this.state = {
+      ...this.state,
+      ...data,
+    };
     this.render();
   };
 
   createTemplate() {
     return `
-      <div> total : ${this.data.totalTodo}</div>
-      <div> completed : ${this.data.completedTodo}</div>
+      <div> total : ${this.state.totalTodo}</div>
+      <div> completed : ${this.state.completedTodo}</div>
     `;
   }
 
-  init(data) {
-    this.setState(data);
+  init(data = {}) {
+    this.render()
   }
 
   render() {

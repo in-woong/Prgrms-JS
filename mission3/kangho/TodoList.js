@@ -1,15 +1,23 @@
 export default class TodoList {
   constructor($target) {
     this.$target = $target;
+    this.state = {
+      todoList: [],
+    }
+
+    this.init();
   }
 
   setState(data) {
-    this.data = data;
+    this.state = {
+      ...this.state,
+      ...data,
+    };
     this.render();
   };
 
   createTemplate() {
-    return this.data.map((todo, idx) => {
+    return this.state.todoList.map((todo, idx) => {
       return `
         <li data-key='${idx}' data-node='list-tag' class=${todo.isCompleted ? 'completed' : '' } >
           ${todo.text}
@@ -19,12 +27,8 @@ export default class TodoList {
     });
   }
 
-  getData() {
-    return this.data; 
-  }
-
-  init(data) {
-    this.setState(data);
+  init(data = {}) {
+    this.render(data);
     this.$target.addEventListener('click', (e) => {
       const { node } = e.target.dataset;
       const key = e.target.closest('[data-key]').dataset.key
@@ -43,7 +47,9 @@ export default class TodoList {
           }
         }));  
       }
-    })
+    });
+
+    return this;
   }
 
   render() {

@@ -1,6 +1,7 @@
 import TodoList from './TodoList.js';
 import TodoInput from './TodoInput.js';
 import TodoCount from './TodoCount.js';
+import { proxyState } from './utils.js';
 
 const data = [
   {
@@ -27,9 +28,8 @@ class App {
     this.todoInput = todoInput;
     this.todoCount = todoCount;
     this.$wrapper = $wrapper;
-
     this.state = {
-      todoListData: data,
+      todoListData: [],
     }
 
     this.init = this.init.bind(this);
@@ -40,30 +40,21 @@ class App {
   }
 
   init() {
-    this.todoList.init(this.state.todoListData);
-    this.todoInput.init();
-    this.todoCount.init(this.filterList());
-
-    this.state = new Proxy(this.state, {
-      get: function(target, name) {
-        return target[name];
-      },
-
-      set: function(obj, prop, newval) {
-        obj[prop] = [...newval];
-        if (prop === 'todoListData') {
-          console.log('render');
-          this.todoList.setState(newval);
-          this.todoCount.setState(this.filterList(newval));  
-        } 
-        return true;
-      }.bind(this)
+    this.state = proxyState(this.state, this, {
+      todoListData: this.handler.bind(this),
     });
 
+    this.state.todoListData = data;
+  
     this.$wrapper.addEventListener('removeAllTodo', this.removeAllTodo);
     this.$wrapper.addEventListener('addTodo', this.addTodo);
     this.$wrapper.addEventListener('toggleTodo', this.toggleTodo);
     this.$wrapper.addEventListener('removeTodo', this.removeTodo);
+  }
+
+  handler() {
+    this.todoList.setState({todoList: this.state.todoListData});
+    this.todoCount.setState(this.filterList());
   }
 
   filterList() {
@@ -98,7 +89,15 @@ class App {
       }
       return elem;
     });
-  } 
+  }
+
+  setState(data) {
+    this.state = {
+      ...this.state,
+      ...data,
+    };
+    this.render();
+  };
 }
 
 
