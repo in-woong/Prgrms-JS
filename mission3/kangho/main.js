@@ -29,16 +29,38 @@ class App {
     this.data = data;
     this.$wrapper = $wrapper;
 
+    this.state = {
+      todoListData: data,
+    }
+
+    this.init = this.init.bind(this);
     this.addTodo = this.addTodo.bind(this);
     this.removeAllTodo = this.removeAllTodo.bind(this);
     this.toggleTodo = this.toggleTodo.bind(this);
     this.removeTodo = this.removeTodo.bind(this);
+
   }
 
   init() {
     this.todoList.init(this.data);
     this.todoInput.init();
     this.todoCount.init(this.filterList());
+
+    this.state = new Proxy(this.state, {
+      get: function(target, name) {
+        return target[name];
+      },
+
+      set: function(obj, prop, newval) {
+        obj[prop] = [...newval];
+        if (prop === 'todoListData') {
+          console.log('render');
+          this.todoList.setState(newval);
+          this.todoCount.setState(this.filterList());  
+        } 
+        return true;
+      }.bind(this)
+    });
 
     this.$wrapper.addEventListener('removeAllTodo', this.removeAllTodo);
     this.$wrapper.addEventListener('addTodo', this.addTodo);
@@ -48,42 +70,37 @@ class App {
 
   filterList() {
     return {
-      totalTodo: this.data.length,
-      completedTodo: this.data.filter(elem => elem.isCompleted).length,
+      totalTodo: this.state.todoListData.length,
+      completedTodo: this.state.todoListData.filter(elem => elem.isCompleted).length,
     }
   }
 
   addTodo($event) {
-    this.data.push($event.detail.todo);
-    this.todoCount.setState(this.filterList());
-    this.todoList.setState(this.data);
+    const { todo } = $event.detail;
+    this.state.todoListData = [
+      ...this.data,
+      todo,
+    ];
   }
 
   removeAllTodo() {
-    this.data = [];
-    this.todoCount.setState(this.filterList());
-    this.todoList.setState(this.data);
+    this.state.todoListData = [];
   }
 
   removeTodo($event) {
     const { key } = $event.detail;
-    this.data = this.data.filter((elem, idx) => idx !== parseInt(key));
-    this.todoCount.setState(this.filterList());
-    this.todoList.setState(this.data);
+    this.state.todoListData = this.state.todoListData.filter((elem, idx) => idx !== parseInt(key));
   }
 
   toggleTodo($event) {
     const { key } = $event.detail;
-    this.data = this.data.map((elem, idx) => {
+    this.state.todoListData = this.state.todoListData.map((elem, idx) => {
       if (idx === parseInt(key)) {
         elem.isCompleted = !elem.isCompleted;
       }
       return elem;
     });
-    this.todoCount.setState(this.filterList());
-    this.todoList.setState(this.data);
-  }
-  
+  } 
 }
 
 
