@@ -22,10 +22,14 @@
         this.data = data
         this.render = function(){
           let divOfTodos = ''
-          data.map(todo => {
+          this.data.map(todo => {
             divOfTodos += `<div>${todo.text}</div>`
           })
           document.querySelector('#todo-list').innerHTML = divOfTodos
+        }
+        this.setState = function(data){
+          this.data = data
+          this.render()
         }
       };
       var todoList = new TodoList(data)
@@ -33,6 +37,14 @@
           throw new Error('todoList undefined - possibly caused by not initiating TodoList function with `new` keyword')
       }
       todoList.render()
+      todoList.setState([
+        {
+          text: "JS 다시 공부하기"
+        },
+        {
+          text: "JS 다시 복습하기"
+        }
+      ])
     </script>
   </body>
 </html>
