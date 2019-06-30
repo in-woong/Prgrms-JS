@@ -4,6 +4,8 @@ export default class TodoInput {
     this.$form= $form;
     this.$removeButton = $removeButton;
     this.todo = null;
+
+    this.init();
   }
 
   init() {
