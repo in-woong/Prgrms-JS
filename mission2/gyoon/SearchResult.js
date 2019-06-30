@@ -5,11 +5,7 @@ function SearchResult(data, target){
   let jjalMarkup = ''
   let jjalTags = ''
   this.render = function(){
-    this.setState(data)
-    document.querySelector(`${target}`).innerHTML = jjalMarkup
-  }
-  this.setState = function(data){
-    data.map(jjal => {
+    this.data.map(jjal => {
       const { 
         tags,
         title,
@@ -20,11 +16,16 @@ function SearchResult(data, target){
       jjalMarkup += 
         `<div>
           <a href=${videoUrl} target='_blank'>
-            <img src=${imageUrl} width='100%' />
+            <img src=${imageUrl} width='30%' />
           </a>
           <div>${title}</div>
           <div>${jjalTags}</div>
         </div>`
     })
+    document.querySelector(`${target}`).innerHTML = jjalMarkup
+  }
+  this.setState = function(data){
+    this.data = data
+    this.render()
   }
 }
