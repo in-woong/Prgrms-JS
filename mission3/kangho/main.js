@@ -2,6 +2,7 @@ import TodoList from './TodoList.js';
 import TodoInput from './TodoInput.js';
 import TodoCount from './TodoCount.js';
 import { proxyState } from './utils.js';
+import LocalStorageService from './localStorageService.js';
 
 const data = [
   {
@@ -23,13 +24,14 @@ const data = [
 ];
 
 class App {
-  constructor($wrapper, todoList, todoInput, todoCount) {
+  constructor($wrapper, props, todoList, todoInput, todoCount) {
     this.todoList = todoList;
     this.todoInput = todoInput;
     this.todoCount = todoCount;
     this.$wrapper = $wrapper;
     this.state = {
       todoListData: [],
+      ...props,
     }
 
     this.init = this.init.bind(this);
@@ -45,9 +47,6 @@ class App {
     this.state = proxyState(this.state, this, {
       todoListData: this.handler.bind(this),
     });
-
-    this.state.todoListData = data;
-  
     this.$wrapper.addEventListener('removeAllTodo', this.removeAllTodo);
     this.$wrapper.addEventListener('addTodo', this.addTodo);
     this.$wrapper.addEventListener('toggleTodo', this.toggleTodo);
@@ -68,43 +67,55 @@ class App {
 
   addTodo($event) {
     const { todo } = $event.detail;
-    this.state.todoListData = [
-      ...this.state.todoListData,
-      todo,
-    ];
+    this.setState({
+      todoListData: [
+        ...this.state.todoListData,
+        todo,  
+      ],
+    });
   }
 
   removeAllTodo() {
-    this.state.todoListData = [];
+    this.setState({
+      todoListData: [],
+    });
   }
 
   removeTodo($event) {
     const { key } = $event.detail;
-    this.state.todoListData = this.state.todoListData.filter((elem, idx) => idx !== parseInt(key));
+    this.setState({
+      todoListData: this.state.todoListData.filter((elem, idx) => idx !== parseInt(key)),
+    });
   }
 
   toggleTodo($event) {
     const { key } = $event.detail;
-    this.state.todoListData = this.state.todoListData.map((elem, idx) => {
-      if (idx === parseInt(key)) {
-        elem.isCompleted = !elem.isCompleted;
-      }
-      return elem;
+    this.setState({
+      todoListData: this.state.todoListData.map((elem, idx) => {
+        if (idx === parseInt(key)) {
+          elem.isCompleted = !elem.isCompleted;
+        }
+        return elem;
+      })
     });
   }
 
   setState(data) {
-    this.state = {
-      ...this.state,
-      ...data,
-    };
+    Object.keys(data).forEach(key => {
+      this.state[key] = data[key];
+    });
+    localStorageService.set('todo-app', this.state);
     this.render();
   };
+
+  render() {
+  }
 }
 
-
+const localStorageService = new LocalStorageService();
 const app = new App(
   document.querySelector('#app'),
+  localStorageService.get('todo-app'),
   new TodoList(document.querySelector("#todo-list")),
   new TodoInput(
     document.querySelector('#todo-input'),

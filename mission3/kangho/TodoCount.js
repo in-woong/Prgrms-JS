@@ -10,10 +10,9 @@ export default class TodoCount {
   }
 
   setState(data) {
-    this.state = {
-      ...this.state,
-      ...data,
-    };
+    Object.keys(data).forEach(key => {
+      this.state[key] = data[key];
+    });
     this.render();
   };
 

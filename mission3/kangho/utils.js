@@ -1,5 +1,5 @@
 const proxyState = (state, context, config) => {
-  return new Proxy(state, {
+  const ret = new Proxy(state, {
     set: function(obj, prop, newval) {
       obj[prop] = [...newval];
       if (config[prop]) {
@@ -8,6 +8,10 @@ const proxyState = (state, context, config) => {
       return true;
     }.bind(context)
   });
+  
+  Object.keys(config).forEach(key => ret[key] = state[key]);
+
+  return ret;
 }
 
 export {
