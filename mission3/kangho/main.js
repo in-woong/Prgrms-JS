@@ -37,6 +37,8 @@ class App {
     this.removeAllTodo = this.removeAllTodo.bind(this);
     this.toggleTodo = this.toggleTodo.bind(this);
     this.removeTodo = this.removeTodo.bind(this);
+
+    this.init();
   }
 
   init() {
@@ -113,5 +115,3 @@ const app = new App(
     document.querySelector('#todo-count'),
   ),
 );
-
-app.init();
