@@ -1,11 +1,12 @@
 ;(async function() {
   const username = 'cckn'
 
+  // const api = new Api('http://todo-api.roto.codes/', 'cckn')
+
   async function fetchData() {
     const res = await fetch(`http://todo-api.roto.codes/${username}`)
     return await res.json()
   }
-
   const data = await fetchData()
 
   const todoList = new TodoList({
