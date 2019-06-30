@@ -10,12 +10,17 @@
     .completed {
       text-decoration: line-through;
     }
+
+    .disabled {
+      pointer-events: none;
+      opacity: 0.5;
+    }
   </style>
   <body>
     <div id="app">
       <form id="todo-form">
         <input type="text" id="todo-input" />
-        <button type="submit" id="add-todo-button">
+        <button type="submit" class="disabled" id="add-todo-button">
           Add
         </button>    
         <button type="button" id="remove-todo-button">
