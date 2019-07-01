@@ -17,8 +17,8 @@ export default class TodoList {
   createTemplate() {
     return this.state.todoList.map((todo, idx) => {
       return `
-        <li data-key='${idx}' data-node='list-tag' class=${todo.isCompleted ? 'completed' : '' } >
-          ${todo.text}
+        <li data-key='${todo._id}' data-node='list-tag' class=${todo.isCompleted ? 'completed' : '' } >
+          ${todo.content}
           <button data-node='remove-btn' >remove</button>
         </li>
       `;

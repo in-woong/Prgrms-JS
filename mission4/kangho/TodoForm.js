@@ -17,7 +17,7 @@ export default class TodoForm {
           bubbles: true,
           detail: { 
             todo: {
-              text: this.$input.value,
+              content: this.$input.value,
               isCompleted: false,
             }
           }

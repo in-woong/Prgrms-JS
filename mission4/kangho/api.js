@@ -13,9 +13,10 @@ export default class API {
     return res.join('&');
   }
 
-  async httpGet(queryParams) {
+  async httpGet(url, options = {queryParams: {}}) {
+    const { queryParams } = options;
     try {
-      const res = await fetch(`${this.BASE_URL}?${this.getQueryString(queryParams)}`);
+      const res = await fetch(`${this.BASE_URL}${url}?${this.getQueryString(queryParams)}`);
       const resJson = await res.json();
       return resJson;  
     } catch (e) {
@@ -23,12 +24,15 @@ export default class API {
     }
   }
   
-  async httpPost(params, queryParams) {
+  async httpPost(url, params = {}, options = {queryParams: {}}) {
+    const { queryParams } = options;
     try {
-      const res = await fetch(`${this.BASE_URL}?${this.getQueryString(queryParams)}`, {
+      const res = await fetch(`${this.BASE_URL}${url}?${this.getQueryString(queryParams)}`, {
         method: "POST",
-        body: params,
-
+        body: JSON.stringify(params),
+        headers: {
+          'Content-Type': 'application/json'
+        },
       });
       const resJSON = await res.json();
       return resJSON;
@@ -36,12 +40,25 @@ export default class API {
     }
   }
 
-  async httpPut(params, queryParams) {
+  async httpPut(url, params = {}, options = {queryParams: {}}) {
+    const { queryParams } = options;
     try {
-      const res = await fetch(`${this.BASE_URL}?${this.getQueryString(queryParams)}`, {
+      const res = await fetch(`${this.BASE_URL}${url}?${this.getQueryString(queryParams)}`, {
         method: "PUT",
         body: params,
+      });
+      const resJSON = await res.json();
+      return resJSON;
+    } catch (e) {
+    }
+  }
 
+  async httpDelete(url, params = {}, options = {queryParams: {}}) {
+    const { queryParams } = options;
+    try {
+      const res = await fetch(`${this.BASE_URL}${url}?${this.getQueryString(queryParams)}`, {
+        method: "DELETE",
+        body: params,
       });
       const resJSON = await res.json();
       return resJSON;
