@@ -24,10 +24,11 @@ const initialTodoList = [
 ];
 
 
-const localStorageService = new StorageService(window.localStorage);
+const storageService = new StorageService(window.localStorage);
 const app = new App(
   document.querySelector('#app'),
-  localStorageService.get('todo-app') || { todoListData: initialTodoList },
+  storageService.get('todo-app') || { todoListData: initialTodoList },
+  storageService,
   new TodoList(document.querySelector("#todo-list")),
   new TodoForm(
     document.querySelector('#todo-input'),

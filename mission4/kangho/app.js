@@ -1,7 +1,7 @@
 import { proxyState } from './utils.js';
 
 export default class App {
-  constructor($wrapper, props, todoList, todoInput, todoCount) {
+  constructor($wrapper, props, storageService, todoList, todoInput, todoCount) {
     this.todoList = todoList;
     this.todoInput = todoInput;
     this.todoCount = todoCount;
@@ -11,6 +11,7 @@ export default class App {
       ...props,
     }
 
+    this.storageService = storageService;
     this.init = this.init.bind(this);
     this.addTodo = this.addTodo.bind(this);
     this.removeAllTodo = this.removeAllTodo.bind(this);
@@ -81,7 +82,7 @@ export default class App {
     Object.keys(data).forEach(key => {
       this.state[key] = data[key];
     });
-    localStorageService.set('todo-app', this.state);
+    this.storageService.set('todo-app', this.state);
     this.render();
   };
 
