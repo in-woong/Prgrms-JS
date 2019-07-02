@@ -61,14 +61,16 @@ function TodoApp ({$target, todoList, todoForm,  username, spinner}) {
     handleRequest({
       beforeRequest: handleLoading,
       finishRequest: finishLoading,
-      request: ()=> this.syncToModel()
+      request: () => this.syncToModel()
     });
     // props
     // passProps TodoList
+
     todoList.setProps({
-      onRemove: this.removeTodo.bind(this),
-      onToggleTodoUpdate: this.toggleTodoUpdate.bind(this),
+      onRemove: (id) => this.removeTodo(id),
+      onToggleTodoUpdate: (id) => this.toggleTodoUpdate(id),
     });
+
     // passProps TodoForm
     todoForm.setProps({
       onSubmit: this.addTodo.bind(this)

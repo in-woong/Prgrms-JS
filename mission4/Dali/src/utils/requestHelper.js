@@ -1,4 +1,4 @@
-import validateHandler from "./validateHandler";
+import validateHandler from "./validateHandler.js";
 
 const handleRequest = async ({beforeRequest, finishRequest, request})=>{
   if(validateHandler(beforeRequest)){

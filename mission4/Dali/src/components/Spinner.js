@@ -8,7 +8,6 @@ const spinnerTemplate = () => {
 
 function Spinner({$target, isLoading = false}) {
   this.render = function (isLoading) {
-    console.log('isLoading', isLoading);
     $target.innerHTML = isLoading ?
       spinnerTemplate()
       :

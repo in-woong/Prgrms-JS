@@ -30,7 +30,7 @@ async function request(url, options = {method: 'GET'}){
    }
    catch(error){
      logError(error);
-     throw new HttpError(error)
+     throw HttpError(error)
    }
 }
 

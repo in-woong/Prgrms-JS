@@ -1,9 +1,41 @@
+/*common*/
+body {
+    margin: 0;
+}
+ul {
+    padding-left: 0;
+    margin: 0;
+}
+li  {
+    list-style: none;
+}
+
+/*end*/
+
+/*utils*/
+.hide {
+    display: none;
+}
+
+/*todoApp*/
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+section {
+    box-sizing: border-box;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
 #todo-form {
     display: flex;
 }
 
 #todo-input {
-    width: 500px;
+
+    width: 480px;
     height: 36px;
     border-radius: 4px 0 0 4px;
     box-sizing: border-box;
@@ -17,10 +49,39 @@
     padding: 8px 16px;
     border-radius: 0 4px 4px 0;
     height: 36px;
+    width: 80px;
 }
-.hide {
-    display: none;
+
+#todo-list {
+    margin-top: 25px;
 }
+#todo-list li{
+    margin-top: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 560px;
+    height: 36px;
+    background: #eee;
+    border-right: 4px;
+}
+#todo-list button {
+    color: #fff;
+    background-color: #f03e3e;
+    border-bottom: 2px solid #e03131;
+    padding: 8px 16px;
+    border-radius: 0 4px 4px 0;
+    width: 80px;
+    height: 36px;
+}
+#todo-list button:hover {
+    color: #fefefe;
+    background-color: #c92a2a;
+}
+/**/
+
+
+/*spinner*/
 
 #spinner .spinner-child {
     -webkit-animation: v-beatStretchDelay 0.7s infinite linear;

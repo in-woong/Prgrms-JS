@@ -1,3 +1,5 @@
+import { qs, handleProcessingEl } from '../utils/dom.js';
+
 function TodoList(params) {
   const $target = params.$target;
 
@@ -6,8 +8,10 @@ function TodoList(params) {
 
     if (e.target.className === 'remove-button') {
       e.stopPropagation();
+      handleProcessingEl(e.target);
       this.onRemove(id)
     } else {
+      handleProcessingEl(e.target.closest('li'));
       this.onToggleTodoUpdate(id);
     }
   });
@@ -15,9 +19,7 @@ function TodoList(params) {
     Object.assign(this, {...props});
     console.log(this);
   };
-
   this.render = function(data) {
-    console.log('data', data);
     const htmlString = data.map(function(todo) {
       const contentHTML = todo.isCompleted
         ? `<strike>${todo.content}</strike>`
