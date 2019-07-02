@@ -1,7 +1,7 @@
 
 import TodoAPI from '../api/index.js';
 import { qs, showEl, hideEl } from '../utils/dom.js';
-import validateHandler from '../utils/validateHandler.js';
+import { handleRequest } from '../utils/requestHelper.js';
 function TodoApp ({$target, todoList, todoForm,  username, spinner}) {
   let data = [];
   let loading = false;
@@ -10,15 +10,7 @@ function TodoApp ({$target, todoList, todoForm,  username, spinner}) {
   const showBody = () => showEl($todoAppBody);
   const hideBody = () => hideEl($todoAppBody);
 
-  const handleRequest = async ({beforeRequest, finishRequest, request})=>{
-    if(validateHandler(beforeRequest)){
-      await beforeRequest();
-    }
-      await request();
-    if(validateHandler(finishRequest)){
-      await finishRequest();
-    }
-  }
+
 
   this.fetchData = async function () {
       return await TodoAPI.fetchData(username);
