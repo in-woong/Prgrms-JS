@@ -1,85 +1,67 @@
-import HttpErrorHandler from '../utils/HttpErrorHandler.js';
+import HttpError from '../utils/HTTPError.js';
 
 const baseUrl = `http://todo-api.roto.codes`;
 
-async function request(url, options = {method: 'GET'}){
-  try {
-    const res = await fetch(`${baseUrl}/${url}`, options);
-    const data = await res.json();
-    if(res.ok){
-      return {
-        isError: false,
-        data,
-      }
-    }else {
-      return {
-        isError: true,
-        message: data.message,
-        statusCode: data.status
-      }
-    }
-  }catch(err){
-    return {
-      isError: true,
-      message: data.message,
-      statusCode: data.status
-    }
+const addBaseUrl = url => `${baseUrl}/${url}`;
+
+const makeUpdateToggleUrl = (username, id) => addBaseUrl(`${username}/${id}/toggle`);
+
+const makeDeleteTodoUrl = (username, id) => addBaseUrl(`${username}/${id}/`);
+
+const httpLog = data => console.log('Network success: Log', data);
+
+const logError = error => console.log('Error:' , error);
+
+const validateResponse = res => {
+  if(!res.ok){
+    throw HttpError(res);
   }
+  return res;
+};
+const responseAsJson = res => res.json();
+
+async function request(url, options = {method: 'GET'}){
+   try {
+     const res = await fetch(url, options);
+     const validateRes = await validateResponse(res);
+     const jsonData = await responseAsJson(validateRes);
+     httpLog(jsonData);
+     return jsonData
+   }
+   catch(error){
+     logError(error);
+     throw new HttpError(error)
+   }
 }
 
 async function fetchData(username) {
-  try {
-   const resData = await request(username);
-   if(!resData.isError) return resData;
-   else {
-     return resData;
-   }
-  }
-  catch(error){
-    HttpErrorHandler(error);
-  }
+  return await request(addBaseUrl(username));
 }
 
 async function toggleTodoComplete(username, id) {
-  try {
-    return await fetch(`${baseUrl}/${username}/${id}/toggle`, {
-      method: 'PUT',
-    });
-  }
-  catch(error){
-    throw new Error(error);
-  }
+    return await request(
+                makeUpdateToggleUrl(username, id), {
+                method: 'PUT'
+              });
 }
 
 async function deleteTodo(username, id) {
-  try {
-    return await fetch(`${baseUrl}/${username}/${id}`, {
-      method: 'DELETE',
+    return await request(
+        makeDeleteTodoUrl(username,id), {
+        method: 'DELETE',
     });
-  }
-  catch(error){
-    throw new Error(error);
-  }
 }
 
 async function addTodo(username, todoText){
-  try {
-    const resData = await request(username, {
+    return await request(addBaseUrl(username), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         content: todoText,
-      }),
-    });
-    if(!resData.isError) return resData;
-    else {
-      return resData;
-    }
-  }catch(error){
-    throw new Error(error);
-  }
+      })}
+    )
 }
 
 
