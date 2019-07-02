@@ -2,11 +2,17 @@ import HttpError from '../utils/HTTPError.js';
 
 const baseUrl = `http://todo-api.roto.codes`;
 
+
+
 const addBaseUrl = url => `${baseUrl}/${url}`;
 
 const makeUpdateToggleUrl = (username, id) => addBaseUrl(`${username}/${id}/toggle`);
 
 const makeDeleteTodoUrl = (username, id) => addBaseUrl(`${username}/${id}/`);
+
+const makeGetUsersTodoUrl = _ => addBaseUrl('users');
+
+
 
 const httpLog = data => console.log('Network success: Log', data);
 
@@ -64,10 +70,15 @@ async function addTodo(username, todoText){
     )
 }
 
+async function getUsersTodo(){
+  return await request(makeGetUsersTodoUrl())
+}
+
 
 export default {
   fetchData,
   toggleTodoComplete,
   deleteTodo,
-  addTodo
+  addTodo,
+  getUsersTodo
 }

@@ -58,11 +58,19 @@ function TodoApp ({$target, todoList, todoForm,  username, spinner}) {
     spinner.render(loading)
   };
   this.init = async function () {
+
+    const users = await TodoAPI.getUsersTodo();
+    console.log('users', users);
+    // makeTab
+    //
+
     handleRequest({
       beforeRequest: handleLoading,
       finishRequest: finishLoading,
       request: () => this.syncToModel()
     });
+
+
     // props
     // passProps TodoList
 
