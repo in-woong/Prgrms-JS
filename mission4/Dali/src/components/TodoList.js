@@ -1,24 +1,19 @@
 function TodoList(params) {
   const $target = params.$target;
-  let onRemove = null;
-  let onToggleTodoUpdate = null;
 
-
-
-  $target.addEventListener('click', function(e) {
+  $target.addEventListener('click', e => {
     const id = e.target.closest('li').dataset.id;
 
     if (e.target.className === 'remove-button') {
       e.stopPropagation();
-      onRemove(id)
+      this.onRemove(id)
     } else {
-      onToggleTodoUpdate(id);
+      this.onToggleTodoUpdate(id);
     }
   });
-
-  this.setProps = function(props){
-    onRemove = props.onRemove;
-    onToggleTodoUpdate = props.onToggleTodoUpdate;
+  this.setProps = function (props) {
+    Object.assign(this, {...props});
+    console.log(this);
   };
 
   this.render = function(data) {

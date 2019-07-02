@@ -1,10 +1,8 @@
 import HttpErrorHandler from '../utils/HttpErrorHandler.js';
+
 const baseUrl = `http://todo-api.roto.codes`;
 
-
-
 async function request(url, options = {method: 'GET'}){
-  const baseUrl = `http://todo-api.roto.codes`;
   try {
     const res = await fetch(`${baseUrl}/${url}`, options);
     const data = await res.json();
@@ -66,7 +64,7 @@ async function deleteTodo(username, id) {
 
 async function addTodo(username, todoText){
   try {
-    const res = await fetch(`${baseUrl}/${username}`, {
+    const resData = await request(username, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -74,7 +72,11 @@ async function addTodo(username, todoText){
       body: JSON.stringify({
         content: todoText,
       }),
-    })
+    });
+    if(!resData.isError) return resData;
+    else {
+      return resData;
+    }
   }catch(error){
     throw new Error(error);
   }

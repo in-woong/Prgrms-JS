@@ -34,6 +34,13 @@ function TodoApp ({$target, todoList, todoForm,  username}) {
     const res = await TodoAPI.toggleTodoComplete(username, id);
     this.syncToModel();
   };
+  this.addTodo = async function (todoValue) {
+    const todoText = todoValue.trim();
+    if(todoText.length){
+      const res = await TodoAPI.addTodo(username, todoText);
+      this.syncToModel();
+    }
+  }
   this.init = async function () {
     const fetchData = await this.fetchData() || [];
     this.setState(fetchData);
@@ -42,6 +49,9 @@ function TodoApp ({$target, todoList, todoForm,  username}) {
     todoList.setProps({
       onRemove: this.removeTodo.bind(this),
       onToggleTodoUpdate: this.toggleTodoUpdate.bind(this),
+    });
+    todoForm.setProps({
+      onSubmit: this.addTodo.bind(this)
     })
 
   }

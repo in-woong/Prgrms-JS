@@ -1,4 +1,4 @@
-const qs = (selector) => document.querySelector(selector);
+const qs = selector  => document.querySelector(selector);
 
 
 export {

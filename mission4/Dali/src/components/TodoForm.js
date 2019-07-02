@@ -2,12 +2,15 @@ const TODO_INPUT = 'todo-input';
 
 function TodoForm(params) {
   const $target = params.$target;
-  const onSubmit = params.onSubmit;
   $target.addEventListener('submit', e => {
     e.preventDefault();
-    onSubmit($target[TODO_INPUT].value);
+    this.onSubmit($target[TODO_INPUT].value);
     $target.reset();
   });
+  this.setProps = function (props) {
+    Object.assign(this, {...props});
+    console.log(this);
+  }
 }
 
 
