@@ -1,9 +1,25 @@
 
 import TodoAPI from '../api/index.js';
-function TodoApp ({$target, todoList, todoForm,  username}) {
+import { qs, showEl, hideEl } from '../utils/dom.js';
+import validateHandler from '../utils/validateHandler.js';
+function TodoApp ({$target, todoList, todoForm,  username, spinner}) {
   let data = [];
-  this.tag = $target;
-  // $target component 일관성으로  지금은 안 쓰지만 일단 받아봄 ;;;
+  let loading = false;
+  const $todoAppBody = qs('.todo-app-body', $target);
+
+  const showBody = () => showEl($todoAppBody);
+  const hideBody = () => hideEl($todoAppBody);
+
+  const handleRequest = async ({beforeRequest, finishRequest, request})=>{
+    if(validateHandler(beforeRequest)){
+      await beforeRequest();
+    }
+      await request();
+    if(validateHandler(finishRequest)){
+      await finishRequest();
+    }
+  }
+
   this.fetchData = async function () {
       return await TodoAPI.fetchData(username);
   };
@@ -33,21 +49,40 @@ function TodoApp ({$target, todoList, todoForm,  username}) {
       this.syncToModel();
     }
   }
+  const handleLoading = () => {
+      hideBody();
+      this.showSpinner();
+  };
+  const finishLoading = () => {
+    showBody();
+    this.hideSpinner();
+  };
+  this.showSpinner = function () {
+    loading = true;
+    spinner.render(loading)
+  };
+  this.hideSpinner = function () {
+    loading = false;
+    spinner.render(loading)
+  };
   this.init = async function () {
-    const fetchedData = await this.fetchData() || [];
-    this.setState(fetchedData);
-
+    handleRequest({
+      beforeRequest: handleLoading,
+      finishRequest: finishLoading,
+      request: ()=> this.syncToModel()
+    });
     // props
+    // passProps TodoList
     todoList.setProps({
       onRemove: this.removeTodo.bind(this),
       onToggleTodoUpdate: this.toggleTodoUpdate.bind(this),
     });
+    // passProps TodoForm
     todoForm.setProps({
       onSubmit: this.addTodo.bind(this)
     })
 
   }
   this.init();
-
 }
 export default TodoApp;

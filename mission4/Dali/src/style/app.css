@@ -1,0 +1,87 @@
+#todo-form {
+    display: flex;
+}
+
+#todo-input {
+    width: 500px;
+    height: 36px;
+    border-radius: 4px 0 0 4px;
+    box-sizing: border-box;
+    padding-left: 10px;
+}
+
+#add-todo-button {
+    color: #fff;
+    background-color: #4fc08d;
+    border-bottom: 2px solid #3aa373;
+    padding: 8px 16px;
+    border-radius: 0 4px 4px 0;
+    height: 36px;
+}
+.hide {
+    display: none;
+}
+
+#spinner .spinner-child {
+    -webkit-animation: v-beatStretchDelay 0.7s infinite linear;
+    animation: v-beatStretchDelay 0.7s infinite linear;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    display: inline-block;
+}
+#spinner .spinner-child
+{
+    animation-delay: 0s;
+}
+#spinner .spinner-child:nth-child(2)
+{
+    animation-delay: 0.35s;
+}
+
+
+.spinner-child {
+    margin: 2px;
+    height: 15px;
+    width: 15px;
+    display: inline-block;
+    border-radius: 100%;
+    animation-duration: 0.75s;
+    animation-iteration-count: infinite;
+    animation-fill-mode: both;
+    animation-timing-function: cubic-bezier(0.2, 0.68, 0.18, 1.08);
+    animation-name: v-pulseStretchDelay;
+    background-color: rgb(58, 185, 130);
+}
+
+@-webkit-keyframes v-beatStretchDelay {
+    50%
+    {
+        -webkit-transform: scale(0.75);
+        transform: scale(0.75);
+        -webkit-opacity: 0.2;
+        opacity: 0.2;
+    }
+    100%
+    {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        -webkit-opacity: 1;
+        opacity: 1;
+    }
+}
+@keyframes v-beatStretchDelay {
+    50%
+    {
+        -webkit-transform: scale(0.75);
+        transform: scale(0.75);
+        -webkit-opacity: 0.2;
+        opacity: 0.2;
+    }
+    100%
+    {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        -webkit-opacity: 1;
+        opacity: 1;
+    }
+}
