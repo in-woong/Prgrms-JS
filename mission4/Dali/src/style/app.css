@@ -12,11 +12,41 @@ li  {
 
 /*end*/
 
+
+
 /*utils*/
 .hide {
     display: none;
 }
+/* */
+#app {
+    padding-top: 30px;
+    box-sizing: border-box;
+    display: flex;
+}
 
+#users-tab {
+    width: 300px;
+}
+.users-tab-cells {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.users-cell {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+#todo-app {
+    max-width: 560px;
+}
 /*todoApp*/
 header {
     display: flex;
@@ -60,7 +90,7 @@ section {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 560px;
+    width: 504px;
     height: 36px;
     background: #eee;
     border-right: 4px;
