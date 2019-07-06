@@ -2,42 +2,48 @@ import { proxyState } from './utils.js';
 
 export default class App {
 
-  constructor($wrapper, apiService, todoList, todoInput, todoCount) {
+  constructor($wrapper, apiService, todoList, todoInput, todoCount, todoUsers) {
+    this.$wrapper = $wrapper;
     this.todoList = todoList;
     this.todoInput = todoInput;
     this.todoCount = todoCount;
     this.$wrapper = $wrapper;
     this.apiService = apiService;
+    this.todoUsers = todoUsers;
     this.state = {
       todoListData: [],
+      users: [],
+      currentUser: 'kangho',
     }
 
     this.init = this.init.bind(this);
     this.addTodo = this.addTodo.bind(this);
     this.toggleTodo = this.toggleTodo.bind(this);
     this.removeTodo = this.removeTodo.bind(this);
+    this.setCurrentUser = this.setCurrentUser.bind(this);
+    this.render = this.render.bind(this);
 
     this.init();
   }
 
-  init() {
-    this.state = proxyState(this.state, this, {
-      todoListData: this.handler.bind(this),
-    });
-
-    this.fetchTodoList();
-
+  async init() {
     this.$wrapper.addEventListener('addTodo', this.addTodo);
     this.$wrapper.addEventListener('toggleTodo', this.toggleTodo);
     this.$wrapper.addEventListener('removeTodo', this.removeTodo);
+    this.$wrapper.addEventListener('click-user', this.setCurrentUser);
+
+    const todoListData = await this.fetchTodoList(this.state.currentUser);
+    const users = await this.fetchUsers();
+    this.setState({
+      users,
+      todoListData,
+    });
   }
 
-  async fetchTodoList() {
+  async fetchTodoList(user = this.state.currentUser) {
     try {
-      const ret = await this.apiService.httpGet('/kangho');
-      this.setState({
-        todoListData: ret
-      });
+      const ret = await this.apiService.httpGet(`/${user}`);
+      return ret;
     } catch(e) {
     }
   }
@@ -55,7 +61,7 @@ export default class App {
   async deleteTodo(id) {
     try  {
       const ret = await this.apiService.httpDelete(
-        `/kangho/${id}`,
+        `/${this.state.currentUser}/${id}`,
         {},
       );
     } catch(e) {
@@ -66,18 +72,33 @@ export default class App {
   async toggleTodoItem(id) {
     try {
       const ret = await this.apiService.httpPut(
-        `/kangho/${id}/toggle`,
+        `/${this.state.currentUser}/${id}/toggle`,
         {},
       );
+      return ret;
     } catch(e) {
 
     }
   }
 
+  async fetchUsers() {
+    try {
+      const ret = await this.apiService.httpGet(
+        '/users',
+      );
+      return ret;
+    } catch(e) {
+
+    }
+  }
 
   handler() {
     this.todoList.setState({todoList: this.state.todoListData});
     this.todoCount.setState(this.filterList());
+    this.todoUsers.setState({
+      users: this.state.users,
+      currentUser: this.state.currentUser,
+    });
   }
 
   filterList() {
@@ -119,10 +140,20 @@ export default class App {
     });
   }
 
+  async setCurrentUser($event) {
+    const { user } = $event.detail;
+    const todoListData = await this.fetchTodoList(user);
+    this.setState({
+      currentUser: user,
+      todoListData,
+    });
+  }
+
   setState(data) {
     Object.keys(data).forEach(key => {
       this.state[key] = data[key];
     });
+    this.handler();
     this.render();
   };
 

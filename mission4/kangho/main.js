@@ -1,6 +1,7 @@
 import TodoList from './TodoList.js';
 import TodoForm from './TodoForm.js';
 import TodoCount from './TodoCount.js';
+import TodoUsers from './TodoUsers.js';
 import App from './app.js';
 import API from './api.js';
 
@@ -17,5 +18,8 @@ const app = new App(
   ),
   new TodoCount(
     document.querySelector('#todo-count'),
+  ),
+  new TodoUsers(
+    document.querySelector('#app'),
   ),
 );
