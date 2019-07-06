@@ -3,6 +3,7 @@ export default class TodoList {
     this.$target = $target;
     this.state = {
       todoList: [],
+      isLoading: false,
     }
     this.init();
   }
@@ -15,6 +16,9 @@ export default class TodoList {
   };
 
   createTemplate() {
+    if (this.state.isLoading) {
+      return ['<h1>....Loading</h1>']
+    }
     return this.state.todoList.map((todo, idx) => {
       return `
         <li data-key='${todo._id}' data-node='list-tag' class=${todo.isCompleted ? 'completed' : '' } >

@@ -11,6 +11,7 @@ export default class App {
     this.apiService = apiService;
     this.todoUsers = todoUsers;
     this.state = {
+      isLoading: false,
       todoListData: [],
       users: [],
       currentUser: 'kangho',
@@ -32,9 +33,13 @@ export default class App {
     this.$wrapper.addEventListener('removeTodo', this.removeTodo);
     this.$wrapper.addEventListener('click-user', this.setCurrentUser);
 
+    this.setState({
+      isLoading: true,
+    })
     const todoListData = await this.fetchTodoList(this.state.currentUser);
     const users = await this.fetchUsers();
     this.setState({
+      isLoading: false,
       users,
       todoListData,
     });
@@ -42,7 +47,7 @@ export default class App {
 
   async fetchTodoList(user = this.state.currentUser) {
     try {
-      const ret = await this.apiService.httpGet(`/${user}`);
+      const ret = await this.apiService.httpGet(`/${user}?delay=5000`);
       return ret;
     } catch(e) {
     }
@@ -51,9 +56,10 @@ export default class App {
   async postTodo(todo) {
     try {
       const ret = await this.apiService.httpPost(
-        '/kangho',
+        `/${this.state.currentUser}`,
         todo,
       );
+      return ret;
     } catch(e) {
     }
   }
@@ -84,7 +90,7 @@ export default class App {
   async fetchUsers() {
     try {
       const ret = await this.apiService.httpGet(
-        '/users',
+        `/users`,
       );
       return ret;
     } catch(e) {
@@ -93,6 +99,9 @@ export default class App {
   }
 
   handler() {
+    this.todoList.setState({
+      isLoading: this.state.isLoading,
+    });
     this.todoList.setState({todoList: this.state.todoListData});
     this.todoCount.setState(this.filterList());
     this.todoUsers.setState({
@@ -142,9 +151,13 @@ export default class App {
 
   async setCurrentUser($event) {
     const { user } = $event.detail;
+    this.setState({
+      isLoading: true,
+      currentUser: user,
+    })
     const todoListData = await this.fetchTodoList(user);
     this.setState({
-      currentUser: user,
+      isLoading: false,
       todoListData,
     });
   }
