@@ -22,7 +22,6 @@ export default class App {
     this.toggleTodo = this.toggleTodo.bind(this);
     this.removeTodo = this.removeTodo.bind(this);
     this.setCurrentUser = this.setCurrentUser.bind(this);
-    this.render = this.render.bind(this);
 
     this.init();
   }
@@ -170,9 +169,5 @@ export default class App {
       this.state[key] = data[key];
     });
     this.handler();
-    this.render();
   };
-
-  render() {
-  }
 }
