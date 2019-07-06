@@ -14,7 +14,6 @@ const app = new App(
   new TodoForm(
     document.querySelector('#todo-input'),
     document.querySelector('#todo-form'),
-    document.querySelector('#remove-todo-button'),
   ),
   new TodoCount(
     document.querySelector('#todo-count'),

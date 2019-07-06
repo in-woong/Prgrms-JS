@@ -1,8 +1,7 @@
 export default class TodoForm {
-  constructor($input, $form, $removeButton) {
+  constructor($input, $form) {
     this.$input = $input;
     this.$form= $form;
-    this.$removeButton = $removeButton;
     this.todo = null;
 
     this.init();
@@ -34,14 +33,5 @@ export default class TodoForm {
         this.$form.querySelector('[type=submit]').classList.add('disabled');
       }
     })
-
-    this.$removeButton.addEventListener("click", () => {
-      this.$removeButton.dispatchEvent(new CustomEvent('removeAllTodo', 
-        {
-          bubbles: true,
-        })
-      );
-    });
-
   }
 }

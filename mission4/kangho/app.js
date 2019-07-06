@@ -14,7 +14,6 @@ export default class App {
 
     this.init = this.init.bind(this);
     this.addTodo = this.addTodo.bind(this);
-    this.removeAllTodo = this.removeAllTodo.bind(this);
     this.toggleTodo = this.toggleTodo.bind(this);
     this.removeTodo = this.removeTodo.bind(this);
 
@@ -28,7 +27,6 @@ export default class App {
 
     this.fetchTodoList();
 
-    this.$wrapper.addEventListener('removeAllTodo', this.removeAllTodo);
     this.$wrapper.addEventListener('addTodo', this.addTodo);
     this.$wrapper.addEventListener('toggleTodo', this.toggleTodo);
     this.$wrapper.addEventListener('removeTodo', this.removeTodo);
@@ -97,12 +95,6 @@ export default class App {
         ...this.state.todoListData,
         todo,  
       ],
-    });
-  }
-
-  removeAllTodo() {
-    this.setState({
-      todoListData: [],
     });
   }
 
