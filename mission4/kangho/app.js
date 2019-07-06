@@ -103,7 +103,10 @@ export default class App {
       isLoading: this.state.isLoading,
     });
     this.todoList.setState({todoList: this.state.todoListData});
-    this.todoCount.setState(this.filterList());
+    this.todoCount.setState({
+      ...this.filterList(),
+      isLoading: this.state.isLoading,
+    });
     this.todoUsers.setState({
       users: this.state.users,
       currentUser: this.state.currentUser,

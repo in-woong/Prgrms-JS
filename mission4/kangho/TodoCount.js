@@ -4,6 +4,7 @@ export default class TodoCount {
     this.state = {
       totalTodo: 0,
       completedTodo: 0,
+      isLoading: false,
     }
 
     this.init();
@@ -17,6 +18,9 @@ export default class TodoCount {
   };
 
   createTemplate() {
+    if(this.state.isLoading) {
+      return '';
+    }
     return `
       <div> total : ${this.state.totalTodo}</div>
       <div> completed : ${this.state.completedTodo}</div>
