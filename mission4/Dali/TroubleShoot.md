@@ -48,3 +48,21 @@ baseURL에서 이어 받지 않을때 username/id/toggle
 ```
 
 3. Class를 안 쓰니 fn을 순서에 맞춰서 써야 되는 번거로움 ?
+
+
+4. 가지고 온 Users Validate  
+나도 범인인듯 'ㅁ';
+
+//0: "rotoa"
+       // 1: "undefined"
+       // 2: "cckn"
+       // 3: "React-Study"
+       // 4: "dali"
+       // 5: "Fp-Study"
+       // 6: "VueJs-Study"
+       // 7: "Resume-Update"
+       // 8: "update-Resume"
+       // 9: "gyoon"
+       // 10: "kangho"
+       // 11: "fseller"
+       // 나도 범인인데 ... validate

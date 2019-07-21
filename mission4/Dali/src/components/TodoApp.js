@@ -3,7 +3,9 @@ import TodoAPI from '../api/index.js';
 import { qs, showEl, hideEl } from '../utils/dom.js';
 import { handleRequest } from '../utils/requestHelper.js';
 
-function TodoApp ({$target, todoList, todoForm,  username, spinner}) {
+function TodoApp({
+  $target, todoList, todoForm, username, spinner,
+}) {
   let data = [];
   let loading = false;
   let userName = username;
@@ -14,13 +16,13 @@ function TodoApp ({$target, todoList, todoForm,  username, spinner}) {
 
 
   this.fetchData = async function () {
-      return await TodoAPI.fetchData(userName);
+    return TodoAPI.fetchData(userName);
   };
-  this.setState = function(nextData) {
+  this.setState = function (nextData) {
     data = nextData;
     this.render(data);
   };
-  this.render = function(data) {
+  this.render = function (data) {
     todoList.render(data);
   };
   this.syncToModel = async function () {
@@ -37,14 +39,14 @@ function TodoApp ({$target, todoList, todoForm,  username, spinner}) {
   };
   this.addTodo = async function (todoValue) {
     const todoText = todoValue.trim();
-    if(todoText.length){
+    if (todoText.length) {
       await TodoAPI.addTodo(username, todoText);
       this.syncToModel();
     }
-  }
+  };
   const handleLoading = () => {
-      hideBody();
-      this.showSpinner();
+    hideBody();
+    this.showSpinner();
   };
   const finishLoading = () => {
     showBody();
@@ -52,37 +54,36 @@ function TodoApp ({$target, todoList, todoForm,  username, spinner}) {
   };
   this.showSpinner = function () {
     loading = true;
-    spinner.render(loading)
+    spinner.render(loading);
   };
   this.hideSpinner = function () {
     loading = false;
-    spinner.render(loading)
+    spinner.render(loading);
   };
   this.setUser = function (newUserName) {
-    if(userName === newUserName) return;
+    if (userName === newUserName) return;
     userName = newUserName;
     this.syncToModel();
-  }
+  };
   this.init = async function () {
     handleRequest({
       beforeRequest: handleLoading,
       finishRequest: finishLoading,
-      request: () => this.syncToModel()
+      request: () => this.syncToModel(),
     });
     // props
     // passProps TodoList
 
     todoList.setProps({
-      onRemove: (id) => this.removeTodo(id),
-      onToggleTodoUpdate: (id) => this.toggleTodoUpdate(id),
+      onRemove: id => this.removeTodo(id),
+      onToggleTodoUpdate: id => this.toggleTodoUpdate(id),
     });
 
     // passProps TodoForm
     todoForm.setProps({
-      onSubmit: this.addTodo.bind(this)
-    })
-
-  }
+      onSubmit: this.addTodo.bind(this),
+    });
+  };
   this.init();
 }
 export default TodoApp;

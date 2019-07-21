@@ -94,6 +94,8 @@ section {
     height: 36px;
     background: #eee;
     border-right: 4px;
+    padding-left: 10px;
+    box-sizing: border-box;
 }
 #todo-list button {
     color: #fff;

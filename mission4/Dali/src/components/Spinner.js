@@ -1,17 +1,14 @@
-const spinnerTemplate = () => {
-  return `
+const spinnerTemplate = () => `
     <div class="spinner-child"></div>
     <div class="spinner-child"></div>
     <div class="spinner-child"></div>
-  `
-}
+  `;
 
-function Spinner({$target, isLoading = false}) {
+function Spinner({ $target, isLoading = false }) {
   this.render = function (isLoading) {
-    $target.innerHTML = isLoading ?
-      spinnerTemplate()
-      :
-      '';
+    $target.innerHTML = isLoading
+      ? spinnerTemplate()
+      :      '';
   };
   this.render();
 }

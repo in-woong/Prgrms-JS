@@ -1,6 +1,6 @@
-const HttpErrorHandler = ({message, statusCode}) => {
+const HttpErrorHandler = ({ message, statusCode }) => {
   console.log('message', message);
-  console.log('satusCode', statusCode)
+  console.log('satusCode', statusCode);
   // doSomething
 };
 

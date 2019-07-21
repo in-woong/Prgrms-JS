@@ -23,8 +23,8 @@ const colorBox = [
   '#d8f5a2',
 ];
 
-const randomColorBox = (box = colorBox)=> box[
-  Math.floor(Math.random()*(box.length))
-  ];
+const randomColorBox = (box = colorBox) => box[
+  Math.floor(Math.random() * (box.length))
+];
 
 export default randomColorBox;
