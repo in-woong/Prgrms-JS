@@ -1,0 +1,1 @@
+new SearchController(new ApiService());

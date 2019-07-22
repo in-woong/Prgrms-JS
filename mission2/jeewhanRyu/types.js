@@ -1,0 +1,8 @@
+export const SEARCH_INPUT__INVALID_PARENT = "SEARCH_INPUT__INVALID_PARENT";
+export const SEARCH_RESULT__INVALID_TARGET = "SEARCH_RESULT__INVALID_TARGET";
+export const DATA__NOT_FOUND = "DATA__NOT_FOUND";
+export const SEARCH_INPUT__INVALID_HANDLE_CHANGE =
+  "SEARCH_INPUT__INVALID_HANDLE_CHANGE";
+export const SEARCH_KEYWORD_ID = "search-keyword";
+export const SEARCH_RESULT_ID = "search-result";
+export const SEARCH_KEYWORD_RESULT_ID = "search-keyword-result";

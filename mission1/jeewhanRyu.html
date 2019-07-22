@@ -1,0 +1,73 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list"></div>
+
+    <script>
+      const data = [
+        {
+          text: "JS 공부하기"
+        },
+        {
+          text: "JS 복습하기"
+        }
+      ];
+
+      const policy = {
+        NOT_ACCEPTABLE: "올바른 요청이 아닙니다!",
+        INVALID_DATA: "올바른 데이터가 아닙니다!",
+        INADEQUATE_TARGET: "올바른 대상이 아닙니다!"
+      };
+
+      const util = {
+        errorThrower(status) {
+          // Sentry.captureException(new Error(status));
+          throw new Error(status);
+        },
+
+        isNotEmptyArray(list) {
+          return Array.isArray(list) && list.length;
+        }
+      };
+
+      function TodoList(data, $target = document.querySelector("#todo-list")) {
+        this.dataChecker = data =>
+          util.isNotEmptyArray(data) &&
+          data.every(({ text }) => typeof text === "string");
+
+        this.validator = data => {
+          if (!(this instanceof TodoList))
+            util.errorThrower(policy.NOT_ACCEPTABLE);
+          else if (!this.dataChecker(data))
+            util.errorThrower(policy.INVALID_DATA);
+          else if (!($target instanceof Element))
+            util.errorThrower(policy.INADEQUATE_TARGET);
+        };
+
+        this.data = data;
+
+        this.createHTMLString = () =>
+          this.data.map(({ text }) => `<div>${text}</div>`).join("\n");
+
+        this.render = () => {
+          $target.innerHTML = this.createHTMLString();
+        };
+
+        this.setState = data => {
+          if (!this.dataChecker(data)) util.errorThrower(policy.INVALID_DATA);
+          this.data = data;
+          this.render();
+        };
+      }
+
+      const todoList = new TodoList(data);
+
+      todoList.render();
+      todoList.setState(data.concat({ text: "TS 공부하기" }));
+    </script>
+  </body>
+</html>

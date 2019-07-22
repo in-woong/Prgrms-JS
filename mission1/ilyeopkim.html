@@ -1,0 +1,62 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list"  style="background-color:yellowgreen"></div>
+  <br>
+  <div id="todo-list2"  style="background-color:lightblue"></div>
+  <script>
+    var data = [
+      {
+        text: 'JS 공부하기'
+      },
+      {
+        text: 'JS 복습하기'
+      },
+    ]
+    var newData = [
+      {
+        text: '족발 먹기'
+      },
+      {
+        text: '운동 하기'
+      },
+      {
+        text: '살 찌기'
+      },
+      {
+        text: '숨 쉬기'
+      },
+    ]
+    function TodoList(data){
+        if(!(this instanceof TodoList)) 
+          throw new Error(`${TodoList.name}(...) can't be used without new keyword.`); // Bonus 2
+        if(!(data instanceof Array))
+            throw new Error(`${typeof(data)} : ${this.data} is invalid format for ${TodoList.name}(...)`); // Bonus 1
+        this.data=data;
+        this.elementId='';
+        this.render = function(elementId){
+            this.elementId=elementId;
+            const lists = this.data.map(d =>`<li>${d.text}</li>`);
+            document.querySelector(this.elementId).innerHTML= lists.join('');
+        }
+        this.setState = function(data){
+            this.data=data;
+            this.render(this.elementId);
+        }
+    }
+    var todoList = new TodoList(data);
+    var todoList2 = new TodoList(newData);
+    todoList.render('#todo-list');
+    todoList2.render('#todo-list2');
+    
+    todoList.setState(newData);
+    todoList2.setState(data);
+  </script>
+</body>
+</html>
+
