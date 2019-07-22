@@ -1,0 +1,43 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #eee;
+}
+
+.app-wrapper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  padding: 10px;
+}
+
+.app-wrapper .app {
+  flex: 1;
+  box-sizing: border-box;
+  padding: 20px;
+  border: 1px solid #ccc;
+  margin-left: 10px;
+  margin-right: 10px;
+  overflow-y: auto;
+  background-color: #fff;
+}
+
+.app-wrapper .app:first-child {
+  margin-left: 0;
+}
+
+.app-wrapper .app:last-child {
+  margin-right: 0;
+}
+
+.app .search-input {
+  font-size: 30px;
+  line-height: 24px;
+}
+
+.app img {
+  max-width: 300px;
+}
