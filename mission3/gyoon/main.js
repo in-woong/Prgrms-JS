@@ -15,6 +15,10 @@
     },
     {
       text: "Slack 접속하기",
+      isCompleted: false,
+    },
+    {
+      text: "Slack 접속하기",
       isCompleted: true,
     },
   ];

@@ -4,6 +4,7 @@ export default class TodoList {
     this.state = {
       todoList: [],
     }
+
     this.init();
   }
 
@@ -46,6 +47,8 @@ export default class TodoList {
         }));  
       }
     });
+
+    return this;
   }
 
   render() {
