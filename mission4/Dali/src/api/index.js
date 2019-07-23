@@ -1,4 +1,5 @@
 import HttpError from '../utils/HTTPError.js';
+import request from './request.js';
 
 const baseUrl = 'http://todo-api.roto.codes';
 
@@ -9,65 +10,49 @@ const makeUpdateToggleUrl = (username, id) => addBaseUrl(`${username}/${id}/togg
 const makeDeleteTodoUrl = (username, id) => addBaseUrl(`${username}/${id}/`);
 
 const makeGetUsersTodoUrl = () => addBaseUrl('users');
-const httpLog = data => console.log('Network success: Log', data);
 
-const logError = error => console.log('Error:', error);
-
-const validateResponse = (res) => {
-  if (!res.ok) {
-    throw HttpError(res);
-  }
-  return res;
-};
-const responseAsJson = res => res.json();
-
-async function request(url, options = { method: 'GET' }) {
-  try {
-    const res = await fetch(url, options);
-    const validateRes = await validateResponse(res);
-    const jsonData = await responseAsJson(validateRes);
-    httpLog(jsonData);
-    return jsonData;
-  } catch (error) {
-    logError(error);
-    throw HttpError(error);
-  }
-}
-
-async function fetchData(username) {
-  return request(addBaseUrl(username));
+async function fetchData({
+  username,
+  beforeRequest,
+  finishRequest,
+}) {
+  return request({
+    url: addBaseUrl(username),
+    beforeRequest,
+    finishRequest,
+  });
 }
 
 async function toggleTodoComplete(username, id) {
-  return request(
-    makeUpdateToggleUrl(username, id), {
+  return request({
+    url: makeUpdateToggleUrl(username, id),
+    options: {
       method: 'PUT',
     },
-  );
+  });
 }
 
 async function deleteTodo(username, id) {
-  return request(
-    makeDeleteTodoUrl(username, id), {
-      method: 'DELETE',
-    },
-  );
+  return request({
+    url: makeDeleteTodoUrl(username, id),
+    options: { method: 'DELETE' },
+  });
 }
 
 async function addTodo(username, todoText) {
-  return request(addBaseUrl(username), {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
+  return request({
+    url: addBaseUrl(username),
+    options: {
+      method: 'POST',
+      body: JSON.stringify({
+        content: todoText,
+      }),
     },
-    body: JSON.stringify({
-      content: todoText,
-    }),
   });
 }
 
 async function getUsersTodo() {
-  return request(makeGetUsersTodoUrl());
+  return request({ url: makeGetUsersTodoUrl() });
 }
 
 

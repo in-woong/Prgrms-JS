@@ -1,22 +1,36 @@
 
 import TodoAPI from '../api/index.js';
 import { qs, showEl, hideEl } from '../utils/dom.js';
-import { handleRequest } from '../utils/requestHelper.js';
+// import { handleRequest } from '../utils/requestHelper.js';
 
 function TodoApp({
   $target, todoList, todoForm, username, spinner,
 }) {
+  // state
   let data = [];
   let loading = false;
   let userName = username;
+  // elbody
   const $todoAppBody = qs('.todo-app-body', $target);
-
+  // body show hide
   const showBody = () => showEl($todoAppBody);
   const hideBody = () => hideEl($todoAppBody);
 
+  const handleLoading = () => {
+    hideBody();
+    this.showSpinner();
+  };
+  const finishLoading = () => {
+    showBody();
+    this.hideSpinner();
+  };
 
   this.fetchData = async function () {
-    return TodoAPI.fetchData(userName);
+    return TodoAPI.fetchData({
+      username,
+      beforeRequest: handleLoading,
+      finishRequest: finishLoading,
+    });
   };
   this.setState = function (nextData) {
     data = nextData;
@@ -26,7 +40,7 @@ function TodoApp({
     todoList.render(data);
   };
   this.syncToModel = async function () {
-    const todoData = await TodoAPI.fetchData(userName);
+    const todoData = await this.fetchData();
     this.setState(todoData);
   };
   this.removeTodo = async function (id) {
@@ -44,14 +58,7 @@ function TodoApp({
       this.syncToModel();
     }
   };
-  const handleLoading = () => {
-    hideBody();
-    this.showSpinner();
-  };
-  const finishLoading = () => {
-    showBody();
-    this.hideSpinner();
-  };
+
   this.showSpinner = function () {
     loading = true;
     spinner.render(loading);
@@ -66,11 +73,7 @@ function TodoApp({
     this.syncToModel();
   };
   this.init = async function () {
-    handleRequest({
-      beforeRequest: handleLoading,
-      finishRequest: finishLoading,
-      request: () => this.syncToModel(),
-    });
+    this.syncToModel();
     // props
     // passProps TodoList
 
