@@ -27,7 +27,7 @@ function TodoApp({
 
   this.fetchData = async function () {
     return TodoAPI.fetchData({
-      username,
+      username: userName,
       beforeRequest: handleLoading,
       finishRequest: finishLoading,
     });

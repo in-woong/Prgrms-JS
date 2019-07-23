@@ -16,16 +16,18 @@ const httpLog = data => console.log('Network success: Log', data);
 const logError = error => console.log('Error:', error);
 async function request({
   url,
-  options = {
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
-  },
+  options,
   beforeRequest,
   finishRequest,
 }) {
   try {
     if (validateFn(beforeRequest))beforeRequest();
-    const res = await fetch(url, options);
+    console.log(url, options);
+    const defaultOptions = {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    };
+    const res = await fetch(url, { ...defaultOptions, ...options });
     const validateRes = await validateResponse(res);
     const jsonData = await responseAsJson(validateRes);
     if (validateFn(finishRequest))finishRequest();
