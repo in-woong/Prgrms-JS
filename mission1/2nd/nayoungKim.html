@@ -1,0 +1,55 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list"></div>
+  <script>
+    var data = [{ text: "JS 학습하기" }, { text: "JS 복습하기" }];
+    var $element = document.getElementById("todo-list");
+
+    /* 
+    * @param {text: string}[] data 할일 목록 data
+    * @param htmlElement      $element  렌더링할 html요소
+    */
+    function TodoList($element) {
+      if (!(this instanceof TodoList)) return helper.handleError(`잘못된 호출입니다.`)
+      if (!(Array.isArray(data) && $element instanceof Element)) return helper.handleError('타입이 올바르지 않은 인자입니다.');
+      this.EMPTY_MSG = '데이터가 없습니다.'
+      this.data = [];
+
+      this.setState = function (data) {
+        this.data = data;
+        this.render();
+      }
+
+      // data를 html tag가 포함된 형태로 변환한다.
+      this.makeHTMLString = function () {
+        if (helper.isEmptyList(this.data)) return this.EMPTY_MSG;
+        else {
+          var listStr = this.data.map(
+            function (_) { return _ ? `<li>${helper.checkString(_.text)}</li>` : ''; }
+          ).join("")
+          return `<ul>${listStr}</ul>`
+        }
+      };
+
+      // htmltag를 dom element에 넣는다.
+      this.render = function () { $element.innerHTML = this.makeHTMLString(); };
+    }
+
+    var helper = {
+      isEmptyList: function (list) { Array.isArray(list) ? list.length === 0 : false },
+      handleError: function (str) { throw new Error(str) },
+      filterString: function (str) { return typeof str === 'string' ? str : '' }
+    }
+
+    var todoList = new TodoList($element);
+    todoList.setState([{ text: 'asdfadsf' }]);
+  </script>
+</body>
+
+</html>

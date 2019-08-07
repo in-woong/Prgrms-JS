@@ -1,0 +1,81 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list"></div>
+    <script>
+      var data = [
+        {
+          text: "JS 공부하기"
+        },
+        {
+          text: "JS 복습하기"
+        }
+      ];
+      var data1 = [
+        {
+          text: "풀 리퀘스트 올리기"
+        },
+        {
+          text: "컨텍스트, 클로저 부분 다시 읽어보기"
+        }
+      ];
+
+      var invalidData = [
+        // Invalid key
+        [
+          {
+            t: "JS 공부하기"
+          },
+          {
+            t: "JS 복습하기"
+          }
+        ],
+
+        // Not Array
+        { text: "JS 공부하기" },
+
+        // Invalid Array
+        [1, 2, 3, 4, 5]
+      ];
+
+      // 이곳에서 코딩을 시작하세요!
+      function TodoList(data) {
+        if (!(this instanceof TodoList)) {
+          // if without 'new' keyword, 'this' is 'window'(global)
+          throw new Error(`Have to create by 'new' keyword`);
+        }
+
+        if (!(data instanceof Array)) {
+          throw new Error(`'data' is not Array`);
+        }
+
+        this.data = data;
+
+        this.setState = function(data) {
+          this.data = data;
+          this.render();
+        };
+
+        this.render = function() {
+          var html = this.data.map(element => {
+            return `<div>${element.text}</div>`;
+          }).join(' ');
+
+          document.querySelector("#todo-list").innerHTML = html;
+        };
+      }
+
+      var todoList = new TodoList(data);
+      //   var todoList = new TodoList(invalidData[1]);
+      todoList.render();
+
+      setTimeout(() => {
+        todoList.setState(data1);
+      }, 3000);
+    </script>
+  </body>
+</html>

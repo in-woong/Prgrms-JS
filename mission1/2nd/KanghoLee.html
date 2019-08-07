@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Mission 1</title>
+</head>
+<body>
+  <div id="todo-list"></div>
+   <script>
+    const data = [
+      {
+        text: 'JS 공부하기'
+      },
+      {
+        text: 'JS 복습하기'
+      }
+    ]
+    // 이곳에서 코딩을 시작하세요!
+
+
+    function TodoList(todoItemList, selector) {
+      const $container = document.querySelector(selector);
+
+      const invalidateParams = ((todoItemList, $container) => {
+        if (todoItemList && !Array.isArray(todoItemList)) {
+          throw new Error('Invalid parameters');
+        } else if (!(this instanceof TodoList)) {
+          throw new Error('Call with New');
+        } else if (!todoItemList.includes(item => item && item.text && typeof item.text === 'string')) {
+          throw new Error('Invalid data');
+        } else if ($container === null) {
+          throw new Errror('Invalid dom seelctor');
+        }
+      })(todoItemList, $container)
+      
+      this.todoItemList = data;
+      
+      this.render = function() {
+        const todoListContent = this.todoItemList
+          .map(filteredItem => $container.innherHtml = `<div>${filteredItem.text}</div>`)
+          .join('');
+          $container.innerHTML = todoListContent;
+      }
+
+      this.setState = function(data) {
+        if (data !== this.todoItemList) {
+          this.todoItemList = data;
+          this.render();
+        }
+      }
+    }
+
+    const todoList = new TodoList(data, '#todo-list');
+    todoList.render();
+   </script>
+</body>
+</html>

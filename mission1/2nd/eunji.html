@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list"></div>
+    <script>
+      var data = [
+        {
+          text: "JS 공부하기"
+        },
+        {
+          text: "JS 복습하기"
+        }
+      ];
+      // 이곳에서 코딩을 시작하세요!
+      function TodoList(data) {
+        const todoBox = document.querySelector("#todo-list");
+        var template = "";
+
+        // 보너스 2번. 타입 에러 발생 시키기
+        //Object.constructor : 모든 객체는 prototype으로부터 constructor속성을 상속받는다. Object함수의 참조를 반환한다!
+        if (this.constructor !== TodoList) {
+          //throw : 예외 상황을 알린다.
+          throw Error("생성자 함수를 제대로 만들어 주세요.");
+        }
+
+        if (!isArray(data)) {
+          throw Error("data를 입력해주세요.");
+        }
+
+        this.render = function() {
+          for (let i = 0; i < data.length; i++) {
+            template += `<div>${data[i].text}</div>`;
+          }
+          todoBox.innerHTML = template;
+        };
+      }
+
+      // 보너스 1번. 파라미터 없을 시 에러 발생 시키기
+      function isArray(data) {
+        return data instanceof Array;
+      }
+
+      const todoList = new TodoList(data);
+      todoList.render();
+    </script>
+  </body>
+</html>
