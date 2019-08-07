@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Mission 3</title>
+  </head>
+  <style>
+    .completed {
+      text-decoration: line-through;
+    }
+
+    .disabled {
+      pointer-events: none;
+      opacity: 0.5;
+    }
+  </style>
+  <body>
+    <div id="app">
+      <form id="todo-form">
+        <input type="text" id="todo-input" />
+        <button type="submit" class="disabled" id="add-todo-button">
+          Add
+        </button>    
+      </form>
+      <div id="todo-list"></div>
+      <div id="todo-count"></div>
+    </div>
+    <script src="./main.js" type="module"></script>
+  </body>
+</html>
