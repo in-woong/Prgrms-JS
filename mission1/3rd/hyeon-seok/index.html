@@ -19,8 +19,44 @@
 
       const $todoList = document.querySelector('#todo-list')
 
+      const ERROR_MSG = {
+        EMPTY_DATA: '데이터가 존재하지 않습니다',
+        INVALID_DATA: '유효한 데이터를 넣어주세요',
+        INCORRECT_DATA: '데이터가 적합하지 않습니다',
+        UNUSED_NEW: 'new 키워드가 필요합니다.',
+      }
+
+      const isValidation = function(todoData) {
+        const { EMPTY_DATA, INVALID_DATA, INCORRECT_DATA } = ERROR_MSG
+
+        if (!todoData) {
+          throw Error(EMPTY_DATA)
+        }
+        if (
+          !Array.isArray(todoData) ||
+          !todoData.length ||
+          todoData.includes(undefined)
+        ) {
+          throw Error(INVALID_DATA)
+        }
+
+        todoData.map(ele => {
+          const [[key, val]] = Object.entries(ele)
+
+          if (key !== 'text' || !val) {
+            throw Error(INCORRECT_DATA)
+          }
+        })
+
+        return todoData
+      }
+
       const TodoList = function({ todoData }) {
-        this.data = todoData
+        if (typeof new.target === 'undefined') {
+          throw Error('new 키워드가 필요합니다.')
+        }
+
+        this.data = isValidation(todoData)
       }
 
       TodoList.prototype.render = function({ $todoList }) {
