@@ -28,13 +28,13 @@
 
       const isValidation = function(todoData) {
         const { EMPTY_DATA, INVALID_DATA, INCORRECT_DATA } = ERROR_MSG
-        const checkArray = arr =>
+        const invalidArray = arr =>
           !Array.isArray(arr) || !arr.length || arr.includes(undefined)
 
         if (!todoData) {
           throw Error(EMPTY_DATA)
         }
-        if (checkArray(todoData)) {
+        if (invalidArray(todoData)) {
           throw Error(INVALID_DATA)
         }
 
