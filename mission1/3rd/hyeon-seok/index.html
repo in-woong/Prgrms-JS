@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list"></div>
+
+    <script>
+      const data = [
+        {
+          text: 'JS 공부하기',
+        },
+        {
+          text: 'JS 복습하기',
+        },
+      ]
+
+      const $todoList = document.querySelector('#todo-list')
+
+      const TodoList = function({ todoData }) {
+        this.data = todoData
+      }
+
+      TodoList.prototype.render = function({ $todoList }) {
+        $todoList.innerHTML = this.data.reduce((totalEl, { text }, index) => {
+          return (totalEl += `<li data-todo-id="${index}">${text}</li>`)
+        }, '<ul>')
+      }
+
+      const todoList = new TodoList({ todoData: data })
+      todoList.render({ $todoList })
+    </script>
+  </body>
+</html>
