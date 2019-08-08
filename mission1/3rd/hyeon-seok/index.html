@@ -40,7 +40,7 @@
           throw Error(INVALID_DATA)
         }
 
-        todoData.map(ele => {
+        todoData.forEach(ele => {
           const [[key, val]] = Object.entries(ele)
 
           if (key !== 'text' || !val) {
