@@ -6,6 +6,8 @@
 
   <body>
     <div id="todo-list"></div>
+    <div id="todo-list2"></div>
+    <div id="todo-list3"></div>
 
     <script>
       const data = [
@@ -16,8 +18,27 @@
           text: 'JS 복습하기',
         },
       ]
+      const data2 = [
+        {
+          text: 'TS 공부하기',
+        },
+        {
+          text: 'TS 복습하기',
+        },
+      ]
+      const data3 = [
+        {
+          text: 'CS 공부하기',
+        },
+        {
+          text: 'CS 복습하기',
+        },
+      ]
 
-      const $todoList = document.querySelector('#todo-list')
+      const $ = query => document.querySelector(query)
+      const $todoList = $('#todo-list')
+      const $todoList2 = $('#todo-list2')
+      const $todoList3 = $('#todo-list3')
 
       const ERROR_MSG = {
         EMPTY_DATA: '데이터가 존재하지 않습니다',
@@ -50,22 +71,40 @@
         return todoData
       }
 
-      const TodoList = function({ todoData }) {
+      const TodoList = function({ wrapperElement, todoData }) {
         if (typeof new.target === 'undefined') {
           throw Error(ERROR_MSG.UNUSED_NEW)
         }
 
+        this.$WRAPPER = wrapperElement
         this.data = isValidation(todoData)
       }
 
-      TodoList.prototype.render = function({ $todoList }) {
-        $todoList.innerHTML = this.data.reduce((totalEl, { text }, index) => {
+      TodoList.prototype.render = function() {
+        const { $WRAPPER, data } = this
+
+        $WRAPPER.innerHTML = data.reduce((totalEl, { text }, index) => {
           return (totalEl += `<li data-todo-id="${index}">${text}</li>`)
         }, '<ul>')
       }
 
-      const todoList = new TodoList({ todoData: data })
-      todoList.render({ $todoList })
+      const todoList = new TodoList({
+        wrapperElement: $todoList,
+        todoData: data,
+      })
+      todoList.render()
+
+      const todoList2 = new TodoList({
+        wrapperElement: $todoList2,
+        todoData: data2,
+      })
+      todoList2.render()
+
+      const todoList3 = new TodoList({
+        wrapperElement: $todoList3,
+        todoData: data3,
+      })
+      todoList3.render()
     </script>
   </body>
 </html>
