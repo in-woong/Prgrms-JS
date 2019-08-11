@@ -6,37 +6,66 @@
 </head>
 
 <body>
-  <ul id="todo-list"></ul>
+  <div id="todo-list"></div>
+  <div id="end-list"></div>
+  <div id="achieve-list"></div>
   <script>
-    const data = [
+    const todoData = [
       {
-        text: 'JS 공부하기'
+        text: 'JS 공부하기',
+        isCompleted: true,
       },
       {
-        text: 'JS 복습하기'
+        text: 'JS 복습하기',
+        isCompleted: false,
+      }
+    ];
+    const endData = [
+      {
+        text: 'CSS 공부하기',
+        isCompleted: true,
       },
       {
-        text: 'JS 복습하기3'
+        text: 'CSS 복습하기',
+        isCompleted: true,
+      }
+    ];
+    const achieveData = [
+      {
+        text: 'HTML 공부하기',
+        isCompleted: false,
+      },
+      {
+        text: 'HTML 복습하기',
+        isCompleted: true,
       }
     ]
 	
-    function TodoList(data) {
+    function List(title, data) {
       this.data = data;
 
       // 타입체크
       if(typeof(data) !== 'object') { throw new Error("error message"); }
 
-      // todoList item 컴포넌트
-      const todoListItem = data.map((data, index) => `<li>${index + 1}. ${data.text}</li>`);
+      // list item 컴포넌트
+      const listItem = data.map((data, index) => {
+        if (!data.isCompleted) return `<p><strike>${index + 1}. ${data.text}</strike></p>`
+        return `<p>${index + 1}. ${data.text}</p>`
+      }).join('');
       
       // HTML에 컴포넌트를 그려주는 함수
       this.render = function() {
-        document.getElementById('todo-list').innerHTML = todoListItem;
+        document.getElementById(title + '-list').innerHTML = listItem;
       }
     }
 
-    const todoList = new TodoList(data);
+    const todoList = new List('todo', todoData);
+    const endList = new List('end', endData);
+    const achieveList = new List('achieve', achieveData);
+
     todoList.render();
+    endList.render();
+    achieveList.render();
   </script>
 </body>
 </html>
