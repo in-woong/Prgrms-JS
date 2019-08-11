@@ -40,32 +40,34 @@
         isCompleted: true,
       }
     ]
-	
-    function List(title, data) {
+
+    function TodoList(title, data) {
       this.data = data;
 
-      // 타입체크
-      if(typeof(data) !== 'object') { throw new Error("error message"); }
+      // 타입 & 에러 체크
+      if(typeof(data) !== 'object' || !this instanceof TodoList) throw new Error("error message");
 
       // list item 컴포넌트
       const listItem = data.map((data, index) => {
         if (!data.isCompleted) return `<p><strike>${index + 1}. ${data.text}</strike></p>`
         return `<p>${index + 1}. ${data.text}</p>`
       }).join('');
+
+      this.setState = (nextData) => {
+        this.data = nextData;
+        this.render();
+      };
       
       // HTML에 컴포넌트를 그려주는 함수
-      this.render = function() {
+      this.render = () => {
         document.getElementById(title + '-list').innerHTML = listItem;
       }
     }
 
-    const todoList = new List('todo', todoData);
-    const endList = new List('end', endData);
-    const achieveList = new List('achieve', achieveData);
-
-    todoList.render();
-    endList.render();
-    achieveList.render();
+    // 랜더
+    const todoList = new TodoList('todo', todoData).setState(todoData);
+    const endList = new TodoList('end', endData).setState(endData);
+    const achieveList = new TodoList('achieve', achieveData).setState(achieveData);
   </script>
 </body>
 </html>
