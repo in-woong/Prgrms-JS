@@ -88,6 +88,11 @@
         }, '<ul>')
       }
 
+      TodoList.prototype.setState = function(nextState) {
+        this.data = isValidation(nextState)
+        this.render()
+      }
+
       const todoList = new TodoList({
         wrapperElement: $todoList,
         todoData: data,
@@ -105,6 +110,7 @@
         todoData: data3,
       })
       todoList3.render()
+      todoList3.setState(data)
     </script>
   </body>
 </html>
