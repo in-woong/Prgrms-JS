@@ -92,24 +92,25 @@
         this.data = isValidation(todoData)
       }
 
-      TodoList.prototype.render = function() {
-        const { $WRAPPER, data } = this
-        const $STRIKE = conditionalTemplate('strike')
+      TodoList.prototype = {
+        render() {
+          const { $WRAPPER, data } = this
+          const $STRIKE = conditionalTemplate('strike')
 
-        $WRAPPER.innerHTML = data.reduce(
-          (totalEl, { text, isCompleted }, index) => {
-            return (totalEl += `<li data-todo-id="${index}">${$STRIKE({
-              text,
-              predicate: isCompleted,
-            })}</li>`)
-          },
-          '<ul>'
-        )
-      }
-
-      TodoList.prototype.setState = function(nextState) {
-        this.data = isValidation(nextState)
-        this.render()
+          $WRAPPER.innerHTML = data.reduce(
+            (totalEl, { text, isCompleted }, index) => {
+              return (totalEl += `<li data-todo-id="${index}">${$STRIKE({
+                text,
+                predicate: isCompleted,
+              })}</li>`)
+            },
+            '<ul>'
+          )
+        },
+        setState(nextState) {
+          this.data = isValidation(nextState)
+          this.render()
+        },
       }
 
       const todoList = new TodoList({
@@ -129,7 +130,7 @@
         todoData: data3,
       })
       todoList3.render()
-      todoList3.setState(data)
+      // todoList3.setState(data)
     </script>
   </body>
 </html>
