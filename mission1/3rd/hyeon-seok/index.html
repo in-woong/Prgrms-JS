@@ -77,8 +77,8 @@
         }
 
         todoData.forEach(ele => {
-          const [textProp, isCompletedProp] = Object.keys(ele)
-          const incorrectKey = (textProp, isCompletedProp) => {
+          const elementProps = Object.keys(ele)
+          const incorrectKey = ([textProp, isCompletedProp]) => {
             const { TEXT, IS_COMPLETED } = ENUM_TODO
 
             return textProp !== TEXT || isCompletedProp !== IS_COMPLETED
@@ -87,7 +87,7 @@
             return !text || typeof isCompleted !== 'boolean'
           }
 
-          if (incorrectKey(textProp, isCompletedProp) || incorrectVal(ele)) {
+          if (incorrectKey(elementProps) || incorrectVal(ele)) {
             throw Error(INCORRECT_DATA)
           }
         })
@@ -142,7 +142,7 @@
         todoData: data3,
       })
       todoList3.render()
-      // todoList3.setState(data)
+      todoList3.setState(data)
     </script>
   </body>
 </html>
