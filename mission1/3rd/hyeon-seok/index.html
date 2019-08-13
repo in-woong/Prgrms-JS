@@ -13,25 +13,31 @@
       const data = [
         {
           text: 'JS 공부하기',
+          isCompleted: true,
         },
         {
           text: 'JS 복습하기',
+          isCompleted: false,
         },
       ]
       const data2 = [
         {
           text: 'TS 공부하기',
+          isCompleted: true,
         },
         {
           text: 'TS 복습하기',
+          isCompleted: false,
         },
       ]
       const data3 = [
         {
           text: 'CS 공부하기',
+          isCompleted: true,
         },
         {
           text: 'CS 복습하기',
+          isCompleted: false,
         },
       ]
 
@@ -45,6 +51,12 @@
         INVALID_DATA: '유효한 데이터를 넣어주세요',
         INCORRECT_DATA: '데이터가 적합하지 않습니다',
         UNUSED_NEW: 'new 키워드가 필요합니다.',
+      }
+
+      const conditionalTemplate = function(element) {
+        return function({ text = '', predicate = true }) {
+          return predicate ? `<${element}>${text}</${element}>` : text
+        }
       }
 
       const isValidation = function(todoData) {
@@ -82,10 +94,17 @@
 
       TodoList.prototype.render = function() {
         const { $WRAPPER, data } = this
+        const $STRIKE = conditionalTemplate('strike')
 
-        $WRAPPER.innerHTML = data.reduce((totalEl, { text }, index) => {
-          return (totalEl += `<li data-todo-id="${index}">${text}</li>`)
-        }, '<ul>')
+        $WRAPPER.innerHTML = data.reduce(
+          (totalEl, { text, isCompleted }, index) => {
+            return (totalEl += `<li data-todo-id="${index}">${$STRIKE({
+              text,
+              predicate: isCompleted,
+            })}</li>`)
+          },
+          '<ul>'
+        )
       }
 
       TodoList.prototype.setState = function(nextState) {
