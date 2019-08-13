@@ -84,7 +84,7 @@
             return textProp !== TEXT || isCompletedProp !== IS_COMPLETED
           }
           const incorrectVal = ({ text, isCompleted }) => {
-            return !text || !typeof isCompleted === 'boolean'
+            return !text || typeof isCompleted !== 'boolean'
           }
 
           if (incorrectKey(textProp, isCompletedProp) || incorrectVal(ele)) {
