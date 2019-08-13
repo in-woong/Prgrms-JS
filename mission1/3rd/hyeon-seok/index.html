@@ -53,6 +53,11 @@
         UNUSED_NEW: 'new 키워드가 필요합니다.',
       }
 
+      const ENUM_TODO = {
+        TEXT: 'text',
+        IS_COMPLETED: 'isCompleted',
+      }
+
       const conditionalTemplate = function(element) {
         return function({ text = '', predicate = true }) {
           return predicate ? `<${element}>${text}</${element}>` : text
@@ -72,10 +77,17 @@
         }
 
         todoData.forEach(ele => {
-          const [[key, val]] = Object.entries(ele)
-          const incorrectKeyOrVal = (key, val) => key !== 'text' || !val
+          const [textProp, isCompletedProp] = Object.keys(ele)
+          const incorrectKey = (textProp, isCompletedProp) => {
+            const { TEXT, IS_COMPLETED } = ENUM_TODO
 
-          if (incorrectKeyOrVal(key, val)) {
+            return textProp !== TEXT || isCompletedProp !== IS_COMPLETED
+          }
+          const incorrectVal = ({ text, isCompleted }) => {
+            return !text || !typeof isCompleted === 'boolean'
+          }
+
+          if (incorrectKey(textProp, isCompletedProp) || incorrectVal(ele)) {
             throw Error(INCORRECT_DATA)
           }
         })
