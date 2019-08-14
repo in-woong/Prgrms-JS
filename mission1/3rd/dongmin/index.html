@@ -1,0 +1,86 @@
+<html>
+
+<head>
+<title>Mission 1</title>
+<meta charset="utf-8" />
+</head>
+
+<body>
+<div id="todo-list"></div>
+<div id="todo-list2"></div>
+<div id="todo-list3"></div>
+<script>
+	const data1 = [
+		{
+			text: 'JS 공부하기',
+            isCompleted: true,
+		},
+		{
+			text: 'JS 복습하기',
+            isCompleted: false,
+		},
+	];
+    const data2 = [
+      {
+        text: 'React 공부하기',
+        isCompleted: true,
+      },
+      {
+        text: 'Redux 공부하기',
+        isCompleted: false,
+      },
+      {
+        text: 'Redux-Saga 공부하기',
+        isCompleted: true,
+      },
+    ];
+    const data3 = [
+      {
+        text: '책 읽기',
+        isCompleted: true,
+      },
+    ];
+
+	const isValidItem = (item) => {
+		if (!item || !(typeof item === 'object')) return false;
+		if (Object.keys(item).length !== 2) return false;
+
+		return item.hasOwnProperty('text')
+          && typeof item.text === "string"
+          && item.hasOwnProperty('isCompleted')
+          && typeof item.isCompleted === "boolean";
+	};
+
+	const validateData = (data) => {
+		if(!Array.isArray(data)) throw new Error('TodoList의 parameter는 반드시 배열이어야 합니다.');
+		if (!data.every(isValidItem)) throw new Error('valid한 데이터가 아닙니다.');
+	};
+	
+	function TodoList (el, data) {
+		if (!(this instanceof TodoList)) throw new Error('TodoList는 반드시 new로 만들어주세요.');
+		this.data = data;
+		this.$wrapper = document.querySelector(el);
+
+		const render = function () {
+			this.$wrapper.innerHTML =
+              `<ul>${this.data.map(item =>`<li>${item.isCompleted ? `<strike>${item.text}</strike>` : item.text}</li>`).join('')}</ul>`;
+		}.bind(this);
+
+		this.setState = function (newData) {
+          if (this.data !== newData) {
+            validateData(newData);
+            this.data = [...newData];
+            render();
+          }
+        }
+        //for initial Rendering
+        render();
+	}
+	
+	const MyComponents = [new TodoList('#todo-list',data1), new TodoList('#todo-list2',data2), new TodoList('#todo-list3',data3)];
+
+	// TEST
+	setInterval(() => MyComponents.forEach(component => component.setState([...component.data, {text: new Date().toString(), isCompleted: Math.random() >= 0.5}])), 5000);
+</script>
+</body>
+</html>
