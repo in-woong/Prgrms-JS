@@ -1,0 +1,147 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list1"></div>
+    <div id="todo-list2"></div>
+    <div id="todo-list3"></div>
+    <script>
+      var todoData1 = [
+        {
+          text: 'node.js 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'CSS 공부하기',
+          isCompleted: false,
+        }
+      ]
+      var todoData2 = [
+        {
+          text: 'react.js 스터디',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 공부하기',
+          isCompleted: false,
+        },
+      ]
+      var todoData3 = [
+        {
+          text: 'vanilla js 공부하기',
+          isCompleted: false,
+        },
+        {
+          text: 'FE JS Study 신청하기',
+          isCompleted: true,
+        }
+      ]
+      var todoData4 = [
+        {
+          text: 'node.js 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'CSS 공부하기',
+          isCompleted: true,
+        }
+      ]
+    // 이곳에서 코딩을 시작하세요!
+    function hasProperty(obj, property) {
+      return obj && obj.hasOwnProperty(property)
+    }
+
+    function hasIdSelector(obj, prop, selector) {
+      return obj.prototype[prop].includes(selector)
+    }
+
+    function isIdSelector(selector) {
+      return typeof selector === 'string' && selector.startsWith('#')
+    }
+
+    function validateStateArray(state) {
+      if(!Array.isArray(state)) throw new Error('state must be Array')
+    }
+
+    function TodoList(todos, idSelector) {
+      if(!(this instanceof TodoList)) throw new Error(`call this function with 'new'`)
+      validateStateArray(todos)
+      if(!isIdSelector(idSelector)) throw new Error(`ID Selector must start with '#'`)
+      
+      this.$elem = document.querySelector(idSelector)
+      if(!this.$elem) throw new Error(`There is no selector ${idSelector}`)
+
+      if(TodoList.prototype.IdSelectors === undefined) TodoList.prototype.IdSelectors = []
+      if(hasIdSelector(TodoList, 'IdSelectors', idSelector)) throw new Error(`already create an object with ID selector '${idSelector}'`)
+      
+      this.IdSelectors.push(idSelector)
+
+      this.todos = todos.filter(todo => hasProperty(todo, 'text'))
+
+      TodoList.prototype.render = function() {
+        var todosHTMLString = this.todos.reduce((acc, todo) => {
+          const todoText = `<div>${todo.text}</div>`
+          return todo.isCompleted ? `${acc}<strike>${todoText}</strike>` : `${acc}${todoText}`
+        }, '')
+        this.$elem.innerHTML = todosHTMLString
+      }
+
+      TodoList.prototype.isStateEqual = function(curState, nextState) {
+        for(let si=0; si<curState.length; si++) {
+          const curStateObject = curState[si]
+          const nextStateObject = nextState[si]
+          const curKeys = Object.keys(curStateObject)
+          const nextKeys = Object.keys(nextStateObject)
+          if(curKeys.length !== nextKeys.length) return false
+          
+          for(const key of curKeys) {
+            const curValue = curStateObject[key]
+            const nextValue = nextStateObject[key]
+            if(typeof curValue === 'object') {
+              if(!this.isStateEqual(curValue, nextValue)) return false
+            } else if(curValue !== nextValue) {
+              return false
+            }
+          }
+        }
+        return true
+      }
+
+      TodoList.prototype.setState = function(nextTodos) {
+        validateStateArray(nextTodos)
+        nextTodos = nextTodos.filter(todo => hasProperty(todo, 'text'))
+        
+        if(!this.isStateEqual(this.todos, nextTodos)) {
+          this.todos = nextTodos
+          this.render()
+        }
+      }
+    }
+
+    var todoList1 = new TodoList(todoData1, '#todo-list1')
+    todoList1.render()
+
+    var todoList2 = new TodoList(todoData2, '#todo-list2')
+    todoList2.render()
+
+    var todoList3 = new TodoList(todoData3, '#todo-list3')
+    todoList3.render()
+
+    setTimeout(() => {
+      todoList1.setState(todoData4)
+
+      setTimeout(() => {
+        todoList1.setState(todoData4)
+
+        setTimeout(() => {
+          todoList1.setState(todoData1)
+        }, 2000)
+      }, 2000)
+    }, 2000)
+
+    </script>
+  </body>
+</html>
