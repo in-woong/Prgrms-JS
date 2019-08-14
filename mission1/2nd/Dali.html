@@ -52,7 +52,7 @@
 
         function TodoList(data, todoEl) {
           this.el = todoEl;
-          const validate = (data) => {
+          const validateData = (data) => {
             utils.throwErrorByFalsy(utils.isInstance(this, TodoList), "new 키워드로 함수를 실행해주세요");
             utils.throwErrorByFalsy(utils.isArray(data), "data 형식이 올바르지 않습니다");
           };

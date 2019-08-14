@@ -1,0 +1,106 @@
+<html>
+
+<head>
+    <title>Mission 1</title>
+    <meta charset="utf-8"/>
+</head>
+
+<body>
+<h2>todo-list</h2>
+<div id="todo-list"></div>
+<hr>
+<h2>weekday-todo-list</h2>
+<div id="weekday-todo-list"></div>
+<hr>
+<h2>weekend-todo-list</h2>
+<div id="weekend-todo-list"></div>
+<hr>
+<script>
+  const data = [{
+    text: 'JS 공부하기', isCompleted: false,
+  }, {
+    text: 'JS 복습하기', isCompleted: true,
+  }]
+
+  const weekdayData = [{
+    text: 'JS 공부하기', isCompleted: false,
+  }, {
+    text: 'HTML/CSS 공부하기', isCompleted: true,
+  }, {
+    text: 'webpack 공부하기', isCompleted: false,
+  }, {
+    text: '운동하기', isCompleted: false,
+  }, {
+    text: 'JS 공부하기', isCompleted: true,
+  }]
+
+  const weekendData = [{
+    text: '여행가기', isCompleted: false,
+  }, {
+    text: '늦잠자기', isCompleted: true,
+  }]
+
+  const validateData = (data) => {
+    if (!Array.isArray(data)) {
+      throw new Error('argument is not array')
+    }
+
+    if (!data.length) {
+      throw new Error('argument is empty array')
+    }
+
+    data.forEach(item => {
+      if (!item) {
+        throw new Error('item in argument is undefined')
+      }
+
+      if (!item.hasOwnProperty('text')) {
+        throw new Error('item in argument is not include text prop')
+      }
+
+      if (!item.hasOwnProperty('isCompleted')) {
+        throw new Error('item in argument is not include isCompleted prop')
+      }
+
+      if (!item.text) {
+        throw new Error('item in argument is not include text prop')
+      }
+
+      if (typeof item.text !== 'string') {
+        throw new Error('text prop is not string type')
+      }
+    })
+  }
+
+  function TodoList(elementId) {
+    let state;
+
+    if (this.constructor !== TodoList) {
+      throw new Error('TodoList should be called by new keyword')
+    }
+
+    if (!elementId || typeof elementId !== 'string') {
+      throw new Error('elementId is undefined or not string type')
+    }
+
+    const createTodoListHtml = () => state.reduce((acc, todo) => {
+      return `${acc}<div>${todo.isCompleted ? `<strike>${todo.text}</strike>` : todo.text}</div>`
+    }, '')
+
+    const render = () => document.querySelector(`#${elementId}`).innerHTML = createTodoListHtml()
+
+    this.setState = (nextData) => {
+      validateData(nextData)
+      state = nextData
+      render()
+    }
+  }
+
+  new TodoList('todo-list').setState(data)
+
+  new TodoList('weekday-todo-list').setState(weekdayData)
+
+  new TodoList('weekend-todo-list').setState(weekendData)
+</script>
+</body>
+</html>
