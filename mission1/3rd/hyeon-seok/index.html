@@ -100,21 +100,23 @@
           throw Error(ERROR_MSG.UNUSED_NEW)
         }
 
-        this.$WRAPPER = wrapperElement
+        this.$wrapper = wrapperElement
         this.data = isValidation(todoData)
       }
 
       TodoList.prototype = {
         render() {
-          const { $WRAPPER, data } = this
-          const $STRIKE = conditionalTemplate('strike')
+          const { $wrapper, data } = this
+          const strikeTemplateCreator = conditionalTemplate('strike')
 
-          $WRAPPER.innerHTML = data.reduce(
+          $wrapper.innerHTML = data.reduce(
             (totalEl, { text, isCompleted }, index) => {
-              return (totalEl += `<li data-todo-id="${index}">${$STRIKE({
-                text,
-                predicate: isCompleted,
-              })}</li>`)
+              return (totalEl += `<li data-todo-id="${index}">${strikeTemplateCreator(
+                {
+                  text,
+                  predicate: isCompleted,
+                }
+              )}</li>`)
             },
             '<ul>'
           )
