@@ -1,0 +1,150 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list"></div>
+    <div id="todo-list2"></div>
+    <div id="todo-list3"></div>
+
+    <script>
+      const data = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false,
+        },
+      ]
+      const data2 = [
+        {
+          text: 'TS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'TS 복습하기',
+          isCompleted: false,
+        },
+      ]
+      const data3 = [
+        {
+          text: 'CS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'CS 복습하기',
+          isCompleted: false,
+        },
+      ]
+
+      const $ = query => document.querySelector(query)
+      const $todoList = $('#todo-list')
+      const $todoList2 = $('#todo-list2')
+      const $todoList3 = $('#todo-list3')
+
+      const ERROR_MSG = {
+        EMPTY_DATA: '데이터가 존재하지 않습니다',
+        INVALID_DATA: '유효한 데이터를 넣어주세요',
+        INCORRECT_DATA: '데이터가 적합하지 않습니다',
+        UNUSED_NEW: 'new 키워드가 필요합니다.',
+      }
+
+      const ENUM_TODO = {
+        TEXT: 'text',
+        IS_COMPLETED: 'isCompleted',
+      }
+
+      const conditionalTemplate = function(element) {
+        return function({ text = '', predicate = true }) {
+          return predicate ? `<${element}>${text}</${element}>` : text
+        }
+      }
+
+      const isValidation = function(todoData) {
+        const { EMPTY_DATA, INVALID_DATA, INCORRECT_DATA } = ERROR_MSG
+        const invalidArray = arr =>
+          !Array.isArray(arr) || !arr.length || arr.includes(undefined)
+
+        if (!todoData) {
+          throw Error(EMPTY_DATA)
+        }
+        if (invalidArray(todoData)) {
+          throw Error(INVALID_DATA)
+        }
+
+        todoData.forEach(ele => {
+          const elementProps = Object.keys(ele)
+          const incorrectKey = ([textProp, isCompletedProp]) => {
+            const { TEXT, IS_COMPLETED } = ENUM_TODO
+
+            return textProp !== TEXT || isCompletedProp !== IS_COMPLETED
+          }
+          const incorrectVal = ({ text, isCompleted }) => {
+            return !text || typeof isCompleted !== 'boolean'
+          }
+
+          if (incorrectKey(elementProps) || incorrectVal(ele)) {
+            throw Error(INCORRECT_DATA)
+          }
+        })
+
+        return todoData
+      }
+
+      const TodoList = function({ wrapperElement, todoData }) {
+        if (typeof new.target === 'undefined') {
+          throw Error(ERROR_MSG.UNUSED_NEW)
+        }
+
+        this.$wrapper = wrapperElement
+        this.data = isValidation(todoData)
+      }
+
+      TodoList.prototype = {
+        render() {
+          const { $wrapper, data } = this
+          const strikeTemplateCreator = conditionalTemplate('strike')
+
+          $wrapper.innerHTML = data.reduce(
+            (totalEl, { text, isCompleted }, index) => {
+              return (totalEl += `<li data-todo-id="${index}">${strikeTemplateCreator(
+                {
+                  text,
+                  predicate: isCompleted,
+                }
+              )}</li>`)
+            },
+            '<ul>'
+          )
+        },
+        setState(nextState) {
+          this.data = isValidation(nextState)
+          this.render()
+        },
+      }
+
+      const todoList = new TodoList({
+        wrapperElement: $todoList,
+        todoData: data,
+      })
+      todoList.render()
+
+      const todoList2 = new TodoList({
+        wrapperElement: $todoList2,
+        todoData: data2,
+      })
+      todoList2.render()
+
+      const todoList3 = new TodoList({
+        wrapperElement: $todoList3,
+        todoData: data3,
+      })
+      todoList3.render()
+      todoList3.setState(data)
+    </script>
+  </body>
+</html>
