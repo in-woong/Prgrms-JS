@@ -38,7 +38,7 @@ class App {
   }
 
   inputTodoFocus() {
-    inputFocus({ query: '.create__input' })
+    inputFocus({ target: this.$wrapper, query: '.create__input' })
   }
 
   render = () => {

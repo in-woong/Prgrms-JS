@@ -1,6 +1,6 @@
 import { ERROR_MSG } from '../constants/index.js'
 
-const $ = query => document.querySelector(query)
+const $ = (query, target = document) => target.querySelector(query)
 
 const isValidation = function(todoData) {
   const { EMPTY_DATA, INVALID_DATA, INCORRECT_DATA } = ERROR_MSG
@@ -42,8 +42,8 @@ const getTodoIdByElement = function({ target }) {
   return Number(target.dataset.todoId)
 }
 
-const inputFocus = function({ query }) {
-  $(query).focus()
+const inputFocus = function({ target, query }) {
+  $(query, target).focus()
 }
 
 const getActionNameByClassName = function({ className }) {
