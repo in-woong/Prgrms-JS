@@ -1,0 +1,116 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="index.css" />
+  </head>
+  <body>
+    <h1 class="title">TO-DO LIST</h1>
+    <div class="btn-container">
+      <button class="btn" id="add" onclick="handleAddClick()">ADD</button>
+      <button class="btn" onclick="handleClearClick()">CLEAR</button>
+    </div>
+    <div id="todo-list"></div>
+    <script>
+      'use strict'
+
+      var data = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false,
+        },
+      ]
+
+      var data2 = [
+        {
+          text: '프로그래머스 숙제',
+          isCompleted: true,
+        },
+        {
+          text: '회사 업무 남은 거',
+          isCompleted: false,
+        },
+      ]
+
+      var data3 = [
+        {
+          text: '이비인후과',
+          isCompleted: true,
+        },
+        {
+          text: '미용실',
+          isCompleted: true,
+        },
+      ]
+      const $todoContainer = document.querySelector('#todo-list')
+      class TodoList {
+        constructor(data) {
+          if (
+            !Array.isArray(data) ||
+            data.length <= 0 ||
+            data.some(datum => typeof datum.text !== 'string')
+          ) {
+            throw new Error('Invalid Parameter')
+          }
+          this.data = data
+        }
+
+        $ul
+
+        setState(data) {
+          this.data = data
+          this.render()
+        }
+
+        render() {
+          let str = ''
+          const parseToHtmlStr = todo => {
+            return todo.isCompleted
+              ? `<strike>${todo.text}</strike>`
+              : `<li>${todo.text}</li>`
+          }
+          this.data.forEach(todo => {
+            str += parseToHtmlStr(todo)
+          })
+          if (!this.$ul) {
+            this.$ul = document.createElement('ul')
+            $todoContainer.appendChild(this.$ul)
+          }
+          this.$ul.innerHTML = str
+        }
+      }
+
+      function* addGen() {
+        const todoList = new TodoList(data)
+        todoList.render()
+        yield
+        const todoList2 = new TodoList(data2)
+        todoList2.render()
+        yield
+        const todoList3 = new TodoList(data3)
+        todoList3.render()
+        document.querySelector('#add').innerHTML = 'UPDATE'
+        yield
+        todoList.setState([{ text: '내일 할 일', isCompleted: false }])
+        yield
+        todoList2.setState([{ text: '모레 할 일', isCompleted: false }])
+        yield
+        todoList3.setState([{ text: '다음 주 할 일', isCompleted: false }])
+        yield
+      }
+
+      let adder = addGen()
+      function handleAddClick() {
+        adder.next()
+      }
+      function handleClearClick() {
+        $todoContainer.innerHTML = ''
+        adder = addGen()
+      }
+    </script>
+  </body>
+</html>
