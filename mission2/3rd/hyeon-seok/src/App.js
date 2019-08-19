@@ -17,7 +17,7 @@ class App {
 
     this.$wrapper = wrapperElement
     this.model = new ProxyModel({ callback: this.render })
-    this.model.todo = initData
+    this.model.todo = isValidation(initData)
     this.attachEvent()
   }
 
