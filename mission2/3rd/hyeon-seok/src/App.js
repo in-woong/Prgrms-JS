@@ -1,13 +1,6 @@
-import {
-  isValidation,
-  conditionalTemplate,
-  getParentElement,
-  getDataIndex,
-  inputFocus,
-} from './util/index.js'
+import { isValidation, conditionalTemplate, inputFocus } from './util/index.js'
 import { TodoCount, TodoInput, TodoList } from './components/index.js'
-import ACTION_TYPE from '../src/actions/index.js'
-import reducer from '../src/reducer/index.js'
+import { createTodo, updateTodo } from './actions/index.js'
 
 class App {
   constructor({ wrapperElement, initData, ProxyModel }) {
@@ -28,53 +21,8 @@ class App {
   attachEvent() {
     const { $wrapper } = this
 
-    $wrapper.addEventListener(
-      'click',
-      function({ target }) {
-        const [actionName] = target.className.split('__')
-        const selectedAction = ACTION_TYPE[actionName.toUpperCase()]
-
-        if (!selectedAction || selectedAction === ACTION_TYPE.CREATE) {
-          return
-        }
-        const dispatch = reducer[ACTION_TYPE.CREATE]
-        const $todoItem = getParentElement({
-          target: target,
-          query: '.todo__item',
-        })
-        const selectedTodoIndex = getDataIndex({
-          target: $todoItem,
-        })
-
-        const newTodoList = reducer[selectedAction]({
-          prevTodoList: this.getTodo(),
-          selectedTodoIndex: selectedTodoIndex,
-        })
-        this.setState({ newData: newTodoList })
-      }.bind(this)
-    )
-
-    $wrapper.addEventListener(
-      'keyup',
-      function(e) {
-        e.preventDefault()
-        const isEnter = e.key === 'Enter'
-        const { value: newTodoText, className } = e.target
-        const [actionName] = className.split('__')
-        const selectedAction = ACTION_TYPE[actionName.toUpperCase()]
-
-        if (!isEnter || !newTodoText) {
-          return
-        }
-
-        const dispatch = reducer[ACTION_TYPE.CREATE]
-        const newTodoList = dispatch({
-          prevTodoList: this.getTodo(),
-          newTodoText: newTodoText,
-        })
-        this.setState({ newData: newTodoList })
-      }.bind(this)
-    )
+    $wrapper.addEventListener('click', updateTodo.bind(this))
+    $wrapper.addEventListener('keyup', createTodo.bind(this))
   }
 
   getTodo() {

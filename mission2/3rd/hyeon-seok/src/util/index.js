@@ -43,12 +43,16 @@ const getParentElement = function({ target, query }) {
   return target.closest(query)
 }
 
-const getDataIndex = function({ target }) {
+const getTodoIdByElement = function({ target }) {
   return Number(target.dataset.todoId)
 }
 
 const inputFocus = function({ query }) {
   $(query).focus()
+}
+
+const getActionNameByClassName = function({ className }) {
+  return className.split('__')[0].toUpperCase()
 }
 
 export {
@@ -57,5 +61,6 @@ export {
   isValidation,
   conditionalTemplate,
   getParentElement,
-  getDataIndex,
+  getTodoIdByElement,
+  getActionNameByClassName,
 }
