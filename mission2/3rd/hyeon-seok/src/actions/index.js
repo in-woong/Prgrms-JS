@@ -14,11 +14,7 @@ const ACTION_TYPE = {
 const createTodo = function(e) {
   e.preventDefault()
   const isEnter = e.key === 'Enter'
-  const { value: newTodoText, className } = e.target
-  const actionName = getActionNameByClassName({
-    className: className,
-  })
-  const selectedAction = ACTION_TYPE[actionName]
+  const { value: newTodoText } = e.target
 
   if (!isEnter || !newTodoText) {
     return
@@ -42,18 +38,15 @@ const updateTodo = function({ target }) {
   if (!selectedAction || isCreateTodoAction) {
     return
   }
-  const dispatch = reducer[ACTION_TYPE.CREATE]
   const $todoItem = getParentElement({
     target: target,
     query: '.todo__item',
   })
-  const selectedTodoIndex = getTodoIdByElement({
-    target: $todoItem,
-  })
+  const selectedTodoId = getTodoIdByElement({ target: $todoItem })
 
   const newTodoList = reducer[selectedAction]({
     prevTodoList: this.getTodo(),
-    selectedTodoIndex: selectedTodoIndex,
+    selectedTodoId: selectedTodoId,
   })
   this.setState({ newData: newTodoList })
 }
