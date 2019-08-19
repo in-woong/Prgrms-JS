@@ -1,11 +1,11 @@
-export default (function() {
-  const createTodo = ({ prevTodoList, newTodoText }) => {
+const reducer = {
+  createTodo: function({ prevTodoList, newTodoText }) {
     return [...prevTodoList, { text: newTodoText, isCompleted: false }]
-  }
-  const deleteTodo = ({ prevTodoList, selectedTodoId }) => {
+  },
+  deleteTodo: function({ prevTodoList, selectedTodoId }) {
     return prevTodoList.filter((item, index) => index !== selectedTodoId)
-  }
-  const toggleTodo = ({ prevTodoList, selectedTodoId }) => {
+  },
+  toggleTodo: function({ prevTodoList, selectedTodoId }) {
     const prevTodoIem = prevTodoList[selectedTodoId]
     const newTodoItem = {
       ...prevTodoIem,
@@ -17,11 +17,6 @@ export default (function() {
       newTodoItem,
       ...prevTodoList.slice(selectedTodoId + 1),
     ]
-  }
-
-  return {
-    createTodo,
-    deleteTodo,
-    toggleTodo,
-  }
-})()
+  },
+}
+export default reducer
