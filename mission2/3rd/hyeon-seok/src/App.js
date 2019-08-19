@@ -1,4 +1,9 @@
-import { isValidation, conditionalTemplate } from './util/index.js'
+import {
+  isValidation,
+  conditionalTemplate,
+  getParentElement,
+  getDataIndex,
+} from './util/index.js'
 import { TodoCount, TodoInput, TodoList } from './components/index.js'
 import ACTION_TYPE from '../src/actions/index.js'
 import reducer from '../src/reducer/index.js'
@@ -20,7 +25,7 @@ class App {
   }
 
   attachEvent() {
-    const { $wrapper, model } = this
+    const { $wrapper } = this
     const eventList = ['click', 'keyup']
 
     eventList.forEach(eventType =>
@@ -33,8 +38,11 @@ class App {
           if (!selectedAction) {
             return
           }
+          const todoIndex = getDataIndex(
+            getParentElement(target, '.todo__item')
+          )
 
-          const payload = reducer[selectedAction](model.todo)
+          const payload = reducer[selectedAction](this.model.todo, todoIndex)
           this.setState({
             target: 'todo',
             newData: payload,

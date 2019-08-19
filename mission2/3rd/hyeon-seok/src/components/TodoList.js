@@ -3,7 +3,9 @@ const TodoList = function(data, strikeTemplateCreator) {
     const isCheckbox = isCompleted ? 'checked' : ''
 
     return (totalEl += `
-            <li data-todo-id="${index}">
+            <li
+              class="todo__item"
+              data-todo-id="${index}">
               <input
                 class="toggle__checkbox"
                 type="checkbox"

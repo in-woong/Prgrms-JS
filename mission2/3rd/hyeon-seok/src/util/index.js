@@ -39,4 +39,12 @@ const conditionalTemplate = function(element) {
   }
 }
 
-export { $, isValidation, conditionalTemplate }
+const getParentElement = function(target, query) {
+  return target.closest(query)
+}
+
+const getDataIndex = function(target) {
+  return Number(target.dataset.todoId)
+}
+
+export { $, isValidation, conditionalTemplate, getParentElement, getDataIndex }
