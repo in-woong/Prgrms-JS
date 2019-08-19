@@ -12,21 +12,19 @@ class App {
     this.$wrapper = wrapperElement
     this.model = new ProxyModel({ callback: this.render })
     this.model.todo = initData
-    this.attachEvent({
-      $target: this.$wrapper,
-      model: this.model,
-    })
+    this.attachEvent()
   }
 
-  setState({ target, prevData, newData }) {
-    prevData[target] = newData
+  setState({ target, newData }) {
+    this.model[target] = newData
   }
 
-  attachEvent({ $target, model }) {
+  attachEvent() {
+    const { $wrapper, model } = this
     const eventList = ['click', 'keyup']
 
     eventList.forEach(eventType =>
-      $target.addEventListener(
+      $wrapper.addEventListener(
         eventType,
         function({ target }) {
           const [actionName] = target.className.split('__')
@@ -39,7 +37,6 @@ class App {
           const payload = reducer[selectedAction](model.todo)
           this.setState({
             target: 'todo',
-            prevData: model,
             newData: payload,
           })
         }.bind(this)
