@@ -16,7 +16,7 @@ class App {
     }
 
     this.$wrapper = wrapperElement
-    this.model = new ProxyModel({ callback: this.render })
+    this.model = new ProxyModel({ callbackFunc: this.render })
     this.model.todo = isValidation(initData)
     this.attachEvent()
   }
@@ -58,7 +58,7 @@ class App {
       'keyup',
       function(e) {
         e.preventDefault()
-        const isEnter = e.key !== 'Enter'
+        const isEnter = e.key === 'Enter'
         const { value: newTodoText, className } = e.target
         const [actionName] = className.split('__')
         const selectedAction = ACTION_TYPE[actionName.toUpperCase()]

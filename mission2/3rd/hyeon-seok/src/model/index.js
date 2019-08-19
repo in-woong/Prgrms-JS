@@ -1,12 +1,13 @@
 export default class Model {
-  constructor({ callback }) {
+  constructor({ callbackFunc }) {
     const proxy = new Proxy(this, {
       get(target, prop) {
         return target[prop]
       },
       set(target, prop, value) {
         target[prop] = value
-        callback(prop, value)
+
+        callbackFunc()
 
         return true
       },
