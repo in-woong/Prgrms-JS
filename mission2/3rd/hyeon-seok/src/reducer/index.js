@@ -9,6 +9,7 @@ export default (function() {
       ...prevTodoIem,
       isCompleted: !prevTodoIem.isCompleted,
     }
+
     return [
       ...todoList.slice(0, todoIndex),
       newTodoItem,

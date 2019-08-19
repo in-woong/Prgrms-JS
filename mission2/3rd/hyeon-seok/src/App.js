@@ -52,17 +52,22 @@ class App {
     )
   }
 
+  getTodoCount() {
+    return this.model.todo.length
+  }
+
   render = () => {
     const {
       $wrapper,
       model: { todo },
     } = this
     const strikeTemplateCreator = conditionalTemplate('strike')
+    const countTodo = this.getTodoCount()
 
     $wrapper.innerHTML = `
       ${TodoInput()}
       ${TodoList(todo, strikeTemplateCreator)}
-      ${TodoCount()}
+      ${TodoCount(countTodo)}
     `
   }
 }
