@@ -4,12 +4,18 @@ const TodoList = function(data, strikeTemplateCreator) {
 
     return (totalEl += `
             <li data-todo-id="${index}">
-              <input type="checkbox" ${isCheckbox}>
+              <input
+                class="toggle__checkbox"
+                type="checkbox"
+                ${isCheckbox}
+              >
                 ${strikeTemplateCreator({
                   text,
                   predicate: isCompleted,
                 })}
-              </input>
+              <button class="delete__button">
+                X
+              </button>
             </li>
           `)
   }, '<ul style="list-style: none;">')

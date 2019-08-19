@@ -1,5 +1,5 @@
 const TodoInput = function() {
-  return `<input type="text"/>`
+  return `<input class="create__input" type="text"/>`
 }
 
 export default TodoInput
