@@ -1,4 +1,4 @@
-const TodoList = function(data, strikeTemplateCreator) {
+const TodoList = function({ data, strkieTemplate }) {
   return data.reduce((totalEl, { text, isCompleted }, index) => {
     const isCheckbox = isCompleted ? 'checked' : ''
 
@@ -11,7 +11,7 @@ const TodoList = function(data, strikeTemplateCreator) {
                 type="checkbox"
                 ${isCheckbox}
               >
-                ${strikeTemplateCreator({
+                ${strkieTemplate({
                   text,
                   predicate: isCompleted,
                 })}

@@ -33,21 +33,21 @@ const isValidation = function(todoData) {
   return todoData
 }
 
-const conditionalTemplate = function(element) {
+const conditionalTemplate = function({ element }) {
   return function({ text = '', predicate = true }) {
     return predicate ? `<${element}>${text}</${element}>` : text
   }
 }
 
-const getParentElement = function(target, query) {
+const getParentElement = function({ target, query }) {
   return target.closest(query)
 }
 
-const getDataIndex = function(target) {
+const getDataIndex = function({ target }) {
   return Number(target.dataset.todoId)
 }
 
-const inputFocus = function(query) {
+const inputFocus = function({ query }) {
   $(query).focus()
 }
 

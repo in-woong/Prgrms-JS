@@ -1,21 +1,21 @@
 export default (function() {
-  const createTodo = (todoList, todoValue) => {
-    return [...todoList, { text: todoValue, isCompleted: false }]
+  const createTodo = ({ prevTodoList, newTodoText }) => {
+    return [...prevTodoList, { text: newTodoText, isCompleted: false }]
   }
-  const deleteTodo = (todoList, todoIndex) => {
-    return todoList.filter((item, index) => index !== todoIndex)
+  const deleteTodo = ({ prevTodoList, selectedTodoIndex }) => {
+    return prevTodoList.filter((item, index) => index !== selectedTodoIndex)
   }
-  const toggleTodo = (todoList, todoIndex) => {
-    const prevTodoIem = todoList[todoIndex]
+  const toggleTodo = ({ prevTodoList, selectedTodoIndex }) => {
+    const prevTodoIem = prevTodoList[selectedTodoIndex]
     const newTodoItem = {
       ...prevTodoIem,
       isCompleted: !prevTodoIem.isCompleted,
     }
 
     return [
-      ...todoList.slice(0, todoIndex),
+      ...prevTodoList.slice(0, selectedTodoIndex),
       newTodoItem,
-      ...todoList.slice(todoIndex + 1),
+      ...prevTodoList.slice(selectedTodoIndex + 1),
     ]
   }
 

@@ -37,11 +37,20 @@ class App {
         if (!selectedAction || selectedAction === ACTION_TYPE.CREATE) {
           return
         }
+        const dispatch = reducer[ACTION_TYPE.CREATE]
+        const $todoItem = getParentElement({
+          target: target,
+          query: '.todo__item',
+        })
+        const selectedTodoIndex = getDataIndex({
+          target: $todoItem,
+        })
 
-        const todoIndex = getDataIndex(getParentElement(target, '.todo__item'))
-
-        const payload = reducer[selectedAction](this.getTodo(), todoIndex)
-        this.setState({ newData: payload })
+        const newTodoList = reducer[selectedAction]({
+          prevTodoList: this.getTodo(),
+          selectedTodoIndex: selectedTodoIndex,
+        })
+        this.setState({ newData: newTodoList })
       }.bind(this)
     )
 
@@ -49,16 +58,21 @@ class App {
       'keyup',
       function(e) {
         e.preventDefault()
-        const [actionName] = e.target.className.split('__')
+        const isEnter = e.key !== 'Enter'
+        const { value: newTodoText, className } = e.target
+        const [actionName] = className.split('__')
         const selectedAction = ACTION_TYPE[actionName.toUpperCase()]
-        const { value } = e.target
 
-        if (e.key !== 'Enter' || !value) {
+        if (!isEnter || !newTodoText) {
           return
         }
-        const payload = reducer[ACTION_TYPE.CREATE](this.getTodo(), value)
 
-        this.setState({ newData: payload })
+        const dispatch = reducer[ACTION_TYPE.CREATE]
+        const newTodoList = dispatch({
+          prevTodoList: this.getTodo(),
+          newTodoText: newTodoText,
+        })
+        this.setState({ newData: newTodoList })
       }.bind(this)
     )
   }
@@ -76,7 +90,7 @@ class App {
   }
 
   inputTodoFocus() {
-    inputFocus('.create__input')
+    inputFocus({ query: '.create__input' })
   }
 
   render = () => {
@@ -84,22 +98,29 @@ class App {
       $wrapper,
       model: { todo },
     } = this
+    // computed Data
     const completedTodoCount = this.getCompletedTodoCount()
     const activeTodoCount = this.getActiveTodoCount()
-    const strikeTemplateCreator = conditionalTemplate('strike')
-    const CompletedTodoCount = TodoCount({
+    const strikeTemplateCreator = conditionalTemplate({ element: 'strike' })
+    // String DOM Template
+    const $completedTodoCount = TodoCount({
       isCompleted: true,
       count: completedTodoCount,
     })
-    const ActiveTodoCount = TodoCount({
+    const $activeTodoCount = TodoCount({
       count: activeTodoCount,
+    })
+    const $todoInput = TodoInput()
+    const $todoList = TodoList({
+      data: todo,
+      strkieTemplate: strikeTemplateCreator,
     })
 
     $wrapper.innerHTML = `
-      ${TodoInput()}
-      ${TodoList(todo, strikeTemplateCreator)}
-      ${completedTodoCount ? CompletedTodoCount : ''}
-      ${activeTodoCount ? ActiveTodoCount : ''}
+      ${$todoInput}
+      ${$todoList}
+      ${completedTodoCount ? $completedTodoCount : ''}
+      ${activeTodoCount ? $activeTodoCount : ''}
     `
 
     this.inputTodoFocus()
