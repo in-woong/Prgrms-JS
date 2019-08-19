@@ -21,8 +21,8 @@ class App {
     this.attachEvent()
   }
 
-  setState({ target, newData }) {
-    this.model[target] = newData
+  setState({ newData }) {
+    this.model.todo = newData
   }
 
   attachEvent() {
@@ -41,10 +41,7 @@ class App {
         const todoIndex = getDataIndex(getParentElement(target, '.todo__item'))
 
         const payload = reducer[selectedAction](this.getTodo(), todoIndex)
-        this.setState({
-          target: 'todo',
-          newData: payload,
-        })
+        this.setState({ newData: payload })
       }.bind(this)
     )
 
@@ -61,10 +58,7 @@ class App {
         }
         const payload = reducer[ACTION_TYPE.CREATE](this.getTodo(), value)
 
-        this.setState({
-          target: 'todo',
-          newData: payload,
-        })
+        this.setState({ newData: payload })
       }.bind(this)
     )
   }
