@@ -5,9 +5,4 @@ const ERROR_MSG = {
   UNUSED_NEW: 'new 키워드가 필요합니다.',
 }
 
-const ENUM_TODO = {
-  TEXT: 'text',
-  IS_COMPLETED: 'isCompleted',
-}
-
-export { ERROR_MSG, ENUM_TODO }
+export { ERROR_MSG }

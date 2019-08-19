@@ -1,4 +1,4 @@
-import { ERROR_MSG, ENUM_TODO } from '../constants/index.js'
+import { ERROR_MSG } from '../constants/index.js'
 
 const $ = query => document.querySelector(query)
 
@@ -16,16 +16,11 @@ const isValidation = function(todoData) {
 
   todoData.forEach(ele => {
     const elementProps = Object.keys(ele)
-    const incorrectKey = ([textProp, isCompletedProp]) => {
-      const { TEXT, IS_COMPLETED } = ENUM_TODO
-
-      return textProp !== TEXT || isCompletedProp !== IS_COMPLETED
-    }
     const incorrectVal = ({ text, isCompleted }) => {
       return !text || typeof isCompleted !== 'boolean'
     }
 
-    if (incorrectKey(elementProps) || incorrectVal(ele)) {
+    if (incorrectVal(ele)) {
       throw Error(INCORRECT_DATA)
     }
   })
