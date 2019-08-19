@@ -1,5 +1,7 @@
 export default (function() {
-  const createTodo = todoList => {}
+  const createTodo = (todoList, todoValue) => {
+    return [...todoList, { text: todoValue, isCompleted: false }]
+  }
   const deleteTodo = (todoList, todoIndex) => {
     return todoList.filter((item, index) => index !== todoIndex)
   }

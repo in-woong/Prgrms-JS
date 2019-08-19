@@ -3,6 +3,7 @@ import {
   conditionalTemplate,
   getParentElement,
   getDataIndex,
+  inputFocus,
 } from './util/index.js'
 import { TodoCount, TodoInput, TodoList } from './components/index.js'
 import ACTION_TYPE from '../src/actions/index.js'
@@ -26,38 +27,62 @@ class App {
 
   attachEvent() {
     const { $wrapper } = this
-    const eventList = ['click', 'keyup']
 
-    eventList.forEach(eventType =>
-      $wrapper.addEventListener(
-        eventType,
-        function({ target }) {
-          const [actionName] = target.className.split('__')
-          const selectedAction = ACTION_TYPE[actionName.toUpperCase()]
+    $wrapper.addEventListener(
+      'click',
+      function({ target }) {
+        const [actionName] = target.className.split('__')
+        const selectedAction = ACTION_TYPE[actionName.toUpperCase()]
 
-          if (!selectedAction) {
-            return
-          }
-          const todoIndex = getDataIndex(
-            getParentElement(target, '.todo__item')
-          )
+        if (!selectedAction || selectedAction === ACTION_TYPE.CREATE) {
+          return
+        }
 
-          const payload = reducer[selectedAction](this.model.todo, todoIndex)
-          this.setState({
-            target: 'todo',
-            newData: payload,
-          })
-        }.bind(this)
-      )
+        const todoIndex = getDataIndex(getParentElement(target, '.todo__item'))
+
+        const payload = reducer[selectedAction](this.getTodo(), todoIndex)
+        this.setState({
+          target: 'todo',
+          newData: payload,
+        })
+      }.bind(this)
+    )
+
+    $wrapper.addEventListener(
+      'keyup',
+      function(e) {
+        e.preventDefault()
+        const [actionName] = e.target.className.split('__')
+        const selectedAction = ACTION_TYPE[actionName.toUpperCase()]
+        const { value } = e.target
+
+        if (e.key !== 'Enter' || !value) {
+          return
+        }
+        const payload = reducer[ACTION_TYPE.CREATE](this.getTodo(), value)
+
+        this.setState({
+          target: 'todo',
+          newData: payload,
+        })
+      }.bind(this)
     )
   }
 
+  getTodo() {
+    return this.model.todo
+  }
+
   getActiveTodoCount() {
-    return this.model.todo.filter(({ isCompleted }) => !isCompleted).length
+    return this.getTodo().filter(({ isCompleted }) => !isCompleted).length
   }
 
   getCompletedTodoCount() {
-    return this.model.todo.filter(({ isCompleted }) => isCompleted).length
+    return this.getTodo().filter(({ isCompleted }) => isCompleted).length
+  }
+
+  inputTodoFocus() {
+    inputFocus('.create__input')
   }
 
   render = () => {
@@ -82,6 +107,8 @@ class App {
       ${completedTodoCount ? CompletedTodoCount : ''}
       ${activeTodoCount ? ActiveTodoCount : ''}
     `
+
+    this.inputTodoFocus()
   }
 }
 

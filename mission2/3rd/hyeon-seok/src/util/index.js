@@ -47,4 +47,15 @@ const getDataIndex = function(target) {
   return Number(target.dataset.todoId)
 }
 
-export { $, isValidation, conditionalTemplate, getParentElement, getDataIndex }
+const inputFocus = function(query) {
+  $(query).focus()
+}
+
+export {
+  $,
+  inputFocus,
+  isValidation,
+  conditionalTemplate,
+  getParentElement,
+  getDataIndex,
+}
