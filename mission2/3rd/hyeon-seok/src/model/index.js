@@ -5,9 +5,13 @@ export default class Model {
         return target[prop]
       },
       set(target, prop, value) {
+        const stringify = obj => JSON.stringify(obj)
+        const prevData = target[prop]
         target[prop] = value
 
-        callbackFunc()
+        if (stringify(value) !== stringify(prevData)) {
+          callbackFunc()
+        }
 
         return true
       },
