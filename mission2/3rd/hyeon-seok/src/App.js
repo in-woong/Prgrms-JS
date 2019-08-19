@@ -52,8 +52,12 @@ class App {
     )
   }
 
-  getTodoCount() {
-    return this.model.todo.length
+  getActiveTodoCount() {
+    return this.model.todo.filter(({ isCompleted }) => !isCompleted).length
+  }
+
+  getCompletedTodoCount() {
+    return this.model.todo.filter(({ isCompleted }) => isCompleted).length
   }
 
   render = () => {
@@ -61,13 +65,22 @@ class App {
       $wrapper,
       model: { todo },
     } = this
+    const completedTodoCount = this.getCompletedTodoCount()
+    const activeTodoCount = this.getActiveTodoCount()
     const strikeTemplateCreator = conditionalTemplate('strike')
-    const countTodo = this.getTodoCount()
+    const CompletedTodoCount = TodoCount({
+      isCompleted: true,
+      count: completedTodoCount,
+    })
+    const ActiveTodoCount = TodoCount({
+      count: activeTodoCount,
+    })
 
     $wrapper.innerHTML = `
       ${TodoInput()}
       ${TodoList(todo, strikeTemplateCreator)}
-      ${TodoCount(countTodo)}
+      ${completedTodoCount ? CompletedTodoCount : ''}
+      ${activeTodoCount ? ActiveTodoCount : ''}
     `
   }
 }
