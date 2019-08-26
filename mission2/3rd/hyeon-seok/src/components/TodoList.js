@@ -1,6 +1,7 @@
 const TodoList = function({ data, strkieTemplate }) {
-  return data.reduce((totalEl, { text, isCompleted }, index) => {
+  return data.reduce((totalEl, { text, isCompleted }, index, { length }) => {
     const isCheckbox = isCompleted ? 'checked' : ''
+    const isFinal = length - 1 === index
 
     return (totalEl += `
             <li
@@ -19,6 +20,7 @@ const TodoList = function({ data, strkieTemplate }) {
                 X
               </button>
             </li>
+            ${isFinal ? '</ul>' : ''}
           `)
   }, '<ul style="list-style: none;">')
 }
