@@ -1,0 +1,131 @@
+<html>
+<head>
+    <title>Mission 1</title>
+    <meta charset="utf-8"/>
+</head>
+
+<body>
+<ul class="todo-list"></ul>
+<br/>
+<ul id="weekday-todo-list"></ul>
+<br/>
+<ul id="weekend-todo-list"></ul>
+
+<script>
+    const ERROR_MESSAGE = {
+        CHECK_THIS_INSTANCE: 'This is not an instance of TodoList',
+        NULL_OR_UNDEFINED: 'invalid list : null or undefined',
+        SHOULD_BE_ARRAY: 'invalid list : should be an array',
+        INVALID_OBJECT: 'invalid object : missing keys in the object',
+        ELEMENT_NOT_EXIST: 'DOM element not exist : cannot find the DOM element by this id'
+    };
+
+    const getDOMElement = query => {
+        const {ELEMENT_NOT_EXIST} = ERROR_MESSAGE;
+        const element = document.querySelector(query);
+
+        if (element !== null)
+            return element;
+
+        throw new Error(ELEMENT_NOT_EXIST)
+    };
+
+    const TodoList = function (list, element) {
+        this.isValidList = list => {
+            const {CHECK_THIS_INSTANCE, NULL_OR_UNDEFINED, SHOULD_BE_ARRAY, INVALID_OBJECT} = ERROR_MESSAGE;
+
+            if (this instanceof TodoList === false)
+                throw new Error(CHECK_THIS_INSTANCE);
+            if (list === null || list === undefined)
+                throw new Error(NULL_OR_UNDEFINED);
+            if (Array.isArray(list) === false)
+                throw new Error(SHOULD_BE_ARRAY);
+            list.forEach(item => {
+                if (item.text === undefined || typeof item.text !== 'string')
+                    throw new Error(INVALID_OBJECT)
+            });
+            return true;
+        };
+        this.element = element;
+        this.render = () => {
+            if (this.element !== null) {
+                let renderItems = this.list.map(({text, isCompleted}) => {
+                    if (isCompleted)
+                        return `<li><strike>${text}</strike></li>`;
+                    else
+                        return `<li>${text}</li>`
+                });
+                this.element.innerHTML = renderItems.join("");
+            }
+        };
+
+        this.setState = (nextData) => {
+            this.isValidList(nextData);
+            this.list = nextData;
+            this.render();
+        };
+        this.list = this.setState(list)
+    }
+
+    const data = [
+        {
+            text: 'JS 공부하기',
+            isCompleted: true,
+        },
+        {
+            text: 'JS 복습하기',
+            isCompleted: false,
+        },
+    ]
+
+    const todoList = new TodoList(data, getDOMElement('.todo-list'))
+
+    const weekdayTodoData = [
+        {
+            text: '출근하기',
+            isCompleted: true,
+        },
+        {
+            text: '커피 마시기',
+            isCompleted: true,
+        },
+        {
+            text: '칼퇴근하기',
+            isCompleted: false,
+        },
+    ]
+    const weekdayTodoList = new TodoList(weekdayTodoData, getDOMElement('#weekday-todo-list'))
+
+    const weekendTodoData = [
+        {
+            text: '늦잠자기',
+            isCompleted: true,
+        },
+        {
+            text: '낮잠자기',
+            isCompleted: false,
+        },
+        {
+            text: '아무것도 안하기',
+            isCompleted: false,
+        },
+    ]
+    const weekendTodoList = new TodoList(weekendTodoData, getDOMElement('#weekend-todo-list'))
+
+    // ** BONUS TEST CODE **
+    // const nullTodoList = new TodoList(null);
+    // const undefinedTodoList = new TodoList(undefined);
+    // const notArrayTodoList = new TodoList({});
+    // const missingTextObjectTodoList = new TodoList(['hi']);
+    // const objectTextData = [
+    // {
+    //     text: 'JS 공부하기'
+    //   },
+    //   {
+    //     text: {text: 'JS 복습하기'}
+    //   }
+    // ]
+    // const objectTextTodoList = new TodoList(objectTextData);
+</script>
+</body>
+</html>
