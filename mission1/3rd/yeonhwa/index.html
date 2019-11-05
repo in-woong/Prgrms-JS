@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Mission 1</title>
+</head>
+<body>
+  <div id="todoList"></div>
+  <div id="workTodoList"></div>
+  <div id="studyTodoList"></div>
+  <script>
+      var data = [
+      {
+        text: 'JS 공부하기',
+        isCompleted: true
+      },
+      {
+        text: 'JS 복습하기',
+        isCompleted: false
+      }
+    ]
+
+    var workData = [
+      {
+        text: '인증클라이언트 ui 컴포넌트 마무리',
+        isCompleted: true
+      },
+      {
+        text: '인증클라이언트 기능 컴포넌트 마무리',
+        isCompleted: false
+      }
+    ]
+
+    var studyData = [
+      {
+        text: '휴가 가서 못한 미션 수행하기',
+        isCompleted: true
+      },
+      {
+        text: '운동하기',
+        isCompleted: false 
+      }
+    ]
+
+    // 이곳에서 코딩을 시작하세요!
+    const $todoList = document.querySelector('#todoList');
+    const $workTodoList = document.querySelector('#workTodoList');
+    const $studyTodoList = document.querySelector('#studyTodoList');
+    
+    function TodoList(data, $template){
+      if(!data && data !== undefined) { 
+        throw new Error('data is empty'); 
+      }
+
+      if(data === undefined){
+        throw new Error('data is undefined');
+      }
+
+      if(typeof data !== 'object'){
+        throw new Error('data is not object');
+      }
+
+      if(!(this instanceof TodoList)){
+        throw new Error('not instance');
+      }
+
+      this.data = data;
+
+      this.render = () => {
+        let html = '';
+
+        this.data.forEach((element, index) => {
+          html +=  element.isCompleted ? 
+                    `<strike>${element.text}</strike><br/>` : 
+                    `<div>${element.text}</div>`;
+        });
+
+        $template.innerHTML = html;
+      };
+
+      this.setState = nextData =>{
+        this.data = nextData;
+        this.render();
+      };
+    };
+
+    const todoList = new TodoList(data, $todoList);
+    const workList = new TodoList(workData, $workTodoList);
+    const studyList = new TodoList(studyData, $studyTodoList);
+
+    todoList.render();
+    workList.render();
+    studyList.render();
+
+    studyList.setState(workData);
+  </script>
+</body>
+</html>
