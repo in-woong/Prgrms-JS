@@ -1,0 +1,93 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list"></div>
+  <div id="todo-list2"></div>
+  <div id="todo-list3"></div>
+
+  <script>
+    const data = [
+        {
+            text: 'JS 공부하기',
+            isComplete: true
+        },
+        {
+            text: 'JS 복습하기',
+            isComplete: false
+        }
+    ]
+
+    const data2 = [
+        {
+            text: '1주차 미션완료',
+            isComplete: true
+        },
+        {
+            text: '1주차 보너스미션완료',
+            isComplete: false
+        }
+    ]
+
+    const data3 = [
+        {
+            text: '2주차 미션완료',
+            isComplete: true
+        },
+        {
+            text: '2주차 보너스미션완료',
+            isComplete: false,
+        }
+    ]
+
+   
+	
+    function TodoList(data, $element) {
+
+        if (!this instanceof TodoList) {
+            throw new Error('new 키워드가 필요합니다!')
+        }
+
+        if (!data instanceof Array) {
+            throw new Error('배열 타입의 파라메타가 아닙니다!')
+        }
+
+        data.forEach( todo => {
+            if (!todo.text || typeof todo.text !== 'string')
+            throw new Error('배열안의 데이터가 올바르지 않습니다!')
+        })
+
+
+        TodoList.prototype.render = function() {
+            const todoList = data.reduce((acc, todo) => {
+                let todoHtml = '';
+                if(todo.isComplete){
+                    todoHtml = `${acc}<li><strike>${todo.text}</strike></li>`
+                }else{
+                    todoHtml = `${acc}<li>${todo.text}</li>`
+                }
+                return todoHtml
+            }, '')
+            
+            $element.innerHTML = `<ul>${todoList}</ul>`
+        }
+        
+    }
+
+   
+    const todoList = new TodoList(data, document.querySelector('#todo-list'))
+    todoList.render()
+
+    const todoList2 = new TodoList(data2, document.querySelector('#todo-list2'))
+    todoList.render()
+
+    const todoList3 = new TodoList(data3, document.querySelector('#todo-list3'))
+    todoList.render()
+
+  </script>
+</body>
+</html>
