@@ -1,0 +1,99 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list"></div>
+  <div id="study-list"></div>
+  <div id="other-list"></div>
+  <script>
+    const data1 = [
+      {
+        text: 'JS 공부하기',
+        isCompleted: false
+      },
+      {
+        text: 'JS 복습하기',
+        isCompleted: true
+      }
+    ];
+
+    const data2 = [
+      {
+        text: 'vanilla js 기본부터 공부 하기',
+        isCompleted: true
+      },
+      {
+        text: '알고리즘 하나씩 풀어보기',
+        isCompleted: false
+      }
+    ];
+
+    const data3 = [
+      {
+        text: '운전면허 따기',
+        isCompleted: false
+      },
+      {
+        text: '게으르게 행동하지 않기',
+        isCompleted: false
+      }
+    ];
+
+  // 이곳에서 코딩을 시작하세요!
+  const $todoList = document.querySelector('#todo-list');
+  const $studyList = document.querySelector('#study-list');
+  const $otherList = document.querySelector('#other-list');
+
+  function TodoList(data, element) {
+    this.isValidData = function(data) {
+      if(!data) {
+        throw new Error('data is not a valid value');
+      } else if(!Array.isArray(data)) {
+        throw new Error('data type is not array');
+      } else if(!(this instanceof TodoList)) {
+        throw new Error('missing new keyword');
+      }
+
+      data.forEach(function(ele) {
+        if(!ele.text) {
+          throw new Error('data.text is not defined');
+        }
+      });
+
+      return data;
+    }
+
+    this.setState = function(nextData) {
+      data = nextData;
+      this.render()
+    }
+
+    this.render = function() {
+      let validData = this.isValidData(data) || [];
+
+      let html = '';
+
+      validData.forEach(function(el, idx) {
+        if(el.isCompleted) {
+          html += `<div><strike>${el.text}</strike></div>`;
+        }else {
+          html += `<div>${el.text}</div>`;
+        }
+      });
+
+      element.innerHTML = html;
+    }
+
+  }
+
+  let todoList = new TodoList(data1, $todoList);
+  let studyList = new TodoList(data2, $studyList);
+  let otherList = new TodoList(data3, $otherList);
+
+  </script>
+</body>
+</html>
