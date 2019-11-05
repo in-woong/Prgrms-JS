@@ -1,0 +1,107 @@
+/* Initialization */
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  -webkit-tap-highlight-color: transparent;
+  color: #000;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 0;
+  font-size: 100%;
+  font-family: system-ui, 'AppleSDGothicNeo', sans-serif;
+  font-style: normal;
+  word-wrap: break-word;
+  word-break: keep-all;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+}
+
+*:focus {
+  outline: none;
+  border: none;
+}
+
+input {
+  border: none;
+  background-color: transparent;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+}
+
+/* remove chrome autofill */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px white inset;
+  box-shadow: 0 0 0 1000px white inset;
+}
+
+ul,
+li {
+  list-style: none;
+}
+
+button {
+  display: inline-block;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+button:active {
+  outline: none;
+  border: none;
+}
+
+/* style */
+.main {
+  max-width: 480px;
+  margin: auto;
+}
+
+.main ul {
+  margin: 24px 0;
+}
+
+.main li {
+  height: 54px;
+}
+
+li p {
+  line-height: 54px;
+  display: inline-block;
+}
+
+.input-todo {
+  border-bottom: 1px solid #e1e1e1;
+  width: 100%;
+  height: 54px;
+}
+
+.btn-add {
+  width: 100%;
+  height: 60px;
+  background-color: #ffeb00;
+  font-size: 18px;
+  font-weight: 600;
+  color: #0e1012;
+  border-radius: 8px;
+  margin-top: 12px;
+}
+
+.btn-delete {
+  width: 54px;
+  height: 36px;
+  font-size: 13px;
+  background-color: #ffeb00;
+  border-radius: 8px;
+}
