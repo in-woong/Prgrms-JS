@@ -1,0 +1,129 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div class="todo__list" id="todo-list"></div>
+    <div class="todo__list" id="todo-list2"></div>
+    <div class="todo__list" id="todo-list3"></div>
+
+    <script>
+      var data = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false,
+        },
+      ];
+
+      var data2 = [
+        {
+          text: '밥먹기',
+        },
+        {
+          text: '잠자기',
+        },
+      ];
+
+      var data3 = [
+        {
+          text: 'JAVA',
+        },
+        {
+          text: 'C#',
+        },
+      ];
+
+      class TodoList {
+        constructor(todoItems, targetComponent) {
+          if (!validateItems(todoItems)) {
+            throw new Error('TodoItems Not Available');
+          }
+          if (!targetComponent || !document.querySelector(targetComponent)) {
+            throw new Error('Target Component Not Available');
+          }
+
+          this.todoItems = todoItems;
+          this.targetComponent = document.querySelector(targetComponent);
+        }
+
+        render() {
+          let todoElements = '';
+          this.todoItems.forEach(todo => {
+            todoElements += createTodoElement(todo).outerHTML;
+          });
+          this.targetComponent.innerHTML = todoElements.toString();
+        }
+
+        setState(nextTodoItems) {
+          if (!validateItems(nextTodoItems)) {
+            throw new Error('TodoItems Not Available');
+          }
+          this.todoItems = nextTodoItems;
+          this.clearTodoList();
+          this.render();
+        }
+
+        clearTodoList() {
+          this.targetComponent.innerHTML = '';
+        }
+      }
+
+      function createTodoElement(todo) {
+        const todo_item = document.createElement('div');
+        todo_item.setAttribute('class', 'todo__list--item');
+        let todoTitle = todo.text;
+
+        if (todo.isCompleted) todoTitle = `<strike>${todoTitle}</strike>`;
+        todo_item.innerHTML = todoTitle;
+        return todo_item;
+      }
+
+      function validateItems(todoItems) {
+        if (
+          todoItems === null ||
+          todoItems === undefined ||
+          !Array.isArray(todoItems) ||
+          todoItems.length !== todoItems.filter(validateTodo).length
+        ) {
+          return false;
+        } else {
+          return true;
+        }
+
+        //Todo Check Filter
+        function validateTodo(todo) {
+          return todo && typeof todo.text === 'string';
+        }
+      }
+
+      const todoList = new TodoList(data, '#todo-list');
+      todoList.render();
+
+      const todoList2 = new TodoList(data2, '#todo-list2');
+      todoList2.render();
+
+      const todoList3 = new TodoList(data3, '#todo-list3');
+      todoList3.render();
+
+      todoList.setState([{ text: 'JS 책읽기', isCompleted: false }]);
+
+      todoList2.setState([
+        { text: '일어나기', isCompleted: true },
+        { text: '아침밥먹기', isCompleted: false },
+      ]);
+
+      todoList3.setState([
+        { text: 'PHP' },
+        { text: 'JSP' },
+        { text: 'Spring' },
+        { text: 'NodeJS' },
+      ]);
+    </script>
+  </body>
+</html>
