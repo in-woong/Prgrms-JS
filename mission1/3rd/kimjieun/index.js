@@ -73,7 +73,6 @@ function TodoList(selector) {
     if (!$todoList.hasChildNodes()) $todoList.appendChild(document.createElement('ul'))
 
     const $ul = $todoList.querySelector('ul')
-    // $ul.innerHTML = $ul.innerHTML + todoItemsHtmlString
     $ul.innerHTML = todoItemsHtmlString
   }
 }
@@ -82,6 +81,3 @@ const todoList = new TodoList('todo-list')
 todoList.setState(data)
 setTimeout(() => {todoList.setState(hobbyList)}, 2000)
 setTimeout(() => {todoList.setState(weekendList)}, 4000)
-// const todoList1 = new TodoList('hobby-list')
-// const todoList2 = new TodoList('weekend-list')
-// todoList.setState(weekendList)
