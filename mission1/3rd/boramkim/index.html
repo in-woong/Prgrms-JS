@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <h1>todo list with vanilla script!</h1>
+  <div id="todo-list"></div>
+  <div id="todo-list2"></div>
+  <div id="todo-list3"></div>
+  <script>
+    const data = [
+      {
+        text: 'JS 공부하기',
+        isCompleted: true
+      }, {
+        text: 'JS 복습하기',
+        isCompleted: false
+      }
+    ]
+    const data2 = [
+      {
+        text: '미션1 수행하기',
+        isCompleted: true
+      }, {
+        text: '미션 중 질문사항 정리하기',
+        isCompleted: true
+      }
+    ]
+    const data3 = [
+      {
+        text: '다른 스터디원 코드 보기',
+        isCompleted: true
+      }, {
+        text: '리뷰 달아보기',
+        isCompleted: false
+      }
+    ]
+
+    const ERROR_MESSAGE = {
+      IS_NOT_USE_NEW: {
+        en: 'You didn\'t use the "new" keyword!',
+        ko: 'new 키워드를 사용하지 않았습니다!',
+      },
+      IS_NULL_OR_UNDEFINED: {
+        en: 'The parameter must not be null or undefined!',
+        ko: '파라미터는 null 혹은 undefined가 아니어야합니다!'
+      },
+      IS_NOT_ARRAY: {
+        en: 'The parameter must be an Array.',
+        ko: '파라미터는 Array 여야 합니다.',
+      },
+      IS_NOT_AVAILABLE_DATA: {
+        en: 'Check the value inside the array.',
+        ko: '배열 내부의 값을 확인해주세요.',
+      }
+    }
+
+    const throwError = (errKey, errMessageKey) => {
+      const lang = window.document.documentElement.lang || 'en'
+      const errMessage = ERROR_MESSAGE[errMessageKey][lang]
+      throw Error(`${errKey} - ${errMessageKey}: ${errMessage}`)
+    }
+
+    const validator = {
+      isNotUseNew: (nowThis) => nowThis === window,
+      isNullOrUndefinedData: data => !data,
+      isNotArray: data => !Array.isArray(data),
+      isNotAvailableInnerData: (data) => data.filter(({text}) => !text).length > 0 || data.length === 0
+    }
+    
+    const validTodoData = function(data) {
+      if(validator.isNullOrUndefinedData(data)) {
+        throwError('ERROR002', 'IS_NULL_OR_UNDEFINED')
+      } else if(validator.isNotArray(data)) {
+        throwError('ERROR003', 'IS_NOT_ARRAY')
+      } else if(validator.isNotAvailableInnerData(data)) {
+        throwError('ERROR004', 'IS_NOT_AVAILABLE_DATA')
+      }
+      return true
+    }
+
+    const TodoList = function(el, data) {
+      if (validator.isNotUseNew(this)) {
+        throwError('ERROR001', 'IS_NOT_USE_NEW')
+      }
+
+      validTodoData(data)
+
+      this.el = el
+      this.data = data
+    } 
+
+    TodoList.prototype.render = function() {
+      let liElementString = ''
+      this.data.forEach(({text, isCompleted}) => {
+        liElementString += isCompleted ? `<li><strike>${text}</strike></li>` : `<li>${text}</li>`
+      })
+      const ulElementString = `<ul>${liElementString}</ul>`
+      document.querySelector(this.el).innerHTML = ulElementString
+    }
+
+    TodoList.prototype.setState = function(nextData) {
+      validTodoData(nextData)
+      this.data = nextData
+      this.render()
+    }
+
+    const todoList = new TodoList('#todo-list', data)
+    const todoList2 = new TodoList('#todo-list2', data2)
+    const todoList3 = new TodoList('#todo-list3', data3)
+
+    todoList.render()
+    todoList2.render()
+    todoList3.render()
+  </script>
+</body>
+
+</html>
