@@ -1,4 +1,6 @@
 
 import App from './App.js'
 
-new App(document.querySelector('#root'))
+document.addEventListener('DOMContentLoaded', () => {
+    new App(document.querySelector('#root'))
+})
