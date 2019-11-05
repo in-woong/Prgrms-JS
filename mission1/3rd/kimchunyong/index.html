@@ -1,0 +1,153 @@
+<html>
+
+<head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+</head>
+
+<body>
+    <div id="todo__list"></div>
+    <div id="todo__week-list"></div>
+    <div id="todo__month-list"></div>
+    <script>
+        var newdata = [{
+                text: '밥 먹기2',
+                isCompleted: true
+            }, {
+                text: '잠 자기2',
+                isCompleted: false
+            }]
+            // 이곳에서 코딩을 시작하세요!
+        var data = [{
+            text: '밥 먹기',
+            isCompleted: true
+        }, {
+            text: '잠 자기',
+            isCompleted: false
+        }]
+
+        var weekData = [{
+                text: '커피마시기',
+                isCompleted: true
+            }, {
+                text: '주유하기',
+                isCompleted: false
+            }]
+            // 이곳에서 코딩을 시작하세요!
+
+        var monthData = [{
+                text: 'JS 공부하기',
+                isCompleted: true
+            }, {
+                text: 'JS 복습하기',
+                isCompleted: false
+            }]
+            // 이곳에서 코딩을 시작하세요!
+
+        var ERROR_MESSAGE = {
+            EMTY_DATA: "데이터가 없습니다.",
+            NOTARRAY_DATA: "데이터형식이 잘못되었습니다.",
+            DON_USE_NEW_KEYWORD: "New키워드를 사용하지 않았습니다.",
+            SET_ELEMENT: "Element를 잘못 입력 하였습니다."
+        }
+
+        var validateData = function(data) {
+            if (!data) {
+                throw new Error(ERROR_MESSAGE.EMTY_DATA);
+            }
+
+            if (!Array.isArray(data)) {
+                throw new Error(ERROR_MESSAGE.NOTARRAY_DATA);
+            }
+        }
+
+        var TodoList = function(data, element) {
+            //new 키워드 작성하지 않고 함수실행시 오류
+            if (this === window) {
+                throw new Error(ERROR_MESSAGE.DON_USE_NEW_KEYWORD);
+            }
+
+            validateData(data);
+            //TodoList Get Data
+            this.data = data;
+
+            //TodoList를 draw할 element 지정
+            this.setElement = (element) => {
+                var setElement = document.querySelector(`${element}`);
+
+                return setElement;
+            }
+
+            // Data list Render
+            this.render = () => {
+
+                try {
+                    var todoDrawParentNode = this.setElement(element);
+
+                    //element를 잘못 기입하거나 없을때 Error 발생
+                    if (!todoDrawParentNode) {
+                        throw new Error(ERROR_MESSAGE.SET_ELEMENT);
+                    }
+
+                    var htmlTodoList = this.data.reduce((html, dataList, idx) => {
+                        html += this.createTodoListDraw(dataList, idx);
+                        return html;
+                    }, '<ul class="todo__menu">') + '</ul>';
+
+                    todoDrawParentNode.insertAdjacentHTML('beforeend', htmlTodoList);
+                } catch (error) {
+                    console.warn(error);
+                }
+            }
+
+            this.createTodoListDraw = (dataList, idx) => {
+                var text = dataList.text;
+                var isCompleted = dataList.isCompleted;
+
+                var htmlGetTodoList = isCompleted ?
+                    `
+                    <li class="todo__item" data-key=${idx}>
+                        <strike>
+                            <span class="todo__txt">${text}</span>
+                        </strike>
+                    </li>
+                ` :
+                    `
+                    <li class="todo__item" data-key=${idx}>
+                        <span class="todo__txt">${text}</span>
+                    </li>
+                `
+
+                return htmlGetTodoList
+            }
+
+            //setState
+            this.setState = (newData) => {
+                var todoDrawParentNode = this.setElement(element);
+                validateData(newData);
+
+                var htmlNewTodoList = newData.reduce((html, dataList, idx) => {
+                    html += this.createTodoListDraw(dataList, idx);
+                    return html;
+                }, '<ul class="todo__menu">') + '</ul>';
+
+                todoDrawParentNode.innerHTML = htmlNewTodoList;
+            }
+        }
+
+        //ToDoList
+        var todoList = new TodoList(data, '#todo__list');
+        todoList.render();
+
+        //WeekToDoList
+        var secondList = new TodoList(weekData, '#todo__week-list');
+        secondList.render();
+
+        //MonthToDoList
+        var thirdList = new TodoList(monthData, '#todo__month-list');
+        thirdList.render();
+        thirdList.setState(newdata);
+    </script>
+</body>
+
+</html>
