@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>QUnit Example</title>
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/qunit/qunit-2.9.2.css"
+    />
+  </head>
+  <body>
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+    <script src="https://code.jquery.com/qunit/qunit-2.9.2.js"></script>
+    <script>
+      function TodoList(params) {
+        const $target = params.$target
+        const onClick = params.onClick
+        const onRemove = params.onRemove
+        let data = params.data || []
+
+        $target.addEventListener('click', function(e) {
+          const id = e.target.closest('li').dataset.id
+
+          if (e.target.className === 'remove-button') {
+            e.stopPropagation()
+            onRemove(id)
+          } else {
+            onClick(id)
+          }
+        })
+
+        this.setState = function(nextData) {
+          data = nextData
+          this.render()
+        }
+
+        this.render = function() {
+          const htmlString = data.map(function(todo) {
+            const contentHTML = todo.isCompleted
+              ? `<strike>${todo.content}</strike>`
+              : `${todo.content}`
+
+            return `<li data-id="${todo._id}">${contentHTML} <button class="remove-button">Remove</button></li>`
+          })
+
+          $target.innerHTML = `<ul>${htmlString.join('')}</ul>`
+        }
+
+        this.render()
+      }
+
+      QUnit.test('TodoList Test', function(assert) {
+        const $dummy = document.createElement('div')
+        const testTodoList = new TodoList({
+          $target: $dummy,
+          data: [],
+        })
+
+        assert.ok(
+          $dummy.innerHTML === '<ul></ul>',
+          '빈 데이터가 오는 경우는 li가 없어야 한다!'
+        )
+
+        testTodoList.setState([
+          {
+            content: 'hello',
+            _id: 1,
+            isCompleted: false,
+          },
+        ])
+
+        assert.ok(
+          $dummy.innerHTML ===
+            '<ul><li data-id="1">hello <button class="remove-button">Remove</button></li></ul>',
+          '데이터가 갱신이 되는 경우 li가 생겨야한다.'
+        )
+      })
+    </script>
+  </body>
+</html>
