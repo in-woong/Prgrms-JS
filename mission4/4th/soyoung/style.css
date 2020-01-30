@@ -1,0 +1,105 @@
+body {
+  background-color: #e8e8e8;
+}
+#app {
+  display: flex;
+  padding: 20px;
+}
+
+/* loading spinner */
+.lds-ring.visible {
+  visibility: visible;
+}
+.lds-ring {
+  display: block;
+  left: calc(50% - 32px);
+  top: calc(50% - 32px);
+  position: fixed;
+  width: 64px;
+  height: 64px;
+  padding: 0;
+  visibility: hidden;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 51px;
+  height: 51px;
+  margin: 6px;
+  border: 6px solid red;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: red transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* todo container */
+.todo__container {
+  flex-basis: 70%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 3px 3px 6px 2px rgb(0, 0, 0, 0.1);
+}
+.todo__title {
+  margin: 0 0 15px 0;
+  border-bottom: 1px solid #ccc;
+}
+.todo__count {
+  color: #aaa;
+  font-size: 14px;
+  text-align: center;
+}
+.todo__btn {
+  border-radius: 4px;
+}
+.todo__btn--primary {
+  color: #0094ff;
+  border-color: #0094ff;
+}
+.todo__btn--primary:hover {
+  background-color: #0094ff;
+  color: white;
+}
+.todo__btn--danger {
+  color: #ff0047;
+  border-color: #ff0047;
+}
+.todo__btn--danger:hover {
+  background-color: #ff0047;
+  color: white;
+}
+
+/* user container */
+.user__container {
+  flex-basis: 15%;
+  margin-right: 20px;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 3px 3px 6px 2px rgb(0, 0, 0, 0.1);
+}
+.user__title {
+  margin: 0 0 15px 0;
+  border-bottom: 1px solid #ccc;
+}
+.user__item:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
