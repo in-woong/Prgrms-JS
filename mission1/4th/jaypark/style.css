@@ -1,0 +1,12 @@
+.todo-item-box {
+  padding: 12px 20px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  box-shadow: 1px 2px 12px rgba(0,0,0,0.08);
+}
+
+#todo-list-container {
+  width: 100%;
+  max-width: 300px;  
+  margin: 64px auto;
+}
