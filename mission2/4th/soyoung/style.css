@@ -1,0 +1,23 @@
+body {
+  background-color: #e8e8e8;
+}
+.container {
+  width: 80%;
+  margin: 20px auto;
+  background-color: #fff;
+  box-shadow: 3px 3px 6px 2px rgb(0, 0, 0, 0.1);
+  padding: 20px;
+}
+.container h1 {
+  margin: 0 0 15px 0;
+  border-bottom: 1px solid #ccc;
+}
+.count {
+  color: #aaa;
+  font-size: 14px;
+  text-align: center;
+}
+.remove-btn {
+  background-color: darkred;
+  color: white;
+}
