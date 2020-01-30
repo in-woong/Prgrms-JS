@@ -1,0 +1,97 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+    
+  <div id="todo-list"></div><br>
+  <div id='todo-data1'></div><br>
+  <div id='todo-data2'></div><br>
+
+  <script>
+    var data = [
+      {
+        text: 'JS 공부하기',
+        isCompleted: true
+      },
+      {
+        text: 'JS 복습하기',
+        isCompleted: false
+      }
+    ]
+    var data1 = [
+        {
+            text: 'Web Site 만들기',
+            isCompleted: false
+        },
+        {
+            text: 'Web Site 유지보수하기',
+            isCompleted: true
+        }
+    ]
+    var data2 = [
+        {
+            text: 'NoNo Japan',
+            isCompleted: true
+        },
+        {
+            text: 'NoNo 일본',
+            isCompleted: true
+        }
+    ]
+    var data3 = [
+        {
+            text: 'setState test',
+            isCompleted: true
+        },
+        {
+            text: 'setState clear!',
+            isCompleted: true
+        }
+    ]
+
+    function TodoList(data) {
+        if(typeof(data) !== "object"){
+            throw new Error("error message, data is not valid");
+        }
+        var string = '';
+        var dir = '';
+        for(var i = 0; i < data.length; i++){
+            string = string+'<li class="todo-item">';
+            if(data[i].isCompleted){
+                string = string+'<strike>'+data[i].text+'</strike></li>';
+            }else{
+                string = string+data[i].text+'</li>';
+            }
+        }
+        this.render = function(korea){
+            dir = korea;
+            document.getElementById(dir).innerHTML = string;
+        }
+        this.setState = function(nextData){
+            data = nextData;
+            for(var i = 0; i < data.length; i++){
+                string = string+'<li class="todo-item">';
+                if(data[i].isCompleted){
+                    string = string+'<strike>'+data[i].text+'</strike></li>';
+                }else{
+                    string = string+data[i].text+'</li>';
+                }
+            }
+            document.getElementById(dir).innerHTML = string;
+        }
+    }
+
+    const todo = new TodoList(data);
+    const todo1 = new TodoList(data1);
+    const todo2 = new TodoList(data2);
+    todo.render('todo-list');
+    todo1.render('todo-data1');
+    todo2.render('todo-data2');
+    todo.setState(data3);
+  </script>
+</body>
+</html>
