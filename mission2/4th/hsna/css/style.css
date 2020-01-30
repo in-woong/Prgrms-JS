@@ -1,0 +1,11 @@
+@import 'reset.css';
+@import 'card.css';
+
+*{
+  box-sizing: border-box;
+}
+
+html, body{
+  height: 100%;
+  width: 100%;
+}
