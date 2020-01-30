@@ -1,0 +1,79 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+    <div id="todo-list1"></div>
+    <div id="todo-list2"></div>
+    <div id="todo-list3"></div>
+    <script>
+        const data1 = [
+            {
+                text: 'JS 공부하기',
+                isCompleted: true
+            },
+            {
+                text: 'JS 복습하기',
+                isCompleted: false
+            }
+        ]
+        const data2 = [
+            {
+                text: '게임 하고싶은데',
+                isCompleted: false
+            },
+            {
+                text: '할게 많다',
+                isCompleted: true
+            }
+        ]
+        const data3 = [
+            {
+                text: '머리 잘라야하는데', 
+                isCompleted: false
+            },
+            {
+                text: '나가기 귀찮다',
+                isCompleted: true
+            }
+        ]
+        // 이곳에서 코딩을 시작하세요!
+        function TodoList(data, id) {
+            this.data = data;
+            this.id = id;
+
+            const validate = (msg, func) => {if(func()) { throw new Error(msg); }};
+
+            validate("new 키워드를 사용하세요.", () => { return !(this instanceof TodoList) });
+            validate("null 혹은 undefined값이 넘어왔습니다.", () => { return typeof data === (null || undefined) });
+            validate("array의 형태가 아닙니다.", () => { return !(Array.isArray(data)) });
+            validate("데이터 내용이 이상합니다.", () => { return typeof data.text === 'string' });
+            
+            this.render = function() {
+                const TodoList = document.querySelector(`#todo-list${id}`);
+                const htmlString = data.map(data  => data.isCompleted ? `<p><strike>${data.text}</strike></p></<p>` : `<p>${data.text}</p></<p>`).join('');
+                console.log(htmlString);
+                TodoList.innerHTML += htmlString;
+            }
+            
+            this.setState = function(nextData) {
+                validate("new 키워드를 사용하세요.", () => { return !(this instanceof TodoList) });
+                validate("null 혹은 undefined값이 넘어왔습니다.", () => { return typeof nextData === (null || undefined) });
+                validate("array의 형태가 아닙니다.", () => { return !(Array.isArray(nextData)) });
+                validate("데이터 내용이 이상합니다.", () => { return typeof nextData.text === 'string' });
+
+                data = nextData;
+                this.render();
+            }
+        }
+
+        const todoList1 = new TodoList(data1, 1);
+        todoList1.render();
+        todoList1.setState(data2);
+        todoList1.setState(data3);
+    </script>
+</body>
+</html>
