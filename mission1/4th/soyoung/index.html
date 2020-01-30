@@ -1,0 +1,76 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+
+  <body>
+    <section class="container">
+      <h1>Todo List</h1>
+      <ul id="todo-list"></ul>
+    </section>
+    <section class="container">
+      <h1>Must Eat List</h1>
+      <ul id="must-eat-list"></ul>
+    </section>
+    <section class="container">
+      <h1>Must Go List</h1>
+      <ul id="must-go-list"></ul>
+    </section>
+    <script src="data.js"></script>
+    <script src="./validate.js"></script>
+    <script>
+      class TodoList {
+        constructor(listItems, id) {
+          this.listItems = this._validateTodoList(listItems)
+          this.$element = document.querySelector(`#${id}`)
+        }
+
+        _validateTodoList(listItems) {
+          return validator.isNotEmptyArray(listItems) &&
+            listItems.every(item =>
+              validator.hasValidProperty(item, {
+                text: 'string',
+                isCompleted: 'boolean',
+              })
+            )
+            ? listItems
+            : validator.throwError('유효한 데이터가 아닙니다.')
+        }
+
+        render() {
+          this.$element.innerHTML = this.listItems
+            .map(item =>
+              item.isCompleted
+                ? `<li><del>${item.text}</del></li>`
+                : `<li>${item.text}</li>`
+            )
+            .join('')
+        }
+
+        setState(nextData) {
+          this.listItems = this._validateTodoList(nextData)
+          this.render()
+        }
+      }
+
+      const todoList = new TodoList(data, 'todo-list')
+      todoList.render()
+      const eatList = new TodoList(eat_data, 'must-eat-list')
+      eatList.render()
+      const goList = new TodoList(go_data, 'must-go-list')
+      goList.render()
+      goList.setState([
+        {
+          text: '다낭',
+          isCompleted: false,
+        },
+        {
+          text: '하와이',
+          isCompleted: false,
+        },
+      ])
+    </script>
+  </body>
+</html>
