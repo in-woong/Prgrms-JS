@@ -1,0 +1,96 @@
+<html>
+
+<head>
+    <title>Mission 1 - [4기]이은영</title>
+    <meta charset="utf-8" />
+    <style>
+        .completed {
+            text-decoration: line-through
+        }
+    </style>
+</head>
+
+<body>
+    <h1>mission 01 </h1>
+    <div class="todo-list" id="todo-list"></div>
+    <div class="todo-list" id="todoNew"></div>
+    <div class="todo-list" id="todoUpcomming"></div>
+
+    <script>
+        const today = [{
+            text: '공부하기',
+            isCompleted: true
+        }, {
+            text: '빨래돌리기',
+            isCompleted: false
+        }, {
+            text: '옵취하기',
+            isCompleted: false
+        }]
+
+        const newTask = [{
+            text: '장보기',
+            isCompleted: false
+        }, {
+            text: '서점가기',
+            isCompleted: true
+        }]
+
+        const upcoming = [{
+            text: 'git pull request',
+            isCompleted: false
+        }, {
+            text: '송년회',
+            isCompleted: true
+        }]
+
+
+        function err(msg) {
+            throw new Error(msg);
+        }
+
+        function TodoList(data, elem) {
+            if (!Array.isArray(data)) {
+                err('data type is not an Array');
+            }
+            this.data = data;
+            this.elem = elem;
+            const $todoList = document.querySelector(`#${elem}`);
+            const $lists = document.createElement('ul');
+            $todoList.innerHTML = '';
+
+            this.render = function() {
+                creates(data)
+            }
+            this.render();
+
+            function creates(getDatas) {
+                this.getDatas = getDatas;
+                $lists.innerHTML = this.getDatas.map(item => {
+                    let $liElem = '';
+                    if (item.isCompleted) {
+                        $liElem = `<li class="completed">${item.text}</li>`;
+                    } else {
+                        $liElem = `<li>${item.text}</li>`;
+                    }
+                    return $liElem
+                }).join('');
+                $todoList.appendChild($lists);
+            }
+
+
+            this.setState = function(nextData) {
+                this.nextData = nextData;
+                creates(nextData)
+            }
+
+        }
+
+        var todoList1 = new TodoList(today, 'todo-list');
+        var todoList2 = new TodoList(newTask, 'todoNew');
+
+        todoList1.setState([...upcoming]) //setState()
+    </script>
+</body>
+
+</html>
