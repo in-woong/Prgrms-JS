@@ -88,13 +88,13 @@
 
 /***/ "./js/components/App.js":
 /*!******************************!*\
-  !*** ./js/components/App.js ***!
+  !*** ./js/components/index.js ***!
   \******************************/
 /*! exports provided: App */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"App\", function() { return App; });\n/* harmony import */ var _SearchKeyword__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SearchKeyword */ \"./js/components/SearchKeyword.js\");\n/* harmony import */ var _SearchResult__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SearchResult */ \"./js/components/SearchResult.js\");\n\r\n\r\n\r\nconst App = data => {\r\n  Object(_SearchKeyword__WEBPACK_IMPORTED_MODULE_0__[\"SearchKeyword\"])();\r\n\r\n  // 초기 랜더링\r\n  const searchResult = new _SearchResult__WEBPACK_IMPORTED_MODULE_1__[\"SearchResult\"]('#search-result', data);\r\n  searchResult.setState(data);\r\n}\r\n\n\n//# sourceURL=webpack:///./js/components/App.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"App\", function() { return App; });\n/* harmony import */ var _SearchKeyword__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SearchKeyword */ \"./js/components/SearchKeyword.js\");\n/* harmony import */ var _SearchResult__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SearchResult */ \"./js/components/SearchResult.js\");\n\r\n\r\n\r\nconst App = data => {\r\n  Object(_SearchKeyword__WEBPACK_IMPORTED_MODULE_0__[\"SearchKeyword\"])();\r\n\r\n  // 초기 랜더링\r\n  const searchResult = new _SearchResult__WEBPACK_IMPORTED_MODULE_1__[\"SearchResult\"]('#search-result', data);\r\n  searchResult.setState(data);\r\n}\r\n\n\n//# sourceURL=webpack:///./js/components/index.js?");
 
 /***/ }),
 
@@ -130,7 +130,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _components_App__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/App */ \"./js/components/App.js\");\n/* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./store/store */ \"./js/store/store.js\");\n\r\n\r\n\r\nObject(_components_App__WEBPACK_IMPORTED_MODULE_0__[\"App\"])(_store_store__WEBPACK_IMPORTED_MODULE_1__[\"getData\"]);\n\n//# sourceURL=webpack:///./js/main.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _components_App__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/App */ \"./js/components/index.js\");\n/* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./store/store */ \"./js/store/store.js\");\n\r\n\r\n\r\nObject(_components_App__WEBPACK_IMPORTED_MODULE_0__[\"App\"])(_store_store__WEBPACK_IMPORTED_MODULE_1__[\"getData\"]);\n\n//# sourceURL=webpack:///./js/main.js?");
 
 /***/ }),
 

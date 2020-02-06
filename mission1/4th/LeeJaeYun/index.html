@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list"></div>
+    <div id="my-todo-list-1"></div>
+    <div id="my-todo-list-2"></div>
+    <script src = "./data.js"></script>
+    <script src = "./validator.js"></script>
+    <script>
+      // 이곳에서 코딩을 시작하세요!
+      function TodoList(data, idName) {
+        this.data = null;
+
+        this.validator_ = function(data) {
+          if (validator.isInstanceof(this, TodoList) === false) {
+            validator.errorThrow("Declare New!!")
+          } else if (validator.isNotEmptyArray(data) === false) {
+            validator.errorThrow("Invalid Array")
+          } else if (data.every(elem => validator.hasValidProperty(elem, {text: 'string', isCompleted: 'boolean'})) === false) {
+            validator.errorThrow("Invalid Data")
+          } else {
+            this.data = data;
+          }
+        };
+        this.validator_(data);
+        this.render = function() {
+          let stringHtml = '';
+          this.data.forEach(element => {
+              let temp = element.isCompleted === false
+                  ? `<strike>${element.text}</strike>`
+                  : element.text;
+              stringHtml += `<div>${temp}</div>`
+          });
+          document.querySelector(`#${idName}`).innerHTML = stringHtml
+        };
+        this.setState = function(nextData) {
+          this.validator_(nextData);
+          this.render();
+        }
+      }
+      const todoList =  new TodoList(data, 'todo-list');
+      const todoList1 = new TodoList(data1, 'my-todo-list-1');
+      const todoList2 = new TodoList(data2, 'my-todo-list-2');
+      todoList.render();
+      todoList.setState(data1);
+      todoList1.render();
+      todoList2.render();
+    </script>
+  </body>
+</html>

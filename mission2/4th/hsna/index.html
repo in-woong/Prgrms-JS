@@ -1,0 +1,55 @@
+<html>
+
+<head>
+  <title>Mission 2</title>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <section class="input-section">
+    <form class="todo-form">
+      <div class="radio-container">
+        <input type="radio" class="radio-input" name="category" value="toStudy-list" />공부
+        <input type="radio" class="radio-input" name="category" value="toEat-list" />먹기
+        <input type="radio" class="radio-input" name="category" value="toWatch-list" />보기
+      </div>
+      <input id="todo-input" />
+    </form>
+  </section>
+  <section class="main-section">
+    <div class="todo-container">
+      <div class="card-default card-title">
+        공부
+      </div>
+      <div id="toStudy-list" class="card-container">
+      </div>
+      <div id="toStudy-count"></div>
+    </div>
+    <div class="todo-container">
+      <div class="card-default card-title">
+        먹기
+      </div>
+      <div id="toEat-list" class="card-container">
+      </div>
+      <div id="toEat-count"></div>
+    </div>
+    <div class="todo-container">
+      <div class="card-default card-title">
+        보기
+      </div>
+      <div id="toWatch-list" class="card-container">
+      </div>
+      <div id="toWatch-count"></div>
+    </div>
+  </section>
+  <script src="js/utils.js"></script>
+  <script src="js/validator.js"></script>
+  <script src="js/TodoCount.js"></script>
+  <script src="js/TodoInput.js"></script>
+  <script src="js/TodoList.js"></script>
+  <script src="js/App.js"></script>
+  <script src="js/index.js"></script>
+</body>
+
+</html>

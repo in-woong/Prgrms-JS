@@ -1,0 +1,66 @@
+.input-section{
+  margin: 0.5em 0em 0.5em 0em;       
+}
+
+.input-section,
+.main-section {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.input-section .todo-form{
+  display: flex;
+  flex-direction:column;
+  justify-content: center;
+}
+
+.input-section .todo-form .radio-container{
+  margin: 0.5em 0em 0.5em 0em;
+}
+
+.main-section .todo-container{
+  width: 30%;
+  display:flex; 
+  flex-direction:column;
+  justify-content:flex-start;
+}
+
+.main-section .card-container{
+  width: 100%;
+  display:flex; 
+  flex-direction:column;
+  justify-content:flex-start;
+}
+
+.main-section .todo-container:not(:last-child),
+.main-section .card-container:not(:last-child){
+  margin: 0em 2em 0em 0em;
+}
+
+.main-section .card-default{
+  width: 100%;
+  height: 5em;
+  margin: 0em 0em 0.5em 0em;
+}
+
+.main-section .card-title{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #345461;
+  color:white;
+}
+
+.main-section .card-content{
+  display: flex;
+  align-items: center;
+  background-color:#CEE5EF;
+  padding: 0, 0, 0, 2em;
+  position: relative;;
+}
+
+.main-section .card-content .del-btn{
+  position: absolute;
+  right:1em;
+}

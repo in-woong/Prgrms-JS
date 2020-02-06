@@ -1,0 +1,39 @@
+#search-history .history__item {
+  margin-right: 15px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+#search-history .history__item:hover {
+  color: royalblue;
+}
+
+#search-keyword {
+  width: 90%;
+  display: block;
+  padding: 10px;
+  margin: 30px auto;
+  border: 2px solid #ccc;
+  font-size: 18px;
+}
+
+#search-result {
+  display: flex;
+  flex-wrap: wrap;
+  border-top: 1px solid #ccc;
+  padding-top: 20px;
+}
+#search-result .result__item {
+  width: 400px;
+  overflow: hidden;
+  margin: 5px;
+}
+#search-result .result__img {
+  width: 100%;
+  border-radius: 15px;
+}
+
+#search-error {
+  text-align: center;
+  color: red;
+}

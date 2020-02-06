@@ -1,0 +1,22 @@
+html, body {
+  font-family: sans-serif;
+}
+.todo-container {
+  width: 100%;
+  max-width: 480px;  
+  margin: 64px auto;
+}
+.todo-list-wrapper {
+  padding: 0;
+}
+.todo-list-item {
+  list-style: none;
+  padding: 16px 24px;
+  margin-bottom: 8px;
+  border-radius: 16px;
+  box-shadow: 1px 2px 12px rgba(0,0,0,0.08);
+}
+.todo-list-item.completed {
+  text-decoration: line-through;
+  color: #999999;
+}

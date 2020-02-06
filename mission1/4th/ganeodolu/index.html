@@ -1,0 +1,68 @@
+<html>
+
+<head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+</head>
+
+<body>
+    <div id="todo-list"></div>
+    <div id="white-list"></div>
+    <div id="black-list"></div>
+    <script src="./TodoList.js"></script>
+    <script>
+        const error = {
+            NO_USED_NEW_KEYWORD: "함수 선언시 new를 사용해주세요.",
+            NOARRAY_DATA: "data타입이 Array가 아닙니다.",
+            NOT_DATA: "data가 null 또는 undefined 입니다.",
+            INVALID_DATA: "data타입이 문자열이 아닙니다.",
+        };
+        var data = [
+            {
+                text: 'JS 공부하기',
+                isCompleted: true
+            },
+            {
+                text: 'JS 복습하기',
+                isCompleted: false
+            }
+        ]
+        var white = [
+            {
+                text: 'JS Git 커밋하기',
+                isCompleted: true
+            },
+            {
+                text: 'JS Git 풀리퀘하기',
+                isCompleted: false
+            }
+        ]
+        var black = [
+            {
+                text: 'JS 한시간 뒤에 하기',
+                isCompleted: false
+            },
+            {
+                text: 'JS 내일하기',
+                isCompleted: true
+            }
+        ]
+        var newData = [
+            {
+                text: 'JS 책 읽기',
+                isCompleted: true
+            },
+            {
+                text: 'JS 강의 보기',
+                isCompleted: false
+            }
+        ]
+
+        var todoList = new TodoList('#todo-list', data);
+        var whiteList = new TodoList('#white-list', white);
+        var blackList = new TodoList('#black-list', black);
+        blackList.setState(newData);
+    </script>
+</body>
+
+</html>

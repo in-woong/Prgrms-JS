@@ -1,7 +1,7 @@
 {
   "name": "roto",
   "version": "1.0.0",
-  "description": "",
+  "description": "**프론트엔드 개발을 위한 자바스크립트 온라인 스터디** - [학습 참고 공간](https://school.programmers.co.kr/courses/9998)",
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
@@ -12,11 +12,22 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "eslint": "^6.1.0",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^18.0.1",
     "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.18.2"
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-react": "^7.16.0"
   },
   "dependencies": {
     "http-server": "^0.11.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://eastjunDev:ehdwns3624!@github.com/learn-programmers/prgrms-fejs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/learn-programmers/prgrms-fejs/issues"
+  },
+  "homepage": "https://github.com/learn-programmers/prgrms-fejs#readme"
 }

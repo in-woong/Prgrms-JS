@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mission 1</title>
+</head>
+<body>
+  <div class="list_wrap"><strong>Todo List</strong><div id="todo-list"></div></div>
+  <div class="list_wrap"><strong>Trip List</strong><div id="trip-list"></div></div>
+  <div class="list_wrap"><strong>Study List</strong><div id="study-list"></div></div>
+  <script src="js/data.js"></script>
+  <script>
+    function isValidData(data) {
+        if(data === null)
+            throw new Error('null입니다');
+        else if(data === undefined)
+            throw new Error('undefined입니다');
+        else if(!Array.isArray(data))
+            throw new Error('배열 형태가 아닙니다');
+        else if(!data.length)
+            throw new Error('빈 배열 입니다');
+
+        data.forEach(item => {
+            if(!item.hasOwnProperty('text') || typeof item.text !== 'string')
+                throw new Error('올바른 데이터 형식이 아닙니다');
+        });
+        
+        return data;
+    }
+
+    function isValidInstance(thisObj) {
+        if(!(thisObj instanceof TodoList))
+            throw new Error('TodoList의 인스턴스가 아닙니다');
+    }
+
+    function TodoList(data, elementId) {
+        isValidInstance(this);
+
+        const $list = document.createElement('ul');
+        const $listArea = document.querySelector(`#${elementId}`);
+        $listArea.appendChild($list);
+
+        this.data = isValidData(data);
+        this.render = function() {
+            
+            $listArea.childNodes[0].innerHTML = this.data
+                .map(item => item.isCompleted ? `<li><del>${item.text}</del></li>` : `<li>${item.text}</li>`)
+                .join('');
+        }
+        this.setState = function(nextData) {
+            this.data = isValidData(nextData);
+            this.render();
+        }
+    }
+
+    const todo = new TodoList(todo_data, 'todo-list');
+    todo.render();
+    const trip = new TodoList(trip_data, 'trip-list');
+    trip.render();
+    const study = new TodoList(study_data, 'study-list');
+    study.render();
+
+    todo.setState([
+        {
+            text: 'HTML 공부하기',
+            isCompleted: false
+        },
+        {
+            text: 'CSS 공부하기',
+            isCompleted: false
+        }
+    ]);
+  </script>
+</body>
+</html>
