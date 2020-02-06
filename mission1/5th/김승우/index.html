@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Mission 1</title>
+  </head>
+  <body>
+    <div id="todo-list"></div>
+    <script>
+      const todoList = document.getElementById('todo-list')
+
+      var data = [
+        {
+          text: 'JS 공부하기',
+        },
+        {
+          text: 'JS 복습하기',
+        },
+      ]
+      // 이곳에서 코딩을 시작하세요!
+
+      function TodoList(inputData) {
+        this.data = inputData
+        this.render = function() {
+          let inputHTML = ''
+          this.data.forEach(function(elem) {
+            inputHTML += `<div>${elem.text}</div>`
+          })
+          todoList.innerHTML = inputHTML
+        }
+      }
+
+      const firstTodo = new TodoList(data)
+      firstTodo.render()
+    </script>
+  </body>
+</html>
