@@ -425,8 +425,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-
-mission1/**
 yarn.lock
-mission3/**
-mission4/**
