@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list"></div>
+    <script>
+      var data = [
+        {
+          text: 'JS 공부하기',
+        },
+        {
+          text: 'JS 복습하기',
+        },
+      ]
+
+      // 전달 받은 Todo list 데이터를 그리는 컴포넌트
+      function TodoList(data) {
+        this.data = data
+
+        this.render = function() {
+          var renderData = this.data.map(item => `<div> ★ ${item.text} </div>`)
+          document.querySelector('#todo-list').innerHTML = renderData.join('')
+        }
+      }
+
+      var todoList = new TodoList(data)
+      todoList.render()
+    </script>
+  </body>
+</html>
