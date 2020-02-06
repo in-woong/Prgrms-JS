@@ -1,0 +1,105 @@
+<html>
+
+<head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+</head>
+
+<body>
+    <h1>TODO LIST</h1>
+    <div id="todo-list"></div>
+
+    <div id="myTodo-list"></div>
+
+    <div id="workTodo-list"></div>
+    <script>
+        var data = [
+            {
+                text: '코딩하기'
+            },
+            {
+                text: '집안 청소하기'
+            }
+        ]
+
+        var myTodoData = [
+            {
+                text: '미션 1 - 필수 구현사항',
+                isCompleted: true
+            },
+            {
+                text: '미션 1 - 보너스 구현사항 (에러체크)',
+                isCompleted: false
+            },
+            {
+                text: '미션 1 - 보너스 구현사항 (다중컴포넌트)',
+                isCompleted: true
+            },
+            {
+                text: '미션 1 - 보너스 구현사항 (삭선처리)',
+                isCompleted: true
+            },
+            {
+                text: '미션 1 - 보너스 구현사항 (setState)',
+                isCompleted: false
+            },
+        ]
+
+        var workTodoData = [] //빈 값
+        var errData = '이상한값'  //배열이 아닌 값
+
+        // 이곳에서 코딩을 시작하세요!
+        const todo = document.querySelector('#todo-list')
+        const myTodo = document.querySelector('#myTodo-list')
+        const workTodo = document.querySelector('#workTodo-list')
+
+        function TodoList(data, el) {
+            this.data = data
+            this.el = el
+
+            this.getData = function (data) {
+                return data.reduce((html, item) => {
+                    if (item.isCompleted == true) {
+                        html += `<li><del>${item.text}</del></li>`
+                    }
+                    else {
+                        html += `<li>${item.text}</li>`
+                    }
+                    return html
+                }, '<ul class="todo_list">') + '</ul>'
+            }
+
+            this.render = function () {
+                el.innerHTML = this.errCheck(data) ? this.getData(data) : 'error'
+            }
+
+            this.errCheck = function (data) {
+                // array가 아닌 형태로 넘어오면?
+                if  (!data instanceof Array) {
+                    debugger
+                    return false
+                    // array가 아닌 data일 때 errCheck false로 getData를 방문하지 않을 것 같은데 방문이되는건지 에러가 뜹니다.
+                }
+
+                // null 혹은 undefined가 넘어오면?
+                if (typeof data == "undefined" || data == null || data == '') {
+                    return false
+                } else {
+                    return true
+                }
+            }
+        }
+
+        var todoList = new TodoList(data, todo)
+        var myTodoList = new TodoList(myTodoData, myTodo)
+        var workTodoList = new TodoList(workTodoData, workTodo)
+        // var workTodoList = new TodoList(errData, workTodo)
+
+        todoList.render()
+        myTodoList.render()
+        workTodoList.render()
+
+    </script>
+</body>
+
+</html>
