@@ -41,7 +41,7 @@
             },
             {
                 text: '미션 1 - 보너스 구현사항 (setState)',
-                isCompleted: false
+                isCompleted: true
             },
         ]
 
@@ -54,10 +54,18 @@
         const workTodo = document.querySelector('#workTodo-list')
 
         function TodoList(data, el) {
+            // new 키워드 안붙이고 함수 실행시 에러발생하게 하기
+            // TodoList의 객체인지 아닌지 판단
+            if( !this instanceof TodoList ) {
+                throw new Error("instance type error")
+            }
+        
             this.data = data
             this.el = el
 
             this.getData = function (data) {
+                this.errCheck(data)
+
                 return data.reduce((html, item) => {
                     if (item.isCompleted == true) {
                         html += `<li><del>${item.text}</del></li>`
@@ -70,34 +78,49 @@
             }
 
             this.render = function () {
-                el.innerHTML = this.errCheck(data) ? this.getData(data) : 'error'
+                // el.innerHTML = this.errCheck(data) ? this.getData(data) : "error message"
+                el.innerHTML = this.getData(this.data)
             }
 
             this.errCheck = function (data) {
-                // array가 아닌 형태로 넘어오면?
-                if  (!data instanceof Array) {
-                    debugger
-                    return false
-                    // array가 아닌 data일 때 errCheck false로 getData를 방문하지 않을 것 같은데 방문이되는건지 에러가 뜹니다.
-                }
+                // array가 아닌 형태로 넘어오면? 
+                // null 혹은 undefined가 넘어오면? 
 
-                // null 혹은 undefined가 넘어오면?
-                if (typeof data == "undefined" || data == null || data == '') {
-                    return false
+                // if (!data instanceof Array) {
+                //     throw new Error("data type array")
+                // }
+
+                if (data == "undefined" || data == null || data == '' || !Array.isArray(data)) {
+                    throw new Error("data type error")
                 } else {
-                    return true
+                    return data
                 }
+            }
+
+            this.setState = function (nextData) {
+                this.data = nextData
+                this.render()
             }
         }
 
         var todoList = new TodoList(data, todo)
+        // var todoList = TodoList(data, todo)
         var myTodoList = new TodoList(myTodoData, myTodo)
-        var workTodoList = new TodoList(workTodoData, workTodo)
-        // var workTodoList = new TodoList(errData, workTodo)
+        // var workTodoList = new TodoList(workTodoData, workTodo)
+        var workTodoList = new TodoList(errData, workTodo)
 
         todoList.render()
         myTodoList.render()
         workTodoList.render()
+
+        todoList.setState([
+        {
+          text: 'JS 공부하기',
+        },
+        {
+          text: 'JS 복습하기',
+        },
+    ]);
 
     </script>
 </body>
