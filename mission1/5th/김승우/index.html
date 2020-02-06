@@ -8,6 +8,7 @@
   </head>
   <body>
     <div id="todo-list"></div>
+    <div id="console"></div>
     <script>
       const todoList = document.getElementById('todo-list')
 
@@ -24,16 +25,26 @@
       function TodoList(inputData) {
         this.data = inputData
         this.render = function() {
-          let inputHTML = ''
           this.data.forEach(function(elem) {
-            inputHTML += `<div>${elem.text}</div>`
+            todoList.innerHTML += `<div>${elem.text}</div>`
           })
-          todoList.innerHTML = inputHTML
         }
       }
 
       const firstTodo = new TodoList(data)
       firstTodo.render()
+
+      //추가구현사항1 올바른 파라미터가 입력되지 않았을 경우 에러 발생하게 하기
+      //질문 : 그러면 이럴 경우 파라미터의 요소 안에 text라는 프로퍼티가 있는지 우선 검사하고 실행해야 하나요?
+
+      var data2 = ['JS 공부하기', 'JS 복습하기']
+      const secondTodo = new TodoList(data2)
+      secondTodo.render()
+
+      //new 키워드를 안붙이고 실행하였을 경우
+      //47번 줄에서 Cannot read property 'render' of undefined 발생
+      const thirdTodo = TodoList(data)
+      thirdTodo.render()
     </script>
   </body>
 </html>
