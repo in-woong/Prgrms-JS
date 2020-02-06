@@ -12,6 +12,20 @@
                 {text: "JS 복습하기"}
             ]
             //코딩 시작
+
+            function todoList(data) {
+                this.data = data;
+                this.render = function(data) {
+                    for (var i=0; i<data.length; i++) {
+                        var html = '<div>' + data[i].text + '</div>';
+                        document.querySelector(todo-list).innerHTML = html;
+                    }
+                }
+            }
+
+            var todoList1 = new todoList(data);
+            todoList1.render();
+
         </script>
     </body>
 </html>
