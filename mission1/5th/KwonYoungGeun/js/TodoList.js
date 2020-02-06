@@ -6,6 +6,7 @@ class TodoList {
   }
 
   init() {
+    validation(this.$todoList, this._data)
     this.render()
   }
 
