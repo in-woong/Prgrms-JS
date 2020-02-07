@@ -6,13 +6,13 @@ class TodoList {
   }
 
   init() {
-    validators.arrayValidator(this._data)
+    validators.dataValidator(this._data)
     validators.elementValidator(this.$element)
     this.render()
   }
 
   setState(nextData) {
-    validators.arrayValidator(nextData)
+    validators.dataValidator(nextData)
     this._data = nextData
 
     this.render()

@@ -10,7 +10,7 @@ const isElement = target => {
   return target instanceof HTMLElement
 }
 
-const arrayValidator = data => {
+const dataValidator = data => {
   !isArray(data) &&
     errorHandle(`데이터가 Array가 아닙니다. data: ${typeof data}`)
 }
@@ -21,6 +21,6 @@ const elementValidator = element => {
 }
 
 const validators = {
-  arrayValidator,
+  dataValidator,
   elementValidator,
 }
