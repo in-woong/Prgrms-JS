@@ -9,10 +9,10 @@
   <body>
     <h1>TODO-LIST</h1>
     <div id="todo-list"></div>
-    <h1>DOING-LIST</h1>
-    <div id="doing-list"></div>
-    <h1>DONE-LIST</h1>
-    <div id="done-list"></div>
+    <h1>TO-READ-LIST</h1>
+    <div id="to-read-list"></div>
+    <h1>TO-WATCH-LIST</h1>
+    <div id="to-watch-list"></div>
     <script src="./js/data.js"></script>
     <script src="./js/utils.js"></script>
     <script src="./js/todoList.js"></script>
@@ -20,11 +20,11 @@
       const todoListElement = document.getElementById('todo-list')
       const todoList = new TodoList(todoData, todoListElement)
 
-      const doingListElement = document.getElementById('doing-list')
-      const doingList = new TodoList(doingData, doingListElement)
+      const toReadListElement = document.getElementById('to-read-list')
+      const toReadList = new TodoList(toReadData, toReadListElement)
 
-      const doneListElement = document.getElementById('done-list')
-      const doneList = new TodoList(doneData, doneListElement)
+      const toWatchListElement = document.getElementById('to-watch-list')
+      const toWatchList = new TodoList(toWatchData, toWatchListElement)
     </script>
   </body>
 </html>

@@ -1,26 +1,32 @@
 const todoData = [
   {
     text: 'JS 공부하기',
+    isCompleted: true,
   },
   {
     text: 'JS 복습하기',
+    isCompleted: true,
   },
 ]
 
-const doingData = [
+const toReadData = [
   {
-    text: '과제 하기',
+    text: '자바스크립트 완벽가이드',
+    isCompleted: false,
   },
   {
-    text: '세션 내용 키워드 정리하기',
+    text: '만개의 레시피',
+    isCompleted: true,
   },
 ]
 
-const doneData = [
+const toWatchData = [
   {
-    text: '운동',
+    text: '겨울왕국 2',
+    isCompleted: false,
   },
   {
-    text: '고양이 밥주기',
+    text: '나쁜 녀석들 3 포에버',
+    isCompleted: false,
   },
 ]
