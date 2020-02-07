@@ -6,7 +6,8 @@ class TodoList {
   }
 
   init() {
-    validation(this.$element, this._data)
+    validators.arrayValidator(this._data)
+    validators.elementValidator(this.$element)
     this.render()
   }
 
