@@ -1,18 +1,23 @@
 class TodoList {
   constructor(data, element) {
+    this.validate(data, element)
     this.$element = element
     this._data = data
     this.init()
   }
 
+  // 첫 생성될 때 실행되어야할 함수들을 따로 init()에 모아서 호출합니다.
   init() {
-    validators.dataValidator(this._data)
-    validators.elementValidator(this.$element)
     this.render()
   }
 
+  validate(data, element) {
+    dataValidator(data)
+    elementValidator(element)
+  }
+
   setState(nextData) {
-    validators.dataValidator(nextData)
+    dataValidator(nextData)
     this._data = nextData
 
     this.render()

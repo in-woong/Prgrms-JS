@@ -19,8 +19,3 @@ const elementValidator = element => {
   !isElement(element) &&
     errorHandle(`정상적인 요소가 아닙니다. element: ${element}`)
 }
-
-const validators = {
-  dataValidator,
-  elementValidator,
-}
