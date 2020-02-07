@@ -2,10 +2,27 @@
   <head>
     <title>Mission 1</title>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
-    <div id="todo-list"></div>
+    <div>
+      <div class="main">
+        <span>JS 스터디 TODO</span>
+        <div id="todo-list"></div>
+      </div>
+
+      <div class="main">
+        <span>내일 TODO</span>
+        <div id="daily-todo-list"></div>
+      </div>
+
+      <div class="main">
+        <span>다음주 TODO</span>
+        <div id="week-todo-list"></div>
+      </div>
+    </div>
+    <script src="./todoList.js"></script>
     <script>
       var data = [
         {
@@ -16,51 +33,33 @@
         },
       ]
 
-      // 전달 받은 Todo list 데이터를 그리는 컴포넌트
-      function TodoList(data) {
-        // new 키워드를 붙이지 않고 함수 실행 시
-        if (!(this instanceof TodoList)) {
-          throw new Error('new 키워드로 실행되지 않았습니다.')
-        }
+      var dailyTodo = [
+        {
+          text: '1주차 보너스 미션 도전해보기',
+        },
+        {
+          text: '늦잠자기!!!',
+        },
+      ]
 
-        var isParamValid = (function(param) {
-          // 데이터가 null / undefined 또는 array가 아닐 경우
-          if (!param || !Array.isArray(param)) {
-            return false
-          }
+      var nextWeekTodo = [
+        {
+          text: '일 축가 연습',
+        },
+        {
+          text: '월, 금 운동',
+        },
+        {
+          text: '수 js 스터디',
+        },
+      ]
 
-          // 데이터 내용이 이상할 때
-          var result = true
-          if (param.length > 0) {
-            result = param.every(
-              item =>
-                Object.prototype.toString.call(item) === '[object Object]' &&
-                'text' in item
-            )
-          }
-
-          return result
-        })(data)
-
-        if (!isParamValid) {
-          throw new Error('데이터가 올바르지 않습니다.')
-        }
-
-        this.data = data
-
-        this.render = function() {
-          var renderData = this.data.map(item => `<div> ★ ${item.text} </div>`)
-          document.querySelector('#todo-list').innerHTML = renderData.join('')
-        }
-      }
-
-      var todoList = new TodoList(data)
+      var todoList = new TodoList(data, 'todo-list')
       todoList.render()
-      // var todoList1 = new TodoList()
-      // var todoList2 = new TodoList([])
-      // var todoList3 = new TodoList([1, 2])
-      // var todoList4 = new TodoList([{ b: 1 }, { a: 1 }])
-      // var todoList5 = TodoList(data)
+      var dailyList = new TodoList(dailyTodo, 'daily-todo-list')
+      dailyList.render()
+      var weekList = new TodoList(nextWeekTodo, 'week-todo-list')
+      weekList.render()
     </script>
   </body>
 </html>
