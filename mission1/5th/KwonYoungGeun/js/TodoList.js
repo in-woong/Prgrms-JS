@@ -12,7 +12,12 @@ class TodoList {
 
   render() {
     this.$element.innerHTML = `<ul>${this._data.map(
-      data => `<li>${data.text}</li>`
+      data =>
+        `${
+          data.isCompleted
+            ? `<li><strike>${data.text}</strike></li>`
+            : `<li>${data.text}</li>`
+        }`
     )}</ul>`
   }
 }
