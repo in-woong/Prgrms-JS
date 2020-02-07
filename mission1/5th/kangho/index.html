@@ -5,26 +5,45 @@
         <meta charset="utf-8">
     </head>
     <body>
-        <div id="todo-list"></div>
+        <div id="idTodoList"></div>
+        <div id="stage"></div>
+
         <script>
-            var data = [
-                {text: "JS 공부하기"},
-                {text: "JS 복습하기"}
+            var inputData = [
+                {text: 'JS 공부하기'},
+                {text: 'JS 복습하기'}
             ]
             //코딩 시작
 
-            function todoList(data) {
-                this.data = data;
-                this.render = function(data) {
-                    for (var i=0; i<data.length; i++) {
-                        var html = '<div>' + data[i].text + '</div>';
-                        document.querySelector(todo-list).innerHTML = html;
+            function todoList(inputData) {
+                this.data = inputData;
+                this.render = function() {
+                    // document.write(this.data[0].text);
+                    // document.write(this.data.length);
+                    for (var i=0; i<this.data.length; i++) {
+                        var html = '<div>' + this.data[i].text + '</div>'
+                        document.querySelector('#idTodoList').innerHTML += html;
                     }
                 }
             }
 
-            var todoList1 = new todoList(data);
+            var todoList1 = new todoList(inputData);
+            console.log(todoList1);
             todoList1.render();
+
+            
+            // function Band(name) {
+            //     this.name = name;
+            //     this.perform = function(){
+            //         console.log(`${this.name} 밴드가 공연을 합니다!`);
+            //     }
+            //     this.performHTML = function() {
+            //         document.querySelector('#stage').innerHTML = `<div>${this.name} 밴드가 공연을 합니다!</div>`
+            //     }
+            // }
+
+            // var band1 = new Band('bb');
+            // band1.performHTML();
 
         </script>
     </body>
