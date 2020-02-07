@@ -7,13 +7,24 @@
     <title>TODO-LIST</title>
   </head>
   <body>
+    <h1>TODO-LIST</h1>
     <div id="todo-list"></div>
+    <h1>DOING-LIST</h1>
+    <div id="doing-list"></div>
+    <h1>DONE-LIST</h1>
+    <div id="done-list"></div>
     <script src="./js/data.js"></script>
     <script src="./js/utils.js"></script>
     <script src="./js/todoList.js"></script>
     <script>
       const todoListElement = document.getElementById('todo-list')
-      const todoList = new TodoList(data, todoListElement)
+      const todoList = new TodoList(todoData, todoListElement)
+
+      const doingListElement = document.getElementById('doing-list')
+      const doingList = new TodoList(doingData, doingListElement)
+
+      const doneListElement = document.getElementById('done-list')
+      const doneList = new TodoList(doneData, doneListElement)
     </script>
   </body>
 </html>

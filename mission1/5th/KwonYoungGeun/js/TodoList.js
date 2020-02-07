@@ -1,17 +1,17 @@
 class TodoList {
   constructor(data, element) {
-    this.$todoList = element
+    this.$element = element
     this._data = data
     this.init()
   }
 
   init() {
-    validation(this.$todoList, this._data)
+    validation(this.$element, this._data)
     this.render()
   }
 
   render() {
-    this.$todoList.innerHTML = `<ul>${this._data.map(
+    this.$element.innerHTML = `<ul>${this._data.map(
       data => `<li>${data.text}</li>`
     )}</ul>`
   }
