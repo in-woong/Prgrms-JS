@@ -1,0 +1,71 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list"></div>
+  <div id="todo-list2"></div>
+  <div id="todo-list3"></div>
+  <script>
+    const data = [
+      {
+        text: 'JS 공부하기',
+        isCompleted: true
+      },
+      {
+        text: 'JS 복습하기',
+        
+      }
+    ]
+    const data2 = [
+      {
+        text: '8시 기상',
+        isCompleted: true
+      },
+      {
+        text: '12시 취침',
+        isCompleted: false 
+      }  
+    ]
+    const data3 = [
+      {
+        text: '6장, 7장, 8장 복습하기',
+        isCompleted: true
+      },
+      {
+        text: '강의 듣기',
+        isCompleted: false 
+      }
+    ]
+    class TodoList{
+        constructor(data){
+            this.data = data;
+            try{
+              if(Array.isArray(this.data) === false) throw new Error("Array가 아닙니다.");
+            }catch(e){
+              alert(e.message);
+            }
+        }
+        render(){
+          const string = this.data.map(el => el.text);
+          const completed = this.data.filter( el => el.isCompleted === true);
+          string.forEach(el => {
+            completed[0].text === el ?
+            document.getElementById('todo-list').innerHTML += `<strike> ${el} </strike>`:
+            document.getElementById('todo-list').innerHTML += `<div> ${el} </div><br>`;
+          });
+        }
+    }
+    const todoList = new TodoList(data);
+    const todoList2 = new TodoList(data2);
+    const todoList3 = new TodoList(data3);
+    todoList.render();
+    todoList2.render();
+    todoList3.render();
+   
+  </script>
+</body>
+</html>
