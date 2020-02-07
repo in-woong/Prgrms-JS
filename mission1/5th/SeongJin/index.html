@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="todo-list"></div>
+    <script>
+        const todos = [{
+                text: 'JS 공부하기',
+            },
+            {
+                text: 'JS 복습하기',
+            },
+            // {
+            // errorText: 'dummyData'
+            // },
+            // {
+            // text: 1
+            // }
+        ]
+
+        function TodoList(todos) {
+            const todoList = document.getElementById('todo-list')
+            if (!this instanceof TodoList) {
+                throw new Error('new 키워드 or 함수의 이름을 확인해주세요')
+            }
+            if (!Array.isArray(todos) || todos === null || todos === 'undefined') {
+                throw new Error('데이터 타입을 다시 확인해주세요')
+            }
+            for (const key in todos) {
+                if (!todos[key].text || typeof todos[key].text !== 'string')
+                    throw new Error('객체의 내용을 다시 확인해주세요')
+            }
+
+            this.todos = todos
+            // 이 함수는 파라메터로 넘겨받은 data를 순회하며 각 배열첨자의 text를 html string으로 만든 뒤, todo-list라는 id를 가진 div에 innerHTML을 이용해 렌더링 되도록 합니다.
+            // 이 함수는 별도의 파라메터 없이 todoList.render() 형태로 실행되도록 만듭니다.
+            this.render = function () {
+                this.todos.map(todo => {
+                    todoList.innerHTML += `<div>${todo.text}</div>`
+                })
+            }
+        }
+
+        const todoList = new TodoList(todos)
+        todoList.render()
+    </script>
+</body>
+
+</html>
