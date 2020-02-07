@@ -11,6 +11,13 @@ class TodoList {
     this.render()
   }
 
+  setState(nextData) {
+    validators.arrayValidator(nextData)
+    this._data = nextData
+
+    this.render()
+  }
+
   render() {
     this.$element.innerHTML = `<ul>${this._data.map(
       data =>
