@@ -48,8 +48,10 @@
     ]
 
   function TodoList(data, targetId) {
-    isValid(data, new.target);
-
+    if(!new.target) {
+      throw new Error("new 생성자로 함수를 호출하세요.");
+    }
+    isValidData(data, new.target);
     this.data = data;
 
     this.render = function() {
@@ -62,15 +64,13 @@
     }
     
     this.setState = function(nextData) {
+      isValidData(nextData);
       this.data = nextData;
       this.render();
     }
   }
 
-  function isValid(data, newTarget) {
-    if(!newTarget) {
-      throw new Error("new 생성자로 함수를 호출하세요.");
-    }
+  function isValidData(data) {
     if(!data) {
       throw new Error("데이터가 없습니다.");
     } 
