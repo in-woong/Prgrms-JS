@@ -51,6 +51,7 @@
     isValid(data, new.target);
 
     this.data = data;
+
     this.render = function() {
       const html = this.data.reduce(
         (sum, current) => sum + `
@@ -58,6 +59,11 @@
         current.text}</div>
         `,'');
       document.querySelector(`#${targetId}`).innerHTML = html;
+    }
+    
+    this.setState = function(nextData) {
+      this.data = nextData;
+      this.render();
     }
   }
 
@@ -88,6 +94,7 @@
     todoListCat.render();
     const todoListMine = new TodoList(myData,'todo-list-mine');
     todoListMine.render();
+    setTimeout(() => todoList.setState(myData), 3000);
   }catch(e) {
     console.log(e);
   }
