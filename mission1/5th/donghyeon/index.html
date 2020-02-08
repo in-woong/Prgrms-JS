@@ -1,0 +1,65 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list"></div>
+  <script>
+    var data1 = [
+      {
+        text: 'JS 공부하기'
+      },
+      {
+        text: 'JS 복습하기'
+      }
+    ]
+    var data2 = [
+      {
+        text: 'sj 공부하기'
+      },
+      {
+        text: 'sj 복습하기'
+      }
+    ]
+  
+    function TodoList(data) {
+      if (!(this instanceof TodoList)) {
+        console.info('new를 안쓰셨던데, 붙인것처럼 해드림')
+        return new TodoList(data)
+      }
+
+      if (!Array.isArray(data)) {
+        const errorMessage = '어레이로 주세요'
+        console.error(errorMessage)
+        this.render = function(errorMessage='알 수 없는 에러 발생') {
+          const errorWrapper = document.createElement('h2')
+          errorWrapper.innerHTML = errorMessage
+
+          document.querySelector('body').appendChild(errorWrapper)
+        }
+        return
+      }
+
+      this.data = data
+      this.render = function() {
+        const listWrapper = document.createElement('ul')
+        document.querySelector('#todo-list').appendChild(listWrapper)
+
+        this.data.forEach(element => {
+          const item = document.createElement('li')
+          item.innerHTML =`<span>${element.text}</span>`;
+          listWrapper.appendChild(item);
+        });
+      }
+    } 
+
+    var todoList1 = new TodoList(data1)
+    var todoList2 = new TodoList(data2)
+    todoList1.render();
+    todoList2.render();
+  </script> 
+</body>
+</html>
