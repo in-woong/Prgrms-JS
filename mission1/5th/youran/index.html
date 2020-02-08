@@ -12,31 +12,38 @@
   <script>
     const data = [
       {
-        text: 'JS 공부하기'
+        text: 'JS 공부하기',
+        isCompleted: true
       },
       {
-        text: 'JS 복습하기'
+        text: 'JS 복습하기',
+        isCompleted: false
       }
     ]
 
     const catData = [
       {
-        text: '화장실 모래 전체갈이'
+        text: '화장실 모래 전체갈이',
+        isCompleted: false
       },
       {
-        text: '발톱 깎아주기'
+        text: '발톱 깎아주기',
+        isCompleted: true
       }
     ]
 
     const myData = [
       {
-        text: '소독용 알콜 구입'
+        text: '소독용 알콜 구입',
+        isCompleted: false
       },
       {
-        text: '중고책 팔기'
+        text: '중고책 팔기',
+        isCompleted: false
       },
       {
-        text: '연말정산'
+        text: '연말정산',
+        isCompleted: true
       }
     ]
 
@@ -46,8 +53,10 @@
     this.data = data;
     this.render = function() {
       const html = this.data.reduce(
-        (sum, current) => sum + `<div>${current.text}</div>`
-        ,'');
+        (sum, current) => sum + `
+        <div>${current.isCompleted ? '<s>' + current.text + '</s>' : 
+        current.text}</div>
+        `,'');
       document.querySelector(`#${targetId}`).innerHTML = html;
     }
   }
