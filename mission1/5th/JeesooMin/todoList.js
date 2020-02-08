@@ -31,10 +31,16 @@ function TodoList(data, elementId) {
   this.data = data
   this.elementId = elementId
 
+  const renderItem = item => {
+    if (item.isCompleted) {
+      return `<div> <s> ★ ${item.text} </s> </div>`
+    }
+    return `<div> ★ ${item.text} </div>`
+  }
+
   this.render = function() {
-    var renderData = this.data.map(item => `<div> ★ ${item.text} </div>`)
-    var container = `<div class="todo-list"> 
-    ${renderData.join('')} </div>`
+    var renderData = this.data.map(item => renderItem(item))
+    var container = `<div class="todo-list"> ${renderData.join('')} </div>`
     document.querySelector(`#${this.elementId}`).innerHTML = container
   }
 }
