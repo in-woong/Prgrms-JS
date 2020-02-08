@@ -17,6 +17,7 @@
       }
     ]
 	function TodoList(data) {
+        if (!(this instanceof TodoList)) throw new Error("new로 생성 후 사용해야 함");
         this.validate = function(data) {
             if (data === null || data === undefined) throw new Error("null or undefined");
             if (!(data instanceof Array)) throw new Error("not Array")
