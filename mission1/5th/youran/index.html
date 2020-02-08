@@ -7,9 +7,10 @@
 
 <body>
   <div id="todo-list"></div>
-
+  <div id="todo-list-cat" style="background-color: plum;"></div>
+  <div id="todo-list-mine" style="background-color: lightgreen;"></div>
   <script>
-    var data = [
+    const data = [
       {
         text: 'JS 공부하기'
       },
@@ -18,7 +19,28 @@
       }
     ]
 
-	function TodoList(data, targetId) {
+    const catData = [
+      {
+        text: '화장실 모래 전체갈이'
+      },
+      {
+        text: '발톱 깎아주기'
+      }
+    ]
+
+    const myData = [
+      {
+        text: '소독용 알콜 구입'
+      },
+      {
+        text: '중고책 팔기'
+      },
+      {
+        text: '연말정산'
+      }
+    ]
+
+  function TodoList(data, targetId) {
     isValid(data, new.target);
 
     this.data = data;
@@ -26,7 +48,7 @@
       const html = this.data.reduce(
         (sum, current) => sum + `<div>${current.text}</div>`
         ,'');
-      document.querySelector('#todo-list').innerHTML = html;
+      document.querySelector(`#${targetId}`).innerHTML = html;
     }
   }
 
@@ -46,13 +68,17 @@
   }
   
   try { 
-    const todoList = new TodoList(data);
+    const todoList = new TodoList(data,'todo-list');
     /* error test */
     //const todoList = TodoList(data);
     //const todoList = new TodoList();
     //const todoList = new TodoList([]);
     //const todoList = new TodoList('data');
     todoList.render();
+    const todoListCat = new TodoList(catData,'todo-list-cat');
+    todoListCat.render();
+    const todoListMine = new TodoList(myData,'todo-list-mine');
+    todoListMine.render();
   }catch(e) {
     console.log(e);
   }
