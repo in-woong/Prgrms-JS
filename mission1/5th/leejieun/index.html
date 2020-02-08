@@ -1,0 +1,41 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list"></div>
+  <script>
+    var data = [
+      {
+        text: 'JS 공부하기'
+      },
+      {
+        text: 'JS 복습하기'
+      }
+    ]
+   //function style, new 키워드를 통해 생성, 파라마터로 아래와 같은 형태의 data를 넘겨 받음.
+    function TodoList(input_data){
+        this.input_data = input_data;
+        //TodoList에 render함수 
+        this.render = function(){
+            //파라미터 input_data의 각 배열첨자의 text를 저장할 변수
+            //초기화 안해주니 undefined 출력됨
+            var html_string=''; 
+            //input_data의 크기만큼 순회하며 배열첨자의 text를 html string으로 만듦
+            for(let i=0;i<input_data.length;i++){
+               html_string +=`<div>${input_data[i].text}</div>`;
+            }
+            //id가 todo-list인 곳에 html_string 넣기
+            document.querySelector('#todo-list').innerHTML = html_string;
+        }
+    }
+    //data를 인자로 갖는 생성자함수 todoList
+    var todoList = new TodoList(data);
+    //todoList의 render함수 실행
+    todoList.render();
+  </script>
+</body>
+</html>
