@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function Person(name) {
+        this.name = name
+        this.hi = () => {
+          alert(this.name)
+        }
+        this.check = () => {
+          if (!(this instanceof Person)) {
+            console.log('this is not instance of Person')
+          } else {
+            console.log('this is instance' + this.name)
+          }
+        }
+      }
+
+      var sam = new Person('sam')
+      sam.hi()
+      sam.check()
+
+      var jane = Person('jane')
+      //   jane.hi()
+      jane.check()
+    </script>
+  </body>
+</html>
