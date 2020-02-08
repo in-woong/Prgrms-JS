@@ -9,29 +9,34 @@
     <div id="todo-list"></div>
     <script>
         var data = [{
-                text: 'JS 공부하기'
+                text: 'JS 공부하기',
             }, {
-                text: 'JS 복습하기'
-            }]
+                text: 'JS 복습하기',
+            }, ]
             // 이곳에서 코딩을 시작하세요!
         function TodoList(data) {
             if (this == window) {
-                throw new Error("TodoList를 생성하기 위해서는 'new' keyword를 사용해야합니다.")
+                throw new Error(
+                    "TodoList를 생성하기 위해서는 'new' keyword를 사용해야합니다."
+                )
             }
             if (data) {
-                this.data = data;
+                this.data = data
                 this.render = function() {
                     data.forEach(item => {
-                        document.querySelector("#todo-list").innerHTML = '<div>' + item.text + '</div>';
-                    });
+                        var todo = document.createElement('div')
+                        var text = document.createTextNode(item.text)
+                        todo.appendChild(text)
+                        document.querySelector('#todo-list').appendChild(todo)
+                    })
                 }
             } else {
-                throw new Error("파라미터 값이 올바르지 않습니다.")
+                throw new Error('파라미터 값이 올바르지 않습니다.')
             }
         }
 
-        var todoList = new TodoList(data);
-        todoList.render();
+        var todoList = new TodoList(data)
+        todoList.render()
     </script>
 </body>
 
