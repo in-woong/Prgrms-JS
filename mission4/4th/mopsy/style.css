@@ -1,0 +1,161 @@
+html, body {
+  font-family: sans-serif;
+}
+
+div, ul, li {
+  box-sizing: border-box;
+}
+#app {
+  width: 100%;
+  max-width: 480px;  
+  margin: 64px auto;
+}
+.user-list {
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-height: 300px;
+  flex-wrap: wrap;
+}
+.user-item {
+  margin: 8px;
+  padding: 8px 16px;
+  border: 1px solid #dbdbdb;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.user-item:hover {
+  border-color: #666666;
+  background-color: #666666;
+  color: #ffffff;
+}
+
+.todo-list-wrapper {
+  padding: 0;
+  width: 100%;
+}
+
+.btn-back {
+  background-color: #666666;
+  color: #ffffff;
+  border: none;
+}
+.btn-back:hover {
+  background-color: #000000;
+  color: #ffffff;
+  border: none;
+}
+
+.todo-list-item {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;;
+  list-style: none;
+  padding: 16px 24px;
+  margin-bottom: 8px;
+  border-radius: 16px;
+  box-shadow: 1px 2px 12px rgba(0,0,0,0.08);
+  transition: all 0.2s;
+}
+.todo-list-item:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+}
+.todo-list-item.completed {
+  background-color: rgba(0,0,0,0.04);
+}
+.todo-list-item.completed span{
+  text-decoration: line-through;
+  color: #666666;
+}
+button {
+  cursor: pointer;
+  padding: 8px 16px;
+  color: #999999;
+  background-color: #ffffff;
+  border: 1px solid #f8f8f8;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+button:hover {
+  color: #ff264a;
+  border: 1px solid #ff264a;
+}
+.list-container {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  min-height: 300px;
+}
+
+.todo-input {
+  font-size: 16px;
+  width: 100%;
+  padding: 16px 24px;
+  border-radius: 32px;
+  border: none;
+  background-color: #f8f8f8;
+}
+.todo-input::placeholder {
+  color: #cccccc;
+}
+.todo-counter {
+  width: 100%;
+  font-family: serif;
+  font-weight: 800;
+  padding: 24px;
+  color: #666666;
+  background-color: #f8f8f8;
+  border-radius: 16px;
+}
+
+.list-title-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.spinner-container {
+  position: absolute;
+  z-index: 10000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255,255,255,0.6);
+}
+
+.spinner-container .spinner {
+  width: 24px;
+  height: 24px;
+  background-color: #ff264a;
+  animation: spin infinite 3s;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0);
+    background-color: #ff264a;
+    border-radius: 2px;
+  }
+  25% {
+    transform: rotate(180deg);
+  }
+  50% {
+    transform: rotate(360deg);
+    background-color: #a251ff;
+    border-radius: 10px;
+  }
+  75% {
+    transform: rotate(540deg);
+  }
+  100% {
+    transform: rotate(720deg);
+    background-color: #ff264a;
+    border-radius: 2px;
+  }
+}
