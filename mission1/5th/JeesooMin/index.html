@@ -31,7 +31,7 @@
         },
         {
           text: 'JS 복습하기',
-          isCompleted: true,
+          isCompleted: false,
         },
       ]
 
@@ -67,6 +67,17 @@
       dailyList.render()
       var weekList = new TodoList(nextWeekTodo, 'week-todo-list')
       weekList.render()
+
+      todoList.setState([
+        {
+          text: 'JS 공부하기',
+          isCompleted: false,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: true,
+        },
+      ])
     </script>
   </body>
 </html>
