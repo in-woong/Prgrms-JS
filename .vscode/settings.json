@@ -1,3 +1,4 @@
 {
-    "workbench.editor.enablePreviewFromQuickOpen": false
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+    "liveServer.settings.port": 5501
 }

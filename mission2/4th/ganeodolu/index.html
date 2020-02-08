@@ -1,0 +1,31 @@
+<html>
+
+<head>
+    <title>Mission2</title>
+    <meta charset="utf-8" />
+    <style>
+        body {
+            background: #FAED7d
+        }
+    </style>
+</head>
+
+<body>
+    <!-- todolist를 순서가 있는 목록으로 표현 ol(ordered list)이용-->
+    <ol class="todo-list-top" type="1">
+        <div class="todo-list"></div>
+    </ol>
+    <div class="todo-count"></div>
+    &nbsp;&nbsp;&nbsp;&nbsp;<input type="text" placeholder='할일 입력바람' id="todo-input" />
+    <button type="button" id="todo-add-button">할일추가</button>
+    <button type="button" id="todo-removeAll-button">모두삭제</button>
+    <script src="./App.js"></script>
+    <script src="./TodoList.js"></script>
+    <script src="./TodoCount.js"></script>
+    <script src="./TodoInput.js"></script>
+    <script src="./TodoChangeOrDel.js"></script>
+    <script src="./index.js"></script>
+
+</body>
+
+</html>
