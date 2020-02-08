@@ -5,11 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Mission 1</title>
+    <style>
+      body > div {
+        margin-bottom: 5rem;
+        padding: 1rem;
+        border-bottom: 1px solid black;
+        border-top: 1px solid black;
+      }
+    </style>
   </head>
   <body>
     <div id="todo-list"></div>
-    <div id="console"></div>
+    <div id="my-todo"></div>
+    <div id="your-todo"></div>
+    <!-- <div id="console"></div> -->
     <script>
+      //Input Data
       var data = [
         {
           text: 'JS 공부하기',
@@ -18,6 +29,15 @@
           text: 'JS 복습하기',
         },
       ]
+      var data1 = [
+        {
+          text: '#50, #57 구현하기',
+        },
+        {
+          text: '매일 Commit하기',
+        },
+      ]
+
       // 이곳에서 코딩을 시작하세요!
 
       //TodoList의 파라미터를 체크하는 함수
@@ -54,9 +74,11 @@
       //checkArray() 함수의 리턴값에 따라
       //true라면 프로퍼티와 메소드를 생성하고, false라면 undefined를 리턴
 
-      function TodoList(inputData) {
+      //렌더링 될 대상을 정의해주기 위해서 id 파라미터를 추가했습니다.
+      //신수진님 코드와 로토님의 코드리뷰를 참고했습니다.
+      function TodoList(inputData, inputId) {
         //todolist를 만들 대상
-        const todoList = document.getElementById('todo-list')
+        const todoList = document.getElementById(inputId)
 
         //checkArray의 리턴값이 true이면
         if (checkArray(inputData)) {
@@ -76,7 +98,7 @@
         //생성자 함수가 new 키워드 없이 생성될 때 발생할 오류를 해결하기 위한 방법입니다.
 
         if (!(this instanceof TodoList)) {
-          return new TodoList(inputData)
+          return new TodoList(inputData, inputId)
         }
       }
 
@@ -100,8 +122,24 @@
       // tryCatch(data)
 
       //new 키워드 없이 함수 호출하는 것
-      const newTodo = TodoList(data)
+      const newTodo = TodoList(data, 'todo-list')
       newTodo.render()
+
+      const myTodo = new TodoList(data1, 'my-todo')
+      myTodo.render()
+
+      const yourTodo = new TodoList(
+        [
+          {
+            text: '파스타 먹기',
+          },
+          {
+            text: '햄버거먹기',
+          },
+        ],
+        'your-todo'
+      )
+      yourTodo.render()
     </script>
   </body>
 </html>
