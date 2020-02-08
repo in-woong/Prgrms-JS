@@ -1,0 +1,32 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list"></div>
+  <script>
+    var data = [
+      {
+        text: 'JS 공부하기'
+      },
+      {
+        text: 'JS 복습하기'
+      }
+    ]
+	function TodoList(data) {
+    this.data = data;
+    this.render = function() {
+      const html = this.data.reduce(
+        (sum, current) => sum + `<div>${current.text}</div>`
+        ,'');
+      document.querySelector('#todo-list').innerHTML = html;
+    }
+  }
+
+  const todoList = new TodoList(data);
+  todoList.render();
+  </script>
+</body>
