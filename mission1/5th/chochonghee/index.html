@@ -20,18 +20,23 @@
                     "TodoList를 생성하기 위해서는 'new' keyword를 사용해야합니다."
                 )
             }
-            if (data) {
-                this.data = data
-                this.render = function() {
-                    data.forEach(item => {
-                        var todo = document.createElement('div')
-                        var text = document.createTextNode(item.text)
-                        todo.appendChild(text)
-                        document.querySelector('#todo-list').appendChild(todo)
-                    })
-                }
-            } else {
-                throw new Error('파라미터 값이 올바르지 않습니다.')
+
+            if (!data || data == undefined || data == '') {
+                throw new Error('데이터의 값이 올바르지 않습니다.')
+            }
+
+            if (!Array.isArray(data)) {
+                throw new Error('데이터는 리스트형태여야 합니다.')
+            }
+
+            this.data = data
+            this.render = function() {
+                data.forEach(item => {
+                    var todo = document.createElement('div')
+                    var text = document.createTextNode(item.text)
+                    todo.appendChild(text)
+                    document.querySelector('#todo-list').appendChild(todo)
+                })
             }
         }
 
