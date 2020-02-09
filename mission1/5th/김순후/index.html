@@ -65,11 +65,47 @@
         }
         this.setStatus = function(data){
           this.data = data;
-          document.getElementById(el).innerHTML = this.data.map(
-            (d) => {
-              return (d.isCompleted) ? `<strike>${d.text}</strike>` : `<div>${d.text}</div>`
+
+          let selectTag = document.getElementById(el);
+          // 밑에 아이들 배열
+          let tagChildren = selectTag.children;
+          let i = 0;
+          this.data.forEach((d)=>{
+            // 1. 태그 이름부터 비교하기
+            if(i < tagChildren.length){
+              if(d.isCompleted){
+                if(tagChildren[i].tagName != 'STRIKE'){
+                  let newElement = document.createElement("STRIKE");
+                  newElement.innerText = d.text;
+                  selectTag.replaceChild(newElement,tagChildren[i]);
+                }
+                else{
+                  if(tagChildren[i].innerText != d.text) tagChildren[i].innerText = d.text;
+                }
+              }
+              else{
+                if(tagChildren[i].tagName != 'DIV'){
+                  let newElement = document.createElement("DIV");
+                  newElement.innerText = d.text;
+                  selectTag.replaceChild(newElement,tagChildren[i]);
+                }
+                else{
+                  if(tagChildren[i].innerText != d.text) tagChildren[i].innerText = d.text;
+                }
+              }
             }
-          ).join('');          
+            else{
+              let szTag = 'DIV';
+              if(d.isCompleted) szTag = 'STRIKE';
+              let newElement = document.createElement(szTag);
+              newElement.innerText = d.text;
+              selectTag.appendChild(newElement);
+            }
+            i += 1;
+          })
+          
+          
+          
         }
       }
 
