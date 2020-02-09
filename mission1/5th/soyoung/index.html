@@ -64,13 +64,8 @@
           document.querySelector(`#${id}`).innerHTML = innerHTML
         }
         this.setState = function(nextData) {
-          let innerHTML = ''
-          nextData.forEach((todoItem, index) => {
-            innerHTML += `<div>${todoItem.isCompleted ? '<strike>' : ''} ${
-              todoItem.text
-            } ${todoItem.isCompleted ? '</strike>' : ''}</div>`
-          })
-          document.querySelector(`#${this.id}`).innerHTML = innerHTML
+          this.data = nextData
+          this.render()
         }
       }
 
