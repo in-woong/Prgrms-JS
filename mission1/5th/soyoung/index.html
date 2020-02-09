@@ -43,6 +43,7 @@
       function TodoList(data) {
         this.data = data
         this.render = function(id = 'todo-list') {
+          this.id = id
           if (!this.data) {
             throw new Error('data 값이 없습니다.')
           } else if (!Array.isArray(this.data)) {
@@ -62,15 +63,56 @@
           })
           document.querySelector(`#${id}`).innerHTML = innerHTML
         }
+        this.setState = function(nextData) {
+          let innerHTML = ''
+          nextData.forEach((todoItem, index) => {
+            innerHTML += `<div>${todoItem.isCompleted ? '<strike>' : ''} ${
+              todoItem.text
+            } ${todoItem.isCompleted ? '</strike>' : ''}</div>`
+          })
+          document.querySelector(`#${this.id}`).innerHTML = innerHTML
+        }
       }
 
       try {
         const todoList = new TodoList(data)
         todoList.render()
+        todoList.setState([
+          {
+            text: 'JS 공부하기 - edit',
+            isCompleted: true,
+          },
+          {
+            text: 'JS 복습하기 - edit',
+            isCompleted: true,
+          },
+        ])
+
         const todoList2 = new TodoList(data2)
         todoList2.render('todo-list2')
+        todoList2.setState([
+          {
+            text: '운동하기 - edit',
+            isCompleted: true,
+          },
+          {
+            text: '청소하기 - edit',
+            isCompleted: true,
+          },
+        ])
+
         const todoList3 = new TodoList(data3)
         todoList3.render('todo-list3')
+        todoList3.setState([
+          {
+            text: '추가 미션 구현하기 - edit',
+            isCompleted: true,
+          },
+          {
+            text: '코드리뷰 받기 - edit',
+            isCompleted: true,
+          },
+        ])
       } catch (e) {
         console.error('error : ', e)
       }
