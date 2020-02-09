@@ -5,20 +5,19 @@ const isParamValid = function(param) {
   }
 
   // 데이터 내용이 이상할 때
-  var result = true
-  if (param.length > 0) {
-    result = param.every(
-      item =>
-        Object.prototype.toString.call(item) === '[object Object]' &&
-        'text' in item
-    )
+  if (param.length <= 0) {
+    return false
   }
-
-  return result
+  return param.every(
+    item =>
+      toString.call(item) === '[object Object]' &&
+      'text' in item &&
+      toString.call(item.text) === '[object String]'
+  )
 }
 
 // 전달 받은 Todo list 데이터를 그리는 컴포넌트
-function TodoList(data, elementId) {
+function TodoList(data, element) {
   // new 키워드를 붙이지 않고 함수 실행 시
   if (!(this instanceof TodoList)) {
     throw new Error('new 키워드로 실행되지 않았습니다.')
@@ -30,9 +29,9 @@ function TodoList(data, elementId) {
   }
 
   this.data = data
-  this.elementId = elementId
+  this.element = element
 
-  const renderItem = item => {
+  const createTodoHTMLString = item => {
     if (item.isCompleted) {
       return `<div> <s> ★ ${item.text} </s> </div>`
     }
@@ -40,9 +39,9 @@ function TodoList(data, elementId) {
   }
 
   this.render = function() {
-    var renderData = this.data.map(item => renderItem(item))
-    var container = `<div class="todo-list"> ${renderData.join('')} </div>`
-    document.querySelector(`#${this.elementId}`).innerHTML = container
+    this.element.innerHTML = `<div class="todo-list"> ${this.data
+      .map(createTodoHTMLString)
+      .join('')}</div>`
   }
 
   this.setState = function(nextData) {
@@ -50,9 +49,11 @@ function TodoList(data, elementId) {
       throw new Error('데이터가 올바르지 않습니다.')
     }
 
-    if (this.data !== nextData) {
+    if (JSON.stringify(this.data) !== JSON.stringify(nextData)) {
       this.data = nextData
       this.render()
     }
   }
+
+  this.render()
 }

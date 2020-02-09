@@ -61,12 +61,14 @@
         },
       ]
 
-      var todoList = new TodoList(data, 'todo-list')
-      todoList.render()
-      var dailyList = new TodoList(dailyTodo, 'daily-todo-list')
-      dailyList.render()
-      var weekList = new TodoList(nextWeekTodo, 'week-todo-list')
-      weekList.render()
+      var $todoList = document.querySelector('#todo-list')
+      var todoList = new TodoList(data, $todoList)
+
+      var $dailyList = document.querySelector('#daily-todo-list')
+      var dailyList = new TodoList(dailyTodo, $dailyList)
+
+      var $weekList = document.querySelector('#week-todo-list')
+      var weekList = new TodoList(nextWeekTodo, $weekList)
 
       todoList.setState([
         {
