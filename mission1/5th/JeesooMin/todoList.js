@@ -50,10 +50,10 @@ function TodoList(data, element) {
       throw new Error('데이터가 올바르지 않습니다.')
     }
 
-    if (JSON.stringify(this.data) !== JSON.stringify(nextData)) {
-      this.data = nextData
-      this.render()
-    }
+    // if (JSON.stringify(this.data) !== JSON.stringify(nextData)) {
+    this.data = nextData
+    this.render()
+    // }
   }
 
   this.render()
