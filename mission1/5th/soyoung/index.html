@@ -19,6 +19,18 @@
       function TodoList(data) {
         this.data = data
         this.render = function() {
+          if (!this.data) {
+            throw new Error('data 값이 없습니다.')
+          } else if (!Array.isArray(this.data)) {
+            throw new Error('data가 배열이 아닙니다.')
+          } else {
+            this.data.forEach(item => {
+              if (!item.hasOwnProperty('text')) {
+                throw new Error('data 에 text 값이 없습니다.')
+              }
+            })
+          }
+
           data.forEach((todoItem, index) => {
             document.querySelector(
               '#todo-list'
@@ -27,8 +39,12 @@
         }
       }
 
-      const todoList = new TodoList(data)
-      todoList.render()
+      try {
+        const todoList = new TodoList(data)
+        todoList.render()
+      } catch (e) {
+        console.error('error : ', e)
+      }
     </script>
   </body>
 </html>
