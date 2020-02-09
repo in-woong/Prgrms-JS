@@ -71,19 +71,22 @@
   }
 
   function isValidData(data) {
-    if(!data) {
-      throw new Error("데이터가 없습니다.");
-    } 
+    
     if(!Array.isArray(data)) {
       throw new Error("데이터 형식이 올바르지 않습니다.");
+    }
+
+    if(data.length === 0) {
+      throw new Error("데이터가 없습니다.");
     } 
+
     if(!data.some((item) => "text" in item)) {
       throw new Error("사용 가능한 데이터가 아닙니다.");
     }
   }
   
   try { 
-    const todoList = new TodoList(data,'todo-list');
+   // const todoList = new TodoList(data,'todo-list');
     /* error test */
     //const todoList = TodoList(data);
     //const todoList = new TodoList();
