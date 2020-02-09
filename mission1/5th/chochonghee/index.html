@@ -45,6 +45,22 @@
             isCompleted: false,
         }, ]
 
+        var data_next = [{
+            text: '영어소설책 10페이지 읽기',
+            isCompleted: false,
+        }, {
+            text: '영어문장 5개 만들기',
+            isCompleted: false,
+        }, ]
+
+        var data_next_exercise = [{
+            text: '스쿼트 20회',
+            isCompleted: false,
+        }, {
+            text: '윗몸일으키기 20회',
+            isCompleted: false,
+        }, ]
+
         // 이곳에서 코딩을 시작하세요!
         function TodoList(data, div_name) {
             if (this == window) {
@@ -77,13 +93,21 @@
                     document.querySelector(div_name).appendChild(todo)
                 })
             }
+
+            this.setState = function(nextData) {
+                var nextTodoList = new TodoList(nextData, this.div_name);
+                nextTodoList.render()
+            }
         }
 
         var todoList = new TodoList(data, '#todo-list')
         todoList.render()
+        todoList.setState(data_next)
 
         var todoList = new TodoList(data_exercise, '#todo-list-exercise')
         todoList.render()
+        todoList.setState(data_next_exercise)
+        todoList.setState(data_next_exercise)
 
         var todoList = new TodoList(data_shopping, '#todo-list-shopping')
         todoList.render()
