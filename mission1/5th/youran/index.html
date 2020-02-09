@@ -55,12 +55,10 @@
     this.data = data;
 
     this.render = function() {
-      const html = this.data.reduce(
-        (sum, current) => sum + `
-        <div>${current.isCompleted ? '<s>' + current.text + '</s>' : 
-        current.text}</div>
-        `,'');
-      document.querySelector(`#${targetId}`).innerHTML = html;
+      document.querySelector(`#${targetId}`).innerHTML = this.data
+        .map((item) => `<div>${item.isCompleted
+          ? `<s>${item.text}</s>` : item.text}</div>`)
+        .join('');
     }
     
     this.setState = function(nextData) {
@@ -80,7 +78,7 @@
       throw new Error("데이터가 없습니다.");
     } 
     
-    const isPlainObject = (item) => toString.call(item) === "[Object object]";
+    const isPlainObject = (item) => toString.call(item) === "[object Object]";
     const isString = (v) => typeof v === "string";
 
     if(!data.some((item) => isPlainObject(item) && isString(item.text))) {
@@ -89,12 +87,12 @@
   }
   
   try { 
-   // const todoList = new TodoList(data,'todo-list');
+    const todoList = new TodoList(data,'todo-list');
     /* error test */
     //const todoList = TodoList(data);
     // const todoList = new TodoList();
     //const todoList = new TodoList([]);
-    const todoList = new TodoList([{test:""}]);
+    //const todoList = new TodoList([{test:""}]);
     todoList.render();
     const todoListCat = new TodoList(catData,'todo-list-cat');
     todoListCat.render();
