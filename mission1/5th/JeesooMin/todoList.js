@@ -1,18 +1,19 @@
-const isParamValid = function(param) {
-  // 데이터가 null / undefined 또는 array가 아닐 경우
-  if (!param || !Array.isArray(param)) {
+const isTodoDataValid = function(param) {
+  // 데이터가 null / undefined 또는 array가 아닐 경우 판별
+  if (isNullOrUndefined(param) || !isArray(param)) {
     return false
   }
 
-  // 데이터 내용이 이상할 때
+  // 데이터 내용이 없거나 이상할 때 판별
   if (param.length <= 0) {
     return false
   }
+
   return param.every(
     item =>
-      toString.call(item) === '[object Object]' &&
+      isDataTypeCorrect(item, '[object Object]') &&
       'text' in item &&
-      toString.call(item.text) === '[object String]'
+      isDataTypeCorrect(item.text, '[object String]')
   )
 }
 
@@ -24,7 +25,7 @@ function TodoList(data, element) {
   }
 
   // 전달받은 데이터가 올바른 데이터인지 확인
-  if (!isParamValid(data)) {
+  if (!isTodoDataValid(data)) {
     throw new Error('데이터가 올바르지 않습니다.')
   }
 
@@ -45,7 +46,7 @@ function TodoList(data, element) {
   }
 
   this.setState = function(nextData) {
-    if (!isParamValid(nextData)) {
+    if (!isTodoDataValid(nextData)) {
       throw new Error('데이터가 올바르지 않습니다.')
     }
 
