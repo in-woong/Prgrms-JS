@@ -79,8 +79,11 @@
     if(data.length === 0) {
       throw new Error("데이터가 없습니다.");
     } 
+    
+    const isPlainObject = (item) => toString.call(item) === "[Object object]";
+    const isString = (v) => typeof v === "string";
 
-    if(!data.some((item) => "text" in item)) {
+    if(!data.some((item) => isPlainObject(item) && isString(item.text))) {
       throw new Error("사용 가능한 데이터가 아닙니다.");
     }
   }
@@ -89,9 +92,9 @@
    // const todoList = new TodoList(data,'todo-list');
     /* error test */
     //const todoList = TodoList(data);
-    //const todoList = new TodoList();
+    // const todoList = new TodoList();
     //const todoList = new TodoList([]);
-    //const todoList = new TodoList('data');
+    const todoList = new TodoList([{test:""}]);
     todoList.render();
     const todoListCat = new TodoList(catData,'todo-list-cat');
     todoListCat.render();
