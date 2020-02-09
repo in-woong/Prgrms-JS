@@ -66,6 +66,8 @@
       this.data = nextData;
       this.render();
     }
+
+    this.render();
   }
 
   function isValidData(data) {
@@ -87,18 +89,16 @@
   }
   
   try { 
-    const todoList = new TodoList(data,'todo-list');
+    const $todoList = new TodoList(data,'todo-list');  
+    const $todoListCat = new TodoList(catData,'todo-list-cat');
+    const $todoListMine = new TodoList(myData,'todo-list-mine');    
+    setTimeout(() => $todoList.setState(myData), 3000);
+
     /* error test */
     //const todoList = TodoList(data);
     // const todoList = new TodoList();
     //const todoList = new TodoList([]);
     //const todoList = new TodoList([{test:""}]);
-    todoList.render();
-    const todoListCat = new TodoList(catData,'todo-list-cat');
-    todoListCat.render();
-    const todoListMine = new TodoList(myData,'todo-list-mine');
-    todoListMine.render();
-    setTimeout(() => todoList.setState(myData), 3000);
   }catch(e) {
     console.log(e);
   }
