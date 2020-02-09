@@ -87,21 +87,17 @@
       throw new Error("사용 가능한 데이터가 아닙니다.");
     }
   }
-  
-  try { 
-    const $todoList = new TodoList(data,'todo-list');  
-    const $todoListCat = new TodoList(catData,'todo-list-cat');
-    const $todoListMine = new TodoList(myData,'todo-list-mine');    
-    setTimeout(() => $todoList.setState(myData), 3000);
+   
+  const $todoList = new TodoList(data,'todo-list');  
+  const $todoListCat = new TodoList(catData,'todo-list-cat');
+  const $todoListMine = new TodoList(myData,'todo-list-mine');    
+  setTimeout(() => $todoList.setState(myData), 3000);
 
-    /* error test */
-    //const todoList = TodoList(data);
-    // const todoList = new TodoList();
-    //const todoList = new TodoList([]);
-    //const todoList = new TodoList([{test:""}]);
-  }catch(e) {
-    console.log(e);
-  }
+  /* error test */
+  //const todoList = TodoList(data);
+  // const todoList = new TodoList();
+  //const todoList = new TodoList([]);
+  //const todoList = new TodoList([{test:""}]);
   
   </script>
 </body>
