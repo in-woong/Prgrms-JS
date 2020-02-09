@@ -20,20 +20,20 @@
         if (!(this instanceof TodoList)) throw new Error("new로 생성 후 사용해야 함");
         this.validate = function(data) {
             if (data === null || data === undefined) throw new Error("null or undefined");
-            if (!(data instanceof Array)) throw new Error("not Array")
+            if (!(Array.isArray(data))) throw new Error("not Array")
         }
         this.render = function() {
             this.validate(data);
-            const todos = data.map(data => data.text);
-            let todoHtml = '';
-            todos.forEach(function(todo){
-                todoHtml += `<div>${todo}</div>`;
-            })
-            document.querySelector('#todo-list').innerHTML = todoHtml;
+            document.querySelector('#todo-list').innerHTML = 
+                '<div>' + data.map(data => data.text).join('</div><div>') + '</div>';
         }
     }
-    var todoList = new TodoList(data);
-    todoList.render();
+    try {
+        var todoList = new TodoList(data);
+        todoList.render(); 
+    } catch(error) {
+        console.log(error);
+    }
   </script>
 </body>
 </html>
