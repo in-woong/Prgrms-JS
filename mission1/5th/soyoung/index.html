@@ -6,6 +6,8 @@
 
   <body>
     <div id="todo-list"></div>
+    <div id="todo-list2"></div>
+    <div id="todo-list3"></div>
     <script>
       var data = [
         {
@@ -15,10 +17,26 @@
           text: 'JS 복습하기',
         },
       ]
+      var data2 = [
+        {
+          text: '운동하기',
+        },
+        {
+          text: '청소하기',
+        },
+      ]
+      var data3 = [
+        {
+          text: '추가 미션 구현하기',
+        },
+        {
+          text: '코드리뷰 받기',
+        },
+      ]
 
       function TodoList(data) {
         this.data = data
-        this.render = function() {
+        this.render = function(id = 'todo-list') {
           if (!this.data) {
             throw new Error('data 값이 없습니다.')
           } else if (!Array.isArray(this.data)) {
@@ -30,18 +48,21 @@
               }
             })
           }
-
+          let innerHTML = ''
           data.forEach((todoItem, index) => {
-            document.querySelector(
-              '#todo-list'
-            ).innerHTML += `<div>${todoItem.text}</div>`
+            innerHTML += `<div>${todoItem.text}</div>`
           })
+          document.querySelector(`#${id}`).innerHTML = innerHTML
         }
       }
 
       try {
         const todoList = new TodoList(data)
         todoList.render()
+        const todoList2 = new TodoList(data2)
+        todoList2.render('todo-list2')
+        const todoList3 = new TodoList(data3)
+        todoList3.render('todo-list3')
       } catch (e) {
         console.error('error : ', e)
       }
