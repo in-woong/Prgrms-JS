@@ -7,28 +7,36 @@
     <title>Document</title>
   </head>
   <body>
+    <ul id="food"></ul>
     <script>
-      function Person(name) {
-        this.name = name
-        this.hi = () => {
-          alert(this.name)
-        }
-        this.check = () => {
-          if (!(this instanceof Person)) {
-            console.log('this is not instance of Person')
-          } else {
-            console.log('this is instance' + this.name)
-          }
-        }
+      var arr = [
+        {
+          name: 'banana',
+          isEat: true,
+        },
+        {
+          name: 'macaron',
+          isEat: false,
+        },
+        {
+          name: 'apple',
+          isEat: true,
+        },
+      ]
+
+      const isElement = (target, element) => {
+        return target instanceof element
       }
 
-      var sam = new Person('sam')
-      sam.hi()
-      sam.check()
+      const render = array => {
+        const htmlString = array.map(el => {
+          return `<li>${el.name}</li>`
+        })
+        const joinedString = htmlString.join('')
+        document.getElementById('food').innerHTML = joinedString
+      }
 
-      var jane = Person('jane')
-      //   jane.hi()
-      jane.check()
+      render(arr)
     </script>
   </body>
 </html>
