@@ -48,7 +48,7 @@
         // 추가 구현사항 #50-1
         if(!data){
             throw new Error('Please put the right data');
-        }else if(typeof data !== "object"){
+        }else if(!Array.isArray(data)){
             throw new Error('Please put the Array');
         }else if(!data[0].hasOwnProperty("text")){
             throw new Error('Please put the right form of Array');
