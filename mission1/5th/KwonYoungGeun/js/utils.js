@@ -11,18 +11,17 @@ const isElement = target => {
 }
 
 /**
- * 데이터가 '객체'이면서 'TODO 아이템'인지 검증하는 함수
- * TODO: 코드 복잡도가 높은거 같은데, 좋은 아이디어가 떠오르면 리팩토링하기
- * @param {*} target todo 데이터 배열 원소 1개
+ * 커스텀 타입을 검증합니다.
+ * @param {object} type 커스텀 타입
+ * @param {object} target 비교 당할 대상
  */
-const isTodoType = target => {
-  if (!isObject(target)) return false
+const checkCustomType = (type, target) => {
+  if (!isObject(target) || !isObject(type)) return false
 
-  const todoType = { text: 'string', isCompleted: 'boolean' }
-  for (let property in todoType) {
+  for (let property in type) {
     if (
       !target.hasOwnProperty(property) ||
-      typeof target[property] !== todoType[property]
+      typeof target[property] !== type[property]
     )
       return false
   }
@@ -31,8 +30,9 @@ const isTodoType = target => {
 }
 
 const isAllTodo = todoList => {
+  const todoType = { text: 'string', isCompleted: 'boolean' }
   for (todo of todoList) {
-    if (!isTodoType(todo)) return false
+    if (!checkCustomType(todoType, todo)) return false
   }
 
   return true
