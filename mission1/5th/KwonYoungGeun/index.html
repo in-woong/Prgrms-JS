@@ -17,14 +17,14 @@
     <script src="./js/utils.js"></script>
     <script src="./js/todoList.js"></script>
     <script>
-      const todoListElement = document.getElementById('todo-list')
-      const todoList = new TodoList(todoData, todoListElement)
+      const $todoListElement = document.getElementById('todo-list')
+      const todoList = new TodoList(todoData, $todoListElement)
 
-      const toReadListElement = document.getElementById('to-read-list')
-      const toReadList = new TodoList(toReadData, toReadListElement)
+      const $toReadListElement = document.getElementById('to-read-list')
+      const toReadList = new TodoList(toReadData, $toReadListElement)
 
-      const toWatchListElement = document.getElementById('to-watch-list')
-      const toWatchList = new TodoList(toWatchData, toWatchListElement)
+      const $toWatchListElement = document.getElementById('to-watch-list')
+      const toWatchList = new TodoList(toWatchData, $toWatchListElement)
     </script>
   </body>
 </html>

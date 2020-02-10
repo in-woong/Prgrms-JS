@@ -21,6 +21,7 @@ const toReadData = [
 ]
 
 const toWatchData = [
+  null,
   {
     text: '겨울왕국 2',
     isCompleted: false,
