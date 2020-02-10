@@ -31,8 +31,8 @@ const isTodoType = target => {
 }
 
 const isAllTodo = todoList => {
-  for (let i = 0; i < todoList.length; i++) {
-    if (!isTodoType(todoList[i])) return false
+  for (todo of todoList) {
+    if (!isTodoType(todo)) return false
   }
 
   return true
