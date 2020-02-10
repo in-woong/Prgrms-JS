@@ -1,0 +1,94 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list"></div>
+  <div id="wannado-list"></div>
+  <div id="shoulddo-list"></div>
+  <script>
+    var data = [
+      {
+        text: 'JS 공부하기',
+        isCompleted: true        
+      },
+      {
+        text: 'JS 복습하기',
+        isCompleted: false 
+      }
+    ]
+
+    var data_wanna = [
+      {
+        text: '여행 가기',
+        isCompleted: true 
+      },
+      {
+        text: '디저트 먹기',
+        isCompleted: true 
+      }
+    ]
+
+    var data_should = [
+      {
+        text: '프로그래머스 세션 참여',
+        isCompleted: true 
+      },
+      {
+        text: '프로그래머스 미션 구현',
+        isCompleted: false
+      }
+    ]   
+	// 이곳에서 코딩을 시작하세요!
+    
+    function TodoList(selector, data) {
+        // 추가 구현사항 #50-1
+        if(!data){
+            throw new Error('Please put the right data');
+        }else if(typeof data !== "object"){
+            throw new Error('Please put the Array');
+        }else if(!data[0].hasOwnProperty("text")){
+            throw new Error('Please put the right form of Array');
+        }
+         // 추가 구현사항 #50-2
+        if(!new.target)
+            throw new Error('Please use the New keyword');
+
+
+        this.data = data;
+        this.render = function() {
+            var tempHtml = '';
+            this.data.forEach( todoItem => 
+                // 추가 구현사항 #66
+                tempHtml += todoItem.isCompleted ? `<div>${todoItem.text}</div>` : `<div><s>${todoItem.text}</s></div>`
+            );
+            document.querySelector(selector).innerHTML = tempHtml;         
+        }
+
+        // 추가 구현사항 #67
+        this.setState = function(nextData) {
+            this.data = nextData;
+            this.render();
+        }
+    }
+
+    // 추가 구현사항 #57
+    var todoList = new TodoList('#todo-list', data);
+    var wannadoList = new TodoList('#wannado-list', data_wanna);
+    var shoulddoList = new TodoList('#shoulddo-list', data_should);   
+
+    todoList.render();
+    wannadoList.render();
+    shoulddoList.render();
+
+    // 추가 구현사항 #67
+    todoList.setState(data_should);
+
+   
+
+  </script>
+</body>
+</html>
