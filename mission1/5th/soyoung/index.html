@@ -40,10 +40,10 @@
         },
       ]
 
-      function TodoList(data) {
+      function TodoList(data, id = 'todo-list') {
         this.data = data
-        this.render = function(id = 'todo-list') {
-          this.id = id
+        this.id = id
+        this.render = function() {
           if (!this.data) {
             throw new Error('data 값이 없습니다.')
           } else if (!Array.isArray(this.data)) {
@@ -70,7 +70,7 @@
       }
 
       try {
-        const todoList = new TodoList(data)
+        const todoList = new TodoList(data, 'todo-list')
         todoList.render()
         todoList.setState([
           {
@@ -83,8 +83,8 @@
           },
         ])
 
-        const todoList2 = new TodoList(data2)
-        todoList2.render('todo-list2')
+        const todoList2 = new TodoList(data2, 'todo-list2')
+        todoList2.render()
         todoList2.setState([
           {
             text: '운동하기 - edit',
@@ -96,8 +96,8 @@
           },
         ])
 
-        const todoList3 = new TodoList(data3)
-        todoList3.render('todo-list3')
+        const todoList3 = new TodoList(data3, 'todo-list3')
+        todoList3.render()
         todoList3.setState([
           {
             text: '추가 미션 구현하기 - edit',
