@@ -54,6 +54,22 @@
         },
       ]
 
+      //setState용 data
+      var data3 = [
+        {
+          text: '다이어리 쓰기',
+          isCompleted: true,
+        },
+        {
+          text: '롤 하기',
+          isCompleted: false,
+        },
+        {
+          text: '노래방가기',
+          isCompleted: false,
+        },
+      ]
+
       // 이곳에서 코딩을 시작하세요!
 
       //TodoList의 파라미터를 체크하는 함수
@@ -106,6 +122,18 @@
               })
               .join('')
           }
+          //#67 setState
+          this.setState = nextData => {
+            if (checkArray(nextData)) {
+              todoList.innerHTML = nextData
+                .map(el => {
+                  if (el.isCompleted) {
+                    return `<div><s>${el.text}</s></div>`
+                  } else return `<div>${el.text}</div>`
+                })
+                .join('')
+            }
+          }
         }
         // checkArray()에서 에러가 발생하면 이쪽까지 실행이 오지 않기때문에 else구문은 불필요하다
         // if문을 try~catch로 감싸거나 todoList를 생성하는 쪽에 try~catch로 예외처리를한다.
@@ -157,6 +185,7 @@
 
       try {
         const todo = new TodoList(data, 'todo-list')
+        todo.setState(data3)
       } catch (e) {
         console.log(e)
       }
@@ -177,7 +206,20 @@
         ],
         'your-todo'
       )
+      yourTodo.setState([
+        {
+          text: '자소서 쓰기',
+          isCompleted: true,
+        },
+        { text: 'JS 공부하기', isCompleted: true },
+        {
+          text: '컴퓨터 포맷하기',
+          isCompleted: false,
+        },
+      ])
       // yourTodo.render()
+
+      myTodo.setState(data3)
     </script>
   </body>
 </html>
