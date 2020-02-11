@@ -52,7 +52,8 @@
       throw new Error("new 생성자로 함수를 호출하세요.");
     }
 
-    isValidData(data, new.target);
+    isValidData(data);
+    isValidTargetId(targetId);
     
     this.data = data;
     this.targetId = targetId;
@@ -71,6 +72,14 @@
     }
 
     this.render();
+  }
+
+  function isValidTargetId(targetId) {
+    const domWithGivenId = document.querySelector(id);
+
+    if(domWithGivenId.length > 1 || domWithGivenId < 1) {
+      throw new Error("dom Id가 올바르지 않습니다.");
+    }
   }
 
   function isValidData(data) {
