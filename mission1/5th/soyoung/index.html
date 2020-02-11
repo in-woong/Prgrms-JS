@@ -55,13 +55,14 @@
               }
             })
           }
-          let innerHTML = ''
-          data.forEach((todoItem, index) => {
-            innerHTML += `<div>${todoItem.isCompleted ? '<strike>' : ''} ${
-              todoItem.text
-            } ${todoItem.isCompleted ? '</strike>' : ''}</div>`
-          })
-          document.querySelector(`#${id}`).innerHTML = innerHTML
+          document.querySelector(`#${this.id}`).innerHTML = data
+            .map(
+              todoItem =>
+                `<div>${todoItem.isCompleted ? '<strike>' : ''} ${
+                  todoItem.text
+                } ${todoItem.isCompleted ? '</strike>' : ''}</div>`
+            )
+            .join('')
         }
         this.setState = function(nextData) {
           this.data = nextData
