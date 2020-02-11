@@ -12,30 +12,37 @@
   <script>
     var data1 = [
       {
-        text: 'JS 공부하기'
+        text: 'JS 공부하기',
+        isCompleted: false
       },
       {
-        text: 'JS 복습하기'
+        text: 'JS 복습하기',
+        isCompleted: false
       }
     ]
     var dataHouse = [
         {
-            text: '옷장 정리하기'
+            text: '옷장 정리하기',
+            isCompleted: false
         },
         {
-            text: '쓰레기 버리기'
+            text: '쓰레기 버리기',
+            isCompleted: true
         }
         
     ]
     var dataLearn = [
         {
-            text: 'AWS 공부'
+            text: 'AWS 공부',
+            isCompleted: false
         },
         {
-            text: '토이 프로젝트'
+            text: '토이 프로젝트',
+            isCompleted: false
         },
         {
-            text: 'Spring 정리'
+            text: 'Spring 정리',
+            isCompleted: true
         }
     ]
 	function TodoList(data, id) {
@@ -47,8 +54,13 @@
         }
         this.render = function() {
             this.validate(data);
-            document.querySelector(id).innerHTML = 
-                '<div>' + data.map(data => data.text).join('</div><div>') + '</div>';
+
+            let todoHtml = '';
+            data.forEach(function(item){
+              todoHtml += '<div>' + (item.isCompleted ? '<s>' : '') + item.text +  (item.isCompleted ? '</s>' : '') + '</div>';
+            })
+            
+            document.querySelector(id).innerHTML = todoHtml;
         }
     }
     try {
