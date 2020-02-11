@@ -3,11 +3,6 @@
 <head>
     <title>Mission 1</title>
     <meta charset="utf-8" />
-    <style>
-        .list {
-            margin-bottom: 30px;
-        }
-    </style>
 </head>
 
 <body>
@@ -28,7 +23,7 @@
             isCompleted: true,
         }, ]
 
-        var data_exercise = [{
+        var dataExercise = [{
             text: '달리기 20분',
             isCompleted: false,
         }, {
@@ -36,8 +31,7 @@
             isCompleted: false,
         }, ]
 
-
-        var data_shopping = [{
+        var dataShopping = [{
             text: '가습기',
             isCompleted: true,
         }, {
@@ -45,7 +39,7 @@
             isCompleted: false,
         }, ]
 
-        var data_next = [{
+        var dataNext = [{
             text: '영어소설책 10페이지 읽기',
             isCompleted: false,
         }, {
@@ -53,7 +47,7 @@
             isCompleted: false,
         }, ]
 
-        var data_next_exercise = [{
+        var dataNextExercise = [{
             text: '스쿼트 20회',
             isCompleted: false,
         }, {
@@ -62,54 +56,84 @@
         }, ]
 
         // 이곳에서 코딩을 시작하세요!
-        function TodoList(data, div_name) {
-            if (this == window) {
-                throw new Error(
-                    "TodoList를 생성하기 위해서는 'new' keyword를 사용해야합니다."
-                )
-            }
+        function TodoList(data, divName) {
+            try {
+                if (this === window) {
+                    throw new Error(
+                        "TodoList를 생성하기 위해서는 'new' keyword를 사용해야합니다."
+                    )
+                }
 
-            if (!data || data == undefined || data == '') {
-                throw new Error('데이터의 값이 올바르지 않습니다.')
-            }
-
-            if (!Array.isArray(data)) {
-                throw new Error('데이터는 리스트형태여야 합니다.')
+                if (!data) {
+                    throw new Error('데이터의 값이 올바르지 않습니다.')
+                } else if (!Array.isArray(data)) {
+                    throw new Error('데이터는 리스트형태여야 합니다.')
+                }
+            } catch (error) {
+                alert(error)
             }
 
             this.data = data
-            this.div_name = div_name
+            this.divName = divName
             this.render = function() {
-                data.forEach(item => {
-                    var todo = document.createElement('div')
-                    var text = document.createTextNode(item.text)
+                data
+                    .map(function(item) {
+                        item.isCompleted ?
+                            (document.querySelector(
+                                divName
+                            ).innerHTML += `<div><del>${item.text}</del></div>`) :
+                            (document.querySelector(
+                                divName
+                            ).innerHTML += `<div>${item.text}</div>`)
+                    })
+                    .join('')
 
-                    if (item.isCompleted) {
-                        var completed = document.createElement('strike');
-                        todo.appendChild(completed).appendChild(text);
-                    } else {
-                        todo.appendChild(text)
-                    }
-                    document.querySelector(div_name).appendChild(todo)
-                })
+                /*  innerHTML 속성을 이용해서 구현
+                   data.forEach(item => {
+      if (item.isCompleted) {
+          document.querySelector(
+          divName
+          ).innerHTML += `<div><s>${item.text}</s></div>`
+      } else {
+          document.querySelector(
+          divName
+          ).innerHTML += `<div>${item.text}</div>`
+      }
+      })
+      */
+                /* createElement, appendChild를 이용해서 구현
+      data.forEach(item => {
+              var todo = document.createElement('div')
+              var text = document.createTextNode(item.text)
+
+              if (item.isCompleted) {
+                  var completed = document.createElement('s')
+                  todo.appendChild(completed).appendChild(text)
+              } else {
+                  todo.appendChild(text)
+              }
+              document.querySelector(divName).appendChild(todo)
+
+          })
+      */
             }
 
             this.setState = function(nextData) {
-                var nextTodoList = new TodoList(nextData, this.div_name);
+                var nextTodoList = new TodoList(nextData, this.divName)
                 nextTodoList.render()
             }
         }
 
         var todoList = new TodoList(data, '#todo-list')
         todoList.render()
-        todoList.setState(data_next)
+        todoList.setState(dataNext)
 
-        var todoList = new TodoList(data_exercise, '#todo-list-exercise')
+        var todoList = new TodoList(dataExercise, '#todo-list-exercise')
         todoList.render()
-        todoList.setState(data_next_exercise)
-        todoList.setState(data_next_exercise)
+        todoList.setState(dataNextExercise)
+        todoList.setState(dataNextExercise)
 
-        var todoList = new TodoList(data_shopping, '#todo-list-shopping')
+        var todoList = new TodoList(dataShopping, '#todo-list-shopping')
         todoList.render()
     </script>
 </body>
