@@ -7,8 +7,10 @@
 
 <body>
   <div id="todo-list"></div>
+  <div id="todo-list-house"></div>
+  <div id="todo-list-learn"></div>
   <script>
-    var data = [
+    var data1 = [
       {
         text: 'JS 공부하기'
       },
@@ -16,7 +18,27 @@
         text: 'JS 복습하기'
       }
     ]
-	function TodoList(data) {
+    var dataHouse = [
+        {
+            text: '옷장 정리하기'
+        },
+        {
+            text: '쓰레기 버리기'
+        }
+        
+    ]
+    var dataLearn = [
+        {
+            text: 'AWS 공부'
+        },
+        {
+            text: '토이 프로젝트'
+        },
+        {
+            text: 'Spring 정리'
+        }
+    ]
+	function TodoList(data, id) {
         if (!(this instanceof TodoList)) throw new Error("new로 생성 후 사용해야 함");
         this.validate = function(data) {
             if (data === null || data === undefined) throw new Error("null or undefined");
@@ -25,13 +47,17 @@
         }
         this.render = function() {
             this.validate(data);
-            document.querySelector('#todo-list').innerHTML = 
+            document.querySelector(id).innerHTML = 
                 '<div>' + data.map(data => data.text).join('</div><div>') + '</div>';
         }
     }
     try {
-        var todoList = new TodoList(data);
+        const todoList = new TodoList(data1, '#todo-list');
         todoList.render(); 
+        const todoListHouse = new TodoList(dataHouse, '#todo-list-house');
+        todoListHouse.render();
+        const todoListLearn = new TodoList(dataLearn, '#todo-list-learn');
+        todoListLearn.render();
     } catch(error) {
         console.log(error);
     }
