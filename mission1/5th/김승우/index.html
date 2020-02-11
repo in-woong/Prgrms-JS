@@ -6,6 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Mission 1</title>
     <style>
+      h1 {
+        font-size: 1.25rem;
+        text-transform: uppercase;
+      }
+
       body > div {
         margin-bottom: 5rem;
         padding: 1rem;
@@ -15,8 +20,11 @@
     </style>
   </head>
   <body>
+    <h1>todo-list</h1>
     <div id="todo-list"></div>
+    <h1>my-todo</h1>
     <div id="my-todo"></div>
+    <h1>your-todo</h1>
     <div id="your-todo"></div>
     <!-- <div id="console"></div> -->
     <script>
@@ -34,9 +42,15 @@
       var data1 = [
         {
           text: '#50, #57 구현하기',
+          isCompleted: true,
         },
         {
           text: '매일 Commit하기',
+          isCompleted: false,
+        },
+        {
+          text: '아메리카노 마시기',
+          isCompleted: true,
         },
       ]
 
@@ -83,11 +97,14 @@
 
           //todolist를 렌더링하는 함수
           this.render = function() {
-            const htmlString = this.data.map(el => {
-              return `<div>${el.text}</div>`
-            })
-            const joinedString = htmlString.join('')
-            todoList.innerHTML = joinedString
+            todoList.innerHTML = this.data
+              .map(el => {
+                //isCompleted에 따라 return 을 바꿔준다.
+                if (el.isCompleted) {
+                  return `<div><s>${el.text}</s></div>`
+                } else return `<div>${el.text}</div>`
+              })
+              .join('')
           }
         }
         // checkArray()에서 에러가 발생하면 이쪽까지 실행이 오지 않기때문에 else구문은 불필요하다
@@ -100,10 +117,14 @@
           // return new TodoList(inputData, inputId)
           throw new Error('New 키워드 없이 함수를 실행하였습니다')
         }
+
+        //객체가 생성되면 바로 render함수를 실행시킨다.
+        this.render()
       }
 
       //예외처리
 
+      //data가 빈 문자열일 경우
       try {
         const todo = new TodoList('', 'todo-list')
         todo.render()
@@ -111,8 +132,17 @@
         console.log(e)
       }
 
+      //data가 빈 배열일 경우
       try {
         const todo = new TodoList([], 'todo-list')
+        todo.render()
+      } catch (e) {
+        console.log(e)
+      }
+
+      //데이터가 객체일 경우
+      try {
+        const todo = new TodoList({ text: 'JS 복습하기' }, 'todo-list')
         todo.render()
       } catch (e) {
         console.log(e)
@@ -121,26 +151,33 @@
       //new 키워드 없이 함수 호출하는 것
       try {
         const newTodo = TodoList(data, 'todo-list')
-        newTodo.render()
+      } catch (e) {
+        console.log(e)
+      }
+
+      try {
+        const todo = new TodoList(data, 'todo-list')
       } catch (e) {
         console.log(e)
       }
 
       const myTodo = new TodoList(data1, 'my-todo')
-      myTodo.render()
+      // myTodo.render()
 
       const yourTodo = new TodoList(
         [
           {
             text: '파스타 먹기',
+            isCompleted: false,
           },
           {
             text: '햄버거먹기',
+            isCompleted: true,
           },
         ],
         'your-todo'
       )
-      yourTodo.render()
+      // yourTodo.render()
     </script>
   </body>
 </html>
