@@ -60,8 +60,11 @@
 
     this.render = function() {
       document.querySelector(`#${this.targetId}`).innerHTML = this.data
-        .map((item) => `<div>${item.isCompleted
-          ? `<s>${item.text}</s>` : item.text}</div>`)
+        .map(
+          (item) => 
+          `<div>${item.isCompleted
+          ? `<s>${item.text}</s>` 
+          : item.text}</div>`)
         .join('');
     }
     
