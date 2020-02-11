@@ -51,11 +51,14 @@
     if(!new.target) {
       throw new Error("new 생성자로 함수를 호출하세요.");
     }
+
     isValidData(data, new.target);
+    
     this.data = data;
+    this.targetId = targetId;
 
     this.render = function() {
-      document.querySelector(`#${targetId}`).innerHTML = this.data
+      document.querySelector(`#${this.targetId}`).innerHTML = this.data
         .map((item) => `<div>${item.isCompleted
           ? `<s>${item.text}</s>` : item.text}</div>`)
         .join('');
@@ -94,7 +97,7 @@
   setTimeout(() => $todoList.setState(myData), 3000);
 
   /* error test */
-  //const todoList = TodoList(data);
+  // const todoList = TodoList(data);
   // const todoList = new TodoList();
   //const todoList = new TodoList([]);
   //const todoList = new TodoList([{test:""}]);
