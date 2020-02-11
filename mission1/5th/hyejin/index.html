@@ -59,17 +59,15 @@
             data.forEach(function(item){
               todoHtml += '<div>' + (item.isCompleted ? '<s>' : '') + item.text +  (item.isCompleted ? '</s>' : '') + '</div>';
             })
-            
+
             document.querySelector(id).innerHTML = todoHtml;
         }
+        this.render();
     }
     try {
         const todoList = new TodoList(data1, '#todo-list');
-        todoList.render(); 
         const todoListHouse = new TodoList(dataHouse, '#todo-list-house');
-        todoListHouse.render();
         const todoListLearn = new TodoList(dataLearn, '#todo-list-learn');
-        todoListLearn.render();
     } catch(error) {
         console.log(error);
     }
