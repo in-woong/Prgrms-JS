@@ -14,5 +14,5 @@ const validateData = function(data){
         throw new Error('데이터 포맷을 맞춰 주세요.');
     }    
 
-    console.log("데이터에 이상없습니다 :)");
+    console.log('데이터에 이상없습니다 :)');
 }
