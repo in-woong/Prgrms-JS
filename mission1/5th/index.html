@@ -49,11 +49,11 @@
         var errData = '이상한값'  //배열이 아닌 값
 
         // 이곳에서 코딩을 시작하세요!
-        const todo = document.querySelector('#todo-list')
-        const myTodo = document.querySelector('#myTodo-list')
-        const workTodo = document.querySelector('#workTodo-list')
+        const $todo = document.querySelector('#todo-list')
+        const $myTodo = document.querySelector('#myTodo-list')
+        const $workTodo = document.querySelector('#workTodo-list')
 
-        function TodoList(data, el) {
+        function TodoList(data, $el) {
             // new 키워드 안붙이고 함수 실행시 에러발생하게 하기
             // TodoList의 객체인지 아닌지 판단
             if( !this instanceof TodoList ) {
@@ -61,39 +61,38 @@
             }
         
             this.data = data
-            this.el = el
+            this.$el = $el
 
-            this.getData = function (data) {
+            this.createHTMLString = function (data) {
                 this.errCheck(data)
 
-                return data.reduce((html, item) => {
-                    if (item.isCompleted == true) {
-                        html += `<li><del>${item.text}</del></li>`
+                return data.reduce((acc, item) => {
+                    if (item.isCompleted === true) {
+                        acc += `<li><del>${item.text}</del></li>`
                     }
                     else {
-                        html += `<li>${item.text}</li>`
+                        acc += `<li>${item.text}</li>`
                     }
-                    return html
-                }, '<ul class="todo_list">') + '</ul>'
+                    return acc
+                }, '') 
             }
 
             this.render = function () {
                 // el.innerHTML = this.errCheck(data) ? this.getData(data) : "error message"
-                el.innerHTML = this.getData(this.data)
+                $el.innerHTML = `<ul class="todo_list">${this.createHTMLString(this.data)}</ul>`
+                // `<ul class=${className}>${this.generateTodoHTML(data)}</ul>`
             }
 
-            this.errCheck = function (data) {
+            this.errCheck = function (todos) {
                 // array가 아닌 형태로 넘어오면? 
                 // null 혹은 undefined가 넘어오면? 
+                // !Array.isArray(todos) 
+                if (!(todos instanceof Array)) { 
+                    throw new Error("data type array")
+                }
 
-                // if (!data instanceof Array) {
-                //     throw new Error("data type array")
-                // }
-
-                if (data == "undefined" || data == null || data == '' || !Array.isArray(data)) {
+                if (todos === "undefined" || todos === null || todos === '') {
                     throw new Error("data type error")
-                } else {
-                    return data
                 }
             }
 
@@ -103,24 +102,24 @@
             }
         }
 
-        var todoList = new TodoList(data, todo)
+        var todoList = new TodoList(data, $todo)
         // var todoList = TodoList(data, todo)
-        var myTodoList = new TodoList(myTodoData, myTodo)
+        var myTodoList = new TodoList(myTodoData, $myTodo)
         // var workTodoList = new TodoList(workTodoData, workTodo)
-        var workTodoList = new TodoList(errData, workTodo)
+        var workTodoList = new TodoList(errData, $workTodo)
 
         todoList.render()
         myTodoList.render()
         workTodoList.render()
 
         todoList.setState([
-        {
-          text: 'JS 공부하기',
-        },
-        {
-          text: 'JS 복습하기',
-        },
-    ]);
+            {
+                text: 'JS 공부하기',
+            },
+            {
+                text: 'JS 복습하기',
+            },
+        ]);
 
     </script>
 </body>
