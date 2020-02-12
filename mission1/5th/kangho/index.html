@@ -26,33 +26,39 @@
                 // {wrongTextName: 'dummy'},
                 // {text: 222},
             ]
+            
 
             function checkData(data) {
+                // if (!(this instanceof todoList)) {
+                //     throw new Error('Error 1: no new keyword');
+                // }
+
                 if (!(data instanceof Array)) {
-                    throw new Error('Error 1: not array');
+                    throw new Error('Error 2: not array');
                 }
 
                 if (data.length === 0) {
-                    throw new Error('Error 2: empty array');
+                    throw new Error('Error 3: empty array');
                 }
 
                 for (var i=0; i<data.length; i++) {
                     var keyNames = Object.keys(data[i]);
                     keyNames.forEach(function(names) {
                         if (names !== 'text') {
-                            throw new Error('Error 3: wrong key name');
+                            throw new Error('Error 4: wrong key name');
                         }
                     })
                 }
 
                 data.forEach(function(list) {
                     if(typeof list.text !== 'string') {
-                        throw new Error('Error 4: not string type');
+                        throw new Error('Error 5: not string type');
                     }
                 })
             }
 
-            var todoList1 = new todoList(data);
+            // var todoList1 = todoList(data);
+            var todoList2 = new todoList(data);
 
         </script>
     </body>
