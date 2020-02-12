@@ -65,9 +65,11 @@
 
         this.data = data;
         this.render = function() {
-            this.targetElement.innerHTML = this.data.map( todoItem => 
-                    todoItem.isCompleted ? `<div>${todoItem.text}</div>` : `<div><s>${todoItem.text}</s></div>`
-                ).join('');         
+            this.targetElement.innerHTML = `<ul>${this.data.map( todoItem => 
+                    todoItem.isCompleted 
+                    ? `<li>${todoItem.text}</li>` 
+                    : `<li><s>${todoItem.text}</s></li>`
+                ).join('')}<ul>`;         
         }
 
         this.setState = function(nextData) {
