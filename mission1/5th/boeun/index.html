@@ -51,20 +51,27 @@
     
     function TodoList(selector, data) {
 
-        if(!new.target) {
+        if (!new.target) {
             throw new Error('TodoList를 new로 호출해주세요.');
         }
 
         validateData(data);
 
+        this.targetElement = document.querySelector(selector);
+
+        if (this.targetElement == null) {
+            throw new Error('선택된 HTML Element가 없습니다.');
+        }
+
         this.data = data;
         this.render = function() {
-            document.querySelector(selector).innerHTML = this.data.map( todoItem => 
+            this.targetElement.innerHTML = this.data.map( todoItem => 
                     todoItem.isCompleted ? `<div>${todoItem.text}</div>` : `<div><s>${todoItem.text}</s></div>`
                 ).join('');         
         }
 
         this.setState = function(nextData) {
+            validateData(nextData);
             this.data = nextData;
             this.render();
         }

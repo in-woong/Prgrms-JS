@@ -1,4 +1,4 @@
-const validateData = function(data){
+const validateData = function(data) {
 
     const isString = (v) => typeof v === 'string'
     
