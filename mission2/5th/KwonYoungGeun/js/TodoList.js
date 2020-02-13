@@ -1,41 +1,19 @@
 class TodoList {
-  constructor(data, $list, $input) {
-    this.validate(data, $list, $input)
+  constructor(data, $list) {
+    this.validate(data, $list)
     this.$list = $list
-    this.$input = $input
     this._data = data
     this.init()
   }
 
   // 첫 생성될 때 실행되어야할 함수들을 따로 init()에 모아서 호출합니다.
   init() {
-    this.bindEvents()
     this.render()
   }
 
   validate(data, $list, $input) {
     validateData(data)
     validateElement($list)
-    validateElement($input)
-  }
-
-  bindEvents() {
-    this.$input.addEventListener('keyup', event => this.onKeyup(event))
-  }
-
-  onKeyup(event) {
-    const enterKey = 13
-
-    if (!event.target.value.length) {
-      alert('내용 없음')
-      return
-    }
-
-    if (event.keyCode !== enterKey) {
-      return
-    }
-
-    this.addTodo(this.$input.value)
   }
 
   addTodo(itemValue) {
@@ -51,6 +29,10 @@ class TodoList {
     this._data = nextData
 
     this.render()
+  }
+
+  removeButtonTemplate() {
+    return `<button class="remove-button">삭제</button></li>`
   }
 
   render() {

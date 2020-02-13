@@ -1,3 +1,5 @@
+const $ = selector => document.querySelector(selector)
+
 const isArray = target => {
   return Array.isArray(target)
 }
@@ -10,11 +12,6 @@ const isElement = target => {
   return target instanceof HTMLElement
 }
 
-/**
- * 커스텀 타입을 검증합니다.
- * @param {object} type 커스텀 타입
- * @param {object} target 비교 당할 대상
- */
 const checkCustomType = (type, target) => {
   if (!isObject(target) || !isObject(type)) return false
 
