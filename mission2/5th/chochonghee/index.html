@@ -1,0 +1,129 @@
+<html>
+
+<head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+</head>
+
+<body>
+    <h3>오늘의 공부</h3>
+    <div class="list" id="todo-list"></div>
+
+    <h3>오늘의 운동</h3>
+    <div class="list" id="todo-list-exercise"></div>
+
+    <h3>오늘의 쇼핑</h3>
+    <div class="list" id="todo-list-shopping"></div>
+    <script>
+        // 데이터
+        var data = [{
+            text: 'JS 공부하기',
+            isCompleted: true,
+        }, {
+            text: 'JS 복습하기',
+            isCompleted: true,
+        }, ]
+
+        var dataExercise = [{
+            text: '달리기 20분',
+            isCompleted: false,
+        }, {
+            text: '스트레칭',
+            isCompleted: false,
+        }, ]
+
+        var dataShopping = [{
+            text: '가습기',
+            isCompleted: true,
+        }, {
+            text: '샐러드',
+            isCompleted: false,
+        }, ]
+
+        var dataNext = [{
+            text: '영어소설책 10페이지 읽기',
+            isCompleted: false,
+        }, {
+            text: '영어문장 5개 만들기',
+            isCompleted: false,
+        }, ]
+
+        var dataNextExercise = [{
+            text: '스쿼트 20회',
+            isCompleted: false,
+        }, {
+            text: '윗몸일으키기 20회',
+            isCompleted: false,
+        }, ]
+
+        // 데이터 객체의 속성 체크
+        const propertyChk = data => {
+            for (let item in data) {
+                if (
+                    typeof data[item].text !== 'string' ||
+                    typeof data[item].isCompleted !== 'boolean'
+                )
+                    return false
+            }
+            return true
+        }
+
+        // TodoList 생성자
+        function TodoList(data, $divName) {
+            this.data = data
+            this.$divName = $divName
+
+            try {
+                // 객체인지 체크
+                if (typeof this !== 'object') {
+                    throw new Error(
+                        "TodoList를 생성하기 위해서는 'new' keyword를 사용해야합니다."
+                    )
+                }
+                // 넘어온 데이터의 값이 유효한지/속성이 맞는지/리스트형태인지 체크
+                if (!this.data || !propertyChk(this.data)) {
+                    throw new Error(`데이터의 값이 유효하지 않습니다.`)
+                } else if (!Array.isArray(this.data)) {
+                    throw new Error(
+                        `데이터는 리스트형태여야 합니다. data: ${typeof data}`
+                    )
+                }
+            } catch (error) {
+                alert(error.message)
+            }
+
+            // 화면에 렌더링
+            this.render = () => {
+                    this.$divName.innerHTML += this.data
+                        .map(
+                            item =>
+                            `<div>
+                  ${item.isCompleted ? `<del> ${item.text} </del>` : item.text}
+                    </div>`
+            )
+            .join('')
+        }
+
+        // 새로운 데이터를 받아서 이어서 화면에 렌더링
+        this.setState = nextData => {
+          var nextTodoList = new TodoList(nextData, this.$divName)
+        }
+
+        this.render()
+      }
+
+      const $todoListElement = document.querySelector('#todo-list')
+      var todoList = new TodoList(data, '#todo-list')
+      todoList.setState(dataNext)
+
+      const $todoExerciseElement = document.querySelector('#todo-list-exercise')
+      var todoList = new TodoList(dataExercise, $todoExerciseElement)
+      todoList.setState(dataNextExercise)
+      todoList.setState(dataNextExercise)
+
+      const $todoShoppingElement = document.querySelector('#todo-list-shopping')
+      var todoList = new TodoList(dataShopping, $todoShoppingElement)
+    </script>
+</body>
+
+</html>
