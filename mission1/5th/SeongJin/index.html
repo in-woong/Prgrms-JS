@@ -13,24 +13,40 @@
       justify-content: center;
       align-items: center;
       text-align: center;
+
       background-color: gray;
     }
+
     .todo {
+      width: 200px;
+      height: 150px;
+      margin: 20px;
+      border-radius: 4px;
       background-color: red;
     }
+
     .todo-daily {
+      width: 200px;
+      height: 150px;
+      margin: 20px;
+      border-radius: 4px;
       background-color: blue;
     }
+
     .todo-react {
+      width: 200px;
+      height: 150px;
+      margin: 20px;
+      border-radius: 4px;
       background-color: orange;
     }
   </style>
 
   <body>
     <div class="wrapper">
-      <div id="todo-list" class="todo" />
-      <div id="todo-list_daily" class="todo-daily" />
-      <div id="todo-list_react" class="todo-react" />
+      <div id="todo-list" class="todo"></div>
+      <div id="todo-list_daily" class="todo-daily"></div>
+      <div id="todo-list_react" class="todo-react"></div>
     </div>
     <script>
       const todos = [
@@ -43,7 +59,7 @@
           isCompleted: false,
         },
         // {
-        //     errorText: 'dummyData'
+        //   errorText: 'dummyData'
         // },
         // {
         //   text: 1
@@ -54,64 +70,94 @@
           text: '매일매일 공부하고 기록 남기기',
           isCompleted: true,
         },
-        { text: '야식 먹지 않기', isCompleted: false },
-        { text: 'CS & JS & REACT 공부', isCompleted: true },
-        { text: '취업 준비중', isCompleted: false },
+        {
+          text: '야식 먹지 않기',
+          isCompleted: false,
+        },
+        {
+          text: 'CS & JS & REACT 공부',
+          isCompleted: true,
+        },
+        {
+          text: '취업 준비중',
+          isCompleted: false,
+        },
       ]
 
       const reactTodos = [
-        { text: '컴포넌트 설계 공부', isCompleted: true },
-        { text: '효과적으로 상태 관리 하기', isCompleted: false },
-        { text: 'Contenxt API 활용 해보기', isCompleted: true },
-        { text: '리덕스 연동 하기', isCompleted: true },
-        { text: '리덕스 사가 공부', isCompleted: false },
+        {
+          text: '컴포넌트 설계 공부',
+          isCompleted: true,
+        },
+        {
+          text: '효과적으로 상태 관리 하기',
+          isCompleted: false,
+        },
+        {
+          text: 'Contenxt API 활용 해보기',
+          isCompleted: true,
+        },
+        {
+          text: '리덕스 연동 하기',
+          isCompleted: true,
+        },
+        {
+          text: '리덕스 사가 공부',
+          isCompleted: false,
+        },
       ]
 
       const updateTodos = [
-        { text: '클로져 복습', isCompleted: true },
-        { text: 'this 개념 복습', isCompleted: false },
+        {
+          text: '클로져 복습',
+          isCompleted: true,
+        },
+        {
+          text: 'this 개념 복습',
+          isCompleted: false,
+        },
       ]
 
-      function TodoList(todos, id) {
-        // const todoList = document.getElementById(id);
-        // const dailyTodoList = document.getElementById(id);
-        // const reactTodoList = document.getElementById(id);
-
-        // 보너스 구현 부분 -> 에러처리
-        if (!this instanceof TodoList) {
-          throw new Error('new 키워드 or 함수의 이름을 확인해주세요')
-        }
-        if (!Array.isArray(todos) || todos === null || todos === 'undefined') {
+      function errorCheck(todos, id) {
+        if (!Array.isArray(todos) || !todos) {
           throw new Error('데이터 타입을 다시 확인해주세요')
         }
-        for (const key in todos) {
-          if (!todos[key].text || typeof todos[key].text !== 'string')
+        for (const todo of todos) {
+          if (!todo.text || typeof todo.text !== 'string')
             throw new Error(
-              `객체의 내용을 다시 확인해주세요 -> todos:${todos[key].text}`
+              `객체의 내용을 다시 확인해주세요 -> todo:${todo.text}`
             )
         }
+      }
+
+      function TodoList(todos, id) {
+        if (!(this instanceof TodoList)) {
+          throw new Error('new 키워드로 해당 인스턴스를 다시 생성해주세요')
+        }
+
+        // 보너스 구현 부분 -> 에러처리
+        errorCheck(todos, id)
 
         this.todos = todos
         this.id = id
         // setState 함수 구현
-
         this.setState = function(nextData) {
+          errorCheck(todos, id)
           this.todos = nextData
           this.render()
         }
 
         // 필수 기본 구현 + 다중 컴포넌트 처리
         this.render = function() {
-          console.log(this.todos)
-          // this에 담기는 todos는 매번 달라지지만 해당 render함수가 호출될 때마다  ul태그를 계속해서 생성하고 전달받은 todo가 update가 되는게 아닌 add가 되므로 수정이 필요해보임
           const $todoList = document.getElementById(this.id)
-          const $ul = document.createElement('ul')
-          $todoList.appendChild($ul)
-          this.todos.map(todo => {
-            todo.isCompleted
-              ? ($ul.innerHTML += `<li>${todo.text}</li>`)
-              : ($ul.innerHTML += `<li><strike>${todo.text}</strike></li>`)
-          })
+
+          $todoList.innerHTML = this.todos
+            .map(todo =>
+              todo.isCompleted
+                ? ` <li>${todo.text}</li>`
+                : `<li><strike>${todo.text}</strike></li>`
+            )
+            .join('')
         }
       }
 
