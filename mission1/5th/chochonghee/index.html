@@ -15,6 +15,7 @@
     <h3>오늘의 쇼핑</h3>
     <div class="list" id="todo-list-shopping"></div>
     <script>
+        // 데이터
         var data = [{
             text: 'JS 공부하기',
             isCompleted: true,
@@ -55,86 +56,73 @@
             isCompleted: false,
         }, ]
 
-        // 이곳에서 코딩을 시작하세요!
-        function TodoList(data, divName) {
+        // 데이터 객체의 속성 체크
+        const propertyChk = data => {
+            for (let item in data) {
+                if (
+                    typeof data[item].text !== 'string' ||
+                    typeof data[item].isCompleted !== 'boolean'
+                )
+                    return false
+            }
+            return true
+        }
+
+        // TodoList 생성자
+        function TodoList(data, $divName) {
+            this.data = data
+            this.$divName = $divName
+
             try {
-                if (this === window) {
+                // 객체인지 체크
+                if (typeof this !== 'object') {
                     throw new Error(
                         "TodoList를 생성하기 위해서는 'new' keyword를 사용해야합니다."
                     )
                 }
-
-                if (!data) {
-                    throw new Error('데이터의 값이 올바르지 않습니다.')
-                } else if (!Array.isArray(data)) {
-                    throw new Error('데이터는 리스트형태여야 합니다.')
+                // 넘어온 데이터의 값이 유효한지/속성이 맞는지/리스트형태인지 체크
+                if (!this.data || !propertyChk(this.data)) {
+                    throw new Error(`데이터의 값이 유효하지 않습니다.`)
+                } else if (!Array.isArray(this.data)) {
+                    throw new Error(
+                        `데이터는 리스트형태여야 합니다. data: ${typeof data}`
+                    )
                 }
             } catch (error) {
-                alert(error)
+                alert(error.message)
             }
 
-            this.data = data
-            this.divName = divName
-            this.render = function() {
-                data
-                    .map(function(item) {
-                        item.isCompleted ?
-                            (document.querySelector(
-                                divName
-                            ).innerHTML += `<div><del>${item.text}</del></div>`) :
-                            (document.querySelector(
-                                divName
-                            ).innerHTML += `<div>${item.text}</div>`)
-                    })
-                    .join('')
-
-                /*  innerHTML 속성을 이용해서 구현
-                   data.forEach(item => {
-      if (item.isCompleted) {
-          document.querySelector(
-          divName
-          ).innerHTML += `<div><s>${item.text}</s></div>`
-      } else {
-          document.querySelector(
-          divName
-          ).innerHTML += `<div>${item.text}</div>`
-      }
-      })
-      */
-                /* createElement, appendChild를 이용해서 구현
-      data.forEach(item => {
-              var todo = document.createElement('div')
-              var text = document.createTextNode(item.text)
-
-              if (item.isCompleted) {
-                  var completed = document.createElement('s')
-                  todo.appendChild(completed).appendChild(text)
-              } else {
-                  todo.appendChild(text)
-              }
-              document.querySelector(divName).appendChild(todo)
-
-          })
-      */
-            }
-
-            this.setState = function(nextData) {
-                var nextTodoList = new TodoList(nextData, this.divName)
-                nextTodoList.render()
-            }
+            // 화면에 렌더링
+            this.render = () => {
+                    this.$divName.innerHTML += this.data
+                        .map(
+                            item =>
+                            `<div>
+                  ${item.isCompleted ? `<del> ${item.text} </del>` : item.text}
+                    </div>`
+            )
+            .join('')
         }
 
-        var todoList = new TodoList(data, '#todo-list')
-        todoList.render()
-        todoList.setState(dataNext)
+        // 새로운 데이터를 받아서 이어서 화면에 렌더링
+        this.setState = nextData => {
+          var nextTodoList = new TodoList(nextData, this.$divName)
+        }
 
-        var todoList = new TodoList(dataExercise, '#todo-list-exercise')
-        todoList.render()
-        todoList.setState(dataNextExercise)
-        todoList.setState(dataNextExercise)
+        this.render()
+      }
 
-        var todoList = new TodoList(dataShopping, '#todo-list-shopping')
-        todoList.render()
+      const $todoListElement = document.querySelector('#todo-list')
+      var todoList = new TodoList(data, '#todo-list')
+      todoList.setState(dataNext)
+
+      const $todoExerciseElement = document.querySelector('#todo-list-exercise')
+      var todoList = new TodoList(dataExercise, $todoExerciseElement)
+      todoList.setState(dataNextExercise)
+      todoList.setState(dataNextExercise)
+
+      const $todoShoppingElement = document.querySelector('#todo-list-shopping')
+      var todoList = new TodoList(dataShopping, $todoShoppingElement)
     </script>
 </body>
 
