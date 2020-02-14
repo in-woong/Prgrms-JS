@@ -32,7 +32,7 @@ export default function TodoList(todos, toggleTodo, removeTodo) {
     else if (clickedNode === 'BUTTON') this.removeTodo(clickedIndex)
   }
 
-  this.render = function() {
+  this.render = () => {
     this.$todoList.innerHTML = `<ul>${this.todos
       .map((todo, index) =>
         todo.isCompleted
