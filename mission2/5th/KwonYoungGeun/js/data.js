@@ -5,6 +5,6 @@ const todoData = [
   },
   {
     text: 'JS 복습하기',
-    isCompleted: true,
+    isCompleted: false,
   },
 ]

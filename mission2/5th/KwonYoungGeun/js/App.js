@@ -8,8 +8,14 @@ class App extends Component {
     this.todoList = new TodoList(todoData, $(`${selector}>.todo-list`))
     this.todoInput = new TodoInput($(`${selector}>.todo-input`))
     this.todoCount = new TodoCount($(`${selector}>.todo-count`))
+    this.init()
+  }
+
+  init() {
     this.bindEvents()
   }
 
-  bindEvents() {}
+  bindEvents() {
+    console.log('bindEvent();')
+  }
 }

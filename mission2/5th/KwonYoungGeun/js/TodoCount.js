@@ -44,6 +44,6 @@ class TodoCount extends Component {
   }
 
   markup() {
-    return `<div>전체 TODO 수: ${this.totalCount} 완료 TODO 수:${this.completedCount}</div>`
+    return `<div>전체 TODO 수: ${this.totalCount}</div><div>완료 TODO 수: ${this.completedCount}</div>`
   }
 }
