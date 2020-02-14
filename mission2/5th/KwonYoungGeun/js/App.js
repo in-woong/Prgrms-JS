@@ -5,9 +5,12 @@ class App extends Component {
     }
 
     super($(selector))
-    this.todoList = new TodoList(todoData, $(`${selector}>.todo-list`))
-    this.todoInput = new TodoInput($(`${selector}>.todo-input`))
-    this.todoCount = new TodoCount($(`${selector}>.todo-count`))
+    this.todoInput = new TodoInput($(`${selector}>.input-container`))
+    this.todoList = new TodoList(
+      todoData,
+      $(`${selector}>.todo-list-container`)
+    )
+    this.todoCount = new TodoCount($(`${selector}>.todo-count-container`))
     this.init()
   }
 
@@ -16,6 +19,16 @@ class App extends Component {
   }
 
   bindEvents() {
-    console.log('bindEvent();')
+    this.todoInput
+      .on('@addTodo', e => {
+        this.todoList.addTodo(e.detail.inputValue)
+      })
+      .on('@removeAll', () => {
+        this.todoList.removeAll()
+      })
+
+    this.todoList.on('@setCount', e => {
+      this.todoCount.setState(e.detail)
+    })
   }
 }

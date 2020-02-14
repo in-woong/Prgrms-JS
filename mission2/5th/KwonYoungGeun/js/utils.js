@@ -26,7 +26,7 @@ const checkCustomType = (type, target) => {
 }
 
 const isAllTodo = todoList => {
-  const todoType = { text: 'string', isCompleted: 'boolean' }
+  const todoType = { id: 'number', text: 'string', isCompleted: 'boolean' }
   for (todo of todoList) {
     if (!checkCustomType(todoType, todo)) return false
   }

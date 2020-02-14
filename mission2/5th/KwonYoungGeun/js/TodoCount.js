@@ -15,29 +15,8 @@ class TodoCount extends Component {
     validateElement($element)
   }
 
-  increaseTotalCount() {
-    this.setState(this.totalCount + 1, this.completedCount)
-  }
-
-  decreaseTotalCount() {
-    if (this.totalCount <= 0) {
-      return
-    }
-    this.setState(this.totalCount - 1, this.completedCount)
-  }
-
-  increaseCompletedCount() {
-    this.setState(this.totalCount, this.completedCount + 1)
-  }
-
-  decreaseCompletedCount() {
-    if (this.completedCount <= 0) {
-      return
-    }
-    this.setState(this.totalCount, this.completedCount - 1)
-  }
-
-  setState(totalCount, completedCount) {
+  setState({ totalCount, completedCount }) {
+    console.log('카웉느!')
     this.totalCount = totalCount
     this.completedCount = completedCount
     this.render(this.markup())
