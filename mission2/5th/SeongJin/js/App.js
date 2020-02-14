@@ -1,5 +1,6 @@
 import TodoInput from './TodoInput.js'
 import TodoList from './TodoList.js'
+import TodoCount from './TodoCount.js'
 
 function App() {
   const todos = [
@@ -34,11 +35,13 @@ function App() {
   }
 
   new TodoInput(this.addTodo)
+  this.todoCount = new TodoCount(this.todos)
   this.todoList = new TodoList(this.todos, this.toggleTodo, this.removeTodo)
   this.todoList.render() // 초기에 2개의 데이터 그려주기 위함
 
   this.render = () => {
     this.todoList.setState(this.todos)
+    this.todoCount.render()
   }
 }
 
