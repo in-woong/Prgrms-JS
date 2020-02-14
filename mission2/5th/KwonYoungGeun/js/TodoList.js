@@ -1,42 +1,38 @@
-class TodoList {
-  constructor(data, $list) {
-    this.validate(data, $list)
-    this.$list = $list
-    this._data = data
+class TodoList extends Component {
+  constructor(data, $element) {
+    super($element)
+    this.validate(data, $element)
+    this.data = data
     this.init()
   }
 
-  // 첫 생성될 때 실행되어야할 함수들을 따로 init()에 모아서 호출합니다.
   init() {
-    this.render()
+    this.render(this.markup())
   }
 
-  validate(data, $list, $input) {
+  validate(data, $element) {
     validateData(data)
-    validateElement($list)
+    validateElement($element)
   }
 
   addTodo(itemValue) {
-    console.log(itemValue)
     const newTodo = { text: itemValue, isCompleted: false }
-    this._data.push(newTodo)
-    this.setState(this._data)
-    this.$input.value = ''
+    this.data.push(newTodo)
+    this.setState(this.data)
   }
 
   setState(nextData) {
     validateData(nextData)
-    this._data = nextData
-
-    this.render()
+    this.data = nextData
+    this.render(this.markup())
   }
 
   removeButtonTemplate() {
     return `<button class="remove-button">삭제</button></li>`
   }
 
-  render() {
-    this.$list.innerHTML = `<ul>${this._data
+  markup() {
+    return `<ul>${this.data
       .map(data =>
         data.isCompleted
           ? `<li class="todo-list-item"><del>${data.text}</del><button class="remove-button">삭제</button></li>`

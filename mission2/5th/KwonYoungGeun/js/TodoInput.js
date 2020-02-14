@@ -1,24 +1,18 @@
-class TodoInput {
-  constructor($input) {
-    console.log('실행')
-    this._validate($input)
-    this.$input = $input
-    this._init()
+class TodoInput extends Component {
+  constructor($element) {
+    super($element)
+    this.init()
   }
 
-  _init() {
-    this._bindEvents()
+  init() {
+    this.bindEvents()
   }
 
-  _validate($input) {
-    validateElement($input)
+  bindEvents() {
+    this.$element.addEventListener('keyup', event => this.onKeyup(event))
   }
 
-  _bindEvents() {
-    this.$input.addEventListener('keyup', event => this._onKeyup(event))
-  }
-
-  _onKeyup(event) {
+  onKeyup(event) {
     const enterKey = 13
 
     if (!event.target.value.length) {
@@ -31,6 +25,5 @@ class TodoInput {
     }
 
     console.log('enter!!')
-    // this.addTodo(this.$input.value) 커스텀 이벤트로 던져야하나??
   }
 }
