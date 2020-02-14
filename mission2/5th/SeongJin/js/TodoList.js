@@ -11,10 +11,12 @@ function errorCheck(context, todos) {
   }
 }
 
-function TodoList(todos, id) {
+export default function TodoList(todos, toggleTodo, removeTodo) {
   errorCheck(this, todos)
+  this.$todoList = document.getElementById('todo-list')
   this.todos = todos
-  this.id = id
+  this.toggleTodo = toggleTodo
+  this.removeTodo = removeTodo
 
   this.setState = function(nextData) {
     errorCheck(this, todos)
@@ -22,38 +24,22 @@ function TodoList(todos, id) {
     this.render()
   }
 
-  const $addButton = document.getElementById('addBtn')
-
-  $addButton.addEventListener('click', () => {
-    const $input = document.getElementById('newTodo')
-    const newTodo = { text: $input.value, isCompleted: false }
-    this.setState([...this.todos, newTodo])
-    $input.value = ''
-    $input.focus()
-  })
-
-  onRemove = removeNode => {
-    const $removeList = removeNode.previousSibling
-    this.todos.splice($removeList.id, 1)
-    this.setState(this.todos)
-  }
-
-  onToggle = clickedIndex => {
-    this.todos[clickedIndex] = {
-      ...this.todos[clickedIndex],
-      isCompleted: !this.todos[clickedIndex].isCompleted,
-    }
-    this.setState(this.todos)
+  this.onClick = e => {
+    const clickedNode = e.target.nodeName
+    const clickedIndex = e.target.id
+    if (clickedNode === 'LI' || clickedNode === 'STRIKE')
+      this.toggleTodo(clickedIndex)
+    else if (clickedNode === 'BUTTON') this.removeTodo(clickedIndex)
   }
 
   this.render = function() {
-    const $todoList = document.getElementById(this.id)
-    $todoList.innerHTML = `<ul>${this.todos
+    this.$todoList.innerHTML = `<ul>${this.todos
       .map((todo, index) =>
         todo.isCompleted
-          ? ` <li id=${index} onclick="onToggle(${index})" >${todo.text} </li><button class="todo-btn" onclick="onRemove(this)">삭제</button><hr/>`
-          : `<li id=${index} onclick="onToggle(${index})"><strike>${todo.text}</strike></li><button class="todo-btn" onclick="onRemove(this)">삭제</button><hr/>`
+          ? ` <li id=${index}>${todo.text}<button id=${index} class="todo-btn">삭제</button></li><hr/>`
+          : `<li><strike id=${index}>${todo.text}</strike><button id=${index} class="todo-btn">삭제</button></li><hr/>`
       )
       .join('')}<ul>`
   }
+  this.$todoList.addEventListener('click', this.onClick)
 }
