@@ -6,66 +6,79 @@
 </head>
 
 <body>
-  <div id="todo-list"></div>
+  <div id="todo-list1"></div>
   <div id="todo-list2"></div>
   <div id="todo-list3"></div>
   <script>
     const data = [
       {
         text: 'JS 공부하기',
-        isCompleted: true
+        isCompleted: true,
       },
       {
         text: 'JS 복습하기',
-        
-      }
+        isCompleted: false
+      },
     ]
     const data2 = [
       {
         text: '8시 기상',
-        isCompleted: true
+        isCompleted: true,
       },
       {
         text: '12시 취침',
-        isCompleted: false 
-      }  
+        isCompleted: false,
+      },
+      {
+        text: 'test',
+        isCompleted: false,
+      },
     ]
     const data3 = [
       {
         text: '6장, 7장, 8장 복습하기',
-        isCompleted: true
+        isCompleted: true,
       },
       {
         text: '강의 듣기',
-        isCompleted: false 
-      }
+        isCompleted: false,
+      },
     ]
-    class TodoList{
-        constructor(data){
-            this.data = data;
-            try{
-              if(Array.isArray(this.data) === false) throw new Error("Array가 아닙니다.");
-            }catch(e){
-              alert(e.message);
-            }
+
+    class TodoList {
+      constructor(data) {
+        this.data = data;
+        try {
+          if (data.length <= 0) throw new Error('빈 배열입니다.');
+          if (!Array.isArray(this.data)) throw new Error('Array가 아닙니다.');
+          if (!data.every(todo => todo.hasOwnProperty('text') && todo.hasOwnProperty('isCompleted') && typeof todo.text === 'string')) throw new Error('데이터의 형식이 잘못되었습니다.');
+        } catch (e) {
+          alert(e.message)
         }
-        render(){
-          const string = this.data.map(el => el.text);
-          const completed = this.data.filter( el => el.isCompleted === true);
-          string.forEach(el => {
-            completed[0].text === el ?
-            document.getElementById('todo-list').innerHTML += `<strike> ${el} </strike>`:
-            document.getElementById('todo-list').innerHTML += `<div> ${el} </div><br>`;
-          });
-        }
+      }
+      render() {
+        const div = document.querySelector('div');
+        div.innerHTML = this.data.map((todo) =>
+          todo.isCompleted ? `${todo.text}` : `<del> ${todo.text} </del>`
+        ).join("<br>")
+      }
+      setState(nextData) {
+        this.data = nextData;
+        this.render();
+      }
     }
+
     const todoList = new TodoList(data);
     const todoList2 = new TodoList(data2);
     const todoList3 = new TodoList(data3);
+
     todoList.render();
     todoList2.render();
     todoList3.render();
-   
+
+    todoList.setState(data2);
+
   </script>
 </body>
+
 </html>
