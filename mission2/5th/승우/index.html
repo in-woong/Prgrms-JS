@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="./css/fontello-ca7dd238/fontello-ca7dd238/css/fontello.css"
+    />
+    <title>Mission 2</title>
+    <style>
+      #container {
+        width: 500px;
+        border: 1px solid black;
+        margin: 0 auto;
+        padding: 1rem;
+      }
+
+      h1 {
+        font-size: 2rem;
+        text-transform: uppercase;
+        text-align: center;
+      }
+
+      h2 {
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 1.25rem;
+      }
+
+      #container > div {
+        text-align: center;
+      }
+
+      #input-todo {
+        width: 80%;
+        border: none;
+        border-bottom: 1px solid black;
+        outline: none;
+        text-align: center;
+        font-size: 1.25rem;
+      }
+
+      ul {
+        padding: 0;
+        list-style: none;
+        text-align: center;
+      }
+      ul > li {
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      ul > li.checked {
+        text-decoration: line-through;
+      }
+
+      ul > li > span {
+        font-size: 1rem;
+        margin-left: 5px;
+        cursor: pointer;
+      }
+      ul > li > span:hover {
+        color: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <h1>todo</h1>
+      <h2>What is your main focus today?</h2>
+      <div>
+        <input type="text" id="input-todo" />
+      </div>
+      <ul id="todo-list">
+        <li>Do JS<span class="icon-check-empty"></span></li>
+      </ul>
+    </div>
+    <!-- <h1>my-todo</h1>
+    <ul id="my-todo"></ul>
+    <h1>your-todo</h1>
+    <ul id="your-todo"></ul> -->
+    <!-- <div id="console"></div> -->
+    <script src="./todolist.js"></script>
+    <!-- <script src="./index.js"></script> -->
+    <script>
+      // 이곳에서 코딩을 시작하세요!
+    </script>
+  </body>
+</html>
