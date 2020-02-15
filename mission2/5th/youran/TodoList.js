@@ -11,6 +11,12 @@ function TodoList(data, targetId) {
     this.targetId = targetId;
 
     this.render = function() {
+      if(this.data.length === 0) {
+        document.querySelector(`#${this.targetId}`).innerHTML =
+          "할 일을 입력하세요!";
+        return;
+      }
+      
       document.querySelector(`#${this.targetId}`).innerHTML = this.data
         .map(
           (item) => 

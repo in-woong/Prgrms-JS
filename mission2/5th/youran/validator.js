@@ -17,7 +17,7 @@ function isValidData(data) {
   }
 
   if(data.length === 0) {
-    throw new Error("데이터가 없습니다.");
+    return;
   } 
 
   const isPlainObject = (item) => toString.call(item) === "[object Object]";
