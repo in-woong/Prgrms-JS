@@ -14,10 +14,25 @@ function TodoList(data, targetId) {
       document.querySelector(`#${this.targetId}`).innerHTML = this.data
         .map(
           (item) => 
-          `<div>${item.isCompleted
+          `<div>
+          ${item.isCompleted
           ? `<s>${item.text}</s>` 
-          : item.text}</div>`)
+          : item.text}
+          <button class="todo-delete-button" value=${item.id}>삭제</button>
+          </div>`)
         .join('');
+
+      const $deleteButtons = document.querySelectorAll('.todo-delete-button');
+      $deleteButtons.forEach(button => {
+        button.addEventListener(
+          'click', e => this.deleteTodo(e.target.value)
+        );
+      });
+    }
+  
+    this.deleteTodo = function(todoId) {
+      const nextData = this.data.filter(item => item.id !== todoId );
+      this.setState(nextData);  
     }
 
     this.setState = function(nextData) {
