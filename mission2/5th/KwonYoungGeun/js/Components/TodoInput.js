@@ -1,8 +1,5 @@
 const constants = { INPUT: 0, SUBMIT: 1, REMOVE_ALL: 2 }
 
-/**
- * TODO: 한글 입력시 이벤트가 2번 발생하는 문제 해결하기
- */
 class TodoInput extends Component {
   constructor($element) {
     super($element)
@@ -31,7 +28,6 @@ class TodoInput extends Component {
     const enterKey = 13
 
     if (!e.target.value.length) {
-      alert('내용 없음')
       return
     }
 
