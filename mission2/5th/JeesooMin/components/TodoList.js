@@ -17,16 +17,20 @@ const isTodoDataValid = function(param) {
 function TodoList($element, data, eventHandler) {
   // new 키워드를 붙이지 않고 함수 실행 시
   if (!(this instanceof TodoList)) {
-    throw new Error('new 키워드로 실행되지 않았습니다.')
+    throw new Error('[TodoList] new 키워드로 실행되지 않았습니다.')
   }
 
   // 전달받은 데이터가 올바른 데이터인지 확인
   if (!isTodoDataValid(data)) {
-    throw new Error('데이터가 올바르지 않습니다.')
+    throw new Error('[TodoList] 데이터가 올바르지 않습니다.')
   }
 
-  if (!eventHandler || !eventHandler.onDelete || !eventHandler.onClickItem) {
-    throw new Error('이벤트 핸들러가 정의되지 않았습니다.')
+  if (
+    !eventHandler ||
+    !isEventHandlerValid(eventHandler.onDelete) ||
+    !isEventHandlerValid(eventHandler.onClickItem)
+  ) {
+    throw new Error('[TodoList] 이벤트 핸들러가 정의되지 않았습니다.')
   }
 
   this.data = data
