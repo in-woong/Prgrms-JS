@@ -59,8 +59,10 @@
       })
 
       this.todos = todos
+      this.selector = selector
+
       this.render = function() {
-        document.querySelector(selector).innerHTML = this.todos
+        document.querySelector(this.selector).innerHTML = this.todos
         .map(todo => {
           let todoHtml
           if (todo.isCompleted) {
@@ -72,16 +74,25 @@
         })
         .join('')
       }
+
+      this.setState = function setState(nextdata) {
+        console.log(nextdata)
+        this.todos = nextdata
+        this.render()
+      }
     }
 
     var todoList1 = new TodoList(data1, '#todo-list-1')
     todoList1.render();
 
-    var todoList2 = new TodoList(data2, '#todo-list-2')
-    todoList2.render();
+    setTimeout(() => {
+      todoList1.setState(data2);
+    }, 1000);
 
-    var todoList3 = new TodoList(data3, '#todo-list-3')
-    todoList3.render();
+    setTimeout(() => {
+      todoList1.setState(data3);
+    }, 1000);
+
   </script> 
 </body>
 </html>
