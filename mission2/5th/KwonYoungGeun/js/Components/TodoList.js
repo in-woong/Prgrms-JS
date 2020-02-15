@@ -8,7 +8,6 @@ class TodoList extends Component {
 
   init() {
     this.bindEvents()
-    this.sendCount()
     this.render(this.markup())
   }
 
@@ -32,8 +31,6 @@ class TodoList extends Component {
     const id = Number(e.target.parentNode.getAttribute('data-id'))
     const logic = logics[e.target.className] || logics['default']
     logic(id)
-
-    this.sendCount()
   }
 
   addTodo(itemValue) {
@@ -46,7 +43,6 @@ class TodoList extends Component {
     this.data.push(newTodo)
     postTodo(this.data)
     this.setState(this.data)
-    this.sendCount()
   }
 
   removeTodo(id) {
@@ -59,7 +55,6 @@ class TodoList extends Component {
   removeAll() {
     postTodo([])
     this.setState([])
-    this.sendCount()
   }
 
   toggle(id) {
@@ -87,6 +82,7 @@ class TodoList extends Component {
   setState(nextData) {
     validateData(nextData)
     this.data = nextData
+    this.sendCount()
     this.render(this.markup())
   }
 
