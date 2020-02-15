@@ -14,6 +14,7 @@ try{
   const $todoInput = document.querySelector('#todo-input');
   $todoInput.addEventListener('keyup',function(e) {
     if(e.keyCode !== 13) return;
+    if(!e.target.value) return;
     data.push({
       text: e.target.value,
       isCompleted: false,
