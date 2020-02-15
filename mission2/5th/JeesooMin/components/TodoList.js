@@ -38,14 +38,21 @@ function TodoList($element, data, eventHandler) {
   const onDelete = eventHandler.onDelete
   const onClickItem = eventHandler.onClickItem
 
+  this.$element.addEventListener('click', e => {
+    if (e.target) {
+      if (e.target.nodeName === 'SPAN' || e.target.nodeName === 'S') {
+        onClickItem(e.target.parentNode.id.split('-')[1])
+      }
+      if (e.target.nodeName === 'BUTTON') {
+        onDelete(e.target.id.split('-')[1])
+      }
+    }
+  })
+
   const createTodoHTMLString = (item, index) => {
     return `<div class="todo-list"> 
       <div class="list-item" id=todoitem-${index}>
-      ${
-        item.isCompleted
-          ? `<s> ${item.text} </s>`
-          : `<span> ${item.text} </span>`
-      } 
+      ${item.isCompleted ? `<s>${item.text}</s>` : `<span>${item.text}</span>`} 
       </div>
       <button id=deletebutton-${index} style="margin-left: 10;"}}> X </button> 
     </div>`
@@ -53,20 +60,6 @@ function TodoList($element, data, eventHandler) {
 
   this.render = function() {
     this.$element.innerHTML = `${this.data.map(createTodoHTMLString).join('')}`
-
-    for (let i = 0; i < this.data.length; i++) {
-      // 각 아이템 클릭 이벤트 리스너 추가
-      document.querySelector(`#todoitem-${i}`).addEventListener('click', e => {
-        onClickItem(e.currentTarget.id.split('-')[1])
-      })
-
-      // 삭제 버튼 이벤트 리스너 추가
-      document
-        .querySelector(`#deletebutton-${i}`)
-        .addEventListener('click', e => {
-          onDelete(e.target.id.split('-')[1])
-        })
-    }
   }
 
   this.setState = function(nextData) {
