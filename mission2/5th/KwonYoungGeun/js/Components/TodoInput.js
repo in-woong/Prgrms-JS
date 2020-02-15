@@ -21,7 +21,7 @@ class TodoInput extends Component {
   bindEvents() {
     this.$input.addEventListener('keyup', e => this.onKeyup(e))
     this.$submit.addEventListener('click', e => this.submit(e))
-    this.$removeAll.addEventListener('click', e => this.removeAll())
+    this.$removeAll.addEventListener('click', () => this.removeAll())
   }
 
   onKeyup(e) {
@@ -35,11 +35,14 @@ class TodoInput extends Component {
       return
     }
 
-    this.emit('@submit', { inputValue: this.$input.value })
-    this.$input.value = ''
+    this.submit()
   }
 
   submit() {
+    if (!this.$input.value.length) {
+      return
+    }
+
     this.emit('@submit', { inputValue: this.$input.value })
     this.$input.value = ''
   }
