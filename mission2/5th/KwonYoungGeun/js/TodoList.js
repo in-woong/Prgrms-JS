@@ -1,9 +1,8 @@
 class TodoList extends Component {
-  constructor(data, $element) {
+  constructor($element) {
     super($element)
-    this.validate(data, $element)
-    this.data = data
-    this.lastIndex = data.length - 1
+    this.data = fetchTodos()
+    this.validate(this.data, this.$element)
     this.init()
   }
 
@@ -43,10 +42,10 @@ class TodoList extends Component {
   }
 
   addTodo(itemValue) {
-    this.lastIndex += 1
+    const newTodo = { id: makeID(), text: itemValue, isCompleted: false }
 
-    const newTodo = { id: this.lastIndex, text: itemValue, isCompleted: false }
     this.data.push(newTodo)
+    postTodo(this.data)
     this.setState(this.data)
     this.sendCount()
   }
@@ -54,11 +53,12 @@ class TodoList extends Component {
   removeTodo(id) {
     const removedData = this.data.filter(todo => id !== todo.id)
 
-    this.lastIndex -= 1
+    postTodo(removedData)
     this.setState(removedData)
   }
 
   removeAll() {
+    postTodo([])
     this.setState([])
     this.sendCount()
   }
@@ -67,7 +67,6 @@ class TodoList extends Component {
     const toggledData = this.data.map(todo => {
       return todo.id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo
     })
-
     this.setState(toggledData)
   }
 

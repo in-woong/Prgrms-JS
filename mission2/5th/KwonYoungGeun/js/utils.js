@@ -1,4 +1,10 @@
-const $ = selector => document.querySelector(selector)
+const $ = selector => {
+  return document.querySelector(selector)
+}
+
+const makeID = () => {
+  return Date.now()
+}
 
 const isArray = target => {
   return Array.isArray(target)
