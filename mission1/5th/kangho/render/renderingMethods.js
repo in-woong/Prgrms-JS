@@ -56,3 +56,24 @@
 //     }
 //     this.render();
 // }
+
+
+
+
+
+
+// this.render = function(id) {
+//     console.log(this.data[0].isCompleted);
+//     this.data.forEach(function(number) {
+//         if (checkCompleted(number)) {
+//             id.innerHTML = number.reduce((htmlString, list) => htmlString + `<div><s> ${list.text} </s></div>`, '');
+//         } else {
+//             id.innerHTML = number.reduce((htmlString, list) => htmlString + `<div> ${list.text} </div>`, '');
+//         }
+//     })
+//     if (checkCompleted(this.data)) {
+//         id.innerHTML = this.data.reduce((htmlString, list) => htmlString + `<div><s> ${list.text} </s></div>`, '');
+//     } else {
+//         id.innerHTML = this.data.reduce((htmlString, list) => htmlString + `<div> ${list.text} </div>`, '');
+//     }
+// }

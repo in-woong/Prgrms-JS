@@ -6,64 +6,98 @@
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
-        <div id="idTodoList"></div>
+        <div id="idTodoList1"></div>
         <div id="idTodoList2"></div>
         <div id="idTodoList3"></div>
 
         <script>
-            var data = [
-                {text: 'JS Start'},
-                {text: 'JS Study'},
+            var data1 = [
+                {text: 'JS Start', isCompleted: true},
+                {text: 'JS Study', isCompleted: false},
             ]
 
             var data2 = [
-                {text: 'JS Review'},
-                {text: 'JS Ask'},
+                {text: 'JS Review', isCompleted: true},
+                {text: 'JS Ask', isCompleted: true},
             ]
 
             var data3 = [
-                {text: 'Yay!'},
+                {text: 'Yay!', isCompleted: false},
             ]
             
-            function checkData(data) {
+            function checkNewOperatorUsed(data) {
+                if (!(data instanceof todoList)) {
+                    throw new Error('Error 1: New operator was not used');
+                }
+            }
+
+            function checkDataObjectType(data) {
                 if (!(data instanceof Array)) {
-                    throw new Error('Error 2: not array');
+                    throw new Error('Error 2: data type is not array');
                 }
+            }
 
+            function checkDataObjectNumber(data) {
                 if (data.length === 0) {
-                    throw new Error('Error 3: empty array');
+                    throw new Error('Error 3: data has empty array');
                 }
+            }
 
-                for (var i=0; i<data.length; i++) {
-                    var keyNames = Object.keys(data[i]);
-                    keyNames.forEach(function(names) {
-                        if (names !== 'text') {
-                            throw new Error('Error 4: wrong key name');
-                        }
-                    })
-                }
-
-                data.forEach(function(list) {
-                    if(typeof list.text !== 'string') {
-                        throw new Error('Error 5: not string type');
+            function checkDataPropertyKeyNames(data) {
+                data.forEach(function(property) {
+                    const keyName = Object.keys(property);
+                    if (keyName[0] !== 'text') {
+                        throw new Error('Error 4: data property has wrong key name');
                     }
                 })
             }
 
-            function todoList(data, id) {
-                if (!(this instanceof todoList)) {
-                    throw new Error('Error 1: no new keyword');
-                }
-                checkData(data);
-                this.data = data;
-                this.render = function(id) {
-                    id.innerHTML = this.data.reduce((htmlString, list) => htmlString + `<div> ${list.text} </div>`, '');
-                }
-                this.render(id);
+            function checkDataPropertyValueType(data) {
+                data.forEach(function(property) {
+                    if (typeof property.text !== 'string') {
+                        throw new Error('Error 5: data property has wrong value type');
+                    }
+                })
             }
 
-            // var todoList1 = todoList(data);
-            var todoList1 = new todoList(data, idTodoList);
+            function checkIsCompletedType(data) {
+                data.forEach(function(property) {
+                    if (typeof property.isCompleted !== 'boolean') {
+                        throw new Error('Error 6: checker is not boolean type');
+                    }
+                })
+            }
+
+            function checkCompleted(data) {
+                if (data.isCompleted) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            function todoList(data, id) {
+                checkNewOperatorUsed(this);
+                checkDataObjectType(data);
+                checkDataObjectNumber(data);
+                checkDataPropertyKeyNames(data);
+                checkDataPropertyValueType(data);
+                checkIsCompletedType(data);
+
+                this.data = data;
+                this.render = function() {
+                    for (var i=0; i<this.data.length; i++) {
+                        if (checkCompleted(this.data[i])) {
+                            id.innerHTML += '<div><s>' + this.data[i].text + '</s></div>';
+                        } else {
+                            id.innerHTML += '<div>' + this.data[i].text + '</div>';
+                        }
+                    }
+                }
+                this.render();
+            }
+
+            var todoList1 = new todoList(data1, idTodoList1);
             var todoList2 = new todoList(data2, idTodoList2);
             var todoList3 = new todoList(data3, idTodoList3);
 
