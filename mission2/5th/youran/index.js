@@ -17,12 +17,7 @@ try{
   $todoInput.addEventListener('keyup',function(e) {
     if(e.keyCode !== 13) return;
     if(!e.target.value) return;
-    data.push({
-      id: data.length + 1 + '',
-      text: e.target.value,
-      isCompleted: false,
-    });
-    $todoList.setState(data);
+    $todoList.insertTodo(e.target.value);
     e.target.value = '';
   })
 }catch(e) {

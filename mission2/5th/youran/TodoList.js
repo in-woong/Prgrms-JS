@@ -16,7 +16,7 @@ function TodoList(data, targetId) {
           "할 일을 입력하세요!";
         return;
       }
-      
+
       document.querySelector(`#${this.targetId}`).innerHTML = this.data
         .map(
           (item) => 
@@ -40,6 +40,15 @@ function TodoList(data, targetId) {
       const nextData = this.data.filter(item => item.id !== todoId );
       this.setState(nextData);  
     }
+
+    this.insertTodo = function(newTodoText) {
+      this.data.push({
+        id: this.data.length + 1 + '',
+        text: newTodoText,
+        isCompleted: false,
+      });
+      this.setState(this.data);
+    } 
 
     this.setState = function(nextData) {
       isValidData(nextData);
