@@ -20,7 +20,7 @@ function TodoList(data, targetId) {
       document.querySelector(`#${this.targetId}`).innerHTML = this.data
         .map(
           (item) => 
-          `<div>
+          `<div class="todo-text" data-id=${item.id}>
           ${item.isCompleted
           ? `<s>${item.text}</s>` 
           : item.text}
@@ -34,6 +34,13 @@ function TodoList(data, targetId) {
           'click', e => this.deleteTodo(e.target.value)
         );
       });
+
+      const $todoTexts = document.querySelectorAll('.todo-text');
+      $todoTexts.forEach(text => {
+        text.addEventListener('click', e => {
+          this.setCompletedItem(e.target.dataset.id);
+        });
+      })
     }
   
     this.deleteTodo = function(todoId) {
@@ -49,6 +56,15 @@ function TodoList(data, targetId) {
       });
       this.setState(this.data);
     } 
+
+    this.setCompleted = function(todoId) {
+      this.data.forEach(item => {
+        if(item.id === todoId && !item.isCompleted){
+          item.isCompleted = true;
+        }
+      })
+      this.render();
+    }
 
     this.setState = function(nextData) {
       isValidData(nextData);
