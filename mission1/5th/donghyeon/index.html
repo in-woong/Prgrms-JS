@@ -14,26 +14,32 @@
   <script>
     var data1 = [
       {
-        text: 'JS 공부하기'
+        text: 'JS 공부하기',
+        isCompleted: true
       },
       {
-        text: 'JS 복습하기'
+        text: 'JS 복습하기',
+        isCompleted: false
       }
     ]
     var data2 = [
       {
-        text: '밥먹기'
+        text: '밥먹기',
+        isCompleted: false
       },
       {
-        text: '소화시키기'
+        text: '소화시키기',
+        isCompleted: true
       }
     ]
     var data3 = [
       {
-        text: '잠자기'
+        text: '잠자기',
+        isCompleted: false
       },
       {
-        text: '일어나기'
+        text: '일어나기',
+        isCompleted: true
       }
     ]
   
@@ -55,7 +61,15 @@
       this.todos = todos
       this.render = function() {
         document.querySelector(selector).innerHTML = this.todos
-        .map(todo => `<div>${todo.text}</div>`)
+        .map(todo => {
+          let todoHtml
+          if (todo.isCompleted) {
+            todoHtml = `<strike>${todo.text}</strike>`;
+          } else {
+            todoHtml = `${todo.text}`;
+          }
+          return `<div>${todoHtml}</div>`
+        })
         .join('')
       }
     }
