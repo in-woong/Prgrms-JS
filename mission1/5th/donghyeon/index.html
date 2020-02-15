@@ -6,7 +6,11 @@
 </head>
 
 <body>
-  <div id="todo-list"></div>
+  <div id="todo-list-1"></div>
+  <div id="todo-list-2"></div>
+  <div id="todo-list-3"></div>
+
+
   <script>
     var data1 = [
       {
@@ -18,14 +22,22 @@
     ]
     var data2 = [
       {
-        text: 'sj 공부하기'
+        text: '밥먹기'
       },
       {
-        text: 'sj 복습하기'
+        text: '소화시키기'
+      }
+    ]
+    var data3 = [
+      {
+        text: '잠자기'
+      },
+      {
+        text: '일어나기'
       }
     ]
   
-    function TodoList(todos) {
+    function TodoList(todos, selector) {
       if (!(this instanceof TodoList)) {
         throw new Error("new를 사용하세요.")
       }
@@ -42,14 +54,20 @@
 
       this.todos = todos
       this.render = function() {
-        document.querySelector('#todo-list').innerHTML = this.todos
+        document.querySelector(selector).innerHTML = this.todos
         .map(todo => `<div>${todo.text}</div>`)
         .join('')
       }
     }
 
-    var todoList1 = new TodoList(data1)
+    var todoList1 = new TodoList(data1, '#todo-list-1')
     todoList1.render();
+
+    var todoList2 = new TodoList(data2, '#todo-list-2')
+    todoList2.render();
+
+    var todoList3 = new TodoList(data3, '#todo-list-3')
+    todoList3.render();
   </script> 
 </body>
 </html>
