@@ -62,17 +62,10 @@
       this.selector = selector
 
       this.render = function() {
-        document.querySelector(this.selector).innerHTML = this.todos
-        .map(todo => {
-          let todoHtml
-          if (todo.isCompleted) {
-            todoHtml = `<strike>${todo.text}</strike>`;
-          } else {
-            todoHtml = `${todo.text}`;
-          }
-          return `<div>${todoHtml}</div>`
-        })
-        .join('')
+        document.querySelector(this.selector).innerHTML = this.todos.reduce(
+          (sum, current) => sum + 
+          `<div>${current.isCompleted ? '<strike>' + current.text + '</strikie>' : current.text}</div>`, ''
+        )
       }
 
       this.setState = function setState(nextdata) {
