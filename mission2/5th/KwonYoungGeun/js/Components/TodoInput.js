@@ -1,3 +1,4 @@
+// 컴포넌트 내 자식 요소(children)  index
 const constants = { INPUT: 0, SUBMIT: 1, REMOVE_ALL: 2 }
 
 class TodoInput extends Component {
