@@ -40,21 +40,29 @@
         },
       ]
 
+      function validateData(data) {
+        if (!data) {
+          throw new Error('data 값이 없습니다.')
+        } else if (!Array.isArray(data)) {
+          throw new Error('data가 배열이 아닙니다.')
+        } else if (data.length === 0) {
+          throw new Error('data가 비어있습니다.')
+        } else {
+          data.forEach(item => {
+            if (!item.hasOwnProperty('text')) {
+              throw new Error('data 에 text 값이 없습니다.')
+            } else if (!item.text) {
+              throw new Error('text 내용이 없습니다.')
+            }
+          })
+        }
+      }
+
       function TodoList(data, id = 'todo-list') {
         this.data = data
         this.id = id
+        validateData(this.data)
         this.render = function() {
-          if (!this.data) {
-            throw new Error('data 값이 없습니다.')
-          } else if (!Array.isArray(this.data)) {
-            throw new Error('data가 배열이 아닙니다.')
-          } else {
-            this.data.forEach(item => {
-              if (!item.hasOwnProperty('text')) {
-                throw new Error('data 에 text 값이 없습니다.')
-              }
-            })
-          }
           document.querySelector(`#${this.id}`).innerHTML = data
             .map(
               todoItem =>
