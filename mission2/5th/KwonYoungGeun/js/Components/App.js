@@ -19,21 +19,21 @@ class App extends Component {
 
   bindEvents() {
     this.todoInput
-      .on('@submit', event => this.onSubmit(event))
+      .on('@submit', e => this.onSubmit(e))
       .on('@removeAll', () => this.onRemoveAll())
 
-    this.todoList.on('@setCount', event => this.onSetCount(event))
+    this.todoList.on('@setCount', e => this.onSetCount(e))
   }
 
-  onSubmit(event) {
-    this.todoList.addTodo(event.detail.inputValue)
+  onSubmit(e) {
+    this.todoList.addTodo(e.detail.inputValue)
   }
 
   onRemoveAll() {
     this.todoList.removeAll()
   }
 
-  onSetCount(event) {
-    this.todoCount.setState(event.detail)
+  onSetCount(e) {
+    this.todoCount.setState(e.detail)
   }
 }

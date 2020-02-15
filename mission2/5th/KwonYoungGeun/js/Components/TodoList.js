@@ -18,24 +18,30 @@ class TodoList extends Component {
   }
 
   bindEvents() {
-    this.$element.addEventListener('click', event => this.onClick(event))
+    this.$element.addEventListener('click', e => this.onClick(e)) // ** Event Delegate **
   }
 
-  onClick(event) {
+  onClick(e) {
     const logics = {
       'remove-button': id => this.removeTodo(id),
       'todo-title': id => this.toggle(id),
       'deleted-todo': id => this.toggle(id),
+      'default': () => {},
     }
 
-    const id = Number(event.target.parentNode.getAttribute('data-id'))
-    logics[event.target.className](id)
+    const id = Number(e.target.parentNode.getAttribute('data-id'))
+    const logic = logics[e.target.className] || logics['default']
+    logic(id)
 
     this.sendCount()
   }
 
   addTodo(itemValue) {
-    const newTodo = { id: makeID(), text: itemValue, isCompleted: false }
+    const newTodo = {
+      id: makeID(),
+      text: itemValue,
+      isCompleted: false,
+    }
 
     this.data.push(newTodo)
     postTodo(this.data)
@@ -58,7 +64,12 @@ class TodoList extends Component {
 
   toggle(id) {
     const toggledData = this.data.map(todo => {
-      return todo.id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo
+      return todo.id === id
+        ? {
+            ...todo,
+            isCompleted: !todo.isCompleted,
+          }
+        : todo
     })
     postTodo(toggledData)
     this.setState(toggledData)
