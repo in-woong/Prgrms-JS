@@ -16,7 +16,6 @@ class TodoCount extends Component {
   }
 
   setState({ totalCount, completedCount }) {
-    console.log('카웉느!')
     this.totalCount = totalCount
     this.completedCount = completedCount
     this.render(this.markup())

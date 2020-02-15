@@ -9,7 +9,6 @@ class TodoInput extends Component {
     this.$input = this.$element.children[constants.INPUT]
     this.$removeAll = this.$element.children[constants.REMOVE_ALL]
     this.validate(this.$element, this.$input, this.$removeAll)
-
     this.init()
   }
 
@@ -39,7 +38,7 @@ class TodoInput extends Component {
       return
     }
 
-    this.emit('@addTodo', { inputValue: this.$input.value })
+    this.emit('@submit', { inputValue: this.$input.value })
     this.$input.value = ''
   }
 

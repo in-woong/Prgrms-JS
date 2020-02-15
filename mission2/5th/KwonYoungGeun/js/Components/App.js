@@ -10,6 +10,7 @@ class App extends Component {
 
   init() {
     this.bindEvents()
+    this.todoList.sendCount()
   }
 
   validate($element) {
@@ -18,15 +19,21 @@ class App extends Component {
 
   bindEvents() {
     this.todoInput
-      .on('@addTodo', e => {
-        this.todoList.addTodo(e.detail.inputValue)
-      })
-      .on('@removeAll', () => {
-        this.todoList.removeAll()
-      })
+      .on('@submit', event => this.onSubmit(event))
+      .on('@removeAll', () => this.onRemoveAll())
 
-    this.todoList.on('@setCount', e => {
-      this.todoCount.setState(e.detail)
-    })
+    this.todoList.on('@setCount', event => this.onSetCount(event))
+  }
+
+  onSubmit(event) {
+    this.todoList.addTodo(event.detail.inputValue)
+  }
+
+  onRemoveAll() {
+    this.todoList.removeAll()
+  }
+
+  onSetCount(event) {
+    this.todoCount.setState(event.detail)
   }
 }

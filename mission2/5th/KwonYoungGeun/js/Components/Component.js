@@ -1,3 +1,4 @@
+// 모든 컴포넌트가 상속받는 최상위 클래스
 class Component {
   constructor($element) {
     this.$element = $element

@@ -1,1 +1,1 @@
-const app = new App('#root')
+new App('#root')
