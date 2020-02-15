@@ -16,26 +16,33 @@
         text: 'JS 복습하기'
       }
     ]
-   //function style, new 키워드를 통해 생성, 파라마터로 아래와 같은 형태의 data를 넘겨 받음.
-    function TodoList(input_data){
-        this.input_data = input_data;
-        //TodoList에 render함수 
+
+    function TodoList(inputData){
+        if(!(this instanceof TodoList)){
+            throw new Error('TodoList.prototype is not in the prototype chain of the this object');
+        }
+        if(inputData === null || inputData === undefined ){
+            throw new Error('parameter is null or undefined');
+        }
+        if(!Array.isArray(inputData)){
+            throw new Error('not array type');
+        }
+        if(!inputData.every(elem => elem.hasOwnProperty('text'))){
+            throw new Error('wrong data : some element do not have text(key)');
+        }
+        
+        this.inputData = inputData;
         this.render = function(){
-            //파라미터 input_data의 각 배열첨자의 text를 저장할 변수
-            //초기화 안해주니 undefined 출력됨
-            var html_string=''; 
-            //input_data의 크기만큼 순회하며 배열첨자의 text를 html string으로 만듦
-            for(let i=0;i<input_data.length;i++){
-               html_string +=`<div>${input_data[i].text}</div>`;
-            }
-            //id가 todo-list인 곳에 html_string 넣기
-            document.querySelector('#todo-list').innerHTML = html_string;
+            let htmlString = this.inputData.map(x=>x.text);
+            htmlString = '<div>' + htmlString.join('</div><div>') + '</div>';
+            document.querySelector('#todo-list').innerHTML = htmlString;
         }
     }
-    //data를 인자로 갖는 생성자함수 todoList
-    var todoList = new TodoList(data);
-    //todoList의 render함수 실행
+    const todoList = new TodoList(data);
     todoList.render();
+
+    const todoList1 = TodoList(data);
+    
   </script>
 </body>
 </html>
