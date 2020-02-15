@@ -25,18 +25,24 @@
       }
     ]
   
-    function TodoList(data) {
+    function TodoList(todos) {
       if (!(this instanceof TodoList)) {
         throw new Error("new를 사용하세요.")
       }
 
-      if (!Array.isArray(data)) {
-        throw new Error("data는 array type이 필요합니다.")
+      if (!Array.isArray(todos)) {
+        throw new Error("array type이 필요합니다.")
       }
 
-      this.data = data
+      todos.forEach(todo => {
+        if (typeof todo.text !== 'string') {
+          throw new Error("todo 항목은 string이 필요합니다. ")
+        }
+      })
+
+      this.todos = todos
       this.render = function() {
-        document.querySelector('#todo-list').innerHTML = this.data
+        document.querySelector('#todo-list').innerHTML = this.todos
         .map(todo => `<div>${todo.text}</div>`)
         .join('')
       }
