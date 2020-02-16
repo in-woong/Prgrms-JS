@@ -14,11 +14,11 @@ function TodoList($target, todos) {
   })
 
   this.todos = todos
-  this.$target = $target 
+  this.$target = $target
 
   this.render = function() {
     $target.innerHTML = this.todos.reduce(
-      (sum, current, index) => 
+      (sum, current, index) =>
         sum +
         `<div>
         <span id="todo-${index}" 
@@ -32,17 +32,17 @@ function TodoList($target, todos) {
     )
 
     this.$target.querySelectorAll('button').forEach(button => {
-        button.addEventListener('click', e => {
-            this.todos.splice(e.target.value, 1)
-            this.setState(this.todos)
-        })
+      button.addEventListener('click', e => {
+        this.todos.splice(e.target.value, 1)
+        this.setState(this.todos)
+      })
     })
 
     this.$target.querySelectorAll('span').forEach(text => {
-        text.addEventListener('click', e => {
-            this.todos[e.target.dataset.index].isCompleted = true
-            this.setState(this.todos)
-        })
+      text.addEventListener('click', e => {
+        this.todos[e.target.dataset.index].isCompleted = true
+        this.setState(this.todos)
+      })
     })
   }
 

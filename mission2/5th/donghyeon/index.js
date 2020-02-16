@@ -10,4 +10,8 @@ let data = [
 ]
 
 const todoList = new TodoList(document.querySelector('#todo-list-1'), data)
-const todoInput = new TodoInput(document.querySelector('#input-todo'), todoList, data)
+const todoInput = new TodoInput(
+  document.querySelector('#input-todo'),
+  todoList,
+  data
+)
