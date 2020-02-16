@@ -1,4 +1,4 @@
-function App(data) {
+function App() {
 
   this.initialize = () => {
     this.data = getData();
@@ -16,27 +16,42 @@ function App(data) {
     this.todoInput = new TodoInput('todo-input', insertTodo);
   }
 
+  this.setState = (nextData) => {
+    try{
+      isValidData(nextData);
+    this.data = nextData;
+    this.todoList.setState(nextData);
+    }catch(error) {
+      console.log(error);
+    }
+    
+  }
+
+
   const insertTodo = (newTodoText) => {
-    this.data.push({
+    const nextData = this.data;
+    nextData.push({
       id: this.data.length + 1 + '',
       text: newTodoText,
       isCompleted: false,
     });
-    this.todoList.setState(this.data);
+    this.setState(nextData);
+    //this.todoList.setState(nextData);
   }
 
   const deleteTodo = (todoId) => {
-    this.data = this.data.filter(item => item.id !== todoId );
-    this.todoList.setState(this.data);
+    const nextData = this.data.filter(item => item.id !== todoId );
+    this.setState(nextData);
   }
 
   const setTodoCompleted = (todoId) => {
-    this.data.forEach(item => {
+    const nextData = this.data;
+    nextData.forEach(item => {
       if(item.id === todoId && !item.isCompleted){
         item.isCompleted = true;
       }
     })
-    this.todoList.setState(this.data);
+    this.setState(nextData);
   }
 
   this.initialize();

@@ -44,15 +44,15 @@ function TodoList(data, targetId, deleteTodo, setTodoCompleted) {
     
     const $todoTexts = document.querySelectorAll('.todo-text');
     $todoTexts.forEach(text => {
-      text.addEventListener('click', e => {
-        this.setTodoCompleted(e.target.dataset.id);
-      });
+      text.addEventListener('click', e => 
+        this.setTodoCompleted(e.target.dataset.id)
+      );
     });
 
     const $deleteButtons = document.querySelectorAll('.todo-delete-button');
     $deleteButtons.forEach(button => {
-      button.addEventListener(
-        'click', e => this.deleteTodo(e.target.value)
+      button.addEventListener('click', e => 
+        this.deleteTodo(e.target.value)
       );
     });
   }
