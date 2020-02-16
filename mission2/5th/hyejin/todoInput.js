@@ -6,6 +6,7 @@ function TodoInput(todoList, targetElement) {
         if (event.keyCode !== 13) return false;
         const nextData = this.todoList.data;
         nextData.push({
+            id: nextData.length + 1,
             text: event.target.value,
             isCompleted: false
         })

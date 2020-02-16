@@ -10,16 +10,22 @@ function TodoList(data, element) {
 
     this.render = function() {
         this.validate(data);
+        console.log("render data=" + data.length);
 
         let todoHtml = '';
         data.forEach(function(item){
-          todoHtml += '<div>' + (item.isCompleted ? '<s>' : '') + item.text +  (item.isCompleted ? '</s>' : '') + ' <button>del</button></div>';
+          todoHtml += '<div>' + (item.isCompleted ? '<s>' : '') + item.text +  (item.isCompleted ? '</s>' : '') 
+          + ' <button class="todoDelete" value=' + item.id  + '>del</button></div>';
         })
         element.innerHTML = todoHtml;   
     }
+
     this.setState  = function(nextData) {
         this.data = nextData;
+        console.log('nextData=' + nextData.length);
         this.render();
     }
+
     this.render();
+
 }
