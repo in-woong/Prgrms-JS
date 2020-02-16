@@ -1,6 +1,4 @@
-const $todolist = document.querySelector('#todo-list')
-const $todoAdd = document.querySelector('#todo-add')
-const $todoInput = document.querySelector('#todo-input')
+const $app = document.querySelector('#app')
 const data = [
   {
     text: 'JS 공부하기',
@@ -11,15 +9,4 @@ const data = [
     isCompleted: false,
   },
 ]
-const todoList = new TodoList($todolist, data)
-
-$todoInput.addEventListener('keypress', e => {
-  if (e.key === 'Enter') {
-    todoList.addItem($todoInput.value)
-    $todoInput.value = ''
-  }
-})
-$todoAdd.addEventListener('click', () => {
-  todoList.addItem($todoInput.value)
-  $todoInput.value = ''
-})
+const app = new App($app, data)
