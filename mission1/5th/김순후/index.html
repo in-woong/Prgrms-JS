@@ -36,76 +36,51 @@
         },
       ]
       // 이곳에서 코딩을 시작하세요!
-      function TodoList(data, el){
+      function TodoList(data, elementId){
         // new 를 안붙일 시 예외처리
-        if(this == window) throw new Error('error message');
+        if(this === window) throw new Error('error message');
         this.data = data;
         this.render = function(){
             try{
                 // 여러가지 함수 및 ES6 써보기..
-                document.getElementById(el).innerHTML = this.data.map(
-                  (d) => {
-                    return (d.isCompleted) ? `<strike>${d.text}</strike>` : `<div>${d.text}</div>`
-                  }
+                document.getElementById(elementId).innerHTML = this.data.map(
+                  (d) => (
+                     d.isCompleted ? `<strike>${d.text}</strike>` : `<div>${d.text}</div>`
+                  )
                 ).join('');
-
-                // 가독성 있게? 구현하기..
-                // let szHtml = '';
-                // this.data.forEach(function(d){
-                //   if(d.text){
-                //     if(d.isCompleted) szHtml += `<strike>${d.text}</strike>`;
-                //     else szHtml += `<div>${d.text}</div>`
-                //   }
-                // })
-                // document.getElementById(el).innerHTML = szHtml;
             }
             catch(e){
-                throw new Error('error message');
+                //throw new Error('error message');
             }
         }
         this.setStatus = function(data){
           this.data = data;
 
-          let selectTag = document.getElementById(el);
+          const selectTag = document.getElementById(elementId);
           // 밑에 아이들 배열
-          let tagChildren = selectTag.children;
-          let i = 0;
-          this.data.forEach((d)=>{
-            // 1. 태그 이름부터 비교하기
-            if(i < tagChildren.length){
-              if(d.isCompleted){
-                if(tagChildren[i].tagName != 'STRIKE'){
-                  let newElement = document.createElement("STRIKE");
-                  newElement.innerText = d.text;
-                  selectTag.replaceChild(newElement,tagChildren[i]);
-                }
-                else{
-                  if(tagChildren[i].innerText != d.text) tagChildren[i].innerText = d.text;
-                }
-              }
-              else{
-                if(tagChildren[i].tagName != 'DIV'){
-                  let newElement = document.createElement("DIV");
-                  newElement.innerText = d.text;
-                  selectTag.replaceChild(newElement,tagChildren[i]);
-                }
-                else{
-                  if(tagChildren[i].innerText != d.text) tagChildren[i].innerText = d.text;
-                }
-              }
-            }
-            else{
+          const tagChildren = selectTag.children;
+
+          const replaceHtml = (szTagName) => {
+            const newElement = document.createElement(szTagName);
+            newElement.innerText = d.text;
+            selectTag.replaceChild(newElement,tagChildren[i]);
+          }
+
+          this.data.forEach((d, i)=>{
+            if(i > tagChildren.length){
               let szTag = 'DIV';
               if(d.isCompleted) szTag = 'STRIKE';
               let newElement = document.createElement(szTag);
               newElement.innerText = d.text;
               selectTag.appendChild(newElement);
             }
-            i += 1;
+            else{
+              if(tagChildren[i].tagName != 'STRIKE'){
+                if(d.isCompleted) replaceHtml('STRIKE');
+              }
+              if(tagChildren[i].innerText != d.text) tagChildren[i].innerText = d.text;
+            }
           })
-          
-          
-          
         }
       }
 
