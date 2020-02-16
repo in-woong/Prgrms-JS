@@ -46,11 +46,8 @@ function App() {
 
   const setTodoCompleted = (todoId) => {
     const nextData = this.data;
-    nextData.forEach(item => {
-      if(item.id === todoId && !item.isCompleted){
-        item.isCompleted = true;
-      }
-    })
+    const index = nextData.findIndex(item => item.id === todoId);
+    nextData[index].isCompleted = true;
     this.setState(nextData);
   }
 
