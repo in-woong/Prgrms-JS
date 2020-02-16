@@ -20,10 +20,11 @@ function TodoList($target, todos) {
     $target.innerHTML = this.todos.reduce(
       (sum, current, index) => 
         sum +
-        `<div><span id="todo-${index}" data-index=${index}>${
-          current.isCompleted ? 
-          `<s>${current.text}</s>` : current.text
-        }
+        `<div>
+        <span id="todo-${index}" 
+              class="${current.isCompleted ? 'completed' : ''}"
+              data-index=${index}> 
+          ${current.text} 
         </span>
         <button id="delete-${index}" value=${index}>X</button>
         </div>`,
