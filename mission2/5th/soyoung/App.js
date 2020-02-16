@@ -8,7 +8,7 @@ function App($target, data) {
     this.$target.innerHTML = `
       <div>
         <div id="todo-input"></div>
-        <div id="todo-list"></div>
+        <ul id="todo-list"></ul>
         <div id="todo-count"></div>
       </div>
       `
@@ -46,17 +46,22 @@ function App($target, data) {
       this.setState(nextData)
       todoInput.resetInputValue()
     })
-    todoList.getTodoItems().forEach(item => {
-      item.addEventListener('click', e => {
+    $todoList.addEventListener('click', e => {
+      console.log(e.target)
+      if (e.target.nodeName === 'LI') {
         const clickedIndex = Number(e.target.id.split('-')[2])
         this.data[clickedIndex].isCompleted = !this.data[clickedIndex]
           .isCompleted
         this.render()
-      })
-    })
+      } else if (e.target.parentNode.nodeName === 'LI') {
+        // s 태그일때
+        const clickedIndex = Number(e.target.parentNode.id.split('-')[2])
+        this.data[clickedIndex].isCompleted = !this.data[clickedIndex]
+          .isCompleted
+        this.render()
+      }
 
-    todoList.getRemoveButtons().forEach(item => {
-      item.addEventListener('click', e => {
+      if (e.target.nodeName === 'BUTTON') {
         const clickedIndex = Number(e.target.id.split('-')[2])
         const nextData = this.data
           .filter(d => d.index !== clickedIndex)
@@ -65,7 +70,7 @@ function App($target, data) {
             index,
           }))
         this.setState(nextData)
-      })
+      }
     })
   }
   this.setState = function(nextData) {
