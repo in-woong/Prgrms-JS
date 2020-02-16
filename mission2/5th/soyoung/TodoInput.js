@@ -17,7 +17,7 @@ function TodoInput($target) {
   this.getInput = function() {
     return document.querySelector('#input')
   }
-  this.getAddBtn = function() {
+  this.getAddButton = function() {
     return document.querySelector('#add')
   }
   this.render()
