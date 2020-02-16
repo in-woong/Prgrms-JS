@@ -1,25 +1,14 @@
-function errorCheck(context, todos) {
-  if (context === window) {
-    throw new Error('new 키워드로 생성해주세요')
-  }
-  if (!Array.isArray(todos) || !todos) {
-    throw new Error('데이터 타입을 다시 확인해주세요')
-  }
-  for (const todo of todos) {
-    if (!todo.text || typeof todo.text !== 'string')
-      throw new Error(`객체의 내용을 다시 확인해주세요 -> todo:${todo.text}`)
-  }
-}
+import errorCheck from './errorCheck.js'
 
-export default function TodoList(todos, toggleTodo, removeTodo) {
-  errorCheck(this, todos)
+export default function TodoList(todos, toggleTodo, removeTodo, removeAllTodo) {
+  errorCheck.isInvalidInstance(this, TodoList)
   this.$todoList = document.getElementById('todo-list')
   this.todos = todos
   this.toggleTodo = toggleTodo
   this.removeTodo = removeTodo
+  this.removeAllTodo = removeAllTodo
 
   this.setState = function(nextData) {
-    errorCheck(this, todos)
     this.todos = nextData
     this.render()
   }
@@ -42,4 +31,5 @@ export default function TodoList(todos, toggleTodo, removeTodo) {
       .join('')}<ul>`
   }
   this.$todoList.addEventListener('click', this.onClick)
+  this.$todoList.addEventListener('removeAll', this.removeAllTodo)
 }

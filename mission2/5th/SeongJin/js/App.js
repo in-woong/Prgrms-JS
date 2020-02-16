@@ -34,15 +34,31 @@ function App() {
     this.render()
   }
 
-  new TodoInput(this.addTodo)
+  this.customEvent = e => {
+    this.todoList.$todoList.dispatchEvent(e)
+    //dispatchEvent 메서드는 그 이벤트의 타입이 메서드의 호출이전에 초기화되지 않았을 경우 에러처리..
+  }
+
+  this.removeAllTodo = () => {
+    this.todos.splice(0, this.todos.length)
+    this.render()
+  }
+
+  this.todoInput = new TodoInput(this.addTodo, this.customEvent)
+  this.todoList = new TodoList(
+    this.todos,
+    this.toggleTodo,
+    this.removeTodo,
+    this.removeAllTodo
+  )
   this.todoCount = new TodoCount(this.todos)
-  this.todoList = new TodoList(this.todos, this.toggleTodo, this.removeTodo)
-  this.todoList.render() // 초기에 2개의 데이터 그려주기 위함
 
   this.render = () => {
     this.todoList.setState(this.todos)
     this.todoCount.render()
   }
+
+  this.todoList.render()
 }
 
 new App()
