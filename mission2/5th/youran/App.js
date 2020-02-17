@@ -7,7 +7,7 @@ function App() {
     this.data = getData();
     try{
       this.todoList = new TodoList(
-        'this.data', 
+        this.data, 
         TODO_LIST_SELECTOR, 
         deleteTodo, 
         setTodoCompleted
@@ -34,7 +34,7 @@ function App() {
   const insertTodo = (newTodoText) => {
     const nextData = this.data;
     nextData.push({
-      id: this.data.length + 1 + '',
+      id: (this.data.length + 1).toString(),
       text: newTodoText,
       isCompleted: false,
     });
