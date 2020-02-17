@@ -22,8 +22,8 @@ function App() {
   this.setState = (nextData) => {
     try{
       isValidData(nextData);
-    this.data = nextData;
-    this.todoList.setState(nextData);
+      this.data = nextData;
+      this.todoList.setState(nextData);
     }catch(error) {
       console.log(error);
     }
