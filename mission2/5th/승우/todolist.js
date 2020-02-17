@@ -121,13 +121,3 @@ function App(id, appTitle) {
 
   this.initialize()
 }
-
-///////////////////////////
-
-// const checkId = id => {
-//   const domWithGivenId = document.querySelector('#' + id)
-
-//   if (domWithGivenId.length > 1 || domWithGivenId.length < 1) {
-//     throw new Error('ID 값에 해당하는 DOM 엘리먼트가 존재하지 않습니다.')
-//   }
-// }
