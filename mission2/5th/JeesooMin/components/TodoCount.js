@@ -1,16 +1,18 @@
 const isCountInteger = data => {
-  return data && isInteger(data)
+  return data && Number.isInteger(data) && data >= 0
 }
 
-function TodoCount($element, data) {
+function TodoCount(todoCountData) {
   if (!(this instanceof TodoCount)) {
     throw new Error('[TodoCount] new 키워드로 실행되지 않았습니다.')
   }
 
+  const { $element, data } = todoCountData
+
   if (
     !data ||
     !isCountInteger(data.totalCount) ||
-    !isCountInteger(data.totalCount)
+    !isCountInteger(data.completedCount)
   ) {
     throw new Error('[TodoCount] 필요한 데이터를 전달받지 못했습니다.')
   }
@@ -29,3 +31,5 @@ function TodoCount($element, data) {
 
   this.render()
 }
+
+export default TodoCount

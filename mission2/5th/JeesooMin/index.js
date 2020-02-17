@@ -1,2 +1,2 @@
-const $todoListApp = document.querySelector('#App')
-const todoApp = new App()
+import App from './components/App.js'
+new App()

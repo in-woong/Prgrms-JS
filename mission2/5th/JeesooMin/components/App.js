@@ -1,5 +1,9 @@
+import TodoCount from './TodoCount.js'
+import TodoInput from './TodoInput.js'
+import TodoList from './TodoList.js'
+
 function App() {
-  const data = [
+  this.data = [
     {
       text: 'JS 공부하기',
       isCompleted: true,
@@ -10,34 +14,32 @@ function App() {
     },
   ]
 
-  const $app = document.querySelector('#App')
-  const todoTitle = 'JS 스터디 TODO'
-  const todoCountId = 'todo-count'
-  const todoListId = 'todo-list'
-  const todoInputId = 'todo-input'
+  this.todoCountId = 'todo-count'
+  this.todoListId = 'todo-list'
+  this.todoInputId = 'todo-input'
 
   this.todoCount = null
   this.todoList = null
 
-  $app.innerHTML = `<h1 style="margin: 0;">${todoTitle}</h1>
-  <div id="${todoCountId}" style="margin: 15;"></div>
-  <div id="${todoListId}"></div>
-  <input id="${todoInputId}" type="text" placeholder="새로운 Todo를 입력하세요." style="margin-top: 10"/>`
-
-  const handleClickItem = item => {
-    data[item].isCompleted = !data[item].isCompleted
-    this.setState()
+  const handleClickItem = id => {
+    const updatedData = [...this.data]
+    const prevData = Object.assign(this.data[id])
+    updatedData[id] = {
+      text: prevData.text,
+      isCompleted: !prevData.isCompleted,
+    }
+    this.setState(updatedData)
   }
 
-  const handleDelete = item => {
-    data.splice(item, 1)
-    this.setState()
+  const handleDelete = id => {
+    const updatedData = [...this.data]
+    updatedData.splice(id, 1)
+    this.setState(updatedData)
   }
 
   const handleInput = item => {
-    const newItem = { text: item, isCompleted: false }
-    data.push(newItem)
-    this.setState()
+    const updatedData = [...this.data, { text: item, isCompleted: false }]
+    this.setState(updatedData)
   }
 
   // 질문용 코드입니다.
@@ -49,31 +51,53 @@ function App() {
   }.bind(this)
   */
 
-  this.setState = function() {
-    this.todoCount.setState({
+  this.getTodoCountData = function(data) {
+    return {
       totalCount: data.length,
       completedCount: data.filter(item => item.isCompleted).length,
-    })
-    this.todoList.setState(data)
+    }
+  }
+
+  this.setState = function(newData) {
+    try {
+      this.todoCount.setState(this.getTodoCountData(newData))
+      this.todoList.setState(newData)
+      this.data = newData
+    } catch (e) {
+      console.log(e)
+      return
+    }
   }
 
   this.render = function() {
-    const $todoCount = document.querySelector(`#${todoCountId}`)
-    const $todoList = document.querySelector(`#${todoListId}`)
-    const $todoInput = document.querySelector(`#${todoInputId}`)
+    const $todoCount = document.querySelector(`#${this.todoCountId}`)
+    const $todoList = document.querySelector(`#${this.todoListId}`)
+    const $todoInput = document.querySelector(`#${this.todoInputId}`)
 
-    this.todoCount = new TodoCount($todoCount, {
-      totalCount: data.length,
-      completedCount: data.filter(item => item.isCompleted).length,
-    })
+    try {
+      this.todoCount = new TodoCount({
+        $element: $todoCount,
+        data: this.getTodoCountData(this.data),
+      })
 
-    this.todoList = new TodoList($todoList, data, {
-      onClickItem: handleClickItem,
-      onDelete: handleDelete,
-    })
+      this.todoList = new TodoList({
+        $element: $todoList,
+        data: this.data,
+        onClickItem: handleClickItem,
+        onDelete: handleDelete,
+      })
 
-    new TodoInput($todoInput, handleInput)
+      new TodoInput({
+        $element: $todoInput,
+        onInput: handleInput,
+      })
+    } catch (e) {
+      console.log(e)
+      return
+    }
   }
 
   this.render()
 }
+
+export default App
