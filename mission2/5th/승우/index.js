@@ -74,14 +74,13 @@ var data3 = [
 //   console.log(e)
 // }
 
-// //정상 실행
-// try {
-//   const $target = document.getElementById('todo-list')
-//   const todo = new TodoList(data, $target)
-//   todo.setState(data3)
-// } catch (e) {
-//   console.log(e)
-// }
+//정상 실행
+try {
+  const $target = document.getElementById('todo-list')
+  const todo = new TodoList(data, $target)
+} catch (e) {
+  console.log(e)
+}
 
 // const myTodo = new TodoList(data1, 'my-todo')
 
@@ -114,10 +113,10 @@ var data3 = [
 // myTodo.setState(data3)
 
 //Mission 2 실행
-try {
-  const todoList = document.getElementById('todo-list')
-  const myApp = new App(todoList)
-  myApp.setState(data)
-} catch (e) {
-  console.log(e)
-}
+// try {
+//   const todoList = document.getElementById('todo-list')
+//   const myApp = new App(todoList)
+//   myApp.setState(data)
+// } catch (e) {
+//   console.log(e)
+// }
