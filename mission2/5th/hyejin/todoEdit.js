@@ -1,16 +1,23 @@
-function TodoEdit(todoList) {
-    this.todoList = todoList;
+function DeleteTodo(todoList) {
+    this.todoList = todoList
 
-    this.deleteTodo = function() {
-        const deleteButtons = document.querySelectorAll('.todoDelete')
-        deleteButtons.forEach(b => {
-            b.addEventListener('click', e => {
-                const nextData = todoList.data.filter(item => item.id != e.target.value)
-                console.log(nextData);
-                todoList.setState(nextData);
-            })
-        })
-    }
-    this.deleteTodo();
+    const deleteButtonList = document.getElementById('todo-list')
+    deleteButtonList.addEventListener('click', e => {
+        if (e.target.innerText === 'del') {
+            const nextData = this.todoList.data.filter(item => item.id != e.target.value)
+            this.todoList.setState(nextData)
+        }
+    })
+}
 
+function ToggleTodoComplete(todoList, onToggle) {
+    this.todoList = todoList
+    this.onToggle = onToggle
+    const todoTexts = document.querySelectorAll('.todos')
+    todoTexts.forEach(todoText => {
+                todoText.addEventListener('click', e => {
+                    const nextData = this.onToggle(this.todoList.data, e.target.value)
+                    this.todoList.setState(nextData)
+                })
+             })
 }

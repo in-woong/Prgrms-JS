@@ -1,17 +1,13 @@
-function TodoInput(todoList, targetElement) {
-    this.todoList = todoList;
-    this.targetElement = targetElement;
+function TodoInput(todoList, onEnter, targetElement) {
+    this.todoList = todoList
+    this.onEnter = onEnter
+    this.targetElement = targetElement
 
-    this.targetElement.addEventListener('keyup', event => {
-        if (event.keyCode !== 13) return false;
-        const nextData = this.todoList.data;
-        nextData.push({
-            id: nextData.length + 1,
-            text: event.target.value,
-            isCompleted: false
-        })
-        this.todoList.setState(nextData);
-        this.targetElement.value = '';
+    this.targetElement.addEventListener('keypress', e => {
+        if (e.key === 'Enter') {
+            this.onEnter(event.target.value)
+            this.targetElement.value = ''
+        }
     })
 
 }
