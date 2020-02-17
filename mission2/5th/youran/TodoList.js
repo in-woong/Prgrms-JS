@@ -6,14 +6,14 @@ function TodoList(data, targetId, deleteTodo, setTodoCompleted) {
   try{
     isValidData(data);
   }catch(error) {
-    showErrorMessage(targetId, error);
+    showErrorMessage(error);
     return;
   }  
 
   try{
     isValidTargetId(targetId);
   }catch(error) {
-    console.log(error);
+    showErrorMessage(error);
     return;
   }
     

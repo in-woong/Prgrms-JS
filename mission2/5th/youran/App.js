@@ -13,7 +13,7 @@ function App() {
         setTodoCompleted
         );
     }catch(error) {
-      showErrorMessage(TODO_LIST_SELECTOR, error);
+      showErrorMessage(error);
       return;
     }
     this.todoInput = new TodoInput(TODO_INPUT_SELECTOR, insertTodo);

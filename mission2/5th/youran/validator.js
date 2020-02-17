@@ -1,3 +1,5 @@
+const ERROR_MESSAGE_TARGET = '#error-message';
+
 function isValidTargetId(targetId) {
 
   if(!targetId || !typeof targetId === "string" || targetId.length < 1) {
@@ -5,7 +7,7 @@ function isValidTargetId(targetId) {
   }
 
   const $domWithGivenId = document.querySelectorAll(`#${targetId}`);
-  if(!$domWithGivenId || $domWithGivenId.length > 1 || $domWithGivenId.length < 1) {
+  if(!$domWithGivenId || $domWithGivenId.length !== 1) {
     throw new Error("target element를 찾을 수 없습니다.");
   }
 }
@@ -27,7 +29,7 @@ function isValidData(data) {
   }
 } 
 
-function showErrorMessage(targetId, error) {
-  document.querySelector(`#${targetId}`).innerHTML = `ERROR! ${error.message}`;
+function showErrorMessage(error, targetSelector = ERROR_MESSAGE_TARGET) {
+  document.querySelector(targetSelector).innerHTML = `ERROR! ${error.message}`;
   console.log(error);
 }
