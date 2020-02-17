@@ -1,8 +1,8 @@
-function TodoInput(targetId,insertTodo) {
+function TodoInput(selector,insertTodo) {
 
   const ENTER_KEYCODE = 13;
 
-  this.$todoInput = document.querySelector(`#${targetId}`);
+  this.$todoInput = document.querySelector(`${selector}`);
   this.insertTodo = insertTodo;
 
   this.$todoInput.addEventListener('keyup', e => {

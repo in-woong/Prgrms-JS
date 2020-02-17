@@ -1,4 +1,4 @@
-function TodoList(data, targetId, deleteTodo, setTodoCompleted) {
+function TodoList(data, selector, deleteTodo, setTodoCompleted) {
   if(!new.target) {
     throw new Error("new 생성자로 함수를 호출하세요.");
   }
@@ -11,7 +11,7 @@ function TodoList(data, targetId, deleteTodo, setTodoCompleted) {
   }  
 
   try{
-    isValidTargetId(targetId);
+    isValidSelector(selector);
   }catch(error) {
     showErrorMessage(error);
     return;
@@ -20,18 +20,18 @@ function TodoList(data, targetId, deleteTodo, setTodoCompleted) {
   const NULLTEXT = "할 일을 입력하세요!";
 
   this.data = data;
-  this.targetId = targetId;
+  this.selector = selector;
   this.deleteTodo = deleteTodo;
   this.setTodoCompleted = setTodoCompleted;
 
   this.render = function() {
     if(this.data.length === 0) {
-      document.querySelector(`#${this.targetId}`)
+      document.querySelector(`${this.selector}`)
       .innerHTML = NULLTEXT;
       return;
     }
 
-    document.querySelector(`#${this.targetId}`).innerHTML = this.data
+    document.querySelector(`${this.selector}`).innerHTML = this.data
       .map(
         (item) => 
         `<div class="todo-text" data-id=${item.id}>

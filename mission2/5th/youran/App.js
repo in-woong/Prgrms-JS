@@ -1,7 +1,7 @@
 function App() {
 
-  const TODO_LIST_SELECTOR = 'todo-list';
-  const TODO_INPUT_SELECTOR = 'todo-input';
+  const TODO_LIST_SELECTOR = '#todo-list';
+  const TODO_INPUT_SELECTOR = '#todo-input';
 
   this.initialize = () => {
     this.data = getData();

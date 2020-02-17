@@ -1,13 +1,13 @@
-const ERROR_MESSAGE_TARGET = '#error-message';
+const ERROR_MESSAGE_SELECTOR = '#error-message';
 
-function isValidTargetId(targetId) {
+function isValidSelector(selector) {
 
-  if(!targetId || !typeof targetId === "string" || targetId.length < 1) {
-    throw new Error("target id가 올바르지 않습니다.");
+  if(!selector || !typeof selector === "string" || selector.length < 1) {
+    throw new Error("selector가 올바르지 않습니다.");
   }
 
-  const $domWithGivenId = document.querySelectorAll(`#${targetId}`);
-  if(!$domWithGivenId || $domWithGivenId.length !== 1) {
+  const $domWithGivenSelector = document.querySelectorAll(`${selector}`);
+  if(!$domWithGivenSelector || $domWithGivenSelector.length !== 1) {
     throw new Error("target element를 찾을 수 없습니다.");
   }
 }
@@ -29,7 +29,7 @@ function isValidData(data) {
   }
 } 
 
-function showErrorMessage(error, targetSelector = ERROR_MESSAGE_TARGET) {
-  document.querySelector(targetSelector).innerHTML = `ERROR! ${error.message}`;
+function showErrorMessage(error, selector = ERROR_MESSAGE_SELECTOR) {
+  document.querySelector(selector).innerHTML = `ERROR! ${error.message}`;
   console.log(error);
 }
