@@ -20,18 +20,25 @@ function TodoList(data, selector, deleteTodo, setTodoCompleted) {
   const NULLTEXT = "할 일을 입력하세요!";
 
   this.data = data;
-  this.selector = selector;
+  this.$todoList = document.querySelector(selector);
   this.deleteTodo = deleteTodo;
   this.setTodoCompleted = setTodoCompleted;
 
+  this.$todoList.addEventListener('click', e => {
+    if(e.target.nodeName === 'BUTTON') {
+      this.deleteTodo(e.target.value);
+    }else if(e.target.dataset.id) {
+      this.setTodoCompleted(e.target.dataset.id);
+    }
+  });
+
   this.render = function() {
     if(this.data.length === 0) {
-      document.querySelector(`${this.selector}`)
-      .innerHTML = NULLTEXT;
+      this.$todoList.innerHTML = NULLTEXT;
       return;
     }
 
-    document.querySelector(`${this.selector}`).innerHTML = this.data
+    this.$todoList.innerHTML = this.data
       .map(
         (item) => 
         `<div class="todo-text" data-id=${item.id}>
@@ -41,20 +48,6 @@ function TodoList(data, selector, deleteTodo, setTodoCompleted) {
         <button class="todo-delete-button" value=${item.id}>삭제</button>
         </div>`)
       .join('');
-    
-    const $todoTexts = document.querySelectorAll('.todo-text');
-    $todoTexts.forEach(text => {
-      text.addEventListener('click', e => 
-        this.setTodoCompleted(e.target.dataset.id)
-      );
-    });
-
-    const $deleteButtons = document.querySelectorAll('.todo-delete-button');
-    $deleteButtons.forEach(button => {
-      button.addEventListener('click', e => 
-        this.deleteTodo(e.target.value)
-      );
-    });
   }
 
 this.setState = function(nextData) {
