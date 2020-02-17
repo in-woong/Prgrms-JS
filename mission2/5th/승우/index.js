@@ -75,12 +75,14 @@ var data3 = [
 // }
 
 //정상 실행
-try {
-  const $target = document.getElementById('todo-list')
-  const todo = new TodoList(data, $target)
-} catch (e) {
-  console.log(e)
-}
+// try {
+//   const $target = document.getElementById('todo-list')
+//   const todo = new TodoList(data, $target)
+// } catch (e) {
+//   console.log(e)
+// }
+
+const myApp = new App('wrapper', 'my first Todo App')
 
 // const myTodo = new TodoList(data1, 'my-todo')
 

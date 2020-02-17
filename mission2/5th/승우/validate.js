@@ -6,9 +6,9 @@ function checkData(data) {
     throw new Error('Data가 배열이 아닙니다')
   }
 
-  if (data.length <= 0) {
-    throw new Error('Data가 빈 배열입니다')
-  }
+  //   if (data.length <= 0) {
+  //     throw new Error('Data가 빈 배열입니다')
+  //   }
 
   for (const item of data) {
     if (
