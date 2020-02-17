@@ -11,7 +11,7 @@
 
     <title>Mission 2</title>
     <style>
-      #container {
+      #wrapper {
         width: 500px;
         border: 1px solid black;
         margin: 0 auto;
@@ -30,7 +30,7 @@
         font-size: 1.25rem;
       }
 
-      #container > div {
+      #wrapper > div {
         text-align: center;
       }
 
@@ -75,21 +75,13 @@
     </style>
   </head>
   <body>
-    <div id="container">
+    <div id="wrapper">
       <h1>todo</h1>
       <h2>What is your main focus today?</h2>
       <div>
         <input type="text" id="input-todo" />
       </div>
-      <ul id="todo-list">
-        <li>
-          Do JS
-          <span
-            ><i class="far fa-check-square"></i>
-            <i class="far fa-square not-show"></i
-          ></span>
-        </li>
-      </ul>
+      <ul id="todo-list"></ul>
     </div>
     <!-- <h1>my-todo</h1>
     <ul id="my-todo"></ul>

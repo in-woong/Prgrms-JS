@@ -44,44 +44,44 @@ var data3 = [
 
 //예외처리
 // data가 빈 문자열일 경우
-try {
-  const todo = new TodoList('', 'todo-list')
-  todo.render()
-} catch (e) {
-  console.log(e)
-}
+// try {
+//   const todo = new TodoList('', 'todo-list')
+//   todo.render()
+// } catch (e) {
+//   console.log(e)
+// }
 
-//data가 빈 배열일 경우
-try {
-  const todo = new TodoList([], 'todo-list')
-  todo.render()
-} catch (e) {
-  console.log(e)
-}
+// //data가 빈 배열일 경우
+// try {
+//   const todo = new TodoList([], 'todo-list')
+//   todo.render()
+// } catch (e) {
+//   console.log(e)
+// }
 
-//데이터가 객체일 경우
-try {
-  const todo = new TodoList({ text: 'JS 복습하기' }, 'todo-list')
-  todo.render()
-} catch (e) {
-  console.log(e)
-}
+// //데이터가 객체일 경우
+// try {
+//   const todo = new TodoList({ text: 'JS 복습하기' }, 'todo-list')
+//   todo.render()
+// } catch (e) {
+//   console.log(e)
+// }
 
-//new 키워드 없이 함수 호출하는 것
-try {
-  const newTodo = TodoList(data, 'todo-list')
-} catch (e) {
-  console.log(e)
-}
+// //new 키워드 없이 함수 호출하는 것
+// try {
+//   const newTodo = TodoList(data, 'todo-list')
+// } catch (e) {
+//   console.log(e)
+// }
 
-//정상 실행
-try {
-  const $target = document.getElementById('todo-list')
-  const todo = new TodoList(data, $target)
-  todo.setState(data3)
-} catch (e) {
-  console.log(e)
-}
+// //정상 실행
+// try {
+//   const $target = document.getElementById('todo-list')
+//   const todo = new TodoList(data, $target)
+//   todo.setState(data3)
+// } catch (e) {
+//   console.log(e)
+// }
 
 // const myTodo = new TodoList(data1, 'my-todo')
 
@@ -112,3 +112,12 @@ try {
 // ])
 
 // myTodo.setState(data3)
+
+//Mission 2 실행
+try {
+  const todoList = document.getElementById('todo-list')
+  const myApp = new App(todoList)
+  myApp.setState(data)
+} catch (e) {
+  console.log(e)
+}

@@ -1,4 +1,39 @@
 //todo.js
+//Data Validation
+function ValidateData(data, $target) {
+  this.checkData = function(data) {
+    if (!data) {
+      throw new Error('Data를 입력해주세요')
+    }
+    if (!Array.isArray(data)) {
+      throw new Error('Data가 배열이 아닙니다')
+    }
+
+    //처음 데이터를 빈배열로 초기화시키기 때문에 빈 배열을 체크하는 구문은 제거했습니다.
+    // if (data.length <= 0) {
+    //   throw new Error('Data가 빈 배열입니다')
+    // }
+
+    for (const item of data) {
+      if (
+        !item.text ||
+        !item.hasOwnProperty('isCompleted') ||
+        typeof item.text !== 'string'
+      ) {
+        throw new Error('Data안의 데이터들이 올바르지 않습니다.')
+      }
+    }
+  }
+
+  this.checkTarget = function($target) {
+    if ($target === null) {
+      throw new Error('해당 엘리먼트가 존재하지 않습니다')
+    }
+  }
+  this.checkData(data)
+  this.checkTarget($target)
+}
+
 //Data input을 위해 객체 생성자 함수 정의
 function TodoData(text) {
   this.text = text
@@ -11,8 +46,6 @@ function TodoData(text) {
 }
 
 function TodoList(data, $container) {
-  //data validation 함수
-
   this.data = data
   this.$container = $container
 
@@ -32,29 +65,24 @@ function TodoList(data, $container) {
     this.data = nextData
     this.render()
   }
+  this.render()
 }
 
 //App.js
-function App() {
-  //Data load function
-  //임시 데이터
-  const tempData = [
-    {
-      text: 'JS공부하기',
-      isCompleted: false,
-    },
-    {
-      text: 'JS복습',
-      isCompleted: true,
-    },
-  ]
-  // this.data = tempData
+function App($container) {
+  this.$container = $container
+  this.data = []
 
   this.initialize = function() {
     //데이터를 로드하는 로직 추가
-    //this.data = loadedData
-    this.data = []
-    this.$container = document.querySelector('#todo-list')
+    // loadData()
+
+    //data validation 함수
+    // checkData(data)
+    // checkTarget($container)
+    //질문정리중 :::: 데이터 체크 하는 함수들을 하나의 컴포넌트로 묶었는데
+    //혹시 이런 구문 괜찮은지?!
+    new ValidateData(data, $container)
 
     //todo 객체 생성
     this.todo = new TodoList(this.data, this.$container)
@@ -64,15 +92,10 @@ function App() {
     $inputTodo.addEventListener('keydown', e => {
       //입력된 키가 'enter'이고, 입력된 값이 비어있지 않으면
       if (e.keyCode === 13 && e.target.value !== '') {
-        //data 배열에 새로 입력된 데이터를 추가
-        // this.data.push({ text: e.target.value, isCompleted: false })
-        this.data.push(new TodoData(e.target.value))
+        // this.setState([{ text: e.target.value, isCompleted: false }])
+        this.setState([new TodoData(e.target.value)])
         //질문정리중 :::: 여기서 this.data를 콘솔로 찍으면 push한 newData만 TodoData라고 앞에 표시된다.
         //실행시엔 문제가 없는데 혹시 괜찮은 방법인지 궁금합니다.
-        //입력된 값으로 렌더링
-        this.todo.setState(this.data)
-        // this.setState(new TodoData(e.target.value))
-        console.log(this.data)
 
         //편의성을 위해
         e.target.value = ''
@@ -114,11 +137,16 @@ function App() {
     })
   }
 
-  //   //렌더링 함수
-  //   this.setState = newData => {
-  //     this.data.push(newData)
-  //     this.todo.setState(this.data)
-  //   }
+  //setState
+  this.setState = function(newData) {
+    //질문정리 ::::: 이곳에서는 $target을 검사하지 않고 newdata만 검사하고 싶은데 매개변수 하나 빠드려도 괜찮은가요??
+    new ValidateData(newData)
+    //this.data.push(newData) => newData에 객체가 들어갈경우
+    this.data = [...this.data, ...newData]
+    this.todo.setState(this.data)
+  }
+
+  //Data Load function
 
   //클릭된 list의 index를 가져온다
   this.getIndex = $target => {
@@ -129,5 +157,3 @@ function App() {
 
   this.initialize()
 }
-
-new App()
