@@ -6,7 +6,7 @@ function TodoList(data, targetId, deleteTodo, setTodoCompleted) {
   try{
     isValidData(data);
   }catch(error) {
-    console.log(error);
+    showErrorMessage(targetId, error);
     return;
   }  
 

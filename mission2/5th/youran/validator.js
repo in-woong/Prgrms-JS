@@ -26,3 +26,8 @@ function isValidData(data) {
     throw new Error("사용 가능한 데이터가 아닙니다.");
   }
 } 
+
+function showErrorMessage(targetId, error) {
+  document.querySelector(`#${targetId}`).innerHTML = `ERROR! ${error.message}`;
+  console.log(error);
+}

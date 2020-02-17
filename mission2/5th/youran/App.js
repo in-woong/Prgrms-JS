@@ -1,19 +1,22 @@
 function App() {
 
+  const TODO_LIST_SELECTOR = 'todo-list';
+  const TODO_INPUT_SELECTOR = 'todo-input';
+
   this.initialize = () => {
     this.data = getData();
     try{
       this.todoList = new TodoList(
-        this.data, 
-        'todo-list', 
+        'this.data', 
+        TODO_LIST_SELECTOR, 
         deleteTodo, 
         setTodoCompleted
         );
     }catch(error) {
-      console.log(error);
+      showErrorMessage(TODO_LIST_SELECTOR, error);
       return;
     }
-    this.todoInput = new TodoInput('todo-input', insertTodo);
+    this.todoInput = new TodoInput(TODO_INPUT_SELECTOR, insertTodo);
   }
 
   this.setState = (nextData) => {
