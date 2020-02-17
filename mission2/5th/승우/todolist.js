@@ -21,8 +21,8 @@ function TodoList(data, $container) {
     this.$container.innerHTML = this.data
       .map(d =>
         d.isCompleted
-          ? `<li class="checked">${d.text}<span class="icon-check"></span></il>`
-          : `<li>${d.text}<span class="icon-check-empty"></span></li>`
+          ? `<li class="checked">${d.text}<span><i class="far fa-check-square"></i><i class="far fa-square not-show"></i></span></li>`
+          : `<li>${d.text}<span><i class="far fa-check-square not-show"></i><i class="far fa-square"></i></span></li>`
       )
       .join('')
   }
@@ -32,7 +32,6 @@ function TodoList(data, $container) {
     this.data = nextData
     this.render()
   }
-  this.render()
 }
 
 //App.js
@@ -49,14 +48,16 @@ function App() {
       isCompleted: true,
     },
   ]
-  this.data = tempData
-  this.$container = document.querySelector('#todo-list')
-
-  //todo 객체 생성
-  this.todo = new TodoList(this.data, this.$container)
+  // this.data = tempData
 
   this.initialize = function() {
     //데이터를 로드하는 로직 추가
+    //this.data = loadedData
+    this.data = []
+    this.$container = document.querySelector('#todo-list')
+
+    //todo 객체 생성
+    this.todo = new TodoList(this.data, this.$container)
 
     //input Event
     const $inputTodo = document.getElementById('input-todo')
@@ -66,7 +67,8 @@ function App() {
         //data 배열에 새로 입력된 데이터를 추가
         // this.data.push({ text: e.target.value, isCompleted: false })
         this.data.push(new TodoData(e.target.value))
-        //질문1 여기서 this.data를 콘솔로 찍으면 push한 newData만 TodoData라고 앞에 표시된다.
+        //질문정리중 :::: 여기서 this.data를 콘솔로 찍으면 push한 newData만 TodoData라고 앞에 표시된다.
+        //실행시엔 문제가 없는데 혹시 괜찮은 방법인지 궁금합니다.
         //입력된 값으로 렌더링
         this.todo.setState(this.data)
         // this.setState(new TodoData(e.target.value))
@@ -81,20 +83,33 @@ function App() {
     //List Click Event
     //새로 추가되는 Element에도 이벤트를 추가하기 위해 이벤트 위임을 사용
     this.$container.addEventListener('click', e => {
-      if (e.target.nodeName === 'SPAN') {
-        //check된거는 check 해제, check 안된거는 check
-        //this.data의 isComleted값을 갱신해주는 함수
-        const checkValue = this.toggleComplete(e.target.parentNode)
-        //checkValue가 true라면 체크가 된것이므로 박스를 체크하고, 삭선을 긋는다.
-        if (checkValue) {
-          e.target.className = 'icon-check'
-          e.target.parentNode.className = 'checked'
-        } else {
-          e.target.className = 'icon-check-empty'
-          e.target.parentNode.className = ''
-        }
+      if (e.target.nodeName === 'I') {
+        //index를 통해 data[index]에 접근, isCompleted변수의 값을 체크한 다음 체크, 혹은 체크 해제
+        const i = e.target
+        //i의 리스트
+        const iList = e.target.parentNode.children
+        //i->span->li
+        const li = e.target.parentNode.parentNode
+        const index = this.getIndex(li)
 
-        console.log(this.data)
+        //index를 통해 접근해서 this.data[index]의 isCompleted의 값을 체크
+        //질문 정리중 ::::: 애로우 함수를 사용해서 this를 사용할 수 없기에 e.target을 사용하고, e.target의 sibling에 접근하기위해
+        //children 배열을 이용해 접근했는데 코드가 너무 깔끔하지 못한 것 같습니다.
+        //그리고 fontawesome을 이용하고 여기에 Class를 주어 check된 상태와 아닌 상태를 구분했는데
+        //멘토님들은 어떻게 하셨을지
+        //혹시 더 깔끔하고 좋은 방법이 있을지 궁금합니다.
+        if (this.todo.data[index].isCompleted) {
+          //isCompleted가 'true'일 경우
+          li.className = ''
+          this.todo.data[index].isCompleted = false
+          e.target.classList.add('not-show')
+          iList[1].classList.remove('not-show')
+        } else {
+          li.className = 'checked'
+          this.todo.data[index].isCompleted = true
+          e.target.classList.add('not-show')
+          iList[0].classList.remove('not-show')
+        }
       }
     })
   }
@@ -105,15 +120,11 @@ function App() {
   //     this.todo.setState(this.data)
   //   }
 
-  //isCompleted 갱신하는 함수
-  //클릭된 list의 index를 가져와서 data배열에 접근후 인덱스에 해당하는 객체에 접근후 isCompleted값을 바꾼다.
-  this.toggleComplete = $target => {
+  //클릭된 list의 index를 가져온다
+  this.getIndex = $target => {
     const parent = $target.parentNode
     const index = Array.prototype.indexOf.call(parent.children, $target)
-    const currentData = this.data[index]
-    //true는 false로 false는 true로
-    currentData.isCompleted = !currentData.isCompleted
-    return currentData.isCompleted
+    return index
   }
 
   this.initialize()
