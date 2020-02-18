@@ -2,7 +2,8 @@ function TodoInput(data, todoList, todoCount){
     this.data = data;
     this.todoList = todoList;
     this.todoCount = todoCount;
-    document.getElementById('addBtn').addEventListener('click', () => {
+
+    this.addData = () => {
         const inputValue = document.getElementById('input').value;
         if(!inputValue) alert('값이 비어있습니다!');
         else{
@@ -17,6 +18,13 @@ function TodoInput(data, todoList, todoCount){
 
             window.localStorage.setItem('key', JSON.stringify(this.data));
         }
+    }
+    document.getElementById('addBtn').addEventListener('click', () => {
+        this.addData();
+    });
+
+    document.getElementById('input').addEventListener('keypress', (e) => {
+        if(e.which == 13) this.addData();
     });
 
     this.setStatus = function(data){
