@@ -31,7 +31,7 @@ const checkCustomType = (type, target) => {
   return true
 }
 
-const isAllTodo = todoList => {
+const isAllTodoType = todoList => {
   const todoType = { id: 'number', text: 'string', isCompleted: 'boolean' }
   for (const todo of todoList) {
     if (!checkCustomType(todoType, todo)) return false
@@ -44,7 +44,7 @@ const validateData = data => {
   if (!isArray(data))
     throw new Error(`데이터가 Array가 아닙니다. data: ${typeof data}`)
 
-  if (!isAllTodo(data))
+  if (!isAllTodoType(data))
     throw new Error(`데이터 배열에 TODO 입이 아닌 원소가 있습니다. `)
 }
 
