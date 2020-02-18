@@ -1,15 +1,13 @@
-//정적 버전
-
+//App.js
 function App(selector, title) {
   if (!(this instanceof App)) {
     throw new Error('New 키워드 없이 실행했습니다')
   }
 
   checkSelector(selector)
-
   this.$target = document.querySelector(selector)
 
-  //load Data
+  //Temp Data
   const tempData = [
     {
       text: 'JS 복습하기',
@@ -34,8 +32,9 @@ function App(selector, title) {
     const todoContainer = 'todo-container'
     const countContainer = 'count-container'
     const removeContainer = 'remove-container'
+
     this.$target.innerHTML = `<h1 class="title">${title}</h1><div class=${todoInput}></div><ul class=${todoContainer}></ul>
-    <div class=${countContainer}></div><div class=${removeContainer}></div>`
+    <div class=${countContainer}></div><div class=${removeContainer}><button class="removeAllBtn">remove all</button></div>`
 
     //todoInput
     this.myTodoInput = new TodoInput('.' + todoInput, handleInput)
@@ -48,6 +47,17 @@ function App(selector, title) {
 
     //todoCount
     this.myTodoCount = new TodoCount('.' + countContainer, this.data)
+
+    //removeAllBtn
+    const removeAllBtn = document.querySelector('.removeAllBtn')
+
+    //$target은 커스텀 "awesome" 이벤트를 리슨
+    this.$target.addEventListener('removeAll', removeAllFnc)
+
+    //사용자가 입력한대로, $target 내의 removeAllBtn은 이벤트를 디스패치/트리거하여 시작점으로 사용합니다.
+    removeAllBtn.addEventListener('click', e =>
+      e.target.dispatchEvent(removeAllEvent)
+    )
   } //End initialize
 
   //setState
@@ -74,6 +84,21 @@ function App(selector, title) {
   const handleToggle = index => {
     //Data Array에서 해당 item isCompleted 토글
     this.data[index].isCompleted = !this.data[index].isCompleted
+    this.setState(this.data)
+  }
+
+  //Remove All Event
+  //엘리먼트는 아직 생성되지 않은 이벤트를 리슨할 수 있습니다.
+  const removeAllEvent = new CustomEvent('removeAll', {
+    bubbles: true,
+    // detail: { data: [] },
+  })
+
+  //RemoveAll Function
+  const removeAllFnc = e => {
+    // this.data = e.detail.data
+    // this.data.splice(0, this.data.length)
+    this.data.length = 0
     this.setState(this.data)
   }
 
