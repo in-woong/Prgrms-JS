@@ -76,9 +76,7 @@ export default class TodoList extends Component {
   sendCount() {
     this.emit('@setCount', {
       totalCount: this.data.length,
-      completedCount: this.data.reduce((acc, todo) => {
-        return acc + todo.isCompleted
-      }, 0),
+      completedCount: this.data.filter(data => data.isCompleted).length,
     })
   }
 
