@@ -11,7 +11,7 @@ export default class TodoList extends Component {
 
   init() {
     this.bindEvents()
-    this.render(this.markup())
+    this.render(this.getMarkupString())
   }
 
   validate(data, $element) {
@@ -87,10 +87,10 @@ export default class TodoList extends Component {
     validateData(nextData)
     this.data = nextData
     this.sendCount()
-    this.render(this.markup())
+    this.render(this.getMarkupString())
   }
 
-  markup() {
+  getMarkupString() {
     return `<ul>${this.data
       .map(data =>
         data.isCompleted

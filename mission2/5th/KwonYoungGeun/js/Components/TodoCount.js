@@ -10,7 +10,7 @@ export default class TodoCount extends Component {
   }
 
   init() {
-    this.render(this.markup())
+    this.render(this.getMarkupString())
   }
 
   validate($element) {
@@ -20,10 +20,10 @@ export default class TodoCount extends Component {
   setState({ totalCount, completedCount }) {
     this.totalCount = totalCount
     this.completedCount = completedCount
-    this.render(this.markup())
+    this.render(this.getMarkupString())
   }
 
-  markup() {
+  getMarkupString() {
     return `<div>전체 TODO 수: ${this.totalCount}</div><div>완료 TODO 수: ${this.completedCount}</div>`
   }
 }
