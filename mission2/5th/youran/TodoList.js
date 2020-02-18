@@ -1,60 +1,64 @@
-function TodoList(data, selector, deleteTodo, setTodoCompleted) {
-  if(!new.target) {
-    throw new Error("new 생성자로 함수를 호출하세요.");
+function TodoList(todoListData) {
+  if (!new.target) {
+    throw new Error('new 생성자로 함수를 호출하세요.')
   }
 
-  try{
-    isValidData(data);
-  }catch(error) {
-    showErrorMessage(error);
-    return;
-  }  
+  const NULLTEXT = '할 일을 입력하세요!'
 
-  try{
-    isValidSelector(selector);
-  }catch(error) {
-    showErrorMessage(error);
-    return;
+  this.data = todoListData.data
+  this.$todoList = document.querySelector(todoListData.selector)
+  this.onDeleteTodo = todoListData.onDeleteTodo
+  this.onSetTodoCompleted = todoListData.onSetTodoCompleted
+  this.onRemoveAllTodo = todoListData.onRemoveAllTodo
+
+  try {
+    isValidData(this.data)
+  } catch (error) {
+    showErrorMessage(error)
+    return
   }
-    
-  const NULLTEXT = "할 일을 입력하세요!";
-
-  this.data = data;
-  this.$todoList = document.querySelector(selector);
-  this.deleteTodo = deleteTodo;
-  this.setTodoCompleted = setTodoCompleted;
-
+  /*
+  try {
+    isValidSelector(selector)
+  } catch (error) {
+    showErrorMessage(error)
+    return
+  }
+*/
   this.$todoList.addEventListener('click', e => {
-    if(e.target.nodeName === 'BUTTON') {
-      this.deleteTodo(e.target.value);
-    }else if(e.target.dataset.id) {
-      this.setTodoCompleted(e.target.dataset.id);
+    if (e.target.nodeName === 'BUTTON') {
+      this.onDeleteTodo(e.target.value)
+    } else if (e.target.dataset.id) {
+      this.onSetTodoCompleted(e.target.dataset.id)
     }
-  });
+  })
+
+  this.$todoList.addEventListener('removeAll', e => {
+    this.onRemoveAllTodo()
+  })
 
   this.render = function() {
-    if(this.data.length === 0) {
-      this.$todoList.innerHTML = NULLTEXT;
-      return;
+    if (this.data.length === 0) {
+      this.$todoList.innerHTML = NULLTEXT
+      return
     }
 
     this.$todoList.innerHTML = this.data
       .map(
-        (item) => 
-        `<div class="todo-text" data-id=${item.id}>
-        ${item.isCompleted
-        ? `<s>${item.text}</s>` 
-        : item.text}
+        item =>
+          `<div class="todo-text" data-id=${item.id}>
+        ${item.isCompleted ? `<s>${item.text}</s>` : item.text}
         <button class="todo-delete-button" value=${item.id}>삭제</button>
-        </div>`)
-      .join('');
+        </div>`
+      )
+      .join('')
   }
 
-this.setState = function(nextData) {
-  isValidData(nextData);
-  this.data = nextData;
-  this.render();
-}
+  this.setState = function(nextData) {
+    isValidData(nextData)
+    this.data = nextData
+    this.render()
+  }
 
-  this.render();
+  this.render()
 }

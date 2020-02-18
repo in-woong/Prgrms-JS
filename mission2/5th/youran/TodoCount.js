@@ -1,15 +1,16 @@
-function TodoCount(todoCountNumbers, selector) {
-  this.$todoCount = document.querySelector(selector)
-  this.todoCountNumbers = todoCountNumbers
+function TodoCount(todoCountData) {
+  this.$todoCount = document.querySelector(todoCountData.selector)
+  this.data = todoCountData.data
 
   this.render = () => {
     this.$todoCount.innerHTML = `
-      완료: ${this.todoCountNumbers.completed}/${this.todoCountNumbers.total}
+      완료: ${this.data.completedCount}
+      /${this.data.totalCount}
     `
   }
 
   this.setState = nextData => {
-    this.todoCountNumbers = nextData
+    this.data = nextData
     this.render()
   }
 

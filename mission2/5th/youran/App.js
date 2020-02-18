@@ -2,18 +2,28 @@ function App() {
   const TODO_LIST_SELECTOR = '#todo-list'
   const TODO_INPUT_SELECTOR = '#todo-input'
   const TODO_COUNT_SELECTOR = '#todo-count'
+  const REMOVE_ALL_SELECTOR = '#remove-all-button'
 
   this.initialize = () => {
     this.data = getData()
     try {
-      this.todoList = new TodoList(
-        this.data,
-        TODO_LIST_SELECTOR,
-        deleteTodo,
-        setTodoCompleted
-      )
-      this.todoCount = new TodoCount(this.getTodoCount(), TODO_COUNT_SELECTOR)
-      this.todoInput = new TodoInput(TODO_INPUT_SELECTOR, insertTodo)
+      this.todoList = new TodoList({
+        data: this.data,
+        selector: TODO_LIST_SELECTOR,
+        onDeleteTodo: deleteTodo,
+        onSetTodoCompleted: setTodoCompleted,
+        onRemoveAllTodo: removeAllTodo,
+      })
+      this.todoCount = new TodoCount({
+        data: this.getTodoCount(),
+        selector: TODO_COUNT_SELECTOR,
+      })
+      this.todoInput = new TodoInput({
+        inputSelector: TODO_INPUT_SELECTOR,
+        removeAllSelector: REMOVE_ALL_SELECTOR,
+        onInsertTodo: insertTodo,
+        eventTrigger: eventTrigger,
+      })
     } catch (error) {
       showErrorMessage(error)
       return
@@ -33,8 +43,8 @@ function App() {
 
   this.getTodoCount = () => {
     return {
-      total: this.data.length,
-      completed: this.data.filter(item => item.isCompleted).length,
+      totalCount: this.data.length,
+      completedCount: this.data.filter(item => item.isCompleted).length,
     }
   }
 
@@ -59,6 +69,10 @@ function App() {
     nextData[index].isCompleted = true
     this.setState(nextData)
   }
+
+  const removeAllTodo = () => this.setState([])
+
+  const eventTrigger = event => this.todoList.$todoList.dispatchEvent(event)
 
   this.initialize()
 }
