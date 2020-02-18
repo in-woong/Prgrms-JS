@@ -24,5 +24,6 @@ function TodoInput(todoInputData) {
   this.$removeAllButton.addEventListener('click', e => {
     const removeAllEvent = new CustomEvent('removeAll')
     this.eventTrigger(removeAllEvent)
+    this.$todoInput.value = ''
   })
 }
