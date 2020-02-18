@@ -1,6 +1,12 @@
-class App extends Component {
+import Component from './Component.js'
+import TodoInput from './TodoInput.js'
+import TodoList from './TodoList.js'
+import TodoCount from './TodoCount.js'
+import { $, validateElement } from '../Utils/index.js'
+export default class App extends Component {
   constructor(selector) {
     super($(selector))
+
     this.validate(this.$element)
     this.todoInput = new TodoInput($(`${selector}>.input-container`))
     this.todoList = new TodoList($(`${selector}>.todo-list-container`))

@@ -1,7 +1,10 @@
-// 컴포넌트 내 자식 요소(children)  index
+// 컴포넌트 내 자식 요소(children) 인덱스
+import Component from './Component.js'
+import { $, validateElement } from '../Utils/index.js'
+
 const constants = { INPUT: 0, SUBMIT: 1, REMOVE_ALL: 2 }
 
-class TodoInput extends Component {
+export default class TodoInput extends Component {
   constructor($element) {
     super($element)
     this.$input = this.$element.children[constants.INPUT]

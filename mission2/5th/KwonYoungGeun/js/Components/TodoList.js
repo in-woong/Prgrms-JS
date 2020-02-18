@@ -1,4 +1,7 @@
-class TodoList extends Component {
+import Component from './Component.js'
+import { fetchTodos, postTodo } from '../api/index.js'
+import { $, makeID, validateElement, validateData } from '../Utils/index.js'
+export default class TodoList extends Component {
   constructor($element) {
     super($element)
     this.data = fetchTodos()
@@ -21,6 +24,7 @@ class TodoList extends Component {
   }
 
   onClick(e) {
+    console.log(e.target)
     const logics = {
       'remove-button': id => this.removeTodo(id),
       'todo-title': id => this.toggle(id),

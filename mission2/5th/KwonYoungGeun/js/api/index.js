@@ -12,3 +12,5 @@ const fetchTodos = () => {
 const postTodo = data => {
   localStorage.setItem('todos', JSON.stringify(data))
 }
+
+export { fetchTodos, postTodo }

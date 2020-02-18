@@ -33,7 +33,7 @@ const checkCustomType = (type, target) => {
 
 const isAllTodo = todoList => {
   const todoType = { id: 'number', text: 'string', isCompleted: 'boolean' }
-  for (todo of todoList) {
+  for (const todo of todoList) {
     if (!checkCustomType(todoType, todo)) return false
   }
 
@@ -52,3 +52,5 @@ const validateElement = $element => {
   if (!isElement($element))
     throw new Error(`정상적인 요소가 아닙니다. element: ${$element}`)
 }
+
+export { $, makeID, validateData, validateElement }
