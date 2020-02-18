@@ -24,7 +24,6 @@ export default class TodoList extends Component {
   }
 
   onClick(e) {
-    console.log(e.target)
     const logics = {
       'remove-button': id => this.removeTodo(id),
       'todo-title': id => this.toggle(id),
@@ -32,7 +31,7 @@ export default class TodoList extends Component {
       'default': () => {},
     }
 
-    const id = Number(e.target.parentNode.getAttribute('data-id'))
+    const id = parseInt(e.target.parentNode.getAttribute('data-id'))
     const logic = logics[e.target.className] || logics['default']
     logic(id)
   }
