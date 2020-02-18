@@ -21,7 +21,7 @@ const isElement = target => {
 const checkCustomType = (type, target) => {
   if (!isObject(target) || !isObject(type)) return false
 
-  for (let property in type) {
+  for (const property in type) {
     if (
       !target.hasOwnProperty(property) ||
       typeof target[property] !== type[property]
