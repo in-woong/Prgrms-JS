@@ -1,0 +1,95 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+main {
+  width: 500px;
+  margin: 0 auto;
+  border: 1px solid black;
+}
+section {
+  width: 100%;
+}
+
+section .title {
+  width: 100%;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+section .todo-input {
+  width: 80%;
+  margin: 0 auto;
+  margin-bottom: 2rem;
+}
+
+section .todo-input > input {
+  width: 100%;
+  border: none;
+  outline: none;
+  padding: 0.5rem;
+  border-bottom: 1px solid black;
+  text-align: center;
+  overflow: hidden;
+  font-size: 1.25rem;
+}
+
+section .todo-container {
+  text-align: center;
+  list-style: none;
+  padding: 0;
+}
+
+section .todo-container > li {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  width: 80%;
+  position: relative;
+}
+
+section .todo-container > li > button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: inline-block;
+  width: 35px;
+  outline: none;
+}
+
+section .todo-container > li .toggleBtn {
+  color: white;
+  margin-left: 0.5rem;
+  border: 1px solid;
+  background-color: #f2c500;
+  border-color: #f2c500;
+  -webkit-box-shadow: 0 3px 0 #b19001;
+  box-shadow: 0 3px 0 #b19001;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  right: 40px;
+}
+
+section .todo-container > li .toggleBtn:hover {
+  background-color: #e3ba02;
+}
+
+.deleteBtn {
+  color: white;
+  margin-left: 0.5rem;
+  border: 1px solid;
+  background-color: #237fbc;
+  border-color: #237fbc;
+  -webkit-box-shadow: 0 3px 0 #1a5c87;
+  box-shadow: 0 3px 0 #1a5c87;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.deleteBtn:hover {
+  background-color: #166ea8;
+}

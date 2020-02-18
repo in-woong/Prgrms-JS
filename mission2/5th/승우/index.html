@@ -4,97 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
-    />
-
+    <link rel="stylesheet" href="style.css" />
     <title>Mission 2</title>
-    <style>
-      #wrapper {
-        width: 500px;
-        border: 1px solid black;
-        margin: 0 auto;
-        padding: 1rem;
-      }
-
-      h1 {
-        font-size: 2rem;
-        text-transform: uppercase;
-        text-align: center;
-      }
-
-      h2 {
-        text-align: center;
-        text-transform: uppercase;
-        font-size: 1.25rem;
-      }
-
-      #wrapper > div {
-        text-align: center;
-      }
-
-      input[type='text'] {
-        width: 80%;
-        border: none;
-        border-bottom: 1px solid black;
-        outline: none;
-        text-align: center;
-        font-size: 1.25rem;
-      }
-
-      ul {
-        padding: 0;
-        list-style: none;
-        text-align: center;
-      }
-      ul > li {
-        font-weight: bold;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 0.5rem;
-      }
-
-      ul > li.finished > span {
-        text-decoration: line-through;
-      }
-
-      ul > li > i {
-        margin-left: 10px;
-        cursor: pointer;
-        font-size: 1.25rem;
-      }
-
-      /* Li의 클래스에 따라 특정 icon이 보이게 만듦 */
-
-      ul > li > i.fa-check-square {
-        display: none;
-      }
-      ul > li.finished > i.fa-square {
-        display: none;
-      }
-      ul > li.finished > i.fa-check-square {
-        display: block;
-      }
-
-      ul > li > i:hover {
-        color: blue;
-      }
-    </style>
   </head>
   <body>
-    <div id="wrapper_ex">
-      <!-- <h1>todo</h1>
-      <h2>What is your main focus today?</h2>
-      <div class="insertInput"></div>
-      <ul class="todo-list"></ul> -->
-    </div>
-    <script src="./validate.js"></script>
-    <script src="./todolist.js"></script>
-    <script src="./index.js"></script>
-    <script>
-      // 이곳에서 코딩을 시작하세요!
-    </script>
+    <main>
+      <section id="myApp"></section>
+    </main>
+    <script src="Validate.js"></script>
+    <script src="TodoInput.js"></script>
+    <script src="TodoList.js"></script>
+    <script src="TodoCount.js"></script>
+    <script src="App.js"></script>
+    <script src="index.js"></script>
   </body>
 </html>

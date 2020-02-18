@@ -20,7 +20,8 @@ function checkData(data) {
     }
   }
 }
-function checkTarget($target) {
+function checkSelector(selector) {
+  const $target = document.querySelector(selector)
   if ($target === null) {
     throw new Error('해당 엘리먼트가 존재하지 않습니다')
   }
