@@ -7,9 +7,10 @@ const constants = { INPUT: 0, SUBMIT: 1, REMOVE_ALL: 2 }
 export default class TodoInput extends Component {
   constructor($element) {
     super($element)
-    this.$input = this.$element.children[constants.INPUT]
-    this.$submit = this.$element.children[constants.SUBMIT]
-    this.$removeAll = this.$element.children[constants.REMOVE_ALL]
+    console.log(this.$element.className)
+    this.$input = $(`.${this.$element.className} > .todo-input`)
+    this.$submit = $(`.${this.$element.className} > .submit-button`)
+    this.$removeAll = $(`.${this.$element.className} > .remove-all-button`)
     this.validate([this.$element, this.$input, this.$submit, this.$removeAll])
     this.init()
   }
