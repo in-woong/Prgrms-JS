@@ -1,4 +1,4 @@
-const ERROR_MESSAGE_SELECTOR = '#error-message'
+import { SELECTOR } from './constant.js'
 
 export function isValidSelector(selector) {
   if (!selector || !typeof selector === 'string' || selector.length < 1) {
@@ -27,7 +27,10 @@ export function isValidData(data) {
   }
 }
 
-export function showErrorMessage(error, selector = ERROR_MESSAGE_SELECTOR) {
+export function showErrorMessage(
+  error,
+  selector = SELECTOR.ERROR_MESSAGE_SELECTOR
+) {
   document.querySelector(selector).innerHTML = `ERROR! ${error.message}`
   console.log(error)
 }

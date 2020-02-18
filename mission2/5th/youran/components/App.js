@@ -2,33 +2,27 @@ import TodoList from './TodoList.js'
 import TodoInput from './TodoInput.js'
 import TodoCount from './TodoCount.js'
 import { isValidData, showErrorMessage } from '../util/validator.js'
+import { SELECTOR, STORAGE_KEY } from '../util/constant.js'
 
 export default function App() {
-  const TODO_LIST_SELECTOR = '#todo-list'
-  const TODO_INPUT_SELECTOR = '#todo-input'
-  const TODO_COUNT_SELECTOR = '#todo-count'
-  const REMOVE_ALL_SELECTOR = '#remove-all-button'
-
-  const STORAGE_KEY = 'todoData'
-
   this.initialize = () => {
     const savedData = getData(STORAGE_KEY)
     this.data = savedData ? savedData : []
     try {
       this.todoList = new TodoList({
         data: this.data,
-        selector: TODO_LIST_SELECTOR,
+        selector: SELECTOR.TODO_LIST_SELECTOR,
         onDeleteTodo: deleteTodo,
         onSetTodoCompleted: setTodoCompleted,
         onRemoveAllTodo: removeAllTodo,
       })
       this.todoCount = new TodoCount({
         data: this.getTodoCount(),
-        selector: TODO_COUNT_SELECTOR,
+        selector: SELECTOR.TODO_COUNT_SELECTOR,
       })
       this.todoInput = new TodoInput({
-        inputSelector: TODO_INPUT_SELECTOR,
-        removeAllSelector: REMOVE_ALL_SELECTOR,
+        inputSelector: SELECTOR.TODO_INPUT_SELECTOR,
+        removeAllSelector: SELECTOR.REMOVE_ALL_SELECTOR,
         onInsertTodo: insertTodo,
         eventTrigger: eventTrigger,
       })

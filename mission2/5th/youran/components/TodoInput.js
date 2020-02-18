@@ -1,8 +1,7 @@
 import { isValidData, showErrorMessage } from '../util/validator.js'
+import { KEYCODE } from '../util/constant.js'
 
 export default function TodoInput(todoInputData) {
-  const ENTER_KEYCODE = 13
-
   this.$todoInput = document.querySelector(todoInputData.inputSelector)
   this.$removeAllButton = document.querySelector(
     todoInputData.removeAllSelector
@@ -18,7 +17,7 @@ export default function TodoInput(todoInputData) {
   }
  */
   this.$todoInput.addEventListener('keyup', e => {
-    if (e.keyCode !== ENTER_KEYCODE) return
+    if (e.keyCode !== KEYCODE.ENTER) return
     if (!e.target.value) {
       alert('할 일이 없어요?')
       return
