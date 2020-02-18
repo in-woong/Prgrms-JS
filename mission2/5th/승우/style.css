@@ -93,3 +93,22 @@ section .todo-container > li .toggleBtn:hover {
 .deleteBtn:hover {
   background-color: #166ea8;
 }
+
+section .count-container {
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 2rem;
+  padding: 1rem;
+  border-top: 1px solid black;
+}
+
+section .count-container > div {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+section .count-container > div:last-child {
+  margin-top: 0.5rem;
+}

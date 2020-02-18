@@ -1,4 +1,4 @@
-function TodoInput(selector, app, handleInput) {
+function TodoInput(selector, handleInput) {
   if (!(this instanceof TodoInput)) {
     throw new Error('New 키워드 없이 실행했습니다')
   }
@@ -29,10 +29,6 @@ function TodoInput(selector, app, handleInput) {
     })
   }
 
-  this.render = function() {
-    this.initialize()
-    this.$target.appendChild(this.$input)
-  }
-
-  this.render()
+  this.initialize()
+  this.$target.appendChild(this.$input)
 }

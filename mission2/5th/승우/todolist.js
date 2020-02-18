@@ -1,19 +1,19 @@
 //TodoList.js
 
-function TodoList(selector, state, handleEvents) {
+function TodoList(selector, data, handleEvents) {
   if (!(this instanceof TodoList)) {
     throw new Error('New 키워드 없이 실행됐습니다.')
   }
 
   checkSelector(selector)
-  checkData(state.data)
+  checkData(data)
 
   //$target == ulElement
   this.$target = document.querySelector(selector)
-  this.state = state
+  this.data = data
 
   this.render = () => {
-    this.$target.innerHTML = this.state.data
+    this.$target.innerHTML = this.data
       .map((d, index) => {
         return d.isCompleted
           ? `<li data-index=${index}>${index + 1}. <s>${
@@ -24,13 +24,12 @@ function TodoList(selector, state, handleEvents) {
             }<button class="toggleBtn">Fin</button><button class="deleteBtn">Del</button></li>`
       })
       .join('')
-    this.$target.innerHTML += `<div class="count-container"><div class="total-count">Total : ${this.state.counts.total}</div><div class="completed-count">Completed : ${this.state.counts.completed}</div></div>`
   }
 
   //setState
-  this.setState = newState => {
-    checkData(newState.data)
-    this.state = newState
+  this.setState = newData => {
+    checkData(newData)
+    this.data = newData
     this.render()
   }
 
