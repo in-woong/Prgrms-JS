@@ -4,7 +4,7 @@ const fetchTodos = () => {
 
     if (!todos) {
       localStorage.setItem('todos', JSON.stringify([]))
-      return []
+      return null
     }
 
     return JSON.parse(todos)

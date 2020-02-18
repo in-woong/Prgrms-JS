@@ -2,7 +2,7 @@
 import Component from './Component.js'
 import { $, validateElement } from '../Utils/index.js'
 
-const constants = { INPUT: 0, SUBMIT: 1, REMOVE_ALL: 2 }
+const constants = { ENTER_KEY: 13 }
 
 export default class TodoInput extends Component {
   constructor($element) {
@@ -29,13 +29,11 @@ export default class TodoInput extends Component {
   }
 
   onKeyup(e) {
-    const enterKey = 13
-
     if (!e.target.value.length) {
       return
     }
 
-    if (e.keyCode !== enterKey) {
+    if (e.keyCode !== constants.ENTER_KEY) {
       return
     }
 
