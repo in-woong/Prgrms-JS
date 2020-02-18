@@ -1,0 +1,38 @@
+#outBox {
+   text-align: center;
+   margin-top: 100px;
+   padding-left : 200px;
+   padding-right : 200px;
+   background-color: #c3e6f5;
+}
+
+.inputArea{
+    margin-top: 50px;
+}
+
+#todo-list{
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+body {
+    background-color: #e4dfdf!important;
+}
+
+.done {
+    background-color: #b2b2b2!important;
+}
+
+.done:hover {
+    background-color: #999999!important;
+    cursor : pointer;
+}
+
+.todo {
+    background-color: #b2d8b2!important;
+}
+
+.todo:hover {
+    background-color: #7fbf7f!important;
+    cursor : pointer;
+}

@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <title>Mission 2</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="./index.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  </head>
+
+  <body>
+    
+    <div class="container card alert-primary" id = "outBox">
+        <h1 class="">To Do List</h1>
+        <button id="removeBtn" class="btn btn-warning">모두 삭제하기</button>
+        <div class="inputArea">
+            <input type="text" id="input">
+            <button id="addBtn" class="btn btn-primary">추가</button>
+        </div>
+        <div id="todo-list" class="list-group"></div>
+        <div>
+            <p id="totalNum">총 갯수 : </p>
+            <p id="completeNum">완료한 갯수 : </p>
+        </div>
+    </div>
+
+    <script src="TodoCount.js"></script>
+    <script src="TodoList.js"></script>
+    <script src="TodoInput.js"></script>
+    <script src="App.js"></script>
+  </body>
+</html>
