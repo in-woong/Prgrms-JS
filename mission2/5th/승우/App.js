@@ -1,4 +1,8 @@
 //App.js
+
+//localStorage Name
+const STORAGE_DATA = 'todoData'
+
 function App(selector, title) {
   if (!(this instanceof App)) {
     throw new Error('New 키워드 없이 실행했습니다')
@@ -7,26 +11,13 @@ function App(selector, title) {
   checkSelector(selector)
   this.$target = document.querySelector(selector)
 
-  //Temp Data
-  const tempData = [
-    {
-      text: 'JS 복습하기',
-      isCompleted: true,
-    },
-    {
-      text: 'JS 공부하기',
-      isCompleted: true,
-    },
-    {
-      text: 'JS 완성하기',
-      isCompleted: false,
-    },
-  ]
+  //localStorage
+  this.myStorage = window.localStorage
 
   //Initialize
   this.initialize = function() {
     //load data
-    this.data = tempData
+    this.loadData()
 
     const todoInput = 'todo-input'
     const todoContainer = 'todo-container'
@@ -65,12 +56,16 @@ function App(selector, title) {
     this.data = newData
     this.myTodoCount.setState(this.data)
     this.myTodoList.setState(this.data)
+    this.storeData(this.data)
   }
+
+  ///////Functions/////////
 
   //function handleInput
   const handleInput = value => {
-    const newData = [...this.data, { text: value, isCompleted: false }]
-    this.setState(newData)
+    // const newData = [...this.data, { text: value, isCompleted: false }]
+    this.data.push({ text: value, isCompleted: false })
+    this.setState(this.data)
   }
 
   //function handleDelete
@@ -100,6 +95,23 @@ function App(selector, title) {
     // this.data.splice(0, this.data.length)
     this.data.length = 0
     this.setState(this.data)
+  }
+
+  //Data Load Function
+  this.loadData = () => {
+    const todoData = JSON.parse(localStorage.getItem(STORAGE_DATA))
+    if (todoData) {
+      checkData(todoData)
+      this.data = todoData
+    } else {
+      this.data = []
+      localStorage.setItem(STORAGE_DATA, JSON.stringify(this.data))
+    }
+  }
+
+  //Data Store Function
+  this.storeData = newData => {
+    localStorage.setItem(STORAGE_DATA, JSON.stringify(newData))
   }
 
   this.initialize()
