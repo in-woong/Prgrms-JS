@@ -16,7 +16,11 @@ function TodoInput(todoInputData) {
   }
  */
   this.$todoInput.addEventListener('keyup', e => {
-    if (e.keyCode !== ENTER_KEYCODE || !e.target.value) return
+    if (e.keyCode !== ENTER_KEYCODE) return
+    if (!e.target.value) {
+      alert('할 일이 없어요?')
+      return
+    }
     this.onInsertTodo(e.target.value)
     this.$todoInput.value = ''
   })
