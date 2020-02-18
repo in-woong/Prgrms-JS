@@ -11,7 +11,7 @@ function TodoInput(TodoList, data) {
 
     this.bindEvent = function () {
         $inputBtn.addEventListener('click', e => {
-            this.onClickEnter(e)            
+            this.onClickAdd(e)            
         })
 
         $inputText.addEventListener('keydown', e => {
@@ -34,22 +34,22 @@ function TodoInput(TodoList, data) {
         }
 
         if(target.nodeName !== 'BUTTON') {
-            TodoList.successTodo(index)
+            TodoList.toggleTodo(index)
         }
     }
 
     this.onKeyDownEnter = function (e) {
-        const enter = 13
+        const ENTER = 13
     
-        if( e.keyCode === enter) {
+        if( e.keyCode === ENTER) {
             TodoList.addTodo($inputText.value)
             $inputText.value = ''
         }
     }
 
-    this.onClickEnter = function (e) {
+    this.onClickAdd = function (e) {
         TodoList.addTodo($inputText.value)
         $inputText.value = ''
     }
 }
-export default TodoInput;
+export default TodoInput

@@ -7,9 +7,6 @@ function TodoList(data, $el) {
 
     this.data = data
     this.$el = $el
-
-    const deleteBtn = document.createElement('button')
-        deleteBtn.innerText = 'X'
         
     this.createHTMLString = function (data) {
         this.errCheck(data)
@@ -43,7 +40,6 @@ function TodoList(data, $el) {
     }
 
     this.setState = function (nextData) {
-        debugger
         this.data = nextData
         this.render()
     }
@@ -61,13 +57,10 @@ function TodoList(data, $el) {
         this.render()
     }
 
-    this.successTodo = function (index) {
-         if(data[index].isCompleted === false) {
-            data[index].isCompleted = true
-        }else {
-            data[index].isCompleted = false
-        }
+    this.toggleTodo = function (index) {
+        // false라면 true를 true라면 false를
+        data[index].isCompleted = !data[index].isCompleted
         this.render()
     }
 }
-export default TodoList;
+export default TodoList
