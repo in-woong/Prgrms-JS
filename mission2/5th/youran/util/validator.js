@@ -1,6 +1,6 @@
 const ERROR_MESSAGE_SELECTOR = '#error-message'
 
-function isValidSelector(selector) {
+export function isValidSelector(selector) {
   if (!selector || !typeof selector === 'string' || selector.length < 1) {
     throw new Error('selector가 올바르지 않습니다.')
   }
@@ -11,7 +11,7 @@ function isValidSelector(selector) {
   }
 }
 
-function isValidData(data) {
+export function isValidData(data) {
   if (!Array.isArray(data)) {
     throw new Error('데이터 형식이 올바르지 않습니다.')
   }
@@ -27,7 +27,7 @@ function isValidData(data) {
   }
 }
 
-function showErrorMessage(error, selector = ERROR_MESSAGE_SELECTOR) {
+export function showErrorMessage(error, selector = ERROR_MESSAGE_SELECTOR) {
   document.querySelector(selector).innerHTML = `ERROR! ${error.message}`
   console.log(error)
 }

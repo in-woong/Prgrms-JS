@@ -1,4 +1,6 @@
-function TodoInput(todoInputData) {
+import { isValidData, showErrorMessage } from '../util/validator.js'
+
+export default function TodoInput(todoInputData) {
   const ENTER_KEYCODE = 13
 
   this.$todoInput = document.querySelector(todoInputData.inputSelector)

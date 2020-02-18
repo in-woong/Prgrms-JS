@@ -1,4 +1,6 @@
-function TodoList(todoListData) {
+import { isValidData, showErrorMessage } from '../util/validator.js'
+
+export default function TodoList(todoListData) {
   if (!new.target) {
     throw new Error('new 생성자로 함수를 호출하세요.')
   }

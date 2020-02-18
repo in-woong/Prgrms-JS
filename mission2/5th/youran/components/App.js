@@ -1,4 +1,9 @@
-function App() {
+import TodoList from './TodoList.js'
+import TodoInput from './TodoInput.js'
+import TodoCount from './TodoCount.js'
+import { isValidData, showErrorMessage } from '../util/validator.js'
+
+export default function App() {
   const TODO_LIST_SELECTOR = '#todo-list'
   const TODO_INPUT_SELECTOR = '#todo-input'
   const TODO_COUNT_SELECTOR = '#todo-count'
