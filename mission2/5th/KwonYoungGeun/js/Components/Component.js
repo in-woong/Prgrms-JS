@@ -9,12 +9,6 @@ export default class Component {
     throw new Error('각 컴포넌트마다 validate() 메서드는 꼭 구현해주세요!')
   }
 
-  emit(event, data) {
-    const customEvent = new CustomEvent(event, { detail: data })
-    this.$element.dispatchEvent(customEvent)
-    return this
-  }
-
   render(markup) {
     this.$element.innerHTML = markup
   }

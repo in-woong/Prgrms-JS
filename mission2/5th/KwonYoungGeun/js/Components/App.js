@@ -12,6 +12,7 @@ export default class App extends Component {
     this.validate(this.$element)
     this.todoInput = new TodoInput({
       $element: $(`${selector}>.input-container`),
+      $App: this.$element,
       onSubmit: this.onSubmit.bind(this),
       onRemoveAll: this.onRemoveAll.bind(this),
     })
@@ -26,11 +27,16 @@ export default class App extends Component {
   }
 
   init() {
+    this.bindEvents()
     this.setCount()
   }
 
   validate($element) {
     validateElement($element)
+  }
+
+  bindEvents() {
+    this.$element.addEventListener('@removeAll', () => this.onRemoveAll())
   }
 
   onSubmit(itemValue) {
