@@ -4,8 +4,11 @@ function App() {
   const TODO_COUNT_SELECTOR = '#todo-count'
   const REMOVE_ALL_SELECTOR = '#remove-all-button'
 
+  const STORAGE_KEY = 'todoData'
+
   this.initialize = () => {
-    this.data = getData()
+    const savedData = getData(STORAGE_KEY)
+    this.data = savedData ? savedData : []
     try {
       this.todoList = new TodoList({
         data: this.data,
@@ -33,6 +36,7 @@ function App() {
   this.setState = nextData => {
     try {
       isValidData(nextData)
+      setData(STORAGE_KEY, nextData)
       this.data = nextData
       this.todoList.setState(this.data)
       this.todoCount.setState(this.getTodoCount())
@@ -77,17 +81,20 @@ function App() {
   this.initialize()
 }
 
-const getData = function() {
-  return [
-    {
-      id: '1',
-      text: 'JS 공부하기',
-      isCompleted: true,
-    },
-    {
-      id: '2',
-      text: 'JS 복습하기',
-      isCompleted: false,
-    },
-  ]
+const getData = function(key) {
+  try {
+    const dataString = localStorage.getItem(key)
+    return JSON.parse(dataString)
+  } catch (error) {
+    showErrorMessage(error)
+  }
+}
+
+const setData = function(key, data) {
+  try {
+    const dataString = JSON.stringify(data)
+    localStorage.setItem(key, dataString)
+  } catch (error) {
+    showErrorMessage(error)
+  }
 }
