@@ -43,24 +43,5 @@ function TodoList(data, $el) {
         this.data = nextData
         this.render()
     }
-
-    this.addTodo = function (inputText) {
-        const newTodo = new Object()
-        newTodo.text = inputText
-        newTodo.isCompleted = false
-        this.data.push(newTodo)
-        this.render()
-    }
-
-    this.removeTodo = function (index) {
-        this.data.splice(index, 1)
-        this.render()
-    }
-
-    this.toggleTodo = function (index) {
-        // false라면 true를 true라면 false를
-        data[index].isCompleted = !data[index].isCompleted
-        this.render()
-    }
 }
 export default TodoList

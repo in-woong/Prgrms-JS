@@ -1,10 +1,9 @@
-
-function TodoInput(TodoList, data) { 
+function TodoInput(addTodo, toggleTodo, removeTodo) { 
     const $inputBtn = document.querySelector('#input-btn')
     const $inputText = document.querySelector('#input-text')
     const $myTodo = document.querySelector('#myTodo-list')
 
-    this.setup = function () {
+    this.init = function () {
         this.bindEvent()
         return this
     }
@@ -30,11 +29,11 @@ function TodoInput(TodoList, data) {
         const index = Array.from(ul.childNodes).indexOf(li);
 
         if(target.nodeName === 'BUTTON') {
-            TodoList.removeTodo(index)
+            removeTodo(index)
         }
 
         if(target.nodeName !== 'BUTTON') {
-            TodoList.toggleTodo(index)
+            toggleTodo(index)
         }
     }
 
@@ -42,14 +41,16 @@ function TodoInput(TodoList, data) {
         const ENTER = 13
     
         if( e.keyCode === ENTER) {
-            TodoList.addTodo($inputText.value)
+            addTodo($inputText.value)
             $inputText.value = ''
         }
     }
 
     this.onClickAdd = function (e) {
-        TodoList.addTodo($inputText.value)
+        this.addTodo($inputText.value)
         $inputText.value = ''
     }
+
+    this.init()
 }
 export default TodoInput
