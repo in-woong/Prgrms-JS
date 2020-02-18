@@ -1,16 +1,23 @@
 const fetchTodos = () => {
-  const output = localStorage.getItem('todos')
-  if (!output) {
-    localStorage.setItem('todos', JSON.stringify([]))
-    return []
+  try {
+    const todos = localStorage.getItem('todos')
+    if (!todos) {
+      localStorage.setItem('todos', JSON.stringify([]))
+      return []
+    }
+  } catch (e) {
+    console.error(e)
   }
 
-  const todos = JSON.parse(output)
-  return todos
+  return JSON.parse(todos)
 }
 
 const postTodo = data => {
-  localStorage.setItem('todos', JSON.stringify(data))
+  try {
+    localStorage.setItem('todos', JSON.stringify(data))
+  } catch (e) {
+    console.error(e)
+  }
 }
 
 export { fetchTodos, postTodo }
