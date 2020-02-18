@@ -17,7 +17,9 @@ function App() {
   this.todoCountId = 'todo-count'
   this.todoListId = 'todo-list'
   this.todoInputId = 'todo-input'
+  this.removeAllId = 'remove-all'
 
+  this.App = null
   this.todoCount = null
   this.todoList = null
 
@@ -69,10 +71,18 @@ function App() {
     }
   }
 
+  this.init = function() {
+    this.App = document.querySelector(`#App`)
+    this.App.addEventListener('removeAll', e => {
+      this.setState([])
+    })
+  }
+
   this.render = function() {
     const $todoCount = document.querySelector(`#${this.todoCountId}`)
     const $todoList = document.querySelector(`#${this.todoListId}`)
     const $todoInput = document.querySelector(`#${this.todoInputId}`)
+    const $removeAll = document.querySelector(`#${this.removeAllId}`)
 
     try {
       this.todoCount = new TodoCount({
@@ -82,6 +92,7 @@ function App() {
 
       this.todoList = new TodoList({
         $element: $todoList,
+        $removeAllElement: $removeAll,
         data: this.data,
         onClickItem: handleClickItem,
         onDelete: handleDelete,
@@ -97,6 +108,7 @@ function App() {
     }
   }
 
+  this.init()
   this.render()
 }
 

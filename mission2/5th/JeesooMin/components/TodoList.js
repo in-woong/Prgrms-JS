@@ -22,7 +22,13 @@ function TodoList(todoListData) {
     throw new Error('[TodoList] new 키워드로 실행되지 않았습니다.')
   }
 
-  const { $element, data, onDelete, onClickItem } = todoListData
+  const {
+    $element,
+    $removeAllElement,
+    data,
+    onDelete,
+    onClickItem,
+  } = todoListData
 
   // 전달받은 데이터가 올바른 데이터인지 확인
   if (!isTodoDataValid(data)) {
@@ -35,6 +41,7 @@ function TodoList(todoListData) {
 
   this.data = data
   this.$element = $element
+  this.$removeAllElement = $removeAllElement
   this.onDelete = onDelete
   this.onClickItem = onClickItem
 
@@ -50,6 +57,13 @@ function TodoList(todoListData) {
       }
     }
   })
+
+  this.init = function() {
+    this.$removeAllElement.addEventListener('click', e => {
+      this.App = document.querySelector(`#App`)
+      this.App.dispatchEvent(new CustomEvent('removeAll'))
+    })
+  }
 
   this.render = function() {
     this.$element.innerHTML = `${this.data
@@ -77,6 +91,7 @@ function TodoList(todoListData) {
     this.render()
   }
 
+  this.init()
   this.render()
 }
 
