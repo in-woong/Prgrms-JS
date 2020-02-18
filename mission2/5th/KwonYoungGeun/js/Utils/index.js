@@ -6,10 +6,6 @@ const makeID = () => {
   return Date.now()
 }
 
-const isArray = target => {
-  return Array.isArray(target)
-}
-
 const isObject = target => {
   return target !== null && !Array.isArray(target) && typeof target === 'object'
 }
@@ -41,7 +37,7 @@ const isAllTodoType = todoList => {
 }
 
 const validateData = data => {
-  if (!isArray(data))
+  if (!Array.isArray(data))
     throw new Error(`데이터가 Array가 아닙니다. data: ${typeof data}`)
 
   if (!isAllTodoType(data))

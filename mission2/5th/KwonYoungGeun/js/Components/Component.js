@@ -9,11 +9,6 @@ export default class Component {
     throw new Error('각 컴포넌트마다 validate() 메서드는 꼭 구현해주세요!')
   }
 
-  on(event, handler) {
-    this.$element.addEventListener(event, handler)
-    return this
-  }
-
   emit(event, data) {
     const customEvent = new CustomEvent(event, { detail: data })
     this.$element.dispatchEvent(customEvent)

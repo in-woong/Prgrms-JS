@@ -1,16 +1,15 @@
-// 컴포넌트 내 자식 요소(children) 인덱스
 import Component from './Component.js'
 import { $, validateElement } from '../Utils/index.js'
-
 const constants = { ENTER_KEY: 13 }
-
 export default class TodoInput extends Component {
-  constructor($element) {
+  constructor({ $element, onSubmit, onRemoveAll }) {
     super($element)
     this.$input = $(`.${this.$element.className} > .todo-input`)
     this.$submit = $(`.${this.$element.className} > .submit-button`)
     this.$removeAll = $(`.${this.$element.className} > .remove-all-button`)
     this.validate([this.$element, this.$input, this.$submit, this.$removeAll])
+    this.onSubmit = onSubmit
+    this.onRemoveAll = onRemoveAll
     this.init()
   }
 
@@ -24,8 +23,10 @@ export default class TodoInput extends Component {
 
   bindEvents() {
     this.$input.addEventListener('keyup', e => this.onKeyup(e))
-    this.$submit.addEventListener('click', e => this.submit(e))
-    this.$removeAll.addEventListener('click', () => this.removeAll())
+    this.$submit.addEventListener('click', e =>
+      this.onSubmit(this.$input.value)
+    )
+    this.$removeAll.addEventListener('click', () => this.onRemoveAll())
   }
 
   onKeyup(e) {
@@ -37,19 +38,10 @@ export default class TodoInput extends Component {
       return
     }
 
-    this.submit()
+    this.onSubmit(e.target.value)
   }
 
-  submit() {
-    if (!this.$input.value.length) {
-      return
-    }
-
-    this.emit('@submit', { inputValue: this.$input.value })
-    this.$input.value = ''
-  }
-
-  removeAll() {
-    this.emit('@removeAll')
+  setInputValue(value) {
+    this.$input.value = value
   }
 }
