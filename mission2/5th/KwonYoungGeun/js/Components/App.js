@@ -14,7 +14,6 @@ export default class App extends Component {
       $element: $(`${selector}>.input-container`),
       $App: this.$element,
       onSubmit: this.onSubmit.bind(this),
-      onRemoveAll: this.onRemoveAll.bind(this),
     })
     this.todoList = new TodoList({
       $element: $(`${selector}>.todo-list-container`),

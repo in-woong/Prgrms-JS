@@ -2,7 +2,7 @@ import Component from './Component.js'
 import { $, validateElement } from '../Utils/index.js'
 const constants = { ENTER_KEY: 13 }
 export default class TodoInput extends Component {
-  constructor({ $element, $App, onSubmit, onRemoveAll }) {
+  constructor({ $element, $App, onSubmit }) {
     super($element)
     this.$App = $App
     this.$input = $(`.${this.$element.className} > .todo-input`)
@@ -10,7 +10,7 @@ export default class TodoInput extends Component {
     this.$removeAll = $(`.${this.$element.className} > .remove-all-button`)
     this.validate([this.$element, this.$input, this.$submit, this.$removeAll])
     this.onSubmit = onSubmit
-    this.onRemoveAll = onRemoveAll
+
     this.init()
   }
 
