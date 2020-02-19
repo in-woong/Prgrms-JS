@@ -1,25 +1,26 @@
-import errorCheck from './errorCheck.js'
+import errorCheck from "./errorCheck.js";
 
-export default function TodoList(todos, toggleTodo, removeTodo, removeAllTodo) {
-  errorCheck.isInvalidInstance(this, TodoList)
-  this.$todoList = document.getElementById('todo-list')
-  this.todos = todos
-  this.toggleTodo = toggleTodo
-  this.removeTodo = removeTodo
-  this.removeAllTodo = removeAllTodo
+export default function TodoList(todos, toggleTodo, removeTodo) {
+  errorCheck.isInvalidInstance(this, TodoList);
+  this.$todoList = document.getElementById("todo-list");
+  this.todos = todos;
+  this.toggleTodo = toggleTodo;
+  this.removeTodo = removeTodo;
 
-  this.setState = function(nextData) {
-    this.todos = nextData
-    this.render()
-  }
+  this.setState = nextData => {
+    this.todos = nextData;
+    this.render();
+  };
 
   this.onClick = e => {
-    const clickedNode = e.target.nodeName
-    const clickedIndex = e.target.id
-    if (clickedNode === 'LI' || clickedNode === 'STRIKE')
-      this.toggleTodo(clickedIndex)
-    else if (clickedNode === 'BUTTON') this.removeTodo(clickedIndex)
-  }
+    const clickedNode = e.target.nodeName;
+    const clickedIndex = e.target.id;
+    if (clickedNode === "LI" || clickedNode === "STRIKE") {
+      this.toggleTodo(clickedIndex);
+    } else if (clickedNode === "BUTTON") {
+      this.removeTodo(clickedIndex);
+    }
+  };
 
   this.render = () => {
     this.$todoList.innerHTML = `<ul>${this.todos
@@ -28,8 +29,7 @@ export default function TodoList(todos, toggleTodo, removeTodo, removeAllTodo) {
           ? ` <li id=${index}>${todo.text}<button id=${index} class="todo-btn">삭제</button></li><hr/>`
           : `<li><strike id=${index}>${todo.text}</strike><button id=${index} class="todo-btn">삭제</button></li><hr/>`
       )
-      .join('')}<ul>`
-  }
-  this.$todoList.addEventListener('click', this.onClick)
-  this.$todoList.addEventListener('removeAll', this.removeAllTodo)
+      .join("")}<ul>`;
+  };
+  this.$todoList.addEventListener("click", this.onClick);
 }
