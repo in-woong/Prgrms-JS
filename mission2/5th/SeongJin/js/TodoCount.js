@@ -1,18 +1,16 @@
-function TodoCount(todos) {
-  this.todos = todos
-  this.$count = document.getElementById('count')
+function TodoCount(getTotalCount, getCompletedCount) {
+  this.$count = document.getElementById("count");
+  this.getTotalCount = getTotalCount;
+  this.getCompletedCount = getCompletedCount;
 
-  this.totalCount = () => {
-    return this.todos.length
-  }
-
-  this.completedCount = () => {
-    return this.todos.filter(todo => todo.isCompleted).length
-  }
+  this.setState = nextData => {
+    this.todos = nextData;
+    this.render();
+  };
 
   this.render = () => {
-    this.$count.innerHTML = `총 Todo의 개수 : ${this.totalCount()} / 완료된 Todo의 개수 : ${this.completedCount()}`
-  }
+    this.$count.innerHTML = `총 Todo의 개수 : ${this.getTotalCount()} / 완료된 Todo의 개수 : ${this.getCompletedCount()}`;
+  };
 }
 
-export default TodoCount
+export default TodoCount;
