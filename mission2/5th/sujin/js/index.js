@@ -41,10 +41,12 @@ const $todo = document.querySelector('#todo-list')
 const $myTodo = document.querySelector('#myTodo-list')
 const $workTodo = document.querySelector('#workTodo-list')
 
-const todoList = new TodoList(data, $todo)
+const todoList = new TodoList(data, $myTodo)
 const myTodoList = new TodoList(myTodoData, $myTodo)
-const workTodoList = new TodoList(workTodoData, $workTodo)
+const workTodoList = new TodoList(workTodoData, $myTodo)
 
 // new App(todoList).render()
-new App(myTodoList).render()
-// new App(workTodoList).render()
+// new App(myTodoList).render()
+new App(workTodoList).render()
+
+// new App()
