@@ -5,7 +5,6 @@ import TodoCount from './TodoCount.js'
 function App(TodoList) {
     const $removeAllBtn = document.querySelector('#remove-all-btn')
     const todoCount = new TodoCount()
-    this.todoList = TodoList
 
     this.init = function (){
         this.todoInput = new TodoInput(this.addTodo, this.toggleTodo, this.removeTodo)
@@ -18,10 +17,11 @@ function App(TodoList) {
     }
 
     this.addTodo = function (inputText) {
-        const newTodo = new Object()
-        newTodo.text = inputText
-        newTodo.isCompleted = false
-        this.todoList.data.push(newTodo)
+        const newTodo = {
+            text: inputText,
+            isCompleted: false
+        }
+        TodoList.data.push(newTodo)
         TodoList.setState(TodoList.data)
         todoCount.setState(TodoList)
     }

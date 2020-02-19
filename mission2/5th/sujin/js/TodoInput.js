@@ -47,7 +47,7 @@ function TodoInput(addTodo, toggleTodo, removeTodo) {
     }
 
     this.onClickAdd = function (e) {
-        this.addTodo($inputText.value)
+        addTodo($inputText.value)
         $inputText.value = ''
     }
 
