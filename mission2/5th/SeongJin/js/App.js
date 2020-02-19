@@ -1,64 +1,81 @@
-import TodoInput from './TodoInput.js'
-import TodoList from './TodoList.js'
-import TodoCount from './TodoCount.js'
+import TodoInput from "./TodoInput.js";
+import TodoList from "./TodoList.js";
+import TodoCount from "./TodoCount.js";
+import errorCheck from "./errorCheck.js";
 
-function App() {
-  const todos = [
-    {
-      text: 'JS 공부하기',
-      isCompleted: true,
-    },
-    {
-      text: 'JS 복습하기',
-      isCompleted: false,
-    },
-  ]
+export default function App() {
+  this.$todoList = document.getElementById("todo-list");
+  this.$removeAllButton = document.getElementById("remove-btn");
 
-  this.todos = todos
+  this.init = () => {
+    this.getLocalStorage();
+
+    this.todoInput = new TodoInput(this.addTodo);
+    this.todoList = new TodoList(this.todos, this.toggleTodo, this.removeTodo);
+    this.todoCount = new TodoCount(this.getTotalCount, this.getCompletedCount);
+
+    this.render = () => {
+      this.todoList.setState(this.todos);
+      this.todoCount.setState(this.todos);
+    };
+  };
+
+  this.getLocalStorage = () => {
+    try {
+      const todoData = localStorage.getItem("todos");
+      this.todos = errorCheck.isNotArray(JSON.parse(todoData));
+    } catch (e) {
+      this.todos = [];
+    }
+  };
+
+  this.setLocalStorage = () => {
+    localStorage.setItem("todos", JSON.stringify(this.todos));
+  };
 
   this.toggleTodo = clickedIndex => {
     this.todos[clickedIndex] = {
       ...this.todos[clickedIndex],
-      isCompleted: !this.todos[clickedIndex].isCompleted,
-    }
-    this.render()
-  }
+      isCompleted: !this.todos[clickedIndex].isCompleted
+    };
+    this.setLocalStorage();
+    this.render();
+  };
 
   this.removeTodo = clickedIndex => {
-    this.todos.splice(clickedIndex, 1)
-    this.render()
-  }
+    this.todos.splice(clickedIndex, 1);
+    this.setLocalStorage();
+    this.render();
+  };
 
   this.addTodo = newTodo => {
-    this.todos.push(newTodo)
-    this.render()
-  }
-
-  this.customEvent = e => {
-    this.todoList.$todoList.dispatchEvent(e)
-    //dispatchEvent 메서드는 그 이벤트의 타입이 메서드의 호출이전에 초기화되지 않았을 경우 에러처리..
-  }
+    this.todos.push(newTodo);
+    this.setLocalStorage();
+    this.render();
+  };
 
   this.removeAllTodo = () => {
-    this.todos.splice(0, this.todos.length)
-    this.render()
-  }
+    this.todos = [];
+    localStorage.removeItem("todos");
+    this.render();
+  };
 
-  this.todoInput = new TodoInput(this.addTodo, this.customEvent)
-  this.todoList = new TodoList(
-    this.todos,
-    this.toggleTodo,
-    this.removeTodo,
-    this.removeAllTodo
-  )
-  this.todoCount = new TodoCount(this.todos)
+  this.getTotalCount = () => {
+    return this.todos.length;
+  };
 
-  this.render = () => {
-    this.todoList.setState(this.todos)
-    this.todoCount.render()
-  }
+  this.getCompletedCount = () => {
+    return this.todos.filter(todo => todo.isCompleted).length;
+  };
 
-  this.todoList.render()
+  this.$todoList.addEventListener("removeAll", this.removeAllTodo);
+
+  this.$removeAllButton.addEventListener("click", () => {
+    const removeAllEvent = new CustomEvent("removeAll");
+    this.todoList.$todoList.dispatchEvent(removeAllEvent);
+    this.todoCount.render();
+  });
+
+  this.init();
+  this.render();
 }
-
-new App()

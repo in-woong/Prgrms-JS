@@ -12,17 +12,17 @@ hr {
     border: solid 1px black;
 }
 
-.inputWrapper {
+.input-wrapper {
     text-align: center;
     margin: 20px;
 }
 
-.input {
+.todo-registerinput {
     width: 200px;
     height: 20px;
 }
 
-.input-btn {
+.add-btn {
     width: 50px;
     cursor: pointer;
     margin-left: 20px;
@@ -30,18 +30,22 @@ hr {
     border-radius: 4px;
 }
 
-.todoWrapper {
+.remove-btn {
+    width: 50px;
+    cursor: pointer;
+    margin-left: 20px;
+    background-color: red;
+    border-radius: 4px;
+}
+
+.todo {
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    background-color: gray;
-}
-
-.todo {
     width: 300px;
     height: auto;
-    margin: 20px;
+    margin: 0 auto;
     border-radius: 4px;
     background-color: red;
 }

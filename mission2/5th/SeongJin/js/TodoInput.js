@@ -1,25 +1,18 @@
-import errorCheck from './errorCheck.js'
+import errorCheck from "./errorCheck.js";
 
-function TodoInput(addTodo, customEvent) {
-  this.addTodo = addTodo
-  this.customEvent = customEvent
+function TodoInput(addTodo) {
+  this.addTodo = addTodo;
 
-  this.$addButton = document.getElementById('addBtn')
-  this.$removeAllButton = document.getElementById('removeBtn')
+  this.$addButton = document.getElementById("add-btn");
 
-  this.$addButton.addEventListener('click', () => {
-    const $input = document.getElementById('newTodo')
-    const newTodo = { text: $input.value, isCompleted: false }
-    errorCheck.isEmptyText($input.value)
-    this.addTodo(newTodo)
-    $input.value = ''
-    $input.focus()
-  })
-
-  this.$removeAllButton.addEventListener('click', () => {
-    const removeAllEvent = new CustomEvent('removeAll')
-    this.customEvent(removeAllEvent)
-  })
+  this.$addButton.addEventListener("click", () => {
+    const $input = document.getElementById("new-todo");
+    const newTodo = { text: $input.value, isCompleted: false };
+    errorCheck.isEmptyText($input.value);
+    this.addTodo(newTodo);
+    $input.value = "";
+    $input.focus();
+  });
 }
 
-export default TodoInput
+export default TodoInput;
