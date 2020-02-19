@@ -1,5 +1,5 @@
 import Component from './Component.js'
-import { $, validateElement } from '../Utils/index.js'
+import { validateElement } from '../Utils/index.js'
 export default class TodoCount extends Component {
   constructor($element) {
     super($element)

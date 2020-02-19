@@ -37,11 +37,13 @@ const isAllTodoType = todoList => {
 }
 
 const validateData = data => {
-  if (!Array.isArray(data))
+  if (!Array.isArray(data)) {
     throw new Error(`데이터가 Array가 아닙니다. data: ${typeof data}`)
+  }
 
-  if (!isAllTodoType(data))
+  if (!isAllTodoType(data)) {
     throw new Error(`데이터 배열에 TODO 입이 아닌 원소가 있습니다. `)
+  }
 }
 
 const validateElement = $element => {
