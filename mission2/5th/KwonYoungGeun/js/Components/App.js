@@ -53,8 +53,6 @@ export default class App extends Component {
 
     postTodo(nextData)
     this.setState(nextData)
-    this.todoList.setState(nextData)
-    this.setCount()
     this.todoInput.setInputValue('')
   }
 
@@ -62,15 +60,11 @@ export default class App extends Component {
     const nextData = this.data.filter(todo => id !== todo.id)
     postTodo(nextData)
     this.setState(nextData)
-    this.todoList.setState(nextData)
-    this.setCount()
   }
 
   onRemoveAll() {
     postTodo([])
     this.setState([])
-    this.todoList.setState([])
-    this.setCount()
   }
 
   onToggle(id) {
@@ -85,19 +79,15 @@ export default class App extends Component {
 
     postTodo(nextData)
     this.setState(nextData)
-    this.todoList.setState(nextData)
-    this.setCount()
-  }
-
-  setCount() {
-    this.todoCount.setState({
-      totalCount: this.data.length,
-      completedCount: this.data.filter(data => data.isCompleted).length,
-    })
   }
 
   setState(nextData) {
     validateData(nextData)
     this.data = nextData
+    this.todoList.setState(nextData)
+    this.todoCount.setState({
+      totalCount: this.data.length,
+      completedCount: this.data.filter(data => data.isCompleted).length,
+    })
   }
 }
