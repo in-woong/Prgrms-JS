@@ -7,21 +7,53 @@
 
 <body>
   <div id="todo-list"></div>
+  <div id="week-list"></div>
+  <div id="warning-list"></div>
   <script>
     var data = [
       {
-        text: 'JS 공부하기'
+        text: 'JS 공부하기',
+        isCompleted: true
       },
       {
-        text: 'JS 복습하기'
+        text: 'JS 복습하기',
+        isCompleted: false
+      }
+    ]
+    
+    var data1 = [
+      {
+        text: 'JS 과제하기',
+        isCompleted: true
+      },
+      {
+        text: 'REACT 과제하기',
+        isCompleted: false
+      },
+      {
+        text: 'PS 공부하기',
+        isCompleted: false
       }
     ]
 
-    function TodoList(inputData){
+     var data2 = [
+      {
+        text: '배그,,,',
+        isCompleted: false
+      },
+      {
+        text: '유튜브,,,',
+        isCompleted: true
+      }
+    ]
+
+
+    function TodoList(inputData, divId){
+        //#50
         if(!(this instanceof TodoList)){
             throw new Error('TodoList.prototype is not in the prototype chain of the this object');
         }
-        if(inputData === null || inputData === undefined ){
+        if(inputData === null || inputData === undefined ) {
             throw new Error('parameter is null or undefined');
         }
         if(!Array.isArray(inputData)){
@@ -31,18 +63,33 @@
             throw new Error('wrong data : some element do not have text(key)');
         }
         
+        //#49
         this.inputData = inputData;
         this.render = function(){
-            let htmlString = this.inputData.map(x=>x.text);
-            htmlString = '<div>' + htmlString.join('</div><div>') + '</div>';
-            document.querySelector('#todo-list').innerHTML = htmlString;
+            let htmlStringArr = this.inputData.map(x=>x.text);
+            //#66
+            let htmlString = '';
+            for(let i=0;i<htmlStringArr.length;i++){
+              if(this.inputData[i].isCompleted===true){
+                htmlString += '<div><s>'+ htmlStringArr[i] + '</s></div>';
+              }
+              else{
+                htmlString += '<div>'+ htmlStringArr[i] + '</div>';
+              }
+            }
+            document.querySelector(divId).innerHTML = htmlString;
         }
-    }
-    const todoList = new TodoList(data);
-    todoList.render();
 
-    const todoList1 = TodoList(data);
+    }
+    const todoList = new TodoList(data,'#todo-list');
+    todoList.render();
+    //#57
+    const weekList = new TodoList(data1,'#week-list');
+    weekList.render();
+    const warningList = new TodoList(data2,'#warning-list');
+    warningList.render();
     
+
   </script>
 </body>
 </html>
