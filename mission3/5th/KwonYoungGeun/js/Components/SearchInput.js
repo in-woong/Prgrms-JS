@@ -1,5 +1,6 @@
-import { $ } from '../utils/index.js'
+import { $, debounced } from '../utils/index.js'
 import { validateElement } from '../validation/index.js'
+
 function SearchInput({ target, onChange }) {
   this.init = () => {
     this.$element = $(target)
@@ -13,7 +14,7 @@ function SearchInput({ target, onChange }) {
   }
 
   this.bindEvents = () => {
-    this.$element.addEventListener('keyup', this.onKeyup)
+    this.$element.addEventListener('keyup', debounced(1000, this.onKeyup))
   }
 
   this.onKeyup = e => {

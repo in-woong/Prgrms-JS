@@ -15,4 +15,18 @@ const objectToQueryString = parameters => {
   return queries.join('&')
 }
 
-export { $, objectToQueryString }
+// 레퍼런스: https://codeburst.io/throttling-and-debouncing-in-javascript-646d076d0a44
+const debounced = (delay, fn) => {
+  let timerId
+  return function(...args) {
+    if (timerId) {
+      clearTimeout(timerId)
+    }
+    timerId = setTimeout(() => {
+      fn(...args)
+      timerId = null
+    }, delay)
+  }
+}
+
+export { $, objectToQueryString, debounced }
