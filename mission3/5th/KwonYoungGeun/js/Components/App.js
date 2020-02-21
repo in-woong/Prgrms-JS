@@ -24,11 +24,9 @@ function App(target) {
     this.setState({ text: value })
   }
 
-  this.setState = ({ text }) => {
-    fetchJjals({ text }).then(data => {
-      this.data = data
-      this.searchResult.setState(this.data)
-    })
+  this.setState = async ({ text }) => {
+    this.data = await fetchJjals({ text })
+    this.searchResult.setState(this.data)
   }
 
   this.init()

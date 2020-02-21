@@ -1,12 +1,11 @@
 import { config } from './api.config.js'
 import { objectToQueryString } from '../utils/index.js'
 
-const fetchJjals = parameters => {
-  return fetch(`${config.baseUrl}?${objectToQueryString(parameters)}`).then(
-    response => {
-      return response.json()
-    }
+const fetchJjals = async parameters => {
+  const response = await fetch(
+    `${config.baseUrl}?${objectToQueryString(parameters)}`
   )
+  return response.json()
 }
 
 export { fetchJjals }
