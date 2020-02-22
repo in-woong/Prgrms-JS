@@ -18,7 +18,7 @@ const objectToQueryString = parameters => {
 // 레퍼런스: https://codeburst.io/throttling-and-debouncing-in-javascript-646d076d0a44
 const debounced = (delay, fn) => {
   let timerId
-  return function(...args) {
+  return (...args) => {
     if (timerId) {
       clearTimeout(timerId)
     }

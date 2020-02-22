@@ -9,7 +9,7 @@ function App(target) {
   this.init = () => {
     this.$element = $(target)
     this.data = null
-    this.SearchHistory = new SearchHistory({
+    this.searchHistory = new SearchHistory({
       target: '#search-history',
       onClickHistory: this.onClickHistory,
     })
@@ -35,9 +35,10 @@ function App(target) {
   }
 
   this.setState = async ({ text }) => {
+    this.searchInput.setState(text)
     this.data = await fetchJjals({ text })
     this.searchResult.setState(this.data)
-    this.SearchHistory.setState(text)
+    this.searchHistory.setState(text)
   }
 
   this.init()

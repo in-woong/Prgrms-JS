@@ -1,5 +1,9 @@
 import { $, debounced } from '../utils/index.js'
 import { validateElement } from '../validation/index.js'
+const constants = {
+  ENTER_KEY: 13,
+  TIME_OUT_DURATION: 500,
+}
 
 function SearchInput({ target, onChange }) {
   this.init = () => {
@@ -14,16 +18,19 @@ function SearchInput({ target, onChange }) {
   }
 
   this.bindEvents = () => {
-    this.$element.addEventListener('keyup', debounced(1000, this.onKeyup))
+    this.$element.addEventListener(
+      'keyup',
+      debounced(constants.TIME_OUT_DURATION, this.onKeyup)
+    )
   }
 
   this.onKeyup = e => {
-    this.setState(e.target.value)
-    onChange(this.inputValue)
+    onChange(e.target.value)
   }
 
   this.setState = value => {
     this.inputValue = value
+    this.$element.value = value
   }
 
   this.init()
