@@ -17,7 +17,10 @@ function App(target) {
       target: '#search-keyword',
       requestData: this.requestData,
     })
-    this.searchResult = new SearchResult(this.data, '#search-result')
+    this.searchResult = new SearchResult({
+      data: this.data,
+      target: '#search-result',
+    })
 
     this.validate(this.$element)
   }

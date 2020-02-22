@@ -1,7 +1,7 @@
 import { $ } from '../utils/index.js'
 import { validateElement } from '../validation/index.js'
 
-function SearchResult(data, target) {
+function SearchResult({ data, target }) {
   this.init = () => {
     this.$element = $(target)
     this.data = data || []
