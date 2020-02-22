@@ -19,6 +19,9 @@ function SearchHistory({ target, onClickHistory }) {
     this.$element.addEventListener('click', this.onClick)
   }
 
+  /**
+   * TODO: 유효성 검증 추가하기
+   */
   this.onClick = e => {
     onClickHistory(e.target.innerText)
   }
