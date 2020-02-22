@@ -5,7 +5,7 @@ const constants = {
   TIME_OUT_DURATION: 500,
 }
 
-function SearchInput({ target, onChange }) {
+function SearchInput({ target, requestData }) {
   this.init = () => {
     this.$element = $(target)
     this.inputValue = null
@@ -25,7 +25,7 @@ function SearchInput({ target, onChange }) {
   }
 
   this.onKeyup = e => {
-    onChange(e.target.value)
+    requestData(e.target.value)
   }
 
   this.setState = value => {

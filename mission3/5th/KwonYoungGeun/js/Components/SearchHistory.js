@@ -1,7 +1,7 @@
 import { $ } from '../utils/index.js'
 import { validateElement } from '../validation/index.js'
 
-function SearchHistory({ target, onClickHistory }) {
+function SearchHistory({ target, requestData }) {
   this.init = () => {
     this.$element = $(target)
     this.keywordHistory = ['고양이']
@@ -23,7 +23,7 @@ function SearchHistory({ target, onClickHistory }) {
    * TODO: 유효성 검증 추가하기
    */
   this.onClick = e => {
-    onClickHistory(e.target.innerText)
+    requestData(e.target.innerText)
   }
 
   this.setState = value => {

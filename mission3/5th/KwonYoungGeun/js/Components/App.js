@@ -11,11 +11,11 @@ function App(target) {
     this.data = null
     this.searchHistory = new SearchHistory({
       target: '#search-history',
-      onClickHistory: this.onClickHistory,
+      requestData: this.requestData,
     })
     this.searchInput = new SearchInput({
       target: '#search-keyword',
-      onChange: this.onChange,
+      requestData: this.requestData,
     })
     this.searchResult = new SearchResult(this.data, '#search-result')
 
@@ -26,17 +26,13 @@ function App(target) {
     validateElement($element)
   }
 
-  this.onChange = value => {
-    this.setState({ text: value })
-  }
-
-  this.onClickHistory = keyword => {
-    this.setState({ text: keyword })
-  }
-
-  this.setState = async ({ text }) => {
-    this.searchInput.setState(text)
+  this.requestData = async text => {
     this.data = await fetchJjals({ text })
+    this.setState({ text })
+  }
+
+  this.setState = ({ text }) => {
+    this.searchInput.setState(text)
     this.searchResult.setState(this.data)
     this.searchHistory.setState(text)
   }
