@@ -28,10 +28,10 @@ function App(target) {
 
   this.requestData = async text => {
     this.data = await fetchJjals({ text })
-    this.setState({ text })
+    this.setState(text)
   }
 
-  this.setState = ({ text }) => {
+  this.setState = text => {
     this.searchInput.setState(text)
     this.searchResult.setState(this.data)
     this.searchHistory.setState(text)
