@@ -1,11 +1,17 @@
 function App() {
   const init = () => {
     this.data = []
+    this.historyData = []
     this.searchKeyword = new SearchKeyword('#search-keyword', {
       onKeyUp: getResultData,
     })
     try {
       this.searchResult = new SearchResult(this.data, '#search-result')
+      this.searchHistory = new SearchHistory(
+        this.historyData,
+        '#search-history',
+        { onClick: getResultData }
+      )
     } catch (error) {
       console.error(error)
     }
@@ -16,14 +22,23 @@ function App() {
     this.searchResult.setState(this.data)
   }
 
-  const getResultData = async searchKeyword => {
+  this.setKeywordHistory = (keyword, isFromHistory) => {
+    let newData = this.historyData
+    if (isFromHistory) {
+      newData = newData.filter(text => text !== keyword)
+    }
+    this.historyData = [...newData, keyword]
+    this.searchHistory.setState(this.historyData)
+  }
+
+  const getResultData = async (searchKeyword, isFromHistory = false) => {
     if (typeof searchKeyword !== 'string' || searchKeyword.length < 1) return
-    console.log(`keyword:${searchKeyword}`)
     try {
       const jsonData = await loadJSONData(
         `https://jjalbot.com/api/jjals?text=${searchKeyword}`
       )
       this.setState(generateResultData(jsonData))
+      this.setKeywordHistory(searchKeyword, isFromHistory)
     } catch (error) {
       console.error(error)
     }
