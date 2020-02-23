@@ -8,6 +8,11 @@ function SearchResult(data, $target) {
 
   this.render = function() {
     if (this.data) {
+      if (this.data.length === 0) {
+        this.$target.innerHTML = `<div> 찾는 데이터가 없습니다! </div>`
+        return
+      }
+
       this.$target.innerHTML = `${this.data
         .map(d => `<img class="image" src="${d.imageUrl}">`)
         .join('')}`

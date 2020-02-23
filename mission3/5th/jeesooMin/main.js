@@ -1,7 +1,6 @@
 import SearchInput from './components/SearchInput.js'
 import SearchResult from './components/SearchResult.js'
-
-const JJAL_API = `https://jjalbot.com/api/jjals`
+import api from './api.js'
 
 function Main() {
   this.data = null
@@ -19,6 +18,7 @@ function Main() {
       )
     } catch (e) {
       console.log(e)
+      return
     }
   }
 
@@ -27,16 +27,22 @@ function Main() {
     this.data = newData
   }
 
-  this.handleKeyUp = value => {
+  this.handleKeyUp = async value => {
     if (!value) {
       return
     }
 
-    fetch(`${JJAL_API}?text=${value}`)
-      .then(x => x.json())
-      .then(data => {
-        this.setState(data)
-      })
+    try {
+      const res = await api.getJjalAPI(value)
+      if (res.status !== 200) {
+        throw new Error('[Main] API를 확인해주세요.')
+      }
+
+      this.setState(await res.json())
+    } catch (e) {
+      console.log(e)
+      return
+    }
   }
 
   this.init()
