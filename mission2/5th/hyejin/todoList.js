@@ -1,4 +1,4 @@
-function TodoList($target, data) {
+function TodoList($target, data, { onTodoDelete }, { onTodoToggle }) {
   this.$target = $target
   this.data = data
 
@@ -11,6 +11,14 @@ function TodoList($target, data) {
       throw new Error('data에는 text가 있어야 함')
     if (!Array.isArray(data)) throw new Error('not Array')
   }
+
+  $target.addEventListener('click', e => {
+    if (e.target.innerText === 'del') {
+      onTodoDelete(e.target.value)
+    } else {
+      onTodoToggle(e.target.dataset.id)
+    }
+  })
 
   this.render = function() {
     this.validate(data)

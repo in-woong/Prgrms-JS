@@ -17,7 +17,21 @@ function App() {
   this.init = function() {
     this.todoList = new TodoList(
       document.getElementById('todo-list'),
-      this.data
+      this.data,
+      {
+        onTodoDelete: deleteId => {
+          const nextData = this.data.filter(item => item.id != deleteId)
+          this.setState(nextData)
+        },
+      },
+      {
+        onTodoToggle: toggleId => {
+          const nextData = this.data
+          let isCompleted = nextData[toggleId].isCompleted
+          nextData[toggleId].isCompleted = !isCompleted
+          this.setState(nextData)
+        },
+      }
     )
     this.todoInput = new TodoInput(document.getElementById('todo-input'), {
       onTodoInput: todoText => {
@@ -29,20 +43,6 @@ function App() {
             isCompleted: false,
           },
         ]
-        this.setState(nextData)
-      },
-    })
-    this.todoDelete = new TodoDelete(document.getElementById('todo-list'), {
-      onTodoDelete: deleteId => {
-        const nextData = this.data.filter(item => item.id != deleteId)
-        this.setState(nextData)
-      },
-    })
-    this.todoToggle = new TodoToggle(document.getElementById('todo-list'), {
-      onTodoToggle: toggleId => {
-        const nextData = this.data
-        let isCompleted = nextData[toggleId].isCompleted
-        nextData[toggleId].isCompleted = !isCompleted
         this.setState(nextData)
       },
     })
