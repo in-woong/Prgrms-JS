@@ -27,8 +27,8 @@ function App() {
       {
         onTodoToggle: toggleId => {
           const nextData = this.data
-          let isCompleted = nextData[toggleId].isCompleted
-          nextData[toggleId].isCompleted = !isCompleted
+          const toggleItem = nextData.findIndex(item => item.id == toggleId)
+          nextData[toggleItem].isCompleted = !this.data[toggleItem].isCompleted
           this.setState(nextData)
         },
       }
