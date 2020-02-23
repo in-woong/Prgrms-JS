@@ -17,7 +17,7 @@ function App() {
       const jsonData = await loadJSONData(
         `https://jjalbot.com/api/jjals?text=${searchKeyword}`
       )
-      this.setState(generateArrayData(jsonData))
+      this.setState(generateResultData(jsonData))
     } catch (error) {
       console.error(error)
     }
@@ -26,7 +26,7 @@ function App() {
   init()
 }
 
-const generateArrayData = jsonData => {
+const generateResultData = jsonData => {
   return jsonData.map(item => ({
     imageUrl: item.imageUrl,
     title: item.title,
