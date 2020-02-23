@@ -9,7 +9,8 @@ export default function App() {
   const init = () => {
     this.keywordString = ''
     this.resultData = []
-    this.historyData = []
+    //나호석님 코드 참조 #143
+    this.historyData = new Set()
 
     try {
       this.searchKeyword = new SearchKeyword({
@@ -36,20 +37,23 @@ export default function App() {
     this.searchResult.setState(this.resultData)
   }
 
-  this.setKeywordHistory = (keyword, isFromHistory) => {
-    this.historyData = isFromHistory
-      ? [...this.historyData.filter(text => text !== keyword), keyword]
-      : [...this.historyData, keyword]
+  this.setKeywordHistory = keyword => {
+    const newData = this.historyData
+    if (newData.has(keyword)) {
+      newData.delete(keyword)
+      newData.add(keyword)
+    }
+    this.historyData = newData.add(keyword)
     this.searchHistory.setState(this.historyData)
     this.searchKeyword.setState('')
   }
 
-  const getResultData = async (searchKeyword, isFromHistory = false) => {
+  const getResultData = async searchKeyword => {
     if (typeof searchKeyword !== 'string' || searchKeyword.length < 1) return
     try {
       const jsonData = await loadJSONData(`${searchKeyword}`)
       this.setState(generateResultData(jsonData))
-      this.setKeywordHistory(searchKeyword, isFromHistory)
+      this.setKeywordHistory(searchKeyword)
     } catch (error) {
       console.error(error)
     }

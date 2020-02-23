@@ -27,3 +27,16 @@ export const isString = targetData => {
 export const isArray = targetData => {
   return Array.isArray(targetData)
 }
+
+export const isNil = targetData => {
+  return targetData === null || targetData === undefined
+}
+
+export const isSet = targetData => {
+  return typeof targetData === 'object' && targetData instanceof Set
+}
+
+export const isValidtarget = targetSelector => {
+  const $domWithGivenSelector = document.querySelectorAll(`${targetSelector}`)
+  return $domWithGivenSelector && $domWithGivenSelector.length === 1
+}
