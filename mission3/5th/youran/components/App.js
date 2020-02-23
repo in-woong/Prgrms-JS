@@ -3,15 +3,22 @@ import SearchResult from './SearchResult.js'
 import SearchHistory from './SearchHistory.js'
 import { loadJSONData } from '../api.js'
 import { SELECTOR } from '../constant.js'
+import { showErrorMessage } from '../util.js'
 
 export default function App() {
   const init = () => {
     this.data = []
     this.historyData = []
-    this.searchKeyword = new SearchKeyword(SELECTOR.SEARCH_KEYWORD, {
-      onKeyUp: getResultData,
-    })
+    this.currentKeyword = ''
+
     try {
+      this.searchKeyword = new SearchKeyword(
+        this.currentKeyword,
+        SELECTOR.SEARCH_KEYWORD,
+        {
+          onKeyUp: getResultData,
+        }
+      )
       this.searchResult = new SearchResult(this.data, SELECTOR.SEARCH_RESULT)
       this.searchHistory = new SearchHistory(
         this.historyData,
@@ -19,7 +26,7 @@ export default function App() {
         { onClick: getResultData }
       )
     } catch (error) {
-      console.error(error)
+      showErrorMessage(error)
     }
   }
 
@@ -35,6 +42,7 @@ export default function App() {
     }
     this.historyData = [...newData, keyword]
     this.searchHistory.setState(this.historyData)
+    this.searchKeyword.setState('')
   }
 
   const getResultData = async (searchKeyword, isFromHistory = false) => {

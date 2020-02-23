@@ -1,3 +1,5 @@
+import { SELECTOR } from './constant.js'
+
 export const debounce = (targetFunction, waitTime) => {
   let timer = null
   return (...args) => {
@@ -11,4 +13,9 @@ export const debounce = (targetFunction, waitTime) => {
     }
     timer = setTimeout(debouncedFunction, waitTime)
   }
+}
+
+export const showErrorMessage = error => {
+  document.querySelector(SELECTOR.ERROR_MESSAGE).innerHTML = error.message
+  console.error(error)
 }
