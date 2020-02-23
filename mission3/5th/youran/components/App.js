@@ -2,19 +2,20 @@ import SearchKeyword from './SearchKeyword.js'
 import SearchResult from './SearchResult.js'
 import SearchHistory from './SearchHistory.js'
 import { loadJSONData } from '../api.js'
+import { SELECTOR } from '../constant.js'
 
 export default function App() {
   const init = () => {
     this.data = []
     this.historyData = []
-    this.searchKeyword = new SearchKeyword('#search-keyword', {
+    this.searchKeyword = new SearchKeyword(SELECTOR.SEARCH_KEYWORD, {
       onKeyUp: getResultData,
     })
     try {
-      this.searchResult = new SearchResult(this.data, '#search-result')
+      this.searchResult = new SearchResult(this.data, SELECTOR.SEARCH_RESULT)
       this.searchHistory = new SearchHistory(
         this.historyData,
-        '#search-history',
+        SELECTOR.SEARCH_HISTORY,
         { onClick: getResultData }
       )
     } catch (error) {
@@ -39,9 +40,7 @@ export default function App() {
   const getResultData = async (searchKeyword, isFromHistory = false) => {
     if (typeof searchKeyword !== 'string' || searchKeyword.length < 1) return
     try {
-      const jsonData = await loadJSONData(
-        `https://jjalbot.com/api/jjals?text=${searchKeyword}`
-      )
+      const jsonData = await loadJSONData(`${searchKeyword}`)
       this.setState(generateResultData(jsonData))
       this.setKeywordHistory(searchKeyword, isFromHistory)
     } catch (error) {
