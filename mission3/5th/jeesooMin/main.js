@@ -32,7 +32,7 @@ function Main() {
     }
 
     try {
-      const res = await api.getJjalAPI(value)
+      const res = await api.getJjalAPI({ text: value })
       if (res.status !== 200) {
         throw new Error('[Main] API를 확인해주세요.')
       }
