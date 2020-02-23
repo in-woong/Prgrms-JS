@@ -1,4 +1,9 @@
-function App() {
+import SearchKeyword from './SearchKeyword.js'
+import SearchResult from './SearchResult.js'
+import SearchHistory from './SearchHistory.js'
+import { loadJSONData } from '../api.js'
+
+export default function App() {
   const init = () => {
     this.data = []
     this.historyData = []

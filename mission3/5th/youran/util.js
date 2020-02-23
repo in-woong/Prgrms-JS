@@ -1,4 +1,4 @@
-const debounce = (targetFunction, waitTime) => {
+export const debounce = (targetFunction, waitTime) => {
   let timer = null
   return (...args) => {
     const debouncedFunction = () => {

@@ -1,4 +1,4 @@
-function SearchResult(data, target) {
+export default function SearchResult(data, target) {
   if (!Array.isArray(data)) {
     throw new Error('올바른 데이터 형식이 아닙니다.')
   }

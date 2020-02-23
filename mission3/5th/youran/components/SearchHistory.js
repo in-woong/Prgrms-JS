@@ -1,4 +1,6 @@
-function SearchHistory(historyData, target, { onClick }) {
+import { debounce } from '../util.js'
+
+export default function SearchHistory(historyData, target, { onClick }) {
   if (!Array.isArray(historyData)) {
     throw new Error('올바른 데이터 형식이 아닙니다.')
   }

@@ -1,4 +1,4 @@
-async function loadJSONData(url) {
+export async function loadJSONData(url) {
   try {
     const response = await fetch(url)
     if (!response.ok) {
