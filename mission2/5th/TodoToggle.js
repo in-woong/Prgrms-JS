@@ -1,14 +1,3 @@
-function DeleteTodo(todoList) {
-    this.todoList = todoList
-
-    const deleteButtonList = document.getElementById('todo-list')
-    deleteButtonList.addEventListener('click', e => {
-        if (e.target.innerText === 'del') {
-            const nextData = this.todoList.data.filter(item => item.id != e.target.value)
-            this.todoList.setState(nextData)
-        }
-    })
-}
 
 function ToggleTodoComplete(todoList, onToggle) {
     this.todoList = todoList

@@ -12,8 +12,9 @@ const defaultData = [
   ]
 
 function App() {
+    this.data = defaultData
+
     this.init = function() {
-        this.data = defaultData
         this.todoList = new TodoList(
             this.data,
             document.getElementById('todo-list'),
@@ -44,8 +45,9 @@ function App() {
     }
 
     this.setState = function(nextData) {
-        this.todoList.data = nextData
-        this.todoList.render()
+        this.data = nextData
+        this.todoList.setState(nextData)
+        this.todoDelete.setState(nextData)
     }
 
     this.onDeleteButton = function(deleteId) {
