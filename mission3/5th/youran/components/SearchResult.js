@@ -1,4 +1,8 @@
 function SearchResult(data, target) {
+  if (!isArray(data)) {
+    throw new Error('올바른 데이터 형식이 아닙니다.')
+  }
+
   this.data = data
   this.$searchResult = document.querySelector(target)
 
