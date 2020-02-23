@@ -17,6 +17,8 @@ function App() {
   }
 
   const getResultData = async searchKeyword => {
+    if (typeof searchKeyword !== 'string' || searchKeyword.length < 1) return
+    console.log(`keyword:${searchKeyword}`)
     try {
       const jsonData = await loadJSONData(
         `https://jjalbot.com/api/jjals?text=${searchKeyword}`
