@@ -18,7 +18,6 @@ function Main() {
       )
     } catch (e) {
       console.log(e)
-      return
     }
   }
 
@@ -41,7 +40,6 @@ function Main() {
       this.setState(await res.json())
     } catch (e) {
       console.log(e)
-      return
     }
   }
 
