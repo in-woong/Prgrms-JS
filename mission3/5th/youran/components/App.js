@@ -8,13 +8,7 @@ function App() {
   }
 
   const getResultData = searchKeyword => {
-    fetch(`https://jjalbot.com/api/jjals?text=${searchKeyword}`)
-      .then(response => response.json())
-      .then(data => {
-        console.log(data)
-        this.setState(data)
-      })
-      .catch(error => console.log(error))
+    searchData(searchKeyword).then(data => this.setState(data))
   }
 
   this.setState = newData => {
