@@ -9,7 +9,7 @@ function TodoList($target, data, { onUpdate }) {
         throw new Error('TodoList를 new로 호출해주세요.');
     }
 
-    if ($target == null) {
+    if ($target) {
         throw new Error('선택된 HTML Element가 없습니다.');
     }
 

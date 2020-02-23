@@ -1,6 +1,6 @@
 const validateData = function(data) {
 
-    if (data === undefined || data === null) {
+    if (!data) {
         throw new Error('데이터가 정상적으로 입력되지 않았습니다.');
     }
 
@@ -14,7 +14,5 @@ const validateData = function(data) {
 
     console.log('데이터에 이상없습니다 :)');
 }
-
-
 
 export {validateData};

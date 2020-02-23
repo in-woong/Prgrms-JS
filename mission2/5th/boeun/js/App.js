@@ -1,10 +1,10 @@
 import TodoList from './TodoList.js';
 import TodoCount from './TodoCount.js';
 import TodoInput from './TodoInput.js';
-import { getData } from './util.js';
+import { getData, setData } from './util.js';
 import { TODO_STORAGE_KEY } from './constant.js';
 
-const App = function(selector, appTitle = 'To do List') {
+const App = (selector, appTitle = 'To do List') => {
     
     this.todoData = getData(TODO_STORAGE_KEY) || [];
 
@@ -14,13 +14,14 @@ const App = function(selector, appTitle = 'To do List') {
         this.todoCount.setState(this.todoData); 
     }
 
-    document.querySelector('#App').insertAdjacentHTML('afterbegin', `<h3>${appTitle}</h3><div id="${selector}"></div>`);
+    const appInnerHtml = `<h3>${appTitle}</h3><div id="${selector}"></div>`;
+    document.querySelector('#App').insertAdjacentHTML('afterbegin', appInnerHtml);
     const $target = document.querySelector(`#${selector}`); 
     
     this.todoList = new TodoList($target, this.todoData, {
         onUpdate: (newTodo) => {
-          localStorage.setItem('todoList', JSON.stringify(newTodo)); 
-          updateState(newTodo);
+            setData(TODO_STORAGE_KEY, newTodo);
+            updateState(newTodo);
         }
     }); 
 
@@ -32,7 +33,7 @@ const App = function(selector, appTitle = 'To do List') {
                   text: inputText, isCompleted: false
                 }
             ]
-            localStorage.setItem(TODO_STORAGE_KEY, JSON.stringify(nextData)); 
+            setData(TODO_STORAGE_KEY, newtData);
             updateState(nextData);
           }
     }); 
