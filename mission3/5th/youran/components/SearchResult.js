@@ -1,9 +1,11 @@
-export default function SearchResult(data, target) {
-  if (!Array.isArray(data)) {
-    throw new Error('올바른 데이터 형식이 아닙니다.')
+import { ERROR_MESSAGE } from '../constant.js'
+
+export default function SearchResult({ resultData, target }) {
+  if (!Array.isArray(resultData)) {
+    throw new Error(ERROR_MESSAGE.TYPE_ERROR)
   }
 
-  this.data = data
+  this.data = resultData
   this.$searchResult = document.querySelector(target)
 
   this.render = () => {

@@ -1,8 +1,9 @@
 import { debounce } from '../util.js'
+import { ERROR_MESSAGE } from '../constant.js'
 
-export default function SearchHistory(historyData, target, { onClick }) {
+export default function SearchHistory({ historyData, target, onClick }) {
   if (!Array.isArray(historyData)) {
-    throw new Error('올바른 데이터 형식이 아닙니다.')
+    throw new Error(ERROR_MESSAGE.TYPE_ERROR)
   }
   this.historyData = historyData
   this.$searchHistory = document.querySelector(target)

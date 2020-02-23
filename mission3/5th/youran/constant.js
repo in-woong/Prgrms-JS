@@ -9,4 +9,8 @@ const SELECTOR = {
   ERROR_MESSAGE: '#error-message',
 }
 
-export { URL, SELECTOR }
+const ERROR_MESSAGE = {
+  TYPE_ERROR: '데이터 형식이 올바르지 않습니다.',
+}
+
+export { URL, SELECTOR, ERROR_MESSAGE }

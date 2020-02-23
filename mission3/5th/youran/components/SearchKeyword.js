@@ -1,17 +1,18 @@
 import { debounce } from '../util.js'
+import { ERROR_MESSAGE } from '../constant.js'
 
-export default function SearchKeyword(currentKeyword, target, { onKeyUp }) {
-  if (typeof currentKeyword !== 'string') {
-    throw new Error('올바른 데이터 형식이 아닙니다.')
+export default function SearchKeyword({ keywordString, target, onKeyUp }) {
+  if (typeof keywordString !== 'string') {
+    throw new Error(ERROR_MESSAGE.TYPE_ERROR)
   }
-  this.currentKeyword = currentKeyword
+  this.keywordString = keywordString
   this.$searchKeyword = document.querySelector(target)
   this.onKeyUp = debounce(event => onKeyUp(event.target.value), 1000)
-  this.render = () => (this.$searchKeyword.value = this.currentKeyword)
+  this.render = () => (this.$searchKeyword.value = this.keywordString)
 
   this.$searchKeyword.addEventListener('keyup', this.onKeyUp)
   this.setState = newKeyword => {
-    this.currentKeyword = newKeyword
+    this.keywordString = newKeyword
     this.render()
   }
 }

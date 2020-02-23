@@ -7,40 +7,39 @@ import { showErrorMessage } from '../util.js'
 
 export default function App() {
   const init = () => {
-    this.data = []
+    this.keywordString = ''
+    this.resultData = []
     this.historyData = []
-    this.currentKeyword = ''
 
     try {
-      this.searchKeyword = new SearchKeyword(
-        this.currentKeyword,
-        SELECTOR.SEARCH_KEYWORD,
-        {
-          onKeyUp: getResultData,
-        }
-      )
-      this.searchResult = new SearchResult(this.data, SELECTOR.SEARCH_RESULT)
-      this.searchHistory = new SearchHistory(
-        this.historyData,
-        SELECTOR.SEARCH_HISTORY,
-        { onClick: getResultData }
-      )
+      this.searchKeyword = new SearchKeyword({
+        keywordString: this.keywordString,
+        target: SELECTOR.SEARCH_KEYWORD,
+        onKeyUp: getResultData,
+      })
+      this.searchResult = new SearchResult({
+        resultData: this.resultData,
+        target: SELECTOR.SEARCH_RESULT,
+      })
+      this.searchHistory = new SearchHistory({
+        historyData: this.historyData,
+        target: SELECTOR.SEARCH_HISTORY,
+        onClick: getResultData,
+      })
     } catch (error) {
       showErrorMessage(error)
     }
   }
 
   this.setState = newData => {
-    this.data = newData
-    this.searchResult.setState(this.data)
+    this.resultData = newData
+    this.searchResult.setState(this.resultData)
   }
 
   this.setKeywordHistory = (keyword, isFromHistory) => {
-    let newData = this.historyData
-    if (isFromHistory) {
-      newData = newData.filter(text => text !== keyword)
-    }
-    this.historyData = [...newData, keyword]
+    this.historyData = isFromHistory
+      ? [...this.historyData.filter(text => text !== keyword), keyword]
+      : [...this.historyData, keyword]
     this.searchHistory.setState(this.historyData)
     this.searchKeyword.setState('')
   }
