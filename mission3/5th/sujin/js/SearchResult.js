@@ -14,7 +14,6 @@ function SearchResult(data, $target){
     }
 
     this.render()
-
 } 
 
 export default SearchResult
