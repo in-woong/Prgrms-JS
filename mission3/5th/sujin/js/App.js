@@ -10,8 +10,8 @@ function App() {
         })
     }
 
-    this.fetchData = (inputData) => {
-        fetch(`https://jjalbot.com/api/jjals?text=${inputData}`)
+    this.fetchData = async (inputData) => {
+        await fetch(`https://jjalbot.com/api/jjals?text=${inputData}`)
         .then(x => x.json())
         .then(data => {
             this.setState(data)
