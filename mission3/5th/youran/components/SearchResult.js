@@ -1,7 +1,8 @@
 import { ERROR_MESSAGE } from '../constant.js'
+import { isArray } from '../util.js'
 
 export default function SearchResult({ resultData, target }) {
-  if (!Array.isArray(resultData)) {
+  if (!isArray(resultData)) {
     throw new Error(ERROR_MESSAGE.TYPE_ERROR)
   }
 
@@ -15,6 +16,9 @@ export default function SearchResult({ resultData, target }) {
   }
 
   this.setState = newData => {
+    if (!isArray(newData)) {
+      throw new Error(ERROR_MESSAGE.TYPE_ERROR)
+    }
     this.data = newData
     this.render()
   }

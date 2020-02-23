@@ -19,3 +19,11 @@ export const showErrorMessage = error => {
   document.querySelector(SELECTOR.ERROR_MESSAGE).innerHTML = error.message
   console.error(error)
 }
+
+export const isString = targetData => {
+  return typeof targetData === 'string'
+}
+
+export const isArray = targetData => {
+  return Array.isArray(targetData)
+}

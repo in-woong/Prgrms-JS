@@ -1,8 +1,8 @@
-import { debounce } from '../util.js'
+import { debounce, isArray } from '../util.js'
 import { ERROR_MESSAGE } from '../constant.js'
 
 export default function SearchHistory({ historyData, target, onClick }) {
-  if (!Array.isArray(historyData)) {
+  if (!isArray(historyData)) {
     throw new Error(ERROR_MESSAGE.TYPE_ERROR)
   }
   this.historyData = historyData
@@ -29,6 +29,9 @@ export default function SearchHistory({ historyData, target, onClick }) {
   })
 
   this.setState = newData => {
+    if (!isArray(newData)) {
+      throw new Error(ERROR_MESSAGE.TYPE_ERROR)
+    }
     this.historyData = newData
     this.render()
   }
