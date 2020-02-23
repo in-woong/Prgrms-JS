@@ -1,1 +1,0 @@
-function SearchInput(target) {}
