@@ -4,7 +4,11 @@ function App() {
     this.searchKeyword = new SearchKeyword('#search-keyword', {
       onKeyUp: getResultData,
     })
-    this.searchResult = new SearchResult(this.data, '#search-result')
+    try {
+      this.searchResult = new SearchResult(this.data, '#search-result')
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   this.setState = newData => {
