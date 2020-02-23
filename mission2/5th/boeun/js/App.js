@@ -1,35 +1,50 @@
-const App = function(selector, data, appTitle = 'To do List') {
+import TodoList from './TodoList.js';
+import TodoCount from './TodoCount.js';
+import TodoInput from './TodoInput.js';
+import { getData } from './util.js';
+import { TODO_STORAGE_KEY } from './constant.js';
+
+const App = function(selector, appTitle = 'To do List') {
     
-    const updateState = function() {
-        todoList.setState(data);
-        todoCount.render(); 
+    this.todoData = getData(TODO_STORAGE_KEY) || [];
+
+    const updateState = (newData) => {
+        this.todoData = newData;
+        this.todoList.setState(this.todoData);
+        this.todoCount.setState(this.todoData); 
     }
 
     document.querySelector('#App').insertAdjacentHTML('afterbegin', `<h3>${appTitle}</h3><div id="${selector}"></div>`);
     const $target = document.querySelector(`#${selector}`); 
     
-    const todoList = new TodoList($target, data); 
-    const todoInput = new TodoInput(selector, data); 
-    const todoCount = new TodoCount(selector, data); 
+    this.todoList = new TodoList($target, this.todoData, {
+        onUpdate: (newTodo) => {
+          localStorage.setItem('todoList', JSON.stringify(newTodo)); 
+          updateState(newTodo);
+        }
+    }); 
 
-    $target.addEventListener('todo-removeAll', function(event) {
-        data.splice(0);
-        localStorage.removeItem('todoList'); 
-        updateState();
+    this.todoInput = new TodoInput(selector, this.todoData, {
+        onAddTodo: (inputText) => {          
+            const nextData = [
+                ...this.todoData,
+                {
+                  text: inputText, isCompleted: false
+                }
+            ]
+            localStorage.setItem(TODO_STORAGE_KEY, JSON.stringify(nextData)); 
+            updateState(nextData);
+          }
+    }); 
+    
+    this.todoCount = new TodoCount(selector, this.todoData); 
+
+    $target.addEventListener('todo-removeAll', (event) =>{
+        this.todoData.length = 0;
+        localStorage.removeItem(TODO_STORAGE_KEY); 
+        updateState(this.todoData);
     });
 
-    $target.addEventListener('todo-addTodo', function(event) {
-        localStorage.setItem('todoList', JSON.stringify(data)); 
-        updateState();
-    }); 
-
-    $target.addEventListener('todo-toggleTodo', function(event) {
-        localStorage.setItem('todoList', JSON.stringify(data)); 
-        updateState();
-    }); 
-
-    $target.addEventListener('todo-removeTodo', function(event) {
-        localStorage.setItem('todoList', JSON.stringify(data)); 
-        updateState();
-    }); 
 };
+
+export default App;

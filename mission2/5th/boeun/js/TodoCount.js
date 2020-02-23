@@ -1,5 +1,5 @@
 function TodoCount(selector, data) {
-    this.todoData = data;
+    this.todoData = [...data];
     const $target = document.querySelector(`#${selector}`);
 
     const getTodoCount = function(newData) {
@@ -16,5 +16,12 @@ function TodoCount(selector, data) {
         document.getElementById(`todo-count-${selector}`).innerHTML = `전체 할 일 | ${getTodoCount(this.todoData)} 완료 | ${getCompleteCount(this.todoData)}`;
     }
 
+    this.setState = function(newData) {
+        this.todoData = newData;
+        this.render();
+    }
+
     this.render();
 }
+
+export default TodoCount;
