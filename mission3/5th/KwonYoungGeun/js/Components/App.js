@@ -31,6 +31,7 @@ function App(target) {
 
   this.requestData = async text => {
     this.data = await fetchJjals({ text })
+    console.log(this.data)
     this.setState(text)
   }
 

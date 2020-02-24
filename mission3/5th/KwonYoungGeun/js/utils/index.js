@@ -1,19 +1,14 @@
-const $ = target => {
+export const $ = target => {
   return document.querySelector(target)
 }
 
-const objectToQueryString = parameters => {
-  let queries = []
-
-  for (let key in parameters) {
-    queries.push(`${key}=${parameters[key]}`)
-  }
-
-  return queries.join('&')
-}
+export const objectToQueryString = parameters =>
+  Object.keys(parameters)
+    .map(key => `${key}=${parameters[key]}`)
+    .join('&')
 
 // 레퍼런스: https://codeburst.io/throttling-and-debouncing-in-javascript-646d076d0a44
-const debounced = (delay, fn) => {
+export const debounce = (fn, delay) => {
   let timerId
   return (...args) => {
     if (timerId) {
@@ -25,5 +20,3 @@ const debounced = (delay, fn) => {
     }, delay)
   }
 }
-
-export { $, objectToQueryString, debounced }
