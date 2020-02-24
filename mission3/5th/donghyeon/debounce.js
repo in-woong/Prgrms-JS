@@ -1,10 +1,10 @@
 const INTERVAL_MS = 300
 
-export const debounce = (callback) => {
-    let timer
+export const debounce = callback => {
+  let timer
 
-    return (...args) => {
-        clearTimeout(timer)
-        timer = setTimeout(() => callback(...args), INTERVAL_MS)
-    }
+  return (...args) => {
+    clearTimeout(timer)
+    timer = setTimeout(() => callback(...args), INTERVAL_MS)
+  }
 }
