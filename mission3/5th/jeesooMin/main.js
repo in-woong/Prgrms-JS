@@ -1,8 +1,8 @@
+import { fetchJjalData } from './api.js'
+import { MAX_HISTORY_SIZE } from './constants.js'
 import SearchHistory from './components/SearchHistory.js'
 import SearchInput from './components/SearchInput.js'
 import SearchResult from './components/SearchResult.js'
-import api from './api.js'
-import { MAX_HISTORY_SIZE } from './constants.js'
 
 function Main() {
   this.data = null
@@ -21,10 +21,10 @@ function Main() {
         onKeyUp: this.handleSearch,
       })
 
-      this.searchResult = new SearchResult(
-        this.data,
-        document.querySelector('#search-result')
-      )
+      this.searchResult = new SearchResult({
+        data: this.data,
+        $target: document.querySelector('#search-result'),
+      })
     } catch (e) {
       console.log(e)
     }
@@ -52,16 +52,7 @@ function Main() {
       this.searchInput.setState(value)
     }
 
-    try {
-      const res = await api.getJjalAPI({ text: value })
-      if (res.status !== 200) {
-        throw new Error('[Main] API를 확인해주세요.')
-      }
-
-      this.setState(await res.json())
-    } catch (e) {
-      console.log(e)
-    }
+    this.setState(await fetchJjalData({ text: value }))
   }
 
   this.init()

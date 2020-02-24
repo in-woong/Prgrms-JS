@@ -1,7 +1,4 @@
-const queryString = obj => {
-  return Object.keys(obj)
-    .map(key => `${key}=${obj[key]}`)
+export const queryString = parameterData =>
+  Object.keys(parameterData)
+    .map(key => `${key}=${parameterData[key]}`)
     .join('&')
-}
-
-export { queryString }
