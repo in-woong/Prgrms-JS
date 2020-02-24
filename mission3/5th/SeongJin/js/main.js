@@ -5,7 +5,7 @@ import SearchKeyword from './SearchKeyword.js'
 export default function main() {
   this.init = () => {
     this.$resultElement = document.querySelector('#search-result')
-    this.searchResult = new SearchResult('', this.$resultElement)
+    this.searchResult = new SearchResult([], this.$resultElement)
     this.searchKeyword = new SearchKeyword(this.search)
   }
 
@@ -14,8 +14,8 @@ export default function main() {
       const data = await fetch(
         `https://jjalbot.com/api/jjals?text=${e.target.value}`
       ) // async  await 적용하는법?
-
-      this.searchResult.setState(data.json())
+      const datajson = await data.json()
+      this.searchResult.setState(datajson)
     } catch (e) {
       throw new Error(e)
     }
