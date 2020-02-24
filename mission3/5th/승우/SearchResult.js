@@ -1,9 +1,8 @@
 //SearchResult.js
 
 function SearchResult(data, $selector) {
-  //Data Validate
-  validateSelector($selector)
   validateData(data)
+  validateSelector($selector)
 
   this.data = data
   this.$target = document.querySelector($selector)
@@ -11,7 +10,7 @@ function SearchResult(data, $selector) {
   this.render = () => {
     this.$target.innerHTML = this.data
       .map(d => {
-        return `<img src=${d.imageUrl}>`
+        return `<img src="${d.imageUrl}">`
       })
       .join('')
   }
@@ -20,6 +19,4 @@ function SearchResult(data, $selector) {
     this.data = newData
     this.render()
   }
-
-  this.render()
 }
