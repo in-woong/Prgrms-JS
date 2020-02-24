@@ -7,7 +7,7 @@ import { SELECTOR, STORAGE_KEY } from '../util/constant.js'
 export default function App() {
   this.initialize = () => {
     const savedData = getData(STORAGE_KEY)
-    this.data = savedData ? savedData : []
+    this.data = savedData || []
     try {
       this.todoList = new TodoList({
         data: this.data,
