@@ -12,6 +12,7 @@ const SELECTOR = {
 const ERROR_MESSAGE = {
   TYPE_ERROR: '데이터 형식이 올바르지 않습니다.',
   ELEMENT_ERROR: 'target element를 찾을 수 없습니다.',
+  API_ERROR: 'API 요청 실패',
 }
 
 export { URL, SELECTOR, ERROR_MESSAGE }
