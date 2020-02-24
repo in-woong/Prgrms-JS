@@ -41,7 +41,6 @@ export default function App() {
     const newData = this.historyData
     if (newData.has(keyword)) {
       newData.delete(keyword)
-      newData.add(keyword)
     }
     this.historyData = newData.add(keyword)
     this.searchHistory.setState(this.historyData)
