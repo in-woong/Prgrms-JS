@@ -32,7 +32,11 @@ function SearchInput(param) {
   const handleKeyUp = e => {
     const value = e.target.value.trimStart()
     this.$target.value = value
-    param.onKeyUp(value)
+    param.onKeyUp(value, true)
+  }
+
+  this.setState = function(newData) {
+    this.$target.value = newData
   }
 
   this.init = function() {
