@@ -52,13 +52,14 @@ export default function App() {
   }
 
   const insertTodo = newTodoText => {
-    const nextData = this.data
-    nextData.push({
-      id: (this.data.length + 1).toString(),
-      text: newTodoText,
-      isCompleted: false,
-    })
-    this.setState(nextData)
+    this.setState([
+      ...this.data,
+      {
+        id: (this.data.length + 1).toString(),
+        text: newTodoText,
+        isCompleted: false,
+      },
+    ])
   }
 
   const deleteTodo = todoId => {
