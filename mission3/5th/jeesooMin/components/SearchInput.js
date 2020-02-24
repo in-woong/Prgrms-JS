@@ -1,3 +1,5 @@
+import { INTERVAL } from '../constants.js'
+
 // 참고
 // https://github.com/learn-programmers/prgrms-fejs/pull/141#issuecomment-558628116
 const debounce = (targetFunction, interval) => {
@@ -35,7 +37,7 @@ function SearchInput(param) {
 
   this.init = function() {
     this.$target = param.$target
-    this.$target.addEventListener('keyup', debounce(handleKeyUp, 1000))
+    this.$target.addEventListener('keyup', debounce(handleKeyUp, INTERVAL))
   }
 
   this.init()
