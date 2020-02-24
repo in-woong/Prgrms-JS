@@ -1,4 +1,4 @@
-import { isValidData, showErrorMessage } from '../util/validator.js'
+import { validateData, showErrorMessage } from '../util/validator.js'
 import { KEYCODE } from '../util/constant.js'
 
 export default function TodoInput(todoInputData) {
@@ -10,7 +10,7 @@ export default function TodoInput(todoInputData) {
   this.eventTrigger = todoInputData.eventTrigger
   /*
   try {
-    isValidSelector(selector)
+    validateSelector(selector)
   } catch (error) {
     showErrorMessage(error)
     return

@@ -1,6 +1,6 @@
 import { SELECTOR } from './constant.js'
 
-export function isValidSelector(selector) {
+export function validateSelector(selector) {
   if (!selector || !typeof selector === 'string' || selector.length < 1) {
     throw new Error('selector가 올바르지 않습니다.')
   }
@@ -11,7 +11,7 @@ export function isValidSelector(selector) {
   }
 }
 
-export function isValidData(data) {
+export function validateData(data) {
   if (!Array.isArray(data)) {
     throw new Error('데이터 형식이 올바르지 않습니다.')
   }

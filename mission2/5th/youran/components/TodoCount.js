@@ -1,4 +1,4 @@
-import { isValidData, showErrorMessage } from '../util/validator.js'
+import { showErrorMessage } from '../util/validator.js'
 
 export default function TodoCount(todoCountData) {
   this.$todoCount = document.querySelector(todoCountData.selector)

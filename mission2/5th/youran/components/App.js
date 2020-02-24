@@ -1,7 +1,7 @@
 import TodoList from './TodoList.js'
 import TodoInput from './TodoInput.js'
 import TodoCount from './TodoCount.js'
-import { isValidData, showErrorMessage } from '../util/validator.js'
+import { validateData, showErrorMessage } from '../util/validator.js'
 import { SELECTOR, STORAGE_KEY } from '../util/constant.js'
 
 export default function App() {
@@ -34,7 +34,7 @@ export default function App() {
 
   this.setState = nextData => {
     try {
-      isValidData(nextData)
+      validateData(nextData)
       setData(STORAGE_KEY, nextData)
       this.data = nextData
       this.todoList.setState(this.data)

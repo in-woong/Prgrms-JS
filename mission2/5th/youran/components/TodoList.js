@@ -1,4 +1,4 @@
-import { isValidData, showErrorMessage } from '../util/validator.js'
+import { validateData, showErrorMessage } from '../util/validator.js'
 import { MESSAGE } from '../util/constant.js'
 
 export default function TodoList(todoListData) {
@@ -13,14 +13,14 @@ export default function TodoList(todoListData) {
   this.onRemoveAllTodo = todoListData.onRemoveAllTodo
 
   try {
-    isValidData(this.data)
+    validateData(this.data)
   } catch (error) {
     showErrorMessage(error)
     return
   }
   /*
   try {
-    isValidSelector(selector)
+    validateSelector(selector)
   } catch (error) {
     showErrorMessage(error)
     return
@@ -56,7 +56,7 @@ export default function TodoList(todoListData) {
   }
 
   this.setState = function(nextData) {
-    isValidData(nextData)
+    validateData(nextData)
     this.data = nextData
     this.render()
   }
