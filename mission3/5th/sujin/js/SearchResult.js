@@ -1,4 +1,4 @@
-function SearchResult(data, $target){
+function SearchResult(data = [], $target){
     this.data = data
     this.$target = $target
 
