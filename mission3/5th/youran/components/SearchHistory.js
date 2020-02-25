@@ -1,7 +1,7 @@
-import { debounce, isSet, isValidtarget } from '../util.js'
+import { isSet, isValidtarget } from '../util.js'
 import { ERROR_MESSAGE } from '../constant.js'
 
-export default function SearchHistory({ historyData, target, onClick }) {
+export default function SearchHistory({ historyData, target, onSearch }) {
   if (!isSet(historyData)) {
     throw new Error(ERROR_MESSAGE.TYPE_ERROR)
   }
@@ -10,7 +10,7 @@ export default function SearchHistory({ historyData, target, onClick }) {
   }
   this.historyData = historyData
   this.$searchHistory = document.querySelector(target)
-  this.onClick = onClick
+  this.onSearch = onSearch
 
   this.render = () => {
     let htmlString = ''
@@ -23,7 +23,7 @@ export default function SearchHistory({ historyData, target, onClick }) {
 
   this.$searchHistory.addEventListener('click', event => {
     if (event.target.nodeName === 'SPAN') {
-      this.onClick(event.target.dataset.value)
+      this.onSearch(event.target.dataset.value)
     }
   })
 

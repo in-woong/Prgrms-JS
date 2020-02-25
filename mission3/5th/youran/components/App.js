@@ -1,7 +1,7 @@
 import SearchKeyword from './SearchKeyword.js'
 import SearchResult from './SearchResult.js'
 import SearchHistory from './SearchHistory.js'
-import { loadJSONData } from '../api.js'
+import { fetchImages } from '../api.js'
 import { SELECTOR } from '../constant.js'
 import { showErrorMessage } from '../util.js'
 
@@ -16,7 +16,7 @@ export default function App() {
       this.searchKeyword = new SearchKeyword({
         keywordString: this.keywordString,
         target: SELECTOR.SEARCH_KEYWORD,
-        onKeyUp: getResultData,
+        onSearch: searchImages,
       })
       this.searchResult = new SearchResult({
         resultData: this.resultData,
@@ -25,7 +25,7 @@ export default function App() {
       this.searchHistory = new SearchHistory({
         historyData: this.historyData,
         target: SELECTOR.SEARCH_HISTORY,
-        onClick: getResultData,
+        onSearch: searchImages,
       })
     } catch (error) {
       showErrorMessage(error)
@@ -46,10 +46,10 @@ export default function App() {
     this.searchHistory.setState(this.historyData)
   }
 
-  const getResultData = async searchKeyword => {
+  const searchImages = async searchKeyword => {
     if (typeof searchKeyword !== 'string' || searchKeyword.length < 1) return
     try {
-      const jsonData = await loadJSONData(`${searchKeyword}`)
+      const jsonData = await fetchImages(`${searchKeyword}`)
       this.setState(generateResultData(jsonData))
       this.setKeywordHistory(searchKeyword)
     } catch (error) {

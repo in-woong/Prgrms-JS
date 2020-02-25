@@ -1,6 +1,6 @@
 import { URL, ERROR_MESSAGE } from '../constant.js'
 
-export async function loadJSONData(keyword) {
+export async function fetchImages(keyword) {
   try {
     const response = await fetch(`${URL.IMAGE_API}?text=${keyword}`)
     if (!response.ok) {
