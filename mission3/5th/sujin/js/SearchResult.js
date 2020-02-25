@@ -9,8 +9,8 @@ function SearchResult(data, $target){
 
     this.render = () => {
         this.$target.innerHTML = this.data
-        .map(item => `<img src="${item.imageUrl}">`)
-        .join('')
+            .map(item => `<img src="${item.imageUrl}">`)
+            .join('')
     }
 
     this.render()
