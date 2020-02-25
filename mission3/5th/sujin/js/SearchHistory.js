@@ -5,9 +5,13 @@ function SearchHistory ($target, inputData = [], { onSearch }) {
     const $historyList = document.querySelector('#search-history')
 
     this.render = () => {
-        this.$target.innerHTML = '<ul>' + this.historyList
+        let htmlString = []
+
+        htmlString = this.historyList
             .map(item => `<li>${item}</li>`)
-            .join('') + '</ul>'
+            .join('') 
+        
+        this.$target.innerHTML = `<ul>${htmlString}</ul>`
         this.bindEvent()
     }
 
