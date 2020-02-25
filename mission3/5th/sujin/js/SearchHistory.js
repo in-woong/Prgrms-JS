@@ -1,7 +1,7 @@
-function SearchHistory ($target, inputData, { onSearch }) {
+function SearchHistory ($target, inputData = [], { onSearch }) {
     this.$target = $target
     this.inputData = inputData
-    this.historyList = ['피자']
+    this.historyList = []
     const $historyList = document.querySelector('#search-history')
 
     this.render = () => {

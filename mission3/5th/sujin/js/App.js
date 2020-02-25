@@ -1,12 +1,11 @@
-import SearchKeyword from './SearchKeyword.js'
+import SearchKeyword from "./SearchKeyword.js"
 import SearchResult from "./SearchResult.js"
 import SearchHistory from "./SearchHistory.js"
-import dummyData from './dummyData.js'
 
 function App() {
     this.render = () => {
-        this.searchResult = new SearchResult(dummyData, document.querySelector('#search-result'))
-        this.searchHistory = new SearchHistory(document.querySelector('#search-history'), '피자', {
+        this.searchResult = new SearchResult([], document.querySelector('#search-result'))
+        this.searchHistory = new SearchHistory(document.querySelector('#search-history'), [], {
             onSearch: this.handleSearch
         })
         this.searchKeyword = new SearchKeyword(document.querySelector('#search-keyword'), {
