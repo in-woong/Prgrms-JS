@@ -13,3 +13,16 @@ export const debounce = (targetFunction, debounceTime) => {
     timeoutId = setTimeout(functionToBeCalledLater, debounceTime)
   }
 }
+
+export async function jjalbotApi(value) {
+  try {
+    const data = await fetch(`https://jjalbot.com/api/jjals?text=${value}`)
+    // if (data === null) {
+    //   alert('존재 하지 않은 데이터 입니다.')
+    //   return
+    // }
+    return data.json()
+  } catch (e) {
+    console.log(e)
+  }
+}
