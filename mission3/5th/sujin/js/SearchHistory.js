@@ -4,15 +4,19 @@ function SearchHistory ($target, inputData = [], { onSearch }) {
     this.historyList = []
     const $historyList = document.querySelector('#search-history')
 
+    this.init = () => {
+        this.render()
+        this.bindEvent()
+    }
+
     this.render = () => {
-        let htmlString = []
+        let htmlString = ''
 
         htmlString = this.historyList
             .map(item => `<li>${item}</li>`)
             .join('') 
         
         this.$target.innerHTML = `<ul>${htmlString}</ul>`
-        this.bindEvent()
     }
 
     this.setState = (nextData) => {
@@ -27,6 +31,6 @@ function SearchHistory ($target, inputData = [], { onSearch }) {
         })
     }
 
-    this.render()
+    this.init()
 }
 export default SearchHistory

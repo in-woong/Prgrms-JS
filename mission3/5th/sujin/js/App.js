@@ -4,8 +4,10 @@ import SearchHistory from "./SearchHistory.js"
 import getSearchData from "./api.js"
 
 function App() {
+    this.data = []
+
     this.render = () => {
-        this.searchResult = new SearchResult([], document.querySelector('#search-result'))
+        this.searchResult = new SearchResult(this.data, document.querySelector('#search-result'))
         this.searchHistory = new SearchHistory(document.querySelector('#search-history'), [], {
             onSearch: this.handleSearch
         })
@@ -15,9 +17,14 @@ function App() {
         })
     }
 
+    this.setState = (nextData) => {
+        this.data = nextData
+        this.searchResult.setState(this.data)
+    }   
+
     this.handleSearch = async (inputData) => {
         this.data = await getSearchData(inputData)
-        this.searchResult.setState(this.data)
+        this.setState(this.data)
     }
 
     this.addHistory = (inputData) => {
