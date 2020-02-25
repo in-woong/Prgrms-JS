@@ -1,5 +1,9 @@
 import { SELECTOR } from './constant.js'
 
+/*
+4기 임동준님 리뷰 코멘트의 제프리님 코드 참조 #141 
+https://github.com/learn-programmers/prgrms-fejs/pull/141
+*/
 export const debounce = (targetFunction, waitTime) => {
   let timer = null
   return (...args) => {
