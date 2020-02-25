@@ -1,12 +1,12 @@
 import { debounce } from './util.js'
 
-export default function SearchHistory(history, search) {
+export default function SearchHistory(history, onClickHistory) {
   this.$historyElement = document.querySelector('#search-history')
-  this.search = search
+  this.onClickHistory = onClickHistory
   this.history = history
 
-  this.setState = searchHistory => {
-    this.history = searchHistory
+  this.setState = historyData => {
+    this.history = historyData
     this.render()
   }
 
@@ -19,6 +19,6 @@ export default function SearchHistory(history, search) {
 
   this.$historyElement.addEventListener(
     'click',
-    debounce(e => this.search(e), 1000)
+    debounce(e => this.onClickHistory(e.target.textContent), 1000)
   )
 }
