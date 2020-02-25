@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" id="input" />
+    <script>
+      let timer
+      document.getElementById('input').addEventListener('keyup', function(e) {
+        if (timer) {
+          clearTimeout(timer)
+        }
+        timer = setTimeout(function() {
+          console.log('ajax 요청', e.target.value)
+        }, 500)
+      })
+    </script>
+  </body>
+</html>
