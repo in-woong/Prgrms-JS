@@ -44,7 +44,6 @@ export default function App() {
     }
     this.historyData = newData.add(keyword)
     this.searchHistory.setState(this.historyData)
-    this.searchKeyword.setState('')
   }
 
   const getResultData = async searchKeyword => {
