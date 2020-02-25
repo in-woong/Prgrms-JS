@@ -11,4 +11,10 @@ const validateEmptyInput = data => {
     return false
 }
 
-export { validateElement, validateEmptyInput } 
+const validateApiResponse = response => {
+    if (!response.ok) {
+        throw new Error(ERROR_MESSAGE.API_ERROR)
+    }    
+}
+
+export { validateElement, validateEmptyInput, validateApiResponse } 
