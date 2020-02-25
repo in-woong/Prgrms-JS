@@ -1,4 +1,4 @@
-function SearchHistory ($target, inputData, { search }) {
+function SearchHistory ($target, inputData, { onSearch }) {
     this.$target = $target
     this.inputData = inputData
     this.historyList = ['피자']
@@ -19,12 +19,8 @@ function SearchHistory ($target, inputData, { search }) {
 
     this.bindEvent = () => {
         $historyList.addEventListener('click', e => {
-            this.onClickSearchWord(e)
+            onSearch(e.target.innerText)
         })
-    }
-
-    this.onClickSearchWord = (e) => {
-        search(e.target.innerText)
     }
 
     this.render()

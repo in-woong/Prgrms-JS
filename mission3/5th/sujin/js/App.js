@@ -1,25 +1,24 @@
 import SearchKeyword from './SearchKeyword.js'
-import dummyData from './dummyData.js'
 import SearchResult from "./SearchResult.js"
 import SearchHistory from "./SearchHistory.js"
+import dummyData from './dummyData.js'
 
 function App() {
     this.render = () => {
         this.searchResult = new SearchResult(dummyData, document.querySelector('#search-result'))
         this.searchHistory = new SearchHistory(document.querySelector('#search-history'), '피자', {
-            search: this.search
+            onSearch: this.handleSearch
         })
         this.searchKeyword = new SearchKeyword(document.querySelector('#search-keyword'), {
-            search: this.search, addHistory: this.addHistory
+            onSearch: this.handleSearch, 
+            addHistory: this.addHistory
         })
     }
 
-    this.search = async (inputData) => {
-        await fetch(`https://jjalbot.com/api/jjals?text=${inputData}`)
-        .then(x => x.json())
-        .then(data => {
-            this.setState(data)
-        })
+    this.handleSearch = async (inputData) => {
+        const res = await fetch(`https://jjalbot.com/api/jjals?text=${inputData}`)
+        const data = await res.json()
+        this.setState(data)
     }
 
     this.addHistory = (inputData) => {
