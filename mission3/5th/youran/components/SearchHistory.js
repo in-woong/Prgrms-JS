@@ -16,13 +16,13 @@ export default function SearchHistory({ historyData, target, onSearch }) {
     let htmlString = ''
     this.historyData.forEach(
       keyword =>
-        (htmlString += `<span id="history-keyword" data-value=${keyword}>#${keyword}</span>`)
+        (htmlString += `<span class="history-keyword" data-value=${keyword}>#${keyword}</span>`)
     )
     this.$searchHistory.innerHTML = htmlString
   }
 
   this.$searchHistory.addEventListener('click', event => {
-    if (event.target.nodeName === 'SPAN') {
+    if (event.target.className === 'history-keyword') {
       this.onSearch(event.target.dataset.value)
     }
   })
