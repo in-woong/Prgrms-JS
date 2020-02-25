@@ -1,6 +1,7 @@
 import SearchKeyword from "./SearchKeyword.js"
 import SearchResult from "./SearchResult.js"
 import SearchHistory from "./SearchHistory.js"
+import getSearchData from "./api.js"
 
 function App() {
     this.render = () => {
@@ -15,20 +16,16 @@ function App() {
     }
 
     this.handleSearch = async (inputData) => {
-        const res = await fetch(`https://jjalbot.com/api/jjals?text=${inputData}`)
-        const data = await res.json()
-        this.setState(data)
+        this.data = await getSearchData(inputData)
+        this.searchResult.setState(this.data)
     }
 
     this.addHistory = (inputData) => {
-        this.searchHistory.setState(inputData)
-    }
-
-    this.setState = (nextData) => {
-        this.searchResult.setState(nextData)
+        if(inputData.length) {
+            this.searchHistory.setState(inputData)
+        }
     }
 
     this.render()
 }
-
 export default App
