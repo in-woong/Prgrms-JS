@@ -13,12 +13,12 @@ export default function SearchHistory({ historyData, target, onSearch }) {
   this.onSearch = onSearch
 
   this.render = () => {
-    let htmlString = ''
-    this.historyData.forEach(
-      keyword =>
-        (htmlString += `<span class="history-keyword" data-value=${keyword}>#${keyword}</span>`)
-    )
-    this.$searchHistory.innerHTML = htmlString
+    this.$searchHistory.innerHTML = Array.from(this.historyData)
+      .map(
+        keyword =>
+          `<span class="history-keyword" data-value=${keyword}>#${keyword}</span>`
+      )
+      .join('')
   }
 
   this.$searchHistory.addEventListener('click', event => {
