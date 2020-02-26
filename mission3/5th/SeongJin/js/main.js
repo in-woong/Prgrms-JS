@@ -18,15 +18,19 @@ export default function main() {
   }
 
   this.search = async e => {
+    this.data = await jjalbotApi(e.target.value).then(data => {
+      if (data.length === 0) {
+        alert('데이터가 존재하지 않습니다.')
+        throw new Error('데이터가 존재하지 않습니다.')
+      }
+      this.searchResult.setState(data)
+    })
     if (this.history === null) {
       this.history = new Set(e.target.value)
     } else if (!this.history.includes(e.target.value)) {
       this.history.push(e.target.value)
     }
     this.searchHistory.setState(this.history)
-    this.data = await jjalbotApi(e.target.value).then(data => {
-      this.searchResult.setState(data)
-    })
   }
 
   this.onClickHistory = async textContent => {
