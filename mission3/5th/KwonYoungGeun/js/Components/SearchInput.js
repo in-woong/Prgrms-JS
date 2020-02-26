@@ -1,11 +1,8 @@
 import { $, debounce } from '../utils/index.js'
 import { validateElement } from '../validation/index.js'
-const constants = {
-  ENTER_KEY: 13,
-  TIME_OUT_DURATION: 500,
-}
+import { TIME_OUT_DURATION } from '../constants/index.js'
 
-function SearchInput({ target, requestData }) {
+function SearchInput({ target, onSearch }) {
   this.init = () => {
     this.$element = $(target)
     this.inputValue = null
@@ -20,7 +17,7 @@ function SearchInput({ target, requestData }) {
   this.bindEvents = () => {
     this.$element.addEventListener(
       'keyup',
-      debounce(e => requestData(e.target.value), constants.TIME_OUT_DURATION)
+      debounce(e => onSearch({ text: e.target.value }), TIME_OUT_DURATION)
     )
   }
 

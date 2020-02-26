@@ -1,9 +1,11 @@
 import SearchHistory from './SearchHistory.js'
 import SearchInput from './SearchInput.js'
 import SearchResult from './SearchResult.js'
+import ErrorView from './ErrorView.js'
 import { $ } from '../utils/index.js'
 import { fetchJjals } from '../api/index.js'
 import { validateElement } from '../validation/index.js'
+import { SEARCH_FAIL_ERROR_MESSAGE } from '../constants/index.js'
 
 function App(target) {
   this.init = () => {
@@ -11,16 +13,17 @@ function App(target) {
     this.data = null
     this.searchHistory = new SearchHistory({
       target: '#search-history',
-      requestData: this.requestData,
+      onSearch: this.onSearch,
     })
     this.searchInput = new SearchInput({
       target: '#search-keyword',
-      requestData: this.requestData,
+      onSearch: this.onSearch,
     })
     this.searchResult = new SearchResult({
       data: this.data,
       target: '#search-result',
     })
+    this.ErrorView = new ErrorView({ target: '.error-message' })
 
     this.validate(this.$element)
   }
@@ -29,16 +32,19 @@ function App(target) {
     validateElement($element)
   }
 
-  this.requestData = async text => {
-    this.data = await fetchJjals({ text })
-    console.log(this.data)
-    this.setState(text)
+  this.onSearch = async ({ text }) => {
+    try {
+      this.data = await fetchJjals({ text })
+      this.setState(text)
+    } catch (error) {
+      this.ErrorView.setState(SEARCH_FAIL_ERROR_MESSAGE)
+    }
   }
 
-  this.setState = text => {
-    this.searchInput.setState(text)
+  this.setState = inputValue => {
+    this.searchInput.setState(inputValue)
     this.searchResult.setState(this.data)
-    this.searchHistory.setState(text)
+    this.searchHistory.setState(inputValue)
   }
 
   this.init()

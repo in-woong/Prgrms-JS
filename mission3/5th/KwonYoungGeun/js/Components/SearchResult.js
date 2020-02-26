@@ -21,9 +21,7 @@ function SearchResult({ data, target }) {
 
   this.render = () => {
     this.$element.innerHTML = this.data
-      .map(data => {
-        return `<img src="${data.imageUrl}"></img>`
-      })
+      .map(data => `<img src="${data.imageUrl}"></img>`)
       .join('')
   }
 

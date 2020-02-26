@@ -1,7 +1,7 @@
 import { $ } from '../utils/index.js'
 import { validateElement } from '../validation/index.js'
 
-function SearchHistory({ target, requestData }) {
+function SearchHistory({ target, onSearch }) {
   this.init = () => {
     this.$element = $(target)
     this.keywordHistory = []
@@ -21,7 +21,7 @@ function SearchHistory({ target, requestData }) {
 
   this.onClick = e => {
     if (e.target.className === 'keyword_item') {
-      requestData(e.target.innerText)
+      onSearch({ text: e.target.innerText })
     }
   }
 
@@ -36,9 +36,7 @@ function SearchHistory({ target, requestData }) {
 
   this.render = () => {
     this.$element.innerHTML = `<ul>${this.keywordHistory
-      .map(keyword => {
-        return `<li class="keyword_item">${keyword}</li>`
-      })
+      .map(keyword => `<li class="keyword_item">${keyword}</li>`)
       .join('')}</ul>`
   }
 
