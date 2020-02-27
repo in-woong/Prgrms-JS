@@ -6,8 +6,6 @@ function TodoInput(selector, handleInput) {
   checkSelector(selector)
   this.$target = document.querySelector(selector)
 
-  //   this.handleInput = handleInput;
-
   this.initialize = function() {
     this.$input = document.createElement('input')
     this.$input.setAttribute('type', 'text')
@@ -15,7 +13,6 @@ function TodoInput(selector, handleInput) {
 
     //이벤트 리스너 추가
     this.$input.addEventListener('keydown', e => {
-      const ENTER_KEY = 13
       if (e.keyCode === ENTER_KEY) {
         if (e.target.value === '') {
           alert('할일을 입력해주세요!!')

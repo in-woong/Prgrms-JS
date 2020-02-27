@@ -14,13 +14,13 @@ function TodoList(selector, data, handleEvents) {
 
   this.render = () => {
     this.$target.innerHTML = this.data
-      .map((d, index) => {
-        return d.isCompleted
+      .map((todo, index) => {
+        return todo.isCompleted
           ? `<li data-index=${index}>${index + 1}. <s>${
-              d.text
+              todo.text
             }</s><button class="toggleBtn">Fin</button><button class="deleteBtn">Del</button></li>`
           : `<li data-index=${index}>${index + 1}. ${
-              d.text
+              todo.text
             }<button class="toggleBtn">Fin</button><button class="deleteBtn">Del</button></li>`
       })
       .join('')

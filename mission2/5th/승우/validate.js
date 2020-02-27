@@ -22,7 +22,7 @@ function checkData(data) {
 }
 function checkSelector(selector) {
   const $target = document.querySelector(selector)
-  if ($target === null) {
+  if (!$target) {
     throw new Error('해당 엘리먼트가 존재하지 않습니다')
   }
 }

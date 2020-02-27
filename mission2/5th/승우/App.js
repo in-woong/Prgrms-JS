@@ -1,8 +1,5 @@
 //App.js
 
-//localStorage Name
-const STORAGE_DATA = 'todoData'
-
 function App(selector, title) {
   if (!(this instanceof App)) {
     throw new Error('New 키워드 없이 실행했습니다')
@@ -17,27 +14,31 @@ function App(selector, title) {
   //Initialize
   this.initialize = function() {
     //load data
+
     this.loadData()
 
-    const todoInput = 'todo-input'
-    const todoContainer = 'todo-container'
-    const countContainer = 'count-container'
-    const removeContainer = 'remove-container'
+    const todoInputSelector = 'todo-input'
+    const todoContainerSelector = 'todo-container'
+    const countContainerSelector = 'count-container'
+    const removeContainerSelector = 'remove-container'
 
-    this.$target.innerHTML = `<h1 class="title">${title}</h1><div class=${todoInput}></div><ul class=${todoContainer}></ul>
-    <div class=${countContainer}></div><div class=${removeContainer}><button class="removeAllBtn">remove all</button></div>`
+    this.$target.innerHTML = `<h1 class="title">${title}</h1>
+                              <div class=${todoInputSelector}></div>
+                              <ul class=${todoContainerSelector}></ul>
+                              <div class=${countContainerSelector}></div>
+                              <div class=${removeContainerSelector}><button class="removeAllBtn">remove all</button></div>`
 
     //todoInput
-    this.myTodoInput = new TodoInput('.' + todoInput, handleInput)
+    this.myTodoInput = new TodoInput(`.${todoInputSelector}`, handleInput)
 
     //todoList
-    this.myTodoList = new TodoList('.' + todoContainer, this.data, {
+    this.myTodoList = new TodoList(`.${todoContainerSelector}`, this.data, {
       onDelete: handleDelete,
       onToggle: handleToggle,
     })
 
     //todoCount
-    this.myTodoCount = new TodoCount('.' + countContainer, this.data)
+    this.myTodoCount = new TodoCount(`.${countContainerSelector}`, this.data)
 
     //removeAllBtn
     const removeAllBtn = document.querySelector('.removeAllBtn')
@@ -63,9 +64,9 @@ function App(selector, title) {
 
   //function handleInput
   const handleInput = value => {
-    // const newData = [...this.data, { text: value, isCompleted: false }]
-    this.data.push({ text: value, isCompleted: false })
-    this.setState(this.data)
+    const newData = [...this.data, { text: value, isCompleted: false }]
+    // this.data.push({ text: value, isCompleted: false })
+    this.setState(newData)
   }
 
   //function handleDelete
@@ -86,13 +87,10 @@ function App(selector, title) {
   //엘리먼트는 아직 생성되지 않은 이벤트를 리슨할 수 있습니다.
   const removeAllEvent = new CustomEvent('removeAll', {
     bubbles: true,
-    // detail: { data: [] },
   })
 
   //RemoveAll Function
   const removeAllFnc = e => {
-    // this.data = e.detail.data
-    // this.data.splice(0, this.data.length)
     this.data.length = 0
     this.setState(this.data)
   }
@@ -100,6 +98,7 @@ function App(selector, title) {
   //Data Load Function
   this.loadData = () => {
     const todoData = JSON.parse(localStorage.getItem(STORAGE_DATA))
+
     if (todoData) {
       checkData(todoData)
       this.data = todoData
