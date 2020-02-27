@@ -1,15 +1,15 @@
 //SearchKeyword.js
 
-function SearchKeyword($selector, { onSearch, onAddHistory }) {
-  this.$target = document.querySelector($selector)
+function SearchKeyword({ $selector, onKeyUp }) {
+  this.init = () => {
+    validateSelector($selector)
 
-  this.$target.addEventListener(
-    'keyup',
-    debounce(e => {
-      onSearch(e.target.value)
-      onAddHistory(e.target.value)
-      e.target.value = ''
-      e.target.focus()
-    }, debounceTime)
-  )
+    this.$target = document.querySelector($selector)
+
+    this.keyUp = onKeyUp
+
+    this.$target.addEventListener('keyup', this.keyUp)
+  }
+
+  this.init()
 }

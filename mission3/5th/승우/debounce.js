@@ -10,11 +10,3 @@ function debounce(fn, delay) {
     }, delay)
   }
 }
-
-////이전 코드
-//래퍼런스 : https://github.com/learn-programmers/prgrms-fejs/pull/183
-// function debounce(callback, time) {
-//   if (timer) clearTimeout(timer)
-
-//   timer = setTimeout(callback, time)
-// }

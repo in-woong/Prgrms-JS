@@ -1,7 +1,9 @@
 //SearchHistory.js
 
-function SearchHistory(historyData, $selector, { onSearch }) {
-  this.historyData = historyData
+function SearchHistory({ historyData, $selector, onSearch }) {
+  validateSelector($selector)
+
+  this.historyData = historyData || []
   this.$target = document.querySelector($selector)
 
   this.render = () => {
@@ -18,11 +20,14 @@ function SearchHistory(historyData, $selector, { onSearch }) {
   }
 
   //클릭 이벤트 추가
-  this.$target.addEventListener('click', e => {
-    if (e.target && e.target.nodeName === 'LI') {
-      onSearch(e.target.textContent)
-    }
-  })
+  this.$target.addEventListener(
+    'click',
+    debounce(e => {
+      if (e.target && e.target.nodeName === 'LI') {
+        onSearch(e.target.textContent)
+      }
+    }, debounceTime)
+  )
 
   this.render()
 }

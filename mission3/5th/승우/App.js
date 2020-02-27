@@ -1,6 +1,42 @@
 //App.js
+// import { fetchJalData } from './Api'
 
 function App() {
+  //functions
+  this.fetchJalData = async keyword => {
+    try {
+      const response = await fetch(`${API_URL}${keyword}`)
+      const result = response.json()
+      return result
+    } catch (e) {
+      errorView.setState(e.message)
+    }
+  }
+
+  this.renderImageData = async keyword => {
+    try {
+      const resultData = await this.fetchJalData(keyword)
+      this.data = resultData
+      this.searchResult.setState(resultData)
+    } catch (e) {
+      errorView.setState(e.message)
+    }
+  }
+
+  this.addHistory = keyword => {
+    if (keyword !== '') {
+      const newHistoryData = [...this.historyData, keyword]
+      this.historyData = newHistoryData
+      this.searchHistory.setState(newHistoryData)
+    }
+  }
+
+  this.onKeyUp = debounce(e => {
+    this.renderImageData(e.target.value)
+    this.addHistory(e.target.value)
+    e.target.value = ''
+  }, debounceTime)
+
   this.init = () => {
     //data 초기화
     this.data = []
@@ -8,50 +44,27 @@ function App() {
 
     try {
       //Component 선언
-      this.$searchKeyword = new SearchKeyword(searchKeywordSelector, {
-        onSearch: this.getFetchedData,
-        onAddHistory: this.addHistory,
+      this.errorView = new ErrorView({ $selector: ERROR_VIEW_SELECTOR })
+
+      this.$searchKeyword = new SearchKeyword({
+        $selector: SEARCH_KEYWORD_SELECTOR,
+        onKeyUp: this.onKeyUp,
       })
-      this.searchResult = new SearchResult(this.data, searchResultSelector)
-      this.searchHistory = new SearchHistory(
-        this.historyData,
-        searchHistorySelector,
-        {
-          onSearch: this.getFetchedData,
-        }
-      )
+
+      this.searchResult = new SearchResult({
+        data: this.data,
+        $selector: SEARCH_RESULT_SELECTOR,
+      })
+
+      this.searchHistory = new SearchHistory({
+        historyData: this.historyData,
+        $selector: SEARCH_HISTORY_SELECTOR,
+        onSearch: this.renderImageData,
+      })
     } catch (e) {
-      console.log(e)
+      this.errorView.setState(e)
     }
   } //End Init
-
-  //functions
-  this.fetchData = inputValue => {
-    return fetch(`https://jjalbot.com/api/jjals?text=${inputValue}`).then(
-      res => {
-        return res.json()
-      }
-    )
-  }
-
-  this.getFetchedData = async inputValue => {
-    try {
-      const resultData = await this.fetchData(inputValue)
-      console.log(JSON.stringify(resultData, null, 2))
-      this.data = resultData
-      this.searchResult.setState(resultData)
-    } catch (e) {
-      console.log(e)
-    }
-  }
-
-  this.addHistory = inputHistory => {
-    if (inputHistory !== '') {
-      const newHistoryData = [...this.historyData, inputHistory]
-      this.historyData = newHistoryData
-      this.searchHistory.setState(newHistoryData)
-    }
-  }
 
   this.init()
 }
