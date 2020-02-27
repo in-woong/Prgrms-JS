@@ -4,5 +4,5 @@ const searchResultSelector = '#search-result'
 const searchHistorySelector = '#search-history'
 
 //timer
-let timer = null
+// let timer = null
 const debounceTime = 400

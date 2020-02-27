@@ -38,7 +38,6 @@ function App() {
     try {
       const resultData = await this.fetchData(inputValue)
       console.log(JSON.stringify(resultData, null, 2))
-      //   return data
       this.data = resultData
       this.searchResult.setState(resultData)
     } catch (e) {
