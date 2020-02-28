@@ -17,23 +17,23 @@ function App() {
     this.data = [...this.data, newTodo]
     this.todoList.setState()
   }
-  
-  this.getAllTodos = async (username) => {
+
+  this.getAllTodos = async username => {
     const updateData = await fetchAllTodos(username)
     this.setState(updateData)
   }
 
-  this.onAddTodo = async (newTodo) => {
+  this.onAddTodo = async newTodo => {
     await postTodo(newTodo)
     this.getAllTodos(USER.NAME)
   }
-  
-  this.onRemoveTodo = (todoId) => {
+
+  this.onRemoveTodo = async todoId => {
     await deleteTodo(todoId)
     this.getAllTodos(USER.NAME)
   }
 
-  this.onToggleTodo = (todoId) => {
+  this.onToggleTodo = async todoId => {
     await updateTodo(todoId)
     this.getAllTodos(USER.NAME)
   }
