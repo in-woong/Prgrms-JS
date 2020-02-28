@@ -11,6 +11,14 @@ export const fetchTodosByUsername = async params => {
 }
 
 /**
+ * GET /users
+ */
+export const fetchUsers = async () => {
+  const res = await fetch(`${BASE_URL}/users`)
+  return await res.json()
+}
+
+/**
  * POST /:username
  * @param { Object } params
  * @param { string } params.username

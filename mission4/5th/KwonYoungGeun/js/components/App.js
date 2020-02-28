@@ -1,9 +1,11 @@
+import UserList from './UserList.js'
 import TodoInput from './TodoInput.js'
 import TodoList from './TodoList.js'
 import { $ } from '../utils/index.js'
 import { validateElement } from '../validation/index.js'
 import {
   fetchTodosByUsername,
+  fetchUsers,
   postTodo,
   removeTodo,
   toggleTodo,
@@ -13,7 +15,12 @@ function App({ target }) {
   this.init = () => {
     this.$element = $(target)
     this.username = 'KwonYoungGeun'
-    this.todoListData = null
+    this.userListData = []
+    this.todoListData = []
+    this.userList = new UserList({
+      target: '#user-list',
+      onChangeUser: this.onChangeUser,
+    })
     this.todoInput = new TodoInput({
       target: '.todo-input-container',
       onSubmit: this.onSubmit,
@@ -30,6 +37,11 @@ function App({ target }) {
 
   this.validate = $element => {
     validateElement($element)
+  }
+
+  this.onChangeUser = username => {
+    this.username = username
+    this.setState(this.username)
   }
 
   this.onRemove = async id => {
@@ -49,10 +61,15 @@ function App({ target }) {
 
   this.setState = async username => {
     this.username = username
+    this.userListData = await fetchUsers()
     this.todoListData = await fetchTodosByUsername({ username: this.username })
 
+    this.userList.setState(this.userListData)
     this.todoInput.setState('')
-    this.todoList.setState(this.todoListData)
+    this.todoList.setState({
+      username: this.username,
+      todoListData: this.todoListData,
+    })
   }
 
   this.init()

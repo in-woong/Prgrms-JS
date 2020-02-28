@@ -4,6 +4,7 @@ import { validateElement } from '../validation/index.js'
 function TodoList({ target, onRemove, onToggle }) {
   this.init = () => {
     this.$element = $(target)
+    this.username = ''
     this.todoList = []
 
     this.validate(this.$element)
@@ -26,7 +27,6 @@ function TodoList({ target, onRemove, onToggle }) {
       'deleted-todo': id => onToggle(id),
       default: () => {},
     }
-    console.log(e.target)
 
     const id = e.target.getAttribute('data-id')
     const logic = logics[e.target.className] || logics['default']
@@ -35,12 +35,14 @@ function TodoList({ target, onRemove, onToggle }) {
   }
 
   this.setState = data => {
-    this.todoList = data
+    this.username = data.username
+    this.todoList = data.todoListData
     this.render()
   }
 
   this.render = () => {
-    this.$element.innerHTML = `<ul>${this.todoList
+    this.$element.innerHTML = `<div>${this.username}님의 TODO 리스트</div>
+    <ul>${this.todoList
       .map(todoItem =>
         todoItem.isCompleted
           ? `<li class="todo-item" data-id=${todoItem._id}><del class="deleted-todo" data-id=${todoItem._id}>${todoItem.content}</del><button class="remove-button" data-id=${todoItem._id}>삭제</button></li>`
