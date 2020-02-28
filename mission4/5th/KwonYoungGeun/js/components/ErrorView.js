@@ -3,6 +3,7 @@ function ErrorView({ target, errorMessage = '' }) {
   this.init = () => {
     this.$element = $(target)
     this.errorMessage = errorMessage
+    this.render()
   }
 
   this.setState = errorMessage => {

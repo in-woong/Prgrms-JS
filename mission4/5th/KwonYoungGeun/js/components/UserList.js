@@ -9,6 +9,7 @@ function UserList({ target, onChangeUser }) {
     this.bindEvents()
     this.render()
   }
+
   this.validate = $element => {
     validateElement($element)
   }

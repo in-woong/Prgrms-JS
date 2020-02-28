@@ -1,6 +1,7 @@
 import UserList from './UserList.js'
 import TodoInput from './TodoInput.js'
 import TodoList from './TodoList.js'
+import LoadingView from './LoadingView.js'
 import { $ } from '../utils/index.js'
 import { validateElement } from '../validation/index.js'
 import {
@@ -30,6 +31,7 @@ function App({ target }) {
       onRemove: this.onRemove,
       onToggle: this.onToggle,
     })
+    this.loadingView = new LoadingView({ target: '#loading-status' })
 
     this.validate(this.$element)
     this.setState(this.username)
@@ -60,6 +62,8 @@ function App({ target }) {
   }
 
   this.setState = async username => {
+    this.loadingView.setState(true)
+
     this.username = username
     this.userListData = await fetchUsers()
     this.todoListData = await fetchTodosByUsername({ username: this.username })
@@ -70,6 +74,7 @@ function App({ target }) {
       username: this.username,
       todoListData: this.todoListData,
     })
+    this.loadingView.setState(false)
   }
 
   this.init()
