@@ -10,13 +10,16 @@ function SearchHistory ($target, inputData = [], { onSearch }) {
     }
 
     this.render = () => {
-        let htmlString = ''
+        // let htmlString = ''
 
-        htmlString = this.historyList
-            .map(item => `<li>${item}</li>`)
-            .join('') 
+        // htmlString = this.historyList
+        //     .map(item => `<li>${item}</li>`)
+        //     .join('') 
         
-        this.$target.innerHTML = `<ul>${htmlString}</ul>`
+        // this.$target.innerHTML = `<ul>${htmlString}</ul>`
+        this.$target.innerHTML = `<ul>${this.historyList
+            .map(item => `<li>${item}</li>`)
+            .join('')}</ul>`
     }
 
     this.setState = (nextData) => {
