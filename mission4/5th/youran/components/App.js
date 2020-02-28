@@ -38,3 +38,5 @@ function App() {
     this.getAllTodos(USER.NAME)
   }
 }
+
+export default App

@@ -1,3 +1,8 @@
+import App from './components/App.js'
+
+new App()
+
+/*
 ;(async function() {
   const username = 'roto'
 
@@ -54,3 +59,4 @@
       }
     })
 })()
+*/
