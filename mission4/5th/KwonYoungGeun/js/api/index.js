@@ -11,7 +11,6 @@ export const fetchTodosByUsername = async params => {
     const res = await fetch(`${BASE_URL}/${params.username}/`)
     return await res.json()
   } catch (error) {
-    console.dir(response)
     errorHandler(error)
   }
 }
@@ -47,7 +46,6 @@ export const postTodo = async (params, request) => {
       }),
     })
   } catch (error) {
-    console.dir(response)
     errorHandler(error)
   }
 }
