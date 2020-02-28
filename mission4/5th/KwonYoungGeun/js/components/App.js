@@ -4,6 +4,7 @@ import TodoList from './TodoList.js'
 import LoadingView from './LoadingView.js'
 import { $ } from '../utils/index.js'
 import { validateElement } from '../validation/index.js'
+import { selectors } from '../constants/index.js'
 import {
   fetchTodosByUsername,
   fetchUsers,
@@ -19,19 +20,19 @@ function App({ target }) {
     this.userListData = []
     this.todoListData = []
     this.userList = new UserList({
-      target: '#user-list',
+      target: selectors.USER_LIST,
       onChangeUser: this.onChangeUser,
     })
     this.todoInput = new TodoInput({
-      target: '.todo-input-container',
+      target: selectors.TODO_INPUT,
       onSubmit: this.onSubmit,
     })
     this.todoList = new TodoList({
-      target: '#todo-list',
+      target: selectors.TODO_LIST,
       onRemove: this.onRemove,
       onToggle: this.onToggle,
     })
-    this.loadingView = new LoadingView({ target: '#loading-status' })
+    this.loadingView = new LoadingView({ target: selectors.LOADING_VIEW })
 
     this.validate(this.$element)
     this.setState(this.username)

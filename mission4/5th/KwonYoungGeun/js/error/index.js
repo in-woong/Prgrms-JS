@@ -1,9 +1,10 @@
 import ErrorView from '../components/ErrorView.js'
+import { selectors, ERROR_MESSAGE } from '../constants/index.js'
 
 export const errorHandler = error => {
-  console.dir(error)
+  console.error(error)
   new ErrorView({
-    target: '#error-message',
-    errorMessage: '데이터를 가져오는데 실패하였습니다. 🥺',
+    target: selectors.ERROR_VIEW,
+    errorMessage: ERROR_MESSAGE,
   })
 }
