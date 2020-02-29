@@ -34,3 +34,5 @@ function TodoList(params) {
 
   this.render()
 }
+
+export default TodoList
