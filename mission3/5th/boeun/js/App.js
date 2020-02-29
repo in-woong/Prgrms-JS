@@ -1,4 +1,3 @@
-
 import SearchResult from './SearchResult.js';
 import SearchInput from './SearchInput.js';
 import SearchHistory from './SearchHistory.js';

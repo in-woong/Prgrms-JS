@@ -23,6 +23,7 @@ const getData = (key) => {
     } catch(e) {
         alert('데이터를 정상적으로 파싱하지 못했습니다');
         console.error('데이터를 정상적으로 파싱하지 못했습니다.');
+        return null;
     }
 }
 

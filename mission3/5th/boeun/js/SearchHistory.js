@@ -4,7 +4,7 @@ import { getData, setData } from './util.js';
 
 function SearchHistory(target, onClickHistory) {
 
-    this.historyData = getData(STORAGE_KEY_HISTORY) || [];
+    this.historyData = getData(STORAGE_KEY_HISTORY);
     this.$target = document.querySelector(target);
 
     validateElement(this.$target);
@@ -13,8 +13,7 @@ function SearchHistory(target, onClickHistory) {
 
     this.render = () => {        
         if(this.historyData) {
-            const htmlString = this.historyData.map(d => `<div>${d}</div>`).join('');
-            this.$target.innerHTML = htmlString;
+            this.$target.innerHTML = this.historyData.map(historyData => `<div>${historyData}</div>`).join('');
         }
     }  
 

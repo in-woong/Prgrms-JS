@@ -4,10 +4,9 @@ function SearchResult(target, data) {
     
   this.render = () => {
     if(this.data) {
-      const htmlString = this.data.map(d => `<img src="${d.imageUrl}">`).join('');
-      document.querySelector(target).innerHTML = htmlString;
+      document.querySelector(target).innerHTML = this.data.map(d => `<img src="${d.imageUrl}">`).join('');
     } else {
-      document.querySelector(target).innerHTML = `검색 결과가 없습니다.`;
+      document.querySelector(target).innerHTML = '검색 결과가 없습니다.';
     }
   }
 
