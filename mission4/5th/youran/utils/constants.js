@@ -10,3 +10,7 @@ export const USER = {
 export const KEY_CODE = {
   ENTER: 13,
 }
+
+export const URL = {
+  TODO_API: 'http://todo-api.roto.codes',
+}

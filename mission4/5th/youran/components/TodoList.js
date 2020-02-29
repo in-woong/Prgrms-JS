@@ -17,16 +17,24 @@ function TodoList(data, $target, { onToggleTodo, onRemoveTodo }) {
   })
 
   this.setState = nextData => {
+    this.validate(nextData)
     this.data = nextData
     this.render()
   }
 
+  this.validate = data => {
+    if (!Array.isArray(data)) {
+      throw new Error('데이터 형식이 올바르지 않습니다.')
+    }
+  }
+
   this.generateHTMLString = () => {
+    this.validate(this.data)
     if (this.data.length < 1) {
       return '아직 할 일이 없어요.'
     }
 
-    this.data
+    return this.data
       .map(
         todo => `<li data-id="${todo._id}">
       ${todo.isCompleted ? `<s>${todo.content}</s>` : `${todo.content}`}
