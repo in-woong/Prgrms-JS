@@ -1,0 +1,56 @@
+h1 {
+  margin: 0;
+}
+
+.main {
+  width: 500px;
+  text-align: center;
+  background-color: #f0ffff;
+  padding: 10;
+  float: left;
+}
+
+.todo-list {
+  margin: 15 0;
+}
+
+.list-item {
+  display: inline-block;
+  cursor: pointer;
+}
+
+#todo-count {
+  margin: 15;
+}
+
+#todo-input {
+  margin-top: 10;
+  width: 300px;
+  text-align: center;
+}
+
+#user-list-wrapper {
+  padding: 0;
+  list-style-type: none;
+  cursor: pointer;
+  margin: 15;
+  text-align: center;
+}
+
+.user-list-item {
+  padding: 5;
+}
+
+.user-list-item:hover {
+  background-color: mistyrose;
+}
+
+#user-list-parent {
+  float: left;
+  background-color: lightpink;
+  width: 200px;
+  height: 300px;
+  margin-left: 20;
+  text-align: center;
+  overflow-y: auto;
+}
