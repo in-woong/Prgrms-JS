@@ -1,35 +1,42 @@
-function TodoList(params) {
-  const $target = params.$target
-  const onClick = params.onClick
-  const onRemove = params.onRemove
-  let data = params.data || []
+function TodoList(data, $target, { onToggleTodo, onRemoveTodo }) {
+  this.data = data
+  this.$target = $target
+  this.onToggleTodo = onToggleTodo
+  this.onRemoveTodo = onRemoveTodo
 
-  $target.addEventListener('click', function(e) {
-    const id = e.target.closest('li').dataset.id
+  $target.addEventListener('click', event => {
+    // 보일러플레이트 코드
+    const id = event.target.closest('li').dataset.id
 
-    if (e.target.className === 'remove-button') {
-      e.stopPropagation()
-      onRemove(id)
+    if (event.target.className === 'remove-button') {
+      event.stopPropagation()
+      onRemoveTodo(id)
     } else {
-      onClick(id)
+      onToggleTodo(id)
     }
   })
 
-  this.setState = function(nextData) {
-    data = nextData
+  this.setState = nextData => {
+    this.data = nextData
     this.render()
   }
 
-  this.render = function() {
-    const htmlString = data.map(function(todo) {
-      const contentHTML = todo.isCompleted
-        ? `<strike>${todo.content}</strike>`
-        : `${todo.content}`
+  this.generateHTMLString = () => {
+    if (this.data.length < 1) {
+      return '아직 할 일이 없어요.'
+    }
 
-      return `<li data-id="${todo._id}">${contentHTML} <button class="remove-button">Remove</button></li>`
-    })
+    this.data
+      .map(
+        todo => `<li data-id="${todo._id}">
+      ${todo.isCompleted ? `<s>${todo.content}</s>` : `${todo.content}`}
+      <button class="remove-button">X</button>`
+      )
+      .join('')
+  }
 
-    $target.innerHTML = `<ul>${htmlString.join('')}</ul>`
+  this.render = () => {
+    this.$target.innerHTML = `<ul>${this.generateHTMLString()}</ul>`
   }
 
   this.render()
