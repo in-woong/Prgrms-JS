@@ -12,7 +12,6 @@ function Users(userList, $target, { onChangeUser }) {
   }
 
   this.setState = nextData => {
-    console.log('why!')
     this.userList = nextData
     this.render()
   }

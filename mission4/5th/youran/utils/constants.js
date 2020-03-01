@@ -1,7 +1,8 @@
 export const SELECTOR = {
   TODO_LIST: '#todo-list',
   TODO_INPUT: '#todo-input',
-  USERS: '#users',
+  USERS: '#user-list',
+  TODO_USER: '#todo-user',
 }
 
 export const KEY_CODE = {
