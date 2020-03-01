@@ -25,6 +25,64 @@ function App() {
   this.todoCount = null
   this.todoList = null
 
+  this.init = async function() {
+    try {
+      // 로딩 화면 띄우고 데이터 가져오기
+      this.loading = new Loading(document.querySelector('#loading'))
+      this.todoData = await this.setLoadingBeforeFetch(() =>
+        api.fetchTodoList(this.userName)
+      )
+      this.userData = await api.fetchUserDataList()
+
+      // Todo 제목 설정
+      this.todoTitle = document.querySelector(`#todo-title`)
+      this.todoTitle.innerHTML = getTodoTitle(this.userName)
+
+      // 각 컴포넌트의 element 정의, 컴포넌트 생성
+      const $todoCount = document.querySelector(`#${this.todoCountId}`)
+      const $todoList = document.querySelector(`#${this.todoListId}`)
+      const $todoInput = document.querySelector(`#${this.todoInputId}`)
+      const $todoUserList = document.querySelector(`#${this.todoUserList}`)
+
+      this.todoCount = new TodoCount({
+        $element: $todoCount,
+        data: this.getTodoCountData(this.todoData),
+      })
+
+      this.todoList = new TodoList({
+        $element: $todoList,
+        data: this.todoData,
+        onClickItem: handleClickTodoItem,
+        onDelete: handleDeleteTodoItem,
+      })
+
+      new TodoInput({
+        $element: $todoInput,
+        onInput: handleInputTodoItem,
+      })
+
+      new TodoUsers({
+        $element: $todoUserList,
+        data: this.userData,
+        onClickUser: handleClickUser,
+      })
+    } catch (e) {
+      console.log(e)
+      return
+    }
+  }
+
+  this.setState = function(newData) {
+    try {
+      this.todoCount.setState(this.getTodoCountData(newData))
+      this.todoList.setState(newData)
+      this.todoData = newData
+    } catch (e) {
+      console.log(e)
+      return
+    }
+  }
+
   const handleClickTodoItem = async id => {
     try {
       await api.toggleTodoItem(this.userName, this.todoData[id]._id)
@@ -83,70 +141,6 @@ function App() {
       totalCount: data.length,
       completedCount:
         data.length > 0 ? data.filter(item => item.isCompleted).length : 0,
-    }
-  }
-
-  this.init = async function() {
-    try {
-      this.loading = new Loading(document.querySelector('#loading'))
-      this.todoData = await this.setLoadingBeforeFetch(() =>
-        api.fetchTodoList(this.userName)
-      )
-      this.userData = await api.fetchUserDataList()
-    } catch (e) {
-      console.log(e)
-      return
-    }
-
-    this.todoTitle = document.querySelector(`#todo-title`)
-    this.render()
-  }
-
-  this.setState = function(newData) {
-    try {
-      this.todoCount.setState(this.getTodoCountData(newData))
-      this.todoList.setState(newData)
-      this.todoData = newData
-    } catch (e) {
-      console.log(e)
-      return
-    }
-  }
-
-  this.render = function() {
-    const $todoCount = document.querySelector(`#${this.todoCountId}`)
-    const $todoList = document.querySelector(`#${this.todoListId}`)
-    const $todoInput = document.querySelector(`#${this.todoInputId}`)
-    const $todoUserList = document.querySelector(`#${this.todoUserList}`)
-
-    this.todoTitle.innerHTML = getTodoTitle(this.userName)
-
-    try {
-      this.todoCount = new TodoCount({
-        $element: $todoCount,
-        data: this.getTodoCountData(this.todoData),
-      })
-
-      this.todoList = new TodoList({
-        $element: $todoList,
-        data: this.todoData,
-        onClickItem: handleClickTodoItem,
-        onDelete: handleDeleteTodoItem,
-      })
-
-      new TodoInput({
-        $element: $todoInput,
-        onInput: handleInputTodoItem,
-      })
-
-      new TodoUsers({
-        $element: $todoUserList,
-        data: this.userData,
-        onClickUser: handleClickUser,
-      })
-    } catch (e) {
-      console.log(e)
-      return
     }
   }
 
