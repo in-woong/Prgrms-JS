@@ -4,7 +4,7 @@ export const SELECTOR = {
 }
 
 export const USER = {
-  NAME: 'norang',
+  NAME: 'youran',
 }
 
 export const KEY_CODE = {

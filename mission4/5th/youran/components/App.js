@@ -5,8 +5,9 @@ import { SELECTOR, USER } from '../utils/constants.js'
 import { fetchAllTodos, postTodo, deleteTodo, putTodo } from '../utils/api.js'
 
 function App() {
-  this.init = async () => {
-    this.data = []
+  this.data = []
+
+  this.initComponents = () => {
     this.todoList = new TodoList(this.data, $(SELECTOR.TODO_LIST), {
       onToggleTodo: this.onToggleTodo,
       onRemoveTodo: this.onRemoveTodo,
@@ -15,12 +16,10 @@ function App() {
     this.todoInput = new TodoInput($(SELECTOR.TODO_INPUT), {
       onAddTodo: this.onAddTodo,
     })
-    await this.getAllTodos()
   }
 
   this.setState = updateData => {
     this.data = updateData
-
     this.todoList.setState(this.data)
   }
 
@@ -44,7 +43,8 @@ function App() {
     await this.getAllTodos(USER.NAME)
   }
 
-  this.init()
+  this.initComponents()
+  this.getAllTodos()
 }
 
 export default App
