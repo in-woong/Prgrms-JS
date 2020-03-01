@@ -22,7 +22,7 @@ function App() {
             allRemoveTodo: this.allRemoveTodo
         })
         this.todoCount = new TodoCount(document.querySelector('#todo-count'), this.data)
-        this.fetchAPI = new fetchAPI()
+        this.fetchAPI = new fetchAPI(this.userName)
 
         this.getFetchData()
         this.getFetchUserData()

@@ -1,6 +1,10 @@
-function fetchAPI() {
-    this.settingName = (text) => {
-        this.username = text
+function fetchAPI(username) {
+    this.init = () => {
+        this.settingName()
+    }
+
+    this.settingName = (username = 'sujin') => {
+        this.username = username
     }
 
     this.fetchUserData = async () => {
@@ -50,5 +54,7 @@ function fetchAPI() {
             method: 'PUT',
         })
     }
+
+    this.init()
 }
 export default fetchAPI
