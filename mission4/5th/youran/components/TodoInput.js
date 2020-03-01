@@ -1,5 +1,4 @@
 import { KEY_CODE } from '../utils/constants.js'
-import { generateHTMLInputString } from '../utils/service.js'
 
 function TodoInput($target, { onAddTodo }) {
   this.$target = $target

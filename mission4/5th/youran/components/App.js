@@ -1,14 +1,27 @@
 import TodoInput from './TodoInput.js'
 import TodoList from './TodoList.js'
+import Users from './Users.js'
 import { $ } from '../utils/service.js'
-import { SELECTOR, USER } from '../utils/constants.js'
-import { fetchAllTodos, postTodo, deleteTodo, putTodo } from '../utils/api.js'
+import { SELECTOR } from '../utils/constants.js'
+import {
+  fetchAllTodos,
+  postTodo,
+  deleteTodo,
+  putTodo,
+  fetchAllUsers,
+} from '../utils/api.js'
 
 function App() {
-  this.data = []
+  this.todoData = []
+  this.userData = []
+  this.currentUser = 'youran'
 
   this.initComponents = () => {
-    this.todoList = new TodoList(this.data, $(SELECTOR.TODO_LIST), {
+    this.users = new Users(this.userData, $(SELECTOR.USERS), {
+      onChangeUser: this.onChangeUser,
+    })
+
+    this.todoList = new TodoList(this.todoData, $(SELECTOR.TODO_LIST), {
       onToggleTodo: this.onToggleTodo,
       onRemoveTodo: this.onRemoveTodo,
     })
@@ -18,33 +31,45 @@ function App() {
     })
   }
 
-  this.setState = updateData => {
-    this.data = updateData
-    this.todoList.setState(this.data)
+  this.setState = () => {
+    this.todoList.setState(this.todoData)
+    this.users.setState(this.userData)
   }
 
   this.getAllTodos = async () => {
-    const updateData = await fetchAllTodos()
-    this.setState(updateData)
+    const updateData = await fetchAllTodos(this.currentUser)
+    this.todoData = updateData
+    this.setState()
+  }
+
+  this.getAllUsers = async () => {
+    const updateData = await fetchAllUsers()
+    this.userData = updateData
+    this.setState()
   }
 
   this.onAddTodo = async newTodo => {
-    await postTodo(newTodo)
-    await this.getAllTodos(USER.NAME)
+    await postTodo(this.currentUser, newTodo)
+    await this.getAllTodos(this.currentUser)
   }
 
   this.onRemoveTodo = async todoId => {
-    await deleteTodo(todoId)
-    await this.getAllTodos(USER.NAME)
+    await deleteTodo(this.currentUser, todoId)
+    await this.getAllTodos(this.currentUser)
   }
 
   this.onToggleTodo = async todoId => {
-    await putTodo(todoId)
-    await this.getAllTodos(USER.NAME)
+    await putTodo(this.currentUser, todoId)
+    await this.getAllTodos(this.currentUser)
+  }
+
+  this.onChangeUser = async username => {
+    this.currentUser = username
+    await this.getAllTodos()
   }
 
   this.initComponents()
-  this.getAllTodos()
+  this.getAllUsers()
 }
 
 export default App

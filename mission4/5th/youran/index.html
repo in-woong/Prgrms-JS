@@ -4,12 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="./style.css" />
     <title>Mission 4</title>
   </head>
   <body>
     <div id="app">
-      <input type="text" id="todo-input" placeholder="할 일을 입력하세요!" />
-      <div id="todo-list"></div>
+      <div class="user-grid">
+        <div id="users"></div>
+      </div>
+      <div class="todo-grid">
+        <input type="text" id="todo-input" placeholder="할 일을 입력하세요!" />
+        <div id="todo-list"></div>
+      </div>
     </div>
     <script type="module" src="./main.js"></script>
   </body>

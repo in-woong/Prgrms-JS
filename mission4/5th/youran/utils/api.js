@@ -1,17 +1,17 @@
-import { URL, USER } from '../utils/constants.js'
+import { URL } from '../utils/constants.js'
 
-export const fetchAllTodos = async() => {
+export const fetchAllTodos = async username => {
   try {
-    const response = await fetch(`${URL.TODO_API}/${USER.NAME}`)
+    const response = await fetch(`${URL.TODO_API}/${username}`)
     return await _checkResponse(response).json()
   } catch (error) {
     console.error(error)
   }
 }
 
-export const postTodo = (newTodo) => {
+export const postTodo = async (username, newTodo) => {
   try {
-    const response = await fetch(`${URL.TODO_API}/${USER.NAME}`, {
+    const response = await fetch(`${URL.TODO_API}/${username}`, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
@@ -26,9 +26,9 @@ export const postTodo = (newTodo) => {
   }
 }
 
-export const deleteTodo = (todoId) => {
+export const deleteTodo = async (username, todoId) => {
   try {
-    const response = await fetch(`${URL.TODO_API}/${USER.NAME}/${todoId}`, {
+    const response = await fetch(`${URL.TODO_API}/${username}/${todoId}`, {
       method: 'DELETE',
     })
     return _checkResponse(response)
@@ -37,10 +37,10 @@ export const deleteTodo = (todoId) => {
   }
 }
 
-export const putTodo = (todoId) => {
+export const putTodo = async (username, todoId) => {
   try {
     const response = await fetch(
-      `${URL.TODO_API}/${USER.NAME}/${todoId}/toggle`,
+      `${URL.TODO_API}/${username}/${todoId}/toggle`,
       {
         method: 'PUT',
       }
@@ -48,6 +48,15 @@ export const putTodo = (todoId) => {
     return _checkResponse(response)
   } catch (error) {
     console.log(error)
+  }
+}
+
+export const fetchAllUsers = async () => {
+  try {
+    const response = await fetch(`${URL.TODO_API}/users`)
+    return await _checkResponse(response).json()
+  } catch (error) {
+    console.error(error)
   }
 }
 
