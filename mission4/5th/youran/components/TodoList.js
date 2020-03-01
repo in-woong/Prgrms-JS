@@ -7,14 +7,16 @@ function TodoList(data, $target, { onToggleTodo, onRemoveTodo }) {
   $target.addEventListener('click', event => this.handleEvent(event))
 
   this.handleEvent = () => {
-    // 보일러플레이트 코드
-    const id = event.target.closest('li').dataset.id
+    // 보일러플레이트 코드에서 수정
+    const li = event.target.closest('li')
+    if (!li) return
 
     if (event.target.className === 'remove-button') {
       event.stopPropagation()
-      onRemoveTodo(id)
+      onRemoveTodo(li.dataset.id)
     } else {
-      onToggleTodo(id)
+      event.stopPropagation()
+      onToggleTodo(li.dataset.id)
     }
   }
 

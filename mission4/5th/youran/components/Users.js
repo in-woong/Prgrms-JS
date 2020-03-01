@@ -6,9 +6,12 @@ function Users(userList, $target, { onChangeUser }) {
   this.$target.addEventListener('click', event => this.handleEvent(event))
 
   this.handleEvent = event => {
-    // 보일러플레이트 코드
-    const username = event.target.closest('li').dataset.username
-    onChangeUser(username)
+    // 보일러플레이트 코드에서 수정
+    const li = event.target.closest('li')
+    if (!li) return
+
+    event.stopPropagation()
+    onChangeUser(li.dataset.username)
   }
 
   this.setState = nextData => {
