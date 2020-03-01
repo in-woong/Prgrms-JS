@@ -22,7 +22,6 @@ function TodoUsers({ $element, data, onClickUser }) {
   }
 
   this.init()
-
   this.render()
 }
 

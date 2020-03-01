@@ -1,28 +1,37 @@
+import Loading from './Loading.js'
 import TodoCount from './TodoCount.js'
 import TodoInput from './TodoInput.js'
 import TodoList from './TodoList.js'
 import TodoUsers from './TodoUsers.js'
 import api from '../api.js'
 
-function App() {
-  this.data = null
-  this.userData = null
+const getTodoTitle = name => `${name}의 TODO LIST`
 
+function App() {
+  // 현재 App에서 사용하는 데이터 변수
+  this.todoData = null
+  this.userData = null
+  this.userName = 'jeesoo' // default 사용자 이름
+
+  // Element Id 변수
   this.todoCountId = 'todo-count'
   this.todoListId = 'todo-list'
   this.todoInputId = 'todo-input'
   this.todoUserList = 'user-list-wrapper'
 
+  // 컴포넌트 변수
+  this.loading = null
   this.todoTitle = null
   this.todoCount = null
   this.todoList = null
 
-  this.userName = 'jeesoo'
-
   const handleClickTodoItem = async id => {
     try {
-      await api.toggleTodoItem(this.userName, this.data[id]._id)
-      this.setState(await api.fetchTodoList(this.userName))
+      await api.toggleTodoItem(this.userName, this.todoData[id]._id)
+      const updateData = await this.setLoadingBeforeFetch(() =>
+        api.fetchTodoList(this.userName)
+      )
+      this.setState(updateData)
     } catch (e) {
       console.log(e)
     }
@@ -30,8 +39,11 @@ function App() {
 
   const handleDeleteTodoItem = async id => {
     try {
-      await api.deleteTodoItem(this.userName, this.data[id]._id)
-      this.setState(await api.fetchTodoList(this.userName))
+      await api.deleteTodoItem(this.userName, this.todoData[id]._id)
+      const updateData = await this.setLoadingBeforeFetch(() =>
+        api.fetchTodoList(this.userName)
+      )
+      this.setState(updateData)
     } catch (e) {
       console.log(e)
     }
@@ -40,7 +52,10 @@ function App() {
   const handleInputTodoItem = async item => {
     try {
       await api.addNewTodoItem(this.userName, item)
-      this.setState(await api.fetchTodoList(this.userName))
+      const updateData = await this.setLoadingBeforeFetch(() =>
+        api.fetchTodoList(this.userName)
+      )
+      this.setState(updateData)
     } catch (e) {
       console.log(e)
     }
@@ -48,8 +63,19 @@ function App() {
 
   const handleClickUser = async user => {
     this.userName = user
-    this.todoTitle.innerHTML = `${this.userName}의 TODO LIST`
-    this.setState(await api.fetchTodoList(this.userName))
+    this.todoTitle.innerHTML = getTodoTitle(this.userName)
+    const updateData = await this.setLoadingBeforeFetch(() =>
+      api.fetchTodoList(this.userName)
+    )
+    this.setState(updateData)
+  }
+
+  // 데이터를 로딩하는 중 로딩 화면 띄워주기
+  this.setLoadingBeforeFetch = async function(fetchApi) {
+    this.loading.setState(true)
+    const result = await fetchApi()
+    this.loading.setState(false)
+    return result
   }
 
   this.getTodoCountData = function(data) {
@@ -62,7 +88,10 @@ function App() {
 
   this.init = async function() {
     try {
-      this.data = await api.fetchTodoList(this.userName)
+      this.loading = new Loading(document.querySelector('#loading'))
+      this.todoData = await this.setLoadingBeforeFetch(() =>
+        api.fetchTodoList(this.userName)
+      )
       this.userData = await api.fetchUserDataList()
     } catch (e) {
       console.log(e)
@@ -77,7 +106,7 @@ function App() {
     try {
       this.todoCount.setState(this.getTodoCountData(newData))
       this.todoList.setState(newData)
-      this.data = newData
+      this.todoData = newData
     } catch (e) {
       console.log(e)
       return
@@ -90,17 +119,17 @@ function App() {
     const $todoInput = document.querySelector(`#${this.todoInputId}`)
     const $todoUserList = document.querySelector(`#${this.todoUserList}`)
 
-    this.todoTitle.innerHTML = `${this.userName}의 TODO LIST`
+    this.todoTitle.innerHTML = getTodoTitle(this.userName)
 
     try {
       this.todoCount = new TodoCount({
         $element: $todoCount,
-        data: this.getTodoCountData(this.data),
+        data: this.getTodoCountData(this.todoData),
       })
 
       this.todoList = new TodoList({
         $element: $todoList,
-        data: this.data,
+        data: this.todoData,
         onClickItem: handleClickTodoItem,
         onDelete: handleDeleteTodoItem,
       })

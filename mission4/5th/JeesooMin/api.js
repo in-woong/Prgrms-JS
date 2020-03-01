@@ -1,11 +1,11 @@
 const TODO_URL = 'http://todo-api.roto.codes'
 
 const fetchTodoList = async userName => {
-  const response = await fetch(`${TODO_URL}/${userName}`)
+  const response = await fetch(`${TODO_URL}/${userName}?delay=5000`)
   if (!response.ok) {
     throw new Error('[api] API를 확인해주세요.')
   }
-  return response.json()
+  return await response.json()
 }
 
 const addNewTodoItem = async (userName, content) => {
@@ -61,7 +61,7 @@ const fetchUserDataList = async () => {
   if (!response.ok) {
     throw new Error('[api] API를 확인해주세요.')
   }
-  return response.json()
+  return await response.json()
 }
 
 const api = {
