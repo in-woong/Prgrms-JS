@@ -13,7 +13,6 @@ function App() {
   this.todoInputId = 'todo-input'
   this.todoUserList = 'user-list-wrapper'
 
-  this.App = null
   this.todoTitle = null
   this.todoCount = null
   this.todoList = null
@@ -71,8 +70,6 @@ function App() {
     }
 
     this.todoTitle = document.querySelector(`#todo-title`)
-    this.App = document.querySelector(`#App`)
-
     this.render()
   }
 
