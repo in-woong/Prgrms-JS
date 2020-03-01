@@ -3,12 +3,14 @@ import TodoInput from './TodoInput.js'
 import TodoCount from './TodoCount.js'
 import UserList from './UserList.js'
 import fetchAPI from './api.js'
+import loadingView from './loadingView.js'
 import { storage } from './util.js'
 
 function App() {
     this.userName = 'sujin'
     this.data = [] 
     this.userData = []
+    this.flag = false
     
     this.init = () => {
         this.userList = new UserList(document.querySelector('#user-list'), this.userData, {

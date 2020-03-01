@@ -1,6 +1,9 @@
+import loadingView from './loadingView.js'
+
 function fetchAPI(username) {
     this.init = () => {
         this.settingName()
+        this.loadingView = new loadingView(document.querySelector('#loading-view'), this.flag)
     }
 
     this.settingName = (username = 'sujin') => {
@@ -20,10 +23,11 @@ function fetchAPI(username) {
     }
 
     this.fetchData = async () => {
+        this.loadingView.setState(true)
         try {
-            const res = await fetch(`http://todo-api.roto.codes/${this.username}`)
+            const res = await fetch(`http://todo-api.roto.codes/${this.username}?delay=5000`)
             const data = await res.json()
-            
+            this.loadingView.setState(false)
             return data
         }
         catch (error) {
