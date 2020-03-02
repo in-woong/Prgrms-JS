@@ -29,4 +29,10 @@ export const errorCheck = {
       } else return data
     })
   },
+  isMe(username) {
+    console.log(username)
+    if (username !== 'seongjin') {
+      throw new Error('해당 투두에 대한 접근 권한이 없습니다.')
+    }
+  },
 }

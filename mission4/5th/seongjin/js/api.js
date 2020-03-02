@@ -1,5 +1,5 @@
 export const getTodoApi = async username => {
-  const res = await fetch(`http://todo-api.roto.codes/${username}?delay=3000`)
+  const res = await fetch(`http://todo-api.roto.codes/${username}?delay=1000`)
   return await res.json()
 }
 
@@ -30,6 +30,6 @@ export const toggleTodoApi = async (username, _id) => {
 }
 
 export const getUsersTodoApi = async () => {
-  const users = await fetch(`http://todo-api.roto.codes/users?delay=3000`)
+  const users = await fetch(`http://todo-api.roto.codes/users?delay=1000`)
   return await users.json()
 }

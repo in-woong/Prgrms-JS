@@ -2,7 +2,7 @@ import TodoList from './TodoList.js'
 import TodoInput from './TodoInput.js'
 import TodoCount from './TodoCount.js'
 import Loading from './Loading.js'
-import { $ } from './util.js'
+import { $, errorCheck } from './util.js'
 import {
   getUsersTodoApi,
   getTodoApi,
@@ -19,6 +19,7 @@ export default function App() {
   this.$usersWrapper = $('#users-wrapper')
   this.todos = []
   this.users = []
+  this.username = 'seongjin'
   this.isLoading = false
 
   this.init = () => {
@@ -37,17 +38,20 @@ export default function App() {
   }
 
   this.onAddClick = async newTodo => {
-    await addTodoApi('seongjin', newTodo)
+    errorCheck.isMe(this.username)
+    await addTodoApi(this.username, newTodo)
     await this.getfetchData()
   }
 
   this.onToggleClick = async _id => {
-    await toggleTodoApi('seongjin', _id)
+    errorCheck.isMe(this.username)
+    await toggleTodoApi(this.username, _id)
     await this.getfetchData()
   }
 
   this.onDeleteClick = async _id => {
-    await removeTodoApi('seongjin', _id)
+    errorCheck.isMe(this.username)
+    await removeTodoApi(this.username, _id)
     await this.getfetchData()
   }
 
@@ -71,14 +75,16 @@ export default function App() {
     this.todoList.$target.dispatchEvent(removeAllevent)
   })
 
-  this.getfetchData = async username => {
-    if (username === undefined) {
-      username = 'seongjin'
+  this.getfetchData = async nextUsername => {
+    this.username = nextUsername
+    if (this.username === undefined) {
+      this.username = 'seongjin'
     }
+
     this.$inputWrapper.style.display = 'none'
     this.$usersWrapper.style.display = 'none'
     this.loading.setState(true)
-    this.todos = await getTodoApi(username)
+    this.todos = await getTodoApi(this.username)
     this.$inputWrapper.style.display = 'block'
     this.$usersWrapper.style.display = 'block'
     this.loading.setState(false)
