@@ -53,7 +53,7 @@ export const putTodo = async (username, todoId) => {
 
 export const fetchAllUsers = async () => {
   try {
-    const response = await fetch(`${URL.TODO_API}/users/users`)
+    const response = await fetch(`${URL.TODO_API}/users`)
     return await checkResponse(response).json()
   } catch (error) {
     throw error
