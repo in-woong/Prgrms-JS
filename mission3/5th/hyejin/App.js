@@ -10,18 +10,21 @@ export default function App() {
   })
 
   this.init = function() {
-    this.searchResult = new SearchResult([], document.getElementById('search-result'))
+    this.searchResult = new SearchResult(
+      [],
+      document.getElementById('search-result')
+    )
   }
 
   this.onSearch = function(keyword) {
     const data = fetch(`${API_URL}${keyword}`)
       .then(response => response.json())
-      .then(
-        data => this.setState(data)
-      )}
+      .then(data => this.setState(data))
+  }
 
   this.setState = function(nextData) {
     this.searchResult.setState(nextData)
   }
+
   this.init()
 }

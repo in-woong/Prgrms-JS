@@ -3,7 +3,9 @@ function SearchResult(data, $target) {
   this.$target = $target
 
   this.render = function() {
-    $target.innerHTML = this.data.map(item => `<img src="${item.imageUrl}">`).join('')
+    $target.innerHTML = this.data
+      .map(item => `<img src="${item.imageUrl}">`)
+      .join('')
   }
 
   this.setState = function(nextData) {
