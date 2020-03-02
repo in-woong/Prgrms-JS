@@ -26,8 +26,8 @@ function UserList({ target, onChangeUser }) {
   }
 
   this.render = () => {
-    this.$element.innerHTML = `<ul>${this.userListData
-      .map(user => `<li>${user}</li>`)
+    this.$element.innerHTML = `<ul class="user-list">${this.userListData
+      .map(user => `<li class="list-item user-list-item">${user}</li>`)
       .join('')}</ul>`
   }
 

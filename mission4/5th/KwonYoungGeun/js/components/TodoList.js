@@ -41,12 +41,14 @@ function TodoList({ target, onRemove, onToggle }) {
   }
 
   this.render = () => {
-    this.$element.innerHTML = `<div>${this.username}님의 TODO 리스트</div>
-    <ul>${this.todoList
+    this.$element.innerHTML = `<h1 class="todo-list-title">${
+      this.username
+    }님의 TODO 리스트</h1>
+    <ul class="todo-list">${this.todoList
       .map(todoItem =>
         todoItem.isCompleted
-          ? `<li class="todo-item" data-id=${todoItem._id}><del class="deleted-todo" data-id=${todoItem._id}>${todoItem.content}</del><button class="remove-button" data-id=${todoItem._id}>삭제</button></li>`
-          : `<li class="todo-item" data-id=${todoItem._id}>${todoItem.content}<button class="remove-button" data-id=${todoItem._id}>삭제</button></li>`
+          ? `<li class="todo-item list-item" data-id=${todoItem._id}><del class="deleted-todo" data-id=${todoItem._id}>${todoItem.content}</del><button class="remove-button" data-id=${todoItem._id}>삭제</button></li>`
+          : `<li class="todo-item list-item" data-id=${todoItem._id}>${todoItem.content}<button class="remove-button" data-id=${todoItem._id}>삭제</button></li>`
       )
       .join('')}</ul>`
   }
