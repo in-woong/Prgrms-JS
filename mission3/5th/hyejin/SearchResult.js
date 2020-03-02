@@ -9,6 +9,7 @@ function SearchResult(data, $target) {
   }
 
   this.setState = function(nextData) {
+    console.log(nextData)
     this.data = nextData
     this.render()
   }

@@ -16,10 +16,10 @@ export default function App() {
     )
   }
 
-  this.onSearch = function(keyword) {
-    const data = fetch(`${API_URL}${keyword}`)
-      .then(response => response.json())
-      .then(data => this.setState(data))
+  this.onSearch = async function(keyword) {
+    const data = await fetch(`${API_URL}${keyword}`)
+    this.setState(await data.json())
+    //this.setState(data.json()) ???
   }
 
   this.setState = function(nextData) {
