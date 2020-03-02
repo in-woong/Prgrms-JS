@@ -6,9 +6,7 @@ function loadingView ($target, flag) {
     }
 
     this.render = () => {
-        this.flag
-            ? $target.innerHTML = `<img src="./img/loading.gif" width="50" alt="loading">`
-            : $target.innerHTML = `` 
+        this.flag ? $target.innerHTML = `<img src="./img/loading.gif" width="50" alt="loading">` : $target.innerHTML = `` 
     }
 
     this.setState = (nextData) => {
