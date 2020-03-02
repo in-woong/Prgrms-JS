@@ -18,7 +18,7 @@ li {
 
 .user-list .list-item:hover {
   cursor: pointer;
-  border: 1px black solid;
+  border: 1px solid black;
 }
 
 .todo-input-container {
@@ -32,6 +32,12 @@ li {
 
 .todo-list-container {
   text-align: center;
+}
+
+.todo-list {
+  padding: 10px;
+  min-height: 100px;
+  border: 2px solid grey;
 }
 
 .todo-list .list-item {
