@@ -33,6 +33,7 @@ export default function App() {
     this.todoCount = new TodoCount(this.getTotalCount, this.getCompletedCount)
     this.todoUsers = new TodoUsers(this.users, this.getfetchData)
 
+    this.setLoadingbeforeData()
     this.getfetchData()
     this.getfetchUsersData()
   }
@@ -80,7 +81,11 @@ export default function App() {
     if (this.username === undefined) {
       this.username = 'seongjin'
     }
+    this.todos = await getTodoApi(this.username)
+    this.render()
+  }
 
+  this.setLoadingbeforeData = async () => {
     this.$inputWrapper.style.display = 'none'
     this.$usersWrapper.style.display = 'none'
     this.loading.setState(true)
@@ -88,7 +93,6 @@ export default function App() {
     this.$inputWrapper.style.display = 'block'
     this.$usersWrapper.style.display = 'block'
     this.loading.setState(false)
-    this.render()
   }
 
   this.getfetchUsersData = async () => {
