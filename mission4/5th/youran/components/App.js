@@ -2,7 +2,7 @@ import TodoInput from './TodoInput.js'
 import TodoList from './TodoList.js'
 import TodoUser from './TodoUser.js'
 import Users from './Users.js'
-import { $ } from '../utils/service.js'
+import { $, handleError } from '../utils/service.js'
 import { SELECTOR } from '../utils/constants.js'
 import {
   fetchAllTodos,
@@ -15,7 +15,7 @@ import {
 function App() {
   this.todoData = []
   this.userData = []
-  this.currentUser = 'youran'
+  this.currentUser = ''
 
   this.initComponents = () => {
     this.users = new Users(this.userData, $(SELECTOR.USERS), {
@@ -41,35 +41,59 @@ function App() {
   }
 
   this.getAllTodos = async () => {
-    const updateData = await fetchAllTodos(this.currentUser)
-    this.todoData = updateData
-    this.setState()
+    try {
+      const updateData = await fetchAllTodos(this.currentUser)
+      this.todoData = updateData
+      this.setState()
+    } catch (error) {
+      handleError(error, { where: 'APP' })
+    }
   }
 
   this.getAllUsers = async () => {
-    const updateData = await fetchAllUsers()
-    this.userData = updateData
-    this.setState()
+    try {
+      const updateData = await fetchAllUsers()
+      this.userData = updateData
+      this.setState()
+    } catch (error) {
+      handleError(error, { where: 'APP' })
+    }
   }
 
   this.onAddTodo = async newTodo => {
-    await postTodo(this.currentUser, newTodo)
-    await this.getAllTodos(this.currentUser)
+    try {
+      await postTodo(this.currentUser, newTodo)
+      await this.getAllTodos(this.currentUser)
+    } catch (error) {
+      handleError(error, { where: 'APP' })
+    }
   }
 
   this.onRemoveTodo = async todoId => {
-    await deleteTodo(this.currentUser, todoId)
-    await this.getAllTodos(this.currentUser)
+    try {
+      await deleteTodo(this.currentUser, todoId)
+      await this.getAllTodos(this.currentUser)
+    } catch (error) {
+      handleError(error, { where: 'APP' })
+    }
   }
 
   this.onToggleTodo = async todoId => {
-    await putTodo(this.currentUser, todoId)
-    await this.getAllTodos(this.currentUser)
+    try {
+      await putTodo(this.currentUser, todoId)
+      await this.getAllTodos(this.currentUser)
+    } catch (error) {
+      handleError(error, { where: 'APP' })
+    }
   }
 
   this.onChangeUser = async username => {
-    this.currentUser = username
-    await this.getAllTodos()
+    try {
+      this.currentUser = username
+      await this.getAllTodos()
+    } catch (error) {
+      handleError(error, { where: 'APP' })
+    }
   }
 
   this.initComponents()

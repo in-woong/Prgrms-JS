@@ -9,7 +9,7 @@ function TodoInput($target, { onAddTodo }) {
   this.handleEvent = event => {
     if (!this.validate(event)) return
     this.onAddTodo(event.target.value)
-    this.$target.value = null
+    this.$target.value = ''
   }
 
   this.validate = event => {
@@ -17,7 +17,7 @@ function TodoInput($target, { onAddTodo }) {
       return false
     }
     if (!event.target.value) {
-      alert('뭐라도 해야죠!')
+      alert('저장할 내용이 없어요.')
       return false
     }
     return true

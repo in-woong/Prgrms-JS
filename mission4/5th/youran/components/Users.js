@@ -1,5 +1,14 @@
-function Users(userList, $target, { onChangeUser }) {
-  this.userList = userList
+import { validateArray } from '../utils/validator.js'
+import { handleError } from '../utils/service.js'
+import { COMPONENT, MESSAGE } from '../utils/constants.js'
+
+function Users(data, $target, { onChangeUser }) {
+  try {
+    this.data = validateArray(data)
+  } catch (error) {
+    handleError(error, { where: COMPONENT.USERS })
+    this.data = []
+  }
   this.$target = $target
   this.onChangeUser = onChangeUser
 
@@ -15,7 +24,13 @@ function Users(userList, $target, { onChangeUser }) {
   }
 
   this.setState = nextData => {
-    this.userList = nextData
+    try {
+      this.data = validateArray(nextData)
+    } catch (error) {
+      handleError(error, { where: COMPONENT.USERS })
+      this.data = []
+    }
+
     this.render()
   }
 
@@ -23,18 +38,11 @@ function Users(userList, $target, { onChangeUser }) {
     $target.innerHTML = this.generateHTMLString()
   }
 
-  this.validate = data => {
-    if (!Array.isArray(data)) {
-      throw new Error('데이터 형식이 올바르지 않습니다.')
-    }
-  }
-
   this.generateHTMLString = () => {
-    this.validate(this.userList)
-    if (this.userList.length < 1) {
-      return '<p>조회 가능한 사용자가 없습니다.</p>'
+    if (this.data.length < 1) {
+      return `<p>${MESSAGE.USER_EMPTY}</p>`
     }
-    const htmlString = this.userList
+    const htmlString = this.data
       .map(username => `<li data-username="${username}">${username}</li>`)
       .join('')
 

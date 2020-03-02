@@ -1,5 +1,15 @@
+import { validateArray } from '../utils/validator.js'
+import { handleError } from '../utils/service.js'
+import { COMPONENT, MESSAGE } from '../utils/constants.js'
+
 function TodoList(data, $target, { onToggleTodo, onRemoveTodo }) {
-  this.data = data
+  try {
+    this.data = validateArray(data)
+  } catch (error) {
+    handleError(error, { where: COMPONENT.TODO_LIST })
+    this.data = []
+  }
+
   this.$target = $target
   this.onToggleTodo = onToggleTodo
   this.onRemoveTodo = onRemoveTodo
@@ -21,8 +31,12 @@ function TodoList(data, $target, { onToggleTodo, onRemoveTodo }) {
   }
 
   this.setState = nextData => {
-    this.validate(nextData)
-    this.data = nextData
+    try {
+      this.data = validateArray(nextData)
+    } catch (error) {
+      handleError(error, { where: COMPONENT.TODO_LIST })
+      this.data = []
+    }
     this.render()
   }
 
@@ -30,16 +44,9 @@ function TodoList(data, $target, { onToggleTodo, onRemoveTodo }) {
     this.$target.innerHTML = this.generateHTMLString()
   }
 
-  this.validate = data => {
-    if (!Array.isArray(data)) {
-      throw new Error('데이터 형식이 올바르지 않습니다.')
-    }
-  }
-
   this.generateHTMLString = () => {
-    this.validate(this.data)
     if (this.data.length < 1) {
-      return '<p>할 일이 없어요.</p>'
+      return `<p>${MESSAGE.TODO_EMPTY}</p>`
     }
 
     const htmlString = this.data

@@ -3,9 +3,9 @@ import { URL } from '../utils/constants.js'
 export const fetchAllTodos = async username => {
   try {
     const response = await fetch(`${URL.TODO_API}/${username}`)
-    return await _checkResponse(response).json()
+    return await checkResponse(response).json()
   } catch (error) {
-    console.error(error)
+    throw error
   }
 }
 
@@ -20,9 +20,9 @@ export const postTodo = async (username, newTodo) => {
         content: newTodo,
       }),
     })
-    return _checkResponse(response)
+    return checkResponse(response)
   } catch (error) {
-    console.error(error)
+    throw error
   }
 }
 
@@ -31,9 +31,9 @@ export const deleteTodo = async (username, todoId) => {
     const response = await fetch(`${URL.TODO_API}/${username}/${todoId}`, {
       method: 'DELETE',
     })
-    return _checkResponse(response)
+    return checkResponse(response)
   } catch (error) {
-    console.log(error)
+    throw error
   }
 }
 
@@ -45,29 +45,31 @@ export const putTodo = async (username, todoId) => {
         method: 'PUT',
       }
     )
-    return _checkResponse(response)
+    return checkResponse(response)
   } catch (error) {
-    console.log(error)
+    throw error
   }
 }
 
 export const fetchAllUsers = async () => {
   try {
-    const response = await fetch(`${URL.TODO_API}/users`)
-    return await _checkResponse(response).json()
+    const response = await fetch(`${URL.TODO_API}/users/users`)
+    return await checkResponse(response).json()
   } catch (error) {
-    console.error(error)
+    throw error
   }
 }
 
-const _checkResponse = response => {
-  //console.log(response)
+const checkResponse = response => {
+  const status = response.status
   if (status >= 300 && status < 400) {
-    // 추가 예정
+    const location = response.headers.location
+    if (!loacation) return
+    throw new Error(`Api Error - redirect to ${location} (${status})`)
   } else if (status >= 400 && status < 500) {
-    throw new Error(`fail: 잘못된 요청입니다. status: ${status}`)
+    throw new Error(`Api Error - 잘못된 요청입니다. (${status})`)
   } else if (status >= 500 && status < 600) {
-    throw new Error(`fail: 잠시 후 다시 시도하세요. status: ${status}`)
+    throw new Error(`Api Error - 잠시 후 다시 시도하세요. (${status})`)
   }
   return response
 }
