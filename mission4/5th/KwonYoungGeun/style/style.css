@@ -34,10 +34,6 @@ li {
   text-align: center;
 }
 
-.todo-list {
-  1width: 50%;
-}
-
 .todo-list .list-item {
   border: 1px solid black;
   margin: 10px;

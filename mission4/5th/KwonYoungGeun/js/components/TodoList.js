@@ -22,14 +22,16 @@ function TodoList({ target, onRemove, onToggle }) {
 
   this.onClick = e => {
     const logics = {
-      'remove-button': id => onRemove(id),
       'todo-item': id => onToggle(id),
-      'deleted-todo': id => onToggle(id),
+      'remove-button': id => onRemove(id),
       default: () => {},
     }
 
     const id = e.target.getAttribute('data-id')
-    const logic = logics[e.target.className] || logics['default']
+    const logicKey = e.target.className.includes('todo-item')
+      ? 'todo-item'
+      : e.target.className
+    const logic = logics[logicKey] || logics['default']
 
     logic(id)
   }
@@ -47,7 +49,7 @@ function TodoList({ target, onRemove, onToggle }) {
     <ul class="todo-list">${this.todoList
       .map(todoItem =>
         todoItem.isCompleted
-          ? `<li class="todo-item list-item" data-id=${todoItem._id}><del class="deleted-todo" data-id=${todoItem._id}>${todoItem.content}</del><button class="remove-button" data-id=${todoItem._id}>삭제</button></li>`
+          ? `<li class="todo-item list-item deleted-todo" data-id=${todoItem._id}><del class="deleted-todo" data-id=${todoItem._id}>${todoItem.content}</del><button class="remove-button" data-id=${todoItem._id}>삭제</button></li>`
           : `<li class="todo-item list-item" data-id=${todoItem._id}>${todoItem.content}<button class="remove-button" data-id=${todoItem._id}>삭제</button></li>`
       )
       .join('')}</ul>`
