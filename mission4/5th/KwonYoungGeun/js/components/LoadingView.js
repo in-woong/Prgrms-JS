@@ -11,7 +11,7 @@ function Loading({ target }) {
   }
 
   this.render = () => {
-    this.$element.innerHTML = `${this.isLoading ? 'Loading...' : ''}`
+    this.$element.innerHTML = this.isLoading ? 'Loading...' : ''
   }
 
   this.init()
