@@ -6,7 +6,7 @@ export const fetchTodoList = async params => {
     const { userId } = params
     validateUserId(userId)
     try {
-        const res = await fetch(`${BASE_URL}/${userId}?delay=5000`)
+        const res = await fetch(`${BASE_URL}/${userId}?delay=0`)
         validateApiResponse(res)
 
         return await res.json()
@@ -20,7 +20,7 @@ export const putTodoList = async params => {
     validateUserId(userId)
     try {
         const res = await fetch(`${BASE_URL}/${userId}/${todoId}/toggle`, {
-            method: 'PUT'
+            method: 'PUT',
         })
         validateApiResponse(res)
     } catch {
@@ -33,7 +33,7 @@ export const deleteTodoList = async params => {
     validateUserId(userId)
     try {
         const res = await fetch(`${BASE_URL}/${userId}/${todoId}`, {
-            method: 'DELETE'
+            method: 'DELETE',
         })
         validateApiResponse(res)
     } catch {
@@ -48,11 +48,11 @@ export const postTodoList = async params => {
         const res = await fetch(`${BASE_URL}/${userId}`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                content: todoText
-            })
+                content: todoText,
+            }),
         })
         validateApiResponse(res)
     } catch {

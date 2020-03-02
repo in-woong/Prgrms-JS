@@ -6,7 +6,7 @@ import { showLoadState } from '../shared/util.js'
 import { SELECTOR } from '../shared/constant.js'
 
 function App() {
-    this.userId = ''
+    this.userId = 'boeun'
 
     const setTodosTitle = userId => {
         document.querySelector(SELECTOR.TODOTITLE).innerHTML = `${userId}의 할 일`
@@ -17,36 +17,47 @@ function App() {
             target: SELECTOR.USERLIST,
             onClick: userId => {
                 this.setState(userId)
-            }
+            },
         })
 
         this.todoList = new TodoList({
             target: SELECTOR.TODOLIST,
             onClick: async todoId => {
                 showLoadState()
-                await putTodoList({ userId: this.userId, todoId: todoId })
+                await putTodoList({
+                    userId: this.userId,
+                    todoId: todoId,
+                })
                 this.setState(this.userId)
             },
             onRemove: async todoId => {
                 showLoadState()
-                await deleteTodoList({ userId: this.userId, todoId: todoId })
+                await deleteTodoList({
+                    userId: this.userId,
+                    todoId: todoId,
+                })
                 this.setState(this.userId)
-            }
+            },
         })
 
         this.todoInput = new TodoInput({
             target: SELECTOR.TODOINPUT,
             onAddTodo: async todoText => {
-                await postTodoList({ userId: this.userId, todoText })
+                await postTodoList({
+                    userId: this.userId,
+                    todoText,
+                })
                 this.setState(this.userId)
-            }
+            },
         })
     }
 
     this.setState = async userId => {
         this.userId = userId
         showLoadState()
-        const updatedData = await fetchTodoList({ userId: this.userId })
+        const updatedData = await fetchTodoList({
+            userId: this.userId,
+        })
         setTodosTitle(this.userId)
         this.todoList.setState(updatedData)
     }

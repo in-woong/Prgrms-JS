@@ -26,9 +26,7 @@ function TodoList(params) {
     this.render = () => {
         const htmlString = this.data
             .map(todo => {
-                const contentHTML = todo.isCompleted
-                    ? `<strike>${todo.content}</strike>`
-                    : `${todo.content}`
+                const contentHTML = todo.isCompleted ? `<strike>${todo.content}</strike>` : `${todo.content}`
 
                 return `<li data-id="${todo._id}">${contentHTML} <button class="remove-button">Remove</button></li>`
             })
