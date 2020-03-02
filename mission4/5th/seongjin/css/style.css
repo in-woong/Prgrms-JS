@@ -12,6 +12,7 @@ li {
 }
 
 .input-wrapper {
+    display: none;
     margin: 20px;
 }
 
@@ -19,7 +20,6 @@ li {
     width: 200px;
     height: 20px;
 }
-
 
 .add-btn .removeall-btn .delete-btn {
     width: 50px;
@@ -48,4 +48,18 @@ li {
 
 .clicked-user {
     color: blue;
+}
+
+.loading {
+    font-size: 25px;
+    font-weight: 700;
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.users-wrapper {
+    display: none;
 }

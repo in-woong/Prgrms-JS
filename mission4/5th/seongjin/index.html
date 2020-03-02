@@ -9,14 +9,17 @@
 </head>
 
 <body>
-    <div class="input-wrapper">
+    <div id="loading" class="loading"></div>
+    <div id="input-wrapper" class="input-wrapper">
         <input id="todo-input" type="text" placeholder="할 일을 입력해주세요." class="todo-registerinput" value="" />
         <button id="add-btn" class="add-btn">추가</button>
         <button id="removeall-btn" class="removeall-btn">전체 삭제</button>
     </div>
-    <div id="users-list" class="users-list"></div>
-    <div id="todo-list" class="todo-list"></div>
-    <div id='todo-count' class='todo-count'></div>
+    <div id="users-wrapper" class="users-wrapper">
+        <div id="users-list" class="users-list"></div>
+        <div id="todo-list" class="todo-list"></div>
+        <div id='todo-count' class='todo-count'></div>
+    </div>
     <script type="module" src="js/index.js"></script>
 </body>
 
