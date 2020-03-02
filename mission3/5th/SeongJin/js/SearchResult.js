@@ -9,7 +9,7 @@ export default function SearchResult(data, target) {
 
   this.render = () => {
     this.target.innerHTML = this.data
-      .map(d => `<img src="${d.imageUrl}">`)
+      .map(data => `<img src="${data.imageUrl}">`)
       .join('')
   }
 }

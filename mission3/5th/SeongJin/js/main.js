@@ -10,21 +10,23 @@ export default function main() {
     this.$resultElement = document.querySelector('#search-result')
     this.searchResult = new SearchResult([], this.$resultElement)
     this.history = []
-    this.searchKeyword = new SearchKeyword(this.search)
+    this.searchKeyword = new SearchKeyword(this.onSearchKeyword)
     this.searchHistory = new SearchHistory(
       this.searchHistory,
       this.onClickHistory
     )
   }
 
-  this.search = async e => {
-    this.data = await jjalbotApi(e.target.value).then(data => {
-      if (data.length === 0) {
-        alert('데이터가 존재하지 않습니다.')
-        throw new Error('데이터가 존재하지 않습니다.')
-      }
-      this.searchResult.setState(data)
-    })
+  this.onSearchKeyword = async e => {
+    this.data = await jjalbotApi(e.target.value)
+    console.log(this.data.length)
+
+    if (this.data.length === 0) {
+      alert('데이터가 존재하지 않습니다.')
+      throw new Error('데이터가 존재하지 않습니다.')
+    }
+    this.searchResult.setState(this.data)
+
     if (this.history === null) {
       this.history = new Set(e.target.value)
     } else if (!this.history.includes(e.target.value)) {
