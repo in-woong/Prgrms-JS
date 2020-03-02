@@ -25,32 +25,16 @@ function TodoList({ target, onRemove, onToggle }) {
   }
 
   this.onClick = e => {
-    const logics = {
-      'todo-item': id => onToggle(id),
-      'remove-button': id => onRemove(id),
-      default: () => {},
-    }
-
     const id = e.target.getAttribute('data-id')
-    const logicKey = e.target.className.includes('todo-item')
-      ? 'todo-item'
-      : e.target.className
-    const logic = logics[logicKey] || logics['default']
-
-    logic(id)
+    if (e.target.className === 'remove-button') {
+      onRemove(id)
+    }
   }
 
-  this.setState = data => {
-    this.username = data.username
-    this.todoListData = data.todoListData.filter(
-      todoItem => !todoItem.isCompleted
-    )
-    this.completedListData = data.todoListData.filter(
-      todoItem => todoItem.isCompleted
-    )
-    this.render()
-  }
-
+  /**
+   * FIXME: 현재 미니 트렐로 구현중
+   * TODO: 미니 트렐로 구현이 완료되면 리팩토링하기
+   */
   this.onDragStart = e => {
     if (e.target.className.includes('todo-item')) {
       e.dataTransfer.setData('text', e.target.getAttribute('data-id'))
@@ -70,9 +54,19 @@ function TodoList({ target, onRemove, onToggle }) {
   this.onDragover = e => {
     if (e.target.className.includes('todo-list')) {
       //TODO: e.preventDefault() 의 역할 조사하기
-      // 데이터를 처리하지 못하게 한다.(?)
-      e.preventDefault()
+      e.preventDefault() // 데이터를 처리하지 못하게 한다.(?)
     }
+  }
+
+  this.setState = data => {
+    this.username = data.username
+    this.todoListData = data.todoListData.filter(
+      todoItem => !todoItem.isCompleted
+    )
+    this.completedListData = data.todoListData.filter(
+      todoItem => todoItem.isCompleted
+    )
+    this.render()
   }
 
   this.render = () => {
