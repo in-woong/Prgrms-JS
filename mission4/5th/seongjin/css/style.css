@@ -1,0 +1,51 @@
+* {
+    text-align: center;
+    margin: 0 auto;
+}
+
+ul {
+    list-style: none;
+}
+
+li {
+    padding: 10px;
+}
+
+.input-wrapper {
+    margin: 20px;
+}
+
+.todo-registerinput {
+    width: 200px;
+    height: 20px;
+}
+
+
+.add-btn .removeall-btn .delete-btn {
+    width: 50px;
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+
+
+.todo-list {
+    width: 80%;
+    text-align: center;
+    background-color: #191a1c;
+    color: white;
+}
+
+
+.users-list {
+    position: absolute;
+    background-color: yellow;
+}
+
+.user {
+    cursor: pointer
+}
+
+.clicked-user {
+    color: blue;
+}
