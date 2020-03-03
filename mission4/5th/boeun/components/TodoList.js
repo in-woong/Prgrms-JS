@@ -1,22 +1,26 @@
-import { fetchTodoList } from '../api/todosAPI.js'
-
 function TodoList(params) {
     const $targetElement = document.querySelector(params.target)
-    const onClick = params.onClick
-    const onRemove = params.onRemove
+    const onClickTodo = params.onClickTodo
+    const onRemoveTodo = params.onRemoveTodo
 
     this.data = []
 
-    $targetElement.addEventListener('click', function(e) {
-        const id = e.target.closest('li').dataset.id
+    this.init = () => {
+        this.bindEvent()
+    }
 
-        if (e.target.className === 'remove-button') {
-            e.stopPropagation()
-            onRemove(id)
-        } else {
-            onClick(id)
-        }
-    })
+    this.bindEvent = async () => {
+        $targetElement.addEventListener('click', function(e) {
+            const id = e.target.closest('li').dataset.id
+
+            if (e.target.className === 'remove-button') {
+                e.stopPropagation()
+                onRemoveTodo(id)
+            } else {
+                onClickTodo(id)
+            }
+        })
+    }
 
     this.setState = nextData => {
         this.data = nextData
@@ -28,12 +32,14 @@ function TodoList(params) {
             .map(todo => {
                 const contentHTML = todo.isCompleted ? `<strike>${todo.content}</strike>` : `${todo.content}`
 
-                return `<li data-id="${todo._id}">${contentHTML} <button class="remove-button">Remove</button></li>`
+                return `<li draggable="true" class="task" data-id="${todo._id}">${contentHTML} <button class="remove-button">Remove</button></li>`
             })
             .join('')
 
-        $targetElement.innerHTML = `<ul>${htmlString}</ul>`
+        $targetElement.innerHTML = `<ul class="tasklist">${htmlString}</ul>`
     }
+
+    this.init()
 }
 
 export default TodoList

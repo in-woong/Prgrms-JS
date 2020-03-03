@@ -1,8 +1,4 @@
-import {
-    SELECTOR,
-    ERROR_ALERT_MESSAGE,
-    THROTTLE_TIME
-} from '../shared/constant.js'
+import { SELECTOR, ERROR_ALERT_MESSAGE, THROTTLE_TIME } from '../shared/constant.js'
 
 function TodoInput(params) {
     const $targetElement = document.querySelector(params.target)
@@ -19,7 +15,7 @@ function TodoInput(params) {
         }
     }
 
-    this.render = () => {
+    this.init = () => {
         this.bindEvent()
     }
 
@@ -27,7 +23,7 @@ function TodoInput(params) {
         document.querySelector(SELECTOR.ADDTODO_BUTTON).addEventListener('click', onClickAdd)
     }
 
-    this.render()
+    this.init()
 }
 
 export default TodoInput

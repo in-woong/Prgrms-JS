@@ -4,13 +4,13 @@ import { validateElement } from '../shared/validator.js'
 
 function Users(params) {
     const $targetElement = document.querySelector(params.target)
-    const onClick = params.onClick
+    const onClickUser = params.onClickUser
     this.userList = null
 
     validateElement($targetElement)
 
     document.querySelector(SELECTOR.USERLIST).addEventListener('click', e => {
-        onClick(e.target.textContent)
+        onClickUser(e.target.textContent)
     })
 
     this.render = async () => {

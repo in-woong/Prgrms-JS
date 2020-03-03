@@ -15,14 +15,14 @@ function App() {
     this.init = async () => {
         this.userList = new Users({
             target: SELECTOR.USERLIST,
-            onClick: userId => {
+            onClickUser: userId => {
                 this.setState(userId)
             }
         })
 
         this.todoList = new TodoList({
             target: SELECTOR.TODOLIST,
-            onClick: async todoId => {
+            onClickTodo: async todoId => {
                 onLoading()
                 await putTodoList({
                     userId: this.userId,
@@ -30,7 +30,7 @@ function App() {
                 })
                 this.setState(this.userId)
             },
-            onRemove: async todoId => {
+            onRemoveTodo: async todoId => {
                 onLoading()
                 await deleteTodoList({
                     userId: this.userId,
@@ -55,6 +55,7 @@ function App() {
 
     this.setState = async userId => {
         this.userId = userId
+
         onLoading()
         const updatedData = await fetchTodoList({
             userId: this.userId
