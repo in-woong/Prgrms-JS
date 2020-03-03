@@ -16,5 +16,3 @@ export const ERROR_ALERT_MESSAGE = {
     USER_ID_ERROR: 'User가 선택되지 않았습니다.',
     INPUT_EMPTY_ERROR: '내용이 입력되지 않았습니다.'
 }
-
-export const THROTTLE_TIME = 1000
