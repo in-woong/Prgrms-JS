@@ -1,4 +1,10 @@
-import { $, swapArrayElements, findIndex } from '../utils/index.js'
+import {
+  $,
+  swapArrayElements,
+  findIndex,
+  isDropToSameListContainer,
+  isDropToItem,
+} from '../utils/index.js'
 import { validateElement } from '../validation/index.js'
 
 function TodoList({ target, onRemove, onToggle }) {
@@ -32,10 +38,6 @@ function TodoList({ target, onRemove, onToggle }) {
     }
   }
 
-  /**
-   * 현재 미니 트렐로 구현중
-   * TODO: 미니 트렐로 구현이 완료되면 리팩토링하기
-   */
   this.onDragStart = e => {
     if (e.target.className.includes('todo-item')) {
       e.dataTransfer.setData('text', e.target.id)
@@ -43,8 +45,7 @@ function TodoList({ target, onRemove, onToggle }) {
   }
 
   /**
-   * TODO: 리팩토링, 모듈화 고민
-   *
+   * TODO:  모듈화 고민
    * 변경된 순서를 api로 반영할 방법이 없어서, `새로고침`, `fetchTodoList한 데이터로 setState로 todoListdata 변경 시`, 다시 순서가 원래 순서로 돌아오는 한계가 있습니다.
    */
   this.onDrop = e => {
@@ -54,53 +55,39 @@ function TodoList({ target, onRemove, onToggle }) {
     ) {
       e.preventDefault()
       const sourceId = e.dataTransfer.getData('text')
-
       const $sourceEl = document.getElementById(sourceId)
       const $sourceParentEl = $sourceEl.parentElement
+
       const $targetEl = document.getElementById(e.target.id)
       const $targetParentEl = $targetEl.parentElement
 
       const swapSameListData = () => {
-        const action = targetListData => {
-          const sourceIndex = findIndex(targetListData, $sourceEl.id)
-          const targetIndex = findIndex(targetListData, $targetEl.id)
-
-          targetListData = swapArrayElements(
-            targetListData,
-            sourceIndex,
-            targetIndex
-          )
-
-          return targetListData
-        }
-
         const doAction = {
-          'todo-list': () => (this.todoListData = action(this.todoListData)),
+          'todo-list': () =>
+            (this.todoListData = swapArrayElements(
+              this.todoListData,
+              findIndex(this.todoListData, $sourceEl.id),
+              findIndex(this.todoListData, $targetEl.id)
+            )),
           'completed-list': () =>
-            (this.completedListData = action(this.completedListData)),
+            (this.completedListData = swapArrayElements(
+              this.completedListData,
+              findIndex(this.completedListData, $sourceEl.id),
+              findIndex(this.completedListData, $targetEl.id)
+            )),
         }
 
         doAction[$targetParentEl.id]()
       }
 
-      // 아이템 위에 드랍하였는지 확인
-      if ($targetEl.className === $sourceEl.className) {
-        if ($targetParentEl.id === $sourceParentEl.id) {
-          // 같은 리스트에 드랍한 경우
-          swapSameListData()
-        } else {
-          //다른 리스트에 드랍한 경우
-          onToggle($sourceEl.id)
-        }
+      if (isDropToItem($sourceEl, $targetEl)) {
+        isDropToSameListContainer($sourceParentEl, $targetParentEl)
+          ? swapSameListData()
+          : onToggle($sourceEl.id)
       } else {
-        // 리스트에 드랍한 경우(아이템 밖)
-        if ($targetEl.id === $sourceParentEl.id) {
-          // 같은 리스트에 드랍한 경우(아이템 사이에 드랍한 경우)
-          return
-        } else {
-          //다른 리스트에 드랍한 경우
-          onToggle($sourceEl.id)
-        }
+        isDropToSameListContainer($sourceParentEl, $targetEl)
+          ? {}
+          : onToggle($sourceEl.id)
       }
 
       this.render()
