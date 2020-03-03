@@ -46,7 +46,7 @@ function App() {
       this.todoData = updateData
       this.setState()
     } catch (error) {
-      handleError(error, { where: 'APP' })
+      handleError.call(this, error)
     }
   }
 
@@ -56,7 +56,7 @@ function App() {
       this.userData = updateData
       this.setState()
     } catch (error) {
-      handleError(error, { where: 'APP' })
+      handleError.call(this, error)
     }
   }
 
@@ -65,7 +65,7 @@ function App() {
       await postTodo(this.currentUser, newTodo)
       await this.getAllTodos(this.currentUser)
     } catch (error) {
-      handleError(error, { where: 'APP' })
+      handleError.call(this, error)
     }
   }
 
@@ -74,7 +74,7 @@ function App() {
       await deleteTodo(this.currentUser, todoId)
       await this.getAllTodos(this.currentUser)
     } catch (error) {
-      handleError(error, { where: 'APP' })
+      handleError.call(this, error)
     }
   }
 
@@ -83,7 +83,7 @@ function App() {
       await putTodo(this.currentUser, todoId)
       await this.getAllTodos(this.currentUser)
     } catch (error) {
-      handleError(error, { where: 'APP' })
+      handleError.call(this, error)
     }
   }
 
@@ -92,7 +92,7 @@ function App() {
       this.currentUser = username
       await this.getAllTodos()
     } catch (error) {
-      handleError(error, { where: 'APP' })
+      handleError.call(this, error)
     }
   }
 

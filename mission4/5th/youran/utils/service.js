@@ -7,7 +7,8 @@ export const $ = selector => {
   return document.querySelector(selector)
 }
 
-export const handleError = (error, { where, $target = $(SELECTOR.ERROR) }) => {
+export function handleError(error) {
+  const $target = $(SELECTOR.ERROR)
   console.error(error)
-  $target.innerHTML = `<p>${error.message} in ${where}</p>`
+  $target.innerHTML = `<p>${error.message} at ${this.constructor.name}</p>`
 }

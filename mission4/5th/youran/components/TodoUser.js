@@ -1,13 +1,13 @@
 import { validateString } from '../utils/validator.js'
 import { handleError } from '../utils/service.js'
-import { COMPONENT, MESSAGE } from '../utils/constants.js'
+import { MESSAGE } from '../utils/constants.js'
 
 function TodoUser(username, $target) {
   try {
     this.username = validateString(username)
     this.$target = $target
   } catch (error) {
-    handleError(error, { where: COMPONENT.TODO_USER })
+    handleError.call(this, error)
     this.username = ''
   }
 
@@ -22,7 +22,7 @@ function TodoUser(username, $target) {
     try {
       this.username = validateString(nextData)
     } catch (error) {
-      handleError(error, { where: COMPONENT.TODO_USER })
+      handleError.call(this, error)
       this.username = ''
     }
     this.render()

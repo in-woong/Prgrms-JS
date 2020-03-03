@@ -1,11 +1,3 @@
-export const COMPONENT = {
-  TODO_LIST: 'TODO_LIST',
-  TODO_INPUT: 'TODO_INPUT',
-  TODO_USER: 'TODO_USER',
-  USERS: 'USERS',
-  APP: 'APP',
-}
-
 export const SELECTOR = {
   TODO_LIST: '#todo-list',
   TODO_INPUT: '#todo-input',
@@ -27,4 +19,5 @@ export const MESSAGE = {
   USER_EMPTY: '조회할 사용자가 없습니다.',
   TODO_EMPTY: '할 일이 없어요',
   TODO_USER_EMPTY: '사용자를 선택하세요.',
+  TODO_INPUT_EMPTY: '저장할 내용이 없습니다.',
 }

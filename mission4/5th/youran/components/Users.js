@@ -1,12 +1,12 @@
 import { validateArray } from '../utils/validator.js'
 import { handleError } from '../utils/service.js'
-import { COMPONENT, MESSAGE } from '../utils/constants.js'
+import { MESSAGE } from '../utils/constants.js'
 
 function Users(data, $target, { onChangeUser }) {
   try {
     this.data = validateArray(data)
   } catch (error) {
-    handleError(error, { where: COMPONENT.USERS })
+    handleError.call(this, error)
     this.data = []
   }
   this.$target = $target
@@ -27,7 +27,7 @@ function Users(data, $target, { onChangeUser }) {
     try {
       this.data = validateArray(nextData)
     } catch (error) {
-      handleError(error, { where: COMPONENT.USERS })
+      handleError.call(this, error)
       this.data = []
     }
 

@@ -1,4 +1,4 @@
-import { KEY_CODE } from '../utils/constants.js'
+import { KEY_CODE, MESSAGE } from '../utils/constants.js'
 
 function TodoInput($target, { onAddTodo }) {
   this.$target = $target
@@ -17,7 +17,7 @@ function TodoInput($target, { onAddTodo }) {
       return false
     }
     if (!event.target.value) {
-      alert('저장할 내용이 없어요.')
+      alert(MESSAGE.TODO_INPUT_EMPTY)
       return false
     }
     return true

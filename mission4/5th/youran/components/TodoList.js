@@ -1,12 +1,12 @@
 import { validateArray } from '../utils/validator.js'
 import { handleError } from '../utils/service.js'
-import { COMPONENT, MESSAGE } from '../utils/constants.js'
+import { MESSAGE } from '../utils/constants.js'
 
 function TodoList(data, $target, { onToggleTodo, onRemoveTodo }) {
   try {
     this.data = validateArray(data)
   } catch (error) {
-    handleError(error, { where: COMPONENT.TODO_LIST })
+    handleError.call(this, error)
     this.data = []
   }
 
@@ -34,7 +34,7 @@ function TodoList(data, $target, { onToggleTodo, onRemoveTodo }) {
     try {
       this.data = validateArray(nextData)
     } catch (error) {
-      handleError(error, { where: COMPONENT.TODO_LIST })
+      handleError.call(this, error)
       this.data = []
     }
     this.render()
