@@ -7,7 +7,6 @@ function TodoList(data, $target, { onToggleTodo, onRemoveTodo }) {
     this.data = validateArray(data)
   } catch (error) {
     handleError.call(this, error)
-    this.data = []
   }
 
   this.$target = $target
@@ -16,7 +15,7 @@ function TodoList(data, $target, { onToggleTodo, onRemoveTodo }) {
 
   $target.addEventListener('click', event => this.handleEvent(event))
 
-  this.handleEvent = () => {
+  this.handleEvent = event => {
     // 보일러플레이트 코드에서 수정
     const li = event.target.closest('li')
     if (!li) return
@@ -35,7 +34,6 @@ function TodoList(data, $target, { onToggleTodo, onRemoveTodo }) {
       this.data = validateArray(nextData)
     } catch (error) {
       handleError.call(this, error)
-      this.data = []
     }
     this.render()
   }

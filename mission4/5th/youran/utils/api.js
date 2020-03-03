@@ -1,11 +1,12 @@
 import { URL } from '../utils/constants.js'
+import { handleError } from './service.js'
 
 export const fetchAllTodos = async username => {
   try {
     const response = await fetch(`${URL.TODO_API}/${username}`)
-    return await checkResponse(response).json()
+    return generatePromise(response)
   } catch (error) {
-    throw error
+    handleError(error)
   }
 }
 
@@ -20,9 +21,9 @@ export const postTodo = async (username, newTodo) => {
         content: newTodo,
       }),
     })
-    return checkResponse(response)
+    return generatePromise(response)
   } catch (error) {
-    throw error
+    handleError(error)
   }
 }
 
@@ -31,9 +32,9 @@ export const deleteTodo = async (username, todoId) => {
     const response = await fetch(`${URL.TODO_API}/${username}/${todoId}`, {
       method: 'DELETE',
     })
-    return checkResponse(response)
+    return generatePromise(response)
   } catch (error) {
-    throw error
+    handleError(error)
   }
 }
 
@@ -45,31 +46,38 @@ export const putTodo = async (username, todoId) => {
         method: 'PUT',
       }
     )
-    return checkResponse(response)
+    return generatePromise(response)
   } catch (error) {
-    throw error
+    handleError(error)
   }
 }
 
 export const fetchAllUsers = async () => {
   try {
-    const response = await fetch(`${URL.TODO_API}/users`)
-    return await checkResponse(response).json()
+    const response = await fetch(`${URL.TODO_API}/users/users`)
+    return generatePromise(response)
   } catch (error) {
-    throw error
+    handleError(error)
   }
 }
 
-const checkResponse = response => {
+const generatePromise = response => {
   const status = response.status
   if (status >= 300 && status < 400) {
     const location = response.headers.location
     if (!loacation) return
-    throw new Error(`Api Error - redirect to ${location} (${status})`)
+    throw Promise.reject(makeAPIError(`redirect to ${location}`, status))
   } else if (status >= 400 && status < 500) {
-    throw new Error(`Api Error - 잘못된 요청입니다. (${status})`)
+    return Promise.reject(makeAPIError('잘못된 요청입니다.', status))
   } else if (status >= 500 && status < 600) {
-    throw new Error(`Api Error - 잠시 후 다시 시도하세요. (${status})`)
+    throw Promise.reject(makeAPIError('잠시 후 다시 시도하세요.', status))
   }
-  return response
+  return response.json()
+}
+
+//코드 참조 https://codeburst.io/error-handling-in-spa-applications-e94c4ecebd86
+const makeAPIError = (message, status) => {
+  const error = new Error(message)
+  error.status = status
+  return error
 }

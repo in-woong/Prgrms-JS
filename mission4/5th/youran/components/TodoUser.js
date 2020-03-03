@@ -8,7 +8,6 @@ function TodoUser(username, $target) {
     this.$target = $target
   } catch (error) {
     handleError.call(this, error)
-    this.username = ''
   }
 
   this.render = () => {
@@ -23,7 +22,6 @@ function TodoUser(username, $target) {
       this.username = validateString(nextData)
     } catch (error) {
       handleError.call(this, error)
-      this.username = ''
     }
     this.render()
   }

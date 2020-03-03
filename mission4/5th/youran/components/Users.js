@@ -7,12 +7,9 @@ function Users(data, $target, { onChangeUser }) {
     this.data = validateArray(data)
   } catch (error) {
     handleError.call(this, error)
-    this.data = []
   }
   this.$target = $target
   this.onChangeUser = onChangeUser
-
-  this.$target.addEventListener('click', event => this.handleEvent(event))
 
   this.handleEvent = event => {
     // 보일러플레이트 코드에서 수정
@@ -28,11 +25,12 @@ function Users(data, $target, { onChangeUser }) {
       this.data = validateArray(nextData)
     } catch (error) {
       handleError.call(this, error)
-      this.data = []
     }
 
     this.render()
   }
+
+  this.$target.addEventListener('click', event => this.handleEvent(event))
 
   this.render = () => {
     $target.innerHTML = this.generateHTMLString()

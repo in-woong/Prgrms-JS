@@ -8,7 +8,15 @@ export const $ = selector => {
 }
 
 export function handleError(error) {
-  const $target = $(SELECTOR.ERROR)
   console.error(error)
-  $target.innerHTML = `<p>${error.message} at ${this.constructor.name}</p>`
+  let message
+  if (error.status) {
+    message = `Api Error - ${error.message} (${error.status})`
+  } else if (this) {
+    // component에서 발생
+    message = `${error.message} at ${this.constructor.name}`
+  } else {
+    message = `Unhandled Error - ${error.message}`
+  }
+  $(SELECTOR.ERROR).innerHTML = message
 }
