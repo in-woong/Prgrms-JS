@@ -54,36 +54,40 @@ function TodoList({ target, onRemove, onToggle }) {
     ) {
       e.preventDefault()
       const sourceId = e.dataTransfer.getData('text')
+
       const $sourceEl = document.getElementById(sourceId)
       const $sourceParentEl = $sourceEl.parentElement
-
       const $targetEl = document.getElementById(e.target.id)
       const $targetParentEl = $targetEl.parentElement
+
+      const swapSameListData = () => {
+        const action = targetListData => {
+          const sourceIndex = findIndex(targetListData, $sourceEl.id)
+          const targetIndex = findIndex(targetListData, $targetEl.id)
+
+          targetListData = swapArrayElements(
+            targetListData,
+            sourceIndex,
+            targetIndex
+          )
+
+          return targetListData
+        }
+
+        const doAction = {
+          'todo-list': () => (this.todoListData = action(this.todoListData)),
+          'completed-list': () =>
+            (this.completedListData = action(this.completedListData)),
+        }
+
+        doAction[$targetParentEl.id]()
+      }
 
       // 아이템 위에 드랍하였는지 확인
       if ($targetEl.className === $sourceEl.className) {
         if ($targetParentEl.id === $sourceParentEl.id) {
           // 같은 리스트에 드랍한 경우
-          const action = targetListData => {
-            const sourceIndex = findIndex(targetListData, $sourceEl.id)
-            const targetIndex = findIndex(targetListData, $targetEl.id)
-
-            targetListData = swapArrayElements(
-              targetListData,
-              sourceIndex,
-              targetIndex
-            )
-
-            return targetListData
-          }
-
-          const doAction = {
-            'todo-list': () => (this.todoListData = action(this.todoListData)),
-            'completed-list': () =>
-              (this.completedListData = action(this.completedListData)),
-          }
-
-          doAction[$targetParentEl.id]()
+          swapSameListData()
         } else {
           //다른 리스트에 드랍한 경우
           onToggle($sourceEl.id)
@@ -91,7 +95,8 @@ function TodoList({ target, onRemove, onToggle }) {
       } else {
         // 리스트에 드랍한 경우(아이템 밖)
         if ($targetEl.id === $sourceParentEl.id) {
-          // 같은 리스트에 드랍한 경우
+          // 같은 리스트에 드랍한 경우(아이템 사이에 드랍한 경우)
+          return
         } else {
           //다른 리스트에 드랍한 경우
           onToggle($sourceEl.id)
