@@ -11,12 +11,15 @@
     <div id="app">
       <div class="user-list-container"></div>
       <div class="todo-input-container">
-        <input type="text" id="todo-input" />
+        <input type="text" id="todo-input" placeholder="할 일 입력" />
         <button type="button" id="add-todo-button">Add</button>
       </div>
       <div class="error-message"></div>
       <div class="loading-status"></div>
-      <div class="todo-list-container"></div>
+      <div class="todo-list-container">
+        <ul class="item-list" id="todo-list"></ul>
+        <ul class="item-list" id="completed-list"></ul>
+      </div>
     </div>
     <script type="module" src="./js/main.js"></script>
   </body>
