@@ -80,16 +80,19 @@ function TodoList({ target, onRemove, onToggle }) {
         doAction[$targetParentEl.id]()
       }
 
-      if (isDropToItem($sourceEl, $targetEl)) {
-        isDropToSameListContainer($sourceParentEl, $targetParentEl)
-          ? swapSameListData()
-          : onToggle($sourceEl.id)
-      } else {
-        isDropToSameListContainer($sourceParentEl, $targetEl)
-          ? {}
-          : onToggle($sourceEl.id)
+      const reArrange = () => {
+        if (isDropToItem($sourceEl, $targetEl)) {
+          isDropToSameListContainer($sourceParentEl, $targetParentEl)
+            ? swapSameListData()
+            : onToggle($sourceEl.id)
+        } else {
+          isDropToSameListContainer($sourceParentEl, $targetEl)
+            ? {}
+            : onToggle($sourceEl.id)
+        }
       }
 
+      reArrange()
       this.render()
     }
   }
