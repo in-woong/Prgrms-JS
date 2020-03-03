@@ -1,4 +1,4 @@
-import { SELECTOR, ERROR_ALERT_MESSAGE, THROTTLE_TIME } from '../shared/constant.js'
+import { SELECTOR, ERROR_ALERT_MESSAGE } from '../shared/constant.js'
 
 function TodoInput(params) {
     const $targetElement = document.querySelector(params.target)

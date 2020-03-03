@@ -1,7 +1,4 @@
-import {
-    ERROR_MESSAGE,
-    SELECTOR
-} from './constant.js'
+import { ERROR_MESSAGE, SELECTOR } from './constant.js'
 
 export const noticeError = error => {
     alert(ERROR_MESSAGE.API_ERROR)
@@ -16,4 +13,15 @@ export const onLoading = () => {
 
 export const offLoading = () => {
     document.querySelector(SELECTOR.ADDTODO_BUTTON).disabled = false
+}
+
+export function swapElements(obj1, obj2) {
+    const temp = document.createElement('div')
+    obj1.parentNode.insertBefore(temp, obj1)
+
+    obj2.parentNode.insertBefore(obj1, obj2)
+
+    temp.parentNode.insertBefore(obj2, temp)
+
+    temp.parentNode.removeChild(temp)
 }
