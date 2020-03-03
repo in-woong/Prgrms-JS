@@ -52,9 +52,6 @@ export const postTodo = async (params, request) => {
 
 /**
  * DELETE /:username/:id
- * @param { Object } params
- * @param { string } params.username
- * @param { string } params.id
  */
 export const removeTodo = async params => {
   try {
@@ -69,9 +66,6 @@ export const removeTodo = async params => {
 
 /**
  * PUT /:username/:id/toggle
- * @param { Object} params
- * @param { string } params.username
- * @param { string } params.id
  */
 export const toggleTodo = async params => {
   try {

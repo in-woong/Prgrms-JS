@@ -32,7 +32,7 @@ function TodoList({ target, onRemove, onToggle }) {
   }
 
   /**
-   * FIXME: 현재 미니 트렐로 구현중
+   * 현재 미니 트렐로 구현중
    * TODO: 미니 트렐로 구현이 완료되면 리팩토링하기
    */
   this.onDragStart = e => {
@@ -53,8 +53,7 @@ function TodoList({ target, onRemove, onToggle }) {
 
   this.onDragover = e => {
     if (e.target.className.includes('todo-list')) {
-      //TODO: e.preventDefault() 의 역할 조사하기
-      e.preventDefault() // 데이터를 처리하지 못하게 한다.(?)
+      e.preventDefault() // 드래그 앤 드랍시 발생하는 기본이벤트가 있다. 그 이벤트를 방지한다.
     }
   }
 
