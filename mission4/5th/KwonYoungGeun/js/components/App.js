@@ -54,7 +54,7 @@ function App({ target }) {
 
   this.onToggle = async id => {
     await toggleTodo({ username: this.username, id })
-    this.setState(this.username)
+    this.setState(this.username) // toggle 됐을 때 fetchTods 방지
   }
 
   this.onSubmit = async todoText => {
