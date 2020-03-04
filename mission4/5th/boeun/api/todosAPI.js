@@ -6,7 +6,7 @@ export const fetchTodoList = async params => {
     const { userId } = params
     validateUserId(userId)
     try {
-        const res = await fetch(`${BASE_URL}/${userId}?delay=3000`)
+        const res = await fetch(`${BASE_URL}/${userId}`)
         validateApiResponse(res)
 
         return await res.json()

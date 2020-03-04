@@ -15,13 +15,28 @@ export const offLoading = () => {
     document.querySelector(SELECTOR.ADDTODO_BUTTON).disabled = false
 }
 
-export function swapElements(obj1, obj2) {
-    const temp = document.createElement('div')
-    obj1.parentNode.insertBefore(temp, obj1)
-
-    obj2.parentNode.insertBefore(obj1, obj2)
-
-    temp.parentNode.insertBefore(obj2, temp)
-
-    temp.parentNode.removeChild(temp)
+export const findIndex = (array, id) => {
+    return array.findIndex(item => item._id === id)
 }
+
+export const swapItems = (array, idx1, idx2) => {
+    ;[array[idx1], array[idx2]] = [array[idx2], array[idx1]]
+}
+
+export const controlStrike = target => {
+    if (target.tagName === 'STRIKE') {
+        return target.parentNode
+    } else {
+        return target
+    }
+}
+// export function swapElements(obj1, obj2) {
+//     const temp = document.createElement('div')
+//     obj1.parentNode.insertBefore(temp, obj1)
+
+//     obj2.parentNode.insertBefore(obj1, obj2)
+
+//     temp.parentNode.insertBefore(obj2, temp)
+
+//     temp.parentNode.removeChild(temp)
+// }

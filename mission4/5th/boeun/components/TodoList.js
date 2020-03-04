@@ -1,21 +1,22 @@
-import { swapElements } from '../shared/util.js'
+import { findIndex, swapItems, controlStrike } from '../shared/util.js'
 
 function TodoList(params) {
     const $targetElement = document.querySelector(params.target)
     const onClickTodo = params.onClickTodo
     const onRemoveTodo = params.onRemoveTodo
 
-    this.data = []
+    this.todoListData = []
 
     this.init = () => {
         this.bindEvent()
     }
 
     this.onDragStart = e => {
-        e.dataTransfer.setData('beginItem', e.target.dataset.id)
+        const eventTarget = controlStrike(e.target)
+        e.dataTransfer.setData('draggingItemId', eventTarget.dataset.id)
 
-        setTimeout(() => (e.target.style.visibility = 'hidden'), 0)
-        e.target.style.color = 'green'
+        setTimeout(() => (eventTarget.style.visibility = 'hidden'), 0)
+        eventTarget.style.color = 'green'
     }
 
     this.onDragOver = e => {
@@ -25,17 +26,25 @@ function TodoList(params) {
     this.onDragDrop = e => {
         e.preventDefault()
 
-        let beginItemId = e.dataTransfer.getData('beginItem')
-        let beginElement = document.querySelector(`[data-id="${beginItemId}"]`)
+        const eventTarget = controlStrike(e.target)
+        const draggingIndex = findIndex(this.todoListData, e.dataTransfer.getData('draggingItemId'))
+        const targetIndex = findIndex(this.todoListData, eventTarget.dataset.id)
 
-        if (e.target.tagName === 'STRIKE') {
-            swapElements(beginElement, e.target.parentNode)
-        } else {
-            swapElements(beginElement, e.target)
-        }
+        swapItems(this.todoListData, draggingIndex, targetIndex)
 
-        beginElement.style.visibility = 'visible'
-        beginElement.style.color = 'black'
+        this.setState(this.todoListData)
+
+        // let beginElement = document.querySelector(`[data-id="${beginItemId}"]`)
+
+        // if (e.target.parentNode === 'ul' || e.target.parentNode === 'li') {
+        //     if (e.target.tagName === 'STRIKE' || e.target.tagName === 'BUTTON') {
+        //         swapElements(beginElement, e.target.parentNode)
+        //     } else {
+        //         swapElements(beginElement, e.target)
+        //     }
+        // }
+        eventTarget.style.visibility = 'visible'
+        eventTarget.style.color = 'black'
     }
 
     this.bindEvent = async () => {
@@ -56,12 +65,12 @@ function TodoList(params) {
     }
 
     this.setState = nextData => {
-        this.data = nextData
+        this.todoListData = nextData
         this.render()
     }
 
     this.render = () => {
-        const htmlString = this.data
+        const htmlString = this.todoListData
             .map(todo => {
                 const contentHTML = todo.isCompleted ? `<strike>${todo.content}</strike>` : `${todo.content}`
 
