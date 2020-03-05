@@ -1,4 +1,4 @@
-import { findIndex, swapItems, controlStrike } from '../shared/util.js'
+import { swapItems, controlStrike } from '../shared/util.js'
 
 function TodoList(params) {
     const $targetElement = document.querySelector(params.target)
@@ -27,22 +27,13 @@ function TodoList(params) {
         e.preventDefault()
 
         const eventTarget = controlStrike(e.target)
-        const draggingIndex = findIndex(this.todoListData, e.dataTransfer.getData('draggingItemId'))
-        const targetIndex = findIndex(this.todoListData, eventTarget.dataset.id)
+        const draggingIndex = this.todoListData.findIndex(item => item._id === e.dataTransfer.getData('draggingItemId'))
+        const targetIndex = this.todoListData.findIndex(item => item._id === eventTarget.dataset.id)
 
         swapItems(this.todoListData, draggingIndex, targetIndex)
 
         this.setState(this.todoListData)
 
-        // let beginElement = document.querySelector(`[data-id="${beginItemId}"]`)
-
-        // if (e.target.parentNode === 'ul' || e.target.parentNode === 'li') {
-        //     if (e.target.tagName === 'STRIKE' || e.target.tagName === 'BUTTON') {
-        //         swapElements(beginElement, e.target.parentNode)
-        //     } else {
-        //         swapElements(beginElement, e.target)
-        //     }
-        // }
         eventTarget.style.visibility = 'visible'
         eventTarget.style.color = 'black'
     }
