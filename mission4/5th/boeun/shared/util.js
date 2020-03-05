@@ -5,16 +5,6 @@ export const noticeError = error => {
     console.error(error)
 }
 
-export const onLoading = () => {
-    document.querySelector(SELECTOR.TODOTITLE).innerHTML = ''
-    document.querySelector(SELECTOR.TODOLIST).innerHTML = '<div class="loader">Loading...</div>'
-    document.querySelector(SELECTOR.ADDTODO_BUTTON).disabled = true
-}
-
-export const offLoading = () => {
-    document.querySelector(SELECTOR.ADDTODO_BUTTON).disabled = false
-}
-
 export const swapItems = (array, idx1, idx2) => {
     ;[array[idx1], array[idx2]] = [array[idx2], array[idx1]]
 }

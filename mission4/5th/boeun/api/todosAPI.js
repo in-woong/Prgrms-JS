@@ -1,12 +1,21 @@
-import { BASE_URL } from './config.js'
-import { noticeError } from '../shared/util.js'
-import { validateApiResponse, validateUserId } from '../shared/validator.js'
+import {
+    BASE_URL
+} from './config.js'
+import {
+    noticeError
+} from '../shared/util.js'
+import {
+    validateApiResponse,
+    validateUserId
+} from '../shared/validator.js'
 
 export const fetchTodoList = async params => {
-    const { userId } = params
+    const {
+        userId
+    } = params
     validateUserId(userId)
     try {
-        const res = await fetch(`${BASE_URL}/${userId}`)
+        const res = await fetch(`${BASE_URL}/${userId}?delay=3000`)
         validateApiResponse(res)
 
         return await res.json()
@@ -16,7 +25,10 @@ export const fetchTodoList = async params => {
 }
 
 export const putTodoList = async params => {
-    const { userId, todoId } = params
+    const {
+        userId,
+        todoId
+    } = params
     validateUserId(userId)
     try {
         const res = await fetch(`${BASE_URL}/${userId}/${todoId}/toggle`, {
@@ -29,7 +41,10 @@ export const putTodoList = async params => {
 }
 
 export const deleteTodoList = async params => {
-    const { userId, todoId } = params
+    const {
+        userId,
+        todoId
+    } = params
     validateUserId(userId)
     try {
         const res = await fetch(`${BASE_URL}/${userId}/${todoId}`, {
@@ -42,7 +57,10 @@ export const deleteTodoList = async params => {
 }
 
 export const postTodoList = async params => {
-    const { userId, todoText } = params
+    const {
+        userId,
+        todoText
+    } = params
     validateUserId(userId)
     try {
         const res = await fetch(`${BASE_URL}/${userId}`, {

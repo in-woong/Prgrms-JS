@@ -1,8 +1,8 @@
 import TodoList from './TodoList.js'
 import TodoInput from './TodoInput.js'
 import Users from './Users.js'
+import Loading from './Loading.js'
 import { fetchTodoList, putTodoList, deleteTodoList, postTodoList } from '../api/todosAPI.js'
-import { onLoading, offLoading } from '../shared/util.js'
 import { SELECTOR } from '../shared/constant.js'
 
 function App() {
@@ -23,7 +23,6 @@ function App() {
         this.todoList = new TodoList({
             target: SELECTOR.TODOLIST,
             onClickTodo: async todoId => {
-                onLoading()
                 await putTodoList({
                     userId: this.userId,
                     todoId: todoId
@@ -31,7 +30,6 @@ function App() {
                 this.setState(this.userId)
             },
             onRemoveTodo: async todoId => {
-                onLoading()
                 await deleteTodoList({
                     userId: this.userId,
                     todoId: todoId
@@ -43,7 +41,6 @@ function App() {
         this.todoInput = new TodoInput({
             target: SELECTOR.TODOINPUT,
             onAddTodo: async todoText => {
-                onLoading()
                 await postTodoList({
                     userId: this.userId,
                     todoText
@@ -51,18 +48,23 @@ function App() {
                 this.setState(this.userId)
             }
         })
+
+        this.loading = new Loading({
+            target: SELECTOR.TODOLIST
+        })
     }
 
     this.setState = async userId => {
         this.userId = userId
-
-        onLoading()
+        // onLoading()
+        this.loading.setState(true)
         const updatedData = await fetchTodoList({
             userId: this.userId
         })
         setTodosTitle(this.userId)
         this.todoList.setState(updatedData)
-        offLoading()
+        // offLoading()
+        this.loading.setState(false)
     }
 
     this.init()
