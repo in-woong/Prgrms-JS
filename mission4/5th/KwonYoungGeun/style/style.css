@@ -6,19 +6,19 @@ li {
 }
 
 .user-list-container {
-  width: 100%;
+  width: 90%;
   margin: 20px auto;
 }
 
 .user-list {
-  border: 1px red solid;
-  height: 200px;
+  width: 100%;
 }
 
 .user-list .list-item {
-  margin: 10px;
-  padding: 5px;
   display: inline-block;
+  margin: 10px;
+  padding: 3px;
+  border: 1px solid transparent;
 }
 
 .user-list .list-item:hover {
