@@ -15,9 +15,13 @@ function UserList({ target, onChangeUser }) {
   }
 
   this.bindEvents = () => {
-    this.$element.addEventListener('click', e =>
+    this.$element.addEventListener('click', e => this.onClick(e))
+  }
+
+  this.onClick = e => {
+    if (e.target.className === 'list-item') {
       onChangeUser(e.target.innerText)
-    )
+    }
   }
 
   this.setState = data => {

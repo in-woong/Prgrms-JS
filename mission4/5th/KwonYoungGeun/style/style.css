@@ -10,8 +10,13 @@ li {
   margin: 20px auto;
 }
 
+.user-list {
+  border: 1px red solid;
+  height: 200px;
+}
+
 .user-list .list-item {
-  margin: 0 10px;
+  margin: 10px;
   padding: 5px;
   display: inline-block;
 }
