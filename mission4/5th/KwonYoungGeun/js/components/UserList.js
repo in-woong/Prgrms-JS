@@ -19,7 +19,7 @@ function UserList({ target, onChangeUser }) {
   }
 
   this.onClick = e => {
-    if (e.target.className === 'list-item') {
+    if (e.target.className === 'list-item user-list-item') {
       onChangeUser(e.target.innerText)
     }
   }

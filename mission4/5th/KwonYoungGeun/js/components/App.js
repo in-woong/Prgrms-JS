@@ -1,5 +1,6 @@
 import UserList from './UserList.js'
 import TodoInput from './TodoInput.js'
+import User from './User.js'
 import TodoList from './TodoList.js'
 import LoadingView from './LoadingView.js'
 import { $ } from '../utils/index.js'
@@ -19,6 +20,7 @@ function App({ target }) {
     this.username = 'KwonYoungGeun'
     this.userListData = []
     this.todoListData = []
+
     this.userList = new UserList({
       target: selectors.USER_LIST,
       onChangeUser: this.onChangeUser,
@@ -26,6 +28,10 @@ function App({ target }) {
     this.todoInput = new TodoInput({
       target: selectors.TODO_INPUT,
       onSubmit: this.onSubmit,
+    })
+    this.User = new User({
+      target: selectors.USERNAME_CONTAINER,
+      username: this.username,
     })
     this.todoList = new TodoList({
       target: selectors.TODO_LIST,
@@ -74,6 +80,7 @@ function App({ target }) {
     this.userListData = await fetchUsers()
     this.todoListData = await fetchTodosByUsername({ username: this.username })
 
+    this.User.setState(username)
     this.userList.setState(this.userListData)
     this.todoInput.setState('')
     this.todoList.setState(
