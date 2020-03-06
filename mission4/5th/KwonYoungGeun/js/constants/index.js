@@ -2,7 +2,9 @@ export const ENTER_KEY = 13
 export const selectors = {
   USER_LIST: '.user-list-container',
   TODO_INPUT: '.todo-input-container',
-  TODO_LIST: '.todo-list-container',
+  TODO_LIST_CONTAINER: '.todo-list-container',
+  TODO_LIST: '#todo-list',
+  COMPLETED_LIST: '#completed-list',
   LOADING_VIEW: '.loading-status',
   ERROR_VIEW: '.error-message',
 }

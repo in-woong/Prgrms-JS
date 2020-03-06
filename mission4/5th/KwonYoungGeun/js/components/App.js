@@ -32,6 +32,11 @@ function App({ target }) {
       onRemove: this.onRemove,
       onToggle: this.onToggle,
     })
+    this.completedList = new TodoList({
+      target: selectors.COMPLETED_LIST,
+      onRemove: this.onRemove,
+      onToggle: this.onToggle,
+    })
     this.loadingView = new LoadingView({ target: selectors.LOADING_VIEW })
 
     this.validate(this.$element)
@@ -54,7 +59,7 @@ function App({ target }) {
 
   this.onToggle = async id => {
     await toggleTodo({ username: this.username, id })
-    this.setState(this.username) // toggle 됐을 때 fetchTods 방지
+    this.setState(this.username)
   }
 
   this.onSubmit = async todoText => {
@@ -71,10 +76,13 @@ function App({ target }) {
 
     this.userList.setState(this.userListData)
     this.todoInput.setState('')
-    this.todoList.setState({
-      username: this.username,
-      todoListData: this.todoListData,
-    })
+    this.todoList.setState(
+      this.todoListData.filter(todoItem => !todoItem.isCompleted)
+    )
+    this.completedList.setState(
+      this.todoListData.filter(todoItem => todoItem.isCompleted)
+    )
+
     this.loadingView.setState(false)
   }
 

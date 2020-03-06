@@ -10,9 +10,7 @@ import { validateElement } from '../validation/index.js'
 function TodoList({ target, onRemove, onToggle }) {
   this.init = () => {
     this.username = ''
-    this.AllListData = []
     this.todoListData = []
-    this.completedListData = []
     this.$element = $(target)
 
     this.validate(this.$element)
@@ -27,8 +25,8 @@ function TodoList({ target, onRemove, onToggle }) {
   this.bindEvents = () => {
     this.$element.addEventListener('click', e => this.onClick(e))
     this.$element.addEventListener('dragstart', e => this.onDragStart(e))
-    this.$element.addEventListener('drop', e => this.onDrop(e)) // drop했을때 콜백함수
-    this.$element.addEventListener('dragover', e => this.onDragover(e)) // 드래그 대상에게 요소가 drop 됐을 때 콜백함수
+    this.$element.addEventListener('drop', e => this.onDrop(e))
+    this.$element.addEventListener('dragover', e => this.onDragover(e))
   }
 
   this.onClick = e => {
@@ -62,22 +60,11 @@ function TodoList({ target, onRemove, onToggle }) {
       const $targetParentEl = $targetEl.parentElement
 
       const swapSameListData = () => {
-        const doAction = {
-          'todo-list': () =>
-            (this.todoListData = swapArrayElements(
-              this.todoListData,
-              findIndex(this.todoListData, $sourceEl.id),
-              findIndex(this.todoListData, $targetEl.id)
-            )),
-          'completed-list': () =>
-            (this.completedListData = swapArrayElements(
-              this.completedListData,
-              findIndex(this.completedListData, $sourceEl.id),
-              findIndex(this.completedListData, $targetEl.id)
-            )),
-        }
-
-        doAction[$targetParentEl.id]()
+        this.todoListData = swapArrayElements(
+          this.todoListData,
+          findIndex(this.todoListData, $sourceEl.id),
+          findIndex(this.todoListData, $targetEl.id)
+        )
       }
 
       const reArrange = () => {
@@ -102,40 +89,22 @@ function TodoList({ target, onRemove, onToggle }) {
       e.target.className.includes('item-list') ||
       e.target.className.includes('todo-item')
     ) {
-      e.preventDefault() // 드래그 앤 드랍시 발생하는 기본이벤트가 있다. 그 이벤트를 방지한다.
+      e.preventDefault()
     }
   }
 
   this.setState = data => {
-    this.username = data.username
-    this.AllListData = data.todoListData
-    this.todoListData = data.todoListData.filter(
-      todoItem => !todoItem.isCompleted
-    )
-    this.completedListData = data.todoListData.filter(
-      todoItem => todoItem.isCompleted
-    )
+    this.todoListData = data
     this.render()
   }
 
   this.render = () => {
-    this.$element.innerHTML = `<h1 class="todo-list-title">${
-      this.username
-    }님의 TODO 리스트</h1>
-    <h2>TODO</h2>
-    <ul class="item-list" id="todo-list">${this.todoListData
+    this.$element.innerHTML = this.todoListData
       .map(
         todoItem =>
           `<li class="todo-item list-item" id=${todoItem._id} draggable="true" >${todoItem.content}<button class="remove-button" data-id=${todoItem._id}>삭제</button></li>`
       )
-      .join('')}</ul>
-      <h2>DONE</h2>
-      <ul class="item-list" id="completed-list">${this.completedListData
-        .map(
-          todoItem =>
-            `<li class="todo-item list-item" id=${todoItem._id} draggable="true" >${todoItem.content}<button class="remove-button" data-id=${todoItem._id}>삭제</button></li>`
-        )
-        .join('')}</ul>`
+      .join('')
   }
 
   this.init()
