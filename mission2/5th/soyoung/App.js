@@ -1,9 +1,13 @@
 function App($target, data) {
   this.$target = $target
-  this.data = data.map((d, index) => ({
-    ...d,
-    index,
-  }))
+  this.data = data
+  this.generateIndex = function() {
+    this.data = this.data.map((item, index) => ({
+      ...item,
+      index,
+    }))
+    this.nextIndex = this.data.length
+  }
   this.render = function() {
     this.$target.innerHTML = `
       <div>
@@ -17,65 +21,65 @@ function App($target, data) {
     const $todoCount = document.querySelector('#todo-count')
 
     // 하위 컴포넌트 생성
-    const todoInput = new TodoInput($todoInput)
-    const todoList = new TodoList($todoList, this.data)
-    const todoCount = new TodoCount($todoCount, this.data)
-
-    // 하위 컴포넌트 이벤트 등록
-    todoInput.getInput().addEventListener('keypress', e => {
-      if (e.key === 'Enter') {
+    const todoInput = new TodoInput($todoInput, {
+      onEnter: todoText => {
         const nextData = [
           ...this.data,
           {
-            text: todoInput.getInputValue(),
-            index: this.data.length,
+            text: todoText,
+            index: this.nextIndex,
+            isCompleted: false,
           },
         ]
         this.setState(nextData)
+        this.nextIndex++
         todoInput.resetInputValue()
-      }
-    })
-    todoInput.getAddButton().addEventListener('click', () => {
-      const nextData = [
-        ...this.data,
-        {
-          text: todoInput.getInputValue(),
-          index: this.data.length,
-        },
-      ]
-      this.setState(nextData)
-      todoInput.resetInputValue()
-    })
-    $todoList.addEventListener('click', e => {
-      console.log(e.target)
-      if (e.target.nodeName === 'LI') {
-        const clickedIndex = Number(e.target.id.split('-')[2])
-        this.data[clickedIndex].isCompleted = !this.data[clickedIndex]
-          .isCompleted
-        this.render()
-      } else if (e.target.parentNode.nodeName === 'LI') {
-        // s 태그일때
-        const clickedIndex = Number(e.target.parentNode.id.split('-')[2])
-        this.data[clickedIndex].isCompleted = !this.data[clickedIndex]
-          .isCompleted
-        this.render()
-      }
-
-      if (e.target.nodeName === 'BUTTON') {
-        const clickedIndex = Number(e.target.id.split('-')[2])
-        const nextData = this.data
-          .filter(d => d.index !== clickedIndex)
-          .map((d, index) => ({
-            ...d,
-            index,
-          }))
+      },
+      onAdd: todoText => {
+        const nextData = [
+          ...this.data,
+          {
+            text: todoText,
+            index: this.nextIndex,
+            isCompleted: false,
+          },
+        ]
         this.setState(nextData)
-      }
+        this.nextIndex++
+        todoInput.resetInputValue()
+      },
     })
+    const todoList = new TodoList($todoList, this.data, {
+      onClick: e => {
+        if (e.target.nodeName === 'BUTTON') {
+          const clickedIndex = Number(e.target.id.split('-')[2])
+          const nextData = this.data.filter(d => d.index !== clickedIndex)
+          this.setState(nextData)
+        } else if (e.target.parentNode.nodeName === 'LI') {
+          // s 태그일때
+          const clickedIndex = Number(e.target.parentNode.id.split('-')[2])
+          this.data[clickedIndex].isCompleted = !this.data[clickedIndex]
+            .isCompleted
+          this.render()
+        } else if (e.target.nodeName === 'LI') {
+          const clickedIndex = Number(e.target.id.split('-')[2])
+          this.data[clickedIndex].isCompleted = !this.data[clickedIndex]
+            .isCompleted
+          this.render()
+        }
+      },
+    })
+    const todoCount = new TodoCount(
+      $todoCount,
+      this.data.filter(item => item.isCompleted).length,
+      this.data.length
+    )
   }
   this.setState = function(nextData) {
     this.data = nextData
+    this.generateIndex()
     this.render()
   }
+  this.generateIndex()
   this.render()
 }

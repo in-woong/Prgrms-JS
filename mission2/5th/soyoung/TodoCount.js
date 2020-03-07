@@ -1,12 +1,11 @@
-function TodoCount($target, data) {
+function TodoCount($target, completedCount, totalCount) {
   this.$target = $target
-  this.data = data
+  this.completedCount = completedCount
+  this.totalCount = totalCount
   this.render = function() {
     this.$target.innerHTML = `
         <div>
-            <span>${this.data.filter(item => item.isCompleted).length} / ${
-      this.data.length
-    }</span>
+            <span>${this.completedCount} / ${this.totalCount}</span>
         </div>
         `
   }
