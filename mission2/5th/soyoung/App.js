@@ -1,6 +1,7 @@
-function App($target, data) {
+function App($target, data, removeAll) {
   this.$target = $target
   this.data = data
+  this.removeAll = removeAll
   this.generateIndex = function() {
     this.data = this.data.map((item, index) => ({
       ...item,
@@ -48,6 +49,9 @@ function App($target, data) {
         this.nextIndex++
         todoInput.resetInputValue()
       },
+      onReset: () => {
+        $target.dispatchEvent(this.removeAll)
+      },
     })
     const todoList = new TodoList($todoList, this.data, {
       onClick: e => {
@@ -82,4 +86,11 @@ function App($target, data) {
   }
   this.generateIndex()
   this.render()
+  $target.addEventListener(
+    'removeAll',
+    () => {
+      this.setState([])
+    },
+    false
+  )
 }

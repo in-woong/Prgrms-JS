@@ -9,4 +9,5 @@ const data = [
     isCompleted: false,
   },
 ]
-const app = new App($app, data)
+const removeAll = new Event('removeAll')
+const app = new App($app, data, removeAll)
