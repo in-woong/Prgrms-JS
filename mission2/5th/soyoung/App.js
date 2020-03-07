@@ -1,6 +1,6 @@
-function App($target, data, removeAll) {
+function App($target, removeAll) {
   this.$target = $target
-  this.data = data
+  this.data = JSON.parse(localStorage.getItem('data')) || []
   this.removeAll = removeAll
   this.generateIndex = function() {
     this.data = this.data.map((item, index) => ({
@@ -62,14 +62,20 @@ function App($target, data, removeAll) {
         } else if (e.target.parentNode.nodeName === 'LI') {
           // s 태그일때
           const clickedIndex = Number(e.target.parentNode.id.split('-')[2])
-          this.data[clickedIndex].isCompleted = !this.data[clickedIndex]
-            .isCompleted
-          this.render()
+          const nextData = this.data.map((item, index) =>
+            index === clickedIndex
+              ? { ...item, isCompleted: !item.isCompleted }
+              : item
+          )
+          this.setState(nextData)
         } else if (e.target.nodeName === 'LI') {
           const clickedIndex = Number(e.target.id.split('-')[2])
-          this.data[clickedIndex].isCompleted = !this.data[clickedIndex]
-            .isCompleted
-          this.render()
+          const nextData = this.data.map((item, index) =>
+            index === clickedIndex
+              ? { ...item, isCompleted: !item.isCompleted }
+              : item
+          )
+          this.setState(nextData)
         }
       },
     })
@@ -82,6 +88,7 @@ function App($target, data, removeAll) {
   this.setState = function(nextData) {
     this.data = nextData
     this.generateIndex()
+    localStorage.setItem('data', JSON.stringify(this.data))
     this.render()
   }
   this.generateIndex()
@@ -90,6 +97,7 @@ function App($target, data, removeAll) {
     'removeAll',
     () => {
       this.setState([])
+      localStorage.removeItem('data')
     },
     false
   )
