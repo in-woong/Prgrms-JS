@@ -1,9 +1,9 @@
-const ENTER = 'enter'
-function TodoInput($target, data) {
+const ENTER = 'Enter'
+function TodoInput($target, { onEnter, onAdd, onReset }) {
   this.$target = $target
-  this.onEnter = data.onEnter
-  this.onAdd = data.onAdd
-  this.onReset = data.onReset
+  this.onEnter = onEnter
+  this.onAdd = onAdd
+  this.onReset = onReset
   this.render = function() {
     this.$target.innerHTML = `
       <div>
@@ -14,24 +14,20 @@ function TodoInput($target, data) {
     this.$input = $target.querySelector('#input')
     this.$addBtn = $target.querySelector('#add')
     this.$reset = $target.querySelector('#reset')
-  }
-  this.getInputValue = function() {
-    return this.$input.value
-  }
-  this.resetInputValue = function() {
-    this.$input.value = ''
-    this.$input.focus()
+
+    this.$input.addEventListener('keypress', e => {
+      if (e.key === ENTER) {
+        this.onEnter(e.target.value)
+        e.target.value = ''
+      }
+    })
+    this.$addBtn.addEventListener('click', e => {
+      this.onAdd(this.$input.value)
+      this.$input.value = ''
+    })
+    this.$reset.addEventListener('click', e => {
+      this.onReset()
+    })
   }
   this.render()
-  this.$input.addEventListener('keypress', e => {
-    if (e.key === ENTER) {
-      this.onEnter(e.target.value)
-    }
-  })
-  this.$addBtn.addEventListener('click', e => {
-    this.onAdd(this.getInputValue())
-  })
-  this.$reset.addEventListener('click', e => {
-    this.onReset()
-  })
 }

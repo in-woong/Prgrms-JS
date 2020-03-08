@@ -1,7 +1,8 @@
-function TodoList($target, data, eventInfoObj) {
+function TodoList($target, data, { onToggle, onDelete }) {
   this.$target = $target
   this.data = data
-  this.onClick = eventInfoObj.onClick
+  this.onToggle = onToggle
+  this.onDelete = onDelete
   this.render = function() {
     this.$target.innerHTML = this.data
       .map(
@@ -15,9 +16,23 @@ function TodoList($target, data, eventInfoObj) {
           `
       )
       .join('')
+
+    this.$target.addEventListener('click', e => {
+      if (e.target.nodeName === 'BUTTON') {
+        const targetIndex = Number(e.target.id.split('-')[2])
+        this.onDelete(targetIndex)
+      } else if (e.target.nodeName === 'S') {
+        const targetIndex = Number(e.target.parentNode.id.split('-')[2])
+        this.onToggle(targetIndex)
+      } else if (e.target.nodeName === 'LI') {
+        const targetIndex = Number(e.target.id.split('-')[2])
+        this.onToggle(targetIndex)
+      }
+    })
+  }
+  this.setState = data => {
+    this.data = data
+    this.render()
   }
   this.render()
-  this.$target.addEventListener('click', e => {
-    this.onClick(e)
-  })
 }

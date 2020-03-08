@@ -9,5 +9,10 @@ function TodoCount($target, completedCount, totalCount) {
         </div>
         `
   }
+  this.setState = (completedCount, totalCount) => {
+    this.completedCount = completedCount
+    this.totalCount = totalCount
+    this.render()
+  }
   this.render()
 }
