@@ -1,7 +1,7 @@
-const TODO_URL = 'http://todo-api.roto.codes'
+const TODO_URL = 'https://todo-api.roto.codes'
 
 const fetchTodoList = async userName => {
-  const response = await fetch(`${TODO_URL}/${userName}?delay=5000`)
+  const response = await fetch(`${TODO_URL}/${userName}?delay=3000`)
   if (!response.ok) {
     throw new Error('[api] API를 확인해주세요.')
   }

@@ -81,6 +81,12 @@ function App() {
       console.log(e)
       return
     }
+
+    this.render()
+  }
+
+  this.render = function() {
+    this.todoTitle.innerHTML = getTodoTitle(this.userName)
   }
 
   const handleClickTodoItem = async id => {
@@ -121,7 +127,6 @@ function App() {
 
   const handleClickUser = async user => {
     this.userName = user
-    this.todoTitle.innerHTML = getTodoTitle(this.userName)
     const updateData = await this.setLoadingBeforeFetch(() =>
       api.fetchTodoList(this.userName)
     )

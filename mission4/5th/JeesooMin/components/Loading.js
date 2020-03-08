@@ -4,15 +4,20 @@ function Loading($element) {
   }
 
   this.$element = $element
+  this.loading = false
 
   this.init = function() {
-    this.$element.className = 'loading'
-    this.$element.innerHTML = '<h1>loading...</h1>'
+    this.render()
   }
 
   this.setState = function(loading) {
-    this.$element.className = loading ? 'loading' : 'loaded'
-    this.$element.innerHTML = loading ? '<h1>loading...</h1>' : ''
+    this.loading = loading
+    this.render()
+  }
+
+  this.render = function() {
+    this.$element.className = this.loading ? 'loading' : 'loaded'
+    this.$element.innerHTML = this.loading ? '<h1>loading...</h1>' : ''
   }
 
   this.init()
