@@ -89,16 +89,14 @@ const searchResult = new SearchResult(
   document.querySelector('#search-result'),
   dummyData
 )
-
-const $input = document.querySelector('#search-keyword')
-$input.addEventListener('keydown', e => {
-  if (e.key === 'Enter') {
-    fetch(`https://jjalbot.com/api/jjals?text=${e.target.value}`)
+const searchInput = new SearchInput(document.querySelector('#search-input'), {
+  onSearch: keyword => {
+    fetch(`https://jjalbot.com/api/jjals?text=${keyword}`)
       .then(response => {
         return response.json()
       })
       .then(data => {
         searchResult.setState(data)
       })
-  }
+  },
 })
