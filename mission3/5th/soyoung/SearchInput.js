@@ -10,10 +10,12 @@ function SearchInput($target, { onSearch }) {
     this.$input.addEventListener('keydown', e => {
       if (e.key === ENTER) {
         this.onSearch(e.target.value)
+        e.target.value = ''
       }
     })
     this.$button.addEventListener('click', e => {
       this.onSearch(this.$input.value)
+      this.$input.value = ''
     })
   }
   this.render()

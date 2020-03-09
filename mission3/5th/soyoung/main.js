@@ -85,15 +85,30 @@ const dummyData = [
   },
 ]
 
+const searchInput = new SearchInput(document.querySelector('#search-input'), {
+  onSearch: keyword => {
+    getJjalbotData(keyword)
+    searchHistory.addItem(keyword)
+    searchHistory.setCurrentItem(keyword)
+  },
+})
+const searchHistory = new SearchHistory(
+  document.querySelector('#search-history'),
+  {
+    list: [],
+    currentItem: '',
+  },
+  {
+    onClick: keyword => {
+      getJjalbotData(keyword)
+      searchHistory.setCurrentItem(keyword)
+    },
+  }
+)
 const searchResult = new SearchResult(
   document.querySelector('#search-result'),
   dummyData
 )
-const searchInput = new SearchInput(document.querySelector('#search-input'), {
-  onSearch: keyword => {
-    getJjalbotData(keyword)
-  },
-})
 
 function getData(keyword) {
   return fetch(`https://jjalbot.com/api/jjals?text=${keyword}`).then(
@@ -106,5 +121,4 @@ function getData(keyword) {
 async function getJjalbotData(keyword) {
   const result = await getData(keyword)
   searchResult.setState(result)
-  return result
 }
