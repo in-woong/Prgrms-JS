@@ -91,12 +91,20 @@ const searchResult = new SearchResult(
 )
 const searchInput = new SearchInput(document.querySelector('#search-input'), {
   onSearch: keyword => {
-    fetch(`https://jjalbot.com/api/jjals?text=${keyword}`)
-      .then(response => {
-        return response.json()
-      })
-      .then(data => {
-        searchResult.setState(data)
-      })
+    getJjalbotData(keyword)
   },
 })
+
+function getData(keyword) {
+  return fetch(`https://jjalbot.com/api/jjals?text=${keyword}`).then(
+    response => {
+      return response.json()
+    }
+  )
+}
+
+async function getJjalbotData(keyword) {
+  const result = await getData(keyword)
+  searchResult.setState(result)
+  return result
+}
