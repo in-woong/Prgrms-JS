@@ -1,3 +1,4 @@
+let timer
 const dummyData = [
   {
     _id: '5c2258053d184c40e5be90d1',
