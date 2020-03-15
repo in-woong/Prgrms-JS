@@ -87,6 +87,9 @@ const dummyData = [
 ]
 
 const searchInput = new SearchInput(document.querySelector('#search-input'), {
+  onSearchPreview: keyword => {
+    getJjalbotData(keyword)
+  },
   onSearch: keyword => {
     getJjalbotData(keyword)
     searchHistory.addItem(keyword)
