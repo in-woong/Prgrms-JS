@@ -1,27 +1,33 @@
 let data = [
   {
     text: 'JS 공부하기',
+    isCompleted: true,
   },
   {
     text: 'JS 복습하기',
+    isCompleted: false,
   },
 ]
 
 let homeTodoData = [
   {
     text: '청소하기',
+    isCompleted: true,
   },
   {
     text: '산책하기',
+    isCompleted: false,
   },
 ]
 
 let workTodoData = [
   {
     text: '이메일 정리하기',
+    isCompleted: true,
   },
   {
     text: '세미나자료 작성하기',
+    isCompleted: false,
   },
 ]
 
@@ -52,7 +58,9 @@ function TodoList(data, elemID) {
   this.render = function () {
     const todosView = document.querySelector(`#${this.elemID}`)
     this.todos.forEach((todo) => {
-      todosView.innerHTML += `<div>${todo.text}</div>`
+      if (todo.isCompleted)
+        todosView.innerHTML += `<div><s>${todo.text}</s></div>`
+      else todosView.innerHTML += `<div>${todo.text}</div>`
     })
   }
 }
