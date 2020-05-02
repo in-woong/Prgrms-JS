@@ -6,6 +6,8 @@
 
   <body>
     <div id="todo-list"></div>
+    <div id="todo-list2"></div>
+    <div id="todo-list3"></div>
     <script>
       // Data
       var data = [
@@ -14,6 +16,22 @@
         },
         {
           text: 'JS 복습하기',
+        },
+      ]
+      var data2 = [
+        {
+          text: 'JS 공부하기 2',
+        },
+        {
+          text: 'JS 복습하기 2',
+        },
+      ]
+      var data3 = [
+        {
+          text: 'JS 공부하기 3',
+        },
+        {
+          text: 'JS 복습하기 3',
         },
       ]
 
@@ -72,16 +90,29 @@
           todoList.append(todos)
         }
       }
+      function TodoList2(data) {
+        validate(data, this)
 
-      // class 사용
-      class TodoListClass {
-        constructor(data) {
-          validate(data, this)
-          this.data = data
+        this.data = data
+        this.render = () => {
+          const todoList = document.querySelector('#todo-list2')
+          const todos = document.createElement('ul')
+          todos.setAttribute('id', 'todos')
+          let str = ''
+
+          this.data.forEach((todo, i) => {
+            str += `<li>${todo.text}</li>`
+          })
+          todos.innerHTML = str
+          todoList.append(todos)
         }
+      }
+      function TodoList3(data) {
+        validate(data, this)
 
-        render() {
-          const todoList = document.querySelector('#todo-list')
+        this.data = data
+        this.render = () => {
+          const todoList = document.querySelector('#todo-list3')
           const todos = document.createElement('ul')
           todos.setAttribute('id', 'todos')
           let str = ''
@@ -94,10 +125,36 @@
         }
       }
 
+      // // class 사용
+      // class TodoListClass {
+      //   constructor(data) {
+      //     validate(data, this)
+      //     this.data = data
+      //   }
+
+      //   render() {
+      //     const todoList = document.querySelector('#todo-list')
+      //     const todos = document.createElement('ul')
+      //     todos.setAttribute('id', 'todos')
+      //     let str = ''
+
+      //     this.data.forEach((todo, i) => {
+      //       str += `<li>${todo.text}</li>`
+      //     })
+      //     todos.innerHTML = str
+      //     todoList.append(todos)
+      //   }
+      // }
+
       var todoList = new TodoList(data)
       todoList.render()
-      var todoListClass = new TodoListClass(data)
-      todoListClass.render()
+      var todoList = new TodoList2(data2)
+      todoList.render()
+      var todoList = new TodoList3(data3)
+      todoList.render()
+
+      // var todoListClass = new TodoListClass(data)
+      // todoListClass.render()
     </script>
   </body>
 </html>
