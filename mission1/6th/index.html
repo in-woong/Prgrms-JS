@@ -83,14 +83,21 @@
         validate(data, this)
 
         this.data = data
+
+        this.setState = (nextData) => {
+          this.data = nextData
+          this.render()
+        }
+
         this.render = () => {
           const todoList = document.querySelector(parentId)
+          todoList.innerHTML = ''
+
           const todos = document.createElement('ul')
           todos.setAttribute('id', 'todos')
           let str = ''
 
           this.data.forEach((todo, i) => {
-            console.log(todo)
             if (todo.isCompleted) {
               str += `<li><s>${todo.text}</s></li>`
             } else {
@@ -102,36 +109,46 @@
         }
       }
 
-      // // class 사용
-      // class TodoListClass {
-      //   constructor(data) {
-      //     validate(data, this)
-      //     this.data = data
-      //   }
+      // class 사용
+      class TodoListClass {
+        constructor(data, parentId) {
+          validate(data, this)
+          this.data = data
+          this.parentId = parentId
+        }
+        setState(nextData) {
+          this.data = nextData
+          this.render()
+        }
+        render() {
+          const todoList = document.querySelector(this.parentId)
+          todoList.innerHTML = ''
+          const todos = document.createElement('ul')
+          todos.setAttribute('id', 'todos')
+          let str = ''
 
-      //   render() {
-      //     const todoList = document.querySelector('#todo-list')
-      //     const todos = document.createElement('ul')
-      //     todos.setAttribute('id', 'todos')
-      //     let str = ''
-
-      //     this.data.forEach((todo, i) => {
-      //       str += `<li>${todo.text}</li>`
-      //     })
-      //     todos.innerHTML = str
-      //     todoList.append(todos)
-      //   }
-      // }
+          this.data.forEach((todo, i) => {
+            if (todo.isCompleted) {
+              str += `<li><s>${todo.text}</s></li>`
+            } else {
+              str += `<li>${todo.text}</li>`
+            }
+          })
+          todos.innerHTML = str
+          todoList.append(todos)
+        }
+      }
 
       var todoList = new TodoList(data, '#todo-list')
       todoList.render()
+      data.push({ text: '새로운 할 일 ', isCompleted: false })
+      todoList.setState(data)
+
       var todoList2 = new TodoList(data2, '#todo-list2')
       todoList2.render()
+
       var todoList3 = new TodoList(data3, '#todo-list3')
       todoList3.render()
-
-      // var todoListClass = new TodoListClass(data)
-      // todoListClass.render()
     </script>
   </body>
 </html>
