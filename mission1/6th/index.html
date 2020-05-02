@@ -7,6 +7,7 @@
   <body>
     <div id="todo-list"></div>
     <script>
+      // Data
       var data = [
         {
           text: 'JS 공부하기',
@@ -17,9 +18,47 @@
       ]
 
       // 이곳에서 코딩을 시작하세요!
-      function TodoList(data) {
-        this.data = data
 
+      // Validation Util
+      function validate(data, instanceThis) {
+        function isValidDataContent(data) {
+          if (data.length !== 0) {
+            return data.every((todo) => {
+              const { text } = todo
+              return text
+            })
+          } else {
+            return false
+          }
+        }
+
+        let errorMessage = ''
+        if (instanceThis === window) {
+          // validate new operator
+          errorMessage += ', new operator is required'
+        } else if (data == null) {
+          // validate null,undefined
+          errorMessage += ', data is not defined'
+        } else if (!Array.isArray(data)) {
+          // validate array
+          errorMessage += ', only array type data is permitted'
+        } else if (!isValidDataContent(data)) {
+          // validate data content
+          errorMessage += ', data is not valid'
+        }
+
+        if (errorMessage) {
+          throw new Error(errorMessage.substring(2))
+        }
+      }
+
+      //Todo List
+
+      // Constructor function 사용
+      function TodoList(data) {
+        validate(data, this)
+
+        this.data = data
         this.render = () => {
           const todoList = document.querySelector('#todo-list')
           const todos = document.createElement('ul')
@@ -34,8 +73,10 @@
         }
       }
 
-      class TodoList2 {
+      // class 사용
+      class TodoListClass {
         constructor(data) {
+          validate(data, this)
           this.data = data
         }
 
@@ -54,9 +95,9 @@
       }
 
       var todoList = new TodoList(data)
-      var todoList2 = new TodoList2(data)
       todoList.render()
-      todoList2.render()
+      var todoListClass = new TodoListClass(data)
+      todoListClass.render()
     </script>
   </body>
 </html>
