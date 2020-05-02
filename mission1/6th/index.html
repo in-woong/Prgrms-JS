@@ -13,25 +13,31 @@
       var data = [
         {
           text: 'JS 공부하기',
+          isCompleted: true,
         },
         {
           text: 'JS 복습하기',
+          isCompleted: false,
         },
       ]
       var data2 = [
         {
           text: 'JS 공부하기 2',
+          isCompleted: true,
         },
         {
           text: 'JS 복습하기 2',
+          isCompleted: true,
         },
       ]
       var data3 = [
         {
           text: 'JS 공부하기 3',
+          isCompleted: false,
         },
         {
           text: 'JS 복습하기 3',
+          isCompleted: false,
         },
       ]
 
@@ -73,52 +79,23 @@
       //Todo List
 
       // Constructor function 사용
-      function TodoList(data) {
+      function TodoList(data, parentId) {
         validate(data, this)
 
         this.data = data
         this.render = () => {
-          const todoList = document.querySelector('#todo-list')
+          const todoList = document.querySelector(parentId)
           const todos = document.createElement('ul')
           todos.setAttribute('id', 'todos')
           let str = ''
 
           this.data.forEach((todo, i) => {
-            str += `<li>${todo.text}</li>`
-          })
-          todos.innerHTML = str
-          todoList.append(todos)
-        }
-      }
-      function TodoList2(data) {
-        validate(data, this)
-
-        this.data = data
-        this.render = () => {
-          const todoList = document.querySelector('#todo-list2')
-          const todos = document.createElement('ul')
-          todos.setAttribute('id', 'todos')
-          let str = ''
-
-          this.data.forEach((todo, i) => {
-            str += `<li>${todo.text}</li>`
-          })
-          todos.innerHTML = str
-          todoList.append(todos)
-        }
-      }
-      function TodoList3(data) {
-        validate(data, this)
-
-        this.data = data
-        this.render = () => {
-          const todoList = document.querySelector('#todo-list3')
-          const todos = document.createElement('ul')
-          todos.setAttribute('id', 'todos')
-          let str = ''
-
-          this.data.forEach((todo, i) => {
-            str += `<li>${todo.text}</li>`
+            console.log(todo)
+            if (todo.isCompleted) {
+              str += `<li><s>${todo.text}</s></li>`
+            } else {
+              str += `<li>${todo.text}</li>`
+            }
           })
           todos.innerHTML = str
           todoList.append(todos)
@@ -146,12 +123,12 @@
       //   }
       // }
 
-      var todoList = new TodoList(data)
+      var todoList = new TodoList(data, '#todo-list')
       todoList.render()
-      var todoList = new TodoList2(data2)
-      todoList.render()
-      var todoList = new TodoList3(data3)
-      todoList.render()
+      var todoList2 = new TodoList(data2, '#todo-list2')
+      todoList2.render()
+      var todoList3 = new TodoList(data3, '#todo-list3')
+      todoList3.render()
 
       // var todoListClass = new TodoListClass(data)
       // todoListClass.render()
