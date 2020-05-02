@@ -18,6 +18,11 @@
         ]
         // 이곳에서 코딩을 시작하세요!
         function TodoList(data, divId){
+            // validation
+            if(!(this instanceof TodoList)) 
+                throw new Error('it is not Instance. must use new keyword.');
+            if(data === null || data === undefined || !Array.isArray(data))
+                throw new Error('it is invalid data.');
             this.data = data;
             this.render = function(){
             data.forEach(data => {
