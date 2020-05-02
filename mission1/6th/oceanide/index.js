@@ -31,6 +31,17 @@ let workTodoData = [
   },
 ]
 
+let nextData = [
+  {
+    text: '책상 정리하기',
+    isCompleted: false,
+  },
+  {
+    text: '저녁 약속 참석하기',
+    isCompleted: false,
+  },
+]
+
 const getType = (value) => Object.prototype.toString.call(value).slice(8, -1)
 const isNull = (value) => getType(value) === 'Null'
 const isUndefined = (value) => getType(value) === 'Undefined'
@@ -63,10 +74,19 @@ function TodoList(data, elemID) {
       else todosView.innerHTML += `<div>${todo.text}</div>`
     })
   }
+  this.setState = function (nextData) {
+    if (!isValidData(nextData)) throw new Error('Invalid data')
+    this.todos = nextData
+
+    const todosView = document.querySelector(`#${this.elemID}`)
+    todosView.innerHTML = ''
+    this.render()
+  }
 }
 
 const todoList = new TodoList(data, 'todo-list')
 todoList.render()
+todoList.setState(nextData)
 
 const homeTodoList = new TodoList(homeTodoData, 'home-todo-list')
 homeTodoList.render()
