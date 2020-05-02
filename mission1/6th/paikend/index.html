@@ -6,14 +6,33 @@
 </head>
 
 <body>
-    <div id="todo-list"></div>
+    <div id="todo-list1"></div>
+    <div id="todo-list2"></div>
+    <div id="todo-list3"></div>
+
     <script>
-        var data = [
+        var data1 = [
             {
             text: 'JS 공부하기'
             },
             {
             text: 'JS 복습하기'
+            }
+        ]
+        var data2 = [
+            {
+            text: '알고리즘 공부하기'
+            },
+            {
+            text: '알고리즘 복습하기'
+            }
+        ]
+        var data3 = [
+            {
+            text: '아키텍쳐 공부하기'
+            },
+            {
+            text: '아키텍쳐 복습하기'
             }
         ]
         // 이곳에서 코딩을 시작하세요!
@@ -29,9 +48,12 @@
             document.querySelector(divId).innerHTML += `<div>${data.text}</div>`});
             }    
         }
-        var todoList = new TodoList(data, "#todo-list");
-        todoList.render()
-
+        var todoList1 = new TodoList(data1, "#todo-list1");
+        var todoList2 = new TodoList(data2, "#todo-list2");
+        var todoList3 = new TodoList(data3, "#todo-list3");
+        todoList1.render()
+        todoList2.render()
+        todoList3.render()
     </script>
 </body>
 </html>
