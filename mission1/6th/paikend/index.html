@@ -50,7 +50,7 @@
                 throw new Error('it is invalid data.');
             this.data = data;
             this.render = function(){
-            data.forEach(data => {
+            this.data.forEach(data => {
                 if(data.hasOwnProperty('text'))
                     (data.isCompleted) ? document.querySelector(divId).innerHTML += `<div><s>${data.text}</s></div>` : document.querySelector(divId).innerHTML += `<div>${data.text}</div>`
                 });
