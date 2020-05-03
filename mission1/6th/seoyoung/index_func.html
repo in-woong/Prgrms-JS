@@ -1,0 +1,90 @@
+<html>
+
+<head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+</head>
+
+<body>
+    <h1>함수 버전</h1>
+    <div id="todo-list"></div>
+    <div id="today-todo-list"></div>
+    <div id="yesterday-todo-list"></div>
+    <script>
+        let data = [{
+                text: '코딩하기',
+                isCompleted: true
+            },
+            {
+                text: '집안 청소하기',
+                isCompleted: false
+            }
+        ]
+        let todayTodos = [{
+                text: '스터디 과제하기',
+                isCompleted: true
+            },
+            {
+                text: '운동하기',
+                isCompleted: true
+            }
+        ]
+        let yesterdayTodos = [{
+                text: '알고리즘 문제풀기',
+                isCompleted: true
+            },
+            {
+                text: '서류 쓰기',
+                isCompleted: false
+            }
+        ]
+        // 함수버전
+        function TodoList(data, queryId) {
+            if (!new.target) {
+                throw new Error('new로 생성해주세요!')
+                return 0
+            } else {
+                if (confirmData(data)) {
+                    this.todos = data
+                    this.render = function () {
+                        document.querySelector(queryId).innerHTML =
+                            this.todos
+                            .map(todo => todo.isCompleted ? `<div><s>${todo.text}</s></div>` :
+                                `<div>${todo.text}</div>`)
+                            .join('\n')
+                    }
+                    this.setState = function (nextData) {
+                        this.todos = nextData
+                        this.render()
+                    }
+                }
+            }
+        }
+
+        function confirmData(data) {
+            if (!data) {
+                throw new Error('data가 없습니다')
+            }
+            if (!Array.isArray(data)) {
+                throw new Error('배열 형태가 아닙니다')
+            }
+            if (data.some(data => typeof data.text !== 'string')) {
+                throw new Error('내용이 이상한 데이터입니다')
+            }
+            return true
+        }
+
+        let todoList = new TodoList(data, '#todo-list');
+        let todayTodoList = new TodoList(todayTodos, '#today-todo-list');
+        let yesterdayTodoList = new TodoList(yesterdayTodos, '#yesterday-todo-list');
+        todoList.render();
+        todayTodoList.render();
+        yesterdayTodoList.render();
+        todoList.setState([{
+            text: '새롭게 할 일',
+            isCompleted: false
+        }]);
+    </script>
+</body>
+
+</html>
