@@ -7,23 +7,42 @@
 
 <body>
 <div id="todo-list"></div>
+<div id="work-todo-list"></div>
+<div id="game-todo-list"></div>
+
 <script>
-  var data = [
+  const data = [
     {
       text: 'JS 공부하기'
     },
     {
       text: 'JS 복습하기'
     }
-  ]
-  // 이곳에서 코딩을 시작하세요!
+  ];
+  const workData = [
+    {
+      text: '리팩토링'
+    },
+    {
+      text: 'A/B Test'
+    }
+  ];
+  const gameData = [
+    {
+      text: '동물의 숲'
+    },
+    {
+      text: '롤'
+    }
+  ];
+
   function isEmpty(value) {
     return value === null ||
       typeof value === 'undefined' ||
       (Array.isArray(value) && value.length < 1);
   }
 
-  var TodoList = function(data) {
+  var TodoList = function(data, id) {
     if (!(this instanceof TodoList)) {
       throw new Error('new 키워드를 붙여야 합니다.');
     }
@@ -36,13 +55,17 @@
     this.render = function() {
       this.todos.forEach(todo => {
         if (!isEmpty(todo.text))
-          document.getElementById('todo-list').innerHTML += `<div>${todo.text}</div>`;
+          document.getElementById(id).innerHTML += `<div>${todo.text}</div>`;
       });
     }
   }
 
-  var todoList = new TodoList(data);
+  const todoList = new TodoList(data, 'todo-list');
   todoList.render();
+  const workTodoList = new TodoList(workData, 'work-todo-list');
+  workTodoList.render();
+  const gameTodoList = new TodoList(gameData, 'game-todo-list');
+  gameTodoList.render();
 </script>
 </body>
 </html>
