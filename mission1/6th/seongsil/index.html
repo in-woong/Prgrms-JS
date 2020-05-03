@@ -13,49 +13,71 @@
 <script>
   const data = [
     {
-      text: 'JS 공부하기'
+      text: 'JS 공부하기',
+      isCompleted: true
     },
     {
-      text: 'JS 복습하기'
+      text: 'JS 복습하기',
+      isCompleted: true
     }
   ];
   const workData = [
     {
-      text: '리팩토링'
+      text: '리팩토링',
+      isCompleted: false
     },
     {
-      text: 'A/B Test'
+      text: 'A/B Test',
+      isCompleted: true
     }
   ];
   const gameData = [
     {
-      text: '동물의 숲'
+      text: '동물의 숲',
+      isCompleted: true
     },
     {
-      text: '롤'
+      text: '롤',
+      isCompleted: false
     }
   ];
 
   function isEmpty(value) {
+    // null 혹은 undefined거나 array가 아닌 형태로 넘어왔을 경우
     return value === null ||
       typeof value === 'undefined' ||
       (Array.isArray(value) && value.length < 1);
   }
 
   var TodoList = function(data, id) {
-    if (!(this instanceof TodoList)) {
+    if (!(this instanceof TodoList)) { //new check
       throw new Error('new 키워드를 붙여야 합니다.');
     }
-    if (isEmpty(data)) {
+    if (isEmpty(data)) { // validation check
       throw new Error('유효하지 않은 형식입니다.');
     }
 
     this.todos = data;
 
     this.render = function() {
+      const parentNode = document.createElement('ul');
+      document.getElementById(id).appendChild(parentNode);
       this.todos.forEach(todo => {
-        if (!isEmpty(todo.text))
-          document.getElementById(id).innerHTML += `<div>${todo.text}</div>`;
+        if (!isEmpty(todo.text)) { // key check
+          const node = document.createElement('li');
+          const textNode = document.createTextNode(`${todo.text}`);
+          if (!isEmpty(todo.isCompleted)) { //key check
+            if (todo.isCompleted) {
+              // isCompleted 값이 true인 경우 <s> 태그를 이용해 삭선처리
+              const strikeNode = document.createElement('s');
+              strikeNode.appendChild(textNode);
+              node.appendChild(strikeNode);
+            } else {
+              node.appendChild(textNode);
+            }
+            parentNode.appendChild(node);
+          }
+        }
       });
     }
   }
