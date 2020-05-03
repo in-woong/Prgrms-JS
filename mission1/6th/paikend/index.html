@@ -46,24 +46,33 @@
             // validation
             if(!(this instanceof TodoList)) 
                 throw new Error('it is not Instance. must use new keyword.');
-            if(data === null || data === undefined || !Array.isArray(data))
+            if(data === null || data === undefined || !Array.isArray(data) || data.length < 1)
                 throw new Error('it is invalid data.');
             this.data = data;
             this.render = function(){
             data.forEach(data => {
-                if(data.isCompleted)
-                    document.querySelector(divId).innerHTML += `<div><s>${data.text}</s></div>`
-                else
-                    document.querySelector(divId).innerHTML += `<div>${data.text}</div>`
+                if(data.hasOwnProperty('text'))
+                    (data.isCompleted) ? document.querySelector(divId).innerHTML += `<div><s>${data.text}</s></div>` : document.querySelector(divId).innerHTML += `<div>${data.text}</div>`
                 });
+            }
+            this.setState = (nextData) => {
+                document.querySelector(divId).innerHTML = ""
+                nextData.forEach(data => {
+                    if(data.hasOwnProperty('text'))
+                        (data.isCompleted) ? document.querySelector(divId).innerHTML += `<div><s>${data.text}</s></div>` : document.querySelector(divId).innerHTML += `<div>${data.text}</div>`
+                })
             }    
         }
         var todoList1 = new TodoList(data1, "#todo-list1");
         var todoList2 = new TodoList(data2, "#todo-list2");
         var todoList3 = new TodoList(data3, "#todo-list3");
+
         todoList1.render()
         todoList2.render()
         todoList3.render()
+        setTimeout(function () {
+            todoList3.setState(data2, "#todo-list3")
+        }, 5000);
     </script>
 </body>
 </html>
