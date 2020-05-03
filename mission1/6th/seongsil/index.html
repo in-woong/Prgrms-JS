@@ -6,8 +6,13 @@
 </head>
 
 <body>
+<h4>Todo List</h4>
 <div id="todo-list"></div>
+
+<h4>Work Todo List</h4>
 <div id="work-todo-list"></div>
+
+<h4>Game Todo List</h4>
 <div id="game-todo-list"></div>
 
 <script>
@@ -41,6 +46,16 @@
       isCompleted: false
     }
   ];
+  const newData = [
+    {
+      text: '미션1 풀기',
+      isCompleted: true
+    },
+    {
+      text: '미션1 PR 날리기',
+      isCompleted: true
+    }
+  ];
 
   function isEmpty(value) {
     // null 혹은 undefined거나 array가 아닌 형태로 넘어왔을 경우
@@ -49,7 +64,7 @@
       (Array.isArray(value) && value.length < 1);
   }
 
-  var TodoList = function(data, id) {
+  const TodoList = function(data, id) {
     if (!(this instanceof TodoList)) { //new check
       throw new Error('new 키워드를 붙여야 합니다.');
     }
@@ -60,34 +75,32 @@
     this.todos = data;
 
     this.render = function() {
-      const parentNode = document.createElement('ul');
-      document.getElementById(id).appendChild(parentNode);
-      this.todos.forEach(todo => {
-        if (!isEmpty(todo.text)) { // key check
-          const node = document.createElement('li');
-          const textNode = document.createTextNode(`${todo.text}`);
-          if (!isEmpty(todo.isCompleted)) { //key check
-            if (todo.isCompleted) {
-              // isCompleted 값이 true인 경우 <s> 태그를 이용해 삭선처리
-              const strikeNode = document.createElement('s');
-              strikeNode.appendChild(textNode);
-              node.appendChild(strikeNode);
-            } else {
-              node.appendChild(textNode);
-            }
-            parentNode.appendChild(node);
+      if (!isEmpty(id)) {
+        const rootElement = document.getElementById(id);
+        rootElement.innerHTML = `<ul>${this.todos.map(todo => {
+          if (!isEmpty(todo.isCompleted) && !isEmpty(todo.text)) {
+            return todo.isCompleted ? `<li><s>${todo.text}</s></li>` : `<li>${todo.text}</li>`
           }
-        }
-      });
+        }).join('')}</ul>`;
+      }
     }
+
+    this.setState = function(nextData) {
+      this.todos = nextData;
+      this.render();
+    }
+
+    this.render();
   }
 
   const todoList = new TodoList(data, 'todo-list');
-  todoList.render();
   const workTodoList = new TodoList(workData, 'work-todo-list');
-  workTodoList.render();
   const gameTodoList = new TodoList(gameData, 'game-todo-list');
-  gameTodoList.render();
+
+  setTimeout(() => {
+    // todoList 데이터를 newData로 바꾼다
+    todoList.setState(newData);
+  }, 2000)
 </script>
 </body>
 </html>
