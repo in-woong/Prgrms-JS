@@ -43,8 +43,12 @@ const nextData = [
 ]
 
 const isValidData = function (value) {
-  if (isNull(value) || isUndefined(value)) return false
-  if (!(isArray(value) && value.length > 0)) return false
+  if (isNull(value) || isUndefined(value)) {
+    return false
+  }
+  if (!(isArray(value) && value.length > 0)) {
+    return false
+  }
 
   return value.every((element) => {
     return isObject(element) && 'text' in element && isString(element.text)
@@ -52,23 +56,30 @@ const isValidData = function (value) {
 }
 
 function TodoList(data, elemID) {
-  if (!(this instanceof arguments.callee))
+  if (!(this instanceof arguments.callee)) {
     throw new Error('Function must be called with new')
+  }
 
-  if (!isValidData(data)) throw new Error('Invalid data')
+  if (!isValidData(data)) {
+    throw new Error('Invalid data')
+  }
 
   this.todos = data
   this.elemID = elemID
   this.render = function () {
     const $todosView = document.querySelector(`#${this.elemID}`)
     this.todos.forEach((todo) => {
-      if (todo.isCompleted)
+      if (todo.isCompleted) {
         $todosView.innerHTML += `<div><s>${todo.text}</s></div>`
-      else $todosView.innerHTML += `<div>${todo.text}</div>`
+      } else {
+        $todosView.innerHTML += `<div>${todo.text}</div>`
+      }
     })
   }
   this.setState = function (nextData) {
-    if (!isValidData(nextData)) throw new Error('Invalid data')
+    if (!isValidData(nextData)) {
+      throw new Error('Invalid data')
+    }
     this.todos = nextData
 
     const $todosView = document.querySelector(`#${this.elemID}`)
