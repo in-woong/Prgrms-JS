@@ -60,19 +60,19 @@ function TodoList(data, elemID) {
   this.todos = data
   this.elemID = elemID
   this.render = function () {
-    const todosView = document.querySelector(`#${this.elemID}`)
+    const $todosView = document.querySelector(`#${this.elemID}`)
     this.todos.forEach((todo) => {
       if (todo.isCompleted)
-        todosView.innerHTML += `<div><s>${todo.text}</s></div>`
-      else todosView.innerHTML += `<div>${todo.text}</div>`
+        $todosView.innerHTML += `<div><s>${todo.text}</s></div>`
+      else $todosView.innerHTML += `<div>${todo.text}</div>`
     })
   }
   this.setState = function (nextData) {
     if (!isValidData(nextData)) throw new Error('Invalid data')
     this.todos = nextData
 
-    const todosView = document.querySelector(`#${this.elemID}`)
-    todosView.innerHTML = ''
+    const $todosView = document.querySelector(`#${this.elemID}`)
+    $todosView.innerHTML = ''
     this.render()
   }
 }
