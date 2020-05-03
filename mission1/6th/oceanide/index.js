@@ -1,4 +1,4 @@
-let data = [
+const data = [
   {
     text: 'JS 공부하기',
     isCompleted: true,
@@ -9,7 +9,7 @@ let data = [
   },
 ]
 
-let homeTodoData = [
+const homeTodoData = [
   {
     text: '청소하기',
     isCompleted: true,
@@ -20,7 +20,7 @@ let homeTodoData = [
   },
 ]
 
-let workTodoData = [
+const workTodoData = [
   {
     text: '이메일 정리하기',
     isCompleted: true,
@@ -31,7 +31,7 @@ let workTodoData = [
   },
 ]
 
-let nextData = [
+const nextData = [
   {
     text: '책상 정리하기',
     isCompleted: false,
