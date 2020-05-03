@@ -17,12 +17,26 @@
     }
   ]
   // 이곳에서 코딩을 시작하세요!
+  function isEmpty(value) {
+    return value === null ||
+      typeof value === 'undefined' ||
+      (Array.isArray(value) && value.length < 1);
+  }
+
   var TodoList = function(data) {
+    if (!(this instanceof TodoList)) {
+      throw new Error('new 키워드를 붙여야 합니다.');
+    }
+    if (isEmpty(data)) {
+      throw new Error('유효하지 않은 형식입니다.');
+    }
+
     this.todos = data;
 
     this.render = function() {
       this.todos.forEach(todo => {
-        document.getElementById('todo-list').innerHTML += `<div>${todo.text}</div>`;
+        if (!isEmpty(todo.text))
+          document.getElementById('todo-list').innerHTML += `<div>${todo.text}</div>`;
       });
     }
   }
