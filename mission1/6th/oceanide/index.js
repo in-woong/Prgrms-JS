@@ -42,13 +42,6 @@ const nextData = [
   },
 ]
 
-const getType = (value) => Object.prototype.toString.call(value).slice(8, -1)
-const isNull = (value) => getType(value) === 'Null'
-const isUndefined = (value) => getType(value) === 'Undefined'
-const isString = (value) => getType(value) === 'String'
-const isArray = (value) => getType(value) === 'Array'
-const isObject = (value) => getType(value) === 'Object'
-
 const isValidData = function (value) {
   if (isNull(value) || isUndefined(value)) return false
   if (!(isArray(value) && value.length > 0)) return false
