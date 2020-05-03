@@ -1,32 +1,45 @@
 <html>
+
 <head>
-  <title>Mission 1</title>
-  <meta charset="utf-8" />
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
 </head>
 
 <body>
-  <div id="todo-list"></div>
-  <script>
-    var data = [
-      {
-        text: 'JS 공부하기'
-      },
-      {
-        text: 'JS 복습하기'
-      }
-    ]
+    <div id="todo-list"></div>
+    <script>
+        var data = [{
+                text: 'JS 공부하기'
+            },
+            {
+                text: 'JS 복습하기'
+            }
+        ]
 
-    function TodoList(data){
-        this.data = data;
-        this.render = function (){
-            this.data.forEach(element => {
-                document.querySelector('#todo-list').innerHTML += `<div>${element.text}</div>`;
-            });
-        };
-    }
+        function TodoList(data) {
+            if (this === window){
+                throw new Error("Error: Object is not set properly");
+            }
+            
+            this.data = data;
+            this.render = function () {
+                if (!this.data) {
+                    throw new Error("Error: Invalid data type");
+                }
+                else if (!Array.isArray(data)){
+                    throw new Error("Error: Data should be array");
+                }
+                else{
+                    this.data.forEach(element => {
+                        document.querySelector('#todo-list').innerHTML += `<div>${element.text}</div>`;
+                    });
+                }
+            };
+        }
 
-    let list = new TodoList(data);
-    list.render();
-  </script>
+        let list = TodoList(data);
+        list.render();
+    </script>
 </body>
+
 </html>
