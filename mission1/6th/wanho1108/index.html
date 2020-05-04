@@ -50,7 +50,30 @@
 
       function TodoList(element, data) {
         const todoElement = document.querySelector(element)
-        const todos = data
+        let todos = data
+
+        // 데이터 검사 함수
+        function dataValidator(data) {
+          let todos = data
+
+          // 데이터가 배열인지 검사
+          if (Array.isArray(todos) === false) {
+            throw new Error(`${element} 데이터는 배열로 전달되어야 합니다.`)
+          }
+
+          // 데이터가 객체이고 text, isCompleted 키를 가지고 있는지 검사
+          todos.map((todo) => {
+            if (
+              (todo.toString().slice(8, -1) === 'Object' &&
+                todo.hasOwnProperty('text') &&
+                todo.hasOwnProperty('isCompleted')) === false
+            ) {
+              throw new Error(
+                `${element} 데이터의 값이 객체가 아니거나 text, isCompleted 키를 가지고 있지 않습니다.`
+              )
+            }
+          })
+        }
 
         // new 키워드를 사용했는지 검사
         if (this instanceof TodoList === false) {
@@ -62,23 +85,8 @@
           throw new Error(`${element}가 존재하지 않습니다.`)
         }
 
-        // 데이터가 배열인지 검사
-        if (Array.isArray(todos) === false) {
-          throw new Error(`${element} 데이터는 배열로 전달되어야 합니다.`)
-        }
-
-        // 데이터가 객체이고 text, isCompleted 키를 가지고 있는지 검사
-        todos.map((todo) => {
-          if (
-            (todo.toString().slice(8, -1) === 'Object' &&
-              todo.hasOwnProperty('text') &&
-              todo.hasOwnProperty('isCompleted')) === false
-          ) {
-            throw new Error(
-              `${element} 데이터의 값이 객체가 아니거나 text, isCompleted 키를 가지고 있지 않습니다.`
-            )
-          }
-        })
+        // 데이터 검사
+        dataValidator(todos)
 
         this.render = () => {
           todoElement.innerHTML = todos
@@ -89,6 +97,12 @@
                 }</div>`
             )
             .join('')
+        }
+
+        this.setState = (nextData) => {
+          dataValidator(nextData)
+          todos = nextData
+          this.render()
         }
       }
 
