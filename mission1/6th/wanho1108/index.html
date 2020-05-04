@@ -49,30 +49,21 @@
       ]
 
       function TodoList(element, data) {
-        const validator = (data) => {
-          let todos = data
+        const todoElement = document.querySelector(element)
+        let todos = data
 
-          // new 키워드를 사용했는지 검사
-          if (this instanceof TodoList === false) {
-            throw new Error('new를 사용해주세요.')
-          }
-
-          // 엘리먼트가 존재하는지 검사
-          if (document.querySelector(element) === null) {
-            throw new Error(`${element}가 존재하지 않습니다.`)
-          }
-
+        const dataValidator = (datas) => {
           // 데이터가 배열인지 검사
-          if (Array.isArray(todos) === false) {
+          if (Array.isArray(datas) === false) {
             throw new Error(`${element} 데이터는 배열로 전달되어야 합니다.`)
           }
 
           // 데이터가 객체이고 text, isCompleted 키를 가지고 있는지 검사
-          todos.map((todo) => {
+          datas.map((data) => {
             if (
-              (todo.toString().slice(8, -1) === 'Object' &&
-                todo.hasOwnProperty('text') &&
-                todo.hasOwnProperty('isCompleted')) === false
+              (data.toString().slice(8, -1) === 'Object' &&
+                data.hasOwnProperty('text') &&
+                data.hasOwnProperty('isCompleted')) === false
             ) {
               throw new Error(
                 `${element} 데이터의 값이 객체가 아니거나 text, isCompleted 키를 가지고 있지 않습니다.`
@@ -81,10 +72,18 @@
           })
         }
 
-        validator(data)
+        // new 키워드를 사용했는지 검사
+        if (this instanceof TodoList === false) {
+          throw new Error('new를 사용해주세요.')
+        }
 
-        const todoElement = document.querySelector(element)
-        let todos = data
+        // 엘리먼트가 존재하는지 검사
+        if (todoElement === null) {
+          throw new Error(`${element}가 존재하지 않습니다.`)
+        }
+
+        // 데이터 검사
+        dataValidator(todos)
 
         this.render = () => {
           todoElement.innerHTML = todos
@@ -98,7 +97,7 @@
         }
 
         this.setState = (nextData) => {
-          validator(nextData)
+          dataValidator(nextData)
           todos = nextData
           this.render()
         }
