@@ -66,15 +66,20 @@ function TodoList(data, elemID) {
 
   this.todos = data
   this.elemID = elemID
+
+  const todosText = () => {
+    return this.todos
+      .map((todo) =>
+        todo.isCompleted
+          ? `<div><s>${todo.text}</s></div>`
+          : `<div>${todo.text}</div>`
+      )
+      .join('')
+  }
+
   this.render = function () {
     const $todosView = document.querySelector(`#${this.elemID}`)
-    this.todos.forEach((todo) => {
-      if (todo.isCompleted) {
-        $todosView.innerHTML += `<div><s>${todo.text}</s></div>`
-      } else {
-        $todosView.innerHTML += `<div>${todo.text}</div>`
-      }
-    })
+    $todosView.innerHTML = todosText()
   }
   this.setState = function (nextData) {
     if (!isValidData(nextData)) {
