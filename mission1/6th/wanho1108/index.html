@@ -5,9 +5,11 @@
   </head>
 
   <body>
-    <div id="todo-list"></div>
+    <div id="todo-mission-list"></div>
+    <div id="todo-animal-list"></div>
+    <div id="todo-food-list"></div>
     <script>
-      var data = [
+      const missionData = [
         {
           text: 'JS 공부하기',
         },
@@ -15,41 +17,74 @@
           text: 'JS 복습하기',
         },
       ]
+      const animalData = [
+        {
+          text: '강아지 키우기',
+        },
+        {
+          text: '고양이 키우기',
+        },
+        {
+          text: '닭 키우기',
+        },
+      ]
+      const foodData = [
+        {
+          text: '치킨 먹기',
+        },
+        {
+          text: '피자 먹기',
+        },
+        {
+          text: '떡볶이 먹기',
+        },
+      ]
 
-      function TodoList(data) {
+      function TodoList(element, data) {
+        const todoElement = document.querySelector(element)
+        const todos = data
+
         // new 키워드를 사용했는지 검사
         if (this instanceof TodoList === false) {
           throw new Error('new를 사용해주세요.')
         }
 
+        // 엘리먼트가 존재하는지 검사
+        if (todoElement === null) {
+          throw new Error(`${element}가 존재하지 않습니다.`)
+        }
+
         // 데이터가 배열인지 검사
-        if (Array.isArray(data) === false) {
-          throw new Error('데이터는 배열로 전달되어야 합니다.')
+        if (Array.isArray(todos) === false) {
+          throw new Error(`${todos} 데이터는 배열로 전달되어야 합니다.`)
         }
 
         // 데이터가 객체이고 text 키를 가지고 있는지 검사
-        data.map((todo) => {
+        todos.map((todo) => {
           if (
-            (todo.toString().slice(8, -1) == 'Object' &&
+            (todo.toString().slice(8, -1) === 'Object' &&
               todo.hasOwnProperty('text')) === false
           ) {
             throw new Error(
-              '데이터의 값이 객체가 아니거나 text 키를 가지고 있지 않습니다.'
+              `${todos} 데이터의 값이 객체가 아니거나 text 키를 가지고 있지 않습니다.`
             )
           }
         })
 
-        this.element = document.querySelector('#todo-list')
-        this.todos = data
         this.render = () => {
-          this.element.innerHTML = this.todos
+          todoElement.innerHTML = todos
             .map((todo) => `<div>${todo.text}</div>`)
             .join('')
         }
       }
 
-      var todoList = new TodoList(data)
-      todoList.render()
+      const todoMissionList = new TodoList('#todo-mission-list', missionData)
+      const todoAnimalList = new TodoList('#todo-animal-list', animalData)
+      const todoFoodList = new TodoList('#todo-food-list', foodData)
+
+      todoMissionList.render()
+      todoAnimalList.render()
+      todoFoodList.render()
     </script>
   </body>
 </html>
