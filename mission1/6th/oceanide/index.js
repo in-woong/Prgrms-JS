@@ -100,8 +100,12 @@ function TodoList(data, elemID) {
   this.render()
 }
 
-const todoList = new TodoList(data, 'todo-list')
-todoList.setState(nextData)
+try {
+  const todoList = new TodoList(data, 'todo-list')
+  todoList.setState(nextData)
 
-const homeTodoList = new TodoList(homeTodoData, 'home-todo-list')
-const workTodoList = new TodoList(workTodoData, 'work-todo-list')
+  const homeTodoList = new TodoList(homeTodoData, 'home-todo-list')
+  const workTodoList = new TodoList(workTodoData, 'work-todo-list')
+} catch (err) {
+  console.log(err)
+}
