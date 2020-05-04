@@ -86,14 +86,11 @@ function TodoList(data, elemID) {
     $todosView.innerHTML = ''
     this.render()
   }
+  this.render()
 }
 
 const todoList = new TodoList(data, 'todo-list')
-todoList.render()
 todoList.setState(nextData)
 
 const homeTodoList = new TodoList(homeTodoData, 'home-todo-list')
-homeTodoList.render()
-
 const workTodoList = new TodoList(workTodoData, 'work-todo-list')
-workTodoList.render()
