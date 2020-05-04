@@ -12,6 +12,12 @@
     <div id="myTodo-list"></div>
 
     <div id="workTodo-list"></div>
+
+    <input type="text" id="input-text">
+    <button type="button" id="input-btn">입력</button>
+
+    <div id="mission2"></div>
+
     <script>
         var data = [
             {
@@ -110,6 +116,7 @@
 
         todoList.render()
         myTodoList.render()
+
         workTodoList.render()
 
         todoList.setState([
@@ -121,6 +128,16 @@
             },
         ]);
 
+        //input-btn
+        const $inputBtn = document.querySelector('#input-btn')
+        const $inputText = document.querySelector('#input-text')
+
+        const $misson2 = document.querySelector('#mission2')
+
+        $inputBtn.addEventListener('click', e => {
+            $misson2.innerHTML += `<li>${$inputText.value}</li>`
+
+        })
     </script>
 </body>
 
