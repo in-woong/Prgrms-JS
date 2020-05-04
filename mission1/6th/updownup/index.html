@@ -16,34 +16,48 @@
         text: 'JS 복습하기'
       }
     ]
-    
+
 	// 이곳에서 코딩을 시작하세요!
   function TodoList(data) {
     // 보너스 구현 사항 1
-    if (!(this instanceof TodoList)) {
+    if(!new.target) {
       throw new Error('new로 TodoList를 생성하지 않음!')
     }
 
    // 보너스 구현 사항 2
-   this.paramCheck = function (data) {
-    if (typeof data === undefined || data === '' || data === null) {
+   this.checkParams = function (data) {
+    if (!data) {
       throw new Error('data value is not available')
     }
-    if (!(data instanceof Array)) { 
+    if (!Array.isArray(data)) {
       throw new Error('data type is not available')
     }
    }
+
    this.render = function () {
-     this.data = this.paramCheck(data)
-     for (var i = 0; i < data.length; i++) {
-      document.querySelector('#todo-list').innerHTML += `<div>${data[i].text}</div>`
-     }
+     this.data = this.checkParams(data)
+     
+     /* 1) Array.prototype.map를 사용했을 경우 
+     document.querySelector('#todo-list').innerHTML = `<div>${data.map(datas => { 
+         return `<p>${datas.text}</p>`
+       }).join('')}</div>`
+      */
+     
+     // 2) reduce를 사용했을 경우 
+     document.querySelector('#todo-list').innerHTML = data
+      .reduce(
+       (sum, current) => { 
+         return '<p>' + sum.text + '</p>' + '<p>' + current.text + '</p>'
+        }
+      )
+
    }
   }
 
   var todoList = new TodoList(data);
 
   todoList.render()
+
   </script>
 </body>
 </html> 
