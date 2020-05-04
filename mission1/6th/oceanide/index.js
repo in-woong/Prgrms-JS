@@ -42,7 +42,7 @@ const nextData = [
   },
 ]
 
-const isValidData = function (value) {
+const validateData = function (value) {
   if (isNull(value) || isUndefined(value)) {
     return false
   }
@@ -66,7 +66,7 @@ function TodoList(data, elemID) {
     throw new Error('Function must be called with new')
   }
 
-  if (!isValidData(data)) {
+  if (!validateData(data)) {
     throw new Error('Invalid data')
   }
 
@@ -88,7 +88,7 @@ function TodoList(data, elemID) {
     $todosView.innerHTML = todosText()
   }
   this.setState = function (nextData) {
-    if (!isValidData(nextData)) {
+    if (!validateData(nextData)) {
       throw new Error('Invalid data')
     }
     this.todos = nextData
