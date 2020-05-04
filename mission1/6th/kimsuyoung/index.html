@@ -16,20 +16,53 @@
         },
       ]
       // 이곳에서 코딩을 시작하세요!
+      const checkDataType = (data) => {
+        for (let item in data) {
+          if (
+            typeof data[item] == null ||
+            typeof data[item] == undefined ||
+            (typeof data[item] === 'object' && !Object.keys(data[item]).length)
+          )
+            return true
+        }
+        return false
+      }
+
       function TodoList(data) {
         this.data = data
 
+        try {
+          if (
+            !Array.isArray(this.data) ||
+            this.data === undefined ||
+            !this.data
+          ) {
+            throw new Error('데이터 값은 배열이 아닌 값이 오면 안 됩니다.')
+          }
+          if (checkDataType(data)) {
+            throw new Error('데이터 내용 값이 유효하지 않습니다.')
+          }
+          if (!(this instanceof TodoList)) {
+            throw new Error('new를 사용하세요.')
+          }
+        } catch (error) {
+          console.error(error)
+          alert(error)
+        }
+
         this.render = () => {
-          let html = data
-            .map((value) => {
-              return `<div>${value.text}</div>`
-            })
-            .join('')
+          let html =
+            data &&
+            data
+              .map((value) => {
+                return `<div>${value.text}</div>`
+              })
+              .join('')
           return (document.querySelector('#todo-list').innerHTML = html)
         }
       }
 
-      let todoList = new TodoList(data)
+      let todoList = TodoList(data)
       todoList.render()
     </script>
   </body>
