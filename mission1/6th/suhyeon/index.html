@@ -41,7 +41,7 @@
         class TodoList {
             constructor(selector, data) {                
                 this.data = this.validateData(data)
-                this.listElement = this.validateElement(selector)
+                this.$list = this.validateElement(selector)
                 this.render()
             }
             validateData(data) {
@@ -50,15 +50,15 @@
                 else return data
             }
             validateElement(selector) {
-                const listElement = document.querySelector(selector)
-                if (!listElement) throw new Error(`${selector} 요소가 존재하지 않습니다.`)
-                else return listElement
+                const $list = document.querySelector(selector)
+                if (!$list) throw new Error(`${selector} 요소가 존재하지 않습니다.`)
+                else return $list
             }
             render() {
                 const htmlString = this.data.map(item => 
                     item.isCompleted ? `<li><s>${item.text}</s></li>` : `<li>${item.text}</li>`
                 ).join('')
-                this.listElement.innerHTML = `<ul>${htmlString}</ul>`
+                this.$list.innerHTML = `<ul>${htmlString}</ul>`
             }
         }
         const todoList = new TodoList('#todo-list', data)
