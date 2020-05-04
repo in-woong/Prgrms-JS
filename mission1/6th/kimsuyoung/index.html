@@ -11,17 +11,22 @@
       var data = [
         {
           text: 'JS 공부하기',
+          isCompleted: true,
         },
         {
           text: 'JS 복습하기',
+          isCompleted: true,
         },
       ]
+
       var data2 = [
         {
           text: 'TS 공부하기',
+          isCompleted: true,
         },
         {
           text: 'TS 복습하기',
+          isCompleted: false,
         },
       ]
       // 이곳에서 코딩을 시작하세요!
@@ -35,6 +40,12 @@
             return true
         }
         return false
+      }
+
+      const isCompletedCheck = (data) => {
+        return data.isCompleted
+          ? `<div><s>${data.text}</s></div>`
+          : `<div>${data.text}</div>`
       }
 
       function TodoList(data, id) {
@@ -64,7 +75,7 @@
             data &&
             data
               .map((value) => {
-                return `<div>${value.text}</div>`
+                return isCompletedCheck(value)
               })
               .join('')
           return (document.querySelector(`#${id}`).innerHTML = html)
