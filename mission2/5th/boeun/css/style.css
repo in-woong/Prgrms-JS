@@ -1,0 +1,10 @@
+li { list-style: none ; margin-bottom: 1px;}
+ul { padding-inline-start: 1px; }
+.remove-button { padding: 3px 5px; background-color: #ff0066; border: none; }
+.remove-button:hover { padding: 3px 5px; background-color: #fad6d6; border: none; }
+.todo-text { display:inline-block; width:270px;  background-color:#e6f2ff}
+.new-text {width:270px;}
+.new-button { padding: 3px 5px; background-color: #ddd; border: none;}
+.new-button:hover { padding: 3px 5px; background-color: #999; border: none;}
+.removeall-button { padding: 3px 5px; background-color: #ddd; border: none;}
+.removeall-button:hover { padding: 3px 5px; background-color: #999; border: none;}

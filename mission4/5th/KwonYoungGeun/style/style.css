@@ -1,0 +1,67 @@
+ul,
+li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.user-list-container {
+  width: 90%;
+  margin: 20px auto;
+}
+
+.user-list {
+  width: 100%;
+}
+
+.user-list .list-item {
+  display: inline-block;
+  margin: 10px;
+  padding: 3px;
+  border: 1px solid transparent;
+}
+
+.user-list .list-item:hover {
+  cursor: pointer;
+  border: 1px solid black;
+}
+
+.todo-input-container {
+  text-align: center;
+  margin: 20px;
+}
+
+.todo-input-container > #todo-input {
+  width: 60%;
+  height: 20px;
+}
+
+.username {
+  text-align: center;
+}
+
+.todo-list-container {
+  text-align: center;
+}
+
+.item-list {
+  padding: 10px;
+  min-height: 100px;
+  border: 2px solid grey;
+}
+
+.item-list .list-item {
+  border: 3px solid black;
+  margin: 10px;
+  padding: 20px;
+}
+
+.loading-status {
+  color: green;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.error-message {
+  color: red;
+}

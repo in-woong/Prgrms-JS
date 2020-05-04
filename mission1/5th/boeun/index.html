@@ -1,0 +1,92 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+  <script src="./js/validator.js"></script>
+</head>
+
+<body>
+  <h3>What to do</h3>
+  <div id="todo-list"></div>
+
+  <h3>What wanna do</h3>
+  <div id="wannado-list"></div>
+
+  <h3>What should do</h3>
+  <div id="shoulddo-list"></div>
+  <script>
+    const data = [
+      {
+        text: 'JS 공부하기',
+        isCompleted: true        
+      },
+      {
+        text: 'JS 복습하기',
+        isCompleted: false 
+      }
+    ]
+
+    const wannaData = [
+      {
+        text: '여행 가기',
+        isCompleted: true 
+      },
+      {
+        text: '디저트 먹기',
+        isCompleted: true 
+      }
+    ]
+
+    const shouldData = [
+      {
+        text: '프로그래머스 세션 참여',
+        isCompleted: true 
+      },
+      {
+        text: '프로그래머스 미션 구현',
+        isCompleted: false
+      }
+    ]   
+    
+    function TodoList(selector, data) {
+
+        if (!new.target) {
+            throw new Error('TodoList를 new로 호출해주세요.');
+        }
+
+        validateData(data);
+
+        this.targetElement = document.querySelector(selector);
+
+        if (this.targetElement == null) {
+            throw new Error('선택된 HTML Element가 없습니다.');
+        }
+
+        this.data = data;
+        this.render = function() {
+            this.targetElement.innerHTML = `<ul>${this.data.map( todoItem => 
+                    todoItem.isCompleted 
+                    ? `<li>${todoItem.text}</li>` 
+                    : `<li><s>${todoItem.text}</s></li>`
+                ).join('')}<ul>`;         
+        }
+
+        this.setState = function(nextData) {
+            validateData(nextData);
+            this.data = nextData;
+            this.render();
+        }
+
+        this.render();
+    }
+
+    const $todoList = new TodoList('#todo-list', data);
+    const $wannadoList = new TodoList('#wannado-list', wannaData);
+    const $shoulddoList = new TodoList('#shoulddo-list', shouldData);   
+
+    setTimeout(() => $todoList.setState(shouldData), 3000);
+
+  </script>
+</body>
+</html>

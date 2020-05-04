@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Mission 1</title>
+        <meta charset="utf-8" />
+    </head>
+
+    <body>
+        <div id="todo-list"></div>
+
+        <script>
+            var data = [
+                {
+                    text: "JS 공부하기",
+                },
+                {
+                    text: "JS 복습하기",
+                },
+            ];
+        
+            function TodoList(toDo) {
+                // 먼저, new 키워드를  안적었을 때에 대한 예외처리.
+                if (this.constructor != TodoList)
+                    throw new Error("new 키워드 혹은 함수의 이름이 잘못 되었습니다.");
+
+                // 그다음, array 내에 객체가 아닌 자료형(?)이 있을 경우에 대한 예외처리.
+                var inspectToDoCnt = 0;
+                for (var key in toDo)
+                    if (toDo[key].constructor != Object) inspectToDoCnt++;
+                if (inspectToDoCnt)
+                    throw new Error("매개변수 배열 속 객체가 아닌 다른 자료형이 존재합니다."); 
+
+                // 마지막으로 매개변수가 array 자료형일 경우, 비로소 객체 초기화 시작.
+                if (Array.isArray(toDo))
+                {
+                    this.toDo = toDo;
+                    this.render = function () {
+                        for (var key in toDo)
+                            document.querySelector("#todo-list").innerHTML += `<div>${this.todo[key].text}</div>`;
+                    }
+                }
+                else
+                    throw new Error("매개변수의 자료형이 array가 아닙니다.");
+                
+            }
+
+            var todoList = new TodoList(data);
+            todoList.render();
+
+        </script>
+
+    </body>
+
+</html>

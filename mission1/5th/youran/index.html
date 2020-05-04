@@ -1,0 +1,122 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list"></div>
+  <div id="todo-list-cat" style="background-color: plum;"></div>
+  <div id="todo-list-mine" style="background-color: lightgreen;"></div>
+  <script>
+    const data = [
+      {
+        text: 'JS 공부하기',
+        isCompleted: true
+      },
+      {
+        text: 'JS 복습하기',
+        isCompleted: false
+      }
+    ]
+
+    const catData = [
+      {
+        text: '화장실 모래 전체갈이',
+        isCompleted: false
+      },
+      {
+        text: '발톱 깎아주기',
+        isCompleted: true
+      }
+    ]
+
+    const myData = [
+      {
+        text: '소독용 알콜 구입',
+        isCompleted: false
+      },
+      {
+        text: '중고책 팔기',
+        isCompleted: false
+      },
+      {
+        text: '연말정산',
+        isCompleted: true
+      }
+    ]
+
+  function TodoList(data, targetId) {
+    if(!new.target) {
+      throw new Error("new 생성자로 함수를 호출하세요.");
+    }
+
+    isValidData(data);
+    isValidTargetId(targetId);
+    
+    this.data = data;
+    this.targetId = targetId;
+
+    this.render = function() {
+      document.querySelector(`#${this.targetId}`).innerHTML = this.data
+        .map(
+          (item) => 
+          `<div>${item.isCompleted
+          ? `<s>${item.text}</s>` 
+          : item.text}</div>`)
+        .join('');
+    }
+    
+    this.setState = function(nextData) {
+      isValidData(nextData);
+      this.data = nextData;
+      this.render();
+    }
+
+    this.render();
+  }
+
+  function isValidTargetId(targetId) {
+
+    if(!targetId || !typeof targetId === "string" || targetId.length < 1) {
+      throw new Error("target id가 올바르지 않습니다.");
+    }
+
+    const $domWithGivenId = document.querySelectorAll(`#${targetId}`);
+    if(!$domWithGivenId || $domWithGivenId.length > 1 || $domWithGivenId.length < 1) {
+      throw new Error("target element를 찾을 수 없습니다.");
+    }
+  }
+
+  function isValidData(data) {
+    
+    if(!Array.isArray(data)) {
+      throw new Error("데이터 형식이 올바르지 않습니다.");
+    }
+
+    if(data.length === 0) {
+      throw new Error("데이터가 없습니다.");
+    } 
+    
+    const isPlainObject = (item) => toString.call(item) === "[object Object]";
+    const isString = (v) => typeof v === "string";
+    if(!data.some((item) => isPlainObject(item) && isString(item.text))) {
+      throw new Error("사용 가능한 데이터가 아닙니다.");
+    }
+  }
+   
+  const $todoList = new TodoList(data,'todo-list');  
+  const $todoListCat = new TodoList(catData,'todo-list-cat');
+  const $todoListMine = new TodoList(myData,'todo-list-mine');    
+  setTimeout(() => $todoList.setState(myData), 3000);
+
+  /* error test */
+  // const todoList = TodoList(data);
+  // const todoList = new TodoList();
+  //const todoList = new TodoList([]);
+  //const todoList = new TodoList([{test:""}]);
+  
+  </script>
+</body>
+</html>

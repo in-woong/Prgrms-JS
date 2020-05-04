@@ -1,0 +1,91 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list-1"></div>
+  <div id="todo-list-2"></div>
+  <div id="todo-list-3"></div>
+
+
+  <script>
+    var data1 = [
+      {
+        text: 'JS 공부하기',
+        isCompleted: true
+      },
+      {
+        text: 'JS 복습하기',
+        isCompleted: false
+      }
+    ]
+    var data2 = [
+      {
+        text: '밥먹기',
+        isCompleted: false
+      },
+      {
+        text: '소화시키기',
+        isCompleted: true
+      }
+    ]
+    var data3 = [
+      {
+        text: '잠자기',
+        isCompleted: false
+      },
+      {
+        text: '일어나기',
+        isCompleted: true
+      }
+    ]
+  
+    function TodoList(todos, selector) {
+      if (!(this instanceof TodoList)) {
+        throw new Error("new를 사용하세요.")
+      }
+
+      if (!Array.isArray(todos)) {
+        throw new Error("array type이 필요합니다.")
+      }
+
+      todos.forEach(todo => {
+        if (typeof todo.text !== 'string') {
+          throw new Error("todo 항목은 string이 필요합니다. ")
+        }
+      })
+
+      this.todos = todos
+      this.selector = selector
+
+      this.render = function() {
+        document.querySelector(this.selector).innerHTML = this.todos.reduce(
+          (sum, current) => sum + 
+          `<div>${current.isCompleted ? '<strike>' + current.text + '</strikie>' : current.text}</div>`, ''
+        )
+      }
+
+      this.setState = function setState(nextdata) {
+        console.log(nextdata)
+        this.todos = nextdata
+        this.render()
+      }
+    }
+
+    var todoList1 = new TodoList(data1, '#todo-list-1')
+    todoList1.render();
+
+    setTimeout(() => {
+      todoList1.setState(data2);
+    }, 1000);
+
+    setTimeout(() => {
+      todoList1.setState(data3);
+    }, 1000);
+
+  </script> 
+</body>
+</html>

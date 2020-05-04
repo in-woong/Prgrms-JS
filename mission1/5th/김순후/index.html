@@ -1,0 +1,96 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list"></div>
+    <div id="todo-list2"></div>
+    <div id="todo-list3"></div>
+    <script>
+      var data = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false
+        },
+      ]
+      var data2 = [
+        {
+          text: 'ES6 익숙하게 다루기',
+        },
+        {
+          text: '알고리즘 공부하기',
+        },
+      ]
+      var data3 = [
+        {
+          text: '다이어트하기 ... ㅠ',
+        },
+        {
+          text: '스토브리그 보기',
+        },
+      ]
+      // 이곳에서 코딩을 시작하세요!
+      function TodoList(data, elementId){
+        // new 를 안붙일 시 예외처리
+        if(this === window) throw new Error('error message');
+        this.data = data;
+        this.render = function(){
+            try{
+                // 여러가지 함수 및 ES6 써보기..
+                document.getElementById(elementId).innerHTML = this.data.map(
+                  (d) => (
+                     d.isCompleted ? `<strike>${d.text}</strike>` : `<div>${d.text}</div>`
+                  )
+                ).join('');
+            }
+            catch(e){
+                //throw new Error('error message');
+            }
+        }
+        this.setStatus = function(data){
+          this.data = data;
+
+          const selectTag = document.getElementById(elementId);
+          // 밑에 아이들 배열
+          const tagChildren = selectTag.children;
+
+          const replaceHtml = (szTagName) => {
+            const newElement = document.createElement(szTagName);
+            newElement.innerText = d.text;
+            selectTag.replaceChild(newElement,tagChildren[i]);
+          }
+
+          this.data.forEach((d, i)=>{
+            if(i > tagChildren.length){
+              let szTag = 'DIV';
+              if(d.isCompleted) szTag = 'STRIKE';
+              let newElement = document.createElement(szTag);
+              newElement.innerText = d.text;
+              selectTag.appendChild(newElement);
+            }
+            else{
+              if(tagChildren[i].tagName != 'STRIKE'){
+                if(d.isCompleted) replaceHtml('STRIKE');
+              }
+              if(tagChildren[i].innerText != d.text) tagChildren[i].innerText = d.text;
+            }
+          })
+        }
+      }
+
+      var todoList = new TodoList(data, 'todo-list');
+      var todoList2 = new TodoList(data2, 'todo-list2');
+      var todoList3 = new TodoList(data3, 'todo-list3');
+      todoList.render();
+      todoList2.render();
+      todoList3.render();
+      // todoList.setStatus(data2, 'todo-list');
+    </script>
+  </body>
+</html>

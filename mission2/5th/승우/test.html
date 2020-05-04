@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" id="todo_input" />
+  </body>
+  <script>
+    const input = document.getElementById('todo_input')
+    input.addEventListener('keydown', callback)
+    function callback(e) {
+      if (e.keyCode === 13 && this.value !== '') {
+        console.log(this.value)
+        this.value = ''
+        this.focus()
+      }
+    }
+  </script>
+</html>

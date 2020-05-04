@@ -1,0 +1,18 @@
+body {
+    margin: 0;
+}
+
+#idTodoList1 {
+    padding: 20px;
+    background-color: lightslategray;
+}
+
+#idTodoList2{
+    padding: 20px;
+    background-color: darkslategray;
+}
+
+#idTodoList3{
+    padding: 20px;
+    background-color: dimgray;
+}

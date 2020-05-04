@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>TodoList</title>
+</head>
+
+<style>
+  .wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    background-color: gray;
+  }
+
+  .todo {
+    width: 200px;
+    height: 150px;
+    margin: 20px;
+    border-radius: 4px;
+    background-color: red;
+  }
+
+  .todo-daily {
+    width: 200px;
+    height: 150px;
+    margin: 20px;
+    border-radius: 4px;
+    background-color: blue;
+  }
+
+  .todo-react {
+    width: 200px;
+    height: 150px;
+    margin: 20px;
+    border-radius: 4px;
+    background-color: orange;
+  }
+</style>
+
+<body>
+  <div class="wrapper">
+    <div id="todo-list" class="todo"></div>
+    <div id="todo-list_daily" class="todo-daily"></div>
+    <div id="todo-list_react" class="todo-react"></div>
+  </div>
+  <script>
+    const todos = [{
+        text: "JS 공부하기",
+        isCompleted: true
+      },
+      {
+        text: "JS 복습하기",
+        isCompleted: false
+      },
+      // {
+      //   errorText: 'dummyData'
+      // },
+      // {
+      //   text: 1
+      // }
+    ];
+    const dailyTodos = [{
+        text: "매일매일 공부하고 기록 남기기",
+        isCompleted: true
+      },
+      {
+        text: "야식 먹지 않기",
+        isCompleted: false
+      },
+      {
+        text: "CS & JS & REACT 공부",
+        isCompleted: true
+      },
+      {
+        text: "취업 준비중",
+        isCompleted: false
+      }
+    ];
+
+    const reactTodos = [{
+        text: "컴포넌트 설계 공부",
+        isCompleted: true
+      },
+      {
+        text: "효과적으로 상태 관리 하기",
+        isCompleted: false
+      },
+      {
+        text: "Contenxt API 활용 해보기",
+        isCompleted: true
+      },
+      {
+        text: "리덕스 연동 하기",
+        isCompleted: true
+      },
+      {
+        text: "리덕스 사가 공부",
+        isCompleted: false
+      }
+    ];
+
+    const updateTodos = [{
+        text: "클로져 복습",
+        isCompleted: true
+      },
+      {
+        text: "this 개념 복습",
+        isCompleted: false
+      }
+    ];
+
+    function errorCheck(context, todos) {
+      if (context === window) {
+        throw new Error("new 키워드로 생성해주세요");
+      }
+      if (!Array.isArray(todos) || !todos) {
+        throw new Error("데이터 타입을 다시 확인해주세요");
+      }
+      for (const todo of todos) {
+        if (!todo.text || typeof todo.text !== "string")
+          throw new Error(`객체의 내용을 다시 확인해주세요 -> todo:${todo.text}`);
+      }
+    }
+
+    function TodoList(todos, id) {
+      // 보너스 구현 부분 -> 에러처리
+      errorCheck(this, todos);
+
+      this.todos = todos;
+      this.id = id;
+      // setState 함수 구현
+      this.setState = function (nextData) {
+        errorCheck(this, todos);
+        this.todos = nextData;
+        this.render();
+      };
+
+      // 필수 기본 구현 + 다중 컴포넌트 처리
+      this.render = function () {
+        const $todoList = document.getElementById(this.id);
+        console.log(this.id, this.todos)
+
+        $todoList.innerHTML = this.todos.map(todo => (
+          todo.isCompleted ?
+          ` <li>${todo.text}</li>` :
+          `<li><strike>${todo.text}</strike></li>`
+        )).join('');
+      };
+    }
+
+    const todoList = new TodoList(todos, "todo-list");
+    const dailyTodoList = new TodoList(dailyTodos, "todo-list_daily");
+    const reactTodoList = new TodoList(reactTodos, "todo-list_react");
+    todoList.render();
+    dailyTodoList.render();
+    reactTodoList.render();
+
+    setTimeout(function () {
+      todoList.setState(updateTodos);
+    }, 3000);
+  </script>
+</body>
+
+</html>

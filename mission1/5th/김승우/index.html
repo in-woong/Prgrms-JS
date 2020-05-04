@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Mission 1</title>
+    <style>
+      h1 {
+        font-size: 1.25rem;
+        text-transform: uppercase;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>todo-list</h1>
+    <ul id="todo-list"></ul>
+    <h1>my-todo</h1>
+    <ul id="my-todo"></ul>
+    <h1>your-todo</h1>
+    <ul id="your-todo"></ul>
+    <!-- <div id="console"></div> -->
+    <script>
+      //Input Data
+      var data = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false,
+        },
+      ]
+      var data1 = [
+        {
+          text: '#50, #57 구현하기',
+          isCompleted: true,
+        },
+        {
+          text: '매일 Commit하기',
+          isCompleted: false,
+        },
+        {
+          text: '아메리카노 마시기',
+          isCompleted: true,
+        },
+      ]
+
+      //setState용 data
+      var data3 = [
+        {
+          text: '다이어리 쓰기',
+          isCompleted: true,
+        },
+        {
+          text: '롤 하기',
+          isCompleted: false,
+        },
+        {
+          text: '노래방가기',
+          isCompleted: false,
+        },
+      ]
+
+      // 이곳에서 코딩을 시작하세요!
+
+      function checkData(data) {
+        if (!data) {
+          throw new Error('Data를 입력해주세요')
+        }
+        if (!Array.isArray(data)) {
+          throw new Error('Data가 배열이 아닙니다')
+        }
+
+        if (data.length <= 0) {
+          throw new Error('Data가 빈 배열입니다')
+        }
+
+        for (const item of data) {
+          if (
+            !item.text ||
+            !item.hasOwnProperty('isCompleted') ||
+            typeof item.text !== 'string'
+          ) {
+            throw new Error('Data안의 데이터들이 올바르지 않습니다.')
+          }
+        }
+      }
+
+      const checkId = id => {
+        const domWithGivenId = document.getElementById(id)
+
+        if (domWithGivenId.length > 1 || domWithGivenId.length < 1) {
+          throw new Error('ID 값에 해당하는 DOM 엘리먼트가 존재하지 않습니다.')
+        }
+      }
+
+      function TodoList(inputData, inputId) {
+        if (!(this instanceof TodoList)) {
+          throw new Error('New 키워드 없이 함수를 실행하였습니다')
+        }
+
+        checkData(inputData)
+        checkId(inputId)
+
+        const $todoList = document.getElementById(inputId)
+        this.data = inputData
+        this.render = function() {
+          $todoList.innerHTML = this.data
+            .map(el => {
+              if (el.isCompleted) {
+                return `<li><s>${el.text}</s></li>`
+              } else {
+                return `<li>${el.text}</li>`
+              }
+            })
+            .join('')
+        }
+        this.setState = function(nextData) {
+          checkData(nextData)
+          this.render()
+        }
+
+        //객체가 생성되면 바로 render함수를 실행시킨다.
+        this.render()
+      }
+
+      //예외처리
+      //data가 빈 문자열일 경우
+      try {
+        const todo = new TodoList('', 'todo-list')
+        todo.render()
+      } catch (e) {
+        console.log(e)
+      }
+
+      //data가 빈 배열일 경우
+      try {
+        const todo = new TodoList([], 'todo-list')
+        todo.render()
+      } catch (e) {
+        console.log(e)
+      }
+
+      //데이터가 객체일 경우
+      try {
+        const todo = new TodoList({ text: 'JS 복습하기' }, 'todo-list')
+        todo.render()
+      } catch (e) {
+        console.log(e)
+      }
+
+      //new 키워드 없이 함수 호출하는 것
+      try {
+        const newTodo = TodoList(data, 'todo-list')
+      } catch (e) {
+        console.log(e)
+      }
+
+      try {
+        const todo = new TodoList(data, 'todo-list')
+        todo.setState(data3)
+      } catch (e) {
+        console.log(e)
+      }
+
+      const myTodo = new TodoList(data1, 'my-todo')
+
+      const yourTodo = new TodoList(
+        [
+          {
+            text: '파스타 먹기',
+            isCompleted: false,
+          },
+          {
+            text: '햄버거먹기',
+            isCompleted: true,
+          },
+        ],
+        'your-todo'
+      )
+
+      yourTodo.setState([
+        {
+          text: '자소서 쓰기',
+          isCompleted: true,
+        },
+        { text: 'JS 공부하기', isCompleted: true },
+        {
+          text: '컴퓨터 포맷하기',
+          isCompleted: false,
+        },
+      ])
+
+      myTodo.setState(data3)
+    </script>
+  </body>
+</html>

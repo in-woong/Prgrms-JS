@@ -1,0 +1,89 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div>
+      <div class="main">
+        <span>JS 스터디 TODO</span>
+        <div id="todo-list"></div>
+      </div>
+
+      <div class="main">
+        <span>내일 TODO</span>
+        <div id="daily-todo-list"></div>
+      </div>
+
+      <div class="main">
+        <span>다음주 TODO</span>
+        <div id="week-todo-list"></div>
+      </div>
+    </div>
+    <script src="./validator.js"></script>
+    <script src="./todoList.js"></script>
+    <script>
+      var data = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: false,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false,
+        },
+      ]
+
+      var dailyTodo = [
+        {
+          text: '1주차 보너스 미션 도전해보기',
+          isCompleted: true,
+        },
+        {
+          text: '늦잠자기!!!',
+          isCompleted: true,
+        },
+      ]
+
+      var nextWeekTodo = [
+        {
+          text: '일 축가 연습',
+          isCompleted: true,
+        },
+        {
+          text: '월, 금 운동',
+          isCompleted: false,
+        },
+        {
+          text: '수 js 스터디',
+          isCompleted: false,
+        },
+      ]
+
+      var $todoList = document.querySelector('#todo-list')
+      var todoList = new TodoList(data, $todoList)
+
+      var $dailyList = document.querySelector('#daily-todo-list')
+      var dailyList = new TodoList(dailyTodo, $dailyList)
+
+      var $weekList = document.querySelector('#week-todo-list')
+      var weekList = new TodoList(nextWeekTodo, $weekList)
+
+      todoList.setState([
+        {
+          text: 'JS 공부하기',
+          isCompleted: false,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: true,
+        },
+      ])
+
+      dailyTodo.push({ text: 'class형태로 재구현해보기' })
+      dailyList.setState(dailyTodo)
+    </script>
+  </body>
+</html>

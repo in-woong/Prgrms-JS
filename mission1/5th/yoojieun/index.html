@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list"></div>
+    <script>
+      var data = [
+        {
+          text: 'JS 공부하기',
+        },
+        {
+          text: 'JS 복습하기',
+        },
+      ]
+
+      function TodoList(data) {
+        if (!this instanceof TodoList) throw new Error('not new')
+        if (!this instanceof Object) throw new Error('not object')
+        if (!Array.isArray(data)) throw new Error('not array')
+        this.data = data
+        this.render = function() {
+          for (var key in data) {
+            document.querySelector(
+              '#todo-list'
+            ).innerHTML = `<div>${data[key].text}</div>`
+            console.log(data[key].text)
+          }
+        }
+      }
+
+      try {
+        var todoList = new TodoList(data)
+        todoList.render()
+      } catch (e) {
+        alert(e)
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,27 @@
+h1 {
+  margin: 0;
+}
+
+.main {
+  width: 500px;
+  text-align: center;
+  background-color: #f0ffff;
+  padding: 10;
+}
+
+.todo-list {
+  margin: 15 0;
+}
+
+.list-item {
+  display: inline-block;
+  cursor: pointer;
+}
+
+#todo-count {
+  margin: 15;
+}
+
+#todo-input {
+  margin-top: 10;
+}

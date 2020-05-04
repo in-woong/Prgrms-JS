@@ -1,0 +1,15 @@
+const SELECTOR_SEARCH_KEYWORD = '#search-keyword'
+const SELECTOR_SEARCH_RESULT = '#search-result'
+const SELECTOR_SEARCH_HISTORY = '#search-history'
+
+const STORAGE_KEY_HISTORY = 'searchHistory'
+
+const DEBOUNCE_TIME = 800
+const MAX_HISTORY_COUNT = 10
+
+export { SELECTOR_SEARCH_KEYWORD, 
+        SELECTOR_SEARCH_RESULT, 
+        SELECTOR_SEARCH_HISTORY, 
+        STORAGE_KEY_HISTORY, 
+        DEBOUNCE_TIME, 
+        MAX_HISTORY_COUNT };

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Mission 1_강호</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <div id="idTodoList1"></div>
+        <div id="idTodoList2"></div>
+        <div id="idTodoList3"></div>
+
+        <script>
+            var data1 = [
+                {text: 'JS Start', isCompleted: true},
+                {text: 'JS Study', isCompleted: false},
+            ]
+
+            var data2 = [
+                {text: 'JS Review', isCompleted: true},
+                {text: 'JS Ask', isCompleted: true},
+            ]
+
+            var data3 = [
+                {text: 'Yay!', isCompleted: false},
+            ]
+            
+            function checkNewOperatorUsed(data) {
+                if (!(data instanceof todoList)) {
+                    throw new Error('Error 1: New operator was not used');
+                }
+            }
+
+            function checkDataObjectType(data) {
+                if (!(data instanceof Array)) {
+                    throw new Error('Error 2: data type is not array');
+                }
+            }
+
+            function checkDataObjectNumber(data) {
+                if (data.length === 0) {
+                    throw new Error('Error 3: data has empty array');
+                }
+            }
+
+            function checkDataPropertyKeyNames(data) {
+                data.forEach(function(property) {
+                    const keyName = Object.keys(property);
+                    if (keyName[0] !== 'text') {
+                        throw new Error('Error 4: data property has wrong key name');
+                    }
+                })
+            }
+
+            function checkDataPropertyValueType(data) {
+                data.forEach(function(property) {
+                    if (typeof property.text !== 'string') {
+                        throw new Error('Error 5: data property has wrong value type');
+                    }
+                })
+            }
+
+            function checkIsCompletedType(data) {
+                data.forEach(function(property) {
+                    if (typeof property.isCompleted !== 'boolean') {
+                        throw new Error('Error 6: checker is not boolean type');
+                    }
+                })
+            }
+
+            function checkCompleted(data) {
+                if (data.isCompleted) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            function todoList(data, id) {
+                checkNewOperatorUsed(this);
+                checkDataObjectType(data);
+                checkDataObjectNumber(data);
+                checkDataPropertyKeyNames(data);
+                checkDataPropertyValueType(data);
+                checkIsCompletedType(data);
+
+                this.data = data;
+                this.render = function() {
+                    for (var i=0; i<this.data.length; i++) {
+                        if (checkCompleted(this.data[i])) {
+                            id.innerHTML += '<div><s>' + this.data[i].text + '</s></div>';
+                        } else {
+                            id.innerHTML += '<div>' + this.data[i].text + '</div>';
+                        }
+                    }
+                }
+                this.render();
+            }
+
+            var todoList1 = new todoList(data1, idTodoList1);
+            var todoList2 = new todoList(data2, idTodoList2);
+            var todoList3 = new todoList(data3, idTodoList3);
+
+        </script>
+    </body>
+</html>
