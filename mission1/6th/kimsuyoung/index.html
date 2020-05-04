@@ -15,7 +15,7 @@
         },
         {
           text: 'JS 복습하기',
-          isCompleted: true,
+          isCompleted: false,
         },
       ]
 
@@ -44,6 +44,7 @@
           isCompleted: false,
         },
       ]
+
       // 이곳에서 코딩을 시작하세요!
       const checkDataType = (data) => {
         for (let item in data) {
@@ -66,26 +67,16 @@
       function TodoList(data, id) {
         this.data = data
 
-        try {
-          if (
-            !Array.isArray(this.data) ||
-            this.data === undefined ||
-            !this.data
-          ) {
-            throw new Error('데이터 값은 배열이 아닌 값이 오면 안 됩니다.')
-          }
-          if (checkDataType(data)) {
+        this.validate = (data) => {
+          if (!Array.isArray(this.data))
+            throw new Error('배열이 아닌 값이 오면 안 됩니다.')
+          if (checkDataType(data))
             throw new Error('데이터 내용 값이 유효하지 않습니다.')
-          }
-          if (!(this instanceof TodoList)) {
-            throw new Error('new를 사용하세요.')
-          }
-        } catch (error) {
-          console.error(error)
-          alert(error)
+          if (!(this instanceof TodoList)) throw new Error('new를 사용하세요.')
         }
 
         this.render = () => {
+          this.validate(data)
           let html =
             data &&
             data
