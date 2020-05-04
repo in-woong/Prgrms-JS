@@ -73,7 +73,7 @@ function TodoList(data, elemID) {
   this.todos = data
   this.elemID = elemID
 
-  const todosText = () => {
+  const getTodosText = () => {
     return this.todos
       .map((todo) =>
         todo.isCompleted
@@ -85,7 +85,7 @@ function TodoList(data, elemID) {
 
   this.render = function () {
     const $todosView = document.querySelector(`#${this.elemID}`)
-    $todosView.innerHTML = todosText()
+    $todosView.innerHTML = getTodosText()
   }
   this.setState = function (nextData) {
     if (!validateData(nextData)) {
