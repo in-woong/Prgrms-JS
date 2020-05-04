@@ -10,26 +10,32 @@
     <script>
         const data = [
             {
-                text: 'JS 공부하기'
+                text: 'JS 공부하기',
+                isCompleted: true
             },
             {
-                text: 'JS 복습하기'
+                text: 'JS 복습하기',
+                isCompleted: false
             }
         ]
         const studyData = [
             {
-                text: 'Vue.js 공부'
+                text: 'Vue.js 공부',
+                isCompleted: false
             },
             {
-                text: 'React 공부'
+                text: 'React 공부',
+                isCompleted: false
             }
         ]
         const missionData = [
             {
-                text: '다중 컴포넌트 구현'
+                text: '다중 컴포넌트 구현',
+                isCompleted: true
             },
             {
-                text: 'isCompleted 처리'
+                text: 'isCompleted 처리',
+                isCompleted: true
             }
         ] 
         class TodoList {
@@ -49,7 +55,9 @@
                 else return listElement
             }
             render() {
-                const htmlString = this.data.map(item => `<li>${item.text}</li>`).join('')
+                const htmlString = this.data.map(item => 
+                    item.isCompleted ? `<li><s>${item.text}</s></li>` : `<li>${item.text}</li>`
+                ).join('')
                 this.listElement.innerHTML = `<ul>${htmlString}</ul>`
             }
         }
