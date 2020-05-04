@@ -51,7 +51,13 @@ const isValidData = function (value) {
   }
 
   return value.every((element) => {
-    return isObject(element) && 'text' in element && isString(element.text)
+    return (
+      isObject(element) &&
+      'text' in element &&
+      isString(element.text) &&
+      'isCompleted' in element &&
+      isBoolean(element.isCompleted)
+    )
   })
 }
 
