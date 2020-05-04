@@ -17,6 +17,28 @@
       ]
 
       function TodoList(data) {
+        // new 키워드를 사용했는지 검사
+        if (this instanceof TodoList === false) {
+          throw new Error('new를 사용해주세요.')
+        }
+
+        // 데이터가 배열인지 검사
+        if (Array.isArray(data) === false) {
+          throw new Error('데이터는 배열로 전달되어야 합니다.')
+        }
+
+        // 데이터가 객체이고 text 키를 가지고 있는지 검사
+        data.map((todo) => {
+          if (
+            (todo.toString().slice(8, -1) == 'Object' &&
+              todo.hasOwnProperty('text')) === false
+          ) {
+            throw new Error(
+              '데이터의 값이 객체가 아니거나 text 키를 가지고 있지 않습니다.'
+            )
+          }
+        })
+
         this.element = document.querySelector('#todo-list')
         this.todos = data
         this.render = () => {
