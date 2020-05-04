@@ -5,6 +5,8 @@
 </head>
 <body>
     <div id="todo-list"></div>
+    <div id="study-list"></div>
+    <div id="mission-list"></div>
     <script>
         const data = [
             {
@@ -14,22 +16,46 @@
                 text: 'JS 복습하기'
             }
         ]
+        const studyData = [
+            {
+                text: 'Vue.js 공부'
+            },
+            {
+                text: 'React 공부'
+            }
+        ]
+        const missionData = [
+            {
+                text: '다중 컴포넌트 구현'
+            },
+            {
+                text: 'isCompleted 처리'
+            }
+        ] 
         class TodoList {
-            constructor(data) {                
+            constructor(selector, data) {                
                 this.data = this.validateData(data)
+                this.listElement = this.validateElement(selector)
+                this.render()
             }
             validateData(data) {
                 if (!data) throw new Error('데이터가 없습니다.')
                 else if (!Array.isArray(data)) throw new Error('배열 형태가 아닙니다.')
                 else return data
             }
+            validateElement(selector) {
+                const listElement = document.querySelector(selector)
+                if (!listElement) throw new Error(`${selector} 요소가 존재하지 않습니다.`)
+                else return listElement
+            }
             render() {
                 const htmlString = this.data.map(item => `<li>${item.text}</li>`).join('')
-                document.querySelector('#todo-list').innerHTML = `<ul>${htmlString}</ul>`
+                this.listElement.innerHTML = `<ul>${htmlString}</ul>`
             }
         }
-        const todoList = new TodoList(data)
-        todoList.render()
+        const todoList = new TodoList('#todo-list', data)
+        const studyList = new TodoList('#study-list', studyData)
+        const missionList = new TodoList('#mission-list' ,missionData)
     </script>
 </body>
 </html>
