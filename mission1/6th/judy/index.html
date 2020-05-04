@@ -8,15 +8,37 @@
 <body>
   <div id="todo-list"></div>
   <script>
-    var data = [
-      {
-        text: 'JS 공부하기'
-      },
-      {
-        text: 'JS 복습하기'
+  let data = [
+    {
+      text: "JS 공부하기"
+    },
+    {
+      text: "JS 복습하기"
+    }
+  ];
+
+  function TodoList(data) {
+    // 필수 구현
+    this.render = function () {
+     for(let i = 0; i < data.length; i++)  {
+       document.querySelector("#todo-list").innerHTML += `<div>${data[i].text}</div>`;
+     }
+     /*
+      for(let key in data) {
+        document.querySelector("#todo-list").innerHTML += '<div>' + data[key].text + '</div>';
       }
-    ]
-	// 이곳에서 코딩을 시작하세요!
+      data.forEach(name => {
+        document.querySelector("#todo-list").innerHTML += `<div>${name.text}</div>`;
+      });
+      */
+    };
+  }
+
+  const todoList = new TodoList(data);
+  todoList.render();
+
+
+
   </script>
 </body>
 
