@@ -7,11 +7,20 @@
 
 <body>
     <h1>함수 버전</h1>
-    <div id="todo-list"></div>
-    <div id="today-todo-list"></div>
-    <div id="yesterday-todo-list"></div>
+    <article>
+        <h2>테스트 투두 리스트</h2>
+        <div id="todo-list"></div>
+    </article>
+    <article>
+        <h2>오늘의 투두 리스트</h2>
+        <div id="today-todo-list"></div>
+    </article>
+    <article>
+        <h2>어제의 투두 리스트</h2>
+        <div id="yesterday-todo-list"></div>
+    </article>
     <script>
-        let data = [{
+        const data = [{
                 text: '코딩하기',
                 isCompleted: true
             },
@@ -20,7 +29,7 @@
                 isCompleted: false
             }
         ]
-        let todayTodos = [{
+        const todayTodos = [{
                 text: '스터디 과제하기',
                 isCompleted: true
             },
@@ -29,7 +38,7 @@
                 isCompleted: true
             }
         ]
-        let yesterdayTodos = [{
+        const yesterdayTodos = [{
                 text: '알고리즘 문제풀기',
                 isCompleted: true
             },
@@ -38,30 +47,8 @@
                 isCompleted: false
             }
         ]
-        // 함수버전
-        function TodoList(data, queryId) {
-            if (!new.target) {
-                throw new Error('new로 생성해주세요!')
-                return 0
-            } else {
-                if (confirmData(data)) {
-                    this.todos = data
-                    this.render = function () {
-                        document.querySelector(queryId).innerHTML =
-                            this.todos
-                            .map(todo => todo.isCompleted ? `<div><s>${todo.text}</s></div>` :
-                                `<div>${todo.text}</div>`)
-                            .join('\n')
-                    }
-                    this.setState = function (nextData) {
-                        this.todos = nextData
-                        this.render()
-                    }
-                }
-            }
-        }
 
-        function confirmData(data) {
+        function validateData(data) {
             if (!data) {
                 throw new Error('data가 없습니다')
             }
@@ -72,6 +59,32 @@
                 throw new Error('내용이 이상한 데이터입니다')
             }
             return true
+        }
+
+        // 함수버전
+        function TodoList(data, queryId) {
+            if (!new.target) {
+                throw new Error('new로 생성해주세요!')
+                return 0
+            } else {
+                if (validateData(data)) {
+                    if (!document.querySelector(this.queryId)) {
+                        throw new Error('해당 노드를 찾을 수 없습니다.')
+                    }
+                    this.todos = data
+                    this.render = function () {
+                        document.querySelector(queryId).innerHTML =
+                            this.todos
+                            .map(todo => todo.isCompleted ? `<li><s>${todo.text}</s></li>` :
+                                `<li>${todo.text}</li>`)
+                            .join('\n')
+                    }
+                    this.setState = function (nextData) {
+                        this.todos = nextData
+                        this.render()
+                    }
+                }
+            }
         }
 
         let todoList = new TodoList(data, '#todo-list');
