@@ -77,8 +77,8 @@ function TodoList(data, elemID) {
     return this.todos
       .map((todo) =>
         todo.isCompleted
-          ? `<div><s>${todo.text}</s></div>`
-          : `<div>${todo.text}</div>`
+          ? `<li><s>${todo.text}</s></li>`
+          : `<li>${todo.text}</li>`
       )
       .join('')
   }
