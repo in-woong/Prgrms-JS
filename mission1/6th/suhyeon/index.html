@@ -20,7 +20,7 @@
             }
             render() {
                 let htmlString = '<ul>'
-                htmlString = data.map(item => `<li>${item.text}</li>`).join('')
+                htmlString += data.map(item => `<li>${item.text}</li>`).join('')
                 document.querySelector('#todo-list').innerHTML = htmlString + '</ul>'
             }
         }
