@@ -28,7 +28,14 @@ class TodoList {
 
   addListToTag() {
     const todoHtml = this.todoList.map((list) => {
-      return `<div>${list.text}</div>`
+      const { text, isCompleted } = list
+      let tagStr = text
+
+      if (isCompleted === true) {
+        tagStr = `<del>${tagStr}</del>`
+      }
+
+      return `<div>${tagStr}</div>`
     })
     return todoHtml.join('')
   }
