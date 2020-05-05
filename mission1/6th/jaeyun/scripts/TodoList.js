@@ -27,14 +27,14 @@ class TodoList {
   }
 
   addListToTag() {
-    const todoHtml = this.todoList.map((list) => `<div>${list.text}</div>`)
-    return todoHtml
+    const todoHtml = this.todoList.map((list) => {
+      return `<div>${list.text}</div>`
+    })
+    return todoHtml.join('')
   }
 
-  render() {
-    const todoContainer = document.getElementById('todo-list')
-
-    todoContainer.innerHTML = this.addListToTag()
+  render(container) {
+    container.innerHTML = this.addListToTag()
   }
 }
 
