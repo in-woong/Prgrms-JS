@@ -15,7 +15,19 @@
             }
         ]
 
-        function TodoList(data) {}
+        function TodoList(data) {
+            // 생성자 미사용시 error 발생
+            if(!(this instanceof TodoList)) {
+                throw new Error('new 생성자 사용하기');
+            }
+
+            // 올바른 파라미터가 아닐 경우 error 발생
+            if(data === null || data === undefined) {
+                throw new Error('data 값을 전달해주세요.');
+            } else if(!Array.isArray(data)) {
+                throw new Error('data 는 배열형태입니다.');
+            }
+
             this.data = data;
             this.render = function() {
                 document.querySelector('#todo-list').innerHTML = data.map(value => `<div>${value.text}</div>`).join('');
