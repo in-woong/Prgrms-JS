@@ -20,32 +20,40 @@
     <script>
       var data = [
         {
-          text: 'JS 공부하기'
+          text: 'JS 공부하기',
+          isCompleted: true,
         },
         {
-          text: 'JS 복습하기'
+          text: 'JS 복습하기',
+          isCompleted: false,
         }
       ]
       var studyInWeek = [
         {
-          text: '월~금 퇴근 후 토이프로젝트 개발'
+          text: '월~금 퇴근 후 토이프로젝트 개발',
+          isCompleted: true,
         },
         {
-          text: '수요일에 퇴근 후 스터디'
+          text: '수요일에 퇴근 후 스터디',
+          isCompleted: true,
         },
         {
-          text: '청소'
+          text: '청소',
+          isCompleted: false,
         }
       ]
       var studyInWeekend = [
         {
-          text: '프론트엔드 전반적인 공부'
+          text: '프론트엔드 전반적인 공부',
+          isCompleted: false,
         },
         {
-          text: '주중에 하던 토이프로젝트 코딩'
+          text: '주중에 하던 토이프로젝트 코딩',
+          isCompleted: true,
         },
         {
-          text: '옷 세탁'
+          text: '옷 세탁',
+          isCompleted: false,
         }
       ]
 
@@ -57,12 +65,14 @@
       }
       
       function isUndefinedOrNull(data){
-        return data === null || data === undefined
+        let value = data
+        return value === null || value === undefined
       }
 
       function isNotExistTextProperty(data){
+        let value = data
         let result = false
-        data.forEach(element => {
+        value.forEach(element => {
           if(!('text' in element)){
             result = true
             return
@@ -72,24 +82,27 @@
       }
 
       function checkTodoListDataType(object){
-        if(isUndefinedOrNull(object.todoData)){
+        let todoList = object
+        if(isUndefinedOrNull(todoList.todoData)){
           throw new Error(errorMessage['null_or_undefined'])
         }
-        if(!Array.isArray(object.todoData)){
+        if(!Array.isArray(todoList.todoData)){
           throw new Error(errorMessage['not_array'])
         }
-        if(isNotExistTextProperty(object.todoData)){
+        if(isNotExistTextProperty(todoList.todoData)){
           throw new Error(errorMessage['not_exist_test_property'])
         }
       }
 
       function checkTodoListInstance(object){
-        if(!(object instanceof TodoList)){
+        let todoList = object
+        if(!(todoList instanceof TodoList)){
           throw new Error(errorMessage['not_object'])
         }
       }
 
       function isCorrectTodoList(object){
+        let todoList = object
         try {
           checkTodoListInstance(object)
           checkTodoListDataType(object)
@@ -99,13 +112,24 @@
         }
         return true
       }
+
+      function todoListIsCompleted(isCheck, text){
+        let isCompleted = isCheck
+        let todoText = text
+
+        if(isCompleted){
+          return `<div><s>${todoText}</s></div>`
+        }
+
+        return `<div>${todoText}</div>`
+      }
       
       function TodoList(selectorId, todoListData){
-        let id = selectorId
+        this.id = selectorId
         this.todoData = todoListData
         this.render = function(){
           this.todoData.forEach(element => {
-            document.querySelector(id).innerHTML += `<div>${element.text}</div>`
+            document.querySelector(this.id).innerHTML += todoListIsCompleted(element.isCompleted, element.text)
           });
         }
       }
