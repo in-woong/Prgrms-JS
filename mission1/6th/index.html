@@ -6,8 +6,17 @@
     <meta charset="utf-8" />
   </head>
 
+  <style>
+    #todo-list, #todo-list-in-week, #todo-list-in-weekend {
+      padding: 1rem;
+    }
+  </style>
+
   <body>
     <div id="todo-list"></div>
+    <div id="todo-list-in-week"></div>
+    <div id="todo-list-in-weekend"></div>
+
     <script>
       var data = [
         {
@@ -15,6 +24,28 @@
         },
         {
           text: 'JS 복습하기'
+        }
+      ]
+      var studyInWeek = [
+        {
+          text: '월~금 퇴근 후 토이프로젝트 개발'
+        },
+        {
+          text: '수요일에 퇴근 후 스터디'
+        },
+        {
+          text: '청소'
+        }
+      ]
+      var studyInWeekend = [
+        {
+          text: '프론트엔드 전반적인 공부'
+        },
+        {
+          text: '주중에 하던 토이프로젝트 코딩'
+        },
+        {
+          text: '옷 세탁'
         }
       ]
 
@@ -69,16 +100,26 @@
         return true
       }
       
-      function TodoList(todoListData){
+      function TodoList(selectorId, todoListData){
+        let id = selectorId
         this.todoData = todoListData
         this.render = function(){
           this.todoData.forEach(element => {
-            document.querySelector('#todo-list').innerHTML += `<div>${element.text}</div>`
+            document.querySelector(id).innerHTML += `<div>${element.text}</div>`
           });
         }
       }
-      let todoList = new TodoList(data)
-      isCorrectTodoList(todoList) ? todoList.render() : ''
+
+      function showTodoList(selectorId, todoListData){
+        let id = selectorId
+        let todoData = todoListData
+        let todoList = new TodoList(id, todoData)
+        isCorrectTodoList(todoList) ? todoList.render() : ''
+      }
+
+      showTodoList('#todo-list', data)
+      showTodoList('#todo-list-in-week', studyInWeek)
+      showTodoList('#todo-list-in-weekend', studyInWeekend)
 
     </script>
   </body>
