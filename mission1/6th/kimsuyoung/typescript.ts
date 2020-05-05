@@ -1,17 +1,17 @@
 const data = [
 	{
-		text: 'JS 공부하기',
+		text: 'JS 복습하기',
 		isCompleted: true
 	},
 	{
-		text: 'JS 복습하기',
+		text: 'JS 복습하기2',
 		isCompleted: true
 	}
 ];
 
 const data2 = [
 	{
-		text: '',
+		text: 'TS 공부하기',
 		isCompleted: true
 	},
 	{
@@ -72,8 +72,8 @@ function TodoList(data: DataProps[], id: string) {
 }
 
 try {
-	const todoList = new (TodoList as any)(data, 'todo-list-1');
-	const todoList2 = new (TodoList as any)(data2, 'todo-list-2');
+	const todoList = new TodoList(data, 'todo-list-1');
+	const todoList2 = new TodoList(data2, 'todo-list-2');
 	todoList.render();
 	todoList2.render();
 	todoList2.setState(dataChange);

@@ -1,16 +1,16 @@
 var data = [
     {
-        text: 'JS 공부하기',
+        text: 'JS 복습하기',
         isCompleted: true
     },
     {
-        text: 'JS 복습하기',
+        text: 'JS 복습하기2',
         isCompleted: true
     }
 ];
 var data2 = [
     {
-        text: '',
+        text: 'TS 공부하기',
         isCompleted: true
     },
     {
