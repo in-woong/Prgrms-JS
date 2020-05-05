@@ -1,4 +1,4 @@
-export let studyTodo = [
+export const studyTodo = [
   {
     text: 'JS 공부하기',
     isCompleted: false,
@@ -9,7 +9,7 @@ export let studyTodo = [
   },
 ]
 
-export let schoolTodo = [
+export const schoolTodo = [
   {
     text: '중간고사 일정 확인',
     isCompleted: true,
@@ -20,7 +20,7 @@ export let schoolTodo = [
   },
 ]
 
-export let homeTodo = [
+export const homeTodo = [
   {
     text: '책 꽂이 정리',
     isCompleted: false,
