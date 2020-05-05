@@ -31,7 +31,7 @@ var workTodo = [
   }
 ]
 
-function TodoList(data, id) {
+function TodoList(element, data) {
   // 보너스 구현 사항 1
   if(!new.target) {
     throw new Error('new로 TodoList를 생성하지 않음!')
@@ -51,15 +51,10 @@ function TodoList(data, id) {
     this.data = this.checkParams(data)
     
     // 보너스 구현사항 - 다중 컴포넌트
-    var tagId = 'todo-list'
-    if (id === 'home') {
-      tagId = 'home-todo-list'
-    } else if (id === 'work') {
-      tagId = 'work-todo-list'
-    }
+    var todoElement = document.querySelector(element)
 
     // 보너스 구현사항 - isCompleted
-    document.querySelector(`#${tagId}`).innerHTML = data
+    document.querySelector(`#${todoElement.id}`).innerHTML = data
       .reduce(
         (sum, current) => `${sum.isCompleted ? '<s><p>' + sum.text + '</s></p>' : '<p>' + sum.text + '</p>' }
                             ${current.isCompleted ? '<s><p>' + current.text + '</s></p>' : '<p>' + current.text + '</p>' }` 
@@ -67,13 +62,13 @@ function TodoList(data, id) {
     }
 }
 
-var todoList = new TodoList(defaultTodo, 'default')
+var todoList = new TodoList('#todo-list', defaultTodo)
 todoList.render()
 
-var todoList = new TodoList(homeTodo, 'home')
+var todoList = new TodoList('#home-todo-list', homeTodo)
 todoList.render()
 
-var todoList = new TodoList(workTodo, 'work')
+var todoList = new TodoList('#work-todo-list', workTodo)
 todoList.render()
 
 
