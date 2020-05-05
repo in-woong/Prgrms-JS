@@ -56,6 +56,22 @@
           isCompleted: false,
         }
       ]
+      
+      //setState 테스트 더미 데이터
+      var testTodoData = [
+        {
+          text: '꿀잠 자기',
+          isCompleted: true,
+        },
+        {
+          text: '맛있는거 먹기',
+          isCompleted: true,
+        },
+        {
+          text: '여행',
+          isCompleted: false,
+        }
+      ]
 
       let errorMessage = {
         null_or_undefined : 'this data is null or undefined',
@@ -83,12 +99,15 @@
 
       function checkTodoListDataType(object){
         let todoList = object
+
         if(isUndefinedOrNull(todoList.todoData)){
           throw new Error(errorMessage['null_or_undefined'])
         }
+
         if(!Array.isArray(todoList.todoData)){
           throw new Error(errorMessage['not_array'])
         }
+
         if(isNotExistTextProperty(todoList.todoData)){
           throw new Error(errorMessage['not_exist_test_property'])
         }
@@ -96,6 +115,7 @@
 
       function checkTodoListInstance(object){
         let todoList = object
+
         if(!(todoList instanceof TodoList)){
           throw new Error(errorMessage['not_object'])
         }
@@ -103,9 +123,10 @@
 
       function isCorrectTodoList(object){
         let todoList = object
+
         try {
-          checkTodoListInstance(object)
-          checkTodoListDataType(object)
+          checkTodoListInstance(object) // 올바른 파라메터 체크
+          checkTodoListDataType(object) // new 키워드 유무 체크
         }catch (e){
           console.error(e)
           return false
@@ -126,8 +147,18 @@
       
       function TodoList(selectorId, todoListData){
         this.id = selectorId
+
         this.todoData = todoListData
+
         this.render = function(){
+          this.todoData.forEach(element => {
+            document.querySelector(this.id).innerHTML += todoListIsCompleted(element.isCompleted, element.text)
+          });
+        }
+
+        this.setState = function(nextData){
+          document.querySelector(this.id).innerHTML = '' //초기화
+          this.todoData = nextData
           this.todoData.forEach(element => {
             document.querySelector(this.id).innerHTML += todoListIsCompleted(element.isCompleted, element.text)
           });
@@ -139,11 +170,15 @@
         let todoData = todoListData
         let todoList = new TodoList(id, todoData)
         isCorrectTodoList(todoList) ? todoList.render() : ''
+        return todoList
       }
 
-      showTodoList('#todo-list', data)
-      showTodoList('#todo-list-in-week', studyInWeek)
-      showTodoList('#todo-list-in-weekend', studyInWeekend)
+      let standardTodoList = showTodoList('#todo-list', data)
+      let weekTodoList = showTodoList('#todo-list-in-week', studyInWeek)
+      let weekendTodoList = showTodoList('#todo-list-in-weekend', studyInWeekend)
+
+      //setState 테스트
+      standardTodoList.setState(testTodoData)
 
     </script>
   </body>
