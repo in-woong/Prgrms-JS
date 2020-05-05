@@ -52,28 +52,35 @@
         const todoElement = document.querySelector(element)
         let todos = data
 
-        const dataValidator = (datas) => {
+        const dataValidator = (data) => {
           // 데이터가 배열인지 검사
-          if (Array.isArray(datas) === false) {
+          if (!Array.isArray(data)) {
             throw new Error(`${element} 데이터는 배열로 전달되어야 합니다.`)
           }
 
+          // 데이터 존재 유무 검사
+          if (data.length === 0) {
+            throw new Error(`${element} 데이터가 없습니다.`)
+          }
+
           // 데이터가 객체이고 text, isCompleted 키를 가지고 있는지 검사
-          datas.map((data) => {
+          data.map((item) => {
             if (
-              (data.toString().slice(8, -1) === 'Object' &&
-                data.hasOwnProperty('text') &&
-                data.hasOwnProperty('isCompleted')) === false
+              !(
+                item.toString().slice(8, -1) === 'Object' &&
+                typeof item.text === 'string' &&
+                typeof item.isCompleted === 'boolean'
+              )
             ) {
               throw new Error(
-                `${element} 데이터의 값이 객체가 아니거나 text, isCompleted 키를 가지고 있지 않습니다.`
+                `${element} 데이터의 값이 객체가 아니거나 잘못된 값을 가지고 있습니다.`
               )
             }
           })
         }
 
         // new 키워드를 사용했는지 검사
-        if (this instanceof TodoList === false) {
+        if (!(this instanceof TodoList)) {
           throw new Error('new를 사용해주세요.')
         }
 
