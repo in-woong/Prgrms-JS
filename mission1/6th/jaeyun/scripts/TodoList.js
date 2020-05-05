@@ -17,8 +17,12 @@ class TodoList {
   checkDataElem(data) {
     let isValidData = true
     data.forEach((elem) => {
-      const { text } = elem
-      if (typeof text !== 'string') {
+      const { text, isCompleted } = elem
+      if (
+        typeof text !== 'string' ||
+        isCompleted === undefined ||
+        typeof isCompleted !== 'boolean'
+      ) {
         isValidData = false
         return
       }
@@ -41,7 +45,14 @@ class TodoList {
   }
 
   render(container) {
+    this.container = container
     container.innerHTML = this.addListToTag()
+  }
+
+  setState(nextData) {
+    this.todoList = nextData
+    this.checkData(this.todoList)
+    this.render(this.container)
   }
 }
 

@@ -8,6 +8,13 @@ const homeTodoCon = document.getElementById('home-todo-list')
 const studyTodoList = new TodoList(studyTodo)
 studyTodoList.render(studyTodoCon)
 
+studyTodoList.setState([
+  {
+    text: '예습',
+    isCompleted: false,
+  },
+])
+
 const schoolTodoList = new TodoList(schoolTodo)
 schoolTodoList.render(schoolTodoCon)
 
