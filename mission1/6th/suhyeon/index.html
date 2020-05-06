@@ -45,14 +45,14 @@
                 this.render()
             }
             validateData(data) {
-                if (!data) throw new Error('데이터가 없습니다.')
-                else if (!Array.isArray(data)) throw new Error('배열 형태가 아닙니다.')
-                else return data
+                if (!data) { throw new Error('데이터가 없습니다.') }
+                if (!Array.isArray(data)) { throw new Error('배열 형태가 아닙니다.') }
+                return data
             }
             validateElement(selector) {
                 const $list = document.querySelector(selector)
-                if (!$list) throw new Error(`${selector} 요소가 존재하지 않습니다.`)
-                else return $list
+                if (!$list) { throw new Error(`${selector} 요소가 존재하지 않습니다.`) }
+                return $list
             }
             render() {
                 const htmlString = this.data.map(item => 
