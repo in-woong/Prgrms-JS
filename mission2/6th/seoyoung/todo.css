@@ -3,11 +3,8 @@
     margin: 20px;
 }
 
-.todoContainer {
+#todo-input {
     width: 300px;
-}
-
-.addContainer {
     display: flex;
     justify-content: center;
     font-size: 1em;
