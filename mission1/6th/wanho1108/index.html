@@ -59,7 +59,7 @@
           }
 
           // 데이터 존재 유무 검사
-          if (data.length === 0) {
+          if (!data.length) {
             throw new Error(`${element} 데이터가 없습니다.`)
           }
 
@@ -85,7 +85,7 @@
         }
 
         // 엘리먼트가 존재하는지 검사
-        if (todoElement === null) {
+        if (!todoElement) {
           throw new Error(`${element}가 존재하지 않습니다.`)
         }
 
