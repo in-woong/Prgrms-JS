@@ -6,14 +6,21 @@
 </head>
 
 <body>
-<h4>Todo List</h4>
-<div id="todo-list"></div>
-
-<h4>Work Todo List</h4>
-<div id="work-todo-list"></div>
-
-<h4>Game Todo List</h4>
-<div id="game-todo-list"></div>
+<main>
+  <h1>Todo List collection!</h1>
+  <article>
+    <h2>Todo List</h2>
+    <div id="todo-list"></div>
+  </article>
+  <article>
+    <h2>Work Todo List</h2>
+    <div id="work-todo-list"></div>
+  </article>
+  <article>
+    <h2>Game Todo List</h2>
+    <div id="game-todo-list"></div>
+  </article>
+</main>
 
 <script>
   const data = [
@@ -58,31 +65,34 @@
   ];
 
   function isEmpty(value) {
-    // null 혹은 undefined거나 array가 아닌 형태로 넘어왔을 경우
+    // null이거나 undefined이거나 array가 아니거나 빈 Object일 때
     return value === null ||
       typeof value === 'undefined' ||
-      (Array.isArray(value) && value.length < 1);
+      (Array.isArray(value) && value.length < 1) ||
+      (typeof value === 'object' && Object.keys(value).length < 1);
   }
 
-  const TodoList = function(data, id) {
-    if (!(this instanceof TodoList)) { //new check
+  const TodoList = function(data, containerId) {
+    if (!(this instanceof TodoList)) {
+      // !new.target으로 사용 가능
       throw new Error('new 키워드를 붙여야 합니다.');
     }
-    if (isEmpty(data)) { // validation check
+    if (isEmpty(data)) {
       throw new Error('유효하지 않은 형식입니다.');
+    }
+    if (isEmpty(containerId)) {
+      throw new Error('id값이 없습니다.');
     }
 
     this.todos = data;
 
     this.render = function() {
-      if (!isEmpty(id)) {
-        const rootElement = document.getElementById(id);
-        rootElement.innerHTML = `<ul>${this.todos.map(todo => {
-          if (!isEmpty(todo.isCompleted) && !isEmpty(todo.text)) {
-            return todo.isCompleted ? `<li><s>${todo.text}</s></li>` : `<li>${todo.text}</li>`
-          }
-        }).join('')}</ul>`;
-      }
+      const $rootElement = document.getElementById(containerId); // DOM을 담은 변수는 $를 붙여서 표기
+      $rootElement.innerHTML = `<ul>${this.todos.map(todo => {
+        if (!isEmpty(todo.isCompleted) && todo.text) {
+          return todo.isCompleted ? `<li><s>${todo.text}</s></li>` : `<li>${todo.text}</li>`
+        }
+      }).join('')}</ul>`;
     }
 
     this.setState = function(nextData) {
