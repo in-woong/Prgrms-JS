@@ -125,8 +125,8 @@
         let todoList = object
 
         try {
-          checkTodoListInstance(object) // 올바른 파라메터 체크
-          checkTodoListDataType(object) // new 키워드 유무 체크
+          checkTodoListInstance(todoList) // 올바른 파라메터 체크
+          checkTodoListDataType(todoList) // new 키워드 유무 체크
         }catch (e){
           console.error(e)
           return false
