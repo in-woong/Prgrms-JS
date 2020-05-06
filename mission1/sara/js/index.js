@@ -1,22 +1,27 @@
 var todoData = [
         {
-            text: 'JS 공부하기'
+            text: 'JS 공부하기',
+            isCompleted: true
         },
         {
-            text: 'JS 복습하기'
+            text: 'JS 복습하기',
+            isCompleted: true
         }
     ],
     weekendData = [
         {
-            text: 'mission1 필수과제'
+            text: 'mission1 필수과제',
+            isCompleted: true
         },
         {
-            text: 'mission1 보너스 과제'
+            text: 'mission1 보너스 과제',
+            isCompleted: false
         }
     ],
     monthData = [
         {
-            text: '프로그래머스 이수'
+            text: '프로그래머스 이수',
+            isCompleted: false
         }
     ];
 
@@ -40,7 +45,15 @@ class TodoList {
     }
 
     render = function() {
-        this.element.innerHTML = `<ul>${this.data.map(value => `<li>${value.text}</li>`).join('')}</ul>`;
+        const innerText = this.data.map((value) => {
+            if(value.isCompleted) {
+               return `<li><s>${value.text}</s></li>`
+            } else {
+                return `<li>${value.text}</li>`;
+            }
+        }).join('');
+
+        this.element.innerHTML = `<ul>${innerText}</ul>`;
     }
 }
 
