@@ -1,0 +1,77 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list"></div>
+  <div id="today-todo-list"></div>
+  <div id="tomorrow-todo-list"></div>
+
+  <script>
+    var data = [
+      {
+        text: 'JS 공부하기'
+      },
+      {
+        text: 'JS 복습하기'
+      }
+    ]
+
+    var todayData = [
+      {
+        text: 'JS 과제'
+      },
+      {
+        text: '한국학 과제'
+      }
+    ]
+
+    var tomorrowData = [
+      {
+        text: '코테 공부'
+      },
+      {
+        text: '자소서'
+      }
+    ]
+
+
+    function TodoList(data, elementId) {
+      if(!(this instanceof TodoList)) {
+        throw new Error("Error");
+      }
+
+      if(typeof data !== "object" || !data) {
+        throw new Error("Error: Parameter is invalid");
+      }
+
+      this.data = data;
+      this.elementId = elementId;
+
+      this.render = () => {
+        const todoElement = document.querySelector(elementId)
+
+        let todos = ''
+        this.data.forEach((todo) => {
+          todos += `<li>${todo.text}</li>`
+        });
+
+        todoElement.innerHTML = todos
+      }
+    }
+
+    var todoList = new TodoList(data, '#todo-list');
+    todoList.render();
+
+    var todayTodoList = new TodoList(todayData, '#today-todo-list');
+    todayTodoList.render();
+
+    var tomorrowTodoList = new TodoList(tomorrowData, '#tomorrow-todo-list');
+    tomorrowTodoList.render();
+
+  </script>
+</body>
+</html>
