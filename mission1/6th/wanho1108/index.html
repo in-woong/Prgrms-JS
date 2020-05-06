@@ -67,7 +67,7 @@
           data.map((item) => {
             if (
               !(
-                item.toString().slice(8, -1) === 'Object' &&
+                Object.prototype.toString.call(item).slice(8, -1) === 'Object' &&
                 typeof item.text === 'string' &&
                 typeof item.isCompleted === 'boolean'
               )
