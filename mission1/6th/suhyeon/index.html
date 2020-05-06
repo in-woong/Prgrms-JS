@@ -37,23 +37,25 @@
                 text: 'isCompleted 처리',
                 isCompleted: true
             }
-        ] 
+        ]
+        
+        const validateData = (data) => {
+            if (!data) { throw new Error('데이터가 없습니다.') }
+            if (!Array.isArray(data)) { throw new Error('배열 형태가 아닙니다.') }
+            return data
+        }
+        const validateElement = (selector) => {
+            const $list = document.querySelector(selector)
+            if (!$list) { throw new Error(`${selector} 요소가 존재하지 않습니다.`) }
+            return $list
+        }
+                
         class TodoList {
             constructor(selector, data) {                
-                this.data = this.validateData(data)
-                this.$list = this.validateElement(selector)
+                this.data = validateData(data)
+                this.$list = validateElement(selector)
                 this.render()
-            }
-            validateData(data) {
-                if (!data) { throw new Error('데이터가 없습니다.') }
-                if (!Array.isArray(data)) { throw new Error('배열 형태가 아닙니다.') }
-                return data
-            }
-            validateElement(selector) {
-                const $list = document.querySelector(selector)
-                if (!$list) { throw new Error(`${selector} 요소가 존재하지 않습니다.`) }
-                return $list
-            }
+            }            
             render() {
                 const htmlString = this.data.map(item => 
                     item.isCompleted ? `<li><s>${item.text}</s></li>` : `<li>${item.text}</li>`
