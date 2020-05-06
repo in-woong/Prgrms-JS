@@ -62,6 +62,10 @@
                 ).join('')
                 this.$list.innerHTML = `<ul>${htmlString}</ul>`
             }
+            setState(nextData) {
+                this.data = validateData(nextData)
+                this.render()
+            }
         }
         const todoList = new TodoList('#todo-list', data)
         const studyList = new TodoList('#study-list', studyData)
