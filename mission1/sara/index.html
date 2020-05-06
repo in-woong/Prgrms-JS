@@ -2,40 +2,18 @@
 <head>
     <title>Mission 1</title>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
+    <h2>할 일</h2>
     <div id="todo-list"></div>
-    <script>
-        var data = [
-            {
-                text: 'JS 공부하기'
-            },
-            {
-                text: 'JS 복습하기'
-            }
-        ]
 
-        class TodoList {
-            constructor(data) {
-                this.dataValidator(data);
-                this.data = data;
-            }
+    <h2>주간 목록</h2>
+    <div id="weekend-list"></div>
 
-            dataValidator = function(data) {
-                if(data === null || data === undefined) {
-                    throw new Error('data 값을 전달해주세요.');
-                } else if(!Array.isArray(data)) {
-                    throw new Error('data 는 배열형태입니다.');
-                }
-            }
+    <h2>월간 목록</h2>
+    <div id="month-list"></div>
 
-            render = function() {
-                document.querySelector('#todo-list').innerHTML = data.map(value => `<div>${value.text}</div>`).join('');
-            }
-        }
-
-        var todoList = new TodoList(data);
-        todoList.render();
-    </script>
+    <script src="js/index.js"></script>
 </body>
 </html>
