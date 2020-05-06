@@ -56,9 +56,8 @@
                 throw new Error('배열 형태가 아닙니다')
             }
             if (data.some(data => typeof data.text !== 'string')) {
-                throw new Error('내용이 이상한 데이터입니다')
+                throw new Error('text 프로퍼티의 타입이 string 이어야 합니다')
             }
-            return true
         }
 
         // 함수버전
@@ -87,9 +86,9 @@
             }
         }
 
-        let todoList = new TodoList(data, '#todo-list');
-        let todayTodoList = new TodoList(todayTodos, '#today-todo-list');
-        let yesterdayTodoList = new TodoList(yesterdayTodos, '#yesterday-todo-list');
+        const todoList = new TodoList(data, '#todo-list');
+        const todayTodoList = new TodoList(todayTodos, '#today-todo-list');
+        const yesterdayTodoList = new TodoList(yesterdayTodos, '#yesterday-todo-list');
         todoList.render();
         todayTodoList.render();
         yesterdayTodoList.render();
