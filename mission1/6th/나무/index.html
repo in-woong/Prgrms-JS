@@ -69,14 +69,21 @@
             this.render = function () {
                 this.listContainer.innerHTML = `<ul>${this.data.map(({text, isCompleted}) => (isCompleted? `<li><s>${text}</s></li>`:`<li>${text}</li>`)).join('')}</ul>`;
             };
+            this.setState = function (nextData) {
+                this.data = nextData;
+                this.render();
+            }
 
             this.validate();
             this.render();
         }
 
-        const JSList = new TodoList(document.getElementById('todo-list-js'), jsData);
-        const LifeList = new TodoList(document.getElementById('todo-list-life'), lifeData);
-        const TripList = new TodoList(document.getElementById('todo-list-trip'), tripData);
+        const jSList = new TodoList(document.getElementById('todo-list-js'), jsData);
+        const lifeList = new TodoList(document.getElementById('todo-list-life'), lifeData);
+        const tripList = new TodoList(document.getElementById('todo-list-trip'), tripData);
+
+        tripData.push({text: "CA", isCompleted: true});
+        tripList.setState(tripData);
     </script>
 </body>
 
