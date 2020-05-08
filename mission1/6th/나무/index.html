@@ -8,7 +8,9 @@
 <body>
     <div id="todo-list"></div>
     <script>
-        var data = [{
+        var data = 
+        [
+            {
                 text: 'JS 공부하기'
             },
             {
@@ -17,28 +19,39 @@
         ]
 
         function TodoList(data) {
-            if (this === window){
+            if (!new.target) {
                 throw new Error("Error: Object is not set properly");
             }
-            
-            this.data = data;
-            this.render = function () {
+            this.validation = function () {
                 if (!this.data) {
                     throw new Error("Error: Invalid data type");
                 }
-                else if (!Array.isArray(data)){
+                if (!Array.isArray(data)) {
                     throw new Error("Error: Data should be array");
                 }
-                else{
-                    this.data.forEach(element => {
-                        document.querySelector('#todo-list').innerHTML += `<div>${element.text}</div>`;
-                    });
-                }
+
+                data.forEach(element => {
+                    if (!("text" in element)){
+                        throw new Error("Error: Key 'text' is missing");
+                    }
+                });
+            }
+
+            this.data = data;
+            this.render = function () {
+                let htmlData = '';
+                this.data.forEach(element => {
+                    htmlData += `<li>${element.text}</li>`;
+                });
+
+                document.querySelector('#todo-list').innerHTML = `<ul>${htmlData}</ul>`;
             };
+
+            this.validation();
+            this.render();
         }
 
-        let list = TodoList(data);
-        list.render();
+        const todoList = new TodoList(data);
     </script>
 </body>
 
