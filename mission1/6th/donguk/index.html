@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TodoList</title>
+</head>
+<body>
+    <div id="todo-list"></div>
+    <script>
+      const data = [
+        {
+          text: '실행 컨텍스트 객체 공부하기',
+          isCompleted: false,
+        },
+        {
+          text: 'Javascript this 공부하기',
+          isCompleted: true,
+        },
+      ]
+
+      function convertToLiNode(data) {
+        const { text, isCompleted } = data
+        return `<li>${isCompleted ? `<s>${text}</s>` : text}</li>`
+      }
+
+      function TodoList(data, target) {
+        this.data = data
+        this.selector = document.querySelector(target)
+
+        this.render = function () {
+          this.selector.innerHTML = `<ul>${this.data.map(v => convertToLiNode(v)).join('')}</ul>`
+        }
+      }
+      const todoList = new TodoList(data, '#todo-list')
+      todoList.render()
+    </script>
+</body>
+</html>
