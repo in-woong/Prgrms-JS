@@ -11,7 +11,7 @@ let data = [
 const todoList = new TodoList(document.querySelector('#todo-list'), data)
 const $input = document.querySelector('#todo-input')
 const $addButton = document.querySelector('#todo-add-button')
-$addButton.addEventListener('click', () => {
+$addButton.addEventListener('click', () => { // 할일 추가
     if (!$input.value) {
         alert('할일을 입력하세요.')
         return
