@@ -18,7 +18,7 @@
     <div id="todo-list-in-weekend"></div>
 
     <script>
-      let data = [
+      const data = [
         {
           text: 'JS 공부하기',
           isCompleted: true,
@@ -28,7 +28,7 @@
           isCompleted: false,
         }
       ]
-      let studyInWeek = [
+      const studyInWeek = [
         {
           text: '월~금 퇴근 후 토이프로젝트 개발',
           isCompleted: true,
@@ -42,7 +42,7 @@
           isCompleted: false,
         }
       ]
-      let studyInWeekend = [
+      const studyInWeekend = [
         {
           text: '프론트엔드 전반적인 공부',
           isCompleted: false,
@@ -58,7 +58,7 @@
       ]
       
       //setState 테스트 더미 데이터
-      let testTodoData = [
+      const testTodo = [
         {
           text: '꿀잠 자기',
           isCompleted: true,
@@ -73,20 +73,18 @@
         }
       ]
 
-      let errorMessage = {
+      const errorMessage = {
         null_or_undefined : 'this data is null or undefined',
         not_object : 'this data is not an object',
         not_array : 'this data is not an array',
         not_exist_test_property : '\"text\" property does not exist in this data',
       }
       
-      function isUndefinedOrNull(data){
-        let value = data
+      function isUndefinedOrNull(value){
         return value === null || value === undefined
       }
 
-      function isNotExistTextProperty(data){
-        let value = data
+      function isNotExistTextProperty(value){
         let result = false
         value.forEach(element => {
           if(!('text' in element)){
@@ -97,33 +95,27 @@
         return result
       }
 
-      function checkTodoListDataType(object){
-        let todoList = object
-
-        if(isUndefinedOrNull(todoList.todoData)){
+      function checkTodoListDataType(todoList){
+        if(isUndefinedOrNull(todoList.todo)){
           throw new Error(errorMessage['null_or_undefined'])
         }
 
-        if(!Array.isArray(todoList.todoData)){
+        if(!Array.isArray(todoList.todo)){
           throw new Error(errorMessage['not_array'])
         }
 
-        if(isNotExistTextProperty(todoList.todoData)){
+        if(isNotExistTextProperty(todoList.todo)){
           throw new Error(errorMessage['not_exist_test_property'])
         }
       }
 
-      function checkTodoListInstance(object){
-        let todoList = object
-
+      function checkTodoListInstance(todoList){
         if(!(todoList instanceof TodoList)){
           throw new Error(errorMessage['not_object'])
         }
       }
 
-      function isCorrectTodoList(object){
-        let todoList = object
-
+      function isCorrectTodoList(todoList){
         try {
           checkTodoListInstance(todoList) // 올바른 파라메터 체크
           checkTodoListDataType(todoList) // new 키워드 유무 체크
@@ -134,51 +126,44 @@
         return true
       }
 
-      function todoListIsCompleted(isCheck, text){
-        let isCompleted = isCheck
-        let todoText = text
-
-        if(isCompleted){
-          return `<div><s>${todoText}</s></div>`
-        }
-
-        return `<div>${todoText}</div>`
+      function todoListIsCompleted(isCompleted, todoText){
+        return (isCompleted) ? `<div><s>${todoText}</s></div>` : `<div>${todoText}</div>`
       }
       
-      function TodoList(selectorId, todoListData){
-        this.id = selectorId
-
-        this.todoData = todoListData
-
+      function TodoList(selectorId, todo){
+        this.selectorId = selectorId
+        this.todo = todo
         this.render = function(){
-          this.todoData.forEach(element => {
-            document.querySelector(this.id).innerHTML += todoListIsCompleted(element.isCompleted, element.text)
-          });
+          let todoText = this.todo.map((element) => {
+            return todoListIsCompleted(element.isCompleted, element.text)
+          }).join('')
+          // let todoText = this.todo.reduce((preElement, element) => {
+          //   return (typeof preElement.isCompleted === 'boolean') 
+          //   ? todoListIsCompleted(preElement.isCompleted, preElement.text) + todoListIsCompleted(element.isCompleted, element.text) 
+          //   : preElement + todoListIsCompleted(element.isCompleted, element.text) 
+          // })
+          document.querySelector(this.selectorId).innerHTML = todoText
         }
 
         this.setState = function(nextData){
-          document.querySelector(this.id).innerHTML = '' //초기화
-          this.todoData = nextData
-          this.todoData.forEach(element => {
-            document.querySelector(this.id).innerHTML += todoListIsCompleted(element.isCompleted, element.text)
-          });
+          document.querySelector(this.selectorId).innerHTML = '' //초기화
+          this.todo = nextData
+          this.render()
         }
       }
 
-      function showTodoList(selectorId, todoListData){
-        let id = selectorId
-        let todoData = todoListData
-        let todoList = new TodoList(id, todoData)
+      function showTodoList(selectorId, todo){
+        const todoList = new TodoList(selectorId, todo)
         isCorrectTodoList(todoList) ? todoList.render() : ''
         return todoList
       }
 
-      let standardTodoList = showTodoList('#todo-list', data)
-      let weekTodoList = showTodoList('#todo-list-in-week', studyInWeek)
-      let weekendTodoList = showTodoList('#todo-list-in-weekend', studyInWeekend)
+      const standardTodoList = showTodoList('#todo-list', data)
+      const weekTodoList = showTodoList('#todo-list-in-week', studyInWeek)
+      const weekendTodoList = showTodoList('#todo-list-in-weekend', studyInWeekend)
 
       //setState 테스트
-      standardTodoList.setState(testTodoData)
+      standardTodoList.setState(testTodo)
 
     </script>
   </body>
