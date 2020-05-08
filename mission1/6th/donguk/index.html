@@ -5,11 +5,27 @@
     <title>TodoList</title>
 </head>
 <body>
+    <h1>Todo1</h1>
     <div id="todo-list"></div>
+    <h1>Todo2</h1>
+    <div id="todo-list2"></div>
+    <h1>Todo3</h1>
+    <div id="todo-list3"></div>
     <script>
       const data = [
         {text: '실행 컨텍스트 공부하기', isCompleted: true},
         {text: '프로그래머스 풀기', isCompleted: false}
+      ]
+
+      const data2 = [
+        {text: '잠 일찍 자기', isCompleted: false},
+        {text: 'arrow function this 공부하기', isCompleted: true}
+      ]
+
+      const data3 = [
+        {text: '집 청소하기', isCompleted: true},
+        {text: '분리수거 하기', isCompleted: true},
+        {text: 'JS 이벤트 공부하기', isCompleted: false}
       ]
 
       function convertToLiNode(data) {
@@ -33,6 +49,10 @@
       try{
         const todoList = new TodoList(data, '#todo-list')
         todoList.render()
+        const todoList2 = new TodoList(data2, '#todo-list2')
+        todoList2.render()
+        const todoList3 = new TodoList(data3, '#todo-list3')
+        todoList3.render()
       } catch(e){
         console.error(e)
       }
