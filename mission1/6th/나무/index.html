@@ -13,26 +13,32 @@
     <script>
         var jsData = [
             {
-                text: 'JS 공부하기'
+                text: 'JS 공부하기',
+                isCompleted: true
             },
             {
-                text: 'JS 복습하기'
+                text: 'JS 복습하기',
+                isCompleted: false
             }
         ];
         var lifeData = [
             {
-                text: '운동하기'
+                text: '운동하기',
+                isCompleted: false
             },
             {
-                text: '펭tv보기'
+                text: '펭tv보기',
+                isCompleted: true
             }
         ];
         var tripData = [
             {
-                text: 'NY'
+                text: 'NY',
+                isCompleted: true
             },
             {
-                text: 'HW'
+                text: 'HW',
+                isCompleted: false
             }
         ];
 
@@ -61,7 +67,7 @@
             this.data = data;
             this.listContainer = listContainer;
             this.render = function () {
-                this.listContainer.innerHTML = `<ul>${this.data.map(({text}) => (`<li>${text}</li>`)).join('')}</ul>`;
+                this.listContainer.innerHTML = `<ul>${this.data.map(({text, isCompleted}) => (isCompleted? `<li><s>${text}</s></li>`:`<li>${text}</li>`)).join('')}</ul>`;
             };
 
             this.validate();
