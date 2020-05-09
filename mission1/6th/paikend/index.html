@@ -13,55 +13,52 @@
     <script>
         var data1 = [
             {
-            text: 'JS 공부하기',
-            isCompleted: true
+                text: 'JS 공부하기',
+                isCompleted: true
             },
             {
-            text: 'JS 복습하기',
-            isCompleted: false
+                text: 'JS 복습하기',
+                isCompleted: false
             }
         ]
         var data2 = [
             {
-            text: '알고리즘 공부하기',
-            isCompleted: false
+                text: '알고리즘 공부하기',
+                isCompleted: false
             },
             {
-            text: '알고리즘 복습하기',
-            isCompleted: true
+                text: '알고리즘 복습하기',
+                isCompleted: true
             }
         ]
         var data3 = [
             {
-            text: '아키텍쳐 공부하기',
-            isCompleted: true
+                text: '아키텍쳐 공부하기',
+                isCompleted: true
             },
             {
-            text: '아키텍쳐 복습하기',
-            isCompleted: false
+                text: '아키텍쳐 복습하기',
+                isCompleted: false
             }
         ]
         // 이곳에서 코딩을 시작하세요!
-        function TodoList(data, divId){
+        function TodoList(data, containerId ){
             // validation
             if(!(this instanceof TodoList)) 
                 throw new Error('it is not Instance. must use new keyword.');
-            if(data === null || data === undefined || !Array.isArray(data) || data.length < 1)
+            if(!(data) || !Array.isArray(data) || data.length < 1)
                 throw new Error('it is invalid data.');
             this.data = data;
-            this.divId = divId;
+            this.containerId  = containerId ;
             this.render = function(){
-            this.data.forEach(data => {
+            this.data.map(data => {
                 if(data.hasOwnProperty('text'))
-                    (data.isCompleted) ? document.querySelector(this.divId).innerHTML += `<div><s>${data.text}</s></div>` : document.querySelector(divId).innerHTML += `<div>${data.text}</div>`
+                    (data.isCompleted) ? document.querySelector(this.containerId ).innerHTML += `<div><s>${data.text}</s></div>` : document.querySelector(containerId ).innerHTML += `<div>${data.text}</div>`
                 });
             }
             this.setState = (nextData) => {
-                document.querySelector(this.divId).innerHTML = ""
-                nextData.forEach(data => {
-                    if(data.hasOwnProperty('text'))
-                        (data.isCompleted) ? document.querySelector(this.divId).innerHTML += `<div><s>${data.text}</s></div>` : document.querySelector(divId).innerHTML += `<div>${data.text}</div>`
-                })
+                document.querySelector(this.containerId ).innerHTML = ""
+                this.render()
             }    
         }
         var todoList1 = new TodoList(data1, "#todo-list1");
