@@ -1,8 +1,10 @@
 import { createDom } from '../utils/utilFunctions.js'
+import TodoCount from './TodoCount.js'
 
 class TodoList {
   constructor(_this, data, completeHandler, deleteHandler) {
     this.data = data
+    this.todoCount = new TodoCount(data)
     this.render()
 
     this.$todoListContainer.addEventListener('click', function (e) {
@@ -26,6 +28,7 @@ class TodoList {
     })
 
     this.$todoListContainer.innerHTML = todoList.join('')
+    this.$todoListContainer.append(this.todoCount.$todoCountInfo)
   }
 }
 
