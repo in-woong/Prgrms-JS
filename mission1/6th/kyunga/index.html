@@ -10,11 +10,10 @@
 <div id="study-todo-list"></div>
 <div id="work-todo-list"></div>
 <script>
-    let data = [
+    const data = [
         {
             text: 'JS 공부하기',
             isCompleted: true
-
         },
         {
             text: 'JS 복습하기',
@@ -22,7 +21,7 @@
         }
     ];
 
-    let studyData = [
+    const studyData = [
         {
             text: '변수 공부하기',
             isCompleted: true
@@ -33,7 +32,7 @@
         }
     ];
 
-    let workData = [
+    const workData = [
         {
             text: '회의 준비하기',
             isCompleted: false
@@ -44,7 +43,7 @@
         }
     ];
 
-    function validator(data) {
+    function validateData(data) {
         if (!data) {
             throw new Error('데이터를 입력해주세요!')
         }
@@ -55,39 +54,38 @@
 
         data.forEach(item => {
             if (!item.text || typeof item.text !== 'string')
-                throw new Error('데이터의 내용을 확인해주세요!');
+                throw new Error('text 프로퍼티의 타입은 꼭 string 이어야 합니다!');
+
+            if (typeof item.isCompleted !== 'boolean')
+                throw new Error('isCompleted 프로퍼티의 타입은 꼭 boolean 이어야 합니다!');
         });
 
-        return data;
+        return true;
     }
 
-	function TodoList(data, targetId = 'todo-list') {
+    function TodoList(data, targetId = '#todo-list') {
         if(!(this instanceof TodoList)) {
             throw new Error('new 키워드가 필요합니다!');
         }
 
-		this.data = validator(data);
+        this.data = validateData(data) && data;
 
         this.render = function() {
-            let todoHtml = '';
-
-            this.data.map(todoItem => {
-                todoHtml += `<li>${todoItem.isCompleted ? `<s>${todoItem.text}</s>` : todoItem.text}</li>`;
-            });
-
-			document.getElementById(`${targetId}`).innerHTML = `<ul>${todoHtml}</ul>`;
+            document.querySelector(`${targetId}`).innerHTML = `<ul>${this.data.reduce((acc, todoItem) => {
+                return `${acc}<li>${todoItem.isCompleted ? `<s>${todoItem.text}</s>` : todoItem.text}</li>`
+            }, '')}</ul>`;
         };
 
         this.setState = function(nextData) {
-            this.data = validator(nextData);
-			this.render();
+            this.data = validateData(nextData) && nextData;
+	        this.render();
         }
     }
 
     try {
         const todoList = new TodoList(data);
-        const studyTodoList = new TodoList(studyData, 'study-todo-list');
-        const workTodoList = new TodoList(workData, 'work-todo-list');
+        const studyTodoList = new TodoList(studyData, '#study-todo-list');
+        const workTodoList = new TodoList(workData, '#work-todo-list');
 
         todoList.render();
         studyTodoList.render();
@@ -95,10 +93,12 @@
 
         todoList.setState([
 	        {
-	            text: 'ES6 공부하기'
+	            text: 'ES6 공부하기',
+		        isCompleted: true
 	        },
             {
-                text: 'ES6 복습하기'
+                text: 'ES6 복습하기',
+                isCompleted: false
             },
         ]);
     } catch(error) {
