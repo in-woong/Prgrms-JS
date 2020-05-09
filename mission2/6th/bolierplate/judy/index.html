@@ -1,0 +1,104 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name=viewport content="width=device-width,height=device-height,initial-scale=1,user-scalable=no">
+    <title>Mission 2</title>
+    <meta charset="utf-8" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+  </head>
+
+  <body>
+    <div class="viewport">
+      <div class="todo">
+        <div class="todo-container">
+          <div class="todo-header">
+            <h1 class="todo-header__heading">To-DO List</h1>
+            <p class="todo-header__description">해야 할 일을 입력해주세요 &#9994;</p>
+          </div>
+          <!-- todo-header//end -->
+          <div class="todo-input">
+            <div class="todo-input__list">
+              <div class="input">
+                <input type="text" placeholder="js 복습하기, js 공부하기" class="input-text" id="todo-list" />
+              </div>
+            </div>
+            <!-- todo-input__list//end -->
+          </div>
+          <!-- todo-input//end -->
+          <div class="todo-data">
+            <div class="todo-data__list">
+              <ul class="todo-data__listbox">
+                <li class="todo-data__list-item">
+                  <div class="checkbox">
+                    <input type="checkbox" class="checkbox-input" id="input-check1">
+                    <label for="input-check1" class="label">js 복습하기</label>
+                  </div>
+                  <div class="button-group">
+                    <button class="button button-icon button-delete">
+                      <span class="button-icon-text">삭제</span>
+                      <i class="button-icon-symbol" aria-hidden="true">&#10005;</i>
+                    </button>
+                  </div>
+                </li>
+                <li class="todo-data__list-item">
+                  <div class="checkbox checkbox-checked">
+                    <input type="checkbox" id="input-check2" class="checkbox-input" checked>
+                    <label for="input-check2" class="label">js 복습하기</label>
+                  </div>
+                  <div class="button-group">
+                    <button class="button button-icon button-delete">
+                      <span class="button-icon-text">삭제</span>
+                      <i class="button-icon-symbol" aria-hidden="true">&#10005;</i>
+                    </button>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <!-- todo-data__list//end -->
+            <div class="todo-data__list" style="display: none;">
+              <!-- list no -->
+              <p class="todo-data__nodata">&#128588; 해야 할 일이 없습니다 &#128588;</p>
+              <!-- list ok -->
+            </div>
+            <!-- todo-data__list//end -->
+            <div class="todo-data__count">
+              <div class="todo-data__count-item">
+                <dl class="definition-list">
+                  <dt class="definition-title">Total</dt>
+                  <dd class="definition-description">nn</dd>
+                </dl>
+              </div>
+              <!-- todo-data__count-item//end -->
+              <div class="todo-data__count-item">
+                <dl class="definition-list">
+                  <dt class="definition-title">Completed</dt>
+                  <dd class="definition-description">nn</dd>
+                </dl>
+              </div>
+              <!-- todo-data__count-item//end -->
+              <!-- 
+              <div class="button-group">
+                <button class="button button-icon button-refresh">
+                  <span class="button-icon-text">전체 삭제</span>
+                  <i class="button-icon-symbol" aria-hidden="true">&#8635;</i>
+                </button>
+              </div>
+              -->
+            </div>
+            <!-- todo-data__count//end -->
+            <div class="button-group">
+              <button class="button button-default button-dangerous">전체 삭제</button>
+            </div>
+          </div>
+          <!-- todo-data//end -->
+        </div>
+        <!-- todo-container//end -->
+      </div>
+      <!-- todo//end -->
+    </div>
+    <!-- viewport//end -->
+    <script src="./TodoList.js"></script>
+    <script src="./main.js"></script>
+  </body>
+</html>
