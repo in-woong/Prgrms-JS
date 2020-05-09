@@ -1,0 +1,84 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list-html"></div>
+  <div id="todo-list-css"></div>
+  <div id="todo-list-js"></div>
+  <script>
+  let dataHtml = [
+      {
+        text: "HTML 공부하기",
+        isCompleted: true
+      },
+      {
+        text: "HTML 복습하기",
+        isCompleted: false
+      }
+  ];
+
+  let dataCss = [
+    {
+      text: "CSS 공부하기",
+      isCompleted: false
+    },
+    {
+      text: "CSS 복습하기",
+      isCompleted: true
+    }
+  ];
+
+  let dataJs = [
+    {
+      text: "JS 공부하기",
+      isCompleted: true
+    },
+    {
+      //text: "JS 복습하기",
+      isCompleted: false
+    }
+  ];
+
+  function TodoList(data, element) {
+
+    // type 검사
+    if (typeof data === undefined || typeof data === null || !Array.isArray(data)) {
+      throw new Error("error message")
+    }
+    // 필수 구현
+    this.render = function () {
+     for(let i = 0; i < data.length; i++)  {
+       // isCompleted 
+       if(data[i].isCompleted === true) {
+         document.querySelector(element).innerHTML += `<div>${data[i].text}</div>`;
+       } else {
+         document.querySelector(element).innerHTML += `<div><s>${data[i].text}</s></div>`;
+       }
+     }
+     // 필수 구현
+     /*
+      for(let key in data) {
+        document.querySelector("#todo-list").innerHTML += '<div>' + data[key].text + '</div>';
+      }
+      data.forEach(name => {
+        document.querySelector("#todo-list").innerHTML += `<div>${name.text}</div>`;
+      });
+      */
+    };
+  }
+
+  const todoListHtml = new TodoList(dataHtml, "#todo-list-html");
+  todoListHtml.render();
+  const todoListCss = new TodoList(dataCss, "#todo-list-css");
+  todoListCss.render();
+  const todoListJs = new TodoList(dataJs, "#todo-list-js");
+  todoListJs.render();
+
+  </script>
+</body>
+
+</html>
