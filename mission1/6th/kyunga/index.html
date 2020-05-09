@@ -2,7 +2,7 @@
 
 <head>
 	<title>Mission 1</title>
-	<meta charset="utf-8" />
+	<meta charset="utf-8"/>
 </head>
 
 <body>
@@ -64,21 +64,21 @@
     }
 
     function TodoList(data, targetId = '#todo-list') {
-        if(!(this instanceof TodoList)) {
+        if (!(this instanceof TodoList)) {
             throw new Error('new 키워드가 필요합니다!');
         }
 
         this.data = validateData(data) && data;
 
-        this.render = function() {
+        this.render = function () {
             document.querySelector(`${targetId}`).innerHTML = `<ul>${this.data.reduce((acc, todoItem) => {
                 return `${acc}<li>${todoItem.isCompleted ? `<s>${todoItem.text}</s>` : todoItem.text}</li>`
             }, '')}</ul>`;
         };
 
-        this.setState = function(nextData) {
+        this.setState = function (nextData) {
             this.data = validateData(nextData) && nextData;
-	        this.render();
+            this.render();
         }
     }
 
@@ -92,16 +92,16 @@
         workTodoList.render();
 
         todoList.setState([
-	        {
-	            text: 'ES6 공부하기',
-		        isCompleted: true
-	        },
+            {
+                text: 'ES6 공부하기',
+                isCompleted: true
+            },
             {
                 text: 'ES6 복습하기',
                 isCompleted: false
             },
         ]);
-    } catch(error) {
+    } catch (error) {
         console.log(error);
     }
 </script>
