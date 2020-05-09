@@ -5,7 +5,7 @@ import { todo } from '../utils/todoList.js'
 class App {
   constructor() {
     this.$todoContainer = document.querySelector('#todo-list')
-    this.todoListData = todo
+    this.todoListData = this.loadData()
     this.todoInput = new TodoInput(this, this.addTodoHandler)
     this.todoList = new TodoList(
       this,
@@ -17,10 +17,24 @@ class App {
     this.render()
   }
 
+  loadData() {
+    if (!localStorage.getItem('todo')) {
+      localStorage.setItem('todo', JSON.stringify([]))
+    }
+    return JSON.parse(localStorage.getItem('todo'))
+  }
+
+  updateData(newData) {
+    localStorage.removeItem('todo')
+    localStorage.setItem('todo', JSON.stringify(newData))
+  }
+
   setState(newData) {
     const oldTodoContainer = this.todoList.$todoListContainer
 
-    this.todoListData = newData
+    this.updateData(newData)
+
+    this.todoListData = this.loadData()
     this.todoList = new TodoList(
       this,
       this.todoListData,
