@@ -1,7 +1,6 @@
 import { isEmpty } from './common.js';
 
-function TodoList($target, data) {
-  this.$target = $target;
+function TodoList($target, data, { onUpdate }) {
   this.todoData = data;
 
   if (isEmpty(this.todoData)) {
@@ -15,12 +14,8 @@ function TodoList($target, data) {
     const isRemoveButton = event.target.name === 'remove';
     const isStrike = event.target.nodeName === 'STRIKE';
 
-    if (isStrike) {
-      return false;
-    }
-
     if (isRemoveButton) { // 삭제
-      data.splice(event.target.parentNode.getAttribute('data-id'), 1);
+      this.todoData.splice(event.target.parentNode.getAttribute('data-id'), 1);
     } else { // 완료
       const todoIndex = isStrike ?
       event.target.parentNode.getAttribute('data-id') :
@@ -28,11 +23,12 @@ function TodoList($target, data) {
       this.todoData[todoIndex].isCompleted = !this.todoData[todoIndex].isCompleted;
     }
 
-    this.setState(data);
+    this.setState(this.todoData);
+    onUpdate(this.todoData);
   });
 
   this.render = () => {
-    this.$target.innerHTML = `<ul>${this.todoData.map(({text, isCompleted}, index) => {
+    $target.innerHTML = `<ul>${this.todoData.map(({text, isCompleted}, index) => {
       if (!isEmpty(isCompleted) && text) {
         return `<li data-id="${index}" class="pointer">
             ${isCompleted ? `<strike>(완료) ${text}</strike>` : text }

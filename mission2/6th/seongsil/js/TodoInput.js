@@ -1,13 +1,12 @@
 function TodoInput($target, data, { onAddTodoItem }) {
-  this.$target = $target;
   this.todoData = data;
 
   if (!new.target) {
-    throw new Error('TodoList를 new로 사용해야 합니다.');
+    throw new Error('TodoInput을 new로 사용해야 합니다.');
   }
 
   this.render = () => {
-    this.$target.insertAdjacentHTML('beforebegin', `<section>
+    $target.insertAdjacentHTML('beforebegin', `<section>
       <input type="text" id="todo-input" placeholder="할 일을 입력하세요" />
       <button type="button" id="add-todo-button">추가</button>
     </section>`);
