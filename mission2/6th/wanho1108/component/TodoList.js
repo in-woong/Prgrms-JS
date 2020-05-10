@@ -1,4 +1,4 @@
-export default function TodoList({ onToggle, onRemove }) {
+export default function TodoList({ data, onToggle, onRemove }) {
   if (!(this instanceof TodoList)) {
     throw new Error('new 연산자를 사용해주세요.')
   }
@@ -17,8 +17,10 @@ export default function TodoList({ onToggle, onRemove }) {
 
   this.$element = document.createElement('ul')
 
-  this.render = (data) => {
-    this.$element.innerHTML = data
+  let todos = data
+
+  this.render = () => {
+    this.$element.innerHTML = todos
       .map(({ id, text, isCompleted }) => {
         return `<li data-id="${id}">
             ${isCompleted ? `<s>${text}</s>` : text}
@@ -26,6 +28,11 @@ export default function TodoList({ onToggle, onRemove }) {
           </li>`
       })
       .join('')
+  }
+
+  this.setState = (nextData) => {
+    todos = nextData
+    this.render()
   }
 
   this.$element.addEventListener('click', (e) => {
