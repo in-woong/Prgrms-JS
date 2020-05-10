@@ -1,90 +1,81 @@
-# [미션2] TodoList 컴포넌트 작성 - 필수 구현 사항
+# [미션2] TodoApp 업그레이드하기
 ## 미션
-- `TodoList` 라는 이름을 가진 함수를 작성합니다.
-- 해당 함수는 new 키워드를 이용해 생성되며, 파라메터로 위의 data를 넘겨받습니다. `ex) var todoList = new TodoList(data);`
-- `TodoList` 함수는 파라메터로 넘겨받은 data를 this 키워드를 이용해 함수 내 변수로 저장해둡니다. `this.data = data` 이런 식으로요.
-- `this.render = function{ ... }` 형태로 TodoList 함수 내에 render function을 작성합니다.
-	- 이 함수는 data를 이용해 data 배열을 순회하며 각 배열첨자의 text를 html로 만든 뒤, `todo-list`라는 id를 가진 div에 data의 text가 렌더링되도록 작성합니다. 아래 Tip을 참고하세요.
-- 위에서 작성한 `TodoList` 함수를 `var todoList = new TodoList(data);` 형태로 생성한 후, `todoList.render()` 함수를 호출하여 실행되게 작성합니다.
-
-## 구현 방향 
-data.text 값을 가져와 todo-list에 data를 넣어준다. 
-for문이나 forEach문을 활용하여 값을 넣어 준다. 
-
-## 어려웠던 점 
-data.text의 값을 입력할때 console 상에서는 값이 모두 찍혀있는데, 
-innerHTML을 사용할때 마지막 값만 입력되어서 많이 어려웠다.
-
-## 질문 
-
-# [미션1] 보너스 구현사항 - 다중 컴포넌트 #57
-## 미션
-- <div id="todo-list"></div> 외의 다른 div를 두 개 더 html 코드에 만듭니다.
-- div의 id는 적당한 이름으로 지어주세요.
-
-- var data = [{ ... }] 외에 todo를 담고 있는 array data를 두 개 더 만듭니다.
-- todo의 내용은 본인의 현재 todo를 담아서 넣으면 더 좋겠죠?
-- TodoList 컴포넌트를 총 세 개 만듭니다. 첫 번째 컴포넌트에는 제가 넣어둔 data와 #todo-list에 렌더링하고, 나머지 두 개는 여러분이 추가하신 div + data를 활용해서 만들어주세요.
-
-## 구현 방향 
-todo-list array data 추가로 TodoList 함수에 파라미터 값으로 해당 element 값들을 넣어줬다. 
-
-## 어려웠던 점 
-
-## 질문 
-
-# [미션1] 보너스 구현사항 - isCompleted 처리 #66
-## 미션
-- data의 각 object에 text외에 isCompleted 라는 필드를 추가합니다.
-- 해당 값은 true, 혹은 false 값을 지정해주세요.
-var data = [
-  { 
-    text: '코딩하기',
-    isCompleted: true
-  },
-  {
-    text: '집안 청소하기',
-    isCompleted: false
-  }
-]
-- TodoList 컴포넌트 내에 text 렌더링 시, isCompleted 값이 true인 경우 <s> 태그를 이용해 삭선처리를 해주는 걸 추가합니다.
-
-## 구현 방향 
-if문으로 true / false 구현 
-
-## 어려웠던 점 
-
-## 질문 
-
-# [미션1] TodoList 컴포넌트 작성 - 보너스 구현사항 #50
-## 미션
-- new 키워드로 함수의 인스턴스를 만들 때 올바른 파라메터가 넘어오지 않을 경우 에러 발생하게 하기
-  - null 혹은 undefined가 넘어오면?
-  - array가 아닌 형태로 넘어오면?
-  - 데이터 내용이 이상하면?
-- new 키워드 안 붙이고 함수 실행 시 에러 발생하게 하기
-  - function 형태의 선언인 경우에만 해당
-에러는 우선 에러를 내야하는 상황이 생기는 경우 throw new Error("error message") 문법을 사용해주세요.
+- 기존 미션1 에서 진행했던, index.html 안에 있던 TodoList 함수는 TodoList.js 라는 이름의 스크립트로 분리합니다.
+- new TodoList() 를 실행했던 코드 구문은 index.js 라는 이름의 스크립트로 분리합니다.
+- 미션1을 참고하여 index.html 파일을 생성한 뒤, 위에서 분리한 두 스크립트를 로딩하도록 합니다.
+- 변수 선언은 var 대신 let, const로만 사용해주세요.
+- <input type="text"> input에 할 일을 입력하여 TodoList 컴포넌트의 데이터에 추가하도록 합니다.
+- 별도의 입력 버튼을 만들어서 버튼 클릭 시 추가 되게 하거나, 엔터키 입력으로 처리하거나 하는 건 자유롭게 합니다.
+- TodoList로 그려지는 할 일 목록에 아래의 기능을 추가합니다.
+  - 할 일 텍스트 뒤에 버튼을 하나 추가합니다. 해당 버튼을 클릭하여 할 일이 삭제되게 만듭니다.
+  - 할 일 텍스트를 클릭하면 해당 Todo의 isCompleted 값을 true로 만듭니다.
+- isCompleted가 true인 경우와 false인 경우를 구분할 수 있도록 TodoList의 html string을 작성합니다.
+  - Todo Text 앞에 (완료) 라는 텍스트를 붙이는 방법
+  - 삭선 처리 하는 방법(<strike>태그로 감싸기)
+  - 그외 본인이 생각하기에 좋아보이는 방법을 써봅시다.
 
 ## 구현 방향 
 
 ## 어려웠던 점 
 
 ## 질문 
-!Array.isArray(data)에 대해서는 제대로 구동이 되는데 typeof로 undefined나 null을 체크 해야 할 경우 
-객체의 값 자체가 잘못 됐을 경우 어떤식으로 타입검사를 해야할지 잘 모르겠습니다. 
 
-# [미션1] 보너스 구현사항 - setState #67
+# [미션2] 보너스 구현사항 - input 컴포넌트화 하기 #76
 ## 미션
-- TodoList 함수에 setState(nextData)라는 함수를 만듭니다.
-
-- 이 함수는 해당 컴포넌트 초기 생성 시 넘겼던 data 파라메터를 nextData로 대체하고 컴포넌트를 다시 렌더링합니다.
-- 해당 함수를 추가한 뒤, new TodoList(...) 하는 코드 이후에 해당 컴포넌트의 인스턴스에 todoList.setState(새로운 배열) 형태로 데이터만 다시 넣었을 때 컴포넌트가 다시 렌더링 되도록 작성해주세요.
-
-- setState 함수 호출 후 다시 todoList.render()를 호출하는 것이 아니라, setState 함수 내에서 화면을 다시 렌더링하는 것까지 처리해야 합니다.
+- 할 일을 추가하는 부분을 컴포넌트화 시켜보세요.
+  - 이름은 TodoInput으로 합시다.
+- App 이라는 컴포넌트를 만든 뒤, 이 App이 TodoInput과 TodoList를 관리하는 구조가 되게 만듭니다.
 
 ## 구현 방향 
-질문이 무슨 내용인지 이해가 안가요 ㅠ0ㅠ... 
+
+## 어려웠던 점 
+
+## 질문 
+
+# [미션2] 보너스 구현 사항 - TodoCount 컴포넌트 #77
+## 미션
+- TodoCount 라는 컴포넌트를 만듭니다.
+  - 해당 컴포넌트는 총 Todo의 갯수, 완료처리된 Todo의 갯수를 표시합니다.
+  - TodoList 컴포넌트 아래에 렌더링 되도록 합니다.
+
+## 구현 방향 
+
+## 어려웠던 점 
+
+## 질문 
+
+# [미션2] 보너스 구현사항 - Event delegate #81
+## 미션
+- todo 데이터의 변동에 따라 해당 아이템을 렌더링하는 DOM이 늘어나고, 삭제되면 해당 todo DOM의 각종 이벤트를 매번 다시 걸어야합니다.
+- 이를 Event delegate 기법을 이용하면 쉽게 처리할 수 있습니다.
+
+## 구현 방향 
+
+## 어려웠던 점 
+
+## 질문
+
+# [미션2] 보너스 구현 사항 - 커스텀 이벤트 #90
+## 미션
+- 입력하는 곳 옆에 버튼을 하나 만듭니다. 이 버튼을 누르면 Todo가 모두 삭제됩니다.
+  - 버튼 클릭 시 removeAll 이벤트가 발생하도록 합니다.
+  - App에서 removeAll 이라는 이벤트를 받도록 합니다.
+  - 해당 이벤트를 수신하면 현재 TodoList에 있는 모든 데이터를 삭제합니다.
+
+## 구현 방향 
+
+## 어려웠던 점 
+
+## 질문 
+
+# [미션2] 보너스 구현사항 - localStorage #91
+## 미션
+- todo 데이터를 하드코딩 해놓은 부분을 삭제합니다.
+- localStorage를 활용해 todo data가 변경될 때마다 localStorage에 저장하게 합시다.
+- 프로그램 초기 기동 시 todo는 localStorage에 저장해둔 todo가 있다면 그걸 사용하고, 없으면 빈 배열로 만듭니다.
+- 새로고침 시 입력해둔 todo가 유지해되도록 localStorage를 활용해봅시다.
+
+## 구현 방향 
 
 ## 어려웠던 점 
 
