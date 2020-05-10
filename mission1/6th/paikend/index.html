@@ -42,22 +42,19 @@
             }
         ]
         // 이곳에서 코딩을 시작하세요!
-        function TodoList(data, containerId ){
+        function TodoList(data, $containerId ){
             // validation
             if(!(this instanceof TodoList)) 
                 throw new Error('it is not Instance. must use new keyword.');
             if(!(data) || !Array.isArray(data) || data.length < 1)
                 throw new Error('it is invalid data.');
             this.data = data;
-            this.containerId  = containerId ;
-            this.render = function(){
-            this.data.map(data => {
-                if(data.hasOwnProperty('text'))
-                    (data.isCompleted) ? document.querySelector(this.containerId ).innerHTML += `<div><s>${data.text}</s></div>` : document.querySelector(containerId ).innerHTML += `<div>${data.text}</div>`
-                });
+            this.$containerId  = $containerId ;
+            this.render = () => {
+                document.querySelector(this.$containerId ).innerHTML = this.data.map((todo) => (todo.isCompleted) ?   `<div><s>${todo.text}</s></div>` : `<div>${todo.text}</div>`).join('')
             }
-            this.setState = (nextData) => {
-                document.querySelector(this.containerId ).innerHTML = ""
+            this.setState = function(nextData) {
+                this.data = nextData
                 this.render()
             }    
         }
@@ -69,7 +66,7 @@
         todoList3.render()
         setTimeout(function () {
             todoList3.setState(data2)
-        }, 5000);
+        }, 1000);
     </script>
 </body>
 </html>
