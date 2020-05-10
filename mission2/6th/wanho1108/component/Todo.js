@@ -85,6 +85,10 @@ export default function Todo(element, name) {
     eventBinder()
   }
 
+  const eventBinder = () => {
+    todoInput.$buttonRemoveAllElement.addEventListener('removeAll', onRemoveAll)
+  }
+
   this.setState = (nextData) => {
     dataValidator(nextData)
     this.todos = nextData
@@ -98,10 +102,6 @@ export default function Todo(element, name) {
     } catch (e) {
       return []
     }
-  }
-
-  const eventBinder = () => {
-    todoInput.$buttonRemoveAllElement.addEventListener('removeAll', onRemoveAll)
   }
 
   this.render = () => {
