@@ -46,7 +46,7 @@ class TodoList {
                     throw new Error('data는 text 속성은 string 타입입니다.');
                 }
 
-                if (typeof item.isCompleted !== 'boolean')
+                if (item.isCompleted !== undefined && typeof item.isCompleted !== 'boolean')
                     throw new Error('data는 isCompleted 속성은 boolean 타입입니다.');
             });
         }
