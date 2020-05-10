@@ -1,4 +1,3 @@
-import { isObjectType } from '../helper/validator.js'
 import TodoInput from './TodoInput.js'
 import TodoList from './TodoList.js'
 import TodoCount from './TodoCount.js'
@@ -22,7 +21,6 @@ export default function Todo($element, name) {
 
       if (
         !(
-          isObjectType(item, 'object') &&
           typeof id === 'number' &&
           typeof text === 'string' &&
           typeof isCompleted === 'boolean'
