@@ -4,3 +4,5 @@ function isEmpty(value) {
     typeof value === 'undefined' ||
     (Array.isArray(value) && value.length < 1);
 }
+
+export { isEmpty };

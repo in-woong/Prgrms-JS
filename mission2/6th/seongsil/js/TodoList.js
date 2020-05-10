@@ -1,3 +1,5 @@
+import { isEmpty } from './common.js';
+
 function TodoList($target, data) {
   this.$target = $target;
   this.todoData = data;
@@ -47,3 +49,5 @@ function TodoList($target, data) {
 
   this.render();
 }
+
+export default TodoList;
