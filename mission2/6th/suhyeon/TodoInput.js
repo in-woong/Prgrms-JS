@@ -1,16 +1,16 @@
 class TodoInput {
-    constructor($input, $button, _this, addTodo) {
+    constructor($input, $button, addTodo) {
         this.$input = $input
         this.$button = $button
-        this.init(_this, addTodo)        
+        this.init(addTodo)        
     }
-    init(_this, addTodo) {
+    init(addTodo) {
         this.$button.addEventListener('click', () => { // 할일 추가
             if (!this.$input.value) {
                 alert('할일을 입력하세요.')
                 return
             }
-            addTodo.call(_this, this.$input.value)
+            addTodo(this.$input.value)
             this.$input.value = ''
             this.$input.focus()
         })

@@ -18,29 +18,27 @@ class App {
     init() {
         this.todoList = new TodoList(document.querySelector('#todo-list'), 
             this.data,
-            this,
             this.removeTodo,
             this.updateCompleted
         )
         this.todoInput = new TodoInput(
             document.querySelector('#todo-input'),
             document.querySelector('#todo-add-button'),
-            this,
             this.addTodo
         )        
     }
-    addTodo(text) {
+    addTodo = (text) => {
         this.data.push({
             text: text,
             isCompleted: false
         })
         this.todoList.setState(this.data)
-    }
-    removeTodo(id) {
+    }    
+    removeTodo = (id) => {
         this.data.splice(id, 1)
         this.todoList.setState(this.data)
     }
-    updateCompleted(id) {               
+    updateCompleted = (id) => {               
         this.data[id].isCompleted = !this.data[id].isCompleted        
         this.todoList.setState(this.data)
     }
