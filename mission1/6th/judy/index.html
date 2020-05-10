@@ -10,7 +10,8 @@
   <div id="todo-list-css"></div>
   <div id="todo-list-js"></div>
   <script>
-  let dataHtml = [
+    
+  const dataHtml = [
       {
         text: "HTML 공부하기",
         isCompleted: true
@@ -21,7 +22,7 @@
       }
   ];
 
-  let dataCss = [
+  const dataCss = [
     {
       text: "CSS 공부하기",
       isCompleted: false
@@ -32,7 +33,7 @@
     }
   ];
 
-  let dataJs = [
+  const dataJs = [
     {
       text: "JS 공부하기",
       isCompleted: true
@@ -53,7 +54,7 @@
     this.render = function () {
      for(let i = 0; i < data.length; i++)  {
        // isCompleted 
-       if(data[i].isCompleted === true) {
+       if(data[i].isCompleted) {
          document.querySelector(element).innerHTML += `<div>${data[i].text}</div>`;
        } else {
          document.querySelector(element).innerHTML += `<div><s>${data[i].text}</s></div>`;
