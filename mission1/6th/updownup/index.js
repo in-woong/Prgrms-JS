@@ -54,22 +54,50 @@ function TodoList(element, data) {
     var todoElement = document.querySelector(element)
 
     // 보너스 구현사항 - isCompleted
+    // 1. map을 사용
+    document.querySelector(`#${todoElement.id}`).innerHTML = `<ul>${data.map(datas => 
+        `<li>${datas.isCompleted ? '<s>' + datas.text + '</s>' : datas.text }</li>`).join('')}</ul>`
+
+    /**
+    2. reduce를 사용
     document.querySelector(`#${todoElement.id}`).innerHTML = data
       .reduce(
-        (sum, current) => `${sum.isCompleted ? '<s><p>' + sum.text + '</s></p>' : '<p>' + sum.text + '</p>' }
-                            ${current.isCompleted ? '<s><p>' + current.text + '</s></p>' : '<p>' + current.text + '</p>' }` 
+        (sum, current) => 
+          `${sum.isCompleted ? '<s><p>' + sum.text + '</s></p>' : '<p>' + sum.text + '</p>' }
+                              ${current.isCompleted ? '<s><p>' + current.text + '</s></p>' : '<p>' + current.text + '</p>' }` 
       )
+       */
+    }
+
+    // 보너스 구현사항 - setState 
+    this.setState = function (nextData) {
+      var nextTodo = new TodoList(element, nextData)
+      nextTodo.render()
     }
 }
 
 var todoList = new TodoList('#todo-list', defaultTodo)
 todoList.render()
 
-var todoList = new TodoList('#home-todo-list', homeTodo)
-todoList.render()
+var todoList2 = new TodoList('#home-todo-list', homeTodo)
+todoList2.render()
 
-var todoList = new TodoList('#work-todo-list', workTodo)
-todoList.render()
+var todoList3 = new TodoList('#work-todo-list', workTodo)
+todoList3.render()
+
+setTimeout(function(){
+  todoList3.setState([
+    {
+      text: '책상 정리하기',
+      isCompleted: true
+    },
+    {
+      text: '강아지 산책 시키기',
+      isCompleted: false
+    }
+  ])
+}, 1000)
+
 
 
 
