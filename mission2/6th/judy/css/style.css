@@ -306,6 +306,7 @@ i {
   }
   input[type="checkbox"]:checked + .label {
     color: #999;
+    text-decoration: line-through;
   }
   input[type="checkbox"]:checked + .label::before {
     background:#fcbf1e;

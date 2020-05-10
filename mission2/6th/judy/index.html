@@ -20,7 +20,7 @@
           <div class="todo-input">
             <div class="todo-input__list">
               <div class="input">
-                <input type="text" placeholder="js 복습하기, js 공부하기" class="input-text" id="todo-list" />
+                <input type="text" placeholder="js 복습하기, js 공부하기" class="input-text" id="todo-input" />
               </div>
             </div>
             <!-- todo-input__list//end -->
@@ -28,52 +28,25 @@
           <!-- todo-input//end -->
           <div class="todo-data">
             <div class="todo-data__list">
-              <ul class="todo-data__listbox">
-                <li class="todo-data__list-item">
-                  <div class="checkbox">
-                    <input type="checkbox" class="checkbox-input" id="input-check1">
-                    <label for="input-check1" class="label">js 복습하기</label>
-                  </div>
-                  <div class="button-group">
-                    <button class="button button-icon button-delete">
-                      <span class="button-icon-text">삭제</span>
-                      <i class="button-icon-symbol" aria-hidden="true">&#10005;</i>
-                    </button>
-                  </div>
-                </li>
-                <li class="todo-data__list-item">
-                  <div class="checkbox checkbox-checked">
-                    <input type="checkbox" id="input-check2" class="checkbox-input" checked>
-                    <label for="input-check2" class="label">js 복습하기</label>
-                  </div>
-                  <div class="button-group">
-                    <button class="button button-icon button-delete">
-                      <span class="button-icon-text">삭제</span>
-                      <i class="button-icon-symbol" aria-hidden="true">&#10005;</i>
-                    </button>
-                  </div>
-                </li>
+              <ul class="todo-data__listbox" id="todo-list">
               </ul>
-            </div>
-            <!-- todo-data__list//end -->
-            <div class="todo-data__list" style="display: none;">
-              <!-- list no -->
-              <p class="todo-data__nodata">&#128588; 해야 할 일이 없습니다 &#128588;</p>
-              <!-- list ok -->
+              <!-- nodata : [S] -->
+              <p class="todo-data__nodata" style="display: none;">&#128588; 해야 할 일이 없습니다 &#128588;</p>
+              <!-- nodata : [E] -->
             </div>
             <!-- todo-data__list//end -->
             <div class="todo-data__count">
               <div class="todo-data__count-item">
                 <dl class="definition-list">
                   <dt class="definition-title">Total</dt>
-                  <dd class="definition-description">nn</dd>
+                  <dd class="definition-description" id="todo-total">0</dd>
                 </dl>
               </div>
               <!-- todo-data__count-item//end -->
               <div class="todo-data__count-item">
                 <dl class="definition-list">
                   <dt class="definition-title">Completed</dt>
-                  <dd class="definition-description">nn</dd>
+                  <dd class="definition-description" id="todo-completed">0</dd>
                 </dl>
               </div>
               <!-- todo-data__count-item//end -->
@@ -88,7 +61,7 @@
             </div>
             <!-- todo-data__count//end -->
             <div class="button-group">
-              <button class="button button-default button-dangerous">전체 삭제</button>
+              <button class="button button-default button-dangerous" id="todo-all-remove">전체 삭제</button>
             </div>
           </div>
           <!-- todo-data//end -->
@@ -98,7 +71,12 @@
       <!-- todo//end -->
     </div>
     <!-- viewport//end -->
+    <!-- 
     <script src="./js/TodoList.js"></script>
+    <script src="./js/TodoInput.js"></script>
+    <script src="./js/TodoCount.js"></script>
+    <script src="./js/App.js"></script>
+    -->
     <script src="./js/main.js"></script>
   </body>
 </html>
