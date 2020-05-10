@@ -10,7 +10,7 @@
     <div id="todo-list3"></div>
     <script>
       // Data
-      var data = [
+      const data = [
         {
           text: 'JS 공부하기',
           isCompleted: true,
@@ -20,7 +20,7 @@
           isCompleted: false,
         },
       ]
-      var data2 = [
+      const data2 = [
         {
           text: 'JS 공부하기 2',
           isCompleted: true,
@@ -30,7 +30,7 @@
           isCompleted: true,
         },
       ]
-      var data3 = [
+      const data3 = [
         {
           text: 'JS 공부하기 3',
           isCompleted: false,
@@ -43,111 +43,94 @@
 
       // 이곳에서 코딩을 시작하세요!
 
-      // Validation Util
-      function validate(data, instanceThis) {
-        function isValidDataContent(data) {
-          if (data.length !== 0) {
-            return data.every((todo) => {
-              const { text } = todo
-              return text
-            })
-          } else {
-            return false
-          }
+      // Validation
+
+      function validateData(data) {
+        function isValidDataFormat(data) {
+          return data.length === 0
+            ? false
+            : data.every(
+                (todo) =>
+                  todo.hasOwnProperty('text') && typeof todo.text === 'string'
+              )
         }
 
-        let errorMessage = ''
-        if (instanceThis === window) {
-          // validate new operator
-          errorMessage += ', new operator is required'
-        } else if (data == null) {
-          // validate null,undefined
-          errorMessage += ', data is not defined'
-        } else if (!Array.isArray(data)) {
-          // validate array
-          errorMessage += ', only array type data is permitted'
-        } else if (!isValidDataContent(data)) {
-          // validate data content
-          errorMessage += ', data is not valid'
+        if (data === null) {
+          throw new Error('data is null')
+        }
+        if (data === undefined) {
+          throw new Error('data is undefined')
         }
 
-        if (errorMessage) {
-          throw new Error(errorMessage.substring(2))
+        if (!Array.isArray(data)) {
+          throw new Error('only array type data is permitted')
         }
+
+        if (!isValidDataFormat(data)) {
+          throw new Error('data is not valid')
+        }
+
+        return data
       }
 
       //Todo List
 
       // Constructor function 사용
       function TodoList(data, parentId) {
-        validate(data, this)
+        if (!new.target) throw 'TodoList() must be called with new'
 
-        this.data = data
+        this.data = validateData(data)
 
         this.setState = (nextData) => {
-          this.data = nextData
+          this.data = validateData(nextData)
           this.render()
         }
 
         this.render = () => {
           const todoList = document.querySelector(parentId)
-          todoList.innerHTML = ''
-
-          const todos = document.createElement('ul')
-          todos.setAttribute('id', 'todos')
-          let str = ''
-
-          this.data.forEach((todo, i) => {
-            if (todo.isCompleted) {
-              str += `<li><s>${todo.text}</s></li>`
-            } else {
-              str += `<li>${todo.text}</li>`
-            }
-          })
-          todos.innerHTML = str
-          todoList.append(todos)
+          const todoListInnerHTML = `<ul>${this.data
+            .map((todo, i) =>
+              todo.isCompleted
+                ? `<li><s>${todo.text}</s></li>`
+                : `<li>${todo.text}</li>`
+            )
+            .join('')}</ul>`
+          todoList.innerHTML = todoListInnerHTML
         }
       }
 
       // class 사용
       class TodoListClass {
         constructor(data, parentId) {
-          validate(data, this)
-          this.data = data
+          this.data = validateData(data)
           this.parentId = parentId
         }
         setState(nextData) {
-          this.data = nextData
+          this.data = validateData(nextData)
           this.render()
         }
         render() {
           const todoList = document.querySelector(this.parentId)
-          todoList.innerHTML = ''
-          const todos = document.createElement('ul')
-          todos.setAttribute('id', 'todos')
-          let str = ''
-
-          this.data.forEach((todo, i) => {
-            if (todo.isCompleted) {
-              str += `<li><s>${todo.text}</s></li>`
-            } else {
-              str += `<li>${todo.text}</li>`
-            }
-          })
-          todos.innerHTML = str
-          todoList.append(todos)
+          const todoListInnerHTML = `<ul>${this.data
+            .map((todo, i) =>
+              todo.isCompleted
+                ? `<li><s>${todo.text}</s></li>`
+                : `<li>${todo.text}</li>`
+            )
+            .join('')}</ul>`
+          todoList.innerHTML = todoListInnerHTML
         }
       }
 
-      var todoList = new TodoList(data, '#todo-list')
+      const todoList = new TodoList(data, '#todo-list')
       todoList.render()
       data.push({ text: '새로운 할 일 ', isCompleted: false })
       todoList.setState(data)
 
-      var todoList2 = new TodoList(data2, '#todo-list2')
+      const todoList2 = new TodoList(data2, '#todo-list2')
       todoList2.render()
 
-      var todoList3 = new TodoList(data3, '#todo-list3')
+      const todoList3 = new TodoListClass(data3, '#todo-list3')
       todoList3.render()
     </script>
   </body>
