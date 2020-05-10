@@ -87,11 +87,13 @@
       function isNotExistTextProperty(value){
         let result = false
         value.forEach(element => {
+          console.log(element)
           if(!('text' in element)){
             result = true
             return
           }
         });
+        console.log(result)
         return result
       }
 
@@ -126,23 +128,23 @@
         return true
       }
 
-      function todoListIsCompleted(isCompleted, todoText){
-        return (isCompleted) ? `<div><s>${todoText}</s></div>` : `<div>${todoText}</div>`
-      }
-      
       function TodoList(selectorId, todo){
         this.selectorId = selectorId
         this.todo = todo
-        this.render = function(){
+
+        this.getTodoListText = (isCompleted, todoText) => {
+          return (isCompleted) ? `<div><s>${todoText}</s></div>` : `<div>${todoText}</div>`
+        }
+
+        this.createTodoInnerHtml = () => {
           let todoText = this.todo.map((element) => {
-            return todoListIsCompleted(element.isCompleted, element.text)
+            return this.getTodoListText(element.isCompleted, element.text)
           }).join('')
-          // let todoText = this.todo.reduce((preElement, element) => {
-          //   return (typeof preElement.isCompleted === 'boolean') 
-          //   ? todoListIsCompleted(preElement.isCompleted, preElement.text) + todoListIsCompleted(element.isCompleted, element.text) 
-          //   : preElement + todoListIsCompleted(element.isCompleted, element.text) 
-          // })
           document.querySelector(this.selectorId).innerHTML = todoText
+        }
+
+        this.render = function(){
+          isCorrectTodoList(this) ? this.createTodoInnerHtml() : ""
         }
 
         this.setState = function(nextData){
@@ -153,7 +155,8 @@
 
       function showTodoList(selectorId, todo){
         const todoList = new TodoList(selectorId, todo)
-        isCorrectTodoList(todoList) ? todoList.render() : ''
+        todoList.render()
+        // isCorrectTodoList(todoList) ? todoList.render() : ''
         return todoList
       }
 
