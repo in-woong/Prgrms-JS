@@ -7,20 +7,10 @@ function TodoCount(todos, $todoCount) {
   this.$todoCount = $todoCount
 
   const calculateTodoCount = () => {
-    const newTodos = [...this.todos]
-
-    let totalTodoCount = 0
-    let completedTodoCount = 0
-
-    if (newTodos.length > 0) {
-      totalTodoCount = newTodos.length
-      completedTodoCount = newTodos.reduce(
-        (acc, todo) => (acc += todo.isCompleted == true ? 1 : 0),
-        0
-      )
-    }
-    this.totalTodoCount = totalTodoCount
-    this.completedTodoCount = completedTodoCount
+    this.totalTodoCount = this.todos.length
+    this.completedTodoCount = this.todos.filter(
+      (todo) => todo.isCompleted
+    ).length
   }
 
   this.setState = function (todos) {

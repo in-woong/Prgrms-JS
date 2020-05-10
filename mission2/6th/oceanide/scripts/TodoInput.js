@@ -1,4 +1,4 @@
-function TodoInput($todoInput, addNewTodo) {
+function TodoInput($todoInput, onAddNewTodo) {
   if (!(this instanceof TodoInput)) {
     throw new Error('TodoInput must be called with new')
   }
@@ -8,7 +8,7 @@ function TodoInput($todoInput, addNewTodo) {
   this.init = function () {
     this.$todoInput.addEventListener('keypress', (e) => {
       if (e.key === 'Enter' && e.target.value) {
-        addNewTodo(e.target.value)
+        onAddNewTodo(e.target.value)
         e.target.value = ''
       }
     })

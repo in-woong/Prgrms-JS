@@ -1,4 +1,4 @@
-function TodoList(data, $todoList, toggleTodo, removeTodo) {
+function TodoList(data, $todoList, onToggleTodo, onRemoveTodo) {
   if (!(this instanceof TodoList)) {
     throw new Error('TodoList must be called with new')
   }
@@ -25,17 +25,17 @@ function TodoList(data, $todoList, toggleTodo, removeTodo) {
       const findedElem = hasClass(elem, 'todo')
       const id = findedElem.getAttribute('todo-id')
 
-      toggleTodo(parseInt(id))
+      onToggleTodo(parseInt(id))
     } else if (elem.classList.contains('todo-remove')) {
       const findedElem = hasClass(elem, 'todo')
       const id = findedElem.getAttribute('todo-id')
 
-      removeTodo(parseInt(id))
+      onRemoveTodo(parseInt(id))
     }
   })
 
-  const getTodosText = () => {
-    return this.todos
+  const getTodosText = () =>
+    this.todos
       .map((todo, index) =>
         todo.isCompleted
           ? `<li class="todo" todo-id="${index}">
@@ -48,7 +48,6 @@ function TodoList(data, $todoList, toggleTodo, removeTodo) {
              </li>`
       )
       .join('')
-  }
 
   this.render = function () {
     if (!$todoList) {
