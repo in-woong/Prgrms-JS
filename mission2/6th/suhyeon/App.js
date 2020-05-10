@@ -16,16 +16,21 @@ class App {
         this.init()        
     }
     init() {
-        this.todoList = new TodoList(document.querySelector('#todo-list'), 
-            this.data,
-            this.removeTodo,
-            this.updateCompleted
+        this.todoList = new TodoList(
+            document.querySelector('#todo-list'),
+            this.data
         )
         this.todoInput = new TodoInput(
             document.querySelector('#todo-input'),
             document.querySelector('#todo-add-button'),
             this.addTodo
-        )        
+        )   
+        this.todoList.$list.addEventListener('removeTodo', (e) => {
+            this.removeTodo(e.detail.id)
+        })   
+        this.todoList.$list.addEventListener('updateCompleted', (e) => {
+            this.updateCompleted(e.detail.id)
+        })
     }
     addTodo = (text) => {
         this.data.push({
