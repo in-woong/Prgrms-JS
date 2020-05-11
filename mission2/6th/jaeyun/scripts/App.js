@@ -6,9 +6,8 @@ class App {
   constructor() {
     this.$todoContainer = document.querySelector('#todo-list')
     this.todoListData = this.loadData()
-    this.todoInput = new TodoInput(this, this.addTodoHandler)
+    this.todoInput = new TodoInput(this.addTodoHandler)
     this.todoList = new TodoList(
-      this,
       this.todoListData,
       this.completeTodoHandler,
       this.deleteTodoHandler
@@ -48,12 +47,12 @@ class App {
     )
   }
 
-  addTodoHandler(data) {
+  addTodoHandler = (data) => {
     const newTodo = [...this.todoListData, { text: data, isCompleted: false }]
     this.setState(newTodo)
   }
 
-  completeTodoHandler(idx) {
+  completeTodoHandler = (idx) => {
     const changedTodo = this.todoListData
       .filter((cur, index) => index === idx)
       .map(({ text, isCompleted }) => ({
@@ -70,7 +69,7 @@ class App {
     this.setState(newTodo)
   }
 
-  deleteTodoHandler(idx) {
+  deleteTodoHandler = (idx) => {
     const newTodo = [
       ...this.todoListData.slice(0, idx),
       ...this.todoListData.slice(idx + 1),

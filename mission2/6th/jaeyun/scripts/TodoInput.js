@@ -1,14 +1,14 @@
 import { createDom } from '../utils/utilFunctions.js'
 
 class TodoInput {
-  constructor(_this, inputHandler) {
+  constructor(inputHandler) {
     this.render()
 
     this.$addButton.addEventListener('click', () => {
       const $input = this.$todoInput
 
       if ($input.value) {
-        inputHandler.call(_this, $input.value)
+        inputHandler($input.value)
         $input.focus()
         $input.value = ''
       }

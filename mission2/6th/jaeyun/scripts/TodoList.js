@@ -2,17 +2,17 @@ import { createDom } from '../utils/utilFunctions.js'
 import TodoCount from './TodoCount.js'
 
 class TodoList {
-  constructor(_this, data, completeHandler, deleteHandler) {
+  constructor(data, completeHandler, deleteHandler) {
     this.data = data
     this.todoCount = new TodoCount(data)
     this.render()
 
     this.$todoListContainer.addEventListener('click', function (e) {
       if (e.target.nodeName === 'SPAN') {
-        completeHandler.call(_this, parseInt(e.target.id))
+        completeHandler(parseInt(e.target.id))
       } else if (e.target.nodeName === 'BUTTON') {
         const [_, idx] = e.target.parentNode.id.split('-')
-        deleteHandler.call(_this, parseInt(idx))
+        deleteHandler(parseInt(idx))
       }
     })
   }
