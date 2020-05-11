@@ -46,6 +46,9 @@
 
 
     function TodoList(data, elementId) {
+      this.data = data;
+      this.elementId = elementId;
+
       if(!(this instanceof TodoList)) {
         throw new Error("TodoList should be instantiated with new keyword");
       }
@@ -58,14 +61,11 @@
         throw new Error("TodoList is null or undefined");
       }
 
-      data.forEach((todo) => {
+      this.data.forEach((todo) => {
         if (typeof todo.text !== 'string') {
           throw new Error("TodoList should be string");
         }
       })
-
-      this.data = data;
-      this.elementId = elementId;
 
       this.render = () => {
         document.querySelector(`#${this.elementId}`).innerHTML = this.data.
@@ -74,6 +74,11 @@
               ? `<li><s>${todo.text}</s></li>`
               : `<li>${todo.text}</li>`
             ).join('')
+      }
+
+      this.setState = (nextData) => {
+        this.data = nextData
+        this.render()
       }
     }
 
@@ -85,6 +90,13 @@
 
     const tomorrowTodoList = new TodoList(tomorrowData, 'tomorrow-todo-list');
     tomorrowTodoList.render();
+
+    todoList.setState([
+      {
+        text: '할 일',
+        isCompleted: false
+      }
+    ]);
 
   </script>
 </body>
