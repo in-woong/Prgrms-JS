@@ -80,21 +80,12 @@
         not_exist_test_property : '\"text\" property does not exist in this data',
       }
       
-      function isUndefinedOrNull(value){
-        return value === null || value === undefined
+      function isUndefinedOrNull(todo){
+        return todo === null || todo === undefined
       }
 
-      function isNotExistTextProperty(value){
-        let result = false
-        value.forEach(element => {
-          console.log(element)
-          if(!('text' in element)){
-            result = true
-            return
-          }
-        });
-        console.log(result)
-        return result
+      function isNotExistTextProperty(todo){
+        return todo.some(element => !('text' in element))
       }
 
       function checkTodoListDataType(todoList){
@@ -132,13 +123,13 @@
         this.selectorId = selectorId
         this.todo = todo
 
-        this.getTodoListText = (isCompleted, todoText) => {
+        this.getTodoListHtmlText = (isCompleted, todoText) => {
           return (isCompleted) ? `<div><s>${todoText}</s></div>` : `<div>${todoText}</div>`
         }
 
         this.createTodoInnerHtml = () => {
           let todoText = this.todo.map((element) => {
-            return this.getTodoListText(element.isCompleted, element.text)
+            return this.getTodoListHtmlText(element.isCompleted, element.text)
           }).join('')
           document.querySelector(this.selectorId).innerHTML = todoText
         }
@@ -156,7 +147,6 @@
       function showTodoList(selectorId, todo){
         const todoList = new TodoList(selectorId, todo)
         todoList.render()
-        // isCorrectTodoList(todoList) ? todoList.render() : ''
         return todoList
       }
 
