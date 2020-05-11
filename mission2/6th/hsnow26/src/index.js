@@ -11,10 +11,7 @@ const data = [
   }
 ]
 
-const standardTodoList = new TodoList('#todo-list', data)
+const todoList = document.querySelector('#todo-list')
 
-document.querySelector("#todo-add").addEventListener('click', function(){
-  standardTodoList.addTodo(document.querySelector("#todo-input"))
-})
+const standardTodoList = new TodoList(todoList, data)
 
-//  default App

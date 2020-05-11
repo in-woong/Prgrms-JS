@@ -39,6 +39,10 @@ export function isCorrectTodoList(todoList, TodoList){
   return true
 }
 
+export function isTodoTextEmpty(text){
+  return text.replace(/\s/gi, "") === ""
+}
+
 export function getCreateTodo(text){
   return {text: text, isCompleted: false}
 }
