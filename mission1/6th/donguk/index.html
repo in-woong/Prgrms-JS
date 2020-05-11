@@ -61,7 +61,7 @@
     return `<li>${isCompleted ? `<s>${text}</s>` : text}</li>`
   }
 
-  function validateObjKey(objArr) {
+  function isValidElementType(objArr) {
     for (const element of objArr) {
       const keys = Object.keys(element)
       const validKeys = new Set(['text', 'isCompleted'])
@@ -81,7 +81,7 @@
     if (data.length === 0) throw new Error('arguments is empty')
     if (!Array.isArray(data)) throw new Error('data must be Array')
     if (!data.length) throw new Error('data array is empty')
-    if (data.some(v => !v) || !validateObjKey(data)) {
+    if (data.some(element => !element) || !isValidElementType(data)) {
       throw new Error('Type Error')
     }
   }
