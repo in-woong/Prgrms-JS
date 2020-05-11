@@ -35,7 +35,6 @@ class App {
 
     this.todoListData = this.loadData()
     this.todoList = new TodoList(
-      this,
       this.todoListData,
       this.completeTodoHandler,
       this.deleteTodoHandler
@@ -78,11 +77,7 @@ class App {
   }
 
   render() {
-    this.$todoContainer.append(
-      this.todoInput.$inputContainer,
-      this.todoList.$todoListContainer
-    )
-    this.todoInput.$todoInput.focus()
+    this.$todoContainer.append(this.todoList.$todoListContainer)
   }
 }
 
