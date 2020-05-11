@@ -5,12 +5,19 @@
     <title>TodoList</title>
 </head>
 <body>
-<h1>Todo1</h1>
-<div id="todo-list"></div>
-<h1>Todo2</h1>
-<div id="todo-list2"></div>
-<h1>Todo3</h1>
-<div id="todo-list3"></div>
+<!--<h1>VanilJS 1주차</h1>-->
+<div>
+    <h2>Todo1</h2>
+    <div id="todo-list"></div>
+</div>
+<div>
+    <h2>Todo2</h2>
+    <div id="todo-list2"></div>
+</div>
+<div>
+    <h2>Todo3</h2>
+    <div id="todo-list3"></div>
+</div>
 <script>
   const data = [
     {
@@ -45,38 +52,56 @@
     },
     {
       text: 'JS 이벤트 공부하기',
-      isCompleted: false,
+      isCompleted: false
     },
   ]
 
-  function convertToLiNode(data) {
+  function convertLiToHTMLString(data) {
     const { text, isCompleted } = data
     return `<li>${isCompleted ? `<s>${text}</s>` : text}</li>`
   }
-  function validate(data){ // data array validate
-    if (!data) throw new Error('arguments is empty')
+
+  function validateObjKey(objArr) {
+    for (const element of objArr) {
+      const keys = Object.keys(element)
+      const validKeys = new Set(['text', 'isCompleted'])
+      for (const key of keys) {
+        if (!validKeys.has(key)) {
+          return false
+        } else {
+          validKeys.delete(key)
+        }
+      }
+      if (validKeys.size !== 0) return false
+    }
+    return true
+  }
+
+  function validate(data) { // data array validate
+    if (data.length === 0) throw new Error('arguments is empty')
     if (!Array.isArray(data)) throw new Error('data must be Array')
     if (!data.length) throw new Error('data array is empty')
-    if (data.some(v => !v) || !data.every(v => Object.keys(v).length === 2)) throw new Error('Type Error')
+    if (data.some(v => !v) || !validateObjKey(data)) {
+      throw new Error('Type Error')
+    }
   }
-  function TodoList(data, target) {
+
+  function TodoList(data, selector) {
     if (!(this instanceof arguments.callee)) throw new Error('Use new keyword')
-    if (!target) throw new Error('target is empty')
-    validate(data, target) // data validate
+    if (!document.querySelector(selector)) throw new Error('Can\'t find target in DOM')
+    if (!selector) throw new Error('target is empty')
+    validate(data) // data validate
 
     this.data = data
-    this.selector = document.querySelector(target)
+    this.target = document.querySelector(selector)
     this.render = function () {
-      this.selector.innerHTML = `<ul>${this.data.map(v => convertToLiNode(v)).join('')}</ul>`
+      this.target.innerHTML = `<ul>${this.data.map(v => convertLiToHTMLString(v))
+        .join('')}</ul>`
     }
     this.setState = function (nextData) {
-      try{
-        this.data = nextData
-        validate(nextData)
-        this.render()
-      }catch(e){
-        throw e
-      }
+      validate(nextData)
+      this.data = nextData
+      this.render()
     }
   }
 
@@ -88,8 +113,14 @@
     const todoList3 = new TodoList(data3, '#todo-list3')
     todoList3.render()
     todoList3.setState([
-      {text: '이벤트 버블링 공부하기', isCompleted: false},
-      {text: '재미있는 알고리즘 공부하기', isCompleted: true}
+      {
+        text: '이벤트 버블링 공부하기',
+        isCompleted: false,
+      },
+      {
+        text: '재미있는 알고리즘 공부하기',
+        isCompleted: true,
+      },
     ])
   } catch (e) {
     console.error(e)
