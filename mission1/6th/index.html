@@ -142,17 +142,13 @@
           this.todo = nextData
           this.render()
         }
+
+        this.render()
       }
 
-      function showTodoList(selectorId, todo){
-        const todoList = new TodoList(selectorId, todo)
-        todoList.render()
-        return todoList
-      }
-
-      const standardTodoList = showTodoList('#todo-list', data)
-      const weekTodoList = showTodoList('#todo-list-in-week', studyInWeek)
-      const weekendTodoList = showTodoList('#todo-list-in-weekend', studyInWeekend)
+      const standardTodoList = new TodoList('#todo-list', data)
+      const weekTodoList = new TodoList('#todo-list-in-week', studyInWeek)
+      const weekendTodoList = new TodoList('#todo-list-in-weekend', studyInWeekend)
 
       //setState 테스트
       standardTodoList.setState(testTodo)
