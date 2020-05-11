@@ -10,7 +10,7 @@ function TodoList($target, data, { onUpdate }) {
     throw new Error('TodoList를 new로 사용해야 합니다.');
   }
 
-  $target.addEventListener('click', (event) => {
+  $target.addEventListener('click', event => {
     const isRemoveButton = event.target.name === 'remove';
     const isStrike = event.target.nodeName === 'STRIKE';
 
@@ -38,7 +38,7 @@ function TodoList($target, data, { onUpdate }) {
     }).join('')}</ul>`;
   };
 
-  this.setState = (nextData) => {
+  this.setState = nextData => {
     this.todoData = nextData;
     this.render();
   };

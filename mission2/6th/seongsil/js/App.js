@@ -27,6 +27,7 @@ const App = function() {
       updateState(newTodoData);
     }
   });
+
   this.todoInput = new TodoInput($target, this.todoData, {
     onAddTodoItem: (newTodoText) => {
       const newData = this.todoData;
@@ -37,7 +38,13 @@ const App = function() {
       updateState(newData);
     }
   });
+
   this.todoCount = new TodoCount($target, this.todoData);
+
+  $target.addEventListener('todoRemoveAll', (event) =>{
+    this.todoData = [];
+    updateState(this.todoData);
+  });
 };
 
 export default App;

@@ -5,10 +5,10 @@ function TodoCount($target, data) {
     throw new Error('TodoCount를 new로 사용해야 합니다.');
   }
 
-  const getTodoListCount = (todoData) => {
+  const getTodoListCount = todoData => {
     return todoData.length;
   }
-  const getCompletedTodoListCount = (todoData) => {
+  const getCompletedTodoListCount = todoData => {
     return todoData.filter(todo => todo.isCompleted).length;
   }
 
@@ -22,7 +22,7 @@ function TodoCount($target, data) {
     $todoCountGroup.innerHTML = `${getCompletedTodoListCount(this.todoData)} / ${getTodoListCount(this.todoData)}`;
   }
 
-  this.setState = (newData) => {
+  this.setState = newData => {
     this.todoData = newData;
     this.render();
   }
