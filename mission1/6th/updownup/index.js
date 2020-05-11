@@ -39,6 +39,7 @@ function TodoList(element, data) {
 
   // 보너스 구현 사항 2
   this.checkParams = function (data) {
+    
     if (!data) {
       throw new Error('data value is not available')
     }
@@ -71,8 +72,8 @@ function TodoList(element, data) {
 
     // 보너스 구현사항 - setState 
     this.setState = function (nextData) {
-      var nextTodo = new TodoList(element, nextData)
-      nextTodo.render()
+      data = nextData
+      this.render()
     }
 }
 
