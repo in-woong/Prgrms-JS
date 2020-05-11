@@ -1,22 +1,11 @@
 // new App();
 
 function TodoList($target, data) {
-  if (!this instanceof TodoList) {
-    throw new Error("instance type error")
-  }
 
   this.$target = $target
   this.data = data
 
-
-  this.validator = (todos) => {
-    if (todos === "undefined" || todos === null || todos === '') {
-      throw new Error("data type error")
-    }
-  }
-
   this.render = (data) => {
-    this.validator(data);
     this.$target.innerHTML =
       this.data
         .map(
@@ -48,9 +37,11 @@ function TodoList($target, data) {
 }
 
 
+const ENTER_KEY = 13
+
 function TodoInput($target, { onAddTodo }) {
   $target.addEventListener('keydown', e => {
-    if (e.keyCode === 13) {
+    if (e.keyCode === ENTER_KEY) {
       if (e.target.value === 'undefined' || e.target.value === null || e.target.value === '') {
         alert("해야 할 일을 입력해주세요.");
       } else {

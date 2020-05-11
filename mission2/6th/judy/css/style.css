@@ -376,6 +376,7 @@ i {
     font-size: 0;
     padding: 20px 0;
     background: #f5f5f5;
+    border-radius: 4px;
   }
 
   .todo-data__count-item {
