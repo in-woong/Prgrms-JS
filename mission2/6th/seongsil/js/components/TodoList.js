@@ -1,11 +1,8 @@
-import { isEmpty } from './common.js';
+import { isEmpty } from '../utils/common.js';
 
 function TodoList($target, data, { onUpdate }) {
   this.todoData = data;
 
-  if (isEmpty(this.todoData)) {
-    throw new Error('데이터가 올바르지 않습니다.');
-  }
   if (!new.target) {
     throw new Error('TodoList를 new로 사용해야 합니다.');
   }

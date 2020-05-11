@@ -1,18 +1,10 @@
 import TodoList from './TodoList.js';
 import TodoInput from './TodoInput.js';
 import TodoCount from './TodoCount.js';
+import { fetchTodoList, postTodo } from '../api/index.js';
 
 const App = function() {
-  this.todoData = [
-    {
-      text: 'JS 공부하기',
-      isCompleted: true,
-    },
-    {
-      text: 'JS 복습하기',
-      isCompleted: false,
-    },
-  ];
+  this.todoData = fetchTodoList() || [];
 
   const updateState = (newData) => {
     this.todoData = newData;
@@ -24,6 +16,7 @@ const App = function() {
 
   this.todoList = new TodoList($target, this.todoData, {
     onUpdate: (newTodoData) => {
+      postTodo(newTodoData);
       updateState(newTodoData);
     }
   });
@@ -35,6 +28,7 @@ const App = function() {
         text: newTodoText,
         isCompleted: false,
       });
+      postTodo(newData);
       updateState(newData);
     }
   });
@@ -43,6 +37,7 @@ const App = function() {
 
   $target.addEventListener('todoRemoveAll', (event) =>{
     this.todoData = [];
+    postTodo(this.todoData);
     updateState(this.todoData);
   });
 };
