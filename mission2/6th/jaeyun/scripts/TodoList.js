@@ -8,6 +8,7 @@ class TodoList {
     this.render()
 
     this.$todoListContainer.addEventListener('click', function (e) {
+      console.log(e.target)
       if (e.target.nodeName === 'SPAN') {
         completeHandler(parseInt(e.target.id))
       } else if (e.target.nodeName === 'BUTTON') {
