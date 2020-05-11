@@ -70,10 +70,14 @@
 
         this.data = validateData(data) && data;
 
-        this.render = function () {
-            document.querySelector(`${targetId}`).innerHTML = `<ul>${this.data.reduce((acc, todoItem) => {
-                return `${acc}<li>${todoItem.isCompleted ? `<s>${todoItem.text}</s>` : todoItem.text}</li>`
-            }, '')}</ul>`;
+        this.getTodoHtml = function() {
+            return this.data.reduce((acc, todoItem) => (
+                `${acc}<li>${todoItem.isCompleted ? `<s>${todoItem.text}</s>` : todoItem.text}</li>`
+            ), '');
+        };
+
+        this.render = function() {
+            document.querySelector(`${targetId}`).innerHTML = `<ul>${this.getTodoHtml()}</ul>`
         };
 
         this.setState = function (nextData) {
