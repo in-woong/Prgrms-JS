@@ -24,7 +24,8 @@ function TodoInput($target, data, { onAddTodoItem }) {
     }
 
     $todoInput.addEventListener('keypress', event => {
-      if (event.keyCode === 13) {
+      const ENTER_KEY_CODE = 13;
+      if (event.keyCode === ENTER_KEY_CODE) {
         // 엔터키 입력으로 처리
         if (!$todoInput.value) {
           alert('할 일을 입력해주세요.');
