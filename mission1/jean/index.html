@@ -13,28 +13,34 @@
   <script>
     const data = [
       {
-        text: 'JS 공부하기'
+        text: 'JS 공부하기',
+        isCompleted: true
       },
       {
-        text: 'JS 복습하기'
+        text: 'JS 복습하기',
+        isCompleted: false
       }
     ]
 
     const todayData = [
       {
-        text: 'JS 과제'
+        text: 'JS 과제',
+        isCompleted: true
       },
       {
-        text: '한국학 과제'
+        text: '한국학 과제',
+        isCompleted: true
       }
     ]
 
     const tomorrowData = [
       {
-        text: '코테 공부'
+        text: '코테 공부',
+        isCompleted: true
       },
       {
-        text: '자소서'
+        text: '자소서',
+        isCompleted: true
       }
     ]
 
@@ -63,7 +69,11 @@
 
       this.render = () => {
         document.querySelector(`#${this.elementId}`).innerHTML = this.data.
-          map(todo => `<li>${todo.text}</li>`).join('')
+          map(
+            todo => todo.isCompleted
+              ? `<li><s>${todo.text}</s></li>`
+              : `<li>${todo.text}</li>`
+            ).join('')
       }
     }
 
