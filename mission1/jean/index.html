@@ -11,7 +11,7 @@
   <div id="tomorrow-todo-list"></div>
 
   <script>
-    var data = [
+    const data = [
       {
         text: 'JS 공부하기'
       },
@@ -20,7 +20,7 @@
       }
     ]
 
-    var todayData = [
+    const todayData = [
       {
         text: 'JS 과제'
       },
@@ -29,7 +29,7 @@
       }
     ]
 
-    var tomorrowData = [
+    const tomorrowData = [
       {
         text: '코테 공부'
       },
@@ -41,35 +41,39 @@
 
     function TodoList(data, elementId) {
       if(!(this instanceof TodoList)) {
-        throw new Error("Error");
+        throw new Error("TodoList should be instantiated with new keyword");
+      }
+
+      if(!Array.isArray(data)) {
+        throw new Error("TodoList should be array");
       }
 
       if(typeof data !== "object" || !data) {
-        throw new Error("Error: Parameter is invalid");
+        throw new Error("TodoList is null or undefined");
       }
+
+      data.forEach((todo) => {
+        if (typeof todo.text !== 'string') {
+          throw new Error("TodoList should be string");
+        }
+      })
 
       this.data = data;
       this.elementId = elementId;
 
       this.render = () => {
-        const todoElement = document.querySelector(elementId)
-
-        let todos = ''
-        this.data.forEach((todo) => {
-          todos += `<li>${todo.text}</li>`
-        });
-
-        todoElement.innerHTML = todos
+        document.querySelector(`#${this.elementId}`).innerHTML = this.data.
+          map(todo => `<li>${todo.text}</li>`).join('')
       }
     }
 
-    var todoList = new TodoList(data, '#todo-list');
+    const todoList = new TodoList(data, 'todo-list');
     todoList.render();
 
-    var todayTodoList = new TodoList(todayData, '#today-todo-list');
+    const todayTodoList = new TodoList(todayData, 'today-todo-list');
     todayTodoList.render();
 
-    var tomorrowTodoList = new TodoList(tomorrowData, '#tomorrow-todo-list');
+    const tomorrowTodoList = new TodoList(tomorrowData, 'tomorrow-todo-list');
     tomorrowTodoList.render();
 
   </script>
