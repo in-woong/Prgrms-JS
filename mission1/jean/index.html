@@ -61,9 +61,9 @@
         throw new Error("TodoList is null or undefined");
       }
 
-      this.data.forEach((todo) => {
-        if (typeof todo.text !== 'string') {
-          throw new Error("TodoList should be string");
+      this.data.forEach(todo => {
+        if (typeof todo.text !== 'string' || typeof todo.isCompleted !== 'boolean') {
+          throw new Error("TodoList type is invalid");
         }
       })
 
