@@ -47,10 +47,10 @@ const getTodoListHTMLText = (element, index) =>
       <span class='todo-close'>&times;</span>
     </div>`
 
-export function isCorrectTodoList(todoList, TodoList){
+export function isCorrectTodoList(thisObject, constructor){
   try {
-    checkCorrectInstance(todoList, TodoList) 
-    checkTodoListDataType(todoList)
+    checkCorrectInstance(thisObject, constructor) 
+    checkTodoListDataType(thisObject)
   }catch (e){
     console.error(e)
     return false
@@ -58,9 +58,9 @@ export function isCorrectTodoList(todoList, TodoList){
   return true
 }
 
-export function isCorrectTodoInput(todoInput, TodoInput){
+export function isCorrectTodoInputOrTodoCount(thisObject, constructor){
   try {
-    checkCorrectInstance(todoInput, TodoInput)
+    checkCorrectInstance(thisObject, constructor)
   }catch (e){
     console.error(e)
     return false
@@ -83,6 +83,14 @@ export function createTodoInnerHTML(todo){
   return todoHTMLText
 }
 
+export function createTodoCountInnerHTML(todo){
+  const todoCompletedCount = todo.reduce((pre, value) => {
+    return value.isCompleted ? pre+1 : pre
+  }, 0)
+  
+  return `<p>할 일 : ${todo.length}, 완료 : ${todoCompletedCount}</p>`
+}
+
 export function addTodoEvent(target, addTodo){
   const todoText = target.value
   target.value = ''
@@ -91,7 +99,6 @@ export function addTodoEvent(target, addTodo){
   if(isTodoTextEmpty(todoText)){
       return
   }
-  console.log('TodoInput todoText', todoText)
 
   addTodo(todoText)
 }
