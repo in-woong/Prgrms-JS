@@ -12,7 +12,9 @@ function App(selector, title) {
     this.$target.innerHTML = `<h1>${title}</h1>
                               <div class=${todoInputSeletor}></div>
                               <ul class=${todoListSelector}></ul>
-                              <div class=${todoCountSelector}></div>`
+                              <div class=${todoCountSelector}></div>
+                              <div><button class="remove-all-btn">Remove ALL</button></div>`
+
     this.$todoInput = new TodoInput({
       selector: `.${todoInputSeletor}`,
       onInput: handleInput,
@@ -27,7 +29,15 @@ function App(selector, title) {
       todos: this.data,
       selector: `.${todoCountSelector}`,
     })
+    this.$removeAllBtn = document.querySelector('.remove-all-btn')
+    this.$target.addEventListener('removeAll', () => {
+      this.setState([])
+    })
+    this.$removeAllBtn.addEventListener('click', (e) => {
+      e.target.dispatchEvent(removeAllEvent)
+    })
   }
+  const removeAllEvent = new CustomEvent('removeAll', { bubbles: true })
 
   this.setState = (newData) => {
     this.data = newData
