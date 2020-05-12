@@ -9,12 +9,14 @@ function TodoInput(props) {
     this.$input.setAttribute('type', 'text')
     this.$input.setAttribute('placeholder', '할 일을 입력하세요.')
 
-    this.$input.addEventListener('keydown',(e) => {
-      if (e.key === 'Enter'){
-        if (e.target.value === '') alert('할 일을 입력해줘..')
-        else {
+    this.$input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        if (e.target.value === '') {
+          alert('할 일을 입력해줘..')
+        } else {
           onInput(e.target.value)
           e.target.value = ''
+          e.target.focus()
         }
       }
     })

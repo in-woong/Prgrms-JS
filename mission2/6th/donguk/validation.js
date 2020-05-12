@@ -11,7 +11,7 @@ function checkData(data) {
     data.forEach((element) => {
       if (!(element instanceof Object)) throw new Error('data 배열의 원소 타입은 Object 입니다.')
       const keys = Object.keys(element)
-      const validKeys = new Set(['text', 'isCompleted'])
+      const validKeys = new Set(['id', 'text', 'isCompleted'])
       keys.forEach((key) => {
         if (validKeys.has(key)) {
           validKeys.delete(key)
