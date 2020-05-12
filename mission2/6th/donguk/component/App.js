@@ -5,12 +5,14 @@ function App(selector, title) {
 
   const todoInputSeletor = 'todo-input'
   const todoListSelector = 'todo-list'
+  const todoCountSelector = 'todo-count'
 
   this.init = () => {
     this.componentDidMount()
     this.$target.innerHTML = `<h1>${title}</h1>
                               <div class=${todoInputSeletor}></div>
-                              <ul class=${todoListSelector}></ul>`
+                              <ul class=${todoListSelector}></ul>
+                              <div class=${todoCountSelector}></div>`
     this.$todoInput = new TodoInput({
       selector: `.${todoInputSeletor}`,
       onInput: handleInput,
@@ -21,11 +23,16 @@ function App(selector, title) {
       onToggle: handleToggle,
       onDelete: handleDelete,
     })
+    this.$todoCount = new TodoCount({
+      todos: this.data,
+      selector: `.${todoCountSelector}`,
+    })
   }
 
   this.setState = (newData) => {
     this.data = newData
     this.$todoList.setState(this.data)
+    this.$todoCount.setState(this.data)
   }
 
   this.componentDidMount = () => {

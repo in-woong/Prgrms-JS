@@ -33,6 +33,7 @@ function TodoList(props) {
   })
 
   this.setState = (newData) => {
+    checkData(newData)
     this.data = newData
     this.render()
   }
