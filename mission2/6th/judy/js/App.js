@@ -3,7 +3,6 @@ function App() {
 
   const $list = document.querySelector('#todo-list');
   const $input = document.querySelector('#todo-input');
-  const $total = document.querySelector('#todo-total');
   const $removeAll = document.querySelector('#todo-all-remove');
 
   this.data = [
@@ -38,7 +37,7 @@ function App() {
       }
     })
 
-    this.todoCount = new TodoCount($total, this.data.length);
+    this.todoCount = new TodoCount(this.data.length);
     
   }
 
@@ -61,3 +60,5 @@ function App() {
   this.remove();
 
 }
+
+
