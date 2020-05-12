@@ -2,16 +2,16 @@ import TodoList from './TodoList.js'
 import TodoInput from './TodoInput.js'
 import TodoCount from './TodoCount.js'
 import * as filters from '../../utils/todo/filerter_item.js'
+import * as store from '../../store/index.js'
 
 export default function App(){
-    this.todo = []
     const $todoList = document.querySelector('#todo-list')
     const $todoInput = document.querySelector('#todo-input')
     const $todoAddBtn = document.querySelector('#todo-add-btn')
     const $todoCount = document.querySelector('#todo-count')
     const $todoRemoveAllBtn = document.querySelector('#todo-remove-all-btn')
 
-    
+
     $todoRemoveAllBtn.addEventListener('todoRemoveAll', function (e) {
         const removedAllTodo = []
         setState(removedAllTodo)
@@ -44,7 +44,13 @@ export default function App(){
         this.todo = nextData
         this.todoList.setState(this.todo)
         this.todoCount.setState(this.todo)
+        store.saveTodoInLocalStorage(this.todo)
     }
 
-    render()
+    const init = () => {
+        this.todo = store.getTodoInLocalStorage()
+        render()
+    }
+
+    init()
 }
