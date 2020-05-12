@@ -1,4 +1,4 @@
-function TodoCount(props){
+function TodoCount(props) {
   if (!(this instanceof TodoCount)) throw new Error('new 연산자를 사용해주세요.')
   const { todos, selector } = props
   checkSelector(selector)

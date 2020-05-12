@@ -4,7 +4,7 @@ function TodoInput(props) {
   checkSelector(selector)
   this.$target = document.querySelector(selector)
 
-  this.init = () => {
+  this.render = () => {
     this.$input = document.createElement('input')
     this.$input.setAttribute('type', 'text')
     this.$input.setAttribute('placeholder', '할 일을 입력하세요.')
@@ -23,5 +23,5 @@ function TodoInput(props) {
 
     this.$target.appendChild(this.$input)
   }
-  this.init()
+  this.render()
 }

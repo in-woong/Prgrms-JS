@@ -8,7 +8,7 @@ function App(selector, title) {
   const todoCountSelector = 'todo-count'
 
   this.init = () => {
-    this.componentDidMount()
+    this.componentMount()
     this.$target.innerHTML = `<h1>${title}</h1>
                               <div class=${todoInputSeletor}></div>
                               <ul class=${todoListSelector}></ul>
@@ -46,7 +46,7 @@ function App(selector, title) {
     saveDataToLocalStorage(newData)
   }
 
-  this.componentDidMount = () => {
+  this.componentMount = () => {
     const storageData = JSON.parse(window.localStorage.getItem('SAVED_DATA'))
     if (storageData) {
       checkData(storageData)
