@@ -43,14 +43,17 @@ function App(selector, title) {
     this.data = newData
     this.$todoList.setState(this.data)
     this.$todoCount.setState(this.data)
+    saveDataToLocalStorage(newData)
   }
 
   this.componentDidMount = () => {
-    this.data = [{
-      id: 0,
-      text: '즐거운 투두리스트',
-      isCompleted: true,
-    }]
+    const storageData = JSON.parse(window.localStorage.getItem('SAVED_DATA'))
+    if (storageData) {
+      checkData(storageData)
+      this.data = storageData
+    } else {
+      this.data = []
+    }
   }
 
   const handleInput = (value) => {
@@ -75,6 +78,10 @@ function App(selector, title) {
 
   const handleDelete = (id) => {
     this.setState(this.data.filter((element) => element.id !== id))
+  }
+
+  const saveDataToLocalStorage = (data) => {
+    window.localStorage.setItem('SAVED_DATA', JSON.stringify(data))
   }
 
   this.init()
