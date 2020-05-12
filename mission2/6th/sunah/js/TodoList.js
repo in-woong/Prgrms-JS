@@ -23,11 +23,7 @@ class TodoList {
     }
 
     getIndex = function(element) {
-        return element.closest('.todo_item').getAttribute('key');
-    }
-
-    getChecked = function(element) {
-        return element.closest('.todo_item').querySelector('.todo_input').checked;
+        return Array.from(element.parentNode.children).indexOf(element) - 1;
     }
 
     createInnerHTML = function() {

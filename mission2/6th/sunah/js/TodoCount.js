@@ -9,8 +9,7 @@ class TodoCount {
     setCount = function() {
         let count = 0;
         this.data.map((value) => {
-            if(value.isCompleted)
-                count += 1;
+            count += value.isCompleted ? 1 : 0;
         });
         this.current = count;
         this.total = this.data.length;

@@ -1,10 +1,11 @@
 class App {
-    constructor(data, selector) {
-        validateData(data);
+    constructor(key, selector) {
+        // validateData(data);
         validateSelector(selector);
 
         this.id = this.createID();
-        this.data = data;
+        this.key = key;
+        this.data = this.getLocalStorage(key);
         this.element = document.querySelector(selector);
 
         this.initCreateDocument();
@@ -16,7 +17,7 @@ class App {
 
     initCreateDocument = function() {
         this.element.innerHTML =
-            `<h2>Todo</h2>
+            `<h2>${this.key}</h2>
             <ul id="todo-list"></ul>
             <div id="todo-input"></div>
             <div id="todo-count"></div>`;
@@ -30,6 +31,15 @@ class App {
         }
     }
 
+    getLocalStorage = function(key) {
+        const storage = localStorage.getItem(key);
+        return storage !== null ? JSON.parse(storage) : [];
+    }
+
+    setLocalStorage = function() {
+        localStorage.setItem(this.key, JSON.stringify(this.data));
+    }
+
     setState = function(nextData) {
         validateData(nextData);
 
@@ -39,6 +49,7 @@ class App {
         this.data = nextData;
         this.todoList.setState(nextData);
         this.todoCount.setState(nextData);
+        this.setLocalStorage(nextData);
 
         function convertDataToString(array) {
             return array.map(value => JSON.stringify(value)).join('');
