@@ -5,7 +5,7 @@
     <title>TodoList</title>
 </head>
 <body>
-<!--<h1>VanilJS 1주차</h1>-->
+<h1>VanilJS 1주차</h1>
 <div>
     <h2>Todo1</h2>
     <div id="todo-list"></div>
@@ -62,22 +62,22 @@
   }
 
   function checkArrayElementType(objArr) {
-    for (const element of objArr) {
+    objArr.forEach((element) => {
       const keys = Object.keys(element)
       const validKeys = new Set(['text', 'isCompleted'])
-      for (const key of keys) {
+      keys.forEach((key) => {
         if (!validKeys.has(key)) {
           return false
         } else {
           validKeys.delete(key)
         }
-      }
+      })
       if (validKeys.size !== 0) return false
-    }
+    })
     return true
   }
 
-  function validate(data) { // data array validate
+  function checkDataValidation(data) { // data array validate
     if (data.length === 0) throw new Error('arguments is empty')
     if (!Array.isArray(data)) throw new Error('data must be Array')
     if (!data.length) throw new Error('data array is empty')
@@ -87,31 +87,29 @@
   }
 
   function TodoList(data, selector) {
-    if (!(this instanceof arguments.callee)) throw new Error('Use new keyword')
+    if (this === window) throw new Error('Use new keyword')
     if (!selector) throw new Error('target is empty')
     if (!document.querySelector(selector)) throw new Error('Can\'t find target in DOM')
-    validate(data) // data validate
+    checkDataValidation(data) // data validate
 
     this.data = data
-    this.target = document.querySelector(selector)
+    this.$target = document.querySelector(selector)
     this.render = function () {
-      this.target.innerHTML = `<ul>${this.data.map(v => convertLiToHTMLString(v))
+      this.$target.innerHTML = `<ul>${this.data.map(v => convertLiToHTMLString(v))
         .join('')}</ul>`
     }
     this.setState = function (nextData) {
-      validate(nextData)
+      checkDataValidation(nextData)
       this.data = nextData
       this.render()
     }
+    this.render()
   }
 
   try {
-    const todoList = new TodoList(data, '#todo-list')
-    todoList.render()
-    const todoList2 = new TodoList(data2, '#todo-list2')
-    todoList2.render()
+    new TodoList(data, '#todo-list')
+    new TodoList(data2, '#todo-list2')
     const todoList3 = new TodoList(data3, '#todo-list3')
-    todoList3.render()
     todoList3.setState([
       {
         text: '이벤트 버블링 공부하기',
