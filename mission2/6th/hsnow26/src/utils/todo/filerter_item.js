@@ -46,3 +46,7 @@ export function isTodoTextEmpty(text){
 export function getCreateTodo(text){
   return {text: text, isCompleted: false}
 }
+
+export function getTodoElement(element){
+  return element.getAttribute("data-todo-id") ? element : element.parentNode
+}

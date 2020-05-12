@@ -1,54 +1,26 @@
 import * as filters from '../../utils/todo/filerter_item.js'
 
-export default function TodoList(element, text){
-    const todoList = element
-    const todo = text
+export default function TodoList(todoListHTML, todo){
+    this.todoListHTML = todoListHTML
+    this.todo = todo
 
-    // this.setDelete = () => {
-    //   document.querySelectorAll(".todo-close").forEach((element, index) => {
-    //       document.querySelector("#todo-close-"+index).addEventListener('click', function(){
-    //           console.log(index)
-    //       })
-    //   })
-    // }
 
-    function isExistTodoId(element, attribute){
-      if(attribute){
+    this.todoListHTML.addEventListener('click', e => {
+      const todoElement = filters.getTodoElement(e.target.parentNode)
+      const todoElementIndex = todoElement.getAttribute("data-todo-id")
 
-        return element
-      }
-      
-      return element.parentNode
-    }
-    
-    // this.document.querySelector('a[data-a="1"]');
-    todoList.addEventListener('click', e => {
-      const element = e.target
-
-      console.log(element.parentNode)
-      console.log(document.querySelector("#todo-add"))
-      // console.log(element.parentNode.getAttribute("data-todo-id")) // Returns the <html> element
-      // console.log(element.parentElement.parentElement) // Returns the <html> element
-
-      // console.log(element)
+      //할 일 텍스트 클릭
       if(element.classList.contains("todo-text")){
-        // todo.
+        this.isCompletedToggle(parseInt(todoElementIndex))
         return
       }
 
+      //삭제 버튼 클릭
       if(element.classList.contains("todo-close")){
-
+        this.removeTodo(parseInt(todoElementIndex))
         return
       }
     })
-
-    console.log('todolist',this)
-    document.querySelector("#todo-add").addEventListener('click', function(){
-      console.log('fuck',this)
-      console.log('su?',todo)
-      todoList.addTodo(document.querySelector("#todo-input"))
-    })
-
 
     this.getTodoListHTMLText = (element, index) => 
       (element.isCompleted)
@@ -64,11 +36,10 @@ export default function TodoList(element, text){
         </div>`
 
     this.createTodoInnerHTML = () => {
-      const todoHTMLText = todo.map((element, index) => {
-        console.log(element)
+      const todoHTMLText = this.todo.map((element, index) => {
         return this.getTodoListHTMLText(element, index)
       }).join('')
-      todoList.innerHTML = todoHTMLText
+      this.todoListHTML.innerHTML = todoHTMLText
       // this.setDelete()
     }
 
@@ -77,7 +48,7 @@ export default function TodoList(element, text){
     }
 
     this.setState = function(nextData){
-      todo = nextData
+      this.todo = nextData
       this.render()
     }
 
@@ -85,12 +56,25 @@ export default function TodoList(element, text){
       const todoText = target.value
       target.value = ''
 
+      //빈 값 or 공백은 추가 x
       if(filters.isTodoTextEmpty(todoText)){
         return
       }
       
-      const addedTodo = todo.concat(filters.getCreateTodo(todoText))
+      const addedTodo = this.todo.concat(filters.getCreateTodo(todoText))
       this.setState(addedTodo)
+    }
+
+    this.removeTodo = function(removeIndex){
+      const removedTodo = this.todo.filter((element, index) => index !== removeIndex)
+      this.setState(removedTodo)
+    }
+
+    this.isCompletedToggle = function(updateIndex){
+      const updatedIsCompletedTodo = this.todo.map((element, index) => 
+        (index === updateIndex) ? ({...element, isCompleted : !element.isCompleted}) : element
+      )
+      this.setState(updatedIsCompletedTodo)
     }
 
     this.render()
