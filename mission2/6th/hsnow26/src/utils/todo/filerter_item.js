@@ -34,18 +34,12 @@ const checkCorrectInstance = (todoList, constructor) => {
   }
 }
 
-const getTodoListHTMLText = (element, index) =>
-  (element.isCompleted)
-  ? `<div class='todo' data-todo-id = ${index}>
-      <s>
-        <span class='todo-text'>${element.text}</span>
-      </s> 
-      <span class='todo-close'>&times;</span>
-      </div>`
-  : `<div class='todo' data-todo-id = ${index}>
-      <span class='todo-text'>${element.text}</span>
-      <span class='todo-close'>&times;</span>
-    </div>`
+const getTodoListHTMLText = (element, index) =>{
+  const topText = `<div class='todo' data-todo-id = ${index}>`
+  const middleText = (element.isCompleted) ? `<s><span class='todo-text'>${element.text}</span></s>` : `<span class='todo-text'>${element.text}`
+  const bottomText = `</span><span class='todo-close'>&times;</span></div>`
+  return topText+middleText+bottomText
+}
 
 export function isCorrectTodoList(thisObject, constructor){
   try {

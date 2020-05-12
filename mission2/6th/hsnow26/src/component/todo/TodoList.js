@@ -1,10 +1,17 @@
 import * as filters from '../../utils/todo/filerter_item.js'
 
-export default function TodoList(todoListHTML, todo, removeTodo, isCompletedToggle){
-    this.todoListHTML = todoListHTML
+export default function TodoList(todoList, todo, removeTodo, isCompletedToggle, todoRemoveAllBtn){
+    this.todoList = todoList
     this.todo = todo
 
-    this.todoListHTML.addEventListener('click', e => {
+    const event = new CustomEvent('todoRemoveAll');
+
+    todoRemoveAllBtn.addEventListener('click', function (e) {
+        todoRemoveAllBtn.dispatchEvent(event)
+    });
+    
+
+    this.todoList.addEventListener('click', e => {
       const element = e.target
       const todoElement = filters.getTodoElement(e.target.parentNode)
       const todoElementIndex = todoElement.getAttribute("data-todo-id")
@@ -24,7 +31,7 @@ export default function TodoList(todoListHTML, todo, removeTodo, isCompletedTogg
 
     this.render = function(){
       filters.isCorrectTodoList(this, TodoList) 
-      ? this.todoListHTML.innerHTML = filters.createTodoInnerHTML(this.todo) : ""
+      ? this.todoList.innerHTML = filters.createTodoInnerHTML(this.todo) : ""
     }
 
     this.setState = function(nextData){

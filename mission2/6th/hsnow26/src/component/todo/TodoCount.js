@@ -1,11 +1,11 @@
 import * as filters from '../../utils/todo/filerter_item.js'
 
-export default function TodoCount(todoCountHTML, todo){
-    this.todoCountHTML = todoCountHTML
+export default function TodoCount(todoCount, todo){
+    this.todoCount = todoCount
     this.todo = todo
 
     this.render = function(){
-        this.todoCountHTML.innerHTML = filters.createTodoCountInnerHTML(this.todo)
+        this.todoCount.innerHTML = filters.createTodoCountInnerHTML(this.todo)
     }
 
     this.setState = function(nextData){

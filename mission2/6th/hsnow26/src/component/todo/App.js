@@ -5,12 +5,18 @@ import * as filters from '../../utils/todo/filerter_item.js'
 
 export default function App(){
     this.todo = []
-    const todoListHTML = document.querySelector('#todo-list')
-    const todoInputHTML = document.querySelector('#todo-input')
-    const todoAddBtnHTML = document.querySelector('#todo-add-btn')
-    const todoCountHTML = document.querySelector('#todo-count')
-    
+    const $todoList = document.querySelector('#todo-list')
+    const $todoInput = document.querySelector('#todo-input')
+    const $todoAddBtn = document.querySelector('#todo-add-btn')
+    const $todoCount = document.querySelector('#todo-count')
+    const $todoRemoveAllBtn = document.querySelector('#todo-remove-all-btn')
 
+    
+    $todoRemoveAllBtn.addEventListener('todoRemoveAll', function (e) {
+        const removedAllTodo = []
+        setState(removedAllTodo)
+    });
+    
     const addTodo = (todoText) => {
         const addedTodo = this.todo.concat(filters.getCreateTodo(todoText))
         setState(addedTodo)
@@ -28,16 +34,16 @@ export default function App(){
         setState(updatedIsCompletedTodo)
     }
     
+    const render = () => {
+        this.todoList = new TodoList($todoList, this.todo, removeTodo, isCompletedToggle, $todoRemoveAllBtn)
+        this.todoInput = new TodoInput($todoInput, $todoAddBtn, addTodo)
+        this.todoCount = new TodoCount($todoCount, this.todo)
+    }
+
     const setState = (nextData) => {
         this.todo = nextData
         this.todoList.setState(this.todo)
         this.todoCount.setState(this.todo)
-    }
-
-    const render = () => {
-        this.todoList = new TodoList(todoListHTML, this.todo, removeTodo, isCompletedToggle)
-        this.todoInput = new TodoInput(todoInputHTML, todoAddBtnHTML, addTodo)
-        this.todoCount = new TodoCount(todoCountHTML, this.todo)
     }
 
     render()
