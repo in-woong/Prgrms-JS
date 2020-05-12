@@ -2,10 +2,9 @@ import TodoInput from './TodoInput.js'
 import TodoList from './TodoList.js'
 import TodoCount from './TodoCount.js'
 import { setLocalStorageData, getLocalStorageData } from './localStorage.js'
+import { TODO_KEY } from './constant.js'
 
 function App() {
-  const TODO_KEY = 'TODOS'
-
   const onAddNewTodo = (text) => {
     const newTodos = [...this.todos, { text, isCompleted: false }]
     this.setState(newTodos)

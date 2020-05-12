@@ -6,7 +6,7 @@ function TodoList(data, $todoList, onToggleTodo, onRemoveTodo) {
   this.todos = data
   this.$todoList = $todoList
 
-  const hasClass = (element, className) => {
+  const getElementWithGivenClassName = (element, className) => {
     while (!element.classList.contains(className)) {
       element = element.parentNode
 
@@ -22,13 +22,13 @@ function TodoList(data, $todoList, onToggleTodo, onRemoveTodo) {
     const elem = e.target
 
     if (elem.classList.contains('todo-text')) {
-      const findedElem = hasClass(elem, 'todo')
-      const id = findedElem.getAttribute('todo-id')
+      const foundElem = getElementWithGivenClassName(elem, 'todo')
+      const id = foundElem.getAttribute('todo-id')
 
       onToggleTodo(parseInt(id))
     } else if (elem.classList.contains('todo-remove')) {
-      const findedElem = hasClass(elem, 'todo')
-      const id = findedElem.getAttribute('todo-id')
+      const foundElem = getElementWithGivenClassName(elem, 'todo')
+      const id = foundElem.getAttribute('todo-id')
 
       onRemoveTodo(parseInt(id))
     }
@@ -36,16 +36,16 @@ function TodoList(data, $todoList, onToggleTodo, onRemoveTodo) {
 
   const getTodosText = () =>
     this.todos
-      .map((todo, index) =>
-        todo.isCompleted
-          ? `<li class="todo" todo-id="${index}">
-              <s><span class="todo-text">${todo.text}</span></s>
-              <button class="todo-remove">X</button>
-             </li>`
-          : `<li class="todo" todo-id="${index}">
-              <span class="todo-text">${todo.text}</span>
-              <button class="todo-remove">X</button>
-             </li>`
+      .map(
+        (todo, index) =>
+          `<li class="todo" todo-id="${index}">
+          ${
+            todo.isCompleted
+              ? `<s><span class="todo-text">${todo.text}</span></s>`
+              : `<span class="todo-text">${todo.text}</span>`
+          }
+          <button class="todo-remove">X</button>
+          </li>`
       )
       .join('')
 
