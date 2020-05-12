@@ -1,12 +1,4 @@
-import TodoList from './component/todo/TodoList.js'
+import App from './component/todo/App.js'
 
-const data = []
-
-const todoList = document.querySelector('#todo-list')
-
-const standardTodoList = new TodoList(todoList, data)
-
-document.querySelector("#todo-add").addEventListener('click', function(){
-  standardTodoList.addTodo(document.querySelector("#todo-input"))
-})
+new App()
 
