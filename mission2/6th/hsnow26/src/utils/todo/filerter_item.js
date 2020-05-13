@@ -23,6 +23,7 @@ const checkTodoListDataType = (todoList) => {
   }
 }
 
+//공백 제거
 const isTodoTextEmpty = (text) => {
   return text.replace(/\s/gi, "") === ""
 }
@@ -68,6 +69,7 @@ export function getCreateTodo(text){
   return {text: text, isCompleted: false}
 }
 
+//todo class 리턴
 export function getTodoElement(element){
   return element.getAttribute("data-todo-id") ? element : element.parentNode
 }
@@ -84,7 +86,7 @@ export function createTodoCountInnerHTML(todo){
   return `<p>할 일 : ${todo.length}, 완료 : ${todoCompletedCount}</p>`
 }
 
-export function addTodoEvent(target, addTodo){
+export function addTodoEvent(target, onAddTodo){
   const todoText = target.value
   target.value = ''
 
@@ -93,6 +95,6 @@ export function addTodoEvent(target, addTodo){
       return
   }
 
-  addTodo(todoText)
+  onAddTodo(todoText)
 }
 
