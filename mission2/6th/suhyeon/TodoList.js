@@ -11,12 +11,14 @@ class TodoList {
         this.$list.addEventListener('click', (e) => {
             if (e.target.classList.contains('todo-delete')) { // 할일 삭제                
                 this.$list.dispatchEvent(new CustomEvent('removeTodo', {
+                    bubbles: true,
                     detail: {
                         id : e.target.parentNode.dataset.id
                     }
                 })) 
             } else {
                 this.$list.dispatchEvent(new CustomEvent('updateCompleted', { // 할일 완료 처리
+                    bubbles: true,
                     detail: {
                         id: e.target.nodeName === 'S' ?
                             e.target.parentNode.dataset.id :
@@ -38,6 +40,7 @@ class TodoList {
     }
     setState(nextData) {
         validateData(nextData)
+        this.data = nextData
         this.render()
     }
 }
