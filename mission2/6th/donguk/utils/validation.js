@@ -15,6 +15,8 @@ function checkData(data) {
       keys.forEach((key) => {
         if (validKeys.has(key)) {
           validKeys.delete(key)
+          if (key === 'text' && typeof element[key] !== 'string') throw new Error('text의 타입은 string입니다.')
+          else if (key === 'isCompleted' && typeof element[key] !== 'boolean') throw new Error('isCompleted의 타입은 boolean입니다.')
         } else {
           throw new Error('data 배열의 원소 타입이 올바르지 않습니다.')
         }
@@ -23,3 +25,5 @@ function checkData(data) {
     })
   }
 }
+
+export {checkData, checkSelector}

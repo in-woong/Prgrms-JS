@@ -1,88 +1,99 @@
-function App(selector, title) {
-  if (!(this instanceof App)) throw new Error('new 키워드를 사용해주세요.')
-  checkSelector(selector)
-  this.$target = document.querySelector(selector)
+import Component from './Component.js'
+import TodoInput from './TodoInput.js'
+import TodoList from './TodoList.js'
+import TodoCount from './TodoCount.js'
+import {checkSelector, checkData} from "../utils/validation.js"
+import {storage} from "../utils/storage.js"
 
-  const todoInputSeletor = 'todo-input'
-  const todoListSelector = 'todo-list'
-  const todoCountSelector = 'todo-count'
+export default class App extends Component {
+  constructor(props) {
+    super()
+    const {selector, title} = props
+    checkSelector(selector)
+    this.$target = document.querySelector(selector)
+    this.title = title
+    this.removeAllEvent = new CustomEvent('removeAll', {bubbles: true})
+    this.componentMount() // data 설정
+    this.render()
+  }
 
-  this.init = () => {
-    this.componentMount()
-    this.$target.innerHTML = `<h1>${title}</h1>
-                              <div class=${todoInputSeletor}></div>
+  render() {
+    const todoInputSelector = 'todo-input'
+    const todoListSelector = 'todo-list'
+    const todoCountSelector = 'todo-count'
+    const removeAllBtnSelector = `remove-all`
+    this.$target.innerHTML = `<h1>${this.title}</h1>
+                              <div class=${todoInputSelector}></div>
                               <ul class=${todoListSelector}></ul>
                               <div class=${todoCountSelector}></div>
-                              <div><button class="remove-all-btn">Remove ALL</button></div>`
-
-    this.$todoInput = new TodoInput({
-      selector: `.${todoInputSeletor}`,
-      onInput: handleInput,
+                              <div><button class=${removeAllBtnSelector}>Remove All</button></div>`
+    new TodoInput({
+      selector: `.${todoInputSelector}`,
+      onInput: this.handleInput
     })
     this.$todoList = new TodoList({
-      todos: this.data,
       selector: `.${todoListSelector}`,
-      onToggle: handleToggle,
-      onDelete: handleDelete,
+      todos: this.data,
+      onToggle: this.handleToggle,
+      onDelete: this.handleDelete,
     })
     this.$todoCount = new TodoCount({
-      completedCount: this.data.filter((element) => element.isCompleted).length,
-      total: this.data.length,
       selector: `.${todoCountSelector}`,
+      total: this.data.length,
+      completedCount: this.data.filter((element) => element.isCompleted).length,
     })
-    this.$removeAllBtn = document.querySelector('.remove-all-btn')
-    this.$target.addEventListener('removeAll', () => {
+    this.$target.addEventListener('removeAll', (e) => {
       this.setState([])
     })
-    this.$removeAllBtn.addEventListener('click', (e) => {
-      e.target.dispatchEvent(removeAllEvent)
+    this.$removeAllBtn = document.querySelector(`.${removeAllBtnSelector}`)
+    this.$removeAllBtn.addEventListener('click',(e)=>{
+      e.target.dispatchEvent(this.removeAllEvent)
     })
   }
-  const removeAllEvent = new CustomEvent('removeAll', { bubbles: true })
 
-  this.setState = (newData) => {
-    this.data = newData
-    this.$todoList.setState(this.data)
-    this.$todoCount.setState({
-      completedCount: this.data.filter((element) => element.isCompleted).length,
-      total: this.data.length,
-    }) // container -> presentational 구조
-    saveDataToLocalStorage(newData)
-  }
-
-  this.componentMount = () => {
-    const initialData = JSON.parse(window.localStorage.getItem('SAVED_DATA')) || []
+  componentMount() {
+    const STORAGE_DATA = 'todos'
+    const initialData = storage.get(STORAGE_DATA)
     checkData(initialData)
     this.data = initialData
   }
 
-  const handleInput = (value) => {
-    const newData = [...this.data, {
-      id: this.data.length === 0 ? 0 : Math.max(...this.data.map((element) => element.id)) + 1,
+  setState(nextData) {
+    if (JSON.stringify(this.data) !== JSON.stringify(nextData)) {
+      this.data = nextData
+      this.$todoList.setState(nextData)
+      this.$todoCount.setState({
+        completedCount: this.data.filter((element) => element.isCompleted).length,
+        total: this.data.length
+      })
+      const STORAGE_DATA = 'todos'
+      storage.set(STORAGE_DATA, this.data)
+    }
+  }
+
+  handleInput = (value) => {
+    this.setState([...this.data, {
+      id: this.data.length !== 0 ? Math.max(...this.data.map((element) => element.id)) + 1 : 0,
       text: value,
       isCompleted: false,
-    }]
-    this.setState(newData)
+    }])
   }
-  const handleToggle = (id) => {
+
+  handleToggle = (id) => {
     const targetIndex = this.data.findIndex((element) => element.id === id)
-    this.setState([
-      ...this.data.slice(0, targetIndex),
-      {
-        ...this.data[targetIndex],
-        isCompleted: !this.data[targetIndex].isCompleted,
-      },
-      ...this.data.slice(targetIndex + 1, this.data.length),
-    ])
+    if (targetIndex > -1) {
+      const newData = [
+        ...this.data.slice(0, targetIndex),
+        {...this.data[targetIndex], isCompleted: !this.data[targetIndex]['isCompleted']},
+        ...this.data.slice(targetIndex + 1, this.data.length)]
+      this.setState(newData)
+    }
   }
 
-  const handleDelete = (id) => {
-    this.setState(this.data.filter((element) => element.id !== id))
+  handleDelete = (id) => {
+    const targetIndex = this.data.findIndex((element) => element.id === id)
+    if (targetIndex > -1){
+      this.setState(this.data.filter((element) => element.id !== id))
+    }
   }
-
-  const saveDataToLocalStorage = (data) => {
-    window.localStorage.setItem('SAVED_DATA', JSON.stringify(data))
-  }
-
-  this.init()
 }

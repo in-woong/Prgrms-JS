@@ -1,21 +1,23 @@
-function TodoCount(props) {
-  if (!(this instanceof TodoCount)) throw new Error('new 연산자를 사용해주세요.')
-  const { completedCount, total, selector } = props
-  checkSelector(selector)
-  this.$target = document.querySelector(selector)
-  this.completedCount = completedCount
-  this.total = total
+import Component from './Component.js'
+import {checkSelector} from "../utils/validation.js"
 
-  this.render = () => {
-    this.$target.innerHTML = `
-      <div>완료: ${this.completedCount}/${this.total}</div>
-    `
-  }
-  this.setState = ({ completedCount, total }) => {
-    this.total = total
+export default class TodoCount extends Component{
+  constructor(props) {
+    super ()
+    const { selector, completedCount, total } = props
+    checkSelector(selector)
+    this.$target = document.querySelector(selector)
     this.completedCount = completedCount
+    this.total = total
     this.render()
   }
 
-  this.render()
+  render(){
+    this.$target.innerHTML = `<div>Completed: ${this.completedCount} / ${this.total}</div>`
+  }
+  setState({completedCount, total}){
+    this.completedCount = completedCount
+    this.total = total
+    this.render()
+  }
 }

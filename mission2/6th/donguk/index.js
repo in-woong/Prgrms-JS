@@ -1,7 +1,10 @@
-try {
-  const selector = '#myApp'
-  const title = 'Mission2'
-  const myApp = new App(selector, title)
-} catch (e) {
+import App from './component/App.js'
+
+try{
+  const myApp = new App({
+    selector: '#myApp',
+    title: 'Mission2'
+  })
+} catch (e){
   console.error(e)
 }
