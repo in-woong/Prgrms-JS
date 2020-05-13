@@ -26,7 +26,8 @@ function App(selector, title) {
       onDelete: handleDelete,
     })
     this.$todoCount = new TodoCount({
-      todos: this.data,
+      completedCount: this.data.filter((element) => element.isCompleted).length,
+      total: this.data.length,
       selector: `.${todoCountSelector}`,
     })
     this.$removeAllBtn = document.querySelector('.remove-all-btn')
@@ -42,18 +43,17 @@ function App(selector, title) {
   this.setState = (newData) => {
     this.data = newData
     this.$todoList.setState(this.data)
-    this.$todoCount.setState(this.data)
+    this.$todoCount.setState({
+      completedCount: this.data.filter((element) => element.isCompleted).length,
+      total: this.data.length,
+    }) // container -> presentational 구조
     saveDataToLocalStorage(newData)
   }
 
   this.componentMount = () => {
-    const storageData = JSON.parse(window.localStorage.getItem('SAVED_DATA'))
-    if (storageData) {
-      checkData(storageData)
-      this.data = storageData
-    } else {
-      this.data = []
-    }
+    const initialData = JSON.parse(window.localStorage.getItem('SAVED_DATA')) || []
+    checkData(initialData)
+    this.data = initialData
   }
 
   const handleInput = (value) => {
