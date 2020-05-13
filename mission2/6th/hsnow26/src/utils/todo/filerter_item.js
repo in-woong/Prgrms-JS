@@ -34,7 +34,7 @@ const checkCorrectInstance = (todoList, constructor) => {
   }
 }
 
-const getTodoListHTMLText = (element, index) =>{
+const getTodoListHTMLText = (element, index) => {
   const topText = `<div class='todo' data-todo-id = ${index}>`
   const middleText = (element.isCompleted) ? `<s><span class='todo-text'>${element.text}</span></s>` : `<span class='todo-text'>${element.text}`
   const bottomText = `</span><span class='todo-close'>&times;</span></div>`
@@ -78,10 +78,7 @@ export function createTodoInnerHTML(todo){
 }
 
 export function createTodoCountInnerHTML(todo){
-  const todoCompletedCount = todo.reduce((pre, value) => {
-    return value.isCompleted ? pre+1 : pre
-  }, 0)
-  
+  const todoCompletedCount = todo.filter( e => e.isCompleted === true).length
   return `<p>할 일 : ${todo.length}, 완료 : ${todoCompletedCount}</p>`
 }
 

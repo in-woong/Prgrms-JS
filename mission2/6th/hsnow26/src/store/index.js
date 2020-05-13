@@ -1,7 +1,9 @@
+const TODO_KEY = 'todo'
+
 export function saveTodoInLocalStorage(todo){
-    localStorage.setItem('todo', JSON.stringify(todo))
+    localStorage.setItem(TODO_KEY, JSON.stringify(todo))
 }
 
 export function getTodoInLocalStorage(){
-    return localStorage.getItem('todo') === null ? [] : JSON.parse(localStorage.getItem('todo'))
+    return localStorage.getItem(TODO_KEY) === null ? [] : JSON.parse(localStorage.getItem(TODO_KEY))
 }

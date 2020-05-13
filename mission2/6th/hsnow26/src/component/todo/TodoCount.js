@@ -1,7 +1,7 @@
 import * as filters from '../../utils/todo/filerter_item.js'
 
-export default function TodoCount(todoCount, todo){
-    this.todoCount = todoCount
+export default function TodoCount($todoCount, todo){
+    this.todoCount = $todoCount
     this.todo = todo
 
     this.render = function(){

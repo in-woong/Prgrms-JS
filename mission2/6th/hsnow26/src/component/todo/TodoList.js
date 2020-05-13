@@ -1,13 +1,13 @@
 import * as filters from '../../utils/todo/filerter_item.js'
 
-export default function TodoList(todoList, todo, removeTodo, isCompletedToggle, todoRemoveAllBtn){
-    this.todoList = todoList
+export default function TodoList($todoList, todo, removeTodo, isCompletedToggle, $todoRemoveAllBtn){
+    this.todoList = $todoList
     this.todo = todo
 
     const event = new CustomEvent('todoRemoveAll');
 
-    todoRemoveAllBtn.addEventListener('click', function (e) {
-        todoRemoveAllBtn.dispatchEvent(event)
+    $todoRemoveAllBtn.addEventListener('click', function (e) {
+      $todoRemoveAllBtn.dispatchEvent(event)
     });
     
 
