@@ -1,7 +1,9 @@
 class TodoList {
     constructor($list, data) {
-        this.data = validateData(data)
-        this.$list = validateElement($list)
+        validateData(data)
+        validateElement($list)
+        this.data = data
+        this.$list = $list
         this.init()
         this.render()
     }    
@@ -35,7 +37,7 @@ class TodoList {
         </ul>`
     }
     setState(nextData) {
-        this.data = validateData(nextData)
+        validateData(nextData)
         this.render()
     }
 }
