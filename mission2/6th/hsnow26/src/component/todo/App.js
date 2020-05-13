@@ -31,8 +31,8 @@ export default function App(){
     
     const render = () => {
         this.todoList = new TodoList($app, this.todo, onRemoveTodo, isCompletedToggle)
-        this.todoInput = new TodoInput($app, onAddTodo)
-        this.todoCount = new TodoCount($app, this.todo)
+        this.todoInput = new TodoInput(onAddTodo)
+        this.todoCount = new TodoCount(this.todo)
     }
 
     const setState = (nextData) => {
