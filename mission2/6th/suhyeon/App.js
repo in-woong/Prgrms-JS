@@ -1,5 +1,6 @@
 import TodoInput from './TodoInput.js'
 import TodoList from  './TodoList.js'
+import TodoCount from './TodoCount.js'
 
 class App {
     constructor() {
@@ -24,7 +25,12 @@ class App {
             document.querySelector('#todo-input'),
             document.querySelector('#todo-add-button'),
             this.addTodo
-        )   
+        )
+        this.todoCount = new TodoCount({
+            $element: document.querySelector('#todo-count'),
+            totalCount: this.data.length,
+            completedCount: this.getCompletedCount()
+        })   
         this.todoList.$list.addEventListener('removeTodo', (e) => {
             this.removeTodo(e.detail.id)
         })   
@@ -36,16 +42,23 @@ class App {
         this.data.push({
             text: text,
             isCompleted: false
-        })
-        this.todoList.setState(this.data)
+        })        
+        this.setState()
     }    
     removeTodo = (id) => {
         this.data.splice(id, 1)
-        this.todoList.setState(this.data)
+        this.setState()    
     }
     updateCompleted = (id) => {               
-        this.data[id].isCompleted = !this.data[id].isCompleted        
+        this.data[id].isCompleted = !this.data[id].isCompleted  
+        this.setState()              
+    }
+    setState = () => {
         this.todoList.setState(this.data)
+        this.todoCount.setState(this.data.length, this.getCompletedCount())
+    }
+    getCompletedCount = () => {
+        return this.data.filter(todo => todo.isCompleted).length
     }
 }
 export default App
