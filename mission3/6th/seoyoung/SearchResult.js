@@ -9,7 +9,7 @@ class SearchResult {
         this.render()
     }
     render() {
-        console.log(this.data.length == 0)
+
         const htmlString = this.data.length == 0 ? '해당 키워드의 이미지가 없습니다' : this.data.map(({
             imageUrl
         }) => `<img src="${imageUrl}">`).join('')
