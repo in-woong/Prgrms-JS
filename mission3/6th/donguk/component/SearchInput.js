@@ -5,12 +5,13 @@ import debounce from '../utils/debounce.js'
 export default class SearchInput extends Component {
   constructor(props) {
     super()
-    const { selector, onSearch, that } = props
+    const { selector, onSearch, onAddHistory } = props
     checkSelector(selector)
     this.$target = document.querySelector(selector)
-    this.onSearch = onSearch.bind(that)
+    this.onSearch = onSearch
+    this.onAddHistory = onAddHistory
     this.render()
-    this.bindEvent()
+    this.bindEvents()
   }
 
   render() {
@@ -20,11 +21,20 @@ export default class SearchInput extends Component {
     this.$target.appendChild(this.$input)
   }
 
-  bindEvent() {
+  bindEvents() {
     this.$input.addEventListener('keyup', (e) => {
       const { value } = e.target
       if (value) {
-        debounce(this.onSearch, value, 100)
+        debounce(this.onSearch, value, 500)
+      }
+    })
+    this.$input.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        if (e.target.value) {
+          this.onAddHistory(e.target.value)
+          e.target.value = ''
+          this.$input.focus()
+        }
       }
     })
   }
