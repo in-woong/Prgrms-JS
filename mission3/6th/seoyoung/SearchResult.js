@@ -1,0 +1,21 @@
+class SearchResult {
+    constructor(data, target) {
+        this.data = data
+        this.$ = document.querySelector(target)
+        this.render()
+    }
+    setState(newData) {
+        this.data = newData
+        this.render()
+    }
+    render() {
+        console.log(this.data.length == 0)
+        const htmlString = this.data.length == 0 ? '해당 키워드의 이미지가 없습니다' : this.data.map(({
+            imageUrl
+        }) => `<img src="${imageUrl}">`).join('')
+
+        this.$.innerHTML = htmlString
+    }
+}
+
+export default SearchResult
