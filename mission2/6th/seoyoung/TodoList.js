@@ -21,6 +21,7 @@ class TodoList {
         if (!document.querySelector(this.queryId)) {
             throw new Error('해당 노드를 찾을 수 없습니다.')
         }
+        this.render()
     }
     render() {
         document.querySelector(this.queryId).innerHTML = this.todos
