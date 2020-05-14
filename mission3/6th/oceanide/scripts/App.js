@@ -3,12 +3,8 @@ import SearchResult from './SearchResult.js'
 import FetchData from './FetchData.js'
 
 function App() {
-  const onSearchKeyword = (keyword) => {
-    FetchData({ text: keyword }, onFetchData)
-  }
-
-  const onFetchData = (data) => {
-    this.setState(data)
+  const onSearchKeyword = async (keyword) => {
+    this.setState(await FetchData({ text: keyword }))
   }
 
   this.init = function () {
