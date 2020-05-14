@@ -1,8 +1,8 @@
 let timer = ''
-const debounce = (callback, args, tick) => {
+const debounce = (callback, tick) => {
   if (timer) clearTimeout(timer)
   timer = setTimeout(() => {
-    callback(args)
+    callback()
   }, tick)
 }
 

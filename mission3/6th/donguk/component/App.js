@@ -4,7 +4,7 @@ import SearchInput from './SearchInput.js'
 import SearchResult from './SearchResult.js'
 import SearchError from './SearchError.js'
 import request  from '../apis/api.js'
-import { checkSelector, checkImages } from '../utils/validation.js'
+import { checkSelector, checkResults } from '../utils/validation.js'
 
 export default class App extends Component {
   constructor(props) {
@@ -22,7 +22,7 @@ export default class App extends Component {
     const searchInputSelector = 'search-input'
     const searchResultSelector = 'search-result'
     const searchErrorSelector = 'search-error'
-    this.$target.innerHTML = `<div>
+    this.$target.innerHTML = `<div class="app-container">
                                 <h1>${this.title}</h1>
                                 <ul class=${searchHistorySelector}></ul>
                                 <div class=${searchInputSelector}></div>
@@ -60,7 +60,7 @@ export default class App extends Component {
 
   setState(nextData) {
     if (JSON.stringify(this.data) !== JSON.stringify(nextData)) {
-      checkImages(nextData)
+      checkResults(nextData)
       this.data = nextData
       this.$searchResult.setState(nextData)
     }
@@ -73,8 +73,8 @@ export default class App extends Component {
         const result = await res.json()
         if (result.length > 0) {
           this.setState(result
-            .map((element) => element.imageUrl)
-            .filter((element) => element))
+            .map((element) => ({ url: element.imageUrl, title: element.title }))
+            .filter((element) => element.url))
         }
       } catch (e) {
         const { status, message } = e

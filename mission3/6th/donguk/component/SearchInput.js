@@ -19,13 +19,14 @@ export default class SearchInput extends Component {
     this.$input.setAttribute('type', 'text')
     this.$input.setAttribute('placeholder', '키워드를 입력해주세요 :)')
     this.$target.appendChild(this.$input)
+
   }
 
   bindEvents() {
     this.$input.addEventListener('keyup', (e) => {
       const { value } = e.target
       if (value) {
-        debounce(this.onSearch, value, 500)
+        debounce(() => this.onSearch(value), 500)
       }
     })
     this.$input.addEventListener('keypress', (e) => {

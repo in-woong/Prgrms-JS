@@ -1,6 +1,14 @@
 import Component from './Component.js'
 import { checkSelector } from '../utils/validation.js'
 
+const createHTMLElement = (image) => {
+  const { url, title } = image
+  return `<div class="image-item">
+            <img src=${url} alt=""/>
+            <div class="item-title">${title}</div>
+         </div>`
+}
+
 export default class SearchResult extends Component {
   constructor(props) {
     super()
@@ -12,9 +20,7 @@ export default class SearchResult extends Component {
   }
 
   render() {
-    this.$target.innerHTML = this.images.map((image) => {
-      return `<img src=${image} alt=""/>`
-    }).join('')
+    this.$target.innerHTML = this.images.map((image) => createHTMLElement(image)).join('')
   }
 
   setState(nextData){
