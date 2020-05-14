@@ -2,6 +2,7 @@ class TodoCount {
     constructor(data) {
         this.todoNum = data ? data.length : 0
         this.completeNum = data ? data.filter(todo => todo.isCompleted).length : 0
+        this.render()
     }
     render() {
         document.querySelector('#todo-count').innerHTML =
