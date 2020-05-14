@@ -1,5 +1,6 @@
 import Component from './Component.js'
 import { checkSelector } from '../utils/validation.js'
+import throttle from '../utils/throttle.js'
 
 const createHTMLElement = (element) => {
   const { url, title } = element
@@ -54,9 +55,15 @@ export default class SearchResult extends Component {
   componentMount() {
     this.currentPage = 1 // scroll에 따른 lazy loading
     this.size = 10
-    this.isUseComponent = false // 검색 안했을 때, 했을 때 flag개
+    this.isUseComponent = false // 검색 안했을 때, 했을 때 flag
     window.addEventListener('scroll', () => {
-
+      if (this.images.length > ((this.currentPage - 1) * 10 + this.size)) { // this가 SearchResult ?
+        const { offsetHeight } = document.body
+        if (window.scrollY + window.innerHeight >= offsetHeight) {
+          this.currentPage += 1
+          throttle(this.render.bind(this), 400)
+        }
+      }
     })
   }
 
