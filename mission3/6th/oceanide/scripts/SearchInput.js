@@ -21,8 +21,13 @@ function SearchInput($searchInput, onSearchKeyword) {
     this.bindEvents()
   }
 
+  this.render = function () {
+    this.$searchInput.value = this.keyword
+  }
+
   this.setState = function (nextData) {
     this.keyword = nextData
+    this.render()
   }
 
   this.init()
