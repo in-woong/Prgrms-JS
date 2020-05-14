@@ -1,19 +1,18 @@
 import TodoList from './TodoList.js'
 import TodoInput from './TodoInput.js'
 import TodoCount from './TodoCount.js'
-import * as filters from '../../utils/todo/filerter_item.js'
-import * as store from '../../store/index.js'
+import {getCreateTodo} from '../../utils/todo/filerter_item.js'
+import {saveTodoInLocalStorage, getTodoInLocalStorage} from '../../store/index.js'
 
 export default function App(){
     const $app = document.querySelector('#app')
 
     $app.addEventListener('todoRemoveAll', function (e) {
-        const removedAllTodo = []
-        setState(removedAllTodo)
+        setState([])
     });
     
     const onAddTodo = (todoText) => {
-        const addedTodo = this.todo.concat(filters.getCreateTodo(todoText))
+        const addedTodo = this.todo.concat(getCreateTodo(todoText))
         setState(addedTodo)
     }
 
@@ -39,11 +38,11 @@ export default function App(){
         this.todo = nextData
         this.todoList.setState(this.todo)
         this.todoCount.setState(this.todo)
-        store.saveTodoInLocalStorage(this.todo)
+        saveTodoInLocalStorage(this.todo)
     }
 
     const init = () => {
-        this.todo = store.getTodoInLocalStorage()
+        this.todo = getTodoInLocalStorage()
         render()
     }
 
