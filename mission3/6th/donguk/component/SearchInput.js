@@ -18,6 +18,7 @@ export default class SearchInput extends Component {
     this.$input = document.createElement('input')
     this.$input.setAttribute('type', 'text')
     this.$input.setAttribute('placeholder', '키워드를 입력해주세요 :)')
+    this.$input.setAttribute('autofocus','true')
     this.$target.appendChild(this.$input)
 
   }

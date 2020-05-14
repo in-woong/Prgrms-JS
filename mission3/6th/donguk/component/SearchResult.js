@@ -8,6 +8,7 @@ const createHTMLElement = (element) => {
   $item.setAttribute('class', 'image-item')
   const $loadingDiv = document.createElement('div')
   $loadingDiv.className = 'loading'
+  $loadingDiv.style = 'display: none'
   $loadingDiv.textContent = 'loading...'
   const $itemTitle = document.createElement('div')
   $itemTitle.className = 'item-title'
@@ -16,7 +17,7 @@ const createHTMLElement = (element) => {
   image.src = url
   image.alt = ''
   image.onload = () => {
-    $item.removeChild($loadingDiv)
+    $loadingDiv.className = ''
   }
   $item.appendChild($loadingDiv)
   $item.appendChild(image)
