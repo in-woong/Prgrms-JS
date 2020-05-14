@@ -2,7 +2,8 @@ import Component from './Component.js'
 import SearchHistory from './SearchHistory.js'
 import SearchInput from './SearchInput.js'
 import SearchResult from './SearchResult.js'
-import { getSearchResult } from '../apis/api.js'
+import SearchError from './SearchError.js'
+import request  from '../apis/api.js'
 import { checkSelector, checkImages } from '../utils/validation.js'
 
 export default class App extends Component {
@@ -12,8 +13,7 @@ export default class App extends Component {
     checkSelector(selector)
     this.$target = document.querySelector(selector)
     this.title = title
-    this.data = []
-    this.histories = []
+    this.componentMount()
     this.render()
   }
 
@@ -21,10 +21,12 @@ export default class App extends Component {
     const searchHistorySelector = 'search-history'
     const searchInputSelector = 'search-input'
     const searchResultSelector = 'search-result'
+    const searchErrorSelector = 'search-error'
     this.$target.innerHTML = `<div>
                                 <h1>${this.title}</h1>
                                 <ul class=${searchHistorySelector}></ul>
                                 <div class=${searchInputSelector}></div>
+                                <div class=${searchErrorSelector}></div>
                                 <div class=${searchResultSelector}></div>
                               </div>`
 
@@ -44,6 +46,16 @@ export default class App extends Component {
       selector: `.${searchResultSelector}`,
       images: this.data,
     })
+
+    this.$searchError = new SearchError({
+      selector: `.${searchErrorSelector}`,
+    })
+  }
+
+  componentMount() {
+    this.nextId = -1 // for history indexing
+    this.data = []
+    this.histories = []
   }
 
   setState(nextData) {
@@ -56,22 +68,28 @@ export default class App extends Component {
 
   async handleSearch(keyword) {
     if (keyword) {
-      const result = await getSearchResult(keyword)
-      if (result.length > 0) {
-        const nextData = result.map((element) => element.imageUrl)
-          .filter((element) => element)
-        this.setState(nextData)
+      try {
+        const res = await request(keyword)
+        const result = await res.json()
+        if (result.length > 0) {
+          this.setState(result
+            .map((element) => element.imageUrl)
+            .filter((element) => element))
+        }
+      } catch (e) {
+        const { status, message } = e
+        this.$searchError.setState({ status, message })
       }
     }
   }
 
   handleAddHistory(keyword) {
     if (keyword) {
-      const nextId = this.histories.length > 0 ? Math.max(...this.histories.map((history) => history.id)) + 1 : 0
       this.histories = this.histories.concat({
-        id: nextId,
+        id: this.nextId + 1,
         value: keyword,
       })
+      this.nextId += 1
       this.$searchHistory.setState(this.histories)
     }
   }

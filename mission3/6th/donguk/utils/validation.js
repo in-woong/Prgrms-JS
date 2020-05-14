@@ -11,3 +11,8 @@ export const checkImages = (images) => {
     })
   }
 }
+
+export const checkError = (status, message) => {
+  if (typeof status !== 'number') throw new Error('error code must be Number')
+  else if (typeof message !== 'String') throw new Error('error message must be String')
+}
