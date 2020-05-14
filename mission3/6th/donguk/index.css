@@ -57,3 +57,8 @@ body {
     align-items: center;
     font-size: 35px;
 }
+
+ul .history-item {
+    cursor: pointer;
+    list-style: none;
+}

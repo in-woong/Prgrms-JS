@@ -14,9 +14,9 @@ export default class SearchHistory extends Component {
   }
 
   render() {
-    this.$target.innerHTML = this.histories.map((history) => {
+    this.$target.innerHTML = this.histories.map((history, index) => {
       const { id, value } = history
-      return `<li data-id=history-${id}>${value}</li>`
+      return `<li data-id=history-${id} class="history-item">${index + 1}. ${value}</li>`
     }).join('')
   }
 
