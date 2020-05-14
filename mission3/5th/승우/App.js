@@ -43,7 +43,7 @@ function App() {
     this.historyData = []
 
     try {
-      //Component 선언
+      //component 선언
       this.errorView = new ErrorView({ $selector: ERROR_VIEW_SELECTOR })
 
       this.$searchKeyword = new SearchKeyword({
