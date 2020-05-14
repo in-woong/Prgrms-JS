@@ -1,5 +1,6 @@
 import Component from './Component.js'
 import { checkSelector } from '../utils/validation.js'
+import debounce from '../utils/debounce.js'
 
 export default class SearchInput extends Component {
   constructor(props) {
@@ -22,7 +23,9 @@ export default class SearchInput extends Component {
   bindEvent() {
     this.$input.addEventListener('keyup', (e) => {
       const { value } = e.target
-      if (value) this.onSearch(value)
+      if (value) {
+        debounce(this.onSearch, value, 100)
+      }
     })
   }
 }
