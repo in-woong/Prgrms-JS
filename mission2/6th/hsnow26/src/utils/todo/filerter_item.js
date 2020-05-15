@@ -10,15 +10,15 @@ const isInvalidTodoProperty = (todo) => {
 
 // new 키워드 유무 체크
 const checkTodoListDataType = (todoList) => {
-  if(isUndefinedOrNull(todoList.todo)){
+  if(isUndefinedOrNull(todoList.todos)){
     throw new Error(todoListErrorMessage['null_or_undefined'])
   }
 
-  if(!Array.isArray(todoList.todo)){
+  if(!Array.isArray(todoList.todos)){
     throw new Error(todoListErrorMessage['not_array'])
   }
 
-  if(isInvalidTodoProperty(todoList.todo)){
+  if(isInvalidTodoProperty(todoList.todos)){
     throw new Error(todoListErrorMessage['not_exist_test_property'])
   }
 }

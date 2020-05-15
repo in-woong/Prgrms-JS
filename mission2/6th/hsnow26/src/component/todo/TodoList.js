@@ -29,6 +29,7 @@ export default function TodoList($app, todos, onRemoveTodo, isCompletedToggle){
     })
 
     this.render = function(){
+      console.log(this)
       isCorrectTodoList(this, TodoList) 
       ? this.$todoList.innerHTML = createTodoInnerHTML(this.todos) : ""
     }

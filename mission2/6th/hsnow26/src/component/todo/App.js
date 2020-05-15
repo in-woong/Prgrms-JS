@@ -29,15 +29,15 @@ export default function App(){
     }
     
     const render = () => {
-        this.todosList = new TodoList($app, this.todos, onRemoveTodo, isCompletedToggle)
-        this.todosInput = new TodoInput(onAddTodo)
-        this.todosCount = new TodoCount(this.todos)
+        this.todoList = new TodoList($app, this.todos, onRemoveTodo, isCompletedToggle)
+        this.todoInput = new TodoInput(onAddTodo)
+        this.todoCount = new TodoCount(this.todos)
     }
 
     const setState = (nextData) => {
         this.todos = nextData
-        this.todosList.setState(this.todos)
-        this.todosCount.setState(this.todos)
+        this.todoList.setState(this.todos)
+        this.todoCount.setState(this.todos)
         saveTodoInLocalStorage(this.todos)
     }
 
