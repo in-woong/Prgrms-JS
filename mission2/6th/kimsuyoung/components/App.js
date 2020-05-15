@@ -3,21 +3,23 @@ import TodoList from './TodoList.js'
 import TodoCount from './TodoCount.js'
 
 export default function App() {
+  const $app = document.querySelector('#container')
   // 컴포넌트들
   this.init = () => {
     this.data = []
     this.todoList = new TodoList({
       data: this.data,
-      selector: '#todo-list',
+      selector: document.querySelector('#todo-list'),
       onDeleteTodoList: deleteTodoList,
       onToggleCompleted: setTodoCompleted,
       onDeleteAllTodoList: removeAllTodoList,
     })
     this.todoInput = new TodoInput({
-      inputSelector: '#todo-input',
-      removeAllSelector: '#remove-all-button',
+      $app,
+      inputSelector: document.querySelector('#todo-input'),
+      removeAllSelector: document.querySelector('#remove-all-button'),
       onAddTodoList: addTodoList,
-      eventTrigger,
+      //eventTrigger,
     })
     this.todoCount = new TodoCount({
       data: getTodoCount(),
@@ -31,13 +33,6 @@ export default function App() {
     this.todoList.setState(this.data)
     this.todoCount.setState(getTodoCount())
   }
-
-  // this.getTodoCount = () => {
-  //   return {
-  //     totalCount: this.data.length,
-  //     completedCount: this.data.filter((item) => item.isCompleted).length,
-  //   }
-  // }
 
   const getTodoCount = () => {
     return {
@@ -74,7 +69,10 @@ export default function App() {
     this.setState(nextData)
   }
 
-  const eventTrigger = (event) => this.todoList.$todoList.dispatchEvent(event)
+  $app.addEventListener('removeAll', () => {
+    this.setState([])
+  })
+  //const eventTrigger = (event) => this.todoList.$todoList.dispatchEvent(event)
 
   this.init()
 }
