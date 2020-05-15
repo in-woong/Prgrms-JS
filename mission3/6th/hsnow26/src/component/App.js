@@ -4,6 +4,10 @@ import SearchInput from './SearchInput.js'
 export default function App(){
     this.components = []
 
+    // async function onSearchedJjalImage (data){
+    //     const searchedJjalImages = await data
+    //     this.setState(searchedJjalImages)
+    // }
     const onSearchedJjalImage = (data) => {
         const searchedJjalImages = data
         this.setState(searchedJjalImages)
