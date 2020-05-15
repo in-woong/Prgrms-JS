@@ -1,12 +1,13 @@
-import {fetchJjalImages} from '../store/index.js'
+import { fetchJjalImages } from '../store/index.js'
+import { searchDebounce } from '../utils/index.js'
 
 export default function SearchResult(target, onSearchedJjalImage){
-  
+
   this.$target = document.querySelector(target)
 
   this.$target.addEventListener('keyup', function(e) {
     const {target} = e
-    getJjalImages(target.value)
+    searchDebounce(getJjalImages, target.value)
   })
 
   const getJjalImages = async value => {

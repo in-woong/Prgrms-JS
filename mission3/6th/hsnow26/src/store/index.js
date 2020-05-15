@@ -5,7 +5,7 @@ export const fetchJjalImages = value => {
         .then(response => response.json())
         .then(data => resolve(data))
     }catch(e){
-      
+      console.log('fetch jjal image falied', e); 
     }
   });
 }
