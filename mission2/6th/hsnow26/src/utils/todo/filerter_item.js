@@ -25,8 +25,7 @@ const checkTodoListDataType = (todoList) => {
 
 //공백 제거
 const isTodoTextEmpty = (text) => {
-  // return text.replace(/\s/gi, "") === ""
-  return text.trim()
+  return text.replace(/\s/gi, "") === ""
 }
 
 // 올바른 파라메터 체크
