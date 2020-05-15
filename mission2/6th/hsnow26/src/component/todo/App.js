@@ -1,7 +1,7 @@
 import TodoList from './TodoList.js'
 import TodoInput from './TodoInput.js'
 import TodoCount from './TodoCount.js'
-import {getCreateTodo} from '../../utils/todo/filerter_item.js'
+import {getTodo} from '../../utils/todo/filerter_item.js'
 import {saveTodoInLocalStorage, getTodoInLocalStorage} from '../../store/index.js'
 
 export default function App(){
@@ -12,37 +12,37 @@ export default function App(){
     });
     
     const onAddTodo = (todoText) => {
-        const addedTodo = this.todo.concat(getCreateTodo(todoText))
+        const addedTodo = this.todos.concat(getTodo(todoText))
         setState(addedTodo)
     }
 
     const onRemoveTodo = (removeIndex) => {
-        const removedTodo = this.todo.filter((element, index) => index !== removeIndex)
+        const removedTodo = this.todos.filter((element, index) => index !== removeIndex)
         setState(removedTodo)
     }
 
     const isCompletedToggle = (updateIndex) => {
-        const updatedIsCompletedTodo = this.todo.map((element, index) => 
+        const updatedIsCompletedTodo = this.todos.map((element, index) => 
           (index === updateIndex) ? ({...element, isCompleted : !element.isCompleted}) : element
         )
         setState(updatedIsCompletedTodo)
     }
     
     const render = () => {
-        this.todoList = new TodoList($app, this.todo, onRemoveTodo, isCompletedToggle)
-        this.todoInput = new TodoInput(onAddTodo)
-        this.todoCount = new TodoCount(this.todo)
+        this.todosList = new TodoList($app, this.todos, onRemoveTodo, isCompletedToggle)
+        this.todosInput = new TodoInput(onAddTodo)
+        this.todosCount = new TodoCount(this.todos)
     }
 
     const setState = (nextData) => {
-        this.todo = nextData
-        this.todoList.setState(this.todo)
-        this.todoCount.setState(this.todo)
-        saveTodoInLocalStorage(this.todo)
+        this.todos = nextData
+        this.todosList.setState(this.todos)
+        this.todosCount.setState(this.todos)
+        saveTodoInLocalStorage(this.todos)
     }
 
     const init = () => {
-        this.todo = getTodoInLocalStorage()
+        this.todos = getTodoInLocalStorage()
         render()
     }
 

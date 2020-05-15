@@ -13,6 +13,6 @@ const getJsonParseWithKey = (key) => {
         return JSON.parse(localStorage.getItem(key))
     } catch (e){
         console.error(e)
-        return ''
+        return []
     }
 }

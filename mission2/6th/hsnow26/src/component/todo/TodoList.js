@@ -1,8 +1,8 @@
-import * as filters from '../../utils/todo/filerter_item.js'
+import {getTodoElement, isCorrectTodoList, createTodoInnerHTML} from '../../utils/todo/filerter_item.js'
 
-export default function TodoList($app, todo, onRemoveTodo, isCompletedToggle){
+export default function TodoList($app, todos, onRemoveTodo, isCompletedToggle){
     this.$todoList = $app.querySelector('#todo-list')
-    this.todo = todo
+    this.todos = todos
 
     const $todoRemoveAllBtn = $app.querySelector('#todo-remove-all-btn')
 
@@ -12,7 +12,7 @@ export default function TodoList($app, todo, onRemoveTodo, isCompletedToggle){
 
     this.$todoList.addEventListener('click', e => {
       const element = e.target
-      const todoElement = filters.getTodoElement(e.target.parentNode)
+      const todoElement = getTodoElement(e.target.parentNode)
       const todoElementIndex = todoElement.getAttribute("data-todo-id")
 
       //할 일 텍스트 클릭
@@ -29,12 +29,12 @@ export default function TodoList($app, todo, onRemoveTodo, isCompletedToggle){
     })
 
     this.render = function(){
-      filters.isCorrectTodoList(this, TodoList) 
-      ? this.$todoList.innerHTML = filters.createTodoInnerHTML(this.todo) : ""
+      isCorrectTodoList(this, TodoList) 
+      ? this.$todoList.innerHTML = createTodoInnerHTML(this.todos) : ""
     }
 
     this.setState = function(nextData){
-      this.todo = nextData
+      this.todos = nextData
       this.render()
     }
 

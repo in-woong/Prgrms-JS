@@ -4,8 +4,8 @@ const isUndefinedOrNull = (todo) => {
   return todo === null || todo === undefined
 }
 
-const isNotExistTextProperty = (todo) => {
-  return todo.some(element => !('text' in element))
+const isInvalidTodoProperty = (todo) => {
+  return todo.some(element => !('text' in element) || !('isCompleted' in element))
 }
 
 // new 키워드 유무 체크
@@ -18,14 +18,15 @@ const checkTodoListDataType = (todoList) => {
     throw new Error(todoListErrorMessage['not_array'])
   }
 
-  if(isNotExistTextProperty(todoList.todo)){
+  if(isInvalidTodoProperty(todoList.todo)){
     throw new Error(todoListErrorMessage['not_exist_test_property'])
   }
 }
 
 //공백 제거
 const isTodoTextEmpty = (text) => {
-  return text.replace(/\s/gi, "") === ""
+  // return text.replace(/\s/gi, "") === ""
+  return text.trim()
 }
 
 // 올바른 파라메터 체크
@@ -65,7 +66,7 @@ export function isCorrectTodoInputOrTodoCount(thisObject, constructor){
   return true
 }
 
-export function getCreateTodo(text){
+export function getTodo(text){
   return {text: text, isCompleted: false}
 }
 
