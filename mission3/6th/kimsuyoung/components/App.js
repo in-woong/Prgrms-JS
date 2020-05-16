@@ -1,22 +1,22 @@
 import searchKeyword from './searchKeyword.js'
 import searchResult from './searchResult.js'
-
-//const $app = document.querySelector('#app')
-const API_URL = 'https://jjalbot.com/api/jjals?text='
+import { loadData } from '../api.js'
 
 export default function App() {
   this.data = []
 
+  this.onSearch = async (keyword) => {
+    try {
+      const result = await loadData(keyword)
+      this.setState(result)
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
   this.searchKeyword = new searchKeyword({
     $inputSelector: document.querySelector('#search-keyword'),
-    onSearch: (keyword) => {
-      this.searchUrl = `${API_URL}${keyword}`
-      fetch(this.searchUrl)
-        .then((value) => value.json())
-        .then((data) => {
-          this.setState(data)
-        })
-    },
+    onSearch: this.onSearch,
   })
 
   this.searchResult = new searchResult({
