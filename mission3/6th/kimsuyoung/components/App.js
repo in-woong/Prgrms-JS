@@ -1,14 +1,17 @@
 import searchKeyword from './searchKeyword.js'
 import searchResult from './searchResult.js'
+import searchHistory from './searchHistory.js'
 import { loadData } from '../api.js'
 
 export default function App() {
   this.data = []
+  this.searchHistory = new Set()
 
   this.onSearch = async (keyword) => {
     try {
       const result = await loadData(keyword)
-      this.setState(result)
+      this.data = result
+      this.setState(keyword)
     } catch (e) {
       console.error(e)
     }
@@ -24,8 +27,13 @@ export default function App() {
     $resultSelector: document.querySelector('#search-result'),
   })
 
-  this.setState = (nextData) => {
-    //console.log('App nextData', nextData)
-    this.searchResult.setState(nextData)
+  this.searchHistory = new searchHistory({
+    $historySelector: document.querySelector('#search-history'),
+    searchHistory: this.searchHistory,
+  })
+
+  this.setState = (keyword) => {
+    this.searchResult.setState(this.data)
+    this.searchHistory.setState(keyword)
   }
 }
