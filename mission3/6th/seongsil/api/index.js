@@ -1,11 +1,7 @@
-const fetchJjalbotList = (paramText) => {
+async function fetchJjalbotList(paramText) {
   try {
-    fetch(`https://jjalbot.com/api/jjals?text=${paramText}`)
-      .then(value => value.json())
-      .then(data => {
-        console.log(data);
-        return data;
-      });
+    const response = await fetch(`https://jjalbot.com/api/jjals?text=${paramText}`);
+    return response.json();
   } catch(error) {
     console.log(error);
     alert('API 오류입니다.');

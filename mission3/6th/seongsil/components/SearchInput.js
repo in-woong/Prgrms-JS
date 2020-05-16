@@ -1,4 +1,4 @@
-function SearchInput($target, data, { onSearchKeyword }) {
+function SearchInput($target, { onSearchKeyword }) {
   if (!new.target) {
     throw new Error('SearchInput을 new로 사용해야 합니다.');
   }

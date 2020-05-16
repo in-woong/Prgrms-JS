@@ -8,12 +8,12 @@ function App() {
   const $searchInput = document.querySelector('#search-keyword');
   const $searchResult = document.querySelector('#search-result');
 
-  this.updateState = (newData) => {
-    this.jjalbotData = fetchJjalbotList(newData);
+  this.updateState = async (newData) => {
+    this.jjalbotData = await fetchJjalbotList(newData);
     this.searchResult.setState(this.jjalbotData);
   }
 
-  this.searchInput = new SearchInput($searchInput, this.jjalbotData, {
+  this.searchInput = new SearchInput($searchInput, {
     onSearchKeyword: (data) => {
       this.updateState(data);
     }
