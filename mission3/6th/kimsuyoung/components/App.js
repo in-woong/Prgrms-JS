@@ -30,6 +30,7 @@ export default function App() {
   this.searchHistory = new searchHistory({
     $historySelector: document.querySelector('#search-history'),
     searchHistory: this.searchHistory,
+    onSearch: this.onSearch,
   })
 
   this.setState = (keyword) => {
