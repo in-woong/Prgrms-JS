@@ -5,10 +5,16 @@ import { fetchTodoList, postTodo } from '../api/index.js';
 
 const App = function() {
   this.todoData = fetchTodoList() || [];
+  this.todoCountData = {
+    todoCompletedCount: this.todoData.filter(todo => todo.isCompleted).length,
+    todoCount: this.todoData.length
+  };
 
   const updateState = (newData) => {
     this.todoData = newData;
     this.todoList.setState(this.todoData);
+    this.todoCountData.todoCompletedCount = this.todoData.filter(todo => todo.isCompleted).length;
+    this.todoCountData.todoCount = this.todoData.length;
     this.todoCount.setState(this.todoData);
   };
 
@@ -33,12 +39,16 @@ const App = function() {
     }
   });
 
-  this.todoCount = new TodoCount($target, this.todoData);
+  this.todoCount = new TodoCount($target, this.todoData, this.todoCountData);
 
   $target.addEventListener('todoRemoveAll', (event) =>{
-    this.todoData = [];
-    postTodo(this.todoData);
-    updateState(this.todoData);
+    const isConfirmRemoveAll = confirm('정말 전체 삭제하실 건가요?');
+
+    if (isConfirmRemoveAll) {
+      this.todoData = [];
+      postTodo(this.todoData);
+      updateState(this.todoData);
+    }
   });
 };
 

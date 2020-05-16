@@ -15,8 +15,8 @@ function TodoList($target, data, { onUpdate }) {
       this.todoData.splice(event.target.parentNode.getAttribute('data-id'), 1);
     } else { // 완료
       const todoIndex = isStrike ?
-      event.target.parentNode.getAttribute('data-id') :
-      event.target.getAttribute('data-id');
+        event.target.parentNode.getAttribute('data-id') :
+        event.target.getAttribute('data-id');
       this.todoData[todoIndex].isCompleted = !this.todoData[todoIndex].isCompleted;
     }
 
@@ -28,7 +28,7 @@ function TodoList($target, data, { onUpdate }) {
     $target.innerHTML = `<ul>${this.todoData.map(({text, isCompleted}, index) => {
       if (!isEmpty(isCompleted) && text) {
         return `<li data-id="${index}" class="pointer">
-            ${isCompleted ? `<strike>(완료) ${text}</strike>` : text }
+            ${isCompleted ? `<del>(완료) ${text}</del>` : text }
             <button name="remove">삭제</button>
           </li>`;
       }

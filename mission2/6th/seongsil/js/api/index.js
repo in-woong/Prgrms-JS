@@ -1,6 +1,6 @@
 const fetchTodoList = () => {
   try {
-    const todoList = JSON.parse(localStorage.getItem('todoList')) || null;
+    const todoList = JSON.parse(localStorage.getItem('todoList')) || [];
     return todoList;
   } catch (e) {
     alert('정보를 불러오는데 실패했습니다.');
