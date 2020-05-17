@@ -1,9 +1,14 @@
 function TodoList($target, data) {
-  this.$target = $target
+
   this.data = data
 
+  this.setState = (nextData) => {
+    this.data = nextData
+    this.render()
+  }
+
   this.render = () => {
-    this.$target.innerHTML =
+    $target.innerHTML =
     `<ul>
       ${this.data.map(({ text, isCompleted }, index) =>
         `<li data-index="${index}">
@@ -12,11 +17,6 @@ function TodoList($target, data) {
         </li>`
       ).join('')}
     </ul>`
-  }
-
-  this.setState = function (nextData) {
-    this.data = nextData
-    this.render()
   }
 
   this.render()
