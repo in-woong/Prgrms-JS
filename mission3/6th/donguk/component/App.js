@@ -1,14 +1,12 @@
-import Component from './Component.js'
 import SearchHistory from './SearchHistory.js'
 import SearchInput from './SearchInput.js'
 import SearchResult from './SearchResult.js'
 import SearchError from './SearchError.js'
-import request  from '../apis/api.js'
+import request from '../apis/api.js'
 import { checkSelector, checkResults } from '../utils/validation.js'
 
-export default class App extends Component {
+export default class App {
   constructor(props) {
-    super()
     const { selector, title } = props
     checkSelector(selector)
     this.$target = document.querySelector(selector)
@@ -18,42 +16,42 @@ export default class App extends Component {
   }
 
   render() {
-    const searchHistorySelector = 'search-history'
-    const searchInputSelector = 'search-input'
-    const searchResultSelector = 'search-result'
-    const searchErrorSelector = 'search-error'
+    const searchHistoryClassName = 'search-history'
+    const searchInputClassName = 'search-input'
+    const searchResultClassName = 'search-result'
+    const searchErrorClassName = 'search-error'
     this.$target.innerHTML = `<div class="app-container">
                                 <h1>${this.title}</h1>
-                                <ul class=${searchHistorySelector}></ul>
-                                <div class=${searchInputSelector}></div>
-                                <div class=${searchErrorSelector}></div>
-                                <div class=${searchResultSelector}></div>
+                                <ul class=${searchHistoryClassName}></ul>
+                                <div class=${searchInputClassName}></div>
+                                <div class=${searchErrorClassName}></div>
+                                <div class=${searchResultClassName}></div>
                               </div>`
 
     this.$searchHistory = new SearchHistory({
-      selector: `.${searchHistorySelector}`,
+      selector: `.${searchHistoryClassName}`,
       histories: this.histories,
       onSearch: this.handleSearch.bind(this),
     })
 
     new SearchInput({
-      selector: `.${searchInputSelector}`,
+      selector: `.${searchInputClassName}`,
       onSearch: this.handleSearch.bind(this),
       onAddHistory: this.handleAddHistory.bind(this),
     })
 
     this.$searchResult = new SearchResult({
-      selector: `.${searchResultSelector}`,
+      selector: `.${searchResultClassName}`,
       images: this.data,
     })
 
     this.$searchError = new SearchError({
-      selector: `.${searchErrorSelector}`,
+      selector: `.${searchErrorClassName}`,
     })
   }
 
   componentMount() {
-    this.nextId = -1 // for history indexing
+    this.nextId = null // for history indexing
     this.data = []
     this.histories = []
   }
@@ -67,29 +65,34 @@ export default class App extends Component {
   }
 
   async handleSearch(keyword) {
-    if (keyword) {
-      try {
-        const res = await request(keyword)
-        const result = await res.json()
-        if (result.length > 0) {
-          this.setState(result
-            .map((element) => ({ url: element.imageUrl, title: element.title }))
-            .filter((element) => element.url))
-        }
-      } catch (e) {
-        const { status, message } = e
-        this.$searchError.setState({ status, message })
+    if (!keyword) { return }
+    try {
+      const res = await request(keyword)
+      const result = await res.json()
+      if (result.length > 0) {
+        this.setState(result
+          .map((element) => ({
+            imageUrl: element.imageUrl,
+            title: element.title,
+          }))
+          .filter((element) => element.imageUrl))
       }
+    } catch (e) {
+      const { status, message } = e
+      this.$searchError.setState({
+        status,
+        message,
+      })
     }
   }
 
   handleAddHistory(keyword) {
     if (keyword) {
-      this.histories = this.histories.concat({
-        id: this.nextId + 1,
-        value: keyword,
-      })
-      this.nextId += 1
+      this.histories = [...this.histories, {
+        id: this.nextId ? this.nextId + 1 : 0,
+        keyword,
+      }]
+      this.nextId = this.nextId + 1 // for next index
       this.$searchHistory.setState(this.histories)
     }
   }

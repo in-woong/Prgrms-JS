@@ -1,9 +1,7 @@
-import Component from './Component.js'
 import { checkSelector } from '../utils/validation.js'
 
-export default class SearchHistory extends Component {
+export default class SearchHistory {
   constructor(props) {
-    super()
     const { selector, histories, onSearch } = props
     checkSelector(selector)
     this.$target = document.querySelector(selector)
@@ -15,8 +13,8 @@ export default class SearchHistory extends Component {
 
   render() {
     this.$target.innerHTML = this.histories.map((history, index) => {
-      const { id, value } = history
-      return `<li data-id=history-${id} class="history-item">${index + 1}. ${value}</li>`
+      const { id, keyword } = history
+      return `<li data-id=${id} class="history-item">${index + 1}. ${keyword}</li>`
     }).join('')
   }
 

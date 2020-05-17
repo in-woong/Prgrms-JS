@@ -7,9 +7,9 @@ export const checkResults = (results) => {
   if (!Array.isArray(results)) throw new Error('images type must be Array')
   if (results.length > 0) {
     results.forEach((element) => {
-      const { url, title } = element
+      const { imageUrl, title } = element
       if (typeof title !== 'string') throw new Error('title type must be String')
-      else if (typeof url !== 'string') throw new Error('url type must be String')
+      else if (typeof imageUrl !== 'string') throw new Error('imageUrl type must be String')
     })
   }
 }
