@@ -2,18 +2,19 @@ import Component from './Component.js'
 import TodoInput from './TodoInput.js'
 import TodoList from './TodoList.js'
 import TodoCount from './TodoCount.js'
-import {checkSelector, checkData} from "../utils/validation.js"
-import {storage} from "../utils/storage.js"
+import { checkSelector, checkData } from '../utils/validation.js'
+import { storage } from '../utils/storage.js'
+import { STORAGE_DATA } from '../utils/constant.js'
 
 export default class App extends Component {
   constructor(props) {
     super()
-    const {selector, title} = props
+    const { selector, title } = props
     checkSelector(selector)
     this.$target = document.querySelector(selector)
     this.title = title
-    this.removeAllEvent = new CustomEvent('removeAll', {bubbles: true})
-    this.componentMount() // data 설정
+    this.removeAllEvent = new CustomEvent('removeAll', { bubbles: true })
+    this.componentBeforeMount() // data 설정
     this.render()
   }
 
@@ -21,7 +22,7 @@ export default class App extends Component {
     const todoInputSelector = 'todo-input'
     const todoListSelector = 'todo-list'
     const todoCountSelector = 'todo-count'
-    const removeAllBtnSelector = `remove-all`
+    const removeAllBtnSelector = 'remove-all'
     this.$target.innerHTML = `<h1>${this.title}</h1>
                               <div class=${todoInputSelector}></div>
                               <ul class=${todoListSelector}></ul>
@@ -29,30 +30,29 @@ export default class App extends Component {
                               <div><button class=${removeAllBtnSelector}>Remove All</button></div>`
     new TodoInput({
       selector: `.${todoInputSelector}`,
-      onInput: this.handleInput
+      onInput: this.handleInput.bind(this),
     })
     this.$todoList = new TodoList({
       selector: `.${todoListSelector}`,
       todos: this.data,
-      onToggle: this.handleToggle,
-      onDelete: this.handleDelete,
+      onToggle: this.handleToggle.bind(this),
+      onDelete: this.handleDelete.bind(this),
     })
     this.$todoCount = new TodoCount({
       selector: `.${todoCountSelector}`,
       total: this.data.length,
       completedCount: this.data.filter((element) => element.isCompleted).length,
     })
-    this.$target.addEventListener('removeAll', (e) => {
+    this.$target.addEventListener('removeAll', () => {
       this.setState([])
     })
     this.$removeAllBtn = document.querySelector(`.${removeAllBtnSelector}`)
-    this.$removeAllBtn.addEventListener('click',(e)=>{
+    this.$removeAllBtn.addEventListener('click', (e) => {
       e.target.dispatchEvent(this.removeAllEvent)
     })
   }
 
-  componentMount() {
-    const STORAGE_DATA = 'todos'
+  componentBeforeMount() {
     const initialData = storage.get(STORAGE_DATA)
     checkData(initialData)
     this.data = initialData
@@ -64,14 +64,13 @@ export default class App extends Component {
       this.$todoList.setState(nextData)
       this.$todoCount.setState({
         completedCount: this.data.filter((element) => element.isCompleted).length,
-        total: this.data.length
+        total: this.data.length,
       })
-      const STORAGE_DATA = 'todos'
       storage.set(STORAGE_DATA, this.data)
     }
   }
 
-  handleInput = (value) => {
+  handleInput(value) {
     this.setState([...this.data, {
       id: this.data.length !== 0 ? Math.max(...this.data.map((element) => element.id)) + 1 : 0,
       text: value,
@@ -79,20 +78,23 @@ export default class App extends Component {
     }])
   }
 
-  handleToggle = (id) => {
+  handleToggle(id) {
     const targetIndex = this.data.findIndex((element) => element.id === id)
     if (targetIndex > -1) {
       const newData = [
         ...this.data.slice(0, targetIndex),
-        {...this.data[targetIndex], isCompleted: !this.data[targetIndex]['isCompleted']},
+        {
+          ...this.data[targetIndex],
+          isCompleted: !this.data[targetIndex].isCompleted,
+        },
         ...this.data.slice(targetIndex + 1, this.data.length)]
       this.setState(newData)
     }
   }
 
-  handleDelete = (id) => {
+  handleDelete(id) {
     const targetIndex = this.data.findIndex((element) => element.id === id)
-    if (targetIndex > -1){
+    if (targetIndex > -1) {
       this.setState(this.data.filter((element) => element.id !== id))
     }
   }
