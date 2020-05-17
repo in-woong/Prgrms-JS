@@ -1,16 +1,14 @@
-import Component from './Component.js'
-import {checkSelector, checkData} from "../utils/validation.js"
+import { checkSelector, checkData } from '../utils/validation.js'
 
 
-function convertElementToHTMLString(element){
+function convertElementToHTMLString(element) {
   const { text, isCompleted } = element
   return isCompleted ? `<s>${text}</s>` : text
 }
 
-export default class TodoList extends Component {
+export default class TodoList {
   constructor(props) {
-    const {selector, todos, onToggle, onDelete} = props
-    super();
+    const { selector, todos, onToggle, onDelete } = props
     checkSelector(selector)
     this.$target = document.querySelector(selector)
     this.data = todos
@@ -26,27 +24,28 @@ export default class TodoList extends Component {
         ${convertElementToHTMLString(element)}
         <button class="finish-btn">Fin</button>
         <button class="delete-btn">Del</button>
-    </li>`).join('')
+    </li>`)
+      .join('')
   }
 
-  bindEvent(){ // event 위임
+  bindEvent() { // event 위임
     this.$target.addEventListener('click', (e) => {
       const { target } = e
-      if (target && target.className === 'finish-btn'){
+      if (target && target.className === 'finish-btn') {
         const { dataset } = e.target.parentNode
-        if (dataset && dataset.id){
+        if (dataset && dataset.id) {
           this.onToggle(Number(dataset.id))
         }
-      } else if (target && target.className === 'delete-btn'){
+      } else if (target && target.className === 'delete-btn') {
         const { dataset } = e.target.parentNode
-        if (dataset && dataset.id){
+        if (dataset && dataset.id) {
           this.onDelete(Number(dataset.id))
         }
       }
     })
   }
 
-  setState(nextData){
+  setState(nextData) {
     checkData(nextData)
     this.data = nextData
     this.render()

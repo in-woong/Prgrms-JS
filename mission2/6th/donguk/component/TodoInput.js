@@ -1,10 +1,8 @@
-import Component from "./Component.js"
-import {checkSelector} from "../utils/validation.js"
+import { checkSelector } from '../utils/validation.js'
 
-export default class TodoInput extends Component {
+export default class TodoInput {
   constructor(props) {
     const { selector, onInput } = props
-    super()
     checkSelector(selector)
     this.onInput = onInput
     this.$target = document.querySelector(selector)
