@@ -16,7 +16,7 @@ function App() {
     },
   ]
 
-  this.listbox = () => {
+  this.listboxAppend = () => {
     const $listBox = document.createElement("ul");
     $listBox.className = "todo-data__listbox"
     $list.appendChild($listBox)
@@ -55,7 +55,7 @@ function App() {
     })
   }
 
-  this.listbox();
+  this.listboxAppend();
   this.render();
   this.remove();
 

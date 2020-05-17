@@ -6,11 +6,12 @@ function TodoCount(count) {
   this.count = count
   this.countState = () => {
     completeCount = 0
-    Array.prototype.forEach.call(document.querySelectorAll('.checkbox-input'), element = () => {
-      let $checkbox = element.currentTarget;
-      console.log(TodoList);
-
-    })
+    Array.from(document.querySelectorAll('.checkbox-input'), element = () => {
+      element.addEventListener('click', e => {
+        const $checkbox = e.currentTarget;
+        console.log($checkbox.value);
+      })
+    }) 
   }
 
   this.render = () => {
