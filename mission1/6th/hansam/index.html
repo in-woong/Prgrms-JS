@@ -7,6 +7,8 @@
 
 <body>
   <div id="todo-list"></div>
+  <div id="todo-list2"></div>
+  <div id="todo-list3"></div>
   <script>
     var data = [
       {
@@ -16,9 +18,27 @@
         text: 'JS 복습하기'
       }
     ]
+    
+    var data2 = [
+      {
+        text: '일찍 잠들기'
+      },
+      {
+        text: '야식 안먹기'
+      }
+    ]
+    
+    var data3 = [
+      {
+        text: '알고리즘 공부하기'
+      },
+      {
+        text: '결과물 만들기'
+      }
+    ]
 
     function TodoList(data, id){
-
+      
         this.data = data; //배열
         this.id = id;     //div id = "todo-list"
 
@@ -49,7 +69,13 @@
 
     var todoList = new TodoList(data, 'todo-list'); //new키워드 통해 함수호출후 todoList 변수에 담기
     todoList.render(); //todoList안에 render 함수호출
+    
+    var todoList2 = new TodoList(data2, 'todo-list2'); //new키워드 통해 함수호출후 todoList 변수에 담기
+    todoList2.render(); //todoList안에 render 함수호출
+    
+    var todoList3 = new TodoList(data3, 'todo-list3'); //new키워드 통해 함수호출후 todoList 변수에 담기
+    todoList3.render(); //todoList안에 render 함수호출
 
   </script>
 </body>
-</html>  
+</html>   
