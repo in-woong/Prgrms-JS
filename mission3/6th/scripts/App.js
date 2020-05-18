@@ -12,16 +12,15 @@ class App {
     this.getData(keyword)
   }
 
-  getData = (keyword) => {
-    fetch(`https://jjalbot.com/api/jjals?text=${keyword}`)
-      .then((data) => data.json())
-      .then((data) => {
-        this.setState(data)
-        this.render()
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+  getData = async (keyword) => {
+    try {
+      const data = await fetch(`https://jjalbot.com/api/jjals?text=${keyword}`)
+      const jsonData = await data.json()
+      this.setState(jsonData)
+      this.render()
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   setState = (data) => {
