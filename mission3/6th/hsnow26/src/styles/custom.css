@@ -1,0 +1,36 @@
+html {
+    font-size: 10px;
+}
+
+#search-result {
+    margin-top : 1rem
+}
+
+#search-keyword {
+    width: 100%;
+    max-width: 20rem;
+}
+#search-history-frame {
+    width: 100%;
+    max-width: 20rem;
+    top: 3rem;
+    z-index: 100;
+    position: fixed;
+}
+
+#search-history {
+    background-color: #fff;
+    /* display: none; */
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding : 0;
+    border : solid 0.15rem #EAEAEA;
+    font-size: 1.6rem;
+ }
+
+ li {
+    padding : 0.2rem 0.5rem 0.2rem 0.5rem;
+ }

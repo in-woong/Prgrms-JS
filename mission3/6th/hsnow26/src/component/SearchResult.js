@@ -1,15 +1,16 @@
-export default function SearchResult(data, target){
-    
+import { createSearchResultInnerHTML } from '../utils/filter.js'
+
+export default function SearchResult(jjalImages, target){
     this.$target = document.querySelector(target)
-    this.data = data
+    this.jjalImages = jjalImages
 
     this.render = _ => {
-        const htmlString = this.data.map(d => `<img src="${d.imageUrl}">`).join('')
+        const htmlString = createSearchResultInnerHTML(this.jjalImages)
         this.$target.innerHTML = htmlString
     }
 
     this.setState = nextData => {
-        this.data = nextData
+        this.jjalImages = nextData
         this.render()
     }  
 }
