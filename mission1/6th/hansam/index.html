@@ -1,0 +1,39 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list"></div>
+  <script>
+    var data = [
+      {
+        text: 'JS 공부하기'
+      },
+      {
+        text: 'JS 복습하기'
+      }
+    ]
+
+    function TodoList(data, id){
+
+        this.data = data; //배열
+        this.id = id;     //div id = "todo-list"
+        
+        this.render = function(){  
+            let htmlText = '';	//스트링 null값
+            this.data.forEach(function(element) { // 배열변수 data 반복문 
+                 htmlText += `<div>${element.text}</div>` // 배열안에 반복문돌면서 htmlText에 저장
+            });
+            document.querySelector(`#${id}`).innerHTML = htmlText; // 담아뒀던 배열 화면에 출력
+        };
+    }
+    
+    var todoList = new TodoList(data, 'todo-list'); //new키워드 통해 함수호출후 todoList 변수에 담기
+    todoList.render(); //todoList안에 render 함수호출
+
+  </script>
+</body>
+</html> 
