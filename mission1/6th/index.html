@@ -123,19 +123,17 @@
         this.selectorId = selectorId
         this.todo = todo
 
-        this.getTodoListHtmlText = (isCompleted, todoText) => {
-          return (isCompleted) ? `<div><s>${todoText}</s></div>` : `<div>${todoText}</div>`
-        }
+        this.createTodoListHtml = (isCompleted, todoText) => (isCompleted) ? `<div><s>${todoText}</s></div>` : `<div>${todoText}</div>`
 
-        this.createTodoInnerHtml = () => {
-          let todoText = this.todo.map((element) => {
-            return this.getTodoListHtmlText(element.isCompleted, element.text)
+        this.renderTodoInnerHtml = () => {
+          const todoHtml = this.todo.map((element) => {
+            return this.createTodoListHtml(element.isCompleted, element.text)
           }).join('')
-          document.querySelector(this.selectorId).innerHTML = todoText
+          document.querySelector(this.selectorId).innerHTML = todoHtml
         }
 
         this.render = function(){
-          isCorrectTodoList(this) ? this.createTodoInnerHtml() : ""
+          isCorrectTodoList(this) ? this.renderTodoInnerHtml() : ""
         }
 
         this.setState = function(nextData){
