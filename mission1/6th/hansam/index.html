@@ -21,7 +21,23 @@
 
         this.data = data; //배열
         this.id = id;     //div id = "todo-list"
-        
+
+
+     //#50 보너스 구현사항
+      if (!(this instanceof TodoList)) {
+        throw new Error("new를 사용하세요.")
+      }
+
+      if (!Array.isArray(this.data)) {
+        throw new Error("array type이 필요합니다.")
+      }
+
+      this.data.forEach(data => {
+        if (typeof data.text !== 'string') {
+          throw new Error("data 항목은 string이 필요합니다. ")
+        }
+      })
+
         this.render = function(){  
             let htmlText = '';	//스트링 null값
             this.data.forEach(function(element) { // 배열변수 data 반복문 
@@ -30,10 +46,10 @@
             document.querySelector(`#${id}`).innerHTML = htmlText; // 담아뒀던 배열 화면에 출력
         };
     }
-    
+
     var todoList = new TodoList(data, 'todo-list'); //new키워드 통해 함수호출후 todoList 변수에 담기
     todoList.render(); //todoList안에 render 함수호출
 
   </script>
 </body>
-</html> 
+</html>  
