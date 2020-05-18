@@ -1,7 +1,7 @@
 import SearchInput from './SearchInput.js'
 import SearchHistory from './SearchHistory.js'
 import SearchResult from './SearchResult.js'
-import FetchData from './FetchData.js'
+import fetchData from './fetchData.js'
 
 function App() {
   this.data = null
@@ -9,7 +9,12 @@ function App() {
 
   const onSearchKeyword = async (keyword) => {
     this.keyword = keyword
-    this.setState(await FetchData({ text: keyword }))
+    try {
+      const images = await fetchData({ text: keyword })
+      this.setState(images)
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   this.init = function () {

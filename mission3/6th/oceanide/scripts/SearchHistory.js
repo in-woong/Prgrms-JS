@@ -11,14 +11,14 @@ function SearchHistory(keyword, $searchHistory, $onSearchKeyword) {
   const addHistory = (keyword) => {
     let history = [...this.history]
 
-    if (!history.includes(keyword)) {
-      if (history.length < MAX_HISTORY_SIZE) {
-        history = [...history, keyword]
-      } else {
-        history = [...history.splice(1), keyword]
-      }
+    if (history.includes(keyword)) {
+      return history
     }
-    return history
+
+    const isMaxHistorySize = history.length >= MAX_HISTORY_SIZE
+    return isMaxHistorySize
+      ? [...history.splice(1), keyword]
+      : [...history, keyword]
   }
 
   this.bindEvents = function () {
