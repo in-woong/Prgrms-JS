@@ -1,20 +1,20 @@
-function searchHistory({ $historySelector, searchHistory, onSearch }) {
+function SearchHistory({ $history, searchHistorySet, onSearch }) {
   this.render = () => {
-    $historySelector.innerHTML = `${[...searchHistory]
+    $history.innerHTML = `${[...searchHistorySet]
       .map((value) => `<div class="history-keyword">${value}</div>`)
       .join('')}`
   }
 
-  $historySelector.addEventListener('click', (event) => {
+  $history.addEventListener('click', (event) => {
     onSearch(event.target.innerText)
   })
 
   // 5th 동현님 소스 참조
   this.setState = (keyword) => {
-    searchHistory.add(keyword)
-    //console.log('history', searchHistory)
+    searchHistorySet.add(keyword)
+    console.log('history', searchHistorySet)
     this.render()
   }
 }
 
-export default searchHistory
+export default SearchHistory

@@ -6,6 +6,6 @@ export async function loadData(keyword) {
     const result = await response.json()
     return result
   } catch (e) {
-    throw new Error(e)
+    console.log(e)
   }
 }

@@ -1,11 +1,13 @@
-function searchResult({ data, $resultSelector }) {
+function SearchResult({ data, $result }) {
   this.setState = (nextData) => {
     data = nextData
     this.render()
+    console.log('SearchResult', data)
   }
 
   this.render = () => {
-    $resultSelector.innerHTML = `<div>${
+    console.log(data)
+    $result.innerHTML = `<div>${
       Object.keys(data).length === 0
         ? '<div>결과값이 없습니다</div>'
         : data.map(
@@ -15,4 +17,4 @@ function searchResult({ data, $resultSelector }) {
   }
 }
 
-export default searchResult
+export default SearchResult

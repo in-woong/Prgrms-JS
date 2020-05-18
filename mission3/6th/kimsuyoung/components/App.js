@@ -1,40 +1,45 @@
-import searchKeyword from './searchKeyword.js'
-import searchResult from './searchResult.js'
-import searchHistory from './searchHistory.js'
+import SearchKeyword from './searchKeyword.js'
+import SearchResult from './searchResult.js'
+import SearchHistory from './searchHistory.js'
 import { loadData } from '../api.js'
 
 export default function App() {
-  this.data = []
-  this.searchHistory = new Set()
+  this.data = {
+    images: [],
+    keywords: new Set(),
+  }
 
-  this.onSearch = async (keyword) => {
+  const onSearch = async (keyword) => {
     try {
       const result = await loadData(keyword)
-      this.data = result
-      this.setState(keyword)
+      this.data.images = result
+      this.data.keywords = keyword
+      this.setState(this.data)
     } catch (e) {
       console.error(e)
     }
   }
 
-  this.searchKeyword = new searchKeyword({
-    $inputSelector: document.querySelector('#search-keyword'),
-    onSearch: this.onSearch,
+  this.searchKeyword = new SearchKeyword({
+    $input: document.querySelector('#search-keyword'),
+    onSearch: onSearch,
   })
 
-  this.searchResult = new searchResult({
-    data: this.data,
-    $resultSelector: document.querySelector('#search-result'),
+  this.searchResult = new SearchResult({
+    data: this.data.images,
+    $result: document.querySelector('#search-result'),
   })
 
-  this.searchHistory = new searchHistory({
-    $historySelector: document.querySelector('#search-history'),
-    searchHistory: this.searchHistory,
-    onSearch: this.onSearch,
+  this.searchHistory = new SearchHistory({
+    $history: document.querySelector('#search-history'),
+    searchHistorySet: this.data.keywords,
+    onSearch: onSearch,
   })
 
-  this.setState = (keyword) => {
-    this.searchResult.setState(this.data)
-    this.searchHistory.setState(keyword)
+  this.setState = (nextData) => {
+    this.data = nextData
+    console.log('app this.setState', this.data)
+    this.searchResult.setState(nextData.images)
+    this.searchHistory.setState(nextData.keywords)
   }
 }

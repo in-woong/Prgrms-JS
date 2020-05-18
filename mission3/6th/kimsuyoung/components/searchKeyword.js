@@ -6,11 +6,11 @@ const debounce = (callback) => {
   }
 }
 
-function searchKeyword({ $inputSelector, onSearch }) {
-  $inputSelector.addEventListener(
+function SearchKeyword({ $input, onSearch }) {
+  $input.addEventListener(
     'keyup',
     debounce((e) => onSearch(e.target.value))
   )
 }
 
-export default searchKeyword
+export default SearchKeyword
