@@ -1,12 +1,8 @@
 import {todoListErrorMessage} from '../../error.js'
 
-const isUndefinedOrNull = (todo) => {
-  return todo === null || todo === undefined
-}
+const isUndefinedOrNull = todo => todo === null || todo === undefined
 
-const isInvalidTodoProperty = (todo) => {
-  return todo.some(element => !('text' in element) || !('isCompleted' in element))
-}
+const isInvalidTodoProperty = todo => todo.some(element => !('text' in element) || !('isCompleted' in element))
 
 // new 키워드 유무 체크
 const checkTodoListDataType = (todoList) => {
@@ -24,24 +20,13 @@ const checkTodoListDataType = (todoList) => {
 }
 
 //공백 제거
-const isTodoTextEmpty = (text) => {
-  return text.replace(/\s/gi, "") === ""
-}
+const isTodoTextEmpty = text => text.replace(/\s/gi, "") === ""
 
 // 올바른 파라메터 체크
 const checkCorrectInstance = (todoList, constructor) => {
   if(!(todoList instanceof constructor)){
     throw new Error(todoListErrorMessage['not_object'])
   }
-}
-
-const getTodoListHTMLText = (element, index) => {
-  return `
-          <div class='todo' data-todo-id = ${index}>
-            ${(element.isCompleted) ? `<s><span class='todo-text'>${element.text}</span></s>` : `<span class='todo-text'>${element.text}</span>`}
-            <span class='todo-close'>&times;</span>
-          </div>
-         `
 }
 
 export function isCorrectTodoList(thisObject, constructor){
@@ -65,9 +50,7 @@ export function isCorrectTodoInputOrTodoCount(thisObject, constructor){
   return true
 }
 
-export function getTodo(text){
-  return {text: text, isCompleted: false}
-}
+export const createTodo = (text) => ({text: text, isCompleted: false})
 
 //todo class 리턴
 export function getTodoElement(element){
@@ -75,10 +58,15 @@ export function getTodoElement(element){
 }
 
 export function createTodoInnerHTML(todo){
-  const todoHTMLText = todo.map((element, index) => {
-    return getTodoListHTMLText(element, index)
+  const todoHTML = todo.map((element, index) => {
+    return `
+            <div class='todo' data-todo-id = ${index}>
+              ${(element.isCompleted) ? `<s><span class='todo-text'>${element.text}</span></s>` : `<span class='todo-text'>${element.text}</span>`}
+              <span class='todo-close'>&times;</span>
+            </div>
+          `
   }).join('')
-  return todoHTMLText
+  return todoHTML
 }
 
 export function createTodoCountInnerHTML(todo){

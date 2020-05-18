@@ -5,10 +5,11 @@ export function saveTodoInLocalStorage(todo){
 }
 
 export function getTodoInLocalStorage(){
-    return localStorage.getItem(TODO_KEY) === null ? [] : getJsonParseWithKey(TODO_KEY)
+    const todos = getJson(TODO_KEY)
+    return todos === null ? [] : todos
 }
 
-const getJsonParseWithKey = (key) => {
+const getJson = (key) => {
     try {
         return JSON.parse(localStorage.getItem(key))
     } catch (e){

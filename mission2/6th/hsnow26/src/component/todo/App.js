@@ -1,7 +1,7 @@
 import TodoList from './TodoList.js'
 import TodoInput from './TodoInput.js'
 import TodoCount from './TodoCount.js'
-import {getTodo} from '../../utils/todo/filerter_item.js'
+import {createTodo} from '../../utils/todo/filerter_item.js'
 import {saveTodoInLocalStorage, getTodoInLocalStorage} from '../../store/index.js'
 
 export default function App(){
@@ -12,7 +12,7 @@ export default function App(){
     });
     
     const onAddTodo = (todoText) => {
-        const addedTodo = this.todos.concat(getTodo(todoText))
+        const addedTodo = this.todos.concat(createTodo(todoText))
         setState(addedTodo)
     }
 
@@ -28,7 +28,7 @@ export default function App(){
         setState(updatedIsCompletedTodo)
     }
     
-    const render = () => {
+    const makeSubComponent = () => {
         this.todoList = new TodoList($app, this.todos, onRemoveTodo, isCompletedToggle)
         this.todoInput = new TodoInput(onAddTodo)
         this.todoCount = new TodoCount(this.todos)
@@ -43,7 +43,7 @@ export default function App(){
 
     const init = () => {
         this.todos = getTodoInLocalStorage()
-        render()
+        makeSubComponent()
     }
 
     init()
