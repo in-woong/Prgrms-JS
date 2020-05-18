@@ -1,12 +1,12 @@
 function SearchResult($target, data) {
-    ValidateTarget($target)
-    ValidateData(data)
+    validateTarget($target)
+    validateData(data)
 
     this.data = data
     this.target = $target
 
     this.setState = function (nextData) {
-        ValidateData(nextData)
+        validateData(nextData)
 
         this.data = nextData
         this.render()

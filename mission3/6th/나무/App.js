@@ -2,13 +2,13 @@ function App() {
     this.data = null;
     this.inputText = null;
 
-    const $SEARCH_RESULT = document.querySelector('#search-result');
-    const $SEARCH_KEYWORD = document.querySelector('#search-keyword');
+    const $searchResult = document.querySelector('#search-result');
+    const $searchKeyword = document.querySelector('#search-keyword');
 
-    const searchResult = new SearchResult($SEARCH_RESULT, this.data);
-    const searchInput = new SearchInput($SEARCH_KEYWORD, this.inputText);
+    const searchResult = new SearchResult($searchResult, this.data);
+    const searchInput = new SearchInput($searchKeyword, this.inputText);
 
-    $SEARCH_KEYWORD.addEventListener('keyup', function (e) {
+    $searchKeyword.addEventListener('keyup', function (e) {
         this.inputText = e.target.value;
         searchInput.fetchData({
             inputText: this.inputText,

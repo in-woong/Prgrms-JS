@@ -1,16 +1,16 @@
-function ValidateTarget($target) {
+function validateTarget($target) {
     if (!($target instanceof HTMLElement)) {
         throw new Error('Wrong Instance')
     }
 }
 
-function ValidateString(str) {
-    if (str !== typeof stringValue) {
-        console.log('Should be Type of String value')
+function validateString(str) {
+    if (str !== typeof String) {
+        console.log('Should be Type of String')
     }
 }
 
-function ValidateData(data) {
+function validateData(data) {
     if (!data) {
         console.log('Invalid data')
     }
