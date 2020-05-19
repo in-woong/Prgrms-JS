@@ -63,21 +63,25 @@
         return true;
     }
 
-    function TodoList(data, targetId = '#todo-list') {
+    function TodoList(data, targetId) {
         if (!(this instanceof TodoList)) {
             throw new Error('new 키워드가 필요합니다!');
         }
 
+        if (!targetId) {
+            throw new Error('targetId가 필요합니다!')
+        }
+
         this.data = validateData(data) && data;
 
-        this.getTodoHtml = function() {
+        this.createTodoHtml = function() {
             return this.data.reduce((acc, todoItem) => (
                 `${acc}<li>${todoItem.isCompleted ? `<s>${todoItem.text}</s>` : todoItem.text}</li>`
             ), '');
         };
 
         this.render = function() {
-            document.querySelector(`${targetId}`).innerHTML = `<ul>${this.getTodoHtml()}</ul>`
+            document.querySelector(`${targetId}`).innerHTML = `<ul>${this.createTodoHtml()}</ul>`
         };
 
         this.setState = function (nextData) {
@@ -87,7 +91,7 @@
     }
 
     try {
-        const todoList = new TodoList(data);
+        const todoList = new TodoList(data, '#todo-list');
         const studyTodoList = new TodoList(studyData, '#study-todo-list');
         const workTodoList = new TodoList(workData, '#work-todo-list');
 
