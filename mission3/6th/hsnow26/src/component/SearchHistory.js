@@ -5,10 +5,7 @@ export default function SearchHistory($target, onSelectedHistory){
 
   $target.addEventListener('click', function(e) {
     const {target} = e
-    
-
-    onSelectedHistory(target.value)
-    console.log('SearchHistory click', target.value)
+    onSelectedHistory(target.innerHTML)
   })
 
   this.setState = (nextData) => {
@@ -17,8 +14,7 @@ export default function SearchHistory($target, onSelectedHistory){
   }
 
   this.render = _ => {
-    const keywordHistories = [...this.keywordHistories]
-    const htmlString = createSearchHistoryInnerHTML(keywordHistories.reverse()) //최신 순으로 정렬
+    const htmlString = createSearchHistoryInnerHTML([...this.keywordHistories].reverse()) //최신 순으로 정렬
     $target.innerHTML = htmlString
   }
 

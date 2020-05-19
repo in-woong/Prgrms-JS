@@ -2,15 +2,17 @@ html {
     font-size: 10px;
 }
 
-#search-result {
-    margin-top : 1rem
+
+body {
+    margin: 0rem;
+    padding: 0rem;
 }
 
-#search-keyword {
-    width: 100%;
-    max-width: 20rem;
+#app {
+    padding: 0.8rem;
 }
-#search-history-frame {
+
+#search-input-frame {
     width: 100%;
     max-width: 20rem;
     top: 3rem;
@@ -18,9 +20,29 @@ html {
     position: fixed;
 }
 
+#search-result {
+    top: 6rem;
+    position: relative;
+}
+
+#search-keyword {
+    width: 100%;
+    max-width: 20rem;
+    line-height : 3rem;
+    padding: 0rem;
+    margin: 0rem;
+    font-size: 1.4rem;
+
+}
+#search-history-frame {
+    width: 100%;
+    max-width: 20rem;
+    position: relative;
+}
+
 #search-history {
     background-color: #fff;
-    /* display: none; */
+    display: none;
 }
 
 ul {
@@ -28,7 +50,7 @@ ul {
     margin: 0;
     padding : 0;
     border : solid 0.15rem #EAEAEA;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
  }
 
  li {

@@ -1,41 +1,34 @@
 import { fetchJjalImages } from '../store/index.js'
 import { searchDebounce } from '../utils/timeControl.js'
-import { isSearchInputEmpty } from '../utils/filter.js'
+import { isSearchInputEmpty, isSearchKeyword } from '../utils/filter.js'
+import { setDisplayShow, setDisplayHide } from '../utils/display.js'
 import SearchHistory from './SearchHistory.js'
 
-export default function SearchResult(target, onSearchedJjalImage){
+export default function SearchResult($app, onSearchedJjalImage){
   this.keywordHistories = []
-  const $searchInput = document.querySelector(target)
-  const $searchHistory = document.querySelector('#search-history')
-  let searchHistory = this.searchHistory
+  const $searchInput = $app.querySelector('#search-keyword')
+  const $searchHistory = $app.querySelector('#search-history')
 
-  $searchInput.addEventListener('keyup', function(e) {
-    console.log('keyup')
+  $app.addEventListener('keyup', function(e) {
     const {target} = e
     searchDebounce(getJjalImages, target.value)
   })
 
-  $searchInput.addEventListener('click', function(e) {
+  //검색창 이외의 부분 클릭 시, 검색기록 숨김
+  $app.addEventListener('click', function(e) {
     const { target } = e
-    console.log('focus', target.id)
-    if(target.id === target){
-      $searchHistory.style.display = 'block'
+    if(isSearchKeyword(target.id)){
+      setDisplayShow($searchHistory)
       return
     }
-
-    if(target.className === 'search-history-item'){
-      $searchHistory.style.display = 'block'
-      return
-    }
-    
-    // $searchHistory.style.display = 'none'
+    setDisplayHide($searchHistory)
   })
 
-  $searchInput.addEventListener('focusout', function(e) {
-    console.log('blur', searchHistory)
-    // $ssearchHistory.click()  
-    // $searchHistory.style.display = 'none'
-  })
+  const onSelectedHistory = (history) => {
+    $searchInput.value = history
+    getJjalImages($searchInput.value)
+    addHistory($searchInput.value)
+  }
 
   const getJjalImages = async value => {
     const jjalImages = await fetchJjalImages(value)
@@ -44,27 +37,22 @@ export default function SearchResult(target, onSearchedJjalImage){
     if(isSearchInputEmpty(value)){ //공백 입력 시 저장 안함
       return
     }
-    addedHistory(value.trim()) //앞 뒤 공백 제거 후, 히스토리 저장
+    addHistory(value.trim()) //앞 뒤 공백 제거 후, 히스토리 저장
   }
 
-  const onSelectedHistory = (history) => {
-    addedHistory(history)
-  }
-
-  const addedHistory = (history) => {
+  const addHistory = (history) => {
     const keywordHistories = this.keywordHistories.filter(element => element !== history).concat(history)
     setState(keywordHistories)
   }
 
   const setState = (nextData) =>{
     this.keywordHistories = nextData
-    searchHistory.setState(this.keywordHistories)
+    this.searchHistory.setState(this.keywordHistories)
   }
 
-  this.render = _ => {
-    searchHistory = new SearchHistory($searchHistory, onSelectedHistory)
-    console.log('render', searchHistory)
+  this.createSubComponent = _ => {
+    this.searchHistory = new SearchHistory($searchHistory, onSelectedHistory)
   }
 
-  this.render()
+  this.createSubComponent()
 }

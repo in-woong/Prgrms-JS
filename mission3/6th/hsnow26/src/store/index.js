@@ -2,11 +2,9 @@ const JJAL_URL = 'https://jjalbot.com/api/jjals'
 
 const createOneParameterGetUrl = (url, key, value = null) => {
   const getUrl = new URL(url)
-  
   if(!value){
     return getUrl
   }
-
   const search_params = getUrl.searchParams;
   search_params.set(key, value);
   getUrl.search = search_params.toString();
