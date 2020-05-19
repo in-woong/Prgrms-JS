@@ -71,13 +71,16 @@
                  htmlText +=  element.isCompleted ? `<strike>${element.text}</strike><br/>` : `<div>${element.text}</div>`; // 배열안에 반복문돌면서 htmlText에 저장
             });
             document.querySelector(`#${id}`).innerHTML = htmlText; // 담아뒀던 배열 화면에 출력
+        };
 
-            //보너스 구현사항 - setState #67
-            this.setState = nextData =>{
+
+        //보너스 구현사항 - setState #67
+        this.setState = nextData =>{
             this.data = nextData;
             this.render();
-           };
         };
+
+
     }
 
     var todoList = new TodoList(data, 'todo-list'); //new키워드 통해 함수호출후 todoList 변수에 담기
