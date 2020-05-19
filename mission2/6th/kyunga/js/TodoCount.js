@@ -1,19 +1,19 @@
-import { validateData, isValidInstance } from './validator.js';
+import { validateInstance } from './validator.js';
 
-export default function TodoCount(data) {
-    isValidInstance(this, TodoCount);
+export default function TodoCount({totalCount, completedCount}) {
+    validateInstance(this, TodoCount);
 
-    this.data = data;
+    this.totalCount = totalCount;
+    this.completedCount = completedCount;
 
     this.render = function () {
         const $todoCount = document.querySelector('.todo-count');
-        this.data.filter(item => item.isCompleted).length;
-
-        $todoCount.innerHTML = `총 : ${this.data.length} / 완료 : ${this.data.filter(todoItem => todoItem.isCompleted).length}`;
+        $todoCount.innerHTML = `총 : ${this.totalCount} / 완료 : ${this.completedCount}`;
     };
 
-    this.setState = function (nextData) {
-        this.data = validateData(nextData) && nextData;
+    this.setState = function ({totalCount, completedCount}) {
+        this.totalCount = totalCount;
+        this.completedCount = completedCount;
         this.render();
     }
 }

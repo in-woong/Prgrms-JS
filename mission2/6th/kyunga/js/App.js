@@ -1,10 +1,11 @@
 import TodoList from './TodoList.js';
 import TodoCount from './TodoCount.js';
 import TodoInput from './TodoInput.js';
+import { validateData } from './validator.js';
 
 export default function App() {
+    this.TODO_STORAGE_KEY = 'todoList';
     this.data = [];
-    this.dataKey = 'todoList';
 
     this.init = function () {
         this.todoList = new TodoList(this.data, {
@@ -12,25 +13,39 @@ export default function App() {
             removeItem: this.removeItem,
             removeAllItem: this.removeAllItem,
         });
-        this.todoCount = new TodoCount(this.data);
+        this.todoCount = new TodoCount(this.getTodoCount());
         this.todoInput = new TodoInput(this.addItem);
 
         this.getStorage();
-        this.setState();
+        this.setState(this.data);
     };
 
-    this.getStorage = function () {
-        const todoListStorage = localStorage.getItem(this.dataKey) || '[]';
-        this.data = JSON.parse(todoListStorage);
+    this.getStorage = function (defaultValue = []) {
+        try {
+            const todoListStorage = localStorage.getItem(this.TODO_STORAGE_KEY);
+            this.data = JSON.parse(todoListStorage);
+        } catch (e) {
+            alert(e.message);
+            return defaultValue;
+        }
     };
 
-    this.setStorage = function () {
-        localStorage.setItem(this.dataKey, JSON.stringify(this.data));
+    this.syncStorage = function () {
+        localStorage.setItem(this.TODO_STORAGE_KEY, JSON.stringify(this.data));
     };
 
-    this.setState = function () {
+    this.setState = function (nextData) {
+        this.data = validateData(nextData) && nextData;
+
         this.todoList.setState(this.data);
-        this.todoCount.setState(this.data);
+        this.todoCount.setState(this.getTodoCount());
+    };
+
+    this.getTodoCount = () => {
+        return {
+            totalCount: this.data.length,
+            completedCount: this.data.filter(todoItem => todoItem.isCompleted).length,
+        }
     };
 
     this.addItem = (inputText) => {
@@ -39,29 +54,29 @@ export default function App() {
             isCompleted: false,
         });
 
-        this.setStorage();
-        this.setState();
+        this.syncStorage();
+        this.setState(this.data);
     };
 
     this.toggleItem = (index) => {
         this.data[index].isCompleted = !this.data[index].isCompleted;
 
-        this.setStorage();
-        this.setState();
+        this.syncStorage();
+        this.setState(this.data);
     };
 
     this.removeItem = (index) => {
         this.data.splice(index, 1);
 
-        this.setStorage();
-        this.setState();
+        this.syncStorage();
+        this.setState(this.data);
     };
 
     this.removeAllItem = () => {
-        this.data.splice(0, this.data.length);
+        this.data = [];
 
-        this.setStorage();
-        this.setState();
+        this.syncStorage();
+        this.setState(this.data);
     };
 
     this.init();

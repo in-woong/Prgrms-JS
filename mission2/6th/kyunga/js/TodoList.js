@@ -1,14 +1,14 @@
-import { validateData, isValidInstance } from './validator.js';
+import { validateData, validateInstance } from './validator.js';
 
 export default function TodoList(data, handleEvents) {
-    isValidInstance(this, TodoList);
+    validateInstance(this, TodoList);
 
     this.data = data;
     const $todoList = document.querySelector('#todo-list');
     const $removeAllButton = document.querySelector('.button-all-remove');
 
     $todoList.addEventListener('click', e => {
-        const target  = e.target;
+        const target = e.target;
         const index = Array.from(target.closest('ul').childNodes).indexOf(target.closest('li'));
 
         // 할 일 텍스트 클릭하여 완료

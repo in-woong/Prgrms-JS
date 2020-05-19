@@ -18,10 +18,10 @@ function validateData(data) {
     return true;
 }
 
-function isValidInstance(thisObject, component) {
+function validateInstance(thisObject, component) {
     if (!(thisObject instanceof component)) {
         throw new Error(`new 키워드가 필요합니다!`);
     }
 }
 
-export { validateData, isValidInstance }
+export { validateData, validateInstance }

@@ -1,10 +1,15 @@
-import { isValidInstance } from './validator.js';
+import { validateInstance } from './validator.js';
 
 export default function TodoInput(removeItem) {
-    isValidInstance(this, TodoInput);
+    validateInstance(this, TodoInput);
 
     const $inputTodo = document.querySelector('.input-todo');
     const $buttonAdd = document.querySelector('.button-add');
+    const $form = document.querySelector('form');
+
+    $form.addEventListener('submit', e => {
+        e.preventDefault();
+    });
 
     $buttonAdd.addEventListener('click', e => {
         this.onClickAdd();
