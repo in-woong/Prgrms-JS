@@ -29,7 +29,7 @@ body {
     width: 100%;
     max-width: 20rem;
     line-height : 3rem;
-    padding: 0rem;
+    padding: 0rem 1rem 0rem 1rem;
     margin: 0rem;
     font-size: 1.4rem;
 
@@ -50,9 +50,9 @@ ul {
     margin: 0;
     padding : 0;
     border : solid 0.15rem #EAEAEA;
-    font-size: 1.4rem;
+    font-size: 1.4rem;  
  }
 
  li {
-    padding : 0.2rem 0.5rem 0.2rem 0.5rem;
+    padding : 0.2rem 1rem 0.2rem 1rem;
  }
