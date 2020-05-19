@@ -1,11 +1,10 @@
-import { fetchJjalImages } from '../store/index.js'
+import { fetchJjalImages, saveSearchHistory, getSearchHistory } from '../store/index.js'
 import { searchDebounce } from '../utils/timeControl.js'
 import { isSearchInputEmpty, isSearchKeyword } from '../utils/filter.js'
 import { setDisplayShow, setDisplayHide } from '../utils/display.js'
 import SearchHistory from './SearchHistory.js'
 
 export default function SearchResult($app, onSearchedJjalImage){
-  this.keywordHistories = []
   const $searchInput = $app.querySelector('#search-keyword')
   const $searchHistory = $app.querySelector('#search-history')
 
@@ -48,11 +47,16 @@ export default function SearchResult($app, onSearchedJjalImage){
   const setState = (nextData) =>{
     this.keywordHistories = nextData
     this.searchHistory.setState(this.keywordHistories)
+    saveSearchHistory(this.keywordHistories)
   }
 
-  this.createSubComponent = _ => {
-    this.searchHistory = new SearchHistory($searchHistory, onSelectedHistory)
+  const createSubComponent = _ => {
+    this.searchHistory = new SearchHistory($searchHistory, onSelectedHistory, this.keywordHistories)
+  }
+  const init = _ => {
+    this.keywordHistories = getSearchHistory()
+    createSubComponent()
   }
 
-  this.createSubComponent()
+  init()
 }

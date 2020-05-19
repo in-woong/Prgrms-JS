@@ -1,4 +1,5 @@
 const JJAL_URL = 'https://jjalbot.com/api/jjals'
+const SEARCH_HISTORY_KEY = 'search_history'
 
 const createOneParameterGetUrl = (url, key, value = null) => {
   const getUrl = new URL(url)
@@ -8,7 +9,7 @@ const createOneParameterGetUrl = (url, key, value = null) => {
   const search_params = getUrl.searchParams;
   search_params.set(key, value);
   getUrl.search = search_params.toString();
-  
+
   return getUrl.toString()
 }
 
@@ -25,3 +26,21 @@ export const fetchJjalImages = value => {
   });
 }
 
+
+export function saveSearchHistory(histories){
+  localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(histories))
+}
+
+export function getSearchHistory(){
+  const histories = getObject(SEARCH_HISTORY_KEY)
+  return histories === null ? [] : histories
+}
+
+const getObject = (key) => {
+  try {
+      return JSON.parse(localStorage.getItem(key))
+  } catch (e){
+      console.error(e)
+      return []
+  }
+}

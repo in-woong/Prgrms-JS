@@ -1,7 +1,7 @@
 import { createSearchHistoryInnerHTML } from '../utils/filter.js'
 
-export default function SearchHistory($target, onSelectedHistory){
-  this.keywordHistories = []
+export default function SearchHistory($target, onSelectedHistory, keywordHistories){
+  this.keywordHistories = keywordHistories
 
   $target.addEventListener('click', function(e) {
     const {target} = e
