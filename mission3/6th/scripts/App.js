@@ -6,6 +6,7 @@ class App {
     this.$searchResult = document.querySelector('#search-result')
     this.data = []
     new SearchInput(this.searchHandler)
+    this.searchResult = new SearchResult(this.data, this.$searchResult)
   }
 
   searchHandler = (keyword) => {
@@ -28,7 +29,7 @@ class App {
   }
 
   render = () => {
-    new SearchResult(this.data, this.$searchResult)
+    this.searchResult.setState(this.data)
   }
 }
 

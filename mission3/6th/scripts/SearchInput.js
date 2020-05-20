@@ -3,22 +3,26 @@ import SearchHistroy from './SearchHistroy.js'
 class SearchInput {
   constructor(searchHandler) {
     this.timer = null
-    this.searchHistory = []
+    this.searchHistoryData = []
     this.$searchInput = document.querySelector('#search-keyword')
     this.$historyContainer = document.createElement('div')
     this.searchHandler = searchHandler
+    this.searchHistory = new SearchHistroy(
+      this.searchHistoryData,
+      this.$historyContainer
+    )
     this.$searchInput.addEventListener('keyup', (e) => {
       this.searchKeywordHandler(e.target.value)
     })
     this.$historyContainer.addEventListener('click', (e) => {
       const { index } = e.target.dataset
-      this.searchKeywordHandler(this.searchHistory[index])
+      this.searchKeywordHandler(this.searchHistoryData[index])
     })
   }
 
   setSearchHistory = (keyword) => {
-    if (!this.searchHistory.includes(keyword) && keyword) {
-      this.searchHistory = [...this.searchHistory, keyword]
+    if (!this.searchHistoryData.includes(keyword) && keyword) {
+      this.searchHistoryData = [...this.searchHistoryData, keyword]
     }
   }
 
@@ -34,7 +38,7 @@ class SearchInput {
   }
 
   render = () => {
-    new SearchHistroy(this.searchHistory, this.$historyContainer)
+    this.searchHistory.setState(this.searchHistoryData)
     this.$searchInput.insertAdjacentElement('afterend', this.$historyContainer)
   }
 }

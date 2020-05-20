@@ -11,6 +11,11 @@ class SearchResult {
       .join('')
     this.$container.innerHTML = htmlString
   }
+
+  setState = (data) => {
+    this.data = data
+    this.render()
+  }
 }
 
 export default SearchResult
