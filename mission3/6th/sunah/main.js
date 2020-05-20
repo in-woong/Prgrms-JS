@@ -1,20 +1,3 @@
-;(function() {
-  document
-    .querySelector('#search-keyword')
-    .addEventListener('keyup', function(e) {
-      fetch(`https://jjalbot.com/api/jjals?text=${e.target.value}`)
-        .then(x => x.json())
-        .then(data => {
-          console.log(JSON.stringify(data, null, 2))
-            searchResult.setState(data);
-          // const htmlString = `${data
-          //   .map(d => `<img src="${d.imageUrl}">`)
-          //   .join('')}`
-          // document.querySelector('#search-result').innerHTML = htmlString
-        })
-    })
-})()
-
 const dummyData = [
     {
         _id: "5c2258053d184c40e5be90d1",
@@ -102,5 +85,9 @@ const dummyData = [
     }
 ]
 
+const searchInput = new SearchInput('#search-input');
 const searchResult = new SearchResult(dummyData, '#search-result');
+const searchAPI = new SearchAPI();
+const searchHistory = new SearchHistory('#search-history');
+
 searchResult.render();

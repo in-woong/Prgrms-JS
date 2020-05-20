@@ -5,10 +5,16 @@
   </head>
   <body>
     <div id="app">
-      <input id="search-keyword" />
+      <p id="search-state"></p>
+      <div id="search-history">기록된 히스토리가 없습니다</div>
+      <input id="search-input" />
       <div id="search-result"></div>
     </div>
+
+    <script src="./SearchInput.js"></script>
     <script src="./SearchResult.js"></script>
+    <script src="./SearchAPI.js"></script>
+    <script src="./SearchHistory.js"></script>
     <script src="./main.js"></script>
   </body>
 </html>
