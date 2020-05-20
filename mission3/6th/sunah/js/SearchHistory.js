@@ -6,7 +6,7 @@ function SearchHistory(selector) {
 
         if(target.getAttribute('class') === 'link') {
             const value = target.innerText;
-            searchAPI.getAPIdata(value);
+            searchAPI.getSearchdata(value);
         }
     })
 

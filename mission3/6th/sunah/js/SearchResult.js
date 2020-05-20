@@ -1,4 +1,4 @@
-function SearchResult(data, selector) {
+function SearchResult(selector, data = []) {
     this.data = data;
     this.$target = document.querySelector(selector);
 
@@ -14,12 +14,11 @@ function SearchResult(data, selector) {
     }
 
     this.setState = function(nextData) {
-        console.log(nextData);
         this.data = nextData;
         this.render();
     };
 
     this.render = function() {
-        this.$target.innerHTML = `<ul>${this.createInnerHTML()}</ul>`;
+        this.$target.innerHTML = this.createInnerHTML();
     }
 }

@@ -1,5 +1,5 @@
 function SearchAPI() {
-    this.getAPIdata = async function(query) {
+    this.getSearchdata = async function(query) {
         try {
             const postResponse = await fetch(
                 `https://jjalbot.com/api/jjals?text=${query}`
