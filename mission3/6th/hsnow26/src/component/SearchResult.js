@@ -4,7 +4,7 @@ export default function SearchResult(jjalImages, target){
     this.$target = document.querySelector(target)
     this.jjalImages = jjalImages
 
-    this.render = _ => {
+    this.render = () => {
         const htmlString = createSearchResultInnerHTML(this.jjalImages)
         this.$target.innerHTML = htmlString
     }

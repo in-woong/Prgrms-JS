@@ -50,10 +50,10 @@ export default function SearchResult($app, onSearchedJjalImage){
     saveSearchHistory(this.keywordHistories)
   }
 
-  const createSubComponent = _ => {
+  const createSubComponent = () => {
     this.searchHistory = new SearchHistory($searchHistory, onSelectedHistory, this.keywordHistories)
   }
-  const init = _ => {
+  const init = () => {
     this.keywordHistories = getSearchHistory()
     createSubComponent()
   }

@@ -13,7 +13,7 @@ export default function SearchHistory($target, onSelectedHistory, keywordHistori
     this.render()
   }
 
-  this.render = _ => {
+  this.render = () => {
     const htmlString = createSearchHistoryInnerHTML([...this.keywordHistories].reverse()) //최신 순으로 정렬
     $target.innerHTML = htmlString
   }

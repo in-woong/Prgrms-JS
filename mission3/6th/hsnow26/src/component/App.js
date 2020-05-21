@@ -19,7 +19,7 @@ export default function App(){
         })
     }
 
-    this.createSubComponent = _ => {
+    this.createSubComponent = () => {
         this.components = [
             new SearchResult(this.jjalImage, '#search-result'),
             new SearchInput($app, onSearchedJjalImage)
