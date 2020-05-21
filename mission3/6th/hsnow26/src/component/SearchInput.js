@@ -15,12 +15,13 @@ export default function SearchResult($app, onSearchedJjalImage){
   }
 
   const getJjalImages = async value => {
+    if(isSearchInputEmpty(value)){ //공백 입력 시 검색 안함
+      return
+    }
+
     const jjalImages = await fetchJjalImages(value)
     onSearchedJjalImage(jjalImages)
     
-    if(isSearchInputEmpty(value)){ //공백 입력 시 저장 안함
-      return
-    }
     addHistory(value.trim()) //앞 뒤 공백 제거 후, 히스토리 저장
   }
 
