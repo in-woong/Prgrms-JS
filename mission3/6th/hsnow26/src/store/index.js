@@ -7,9 +7,9 @@ const createOneParameterGetUrl = (url, key, value = null) => {
   if(!value){
     return getUrl
   }
-  const search_params = getUrl.searchParams;
-  search_params.set(key, value);
-  getUrl.search = search_params.toString();
+  const searchParams = getUrl.searchParams;
+  searchParams.set(key, value);
+  getUrl.search = searchParams.toString();
 
   return getUrl.toString()
 }
