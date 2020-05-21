@@ -1,4 +1,8 @@
+import { validateElement } from '../validator.js'
+
 function SearchHistory({ $history, searchHistorySet, onSearch }) {
+  validateElement($history)
+
   this.render = () => {
     $history.innerHTML = `${[...searchHistorySet]
       .map((value) => `<div class="history-keyword">${value}</div>`)
