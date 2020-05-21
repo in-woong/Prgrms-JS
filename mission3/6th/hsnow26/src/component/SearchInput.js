@@ -8,21 +8,6 @@ export default function SearchResult($app, onSearchedJjalImage){
   const $searchInput = $app.querySelector('#search-keyword')
   const $searchHistory = $app.querySelector('#search-history')
 
-  $app.addEventListener('keyup', function(e) {
-    const {target} = e
-    searchDebounce(getJjalImages, target.value)
-  })
-
-  //검색창 이외의 부분 클릭 시, 검색기록 숨김
-  $app.addEventListener('click', function(e) {
-    const { target } = e
-    if(isSearchKeyword(target.id)){
-      setDisplayShow($searchHistory)
-      return
-    }
-    setDisplayHide($searchHistory)
-  })
-
   const onSelectedHistory = (history) => {
     $searchInput.value = history
     getJjalImages($searchInput.value)
@@ -44,16 +29,28 @@ export default function SearchResult($app, onSearchedJjalImage){
     setState(keywordHistories)
   }
 
+  $app.addEventListener('keyup', searchDebounce(getJjalImages)) //searchDebounce 클로저 이용
+
+  //검색창 이외의 부분 클릭 시, 검색기록 숨김
+  $app.addEventListener('click', function(e) {
+    const { target } = e
+    if(isSearchKeyword(target.id)){
+      setDisplayShow($searchHistory)
+      return
+    }
+    setDisplayHide($searchHistory)
+  })
+
   const setState = (nextData) =>{
     this.keywordHistories = nextData
     this.searchHistory.setState(this.keywordHistories)
     saveSearchHistory(this.keywordHistories)
   }
 
-  const createSubComponent = () => {
+  const createSubComponent = _ => {
     this.searchHistory = new SearchHistory($searchHistory, onSelectedHistory, this.keywordHistories)
   }
-  const init = () => {
+  const init = _ => {
     this.keywordHistories = getSearchHistory()
     createSubComponent()
   }

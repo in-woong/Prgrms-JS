@@ -1,9 +1,16 @@
-let debounce
-const SEARCH_DEBOUNCE_TIME = 500
+export const searchDebounce = (getJjalImages) => {    
+    let debounce 
+    const SEARCH_DEBOUNCE_TIME = 500
+    
+    return (e) => {
+        const { target } = e
 
-export const searchDebounce = (getJjalImages, value) => {    
-    clearTimeout(debounce);
-    debounce = setTimeout(() => {
-        getJjalImages(value)
-    }, SEARCH_DEBOUNCE_TIME);
+        if(debounce){
+            clearTimeout(debounce);
+        }
+        
+        debounce = setTimeout(() => {
+            getJjalImages(target.value)
+        }, SEARCH_DEBOUNCE_TIME);
+    }
 }
