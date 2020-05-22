@@ -1,8 +1,8 @@
-import { BASE_URL } from './constant.js'
+import { BASE_URL, DELAY } from './constant.js'
 
 export const fetchTodos = async (username) => {
   try {
-    const res = await fetch(`${BASE_URL}/${username}`)
+    const res = await fetch(`${BASE_URL}/${username}?delay=${DELAY}`)
     if (!res.ok) {
       throw new Error({ status: res.status, statusText: res.statusText })
     }

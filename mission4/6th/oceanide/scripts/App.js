@@ -10,6 +10,7 @@ import {
   deleteTodo,
   fetchUsers,
 } from './api.js'
+import LoadingView from './LoadingView.js'
 
 function App() {
   const onAddTodo = async (text) => {
@@ -53,14 +54,20 @@ function App() {
 
   this.render = function () {
     this.$title.innerHTML = `${this.username} 할일 목록`
+    this.$app.classList.toggle('app-hide')
   }
 
   this.setState = async function (username) {
     this.username = username
 
+    this.loadingView.setState(true)
+    this.render()
+
     this.todos = await fetchTodos(this.username)
     this.todoList.setState(this.todos)
     this.todoCount.setState(this.todos)
+
+    this.loadingView.setState(false)
     this.render()
   }
 
@@ -73,12 +80,14 @@ function App() {
     this.todos = []
     this.users = []
 
+    this.$app = document.querySelector('#app')
     this.$title = document.querySelector('#title')
     this.$todos = document.querySelector('#todos')
     this.$todoInput = document.querySelector('#todo-input')
     this.$todoCount = document.querySelector('#todo-count')
     this.$todoUsersBtn = document.querySelector('#todo-users-btn')
     this.$todoUsers = document.querySelector('#todo-users')
+    this.$loadingView = document.querySelector('#loading')
 
     this.bindEvents()
 
@@ -92,6 +101,7 @@ function App() {
       this.todoInput = new TodoInput(this.$todoInput, onAddTodo)
       this.todoCount = new TodoCount(this.todos, this.$todoCount)
       this.todoUsers = new TodoUsers(this.users, this.$todoUsers, onClickUser)
+      this.loadingView = new LoadingView(this.$loadingView)
     } catch (err) {
       console.log(err)
     }

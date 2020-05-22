@@ -24,6 +24,10 @@ body {
   position: relative;
 }
 
+.app-hide {
+  display: none;
+}
+
 #title {
   margin-bottom: 1rem;
   font-size: 1.5rem;
@@ -110,4 +114,9 @@ body {
 #todo-users li {
   padding: 0.5em;
   cursor: pointer;
+}
+
+#loading {
+  font-size: 2rem;
+  padding: 1.5em;
 }
