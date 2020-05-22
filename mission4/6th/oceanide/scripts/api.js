@@ -64,3 +64,16 @@ export const deleteTodo = async (username, id) => {
     console.log(err)
   }
 }
+
+export const fetchUsers = async () => {
+  try {
+    const res = await fetch(`${BASE_URL}/users`)
+    if (!res.ok) {
+      throw new Error({ status: res.status, statusText: res.statusText })
+    }
+
+    return await res.json()
+  } catch (err) {
+    console.log(err)
+  }
+}
