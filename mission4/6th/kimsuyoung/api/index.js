@@ -21,7 +21,6 @@ export const getTodoLists = async () => {
 }
 
 export const postTodoList = async (text) => {
-  console.log(text)
   try {
     await fetch(`${BASE_URL}/suyoung`, {
       method: 'POST',
@@ -31,6 +30,16 @@ export const postTodoList = async (text) => {
       body: JSON.stringify({
         content: text,
       }),
+    })
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const deleteTodoList = async (id) => {
+  try {
+    await fetch(`${BASE_URL}/suyoung/${id}`, {
+      method: 'DELETE',
     })
   } catch (error) {
     console.error(error)

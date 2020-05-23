@@ -1,7 +1,12 @@
 import UserList from './UserList.js'
 import TodoList from './TodoList.js'
 import TodoInput from './TodoInput.js'
-import { getUsers, getTodoLists, postTodoList } from '../api/index.js'
+import {
+  getUsers,
+  getTodoLists,
+  postTodoList,
+  deleteTodoList,
+} from '../api/index.js'
 
 export default function App() {
   this.data = {
@@ -17,6 +22,10 @@ export default function App() {
   this.TodoList = new TodoList({
     $todoList: document.querySelector('#todo-list'),
     data: this.data.todoList,
+    onDelete: async (id) => {
+      await deleteTodoList(id)
+      this.setState()
+    },
   })
 
   this.TodoInput = new TodoInput({
