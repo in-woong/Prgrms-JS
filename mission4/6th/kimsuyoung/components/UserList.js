@@ -1,6 +1,6 @@
 function UserList({ $userList, data }) {
   this.render = () => {
-    $userList.innerHTML = `<ul style="display:flex">
+    $userList.innerHTML = `<ul>
         ${data && data.map((user) => `<li>${user}</li>`).join('')}
       </ul>
     `

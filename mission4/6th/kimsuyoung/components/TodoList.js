@@ -5,7 +5,7 @@ function TodoList({ $todoList, data, onDelete, onToggleCompleted }) {
       data
         .map(
           ({ content, _id }) => `
-        <div id=${_id}>
+        <div id=${_id} class="item">
             <span class="text-area">${content}</span>
             <button class="delete-button">삭제</button>
         </div>`
