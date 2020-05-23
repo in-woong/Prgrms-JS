@@ -45,3 +45,13 @@ export const deleteTodoList = async (id) => {
     console.error(error)
   }
 }
+
+export const toggleTodoList = async (id) => {
+  try {
+    await fetch(`${BASE_URL}/suyoung/${id}/toggle`, {
+      method: 'PUT',
+    })
+  } catch (error) {
+    console.error(error)
+  }
+}

@@ -1,17 +1,20 @@
 import UserList from './UserList.js'
 import TodoList from './TodoList.js'
 import TodoInput from './TodoInput.js'
+import TodoListDone from './TodoListDone.js'
 import {
   getUsers,
   getTodoLists,
   postTodoList,
   deleteTodoList,
+  toggleTodoList,
 } from '../api/index.js'
 
 export default function App() {
   this.data = {
     userList: [],
     todoList: [],
+    todoListDone: [],
   }
 
   this.UserList = new UserList({
@@ -24,6 +27,23 @@ export default function App() {
     data: this.data.todoList,
     onDelete: async (id) => {
       await deleteTodoList(id)
+      this.setState()
+    },
+    onToggleCompleted: async (id) => {
+      await toggleTodoList(id)
+      this.setState()
+    },
+  })
+
+  this.TodoListDone = new TodoListDone({
+    $todoListDone: document.querySelector('#todo-done-list'),
+    data: this.data.todoListDone,
+    onDelete: async (id) => {
+      await deleteTodoList(id)
+      this.setState()
+    },
+    onToggleCompleted: async (id) => {
+      await toggleTodoList(id)
       this.setState()
     },
   })
@@ -41,7 +61,12 @@ export default function App() {
     this.todoListData = await getTodoLists()
 
     this.UserList.setState(this.userListData)
-    this.TodoList.setState(this.todoListData)
+    this.TodoList.setState(
+      this.todoListData.filter((value) => !value.isCompleted)
+    )
+    this.TodoListDone.setState(
+      this.todoListData.filter((value) => value.isCompleted)
+    )
     this.TodoInput.setState('')
   }
 

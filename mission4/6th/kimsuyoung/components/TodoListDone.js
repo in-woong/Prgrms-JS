@@ -1,20 +1,20 @@
-function TodoList({ $todoList, data, onDelete, onToggleCompleted }) {
+function TodoListDone({ $todoListDone, data, onDelete, onToggleCompleted }) {
   this.render = () => {
-    $todoList.innerHTML = `${
+    $todoListDone.innerHTML = `${
       data &&
       data
         .map(
           ({ content, _id }) => `
-        <div id=${_id}>
-            <span class="text-area">${content}</span>
-            <button class="delete-button">삭제</button>
-        </div>`
+          <div id=${_id}>
+              <span class="text-area">${content} (완료)</span>
+              <button class="delete-button">삭제</button>
+          </div>`
         )
         .join('')
     }`
   }
 
-  $todoList.addEventListener('click', (event) => {
+  $todoListDone.addEventListener('click', (event) => {
     const { target } = event
     if (target.className === 'delete-button') {
       onDelete(target.parentNode.id)
@@ -26,11 +26,11 @@ function TodoList({ $todoList, data, onDelete, onToggleCompleted }) {
 
   this.setState = (nextData) => {
     data = nextData
-    console.log('todo list', data)
+    console.log('todo list done', data)
     this.render()
   }
 
   this.render()
 }
 
-export default TodoList
+export default TodoListDone
