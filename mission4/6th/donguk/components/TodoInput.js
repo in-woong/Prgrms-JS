@@ -17,7 +17,7 @@ export default function TodoInput(props) {
     this.$input.placeholder = '할 일을 입력하세요 :)'
 
     this.$inputButton = document.createElement('button')
-    this.$inputButton.innerHTML = '가하기'
+    this.$inputButton.innerHTML = 'ADD'
 
     this.$inputSection.appendChild(this.$input)
     this.$inputSection.appendChild(this.$inputButton)

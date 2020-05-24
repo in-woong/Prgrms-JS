@@ -8,16 +8,37 @@ export default function TodoInputErrorModal({ selector }) {
   checkSelector(selector)
 
   this.render = () => {
-    const $modalContent = document.createElement('span')
-    $modalContent.innerHTML = '할 일을 입력해주세요.'
+    const $children = document.createElement('div') // input error modal box
+    $children.className = 'input-error-box'
+    const $title = document.createElement('h2')
+    $title.innerHTML = '입력 오류'
+
+    const $modalContent = document.createElement('div')
+    $modalContent.className = 'modal-content'
+    $modalContent.innerHTML = '할 일을 입력해주세요!!'
+
+    this.$closeButton = document.createElement('button')
+    this.$closeButton.className = 'modal-close'
+    this.$closeButton.innerHTML = '닫기'
+
+    $children.appendChild($title)
+    $children.appendChild($modalContent)
+    $children.appendChild(this.$closeButton)
     this.$todoInputErrorModal = new ModalWrapper({
       selector,
-      modalContent: $modalContent,
+      $children,
     })
+    this.bindEvent()
   }
 
   this.setState = (visible) => {
     this.$todoInputErrorModal.setState(visible)
+  }
+
+  this.bindEvent = () => {
+    this.$closeButton.addEventListener('click', () => {
+      this.setState(false) // modal off
+    })
   }
 
   this.render()
