@@ -8,21 +8,22 @@ export default function TodoInput(props) {
   const { selector } = props
   checkSelector(selector)
 
-  this.render = () => {
-    this.$inputSection = document.createElement('section')
-    this.$inputSection.id = 'todo-input'
+  this.init = () => {
+    const $inputSection = document.createElement('section')
+    $inputSection.id = 'todo-input'
 
     this.$input = document.createElement('input')
     this.$input.type = 'text'
     this.$input.placeholder = '할 일을 입력하세요 :)'
 
     this.$inputButton = document.createElement('button')
+    this.$inputButton.className = 'input-btn'
     this.$inputButton.innerHTML = 'ADD'
 
-    this.$inputSection.appendChild(this.$input)
-    this.$inputSection.appendChild(this.$inputButton)
+    $inputSection.appendChild(this.$input)
+    $inputSection.appendChild(this.$inputButton)
     const $app = document.querySelector(selector)
-    $app.appendChild(this.$inputSection)
+    $app.appendChild($inputSection)
 
     this.$todoInputErrorModal = new TodoInputErrorModal({ selector: '#todo-input' })
     this.bindEvent()
@@ -47,5 +48,5 @@ export default function TodoInput(props) {
     })
   }
 
-  this.render()
+  this.init()
 }

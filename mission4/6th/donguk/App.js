@@ -1,5 +1,5 @@
 import { checkSelector } from './utils/validation.js'
-import { TodoInput } from './components/index.js'
+import { Header, TodoInput } from './components/index.js'
 
 export default function App(props) {
   if (new.target !== App) {
@@ -8,12 +8,13 @@ export default function App(props) {
   const { selector } = props
   checkSelector(selector)
 
-  this.render = () => {
+  this.init = () => {
+    this.$header = new Header({ selector, userName: 'donguk' })
     this.$todoInput = new TodoInput({ selector })
   }
   this.handleAddTodo = async (todo) => {
 
   }// todo add
 
-  this.render()
+  this.init()
 }
