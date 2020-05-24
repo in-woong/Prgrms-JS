@@ -2,6 +2,7 @@ function TodoList(listContainer, data) {
     if (!new.target) {
         throw new Error('Error: TodoList Object is not set properly');
     }
+    //TODO: validate를 분리해서 재사용성 높이기, 파라미터 같이 전달
     this.validate = function () {
         if (!this.data) {
             throw new Error('Error: Invalid data type');
@@ -17,6 +18,9 @@ function TodoList(listContainer, data) {
             if (!('text' in element)) {
                 throw new Error('Error: Key "text" is missing');
             }
+            if (!('isCompleted' in element)) {
+                throw new Error('Error: Key "isCompleted" is missing');
+            }
         })
     }
 
@@ -24,10 +28,10 @@ function TodoList(listContainer, data) {
     this.listContainer = listContainer;
     this.render = function () {
         this.listContainer.innerHTML = `<ul>
-        ${this.data.map(({text, isCompleted}) => 
+        ${this.data.map(({text, isCompleted}, index) => 
         (isCompleted? 
-            `<li><s>${text}</s></li>`:
-            `<li>${text}<button class="done-button">했당</button></li>`)).join('')}
+            `<li class="todo-item"><s>${text}</s></li>`:
+            `<li class="todo-item" data-index="${index}">${text}<button class="remove-button">했당</button></li>`)).join('')}
             </ul>`;
     };
     this.setState = function (nextData) {
@@ -36,6 +40,8 @@ function TodoList(listContainer, data) {
         }
 
         this.data = nextData;
+
+        this.validate();
         this.render();
     }
 

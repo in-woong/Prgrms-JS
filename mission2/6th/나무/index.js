@@ -1,4 +1,4 @@
-let jsData = [
+const jsData = [
     {
         text: 'JS 공부하기',
         isCompleted: true
@@ -8,7 +8,7 @@ let jsData = [
         isCompleted: false
     }
 ];
-let lifeData = [
+const lifeData = [
     {
         text: '운동하기',
         isCompleted: false
@@ -18,7 +18,7 @@ let lifeData = [
         isCompleted: true
     }
 ];
-let tripData = [
+const tripData = [
     {
         text: 'NY',
         isCompleted: true
@@ -32,51 +32,53 @@ const jsList = new TodoList(document.getElementById('todo-list-js'), jsData);
 const lifeList = new TodoList(document.getElementById('todo-list-life'), lifeData);
 const tripList = new TodoList(document.getElementById('todo-list-trip'), tripData);
 
+const todoListMapper = {
+    'js': {
+        component: jsList,
+        data: jsData
+    },
+    'life': {
+        component: lifeList,
+        data: lifeData
+    },
+    'trip': {
+        component: tripList,
+        data: tripData
+    }
+}
+
 const inputText = document.querySelector('#todo-list-inputText');
 inputText.addEventListener('keypress', function (e) {
     if (e.keyCode === ENTER) {
+        e.preventDefault();
+        
         if (!/\S/.test(inputText.value) || inputText === null) {
             document.querySelector('#error-message').innerHTML = '할일을 입력하지 않았습니다.';
             return;
         }
 
-        let todoType = document.querySelector('input[name="todo-type"]:checked');
+        const todoType = document.querySelector('input[name="todo-type"]:checked');
         if (!todoType) {
             document.querySelector('#error-message').innerHTML = '할일을 추가할 리스트를 선택해 주세요';
             return;
         }
         
-        switch (todoType.value) {
-            case 'js':
-                jsData.push({
-                    text: inputText.value,
-                    isCompleted: false
-                });
-                jsList.setState(jsData);
-                break;
-            case 'life':
-                lifeData.push({
-                    text: inputText.value,
-                    isCompleted: false
-                });
-                lifeList.setState(lifeData);
-                break;
-            case 'trip':
-                tripData.push({
-                    text: inputText.value,
-                    isCompleted: false
-                });
-                tripList.setState(tripData);
-                break;
-            default:
-                break;
+        if (todoListMapper[todoType.value]) {
+            todoListMapper[todoType.value].data.push({
+                text: inputText.value,
+                isCompleted: false
+            });
+
+            todoListMapper[todoType.value].component.setState(todoListMapper[todoType.value].data)
         }
     }
 });
 
-const doneButtons = document.querySelectorAll('.done-button');
-doneButtons.forEach(button => {
+const removeButtons = document.querySelectorAll('.remove-button');
+removeButtons.forEach(button => {
     button.addEventListener('click', function (e) {
-        //흠
+        const $div = e.target.closest('.todo-item')
+        const { index } = $div.dataset
+        //TODO: Todo list 별로 하려면 Todolist 객체를 받아와야 할것같은데?
     });
 });
