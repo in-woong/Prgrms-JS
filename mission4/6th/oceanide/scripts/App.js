@@ -3,13 +3,7 @@ import TodoList from './TodoList.js'
 import TodoCount from './TodoCount.js'
 import TodoUsers from './TodoUsers.js'
 import { USERNAME, SHOW_USERS, HIDE_USERS } from './constant.js'
-import {
-  fetchTodos,
-  addTodo,
-  toggleTodo,
-  deleteTodo,
-  fetchUsers,
-} from './api.js'
+import { getTodos, addTodo, toggleTodo, deleteTodo, getUsers } from './api.js'
 import LoadingView from './LoadingView.js'
 
 function App() {
@@ -42,7 +36,7 @@ function App() {
 
   const todoUsersBtnHandler = async (e) => {
     if (e.target.textContent === SHOW_USERS) {
-      this.users = await fetchUsers()
+      this.users = await getUsers()
       e.target.textContent = HIDE_USERS
     } else {
       this.users = []
@@ -63,7 +57,7 @@ function App() {
     this.loadingView.setState(true)
     this.render()
 
-    this.todos = await fetchTodos(this.username)
+    this.todos = await getTodos(this.username)
     this.todoList.setState(this.todos)
     this.todoCount.setState(this.todos)
 

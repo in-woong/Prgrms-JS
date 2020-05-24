@@ -1,79 +1,73 @@
 import { BASE_URL, DELAY } from './constant.js'
 
-export const fetchTodos = async (username) => {
-  try {
-    const res = await fetch(`${BASE_URL}/${username}?delay=${DELAY}`)
-    if (!res.ok) {
-      throw new Error({ status: res.status, statusText: res.statusText })
-    }
+const requestApi = async (path, { method = 'GET', header, body }) => {
+  const option = {
+    method,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }
 
-    return await res.json()
+  if (header) {
+    option.headers = Object.assign(option.headers, header)
+  }
+
+  if (body) {
+    option.body = body
+  }
+  const res = await fetch(`${BASE_URL}${path}`, option)
+
+  if (!res.ok) {
+    throw new Error({ status: res.status, statusText: res.statusText })
+  }
+
+  return await res.json()
+}
+
+export const getTodos = async (username) => {
+  try {
+    return await requestApi(`/${username}?delay=${DELAY}`, { method: 'GET' })
   } catch (err) {
-    console.log(err)
+    console.error(err)
+    alert('Todo list를 가져오는데 실패했습니다.')
   }
 }
 
 export const addTodo = async (username, content) => {
   try {
-    const res = await fetch(`${BASE_URL}/${username}`, {
+    return await requestApi(`/${username}`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
       body: JSON.stringify(content),
     })
-
-    if (!res.ok) {
-      throw new Error({ status: res.status, statusText: res.statusText })
-    }
-
-    return await res.json()
   } catch (err) {
-    console.log(err)
+    console.error(err)
+    alert('Todo를 추가하는데 실패했습니다.')
   }
 }
 
 export const toggleTodo = async (username, id) => {
   try {
-    const res = await fetch(`${BASE_URL}/${username}/${id}/toggle`, {
-      method: 'PUT',
-    })
-
-    if (!res.ok) {
-      throw new Error({ status: res.status, statusText: res.statusText })
-    }
-
-    return await res.json()
+    await requestApi(`/${username}/${id}/toggle`, { method: 'PUT' })
   } catch (err) {
-    console.log(err)
+    console.error(err)
+    alert('Todo 완료처리하는데 실패했습니다.')
   }
 }
 
 export const deleteTodo = async (username, id) => {
   try {
-    const res = await fetch(`${BASE_URL}/${username}/${id}`, {
-      method: 'DELETE',
-    })
-
-    if (!res.ok) {
-      throw new Error({ status: res.status, statusText: res.statusText })
-    }
-
-    return await res.json()
+    return await requestApi(`/${username}/${id}`, { method: 'DELETE' })
   } catch (err) {
-    console.log(err)
+    console.error(err)
+    alert('Todo를 삭제하는데 실패했습니다.')
   }
 }
 
-export const fetchUsers = async () => {
+export const getUsers = async () => {
   try {
-    const res = await fetch(`${BASE_URL}/users`)
-    if (!res.ok) {
-      throw new Error({ status: res.status, statusText: res.statusText })
-    }
-
-    return await res.json()
+    return await requestApi(`/users`, { method: 'GET' })
   } catch (err) {
-    console.log(err)
+    console.error(err)
+    alert('Todo User list를 가져오는데 실패했습니다')
   }
 }

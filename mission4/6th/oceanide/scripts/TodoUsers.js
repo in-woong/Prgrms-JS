@@ -20,8 +20,6 @@ function TodoUsers(users, $target, onClickUser) {
     if (this.users.length > 0) {
       const htmlString = this.users.map((user) => `<li>${user}</li>`).join('')
       $target.innerHTML = htmlString
-    } else {
-      $target.innerHTML = ''
     }
   }
 
