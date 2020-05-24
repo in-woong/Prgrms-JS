@@ -1,4 +1,4 @@
-import { URL, ERROR_MESSAGE } from '../constant.js'
+import { URL, ERROR_MESSAGE } from '../constants.js'
 
 export async function fetchImages(keyword) {
   try {
