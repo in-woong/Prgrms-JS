@@ -51,25 +51,25 @@ section > .input-btn {
     z-index: 10;
 }
 
-.gray-bg > .modal-wrapper .input-error-box {
+.gray-bg > .modal-wrapper .error-box {
     background: white;
     padding: 15px 25px;
     box-shadow: 10px 10px 10px rgba(100, 100, 100, 0.7);
     min-width: 150px;
 }
 
-.gray-bg > .modal-wrapper .input-error-box > h2 {
+.gray-bg > .modal-wrapper .error-box > h2 {
     text-align: center;
     color: red;
 }
 
-.gray-bg > .modal-wrapper .input-error-box > .modal-content {
+.gray-bg > .modal-wrapper .error-box > .modal-content {
     text-align: center;
     margin-top: 20px;
     font-size : 20px;
 }
 
-.gray-bg > .modal-wrapper .input-error-box > .modal-close {
+.gray-bg > .modal-wrapper .error-box > .modal-close {
     display: inline-block;
     margin-top: 20px;
     width: 100%;
@@ -79,7 +79,7 @@ section > .input-btn {
     cursor: pointer;
 }
 
-.gray-bg > .modal-wrapper .input-error-box > .modal-close:hover {
+.gray-bg > .modal-wrapper .error-box > .modal-close:hover {
     border: 1px solid rgba(100, 100, 100, 0.2);
     background: rgba(100, 100, 100, 0.2);
     color: white;

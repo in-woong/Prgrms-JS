@@ -1,9 +1,4 @@
-import { checkSelector, checkModalChildren } from '../../utils/validation.js'
-
 export default function ModalWrapper({ selector, $children }) {
-  checkSelector(selector)
-  checkModalChildren($children)
-
   this.render = () => {
     this.$target = document.querySelector(selector)
 
@@ -18,20 +13,25 @@ export default function ModalWrapper({ selector, $children }) {
     this.$grayBg.appendChild(this.$modalWrapper)
     this.$target.appendChild(this.$grayBg)
 
-    this.bindEvent()
+    this.bindEvents()
   }
 
   this.setState = (visible) => {
     this.$grayBg.style.display = visible ? 'block' : 'none'
   }
 
-  this.bindEvent = () => {
+  this.bindEvents = () => {
     this.$grayBg.addEventListener('click', (e) => {
       if (e.target.className === 'gray-bg') {
         this.setState(false) // modal off
       }
     })
-  }
+    window.addEventListener('keyup', (e) => {
+      if (e.key === 'Escape') {
+        this.setState(false)
+      }
+    })
+  } // esc > modal off
 
   this.render()
 }

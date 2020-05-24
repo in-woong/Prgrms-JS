@@ -1,11 +1,8 @@
-import { checkSelector } from '../utils/validation.js'
-
 export default function Header(props) {
   if (new.target !== Header) {
     throw new Error('Please use \'new\' keyword')
   }
   const { selector, userName } = props
-  checkSelector(selector)
 
   this.init = () => {
     const $box = document.createElement('header')

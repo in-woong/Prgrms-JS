@@ -1,8 +1,32 @@
 export const checkSelector = (selector) => {
   const $target = document.querySelector(selector)
-  if (!$target) throw new Error("Don't exist DOM Element")
+  if (!$target) throw new Error('Don\'t exist DOM Element')
 }
 
-export const checkModalChildren = (content) => {
-  if (!content) throw new Error('empty modal content')
+export const checkModalArguments = ({ selector, title, content }) => {
+  checkSelector(selector)
+  if (!title || !content) throw new Error('invalid Parameter')
+}
+
+export const checkTodos = (todos) => {
+  if (!Array.isArray(todos)) {
+    throw new Error('todos must be Array')
+  }
+  const typeMap = new Map([
+    ['_id', 'string'],
+    ['content', 'string'],
+    ['isCompleted', 'boolean'],
+  ])
+  todos.forEach((todo) => {
+    const validKeys = new Set(['_id', 'content', 'isCompleted'])
+    const keys = Object.keys(todo)
+    keys.forEach((key) => {
+      if (validKeys.has(key)) {
+        if (typeof todo[key] !== typeMap.get(key)) throw new Error('invalid key type')
+        validKeys.delete(key)
+      } else {
+        throw new Error('invalid key type')
+      }
+    })
+  })
 }

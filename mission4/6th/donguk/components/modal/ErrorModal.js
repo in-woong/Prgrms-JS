@@ -1,34 +1,42 @@
 import ModalWrapper from './ModalWrapper.js'
-import { checkSelector } from '../../utils/validation.js'
+import { checkModalArguments } from '../../utils/validation.js'
 
-export default function TodoInputErrorModal({ selector }) {
-  if (new.target !== TodoInputErrorModal) {
+export default function ErrorModal({ selector, title, content }) {
+  if (new.target !== ErrorModal) {
     throw new Error('Please use \'new\' Keyword')
   }
-  checkSelector(selector)
+  checkModalArguments({
+    selector,
+    title,
+    content,
+  })
 
   this.render = () => {
     const $children = document.createElement('div') // input error modal box
-    $children.className = 'input-error-box'
-    const $title = document.createElement('h2')
-    $title.innerHTML = '입력 오류'
+    $children.className = 'error-box'
+    this.$title = document.createElement('h2')
+    this.$title.innerHTML = title
 
-    const $modalContent = document.createElement('div')
-    $modalContent.className = 'modal-content'
-    $modalContent.innerHTML = '할 일을 입력해주세요!!'
+    this.$modalContent = document.createElement('div')
+    this.$modalContent.className = 'modal-content'
+    this.$modalContent.innerHTML = content
 
     this.$closeButton = document.createElement('button')
     this.$closeButton.className = 'modal-close'
     this.$closeButton.innerHTML = '닫기'
 
-    $children.appendChild($title)
-    $children.appendChild($modalContent)
+    $children.appendChild(this.$title)
+    $children.appendChild(this.$modalContent)
     $children.appendChild(this.$closeButton)
     this.$todoInputErrorModal = new ModalWrapper({
       selector,
       $children,
     })
     this.bindEvent()
+  }
+
+  this.editTitleAndContent = (content) => {
+    this.$modalContent.innerHTML = content
   }
 
   this.setState = (visible) => {
