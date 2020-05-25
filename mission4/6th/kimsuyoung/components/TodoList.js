@@ -26,7 +26,6 @@ function TodoList({ $todoList, data, onDelete, onToggleCompleted }) {
 
   this.setState = (nextData) => {
     data = nextData
-    console.log('todo list', data)
     this.render()
   }
 

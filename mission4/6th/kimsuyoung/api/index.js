@@ -10,9 +10,9 @@ export const getUsers = async () => {
   }
 }
 
-export const getTodoLists = async () => {
+export const getUserTodoLists = async (user) => {
   try {
-    const response = await fetch(`${BASE_URL}/suyoung`)
+    const response = await fetch(`${BASE_URL}/${user}`)
     const result = await response.json()
     return result
   } catch (error) {
@@ -20,9 +20,9 @@ export const getTodoLists = async () => {
   }
 }
 
-export const postTodoList = async (text) => {
+export const postTodoList = async ({ text, user }) => {
   try {
-    await fetch(`${BASE_URL}/suyoung`, {
+    await fetch(`${BASE_URL}/${user}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -36,9 +36,9 @@ export const postTodoList = async (text) => {
   }
 }
 
-export const deleteTodoList = async (id) => {
+export const deleteTodoList = async ({ id, user }) => {
   try {
-    await fetch(`${BASE_URL}/suyoung/${id}`, {
+    await fetch(`${BASE_URL}/${user}/${id}`, {
       method: 'DELETE',
     })
   } catch (error) {
@@ -46,9 +46,9 @@ export const deleteTodoList = async (id) => {
   }
 }
 
-export const toggleTodoList = async (id) => {
+export const toggleTodoList = async ({ id, user }) => {
   try {
-    await fetch(`${BASE_URL}/suyoung/${id}/toggle`, {
+    await fetch(`${BASE_URL}/${user}/${id}/toggle`, {
       method: 'PUT',
     })
   } catch (error) {
