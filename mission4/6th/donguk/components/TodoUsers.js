@@ -12,9 +12,13 @@ export default function TodoUsers(props) {
     const $box = document.createElement('section')
     $box.className = 'user-section'
 
+    const $title = document.createElement('h2')
+    $title.innerHTML = '유저 목록'
+
     this.$userList = document.createElement('ul')
     this.$userList.innerHTML = users.map((user) => `<li>${user}</li>`).join('')
 
+    $box.appendChild($title)
     $box.appendChild(this.$userList)
     $target.appendChild($box)
     this.bindEvent()

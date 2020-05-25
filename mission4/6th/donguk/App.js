@@ -18,22 +18,30 @@ export default function App(props) {
       selector,
       userName: this.userName,
     })
-    this.$todoUsers = new TodoUsers({
-      selector,
-      users: this.users,
-      onChangeUser: this.handleChangeUser
-    })
-
     this.$todoInput = new TodoInput({
       selector,
       onAddTodo: this.handleAddTodo,
     })
+
+    // list Section Start
+    const $listSection = document.createElement('section') // todoUsers + todoList
+    $listSection.className = 'main-list'
+    const $target = document.querySelector(selector)
+    $target.appendChild($listSection)
+
+    this.$todoUsers = new TodoUsers({
+      selector: '.main-list',
+      users: this.users,
+      onChangeUser: this.handleChangeUser,
+    })
     this.$todoList = new TodoList({
-      selector,
+      selector: '.main-list',
       todos: this.todos,
       onToggle: this.handleToggleTodo,
       onDelete: this.handleDeleteTodo,
     })
+    // list Section End
+
     this.$errorModal = new ErrorModal({
       selector,
       title: '오류 발생..',
@@ -58,13 +66,14 @@ export default function App(props) {
   this.handleChangeUser = (userName) => {
     this.userName = userName
     this.handleGetTodos(this.userName)
+    this.$header.setState(this.userName)
   }
 
   this.handleAddTodo = async (content) => {
     try {
       await fetchManager({
         method: 'POST',
-        params: `${this.userName}`,
+        params: `/${this.userName}`,
         body: { content },
       })
       this.handleGetTodos(this.userName)

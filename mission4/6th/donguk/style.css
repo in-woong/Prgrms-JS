@@ -2,6 +2,7 @@ body {
     padding: 0;
     margin: 0;
     background: rgba(100, 100, 100, 0.1);
+    box-sizing: border-box;
 }
 
 #App {
@@ -87,7 +88,45 @@ section > .input-btn {
     color: white;
 }
 
+.main-list {
+    width: 100%;
+    display: flex;
+}
+
+.user-section {
+    flex: 0.2;
+}
+.user-section > h2 {
+    margin-top: 40px;
+    text-align: center;
+}
+.user-section > ul {
+    width: 100%;
+    list-style: none;
+    padding: 0;
+    height: 80vh;
+    overflow-y: scroll;
+}
+
+.user-section > ul > li {
+    background: #ffffff;
+    text-align: left;
+    padding: 10px 13px;
+    font-size: 20px;
+    box-shadow: 5px 5px 5px #999999;
+    cursor: pointer;
+}
+
+.user-section > ul > li + li {
+    margin-top: 10px;
+}
+
+.user-section + .list-section {
+    margin-left: 10px;
+}
+
 .list-section {
+    flex: 0.8;
     display: flex;
     width: 70%;
     margin: 0 auto;
