@@ -31,6 +31,19 @@ export const checkTodos = (todos) => {
   })
 }
 
+export const checkUsers = (users) => {
+  if (!Array.isArray(users)) {
+    throw new Error('Users must be Array')
+  }
+  if (users.length > 0) {
+    users.forEach((user) => {
+      if (typeof user !== 'string') {
+        throw new Error('User must be String')
+      }
+    })
+  }
+}
+
 export const checkFetchManagerArgs = (args) => {
   const { params, method } = args
   const methodSet = new Set(['GET', 'POST', 'PUT', 'DELETE'])

@@ -1,5 +1,5 @@
 import { checkSelector } from './utils/validation.js'
-import { Header, TodoInput, TodoList } from './components/index.js'
+import { Header, TodoInput, TodoList, TodoUsers } from './components/index.js'
 import ErrorModal from './components/modal/ErrorModal.js'
 import fetchManager from './api/api.js'
 
@@ -12,11 +12,18 @@ export default function App(props) {
   this.userName = 'donguk'
   this.todos = []
 
-  this.init = () => {
+  this.init = async () => {
+    await this.handleGetUsers() // get users
     this.$header = new Header({
       selector,
       userName: this.userName,
     })
+    this.$todoUsers = new TodoUsers({
+      selector,
+      users: this.users,
+      onChangeUser: this.handleChangeUser
+    })
+
     this.$todoInput = new TodoInput({
       selector,
       onAddTodo: this.handleAddTodo,
@@ -34,6 +41,23 @@ export default function App(props) {
     })
 
     this.handleGetTodos(this.userName) // initial Data load
+  }
+
+  this.handleGetUsers = async () => {
+    try {
+      this.users = await fetchManager({
+        method: 'GET',
+        params: '/users',
+      })
+    } catch (e) {
+      this.$errorModal.editTitleAndContent(e.message)
+      this.$errorModal.setState(true) // modal on
+    }
+  }
+
+  this.handleChangeUser = (userName) => {
+    this.userName = userName
+    this.handleGetTodos(this.userName)
   }
 
   this.handleAddTodo = async (content) => {
