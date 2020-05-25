@@ -2,7 +2,7 @@ const BASE_URL = 'https://todo-api.roto.codes'
 
 export const getUsers = async () => {
   try {
-    const response = await fetch(`${BASE_URL}/users`)
+    const response = await fetch(`${BASE_URL}/users?delay=3000`)
     const result = await response.json()
     return result
   } catch (error) {
@@ -12,7 +12,7 @@ export const getUsers = async () => {
 
 export const getUserTodoLists = async (user) => {
   try {
-    const response = await fetch(`${BASE_URL}/${user}`)
+    const response = await fetch(`${BASE_URL}/${user}?delay=3000`)
     const result = await response.json()
     return result
   } catch (error) {

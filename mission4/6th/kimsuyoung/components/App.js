@@ -3,6 +3,7 @@ import TodoList from './TodoList.js'
 import TodoInput from './TodoInput.js'
 import TodoListDone from './TodoListDone.js'
 import User from './User.js'
+import Loading from './Loading.js'
 import {
   getUsers,
   //getTodoLists,
@@ -68,14 +69,19 @@ export default function App() {
     },
   })
 
+  this.Loading = new Loading({
+    $loading: document.querySelector('#loading'),
+  })
+
   this.setState = async (user) => {
+    // 영근님 코드를 많이 참고하였습니다
+    this.Loading.setState(true)
+
     this.data.user = user
     this.userListData = await getUsers()
-
-    //this.todoListData = await getTodoLists()
-    this.User.setState(user)
     this.todoListData = await getUserTodoLists(user)
 
+    this.User.setState(user)
     this.UserList.setState(this.userListData)
 
     this.TodoList.setState(
@@ -85,6 +91,8 @@ export default function App() {
     this.TodoListDone.setState(
       this.todoListData.filter((value) => value.isCompleted)
     )
+
+    this.Loading.setState(false)
 
     this.TodoInput.setState('')
   }
