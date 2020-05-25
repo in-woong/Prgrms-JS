@@ -1,6 +1,7 @@
 body {
     padding: 0;
     margin: 0;
+    background: rgba(100, 100, 100, 0.1);
 }
 
 #App {
@@ -26,6 +27,7 @@ section input[type="text"] {
 
 section > .input-btn {
     font-size: 25px;
+    width: 10%;
     height: 50px;
     border: 1px solid rgba(100, 100, 100, 0.5);
     margin-left: 12px;
@@ -85,3 +87,46 @@ section > .input-btn {
     color: white;
 }
 
+.list-section {
+    display: flex;
+    width: 70%;
+    margin: 0 auto;
+}
+.list-section article {
+    margin-top: 20px;
+    flex: 0.5
+}
+.list-section article > h2 {
+    text-align: center;
+}
+
+.list-section article > ul {
+    list-style: none;
+}
+
+.list-section article > ul > li {
+    background: #ffffff;
+    text-align: left;
+    padding: 10px 13px;
+    font-size: 20px;
+    box-shadow: 10px 10px 5px #999999;
+    cursor: pointer;
+}
+
+.list-section article > ul > li > button {
+    float: right;
+    font-size: 18px;
+    border: 1px solid rgba(100, 100, 100, 0.3);
+    border-radius: 7px;
+    cursor: pointer;
+    color: rgba(100, 100, 100, 0.3)
+}
+
+.list-section article > ul > li > button:hover {
+    background: rgba(100, 100, 100, 0.4);
+    color: white;
+}
+
+.list-section article > ul > li + li {
+    margin-top: 15px;
+}

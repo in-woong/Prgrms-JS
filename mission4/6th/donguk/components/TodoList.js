@@ -11,13 +11,24 @@ export default function TodoList(props) {
   this.init = () => {
     const $target = document.querySelector(selector)
     const $box = document.createElement('section')
+    $box.className = 'list-section'
 
+    const $completedArticle = document.createElement('article')
+    const $completedTitle = document.createElement('h2')
+    $completedTitle.innerHTML = '완료'
     this.$completedList = document.createElement('ul')
-    $box.appendChild(this.$completedList)
+    $completedArticle.appendChild($completedTitle)
+    $completedArticle.appendChild(this.$completedList)
 
+    const $notCompletedArticle = document.createElement('article')
+    const $notCompletedTitle = document.createElement('h2')
+    $notCompletedTitle.innerHTML = '미완료'
     this.$notCompletedList = document.createElement('ul')
-    $box.appendChild(this.$notCompletedList)
+    $notCompletedArticle.appendChild($notCompletedTitle)
+    $notCompletedArticle.appendChild(this.$notCompletedList)
 
+    $box.appendChild($completedArticle)
+    $box.appendChild($notCompletedArticle)
     $target.appendChild($box)
     this.bindEvents()
     this.render()
