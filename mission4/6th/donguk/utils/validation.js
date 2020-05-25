@@ -45,9 +45,9 @@ export const checkUsers = (users) => {
 }
 
 export const checkFetchManagerArgs = (args) => {
-  const { params, method, delay } = args
+  const { path, method, delay } = args
   const methodSet = new Set(['GET', 'POST', 'PUT', 'DELETE'])
-  if (params && typeof params !== 'string') {
+  if (path && typeof path !== 'string') {
     throw new Error('params must be string')
   } else if ( method && !methodSet.has(method)) {
     throw new Error('invalid method type')

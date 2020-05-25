@@ -2,16 +2,16 @@ import { API_URL } from '../utils/constants.js'
 import { checkFetchManagerArgs } from '../utils/validation.js'
 
 export default async function fetchManager({
-  params, method = 'GET', body, headers, delay,
+  path, method = 'GET', body, headers, delay,
 }) {
   checkFetchManagerArgs({
-    params,
+    path,
     method,
     body,
     headers,
     delay,
   })
-  let url = API_URL + params
+  let url = API_URL + path
   if (delay) url += `?delay=${delay}`
   const options = {
     method,

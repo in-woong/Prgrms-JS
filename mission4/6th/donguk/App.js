@@ -1,4 +1,5 @@
 import { checkSelector } from './utils/validation.js'
+import { USER_NAME, DELAY } from './utils/constants.js'
 import { Header, TodoInput, TodoList, TodoUsers } from './components/index.js'
 import { ErrorModal, LoadingModal } from './components/modal/index.js'
 import fetchManager from './api/api.js'
@@ -9,7 +10,7 @@ export default function App(props) {
   }
   const { selector } = props
   checkSelector(selector)
-  this.userName = 'donguk'
+  this.userName = USER_NAME
   this.todos = []
 
   this.init = async () => {
@@ -57,7 +58,7 @@ export default function App(props) {
     try {
       this.users = await fetchManager({
         method: 'GET',
-        params: '/users',
+        path: '/users',
       })
     } catch (e) {
       this.$errorModal.editTitleAndContent(e.message)
@@ -75,7 +76,7 @@ export default function App(props) {
     try {
       await fetchManager({
         method: 'POST',
-        params: `/${this.userName}`,
+        path: `/${this.userName}`,
         body: { content },
       })
       this.handleGetTodos(this.userName)
@@ -87,18 +88,18 @@ export default function App(props) {
 
   this.handleGetTodos = async (userName) => {
     try {
-      this.$loadingModal.setState(true) // loading on
+      this.$loadingModal.setState(true) // loading modal on
       this.todos = await fetchManager({
         method: 'GET',
-        params: `/${userName}`,
-        delay: 2500,
+        path: `/${userName}`,
+        delay: DELAY, // 2500
       })
-      this.$loadingModal.setState(false) // loading off
+      this.$loadingModal.setState(false) // loading modal off
       this.$todoList.setState(this.todos)
     } catch (e) {
-      this.$loadingModal.setState(false) // loading off
+      this.$loadingModal.setState(false) // loading modal off
       this.$errorModal.editTitleAndContent(e.message)
-      this.$errorModal.setState(true) // modal on
+      this.$errorModal.setState(true) // error modal on
     }
   }
 
@@ -106,7 +107,7 @@ export default function App(props) {
     try {
       await fetchManager({
         method: 'PUT',
-        params: `/${this.userName}/${id}/toggle`,
+        path: `/${this.userName}/${id}/toggle`,
       })
       this.handleGetTodos(this.userName)
     } catch (e) {
@@ -119,7 +120,7 @@ export default function App(props) {
     try {
       await fetchManager({
         method: 'DELETE',
-        params: `/${this.userName}/${id}`,
+        path: `/${this.userName}/${id}`,
       })
       this.handleGetTodos(this.userName)
     } catch (e) {
