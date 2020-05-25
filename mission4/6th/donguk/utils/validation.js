@@ -45,12 +45,14 @@ export const checkUsers = (users) => {
 }
 
 export const checkFetchManagerArgs = (args) => {
-  const { params, method } = args
+  const { params, method, delay } = args
   const methodSet = new Set(['GET', 'POST', 'PUT', 'DELETE'])
   if (params && typeof params !== 'string') {
     throw new Error('params must be string')
   } else if ( method && !methodSet.has(method)) {
     throw new Error('invalid method type')
+  } else if ( delay && typeof delay !== 'number') {
+    throw new Error('delay must be number')
   }
   // need body, headers type check
 }

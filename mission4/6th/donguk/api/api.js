@@ -2,14 +2,17 @@ import { API_URL } from '../utils/constants.js'
 import { checkFetchManagerArgs } from '../utils/validation.js'
 
 export default async function fetchManager({
-  params, method = 'GET', body, headers,
+  params, method = 'GET', body, headers, delay,
 }) {
   checkFetchManagerArgs({
     params,
     method,
     body,
     headers,
+    delay,
   })
+  let url = API_URL + params
+  if (delay) url += `?delay=${delay}`
   const options = {
     method,
     headers: {
@@ -22,7 +25,7 @@ export default async function fetchManager({
   if (headers) {
     options.headers = { ...options.headers, ...headers }
   }
-  console.log(JSON.stringify({ url: API_URL + params, ...options }, null, 2))
-  const response = await fetch(API_URL + params, options)
+  console.log(JSON.stringify({ url, ...options }, null, 2))
+  const response = await fetch(url, options)
   return await response.json()
 }

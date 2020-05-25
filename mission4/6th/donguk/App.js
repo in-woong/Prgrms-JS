@@ -1,6 +1,6 @@
 import { checkSelector } from './utils/validation.js'
 import { Header, TodoInput, TodoList, TodoUsers } from './components/index.js'
-import ErrorModal from './components/modal/ErrorModal.js'
+import { ErrorModal, LoadingModal } from './components/modal/index.js'
 import fetchManager from './api/api.js'
 
 export default function App(props) {
@@ -48,6 +48,8 @@ export default function App(props) {
       content: 'temp content',
     })
 
+    this.$loadingModal = new LoadingModal({ selector })
+
     this.handleGetTodos(this.userName) // initial Data load
   }
 
@@ -85,12 +87,16 @@ export default function App(props) {
 
   this.handleGetTodos = async (userName) => {
     try {
+      this.$loadingModal.setState(true) // loading on
       this.todos = await fetchManager({
         method: 'GET',
         params: `/${userName}`,
+        delay: 2500,
       })
+      this.$loadingModal.setState(false) // loading off
       this.$todoList.setState(this.todos)
     } catch (e) {
+      this.$loadingModal.setState(false) // loading off
       this.$errorModal.editTitleAndContent(e.message)
       this.$errorModal.setState(true) // modal on
     }
