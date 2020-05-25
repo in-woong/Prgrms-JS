@@ -4,7 +4,7 @@ export default function TodoList(props) {
   if (new.target !== TodoList) {
     throw new Error('Please use \'new\' keyword')
   }
-  const { selector, todos, onToggle } = props
+  const { selector, todos, onToggle, onDelete } = props
   checkTodos(todos)
   this.todos = todos
 
@@ -55,15 +55,19 @@ export default function TodoList(props) {
   }
 
   this.bindEvents = () => {
-    const toggleCallback = (e) => {
+    const clickCallback = (e) => {
       const $element = e.target.closest('li')
       if ($element && $element.dataset) {
         const { id } = $element.dataset
-        onToggle(id)
+        if (e.target.tagName.toLowerCase() === 'button') {
+          onDelete(id)
+        } else {
+          onToggle(id)
+        }
       }
     }
-    this.$notCompletedList.addEventListener('click', toggleCallback)
-    this.$completedList.addEventListener('click', toggleCallback)
+    this.$notCompletedList.addEventListener('click', clickCallback)
+    this.$completedList.addEventListener('click', clickCallback)
   }
 
   this.setState = (todos) => {

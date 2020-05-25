@@ -25,6 +25,7 @@ export default function App(props) {
       selector,
       todos: this.todos,
       onToggle: this.handleToggleTodo,
+      onDelete: this.handleDeleteTodo,
     })
     this.$errorModal = new ErrorModal({
       selector,
@@ -34,7 +35,6 @@ export default function App(props) {
 
     this.handleGetTodos(this.userName) // initial Data load
   }
-
 
   this.handleAddTodo = async (content) => {
     try {
@@ -68,6 +68,19 @@ export default function App(props) {
       await fetchManager({
         method: 'PUT',
         params: `/${this.userName}/${id}/toggle`,
+      })
+      this.handleGetTodos(this.userName)
+    } catch (e) {
+      this.$errorModal.editTitleAndContent(e.message)
+      this.$errorModal.setState(true) // modal on
+    }
+  }
+
+  this.handleDeleteTodo = async (id) => {
+    try {
+      await fetchManager({
+        method: 'DELETE',
+        params: `/${this.userName}/${id}`,
       })
       this.handleGetTodos(this.userName)
     } catch (e) {
