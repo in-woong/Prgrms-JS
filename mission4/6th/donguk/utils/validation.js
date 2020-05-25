@@ -30,3 +30,14 @@ export const checkTodos = (todos) => {
     })
   })
 }
+
+export const checkFetchManagerArgs = (args) => {
+  const { params, method } = args
+  const methodSet = new Set(['GET', 'POST', 'PUT', 'DELETE'])
+  if (params && typeof params !== 'string') {
+    throw new Error('params must be string')
+  } else if ( method && !methodSet.has(method)) {
+    throw new Error('invalid method type')
+  }
+  // need body, headers type check
+}

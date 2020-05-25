@@ -1,7 +1,7 @@
 import { checkSelector } from './utils/validation.js'
 import { Header, TodoInput, TodoList } from './components/index.js'
 import ErrorModal from './components/modal/ErrorModal.js'
-import { postTodo, getTodos } from './api/apis.js'
+import fetchManager from './api/api.js'
 
 export default function App(props) {
   if (new.target !== App) {
@@ -24,6 +24,7 @@ export default function App(props) {
     this.$todoList = new TodoList({
       selector,
       todos: this.todos,
+      onToggle: this.handleToggleTodo,
     })
     this.$errorModal = new ErrorModal({
       selector,
@@ -37,7 +38,11 @@ export default function App(props) {
 
   this.handleAddTodo = async (content) => {
     try {
-      await postTodo(this.userName, content)
+      await fetchManager({
+        method: 'POST',
+        params: `${this.userName}`,
+        body: { content },
+      })
       this.handleGetTodos(this.userName)
     } catch (e) {
       this.$errorModal.editTitleAndContent(e.message)
@@ -47,8 +52,24 @@ export default function App(props) {
 
   this.handleGetTodos = async (userName) => {
     try {
-      this.todos = await getTodos(userName)
+      this.todos = await fetchManager({
+        method: 'GET',
+        params: `/${userName}`,
+      })
       this.$todoList.setState(this.todos)
+    } catch (e) {
+      this.$errorModal.editTitleAndContent(e.message)
+      this.$errorModal.setState(true) // modal on
+    }
+  }
+
+  this.handleToggleTodo = async (id) => {
+    try {
+      await fetchManager({
+        method: 'PUT',
+        params: `/${this.userName}/${id}/toggle`,
+      })
+      this.handleGetTodos(this.userName)
     } catch (e) {
       this.$errorModal.editTitleAndContent(e.message)
       this.$errorModal.setState(true) // modal on
