@@ -8,7 +8,7 @@ export default function SearchInput ({ $target, searchHandler }) {
       this.searchKeywordHandler(e.target.value)
   })
 
-  // debouncing
+  // TODO: debouncing util로 옮기기
   this.searchKeywordHandler = (keyword) => {
     if (this.timer) {
       clearTimeout(this.timer)

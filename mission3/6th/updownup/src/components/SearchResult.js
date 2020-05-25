@@ -6,7 +6,7 @@ export default function SearchResult ({ $target, keyword }) {
 
   this.render = () => {
     const htmlString = this.data
-            .map(({ imageUrl }) => `<img src="${imageUrl}"/>`)
+            .map(({ imageUrl }) => `<img alt="이미지짤" src="${imageUrl}"/>`)
             .join('')
     this.$target.innerHTML = htmlString
   }

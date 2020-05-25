@@ -4,19 +4,19 @@ import { fetchSearch } from '../api/index.js'
 
 export default function App() {
 
-  let data = []
+  let searhResult = []
   const searchInputElement = document.querySelector('#search-input')
   const searchResultElement = document.querySelector('#search-result')
 
   // 검색어 입력
   const addSearch = async (keyword) => {
-    data = await fetchSearch(keyword)
-    this.setState(data)
+    searhResult = await fetchSearch(keyword)
+    this.setState(searhResult)
   }
 
   this.setState = (keyword) => {
-    data.push(keyword)
-    this.searchResult.setState(data)
+    searhResult.push(keyword)
+    this.searchResult.setState(searhResult)
   }
 
   // SearchInput 컴포넌트 생성
@@ -28,7 +28,7 @@ export default function App() {
   // SearchResult 컴포넌트 생성
   this.searchResult = new SearchResult({
     $target: searchResultElement,
-    keyword: data
+    keyword: searhResult
   })
 
 }
