@@ -6,7 +6,6 @@ export default function Users({ $target, users, onClickUser, $username }) {
       onClickUser(user)
       $username.innerHTML = `${user}의 Todo List`
     }
-
   })
 
   this.render = (users) => {

@@ -1,7 +1,7 @@
-const BASE_URL = 'https://todo-api.roto.codes'
+import { BASE_URL } from './constant.js'
 
 export const fetchTodos = async (username) => {
-  const res = await fetch(`${BASE_URL}/${username}?delay=5000`)
+  const res = await fetch(`${BASE_URL}/${username}?delay=3000`)
   return await res.json()
 }
 
