@@ -1,11 +1,10 @@
-import debounce from './debounce.js'
+import { DEBOUNCE_TIME } from './contstant.js'
+import { debounce } from './debounce.js'
 
-export default function SearchKeyword(onKeyup, $target) {
-    this.$target = document.querySelector($target)
+export default function SearchKeyword({ onKeyup, $target }) {
+    this.$target = $target
 
-    this.$target.addEventListener('keyup', (e) => {
-        if (e.target.value) {
-            debounce(() => onKeyup(e.target.value))
-        }
-    })
+    this.$target.addEventListener('keyup', debounce((e) => {
+        onKeyup(e.target.value)
+    }, DEBOUNCE_TIME))
 }

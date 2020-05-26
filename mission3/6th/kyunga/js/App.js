@@ -4,24 +4,34 @@ import SearchHistory from './SearchHistory.js'
 import getData from './api.js'
 
 export default function App() {
-    this.data = []
-    this.historyData = new Set()
+    this.images = []
+    this.histories = new Set()
 
     this.init = function () {
-        this.searchKeyword = new SearchKeyword(this.onKeyup, '#search-keyword')
-        this.searchResult = new SearchResult(this.data, '#search-result')
-        this.searchHistory = new SearchHistory(this.onClickHistory, this.historyData, '#search-history')
+        this.searchKeyword = new SearchKeyword({
+            onKeyup: this.onKeyup,
+            $target: document.querySelector('#search-keyword')
+        })
+        this.searchResult = new SearchResult({
+            images: this.images,
+            $target: document.querySelector('#search-result')
+        })
+        this.searchHistory = new SearchHistory({
+            onClickHistory: this.onClickHistory,
+            histories: this.histories,
+            $target: document.querySelector('#search-history')
+        })
     }
 
     this.getApiResponse = async (inputText) => {
-        this.data = await getData(inputText)
-        this.searchResult.setState(this.data)
+        this.images = await getData(inputText)
+        this.searchResult.setState(this.images)
     }
 
     this.onKeyup = (inputText) => {
         this.getApiResponse(inputText)
-        this.historyData.add(inputText)
-        this.searchHistory.setState(this.historyData)
+        this.histories.add(inputText)
+        this.searchHistory.setState(this.histories)
     }
 
     this.onClickHistory = (clickText) => {

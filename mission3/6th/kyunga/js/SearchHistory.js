@@ -1,6 +1,6 @@
-export default function SearchHistory(onClickHistory, historyData, $target) {
-    this.historyData = historyData
-    this.$target = document.querySelector($target)
+export default function SearchHistory({ onClickHistory, histories, $target }) {
+    this.histories = histories
+    this.$target = $target
 
     this.$target.addEventListener('click', (e) => {
         const target = e.target;
@@ -11,13 +11,13 @@ export default function SearchHistory(onClickHistory, historyData, $target) {
     })
 
     this.render = function () {
-        this.$target.innerHTML = `<ul>${[...this.historyData]
+        this.$target.innerHTML = `<ul>${[...this.histories]
             .map(item => `<li><button type="button">${item}</button></li>`)
             .join('')}</ul>`
     }
 
-    this.setState = function (historyData) {
-        this.historyData = historyData
+    this.setState = function (nextData) {
+        this.histories = nextData
         this.render()
     }
 }

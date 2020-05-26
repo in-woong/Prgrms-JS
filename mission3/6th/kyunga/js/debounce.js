@@ -1,13 +1,17 @@
-let timer = null
+export const debounce = (callback, debounceTime) => {
+    let timer = null
 
-export default function debounce(callback) {
-    const DEBOUNCE_TIME = 500
+    return (...args) => {
+        const delayedCallback = () => {
+            clearTimeout(timer)
+            timer = null
+            return callback(...args)
+        }
 
-    if (timer) {
-        clearTimeout(timer)
+        if (timer) {
+            return
+        }
+
+        timer = setTimeout(delayedCallback, debounceTime)
     }
-
-    timer = setTimeout(function () {
-        callback()
-    }, DEBOUNCE_TIME)
 }

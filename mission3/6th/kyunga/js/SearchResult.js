@@ -1,17 +1,17 @@
-export default function SearchResult(data, $target) {
-    this.data = data
-    this.$target = document.querySelector($target)
+export default function SearchResult({ images, $target }) {
+    this.images = images
+    this.$target = $target
 
     this.render = function () {
-        const htmlString = `${this.data.length === 0 ?
+        const htmlString = this.images.length === 0 ?
             '검색 결과가 존재하지 않습니다!' :
-            `${this.data.map(d => `<img src="${d.imageUrl}" alt="${d.title}">`).join('')}`}`
+            this.images.map(d => `<img src=${d.imageUrl} alt=${d.title}>`).join('')
 
         this.$target.innerHTML = htmlString
     }
 
     this.setState = function (nextData) {
-        this.data = nextData;
+        this.images = nextData;
         this.render();
     }
 }

@@ -1,10 +1,15 @@
+import { SERVER_URL } from './contstant.js'
+import ErrorViewer from './ErrorViewer.js'
+
 export default async function getData(text) {
     try {
-        const res = await fetch(`https://jjalbot.com/api/jjals?text=${text}`)
+        const res = await fetch(`${SERVER_URL}?text=${text}`)
         const data = await res.json()
 
         return data
     } catch (e) {
-        console.log('데이터 로드 실패: ' + e);
+        const errorView = new ErrorViewer({
+            $target: document.querySelector('#error-message')
+        }).render()
     }
 }
