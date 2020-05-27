@@ -25,6 +25,10 @@ button {
     border: 5px solid
 }
 
+.users li {
+    cursor: pointer;
+}
+
 .title {
     padding-bottom: 20px;
 }
