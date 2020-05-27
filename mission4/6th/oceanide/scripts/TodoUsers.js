@@ -17,10 +17,8 @@ function TodoUsers(users, $target, onClickUser) {
   }
 
   this.render = function () {
-    if (this.users.length > 0) {
-      const htmlString = this.users.map((user) => `<li>${user}</li>`).join('')
-      $target.innerHTML = htmlString
-    }
+    const htmlString = this.users.map((user) => `<li>${user}</li>`).join('')
+    $target.innerHTML = htmlString
   }
 
   this.setState = function (nextData) {
