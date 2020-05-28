@@ -1,5 +1,5 @@
 import { checkSelector } from './utils/validation.js'
-import { USER_NAME, DELAY } from './utils/constants.js'
+import { USER_NAME, DELAY_TIME } from './utils/constants.js'
 import { Header, TodoInput, TodoList, TodoUsers } from './components/index.js'
 import { ErrorModal, LoadingModal } from './components/modal/index.js'
 import fetchManager from './api/api.js'
@@ -14,7 +14,7 @@ export default function App(props) {
   this.todos = []
 
   this.init = async () => {
-    await this.handleGetUsers() // get users
+    await this.loadUsers() // get users
     this.$header = new Header({
       selector,
       userName: this.userName,
@@ -51,10 +51,10 @@ export default function App(props) {
 
     this.$loadingModal = new LoadingModal({ selector })
 
-    this.handleGetTodos(this.userName) // initial Data load
+    this.getTodos(this.userName) // initial Data load
   }
 
-  this.handleGetUsers = async () => {
+  this.loadUsers = async () => {
     try {
       this.users = await fetchManager({
         method: 'GET',
@@ -68,7 +68,7 @@ export default function App(props) {
 
   this.handleChangeUser = (userName) => {
     this.userName = userName
-    this.handleGetTodos(this.userName)
+    this.getTodos(this.userName)
     this.$header.setState(this.userName)
   }
 
@@ -79,20 +79,20 @@ export default function App(props) {
         path: `/${this.userName}`,
         body: { content },
       })
-      this.handleGetTodos(this.userName)
+      this.getTodos(this.userName)
     } catch (e) {
       this.$errorModal.editTitleAndContent(e.message)
       this.$errorModal.setState(true) // modal on
     }
   }// need edit
 
-  this.handleGetTodos = async (userName) => {
+  this.getTodos = async (userName) => {
     try {
       this.$loadingModal.setState(true) // loading modal on
       this.todos = await fetchManager({
         method: 'GET',
         path: `/${userName}`,
-        delay: DELAY, // 2500
+        delay: DELAY_TIME, // 2500
       })
       this.$loadingModal.setState(false) // loading modal off
       this.$todoList.setState(this.todos)
@@ -109,7 +109,7 @@ export default function App(props) {
         method: 'PUT',
         path: `/${this.userName}/${id}/toggle`,
       })
-      this.handleGetTodos(this.userName)
+      this.getTodos(this.userName)
     } catch (e) {
       this.$errorModal.editTitleAndContent(e.message)
       this.$errorModal.setState(true) // modal on
@@ -122,7 +122,7 @@ export default function App(props) {
         method: 'DELETE',
         path: `/${this.userName}/${id}`,
       })
-      this.handleGetTodos(this.userName)
+      this.getTodos(this.userName)
     } catch (e) {
       this.$errorModal.editTitleAndContent(e.message)
       this.$errorModal.setState(true) // modal on
