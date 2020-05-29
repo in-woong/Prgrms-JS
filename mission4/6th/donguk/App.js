@@ -1,6 +1,6 @@
 import { checkSelector } from './utils/validation.js'
 import { USER_NAME, DELAY_TIME } from './utils/constants.js'
-import { Header, TodoInput, TodoList, TodoUsers } from './components/index.js'
+import { Header, TodoCount, TodoInput, TodoList, TodoUsers } from './components/index.js'
 import { ErrorModal, LoadingModal } from './components/modal/index.js'
 import fetchManager from './api/api.js'
 
@@ -19,6 +19,13 @@ export default function App(props) {
       selector,
       userName: this.userName,
     })
+
+    this.$todoCount = new TodoCount({
+      selector,
+      completedCount: this.todos.filter(({ isCompleted }) => isCompleted).length,
+      total: this.todos.length,
+    })
+
     this.$todoInput = new TodoInput({
       selector,
       onAddTodo: this.handleAddTodo,
@@ -96,6 +103,10 @@ export default function App(props) {
       })
       this.$loadingModal.setState(false) // loading modal off
       this.$todoList.setState(this.todos)
+      this.$todoCount.setState({
+        completedCount: this.todos.filter(({isCompleted}) => isCompleted).length,
+        total: this.todos.length,
+      })
     } catch (e) {
       this.$loadingModal.setState(false) // loading modal off
       this.$errorModal.editTitleAndContent(e.message)

@@ -17,7 +17,7 @@ export default function TodoList(props) {
     const $completedTitle = document.createElement('h2')
     $completedTitle.textContent = '완료'
     this.$completedList = document.createElement('ul')
-    this.$completedList.setAttribute('data-type','done')
+    this.$completedList.setAttribute('data-type', 'done')
     $completedArticle.appendChild($completedTitle)
     $completedArticle.appendChild(this.$completedList)
 
@@ -38,8 +38,8 @@ export default function TodoList(props) {
   }
 
   this.render = () => {
-    const completedArray = this.todos.filter((todo) => todo.isCompleted)
-    const notCompletedArray = this.todos.filter((todo) => !todo.isCompleted)
+    const completedArray = this.todos.filter(({isCompleted}) => isCompleted)
+    const notCompletedArray = this.todos.filter(({isCompleted}) => !isCompleted)
 
     this.$completedList.innerHTML = completedArray.map(({ _id, content }) => `<li data-id=${_id} draggable="true"><s>${content}</s><button>삭제</button></li>`)
       .join('')
@@ -67,7 +67,6 @@ export default function TodoList(props) {
     const dragStartCallback = (e) => {
       const $startParentNode = e.target.closest('ul')
       const { type } = $startParentNode.dataset
-      console.log($startParentNode.dataset)
       e.dataTransfer.setData('text/plain', JSON.stringify({
         id: e.target.dataset.id, // toggle용 id
         type, // start end 구분용 type
@@ -82,7 +81,7 @@ export default function TodoList(props) {
     const dropCallback = (e) => {
       const $endParentNode = e.target.closest('ul')
       const { type: endNodeType } = $endParentNode.dataset
-      const {id: targetId, type: startNodeType } = JSON.parse(e.dataTransfer.getData('text/plain'))
+      const { id: targetId, type: startNodeType } = JSON.parse(e.dataTransfer.getData('text/plain'))
       if (targetId) {
         if (startNodeType !== endNodeType) { // 드래그 스타트, 엔드 지점이 다른 경우에만 toggle
           onToggle(targetId)
