@@ -76,17 +76,4 @@ function App() {
             }
         }
     });
-    
-    const removeButtons = document.querySelectorAll('.remove-button');
-    removeButtons.forEach(button => {
-        button.addEventListener('click', function (e) {
-            const $div = e.target.closest('.todo-item');
-            const { index } = $div.dataset;
-    
-            const $todoList = e.target.closest('.todo-list');
-            
-            //TODO: todolist 컴포넌트 매핑하는 방법? 이건 너무 파워 하드코딩..
-            todoListMapper[$todoList.id.split('-')[2]].component.onRemoveClick(index);
-        });
-    });
 }
