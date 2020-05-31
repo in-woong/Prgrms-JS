@@ -26,6 +26,10 @@ function TodoList(listContainer, data) {
 
     this.data = data;
     this.listContainer = listContainer;
+    this.onRemoveClick = function (index) {
+        this.data[index].isCompleted = true;
+        this.render();
+    };
     this.render = function () {
         this.listContainer.innerHTML = `<ul>
         ${this.data.map(({text, isCompleted}, index) => 

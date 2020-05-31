@@ -54,8 +54,6 @@ function App() {
             input: tripInput
         }
     }
-
-
     
     inputText.addEventListener('keypress', function (e) {
         if (e.keyCode === ENTER) {
@@ -74,7 +72,7 @@ function App() {
             
             if (todoListMapper[todoType.value]) {
                 todoListMapper[todoType.value].input.addInput(inputText.value)
-                inputText.text = '';
+                inputText.value = '';
             }
         }
     });
@@ -82,11 +80,13 @@ function App() {
     const removeButtons = document.querySelectorAll('.remove-button');
     removeButtons.forEach(button => {
         button.addEventListener('click', function (e) {
-            const $div = e.target.closest('.todo-item')
-            const { index } = $div.dataset
+            const $div = e.target.closest('.todo-item');
+            const { index } = $div.dataset;
     
-            const $todoList = e.target.closest('.todo-item')
-            //TODO: Todo list 별로 하려면 Todolist 객체를 받아와야 할것같은데?
+            const $todoList = e.target.closest('.todo-list');
+            
+            //TODO: todolist 컴포넌트 매핑하는 방법? 이건 너무 파워 하드코딩..
+            todoListMapper[$todoList.id.split('-')[2]].component.onRemoveClick(index);
         });
     });
 }
