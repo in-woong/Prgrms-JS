@@ -33,6 +33,26 @@ button {
     padding-bottom: 20px;
 }
 
+#todo-list {
+    padding: 20px 0;
+}
+
+.todos {
+    padding: 20px 0;
+}
+
+.todos li {
+    margin-top: -1px;
+    padding: 10px 5px;
+    border-radius: 5px;
+    border: 1px solid #eee;
+}
+
+.todos li.over {
+    position: relative;
+    border-color: #035e10;
+}
+
 .button-add {
     padding: 3px 10px;
     border-radius: 5px;

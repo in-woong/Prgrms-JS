@@ -1,10 +1,10 @@
-import UserList from './Component/UserList.js';
-import TodoTitle from './Component/TodoTitle.js';
-import TodoList from './Component/TodoList.js';
-import TodoCount from './Component/TodoCount.js';
-import TodoInput from './Component/TodoInput.js';
-import Loading from './Component/Loading.js';
-import { getTodoData, getUserData, addData, removeData, toggleData } from './api.js';
+import UserList from './component/UserList.js'
+import TodoTitle from './component/TodoTitle.js'
+import TodoList from './component/TodoList.js'
+import TodoCount from './component/TodoCount.js'
+import TodoInput from './component/TodoInput.js'
+import Loading from './component/Loading.js'
+import { getTodoData, getUserData, addData, removeData, toggleData } from './api.js'
 
 export default function App() {
   this.username = 'kyunga'
@@ -16,12 +16,14 @@ export default function App() {
 
     this.userList = new UserList(this.users, {onClick: this.getFetchData})
     this.todoTitle = new TodoTitle(this.username)
-    this.todoList = new TodoList(this.todos, {
+    this.todoList = new TodoList({
+      target: document.querySelector('#todo-list'),
+      data: this.todos,
       onRemove: this.onRemoveTodo,
       onToggle: this.onToggleTodo
     })
-    this.todoCount = new TodoCount(this.getTodoCount());
-    this.todoInput = new TodoInput(this.onAddTodo);
+    this.todoCount = new TodoCount(this.getTodoCount())
+    this.todoInput = new TodoInput(this.onAddTodo)
 
     this.getFetchData()
     this.getFatchUserData()
@@ -29,8 +31,8 @@ export default function App() {
 
   this.render = () => {
     this.todoTitle.setState(this.username)
-    this.todoList.setState(this.todos);
-    this.todoCount.setState(this.getTodoCount());
+    this.todoList.setState(this.todos)
+    this.todoCount.setState(this.getTodoCount())
   }
 
   this.getTodoCount = () => {
@@ -78,5 +80,5 @@ export default function App() {
     return result
   }
 
-  this.init();
+  this.init()
 }
