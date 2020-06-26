@@ -1,0 +1,41 @@
+li {
+  list-style: none;
+}
+
+#user-list ul {
+  overflow: hidden;
+}
+#user-list ul li {
+  margin: 0 5px 5px 0;
+  padding: 5px 10px;
+  float: left;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+#user-list ul li:hover {
+  background: #ddd;
+  cursor: pointer;
+}
+.section {
+  text-align: center;
+}
+.section.list {
+  display: flex;
+  justify-content: space-between;
+}
+.section.list > div {
+  width: 50%;
+  margin: 0 50px;
+}
+.item {
+  display: block;
+  margin-bottom: 10px;
+  padding: 10px;
+  background: #efefef;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+.item.done {
+  background: darkseagreen;
+  color: #252525;
+}

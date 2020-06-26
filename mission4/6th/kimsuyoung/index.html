@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <title>Mission 3 움짤 검색기</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+
+  <body>
+    <div id="app">
+      <div class="section">
+        <h2>유저 리스트</h2>
+        <div id="user-list"></div>
+      </div>
+
+      <div class="section">
+        <h2>
+          할 일 추가
+        </h2>
+        <input type="text" id="todo-input" />
+      </div>
+      <div id="loading" style="text-align: center;"></div>
+      <div class="section list">
+        <div class="left">
+          <div id="user"></div>
+          <h2>할 일 리스트</h2>
+          <div id="todo-list"></div>
+        </div>
+        <div class="right">
+          <h2>완료 리스트</h2>
+          <div id="todo-done-list"></div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="index.js"></script>
+  </body>
+</html>
