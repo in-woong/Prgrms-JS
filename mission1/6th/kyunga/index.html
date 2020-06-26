@@ -1,0 +1,117 @@
+<html>
+
+<head>
+	<title>Mission 1</title>
+	<meta charset="utf-8"/>
+</head>
+
+<body>
+<div id="todo-list"></div>
+<div id="study-todo-list"></div>
+<div id="work-todo-list"></div>
+<script>
+    const data = [
+        {
+            text: 'JS 공부하기',
+            isCompleted: true
+        },
+        {
+            text: 'JS 복습하기',
+            isCompleted: false
+        }
+    ];
+
+    const studyData = [
+        {
+            text: '변수 공부하기',
+            isCompleted: true
+        },
+        {
+            text: 'this 공부하기',
+            isCompleted: true
+        }
+    ];
+
+    const workData = [
+        {
+            text: '회의 준비하기',
+            isCompleted: false
+        },
+        {
+            text: '리팩토링 하기',
+            isCompleted: false
+        }
+    ];
+
+    function validateData(data) {
+        if (!data) {
+            throw new Error('데이터를 입력해주세요!')
+        }
+
+        if (!(data instanceof Array)) {
+            throw new Error('데이터의 형태가 배열이 아닙니다!');
+        }
+
+        data.forEach(item => {
+            if (!item.text || typeof item.text !== 'string')
+                throw new Error('text 프로퍼티의 타입은 꼭 string 이어야 합니다!');
+
+            if (typeof item.isCompleted !== 'boolean')
+                throw new Error('isCompleted 프로퍼티의 타입은 꼭 boolean 이어야 합니다!');
+        });
+
+        return true;
+    }
+
+    function TodoList(data, targetId) {
+        if (!(this instanceof TodoList)) {
+            throw new Error('new 키워드가 필요합니다!');
+        }
+
+        if (!targetId) {
+            throw new Error('targetId가 필요합니다!')
+        }
+
+        this.data = validateData(data) && data;
+
+        this.createTodoHtml = function() {
+            return this.data.reduce((acc, todoItem) => (
+                `${acc}<li>${todoItem.isCompleted ? `<s>${todoItem.text}</s>` : todoItem.text}</li>`
+            ), '');
+        };
+
+        this.render = function() {
+            document.querySelector(`${targetId}`).innerHTML = `<ul>${this.createTodoHtml()}</ul>`
+        };
+
+        this.setState = function (nextData) {
+            this.data = validateData(nextData) && nextData;
+            this.render();
+        }
+    }
+
+    try {
+        const todoList = new TodoList(data, '#todo-list');
+        const studyTodoList = new TodoList(studyData, '#study-todo-list');
+        const workTodoList = new TodoList(workData, '#work-todo-list');
+
+        todoList.render();
+        studyTodoList.render();
+        workTodoList.render();
+
+        todoList.setState([
+            {
+                text: 'ES6 공부하기',
+                isCompleted: true
+            },
+            {
+                text: 'ES6 복습하기',
+                isCompleted: false
+            },
+        ]);
+    } catch (error) {
+        console.log(error);
+    }
+</script>
+</body>
+</html>

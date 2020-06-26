@@ -1,0 +1,75 @@
+<html>
+<head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <div id="todo-list"></div>
+    <div id="study-list"></div>
+    <div id="mission-list"></div>
+    <script>
+        const data = [
+            {
+                text: 'JS 공부하기',
+                isCompleted: true
+            },
+            {
+                text: 'JS 복습하기',
+                isCompleted: false
+            }
+        ]
+        const studyData = [
+            {
+                text: 'Vue.js 공부',
+                isCompleted: false
+            },
+            {
+                text: 'React 공부',
+                isCompleted: false
+            }
+        ]
+        const missionData = [
+            {
+                text: '다중 컴포넌트 구현',
+                isCompleted: true
+            },
+            {
+                text: 'isCompleted 처리',
+                isCompleted: true
+            }
+        ]
+        
+        const validateData = (data) => {
+            if (!data) { throw new Error('데이터가 없습니다.') }
+            if (!Array.isArray(data)) { throw new Error('배열 형태가 아닙니다.') }
+            return data
+        }
+        const validateElement = (selector) => {
+            const $list = document.querySelector(selector)
+            if (!$list) { throw new Error(`${selector} 요소가 존재하지 않습니다.`) }
+            return $list
+        }
+                
+        class TodoList {
+            constructor(selector, data) {                
+                this.data = validateData(data)
+                this.$list = validateElement(selector)
+                this.render()
+            }            
+            render() {
+                const htmlString = this.data.map(item => 
+                    item.isCompleted ? `<li><s>${item.text}</s></li>` : `<li>${item.text}</li>`
+                ).join('')
+                this.$list.innerHTML = `<ul>${htmlString}</ul>`
+            }
+            setState(nextData) {
+                this.data = validateData(nextData)
+                this.render()
+            }
+        }
+        const todoList = new TodoList('#todo-list', data)
+        const studyList = new TodoList('#study-list', studyData)
+        const missionList = new TodoList('#mission-list' ,missionData)
+    </script>
+</body>
+</html>

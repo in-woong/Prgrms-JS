@@ -1,0 +1,99 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list"></div>
+  <div id="todo-list2"></div>
+  <div id="todo-list3"></div>
+  <script>
+
+    var data = [
+    { 
+        text: '코딩하기',
+        isCompleted: true
+    },
+    {
+        text: '집안 청소하기',
+        isCompleted: false
+    }
+    ]
+
+    var data2 = [
+    { 
+        text: '책읽기',
+        isCompleted: true
+    },
+    {
+        text: '책사기',
+        isCompleted: false
+    }
+    ]
+
+    var data3 = [
+    { 
+        text: '외식하기',
+        isCompleted: true
+    },
+    {
+        text: '후식먹기',
+        isCompleted: false
+    }
+    ]
+
+
+    function Todo(data){
+        let that = this;
+        this.data = data;
+
+        if( this.__proto__.constructor.name != 'Todo'){
+            throw new Error('Create object with keyword "new".');
+        }
+
+        if(!Array.isArray(data)){
+            throw new Error('Data should be an Array.');
+        }
+        
+        this.data = this.data.filter(item => item.text != undefined);
+
+        this.makeDiv = function(data){
+            let res = '';
+            data.forEach(item => {
+                let s_start = '';
+                let s_end = '';
+                if(item.isCompleted){
+                    s_start = '<s>';
+                    s_end = '</s>';
+                }
+                res += `<div>${s_start}${item.text}${s_end}<div>`;
+            });
+            return res;
+        }
+        
+        this.render = function(id){
+            this.id = id;
+            document.querySelector(`#${id}`).innerHTML = this.makeDiv(that.data);
+        }    
+
+        this.setState = function(nextData){
+            that.data = nextData;
+            document.querySelector(`#${that.id}`).innerHTML = this.makeDiv(nextData);
+        }
+    }
+
+    const todolist = new Todo(data);
+    todolist.render('todo-list');
+
+    const todolist2 = new Todo(data2);
+    todolist2.render('todo-list2');
+
+    const todolist3 = new Todo(data3);
+    todolist3.render('todo-list3');
+
+    todolist.setState(data3);
+  </script>
+</body>
+</html>
