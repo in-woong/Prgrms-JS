@@ -1,0 +1,116 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+<main>
+  <h1>Todo List collection!</h1>
+  <article>
+    <h2>Todo List</h2>
+    <div id="todo-list"></div>
+  </article>
+  <article>
+    <h2>Work Todo List</h2>
+    <div id="work-todo-list"></div>
+  </article>
+  <article>
+    <h2>Game Todo List</h2>
+    <div id="game-todo-list"></div>
+  </article>
+</main>
+
+<script>
+  const data = [
+    {
+      text: 'JS 공부하기',
+      isCompleted: true
+    },
+    {
+      text: 'JS 복습하기',
+      isCompleted: true
+    }
+  ];
+  const workData = [
+    {
+      text: '리팩토링',
+      isCompleted: false
+    },
+    {
+      text: 'A/B Test',
+      isCompleted: true
+    }
+  ];
+  const gameData = [
+    {
+      text: '동물의 숲',
+      isCompleted: true
+    },
+    {
+      text: '롤',
+      isCompleted: false
+    }
+  ];
+  const newData = [
+    {
+      text: '미션1 풀기',
+      isCompleted: true
+    },
+    {
+      text: '미션1 PR 날리기',
+      isCompleted: true
+    }
+  ];
+
+  function isEmpty(value) {
+    // null이거나 undefined이거나 array가 아니거나 빈 Object일 때
+    return value === null ||
+      typeof value === 'undefined' ||
+      (Array.isArray(value) && value.length < 1) ||
+      (typeof value === 'object' && Object.keys(value).length < 1);
+  }
+
+  const TodoList = function(data, containerId) {
+    if (!(this instanceof TodoList)) {
+      // !new.target으로 사용 가능
+      throw new Error('new 키워드를 붙여야 합니다.');
+    }
+    if (isEmpty(data)) {
+      throw new Error('유효하지 않은 형식입니다.');
+    }
+    if (isEmpty(containerId)) {
+      throw new Error('id값이 없습니다.');
+    }
+
+    this.todos = data;
+
+    this.render = function() {
+      const $rootElement = document.getElementById(containerId); // DOM을 담은 변수는 $를 붙여서 표기
+      $rootElement.innerHTML = `<ul>${this.todos.map(todo => {
+        if (!isEmpty(todo.isCompleted) && todo.text) {
+          return todo.isCompleted ? `<li><s>${todo.text}</s></li>` : `<li>${todo.text}</li>`
+        }
+      }).join('')}</ul>`;
+    }
+
+    this.setState = function(nextData) {
+      this.todos = nextData;
+      this.render();
+    }
+
+    this.render();
+  }
+
+  const todoList = new TodoList(data, 'todo-list');
+  const workTodoList = new TodoList(workData, 'work-todo-list');
+  const gameTodoList = new TodoList(gameData, 'game-todo-list');
+
+  setTimeout(() => {
+    // todoList 데이터를 newData로 바꾼다
+    todoList.setState(newData);
+  }, 2000)
+</script>
+</body>
+</html>

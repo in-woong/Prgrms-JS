@@ -88,6 +88,7 @@
 
   function TodoList(data, selector) {
     if (!(this instanceof TodoList)) throw new Error('Use new keyword')
+
     if (!selector) throw new Error('target is empty')
     if (!document.querySelector(selector)) throw new Error('Can\'t find target in DOM')
     checkDataValidation(data) // data validate

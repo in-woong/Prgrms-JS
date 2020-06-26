@@ -1,0 +1,122 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-mission-list"></div>
+    <div id="todo-animal-list"></div>
+    <div id="todo-food-list"></div>
+    <script>
+      const missionData = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false,
+        },
+      ]
+      const animalData = [
+        {
+          text: '강아지 키우기',
+          isCompleted: false,
+        },
+        {
+          text: '고양이 키우기',
+          isCompleted: false,
+        },
+        {
+          text: '닭 키우기',
+          isCompleted: false,
+        },
+      ]
+      const foodData = [
+        {
+          text: '치킨 먹기',
+          isCompleted: true,
+        },
+        {
+          text: '피자 먹기',
+          isCompleted: true,
+        },
+        {
+          text: '떡볶이 먹기',
+          isCompleted: true,
+        },
+      ]
+
+      function TodoList(element, data) {
+        const todoElement = document.querySelector(element)
+        let todos = data
+
+        const dataValidator = (data) => {
+          // 데이터가 배열인지 검사
+          if (!Array.isArray(data)) {
+            throw new Error(`${element} 데이터는 배열로 전달되어야 합니다.`)
+          }
+
+          // 데이터 존재 유무 검사
+          if (!data.length) {
+            throw new Error(`${element} 데이터가 없습니다.`)
+          }
+
+          // 데이터가 객체이고 text, isCompleted 키를 가지고 있는지 검사
+          data.map((item) => {
+            if (
+              !(
+                Object.prototype.toString.call(item).slice(8, -1) === 'Object' &&
+                typeof item.text === 'string' &&
+                typeof item.isCompleted === 'boolean'
+              )
+            ) {
+              throw new Error(
+                `${element} 데이터의 값이 객체가 아니거나 잘못된 값을 가지고 있습니다.`
+              )
+            }
+          })
+        }
+
+        // new 키워드를 사용했는지 검사
+        if (!(this instanceof TodoList)) {
+          throw new Error('new를 사용해주세요.')
+        }
+
+        // 엘리먼트가 존재하는지 검사
+        if (!todoElement) {
+          throw new Error(`${element}가 존재하지 않습니다.`)
+        }
+
+        // 데이터 검사
+        dataValidator(todos)
+
+        this.render = () => {
+          todoElement.innerHTML = todos
+            .map(
+              (todo) =>
+                `<div>${
+                  todo.isCompleted ? `<s>${todo.text}</s>` : todo.text
+                }</div>`
+            )
+            .join('')
+        }
+
+        this.setState = (nextData) => {
+          dataValidator(nextData)
+          todos = nextData
+          this.render()
+        }
+      }
+
+      const todoMissionList = new TodoList('#todo-mission-list', missionData)
+      const todoAnimalList = new TodoList('#todo-animal-list', animalData)
+      const todoFoodList = new TodoList('#todo-food-list', foodData)
+
+      todoMissionList.render()
+      todoAnimalList.render()
+      todoFoodList.render()
+    </script>
+  </body>
+</html>

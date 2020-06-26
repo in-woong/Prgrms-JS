@@ -1,0 +1,70 @@
+<html>
+
+<head>
+    <title>Mission 2</title>
+    <meta charset="utf-8" />
+</head>
+
+<body>
+    <main>
+        <h1>Todo List!</h1>
+        <article>
+          <h2>사용방법</h2>
+          <ul>
+            <li>삭제를 클릭하면 해당 일이 리스트에서 삭제됩니다</li>
+            <li>리스트를 클릭하면 해당 일이 완료상태로 처리됩니다</li>
+          </ul>
+        </article>
+        <ul id="todo-list-container">
+          <li>
+            <article class="container">
+              <h2>👨‍💻 JS</h2>
+              <div id="todo-list-js" class="todo-list"></div>
+            </article>
+          </li>
+          <li>
+            <article class="container">
+              <h2>🚩 Do in Life</h2>
+              <div id="todo-list-life" class="todo-list"></div>
+            </article>
+          </li>
+          <li>
+            <article class="container">
+              <h2>🛫 To Go</h2>
+              <div id="todo-list-trip" class="todo-list"></div>
+            </article>
+          </li>
+        </ul>
+      
+        <form action="" id="todo-list-modifier">
+            <fieldset>
+              <legend>할일을 추가해보세요!🏃‍♂️🏃‍♂️🏃‍♂️</legend>
+              <p>
+                <input type="radio" id="jsRadioButton" name="todo-type" value="js">
+                <label for="jsRadioButton">JS</label>
+              </p>
+              <p>
+                <input type="radio" id="lifeRadioButton" name="todo-type" value="life">
+                <label for="lifeRadioButton">Do in Life</label>
+              </p>
+              <p>
+                <input type="radio" id="tripRadioButton" name="todo-type" value="trip">
+                <label for="tripRadioButton">To Go</label>
+              </p>
+              <p>
+                <span>Enter키를 누르면 자동으로 추가됩니다.</span>
+                <input type="text" id="todo-list-inputText" placeholder="text 입력">
+                <span id="error-message"></span>
+              </p>
+            </fieldset>
+          </form>
+      </main>
+
+    <script src="./constants.js"></script>
+    <script src="./TodoList.js"></script>
+    <script src="./TodoInput.js"></script>
+    <script src="./App.js"></script>
+    <script src="./index.js"></script>
+</body>
+
+</html>
