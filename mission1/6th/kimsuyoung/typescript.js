@@ -1,6 +1,16 @@
 var data = [
+  {
+        text: 'JS 복습하기',
+        isCompleted: true
+    },
     {
-        text: 'JS 공부하기',
+        text: 'JS 복습하기2',
+        isCompleted: true
+    }
+];
+var data2 = [
+    {
+        text: 'TS 공부하기',
         isCompleted: true
     },
     {
@@ -8,16 +18,7 @@ var data = [
         isCompleted: false
     },
 ];
-var data2 = [
-    {
-        text: '',
-        isCompleted: true
-    },
-    {
-        text: 'TS 복습하기',
-        isCompleted: false
-    },
-];
+
 var dataChange = [
     {
         text: 'TS 공부하기',
@@ -30,8 +31,6 @@ var dataChange = [
     {
         text: '출근 준비하기',
         isCompleted: false
-    },
-];
 var createTodoHTMLString = function (data) {
     return data.isCompleted
         ? "<div><s>" + data.text + "</s></div>"

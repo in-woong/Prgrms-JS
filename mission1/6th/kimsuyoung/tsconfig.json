@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
     "noImplicitAny": true,
-    "noImplicitThis": true,
+    "noImplicitThis": false,
     "noImplicitReturns": true,
-    "strict": true
+    "strict": true,
+    "lib": ["es5", "es6", "es2015", "es2016", "dom"]
   }
 }
