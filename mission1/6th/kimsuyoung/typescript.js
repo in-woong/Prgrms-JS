@@ -1,5 +1,5 @@
 var data = [
-    {
+  {
         text: 'JS 복습하기',
         isCompleted: true
     },
@@ -14,10 +14,11 @@ var data2 = [
         isCompleted: true
     },
     {
-        text: 'TS 복습하기',
+        text: 'JS 복습하기',
         isCompleted: false
-    }
+    },
 ];
+
 var dataChange = [
     {
         text: 'TS 공부하기',
@@ -30,10 +31,10 @@ var dataChange = [
     {
         text: '출근 준비하기',
         isCompleted: false
-    }
-];
 var createTodoHTMLString = function (data) {
-    return data.isCompleted ? "<div><s>" + data.text + "</s></div>" : "<div>" + data.text + "</div>";
+    return data.isCompleted
+        ? "<div><s>" + data.text + "</s></div>"
+        : "<div>" + data.text + "</div>";
 };
 function TodoList(data, id) {
     var _this = this;

@@ -1,0 +1,90 @@
+<html>
+
+<head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+</head>
+
+<body>
+    <div id="todo-list-js"></div>
+    <div id="todo-list-life"></div>
+    <div id="todo-list-trip"></div>
+
+    <script>
+        var jsData = [
+            {
+                text: 'JS 공부하기',
+                isCompleted: true
+            },
+            {
+                text: 'JS 복습하기',
+                isCompleted: false
+            }
+        ];
+        var lifeData = [
+            {
+                text: '운동하기',
+                isCompleted: false
+            },
+            {
+                text: '펭tv보기',
+                isCompleted: true
+            }
+        ];
+        var tripData = [
+            {
+                text: 'NY',
+                isCompleted: true
+            },
+            {
+                text: 'HW',
+                isCompleted: false
+            }
+        ];
+
+        function TodoList(listContainer, data) {
+            if (!new.target) {
+                throw new Error("Error: TodoList Object is not set properly");
+            }
+            this.validate = function () {
+                if (!this.data) {
+                    throw new Error("Error: Invalid data type");
+                }
+                if (!Array.isArray(data)) {
+                    throw new Error("Error: Data should be array");
+                }
+                if (!(listContainer instanceof HTMLElement)) {
+                    throw new Error("Error: TodoList DOM Object is not set properly");
+                }
+
+                data.forEach(element => {
+                    if (!("text" in element)) {
+                        throw new Error("Error: Key 'text' is missing");
+                    }
+                })
+            }
+
+            this.data = data;
+            this.listContainer = listContainer;
+            this.render = function () {
+                this.listContainer.innerHTML = `<ul>${this.data.map(({text, isCompleted}) => (isCompleted? `<li><s>${text}</s></li>`:`<li>${text}</li>`)).join('')}</ul>`;
+            };
+            this.setState = function (nextData) {
+                this.data = nextData;
+                this.render();
+            }
+
+            this.validate();
+            this.render();
+        }
+
+        const jSList = new TodoList(document.getElementById('todo-list-js'), jsData);
+        const lifeList = new TodoList(document.getElementById('todo-list-life'), lifeData);
+        const tripList = new TodoList(document.getElementById('todo-list-trip'), tripData);
+
+        tripData.push({text: "CA", isCompleted: true});
+        tripList.setState(tripData);
+    </script>
+</body>
+
+</html>
