@@ -1,0 +1,103 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list"></div>
+  <div id="today-todo-list"></div>
+  <div id="tomorrow-todo-list"></div>
+
+  <script>
+    const data = [
+      {
+        text: 'JS 공부하기',
+        isCompleted: true
+      },
+      {
+        text: 'JS 복습하기',
+        isCompleted: false
+      }
+    ]
+
+    const todayData = [
+      {
+        text: 'JS 과제',
+        isCompleted: true
+      },
+      {
+        text: '한국학 과제',
+        isCompleted: true
+      }
+    ]
+
+    const tomorrowData = [
+      {
+        text: '코테 공부',
+        isCompleted: true
+      },
+      {
+        text: '자소서',
+        isCompleted: true
+      }
+    ]
+
+
+    function TodoList(data, elementId) {
+      this.data = data;
+      this.elementId = elementId;
+
+      if(!(this instanceof TodoList)) {
+        throw new Error("TodoList should be instantiated with new keyword");
+      }
+
+      if(!Array.isArray(data)) {
+        throw new Error("TodoList should be array");
+      }
+
+      if(typeof data !== "object" || !data) {
+        throw new Error("TodoList is null or undefined");
+      }
+
+      this.data.forEach(todo => {
+        if (typeof todo.text !== 'string' || typeof todo.isCompleted !== 'boolean') {
+          throw new Error("TodoList type is invalid");
+        }
+      })
+
+      this.render = () => {
+        document.querySelector(`#${this.elementId}`).innerHTML = this.data.
+          map(
+            todo => todo.isCompleted
+              ? `<li><s>${todo.text}</s></li>`
+              : `<li>${todo.text}</li>`
+            ).join('')
+      }
+
+      this.setState = (nextData) => {
+        this.data = nextData
+        this.render()
+      }
+    }
+
+    const todoList = new TodoList(data, 'todo-list');
+    todoList.render();
+
+    const todayTodoList = new TodoList(todayData, 'today-todo-list');
+    todayTodoList.render();
+
+    const tomorrowTodoList = new TodoList(tomorrowData, 'tomorrow-todo-list');
+    tomorrowTodoList.render();
+
+    todoList.setState([
+      {
+        text: '할 일',
+        isCompleted: false
+      }
+    ]);
+
+  </script>
+</body>
+</html>

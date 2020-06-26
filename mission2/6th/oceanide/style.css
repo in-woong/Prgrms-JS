@@ -1,0 +1,41 @@
+body {
+  color: #222;
+  font-family: 'Arial', sans-serif;
+  text-align: center;
+}
+
+.contents {
+  width: 400px;
+  margin: 0 auto;
+  background-color: #eee;
+  padding: 10px;
+}
+
+.title {
+  margin: 10px;
+  font-size: 25px;
+}
+
+#todo-input {
+  width: 200px;
+  height: 25px;
+}
+
+#todos {
+  margin: 10px;
+}
+
+.todo {
+  padding: 5px;
+  list-style-type: none;
+}
+
+.todo-text,
+.todo-remove {
+  cursor: pointer;
+}
+
+#todo-count {
+  padding: 10px;
+  font-weight: bold;
+}

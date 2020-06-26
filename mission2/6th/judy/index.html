@@ -1,0 +1,68 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name=viewport content="width=device-width,height=device-height,initial-scale=1,user-scalable=no">
+    <title>Mission 2</title>
+    <meta charset="utf-8" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css">
+  </head>
+
+  <body>
+    <div class="viewport">
+      <div class="todo">
+        <div class="todo-container">
+          <div class="todo-header">
+            <h1 class="todo-header__heading">To-DO List</h1>
+            <p class="todo-header__description">해야 할 일을 입력해주세요 &#9994;</p>
+          </div>
+          <!-- todo-header//end -->
+          <div class="todo-input">
+            <div class="todo-input__list">
+              <div class="input">
+                <input type="text" placeholder="js 복습하기, js 공부하기" class="input-text" id="todo-input" />
+              </div>
+            </div>
+            <!-- todo-input__list//end -->
+          </div>
+          <!-- todo-input//end -->
+          <div class="todo-data">
+            <div class="todo-data__list" id="todo-list">
+
+            </div>
+            <!-- todo-data__list//end -->
+            <div class="todo-data__count">
+              <div class="todo-data__count-item">
+                <dl class="definition-list">
+                  <dt class="definition-title">Total</dt>
+                  <dd class="definition-description" id="todo-total">0</dd>
+                </dl>
+              </div>
+              <!-- todo-data__count-item//end -->
+              <div class="todo-data__count-item">
+                <dl class="definition-list">
+                  <dt class="definition-title">Completed</dt>
+                  <dd class="definition-description" id="todo-completed">0</dd>
+                </dl>
+              </div>
+              <!-- todo-data__count-item//end -->
+            </div>
+            <!-- todo-data__count//end -->
+            <div class="button-group">
+              <button class="button button-default button-dangerous" id="todo-all-remove">전체 삭제</button>
+            </div>
+          </div>
+          <!-- todo-data//end -->
+        </div>
+        <!-- todo-container//end -->
+      </div>
+      <!-- todo//end -->
+    </div>
+    <!-- viewport//end -->
+    <script src="./js/TodoList.js"></script>
+    <script src="./js/TodoInput.js"></script>
+    <script src="./js/TodoCount.js"></script>
+    <script src="./js/App.js"></script>
+    <script src="./js/main.js"></script>
+  </body>
+</html>

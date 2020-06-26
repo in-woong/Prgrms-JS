@@ -1,0 +1,101 @@
+@charset "UTF-8";
+
+body,h1, h2, h3, h4, h5, h6, ul, li, form, input, textarea, button, select {
+    margin: 0;
+    padding: 0;
+}
+
+button {
+    border: none;
+    border-radius: 0;
+    background: none;
+    cursor: pointer;
+}
+
+button[disabled] {
+    cursor: default;
+}
+
+.container {
+    padding: 20px;
+}
+
+.input-area {
+    display: flex;
+    margin-top: 10px;
+}
+
+.input-area .input-todo {
+    flex: 1 0 auto;
+    padding: 0 15px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 46px;
+    color: #000;
+    border: 1px solid #ccc;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.input-area .input-todo:focus {
+    outline: transparent;
+    border-color: #0099ff;
+}
+
+.input-area button {
+    display: inline-block;
+    padding: 0 15px;
+    font-size: 16px;
+    line-height: 46px;
+    color: #fff;
+    border: 1px solid #0099ff;
+    box-sizing: border-box;
+    background-color: #0099ff;
+}
+
+.input-area .button-all-remove {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: #066cb1;
+}
+
+.todos {
+    padding: 10px;
+}
+
+.todos li {
+    padding: 5px 0;
+}
+
+.button-delete {
+    vertical-align: middle;
+    margin-left: 5px;
+}
+
+.icon-delete {
+    position: relative;
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #ccc;
+}
+
+.icon-delete::before,
+.icon-delete::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 1px;
+    background-color: #fff;
+    content: '';
+}
+
+.icon-delete::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.icon-delete::after {
+    transform: translate(-50%, -50%) rotate(135deg);
+}
