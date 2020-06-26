@@ -1,0 +1,84 @@
+@charset "UTF-8";
+
+body,h1, h2, h3, h4, h5, h6, ul, li, form, input, textarea, button, select {
+    margin: 0;
+    padding: 0;
+}
+
+button {
+    cursor: pointer;
+}
+
+.container {
+    overflow: hidden;
+    padding: 20px;
+}
+
+.user-wrap, .todo-wrap {
+    float: left;
+    width: 50%;
+    padding: 20px 50px;
+    box-sizing: border-box;
+}
+
+.user-wrap {
+    border: 5px solid
+}
+
+.users li {
+    cursor: pointer;
+}
+
+.title {
+    padding-bottom: 20px;
+}
+
+#todo-list {
+    padding: 20px 0;
+}
+
+.todos {
+    padding: 20px 0;
+}
+
+.todos li {
+    margin-top: -1px;
+    padding: 10px 5px;
+    border-radius: 5px;
+    border: 1px solid #eee;
+}
+
+.todos li.over {
+    position: relative;
+    border-color: #035e10;
+}
+
+.button-add {
+    padding: 3px 10px;
+    border-radius: 5px;
+    color: #fff;
+    background-color: #000;
+}
+
+.button-delete {
+    margin-left: 5px;
+    padding: 3px;
+    background-color: #fff;
+}
+
+.todo-count {
+    padding-top: 20px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.loading {
+    padding: 20px 0;
+    font-size: 20px;
+    color: #035E10;
+}
+
+.loading ~ #todo-list,
+.loading ~ .todo-count {
+    display: none;
+}
