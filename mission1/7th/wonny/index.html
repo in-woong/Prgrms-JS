@@ -15,7 +15,23 @@
           text: 'JS 복습하기',
         },
       ]
-      // 이곳에서 코딩을 시작하세요!
+
+      function TodoList(todos) {
+        this.todos = todos
+
+        this.render = function () {
+          let htmlString = ''
+
+          for (const todo of this.todos) {
+            htmlString += `<div>${todo.text}</div>`
+          }
+
+          document.querySelector('#todo-list').innerHTML = htmlString
+        }
+      }
+
+      const todoList = new TodoList(data)
+      todoList.render()
     </script>
   </body>
 </html>
