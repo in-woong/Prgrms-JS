@@ -33,6 +33,10 @@
       }
 
       function TodoList(todos) {
+        if (!(this instanceof TodoList)) {
+          return new Error('Wrong call')
+        }
+
         if (!isValidTodos(todos)) {
           throw new Error('Invalid todos data')
         }
