@@ -80,6 +80,11 @@
 
           document.querySelector(`#${elementId}`).innerHTML = todosHtmlString
         }
+
+        this.setState = function (newTodos) {
+          this.todos = newTodos
+          this.render()
+        }
       }
 
       const todoListOfRoto = new TodoList('todo-list-of-roto', todoOfRoto)
@@ -93,6 +98,18 @@
 
       const todoListOfWonny = new TodoList('todo-list-of-wonny', todoOfWonny)
       todoListOfWonny.render()
+
+      const newTodosOfWonny = [
+        {
+          text: 'TDD 책 읽기',
+          isComplated: false,
+        },
+        {
+          text: '기술 포스팅하기',
+          isComplated: true,
+        },
+      ]
+      todoListOfWonny.setState(newTodosOfWonny)
     </script>
   </body>
 </html>
