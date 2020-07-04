@@ -12,25 +12,31 @@
       const todoOfRoto = [
         {
           text: 'JS 공부하기',
+          isComplated: true,
         },
         {
           text: 'JS 복습하기',
+          isComplated: false,
         },
       ]
       const todoOfJeffrey = [
         {
           text: '1,000만 원 벌기',
+          isComplated: true,
         },
         {
           text: '2,000만 원 벌기',
+          isComplated: false,
         },
       ]
       const todoOfWonny = [
         {
           text: '기술 발표하기',
+          isComplated: true,
         },
         {
           text: '체지방률 낮추기',
+          isComplated: false,
         },
       ]
 
@@ -62,13 +68,17 @@
         this.todos = todos
 
         this.render = function () {
-          let htmlString = ''
+          let todosHtmlString = ''
 
           for (const todo of this.todos) {
-            htmlString += `<div>${todo.text}</div>`
+            const todoHtmlString = todo.isComplated
+              ? `<s>${todo.text}</s>`
+              : `${todo.text}`
+
+            todosHtmlString += `<div>${todoHtmlString}</div>`
           }
 
-          document.querySelector(`#${elementId}`).innerHTML = htmlString
+          document.querySelector(`#${elementId}`).innerHTML = todosHtmlString
         }
       }
 
