@@ -5,14 +5,32 @@
   </head>
 
   <body>
-    <div id="todo-list"></div>
+    <div id="todo-list-of-roto"></div>
+    <div id="todo-list-of-jeffrey"></div>
+    <div id="todo-list-of-wonny"></div>
     <script>
-      var data = [
+      const todoOfRoto = [
         {
           text: 'JS 공부하기',
         },
         {
           text: 'JS 복습하기',
+        },
+      ]
+      const todoOfJeffrey = [
+        {
+          text: '1,000만 원 벌기',
+        },
+        {
+          text: '2,000만 원 벌기',
+        },
+      ]
+      const todoOfWonny = [
+        {
+          text: '기술 발표하기',
+        },
+        {
+          text: '체지방률 낮추기',
         },
       ]
 
@@ -32,7 +50,7 @@
         return true
       }
 
-      function TodoList(todos) {
+      function TodoList(elementId, todos) {
         if (!(this instanceof TodoList)) {
           return new Error('Wrong call')
         }
@@ -50,12 +68,21 @@
             htmlString += `<div>${todo.text}</div>`
           }
 
-          document.querySelector('#todo-list').innerHTML = htmlString
+          document.querySelector(`#${elementId}`).innerHTML = htmlString
         }
       }
 
-      const todoList = new TodoList(data)
-      todoList.render()
+      const todoListOfRoto = new TodoList('todo-list-of-roto', todoOfRoto)
+      todoListOfRoto.render()
+
+      const todoListOfJeffrey = new TodoList(
+        'todo-list-of-jeffrey',
+        todoOfJeffrey
+      )
+      todoListOfJeffrey.render()
+
+      const todoListOfWonny = new TodoList('todo-list-of-wonny', todoOfWonny)
+      todoListOfWonny.render()
     </script>
   </body>
 </html>
