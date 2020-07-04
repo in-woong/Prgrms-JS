@@ -16,7 +16,27 @@
         },
       ]
 
+      const isValidTodos = (todos) => {
+        if (!todos) {
+          return false
+        }
+
+        if (!Array.isArray(todos)) {
+          return false
+        }
+
+        if (!todos.every((todo) => todo.hasOwnProperty('text'))) {
+          return false
+        }
+
+        return true
+      }
+
       function TodoList(todos) {
+        if (!isValidTodos(todos)) {
+          throw new Error('Invalid todos data')
+        }
+
         this.todos = todos
 
         this.render = function () {
