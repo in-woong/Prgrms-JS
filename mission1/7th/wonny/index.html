@@ -67,8 +67,7 @@
 
         this.todos = todos
 
-        this.render = function () {
-          let todosHtmlString = ''
+        this.render = () => {
 
           for (const todo of this.todos) {
             const todoHtmlString = todo.isComplated
@@ -81,7 +80,7 @@
           document.querySelector(`#${elementId}`).innerHTML = todosHtmlString
         }
 
-        this.setState = function (newTodos) {
+        this.setState = (newTodos) => {
           this.todos = newTodos
           this.render()
         }
