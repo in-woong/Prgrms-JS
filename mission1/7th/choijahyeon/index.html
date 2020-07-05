@@ -18,6 +18,9 @@
     ]
 	// 이곳에서 코딩을 시작하세요!
     function TodoList(data) {
+        if(!Array.isArray(data)) {
+            throw new Error("[error] parameter is not array.");
+        }
         this.todos = data.map(todo => todo.text);
         this.render = function() {
             // const ul = document.createElement('ul');
@@ -37,6 +40,9 @@
         }
     }
     var todoList = new TodoList(data);
+    if( typeof todoList !== 'function') {
+        throw new Error("[error] 'todoList' is not function.");
+    }
     todoList.render()
   </script>
 </body>
