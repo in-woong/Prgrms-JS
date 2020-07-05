@@ -56,6 +56,14 @@
         return true
       }
 
+      const createTodoItem = (todo) => {
+        const todoItem = todo.isComplated
+          ? `<s>${todo.text}</s>`
+          : `${todo.text}`
+
+        return `<div>${todoItem}</div>`
+      }
+
       function TodoList(elementId, todos) {
         if (!(this instanceof TodoList)) {
           return new Error('Wrong call')
@@ -66,18 +74,16 @@
         }
 
         this.todos = todos
-
         this.render = () => {
+          let todoList = ''
 
           for (const todo of this.todos) {
-            const todoHtmlString = todo.isComplated
-              ? `<s>${todo.text}</s>`
-              : `${todo.text}`
-
-            todosHtmlString += `<div>${todoHtmlString}</div>`
+            const todoItem = createTodoItem(todo)
+            todoList += todoItem
           }
 
-          document.querySelector(`#${elementId}`).innerHTML = todosHtmlString
+          const targetElement = document.querySelector(`#${elementId}`)
+          targetElement.innerHTML = todoList
         }
 
         this.setState = (newTodos) => {
