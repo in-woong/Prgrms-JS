@@ -81,7 +81,12 @@
         }
 
         this.setState = (newTodos) => {
+          if (!isValidTodos(newTodos)) {
+            throw new Error('Invalid todos data')
+          }
+
           this.todos = newTodos
+
           this.render()
         }
 
