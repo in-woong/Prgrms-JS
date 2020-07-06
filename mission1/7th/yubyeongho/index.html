@@ -8,6 +8,7 @@
     <div id="todo-list"></div>
     <div id="todo-list1"></div>
     <div id="todo-list2"></div>
+    <div id="error"></div>
     <script>
       const data = [
         {
@@ -44,25 +45,25 @@
       ];
 
       //[issue #49] TodoList 컴포넌트 작성
-      function TodoList(data, id) {
-        this.data = data;
-        this.id = id;
+      function TodoList(todos, elementId) {
+        this.todos = todos;
+        this.elementId = elementId;
 
         //[issue #50] null 혹은 undefined가 넘어오면?
-        if (typeof this.data === null || typeof this.data === 'undefined') {
+        if (!this.todos) {
           throw new Error(
             '데이터 타입이 null 혹은 undefined으로 적합하지 않습니다.'
           );
         }
 
         //[issue #50] array가 아닌 형태로 넘어오면?
-        if (!Array.isArray(this.data)) {
+        if (!Array.isArray(this.todos)) {
           throw new Error('배열 타입의 데이터가 아닙니다.');
         }
 
         //[issue #50] 데이터 내용이 이상하면?
-        this.data.map((todo) => {
-          if (typeof todo.text !== 'string' || !todo.text) {
+        this.todos.forEach((todo) => {
+          if (typeof todo.text !== 'string' || todo.text === '') {
             throw new Error(
               '할일 목록의 텍스트 타입이 적합하지 않거나, 텍스트가 비어 있습니다.'
             );
@@ -75,34 +76,42 @@
         }
 
         this.render = function () {
-          document.querySelector(this.id).innerHTML = this.data.map(
-            (todo, idx) =>
-              //[issue #66] isCompleted 처리
-              todo.isCompleted
-                ? `<ul><s>${idx + 1}. ${todo.text}</s></ul>`
-                : `<ul>${idx + 1}. ${todo.text}</ul>`
-          );
+          document.querySelector(
+            this.elementId
+          ).innerHTML = `<ol>${this.todos.map((todo, idx) =>
+            todo.isCompleted
+              ? `<li><s>${todo.text}</s></li>`
+              : `<li>${todo.text}</li>`
+          )}</ol>`;
         };
 
         this.setState = function (nextData) {
-          this.data = nextData;
+          this.todos = nextData;
           this.render();
         };
+
+        this.init = function () {
+          this.render();
+        };
+
+        this.init();
       }
+      //에러처리를 위한 UI 추가
+      try {
+        const todoList1 = new TodoList(data, '#todo-list');
 
-      const todoList1 = new TodoList(data, '#todo-list');
-      todoList1.render();
-      todoList1.setState([
-        { text: 'JavaScript 공부하기', isCompleted: true },
-        { text: 'JavaScript 복습하기', isCompleted: false },
-      ]);
+        todoList1.setState([
+          { text: 'JavaScript 공부하기', isCompleted: true },
+          { text: 'JavaScript 복습하기', isCompleted: false },
+        ]);
 
-      //[issue #57] 다중 컴포넌트
-      const todoList2 = new TodoList(data1, '#todo-list1');
-      todoList2.render();
+        const todoList2 = new TodoList(data1, '#todo-list1');
 
-      const todoList3 = new TodoList(data2, '#todo-list2');
-      todoList3.render();
+        const todoList3 = new TodoList(data2, '#todo-list2');
+      } catch (e) {
+        document.querySelector('#error').innerHTML = e;
+        document.querySelector('#error').style.color = 'red';
+      }
     </script>
   </body>
 </html>
