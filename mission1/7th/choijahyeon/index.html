@@ -45,38 +45,43 @@
     const types = ['today', 'anytime', 'someday'];
 
     function TodoList(data, type) {
-        if(!Array.isArray(data)) {
-            throw new Error('[error] parameter is not array.');
-        }
-        this.todos = data;
-        this.render = function() {
-            const lis = this.todos.map((todo) => {
-              if( !todo.text || typeof todo.text !== 'string' || typeof todo.isCompleted !== 'boolean') {
-                throw new Error(`[error][${type}] todo list type Error.`);
-              } 
-              return todo.isCompleted ? `<li><s>${todo.text}</s></li>` : `<li>${todo.text}</li>`;
-            }).join('');
-            document.querySelector(`#todo-list-${type}`).innerHTML = `<ul>${lis}<ul>`;
-        },
-        this.setState = function(nextData) {
-          this.todos = nextData;
-          this.render();
-        }
+      if(!new.target) {
+        throw new Error('[error] TodoList() must be called with new.');
+      }
+      if(!Array.isArray(data)) {
+        throw new Error('[error] parameter is not array.');
+      }
+      this.todos = data;
+      this.render = function() {
+          const lis = this.todos.map((todo) => {
+            if( !todo.text || typeof todo.text !== 'string' || typeof todo.isCompleted !== 'boolean') {
+              throw new Error(`[error][${type}] todo list type Error.`);
+            } 
+            return todo.isCompleted ? `<li><s>${todo.text}</s></li>` : `<li>${todo.text}</li>`;
+          }).join('');
+          document.querySelector(`#todo-list-${type}`).innerHTML = `<ul>${lis}<ul>`;
+      },
+      this.setState = function(nextData) {
+        this.todos = nextData;
+        this.render();
+      }   
     }
     
-    types.forEach((type) => {
-      const todoList = new TodoList(data[type], type);
-      if( typeof todoList !== 'object') {
-          throw new Error(`[error][${type}] 'todoList' is not object. Use 'new' keyword.`);
-      }
-      todoList.render();
-      setTimeout(() => {
-        todoList.setState(data[type].map((d) => {
-          d.isCompleted = true;
-          return d;
-        }));
-      }, 1000);
-    });
+    const todayTodoList = new TodoList(data['today'], 'today');
+    const anytimeTodoList = new TodoList(data['anytime'], 'anytime');
+    const somedayTodoList = new TodoList(data['someday'], 'someday');
+
+    todayTodoList.render();
+    anytimeTodoList.render();
+    somedayTodoList.render();
+
+    setTimeout(() => {
+      todayTodoList.setState(data['today'].map((d) => {
+        d.isCompleted = true;
+        return d;
+      }));
+    }, 1000);
+    
   </script>
 </body>
 
