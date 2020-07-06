@@ -6,44 +6,68 @@
 </head>
 
 <body>
-  <div id="todo-list"></div>
+  <div id="todo-list-today"></div>
+  <div id="todo-list-anytime"></div>
+  <div id="todo-list-someday"></div>
   <script>
-    var data = [
-      {
-        text: 'JS 공부하기'
-      },
-      {
-        text: 'JS 복습하기'
-      }
-    ]
-	// 이곳에서 코딩을 시작하세요!
-    function TodoList(data) {
+    const data = {
+      today : [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false
+        }
+      ],
+      anytime: [
+        { 
+          text: '방 청소하기',
+          isCompleted: true
+        },
+        {
+          text: '자전거 타기',
+          isCompleted: false
+        } 
+      ],
+      someday : [
+        {
+          text: '유럽 여행',
+          isCompleted: false
+        },
+        {
+          text: '운전 연수',
+          isCompleted: false
+        }
+      ]
+    };
+
+    function TodoList(data, type) {
         if(!Array.isArray(data)) {
             throw new Error("[error] parameter is not array.");
         }
-        this.todos = data.map(todo => todo.text);
+        this.todos = data;
         this.render = function() {
-            // const ul = document.createElement('ul');
-            // data.forEach((todo) => {
-            //     const li = document.createElement('li');
-            //     li.innerHTML = todo.text;
-            //     ul.appendChild(li);
-            // });
-
-            // const div = document.getElementById('todo-list');
-            // div.appendChild(ul);
-
             const lis = this.todos.map((todo) => {
-                return `<li>${todo}</li>`;
+              if(todo.isCompleted) {
+                return `<li><s>${todo.text}</s></li>`;
+              }
+              return `<li>${todo.text}</li>`;
             }).join('');
-            document.querySelector('#todo-list').innerHTML = `<ul>${lis}<ul>`;
+            document.querySelector(`#todo-list-${type}`).innerHTML = `<ul>${lis}<ul>`;
         }
     }
-    var todoList = new TodoList(data);
-    if( typeof todoList !== 'function') {
-        throw new Error("[error] 'todoList' is not function.");
-    }
-    todoList.render()
+    const types = ['today', 'anytime', 'someday'];
+    types.forEach((type) => {
+      const todoList = new TodoList(data[type], type);
+      if( typeof todoList !== 'object') {
+          throw new Error(`[error][${type}] 'todoList' is not object.`);
+      }
+      todoList.render()
+    });
+    const todossss = TodoList(data['today'], 'today');
+    console.log(todossss);
   </script>
 </body>
 </html>
