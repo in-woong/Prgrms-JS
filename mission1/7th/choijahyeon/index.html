@@ -42,6 +42,7 @@
         }
       ]
     };
+    const types = ['today', 'anytime', 'someday'];
 
     function TodoList(data, type) {
         if(!Array.isArray(data)) {
@@ -50,24 +51,23 @@
         this.todos = data;
         this.render = function() {
             const lis = this.todos.map((todo) => {
-              if(todo.isCompleted) {
-                return `<li><s>${todo.text}</s></li>`;
-              }
-              return `<li>${todo.text}</li>`;
+              return todo.isCompleted ? `<li><s>${todo.text}</s></li>` : `<li>${todo.text}</li>`;
             }).join('');
             document.querySelector(`#todo-list-${type}`).innerHTML = `<ul>${lis}<ul>`;
+        },
+        this.setState = function(nextData) {
+          this.todos = nextData;
+          this.render();
         }
     }
-    const types = ['today', 'anytime', 'someday'];
+    
     types.forEach((type) => {
       const todoList = new TodoList(data[type], type);
       if( typeof todoList !== 'object') {
-          throw new Error(`[error][${type}] 'todoList' is not object.`);
+          throw new Error(`[error][${type}] 'todoList' is not object. Use 'new' keyword.`);
       }
-      todoList.render()
+      todoList.render();
     });
-    const todossss = TodoList(data['today'], 'today');
-    console.log(todossss);
   </script>
 </body>
 </html>
