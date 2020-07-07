@@ -78,7 +78,7 @@
         this.render = function () {
           document.querySelector(
             this.elementId
-          ).innerHTML = `<ol>${this.todos.map((todo, idx) =>
+          ).innerHTML = `<ol>${this.todos.map((todo) =>
             todo.isCompleted
               ? `<li><s>${todo.text}</s></li>`
               : `<li>${todo.text}</li>`
