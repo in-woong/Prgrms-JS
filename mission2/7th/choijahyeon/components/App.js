@@ -26,6 +26,14 @@ function App(todos) {
 				completeCount : this.todos.filter(todo => todo.isCompleted).length
 			});
 		};
+		this.removeAll = () => {
+			this.todos = [];
+			this.todoList.setState(this.todos);
+			this.changeCount();
+		};
+		this.$target.addEventListener('remove-all', () => {
+			this.removeAll();
+		});
 		this.todoInput = new TodoInput({
 			target : this.$target, 
 			addTodo : this.addTodo
