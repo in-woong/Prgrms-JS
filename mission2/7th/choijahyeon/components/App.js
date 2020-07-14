@@ -1,7 +1,10 @@
-function App(todos) {
+function App() {
 	try {
-		this.todos = todos;
+		this.todos = JSON.parse(localStorage.getItem('todos')) || [];
 		this.$target = document.querySelector('#app');
+		this.saveTodos = () => {
+			localStorage.setItem('todos', JSON.stringify(this.todos));
+		};
 		this.addTodo = (text) => {
 			this.todos.push({
 				text: text,
@@ -9,16 +12,19 @@ function App(todos) {
 			});
 			this.todoList.setState(this.todos);
 			this.changeCount();
+			this.saveTodos();
 		};
 		this.deleteTodo = (index) => {
 			this.todos.splice(index, 1);
 			this.todoList.setState(this.todos);
 			this.changeCount();
+			this.saveTodos();
 		};
 		this.toggleTodo = (index) => {
 			this.todos[index].isCompleted = !this.todos[index].isCompleted;
 			this.todoList.render();
 			this.changeCount();
+			this.saveTodos();
 		};
 		this.changeCount = () => {
 			this.todoCount.setState({
@@ -30,6 +36,7 @@ function App(todos) {
 			this.todos = [];
 			this.todoList.setState(this.todos);
 			this.changeCount();
+			this.saveTodos();
 		};
 		this.$target.addEventListener('remove-all', () => {
 			this.removeAll();
