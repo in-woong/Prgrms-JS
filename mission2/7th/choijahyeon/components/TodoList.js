@@ -21,16 +21,22 @@ function TodoList(props) {
 	this.toggleTodo = props.toggleTodo;
 	this.todos = props.todos;
 	this.$ul = document.createElement('ul');
-	
+	this.$ul.addEventListener('click', (e) => {
+		const index = e.target.getAttribute('index');
+		if (e.target.tagName === 'BUTTON') {
+			this.deleteTodo(index);
+		}
+		if (e.target.tagName === 'LI') {
+			this.toggleTodo(index);
+		}
+	});
 	this.render = function() {
 		this.$ul.innerHTML = '';
 		this.todos.map((todo, index) => {
 			new Todo({
 				target : this.$ul, 
 				todo : todo, 
-				index : index, 
-				deleteTodo : this.deleteTodo,
-				toggleTodo : this.toggleTodo
+				index : index
 			});
 		});
 	};
