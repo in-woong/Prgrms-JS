@@ -9,6 +9,7 @@ function TodoInput(props) {
     if (e.key === 'Enter') {
       this.addTodo(this.$input.value)
       this.$input.value = ''
+      this.$input.focus()
     }
   })
   this.$removeAllButton = document.createElement('button')

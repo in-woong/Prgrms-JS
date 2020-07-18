@@ -1,7 +1,7 @@
-function Todo(props) {
-  this.$target = props.target
-  this.todo = props.todo
-  this.index = props.index
+function Todo({ target, todo, index }) {
+  this.$target = target
+  this.todo = todo
+  this.index = index
   this.render = function () {
     const $button = document.createElement('button')
     $button.textContent = 'x'
