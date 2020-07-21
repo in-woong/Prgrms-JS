@@ -1,6 +1,6 @@
-function TodoInput(props) {
-  this.$target = props.target
-  this.addTodo = props.addTodo
+function TodoInput({ target, addTodo }) {
+  this.$target = target
+  this.addTodo = addTodo
   this.removeAll = new CustomEvent('remove-all', {
     bubbles: true,
   })
