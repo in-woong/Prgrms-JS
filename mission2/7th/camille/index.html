@@ -1,0 +1,81 @@
+<html>
+
+<head>
+  <title>Mission 2</title>
+  <meta charset="utf-8"/>
+  <style>
+    html {
+      font-size: 10px;
+    }
+    ul, p {
+      margin: 0;
+      padding: 0;
+    }
+    li {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      line-height: 3rem;
+      border-bottom: gray 1px solid;
+    }
+    .todo_input {
+      max-width: 400px;
+      margin: 0 0 10px;
+      padding: 0;
+      border: 0;
+    }
+    .todo_list {
+      max-width: 400px;
+      border: gray 1px solid;
+      border-bottom: 0;
+      font-size: 1.6rem;
+      margin:0 0 10px;
+    }
+    .todo_list p {
+      background: #efefef;
+      height: 30px;
+      line-height: 3rem;
+      border-bottom: gray 1px solid;
+    }
+    .btn_delete_all {
+      max-width: 400px;
+      text-align: right;
+    }
+    .todo_count {
+      max-width: 400px;
+      text-align: right;
+    }
+    .todo_count span {
+      display: inline-block;
+      line-height: 1.6rem;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+<h1>My todo list</h1>
+
+<div class="todo_input">
+  <label for="textbox-todo"><input type="text" id="textbox-todo" placeholder="할 일을 입력하시오."></label>
+  <button id="btn-add">추가</button>
+</div>
+
+<div class="todo_list" id="todo-list"></div>
+<div class="todo_count" id="todo-count">
+  <span id="tx-remain">2</span><span>/</span><span id="tx-total">4</span>
+</div>
+
+<div class="btn_delete_all">
+  <button id="btn-delete-all">모두삭제</button>
+</div>
+
+<script src="./model/model.js"></script>
+<script src="./util/validateData.js"></script>
+<script src="./components/TodoList.js"></script>
+<script src="./components/TodoInput.js"></script>
+<script src="./components/TodoCount.js"></script>
+<script src="./components/App.js"></script>
+<script src="index.js"></script>
+</body>
+</html>
