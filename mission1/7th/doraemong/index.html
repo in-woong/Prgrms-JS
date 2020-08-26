@@ -1,0 +1,100 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list"></div>
+  <div id="todo-doraemong-list"></div>
+  <div id="todo-jingu-list"></div>
+  <script>
+    var data = [
+      {
+        text: 'JS 공부하기',
+        isCompleted: true
+      },
+      {
+        text: 'JS 복습하기',
+        isCompleted: true
+      },
+      {
+          text:'일하기',
+          isCompleted: true
+      },
+      {
+          text:'주간 보고 작성',
+          isCompleted: true
+      }
+    ];
+    var doraemongData = [
+      {
+        text:'단팥빵 먹기',
+        isCompleted: true
+      },
+      {
+        text:'대나무 헬리콥터 타기',
+        isCompleted: false
+      }
+    ];
+    var jinguData = [
+      {
+        text:'숙제하기',
+        isCompleted: true
+      },
+      {
+        text:'퉁퉁이 만나기',
+        isCompleted: false
+      }
+    ]
+    function validate(data,elementId){
+      if(data === (undefined || null)){
+          throw new Error("data doesn't exist");
+        }
+        if(!Array.isArray(data)){
+          throw new Error("is not Array");
+        }
+    }
+	function TodoList(data,elementId){
+        this.data = data;
+        this.elementId = elementId;
+        validate(data,elementId);
+        if(!(this instanceof TodoList)){
+          throw new Error("not use new keyword");
+        }
+        
+        data.forEach(e=>{
+          if(!e.text || typeof e.isCompleted !== "boolean"){
+            throw new Error("there is no text");
+          }
+        })
+        
+        this.render=()=>{
+            const htmlString = this.data.map(
+                    todo => todo.isCompleted? 
+                    `<li>${todo.text}</li>`:
+                    `<li><s>${todo.text}</s></li>`
+                    ).join('');
+
+            document.querySelector(`#${this.elementId}`).innerHTML =htmlString;
+        }
+        this.setState = (nextData)=>{
+          validate(nextData,this.elementId);
+          this.data = nextData;
+          this.render();
+        }
+        this.render();
+    }
+    const todoList = new TodoList(data,"todo-list");
+    const todoDoraemongList = new TodoList(doraemongData,"todo-doraemong-list");
+    const todoJinguList = new TodoList(jinguData,"todo-jingu-list");
+    todoJinguList.setState([
+      {
+        text: '퇴근 하고 싶다',
+        isCompleted: false
+      }
+    ]);
+  </script>
+</body>
+</html>
