@@ -1,0 +1,138 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="app">
+      <ol id="todo-list-of-roto"></ol>
+      <ol id="todo-list-of-jeffrey"></ol>
+      <ol id="todo-list-of-wonny"></ol>
+    </div>
+    <script>
+      const todoOfRoto = [
+        {
+          text: 'JS 공부하기',
+          isComplated: true,
+        },
+        {
+          text: 'JS 복습하기',
+          isComplated: false,
+        },
+      ]
+      const todoOfJeffrey = [
+        {
+          text: '1,000만 원 벌기',
+          isComplated: true,
+        },
+        {
+          text: '2,000만 원 벌기',
+          isComplated: false,
+        },
+      ]
+      const todoOfWonny = [
+        {
+          text: '기술 발표하기',
+          isComplated: true,
+        },
+        {
+          text: '체지방률 낮추기',
+          isComplated: false,
+        },
+      ]
+
+      const isValidTodos = (todos) => {
+        if (!todos) {
+          return false
+        }
+
+        if (!Array.isArray(todos)) {
+          return false
+        }
+
+        if (
+          !todos.every(
+            (todo) =>
+              todo.hasOwnProperty('text') && typeof todo.text === 'string'
+          )
+        ) {
+          return false
+        }
+
+        if (
+          !todos.every(
+            (todo) =>
+              todo.hasOwnProperty('isComplated') &&
+              typeof todo.isComplated === 'boolean'
+          )
+        ) {
+          return false
+        }
+
+        return true
+      }
+
+      const createTodoItem = ({ isComplated, text }) => {
+        const todoItem = isComplated ? `<del>${text}</del>` : `${text}`
+
+        return `<li>${todoItem}</li>`
+      }
+
+      function TodoList(elementId, todos) {
+        if (!(this instanceof TodoList)) {
+          return new Error('Wrong call')
+        }
+
+        if (!isValidTodos(todos)) {
+          throw new Error('Invalid todos data')
+        }
+
+        this.todos = todos
+        this.targetElement = document.querySelector(`#${elementId}`)
+
+        this.render = () => {
+          this.targetElement.innerHTML = this.todos
+            .map((todo) => createTodoItem(todo))
+            .join('')
+        }
+
+        this.setState = (newTodos) => {
+          if (!isValidTodos(newTodos)) {
+            throw new Error('Invalid todos data')
+          }
+
+          this.todos = newTodos
+
+          this.render()
+        }
+
+        this.render()
+      }
+
+      try {
+        const todoListOfRoto = new TodoList('todo-list-of-roto', todoOfRoto)
+        const todoListOfJeffrey = new TodoList(
+          'todo-list-of-jeffrey',
+          todoOfJeffrey
+        )
+        const todoListOfWonny = new TodoList('todo-list-of-wonny', todoOfWonny)
+
+        const newTodosOfWonny = [
+          {
+            text: 'TDD 책 읽기',
+            isComplated: false,
+          },
+          {
+            text: '기술 포스팅하기',
+            isComplated: true,
+          },
+        ]
+        todoListOfWonny.setState(newTodosOfWonny)
+      } catch (error) {
+        const appElement = document.querySelector(`#app`)
+        appElement.innerHTML = `<div>${error}</div>`
+      }
+    </script>
+  </body>
+</html>
