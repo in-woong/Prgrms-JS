@@ -1,0 +1,17 @@
+body {
+  font-family: sans-serif;
+}
+
+li {
+  font-size: 20px;
+}
+
+s {
+  color: grey;
+}
+
+s,
+span,
+button {
+  cursor: pointer;
+}
