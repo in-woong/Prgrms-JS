@@ -1,0 +1,102 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list"></div>
+    <div id="wish-list"></div>
+    <div id="bucket-list"></div>
+    <script>
+      var data = [
+        {
+          text: '코딩하기',
+          isCompleted: true,
+        },
+        {
+          text: '집안 청소하기',
+          isCompleted: false,
+        },
+      ]
+      // 이곳에서 코딩을 시작하세요!
+
+      var wishListData = [
+        {
+          text: '향수',
+          isCompleted: true,
+        },
+        {
+          text: '고기',
+          isCompleted: false,
+        },
+      ]
+
+      var bucketListData = [
+        {
+          text: '예루살렘 성지순례',
+          isCompleted: false,
+        },
+        {
+          text: '스킨스쿠버 자격증',
+          isCompleted: false,
+        },
+        {
+          text: '고양이 입양',
+          isCompleted: false,
+        },
+      ]
+
+      function checkDataValid(data) {
+        try {
+          if (!data || !Array.isArray(data)) {
+            throw new Error('데이터가 비어있거나 배열형태가 아닙니다.')
+          } else if (!data.every((info) => typeof info.text === 'string')) {
+            throw new Error('데이터의 text 가 문자열이 아닙니다.')
+          }
+        } catch (e) {
+          alert(e)
+        }
+      }
+
+      class TodoList {
+        constructor(data, tagID) {
+          checkDataValid(data)
+          this.data = data
+          this.tagID = tagID
+          this.render()
+        }
+
+        render() {
+          let element = document.querySelector(`#${this.tagID}`)
+          element.innerHTML += `<h1>${this.tagID}</h1><ul>`
+          element.innerHTML += this.data.map(({ text, isCompleted }) => {
+              return `<li>${isCompleted ? `<s>${text}</s>` : text }</li>`
+            }).join('')
+          element.innerHTML += '<ul><br>'
+        }
+
+        setState(nextData) {
+          this.data = nextData
+          checkDataValid(data)
+          this.render()
+        }
+      }
+
+      var nextData = [
+        {
+          text: '빨래하기',
+          isCompleted: false,
+        },
+        {
+          text: '화분에 물주기',
+          isCompleted: false,
+        },
+      ]
+      var todoList = new TodoList(data, 'todo-list')
+      todoList.setState(nextData)
+      var wishList = new TodoList(wishListData, 'wish-list')
+      var bucektList = new TodoList(bucketListData, 'bucket-list')
+    </script>
+  </body>
+</html>
