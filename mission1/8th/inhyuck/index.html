@@ -18,9 +18,12 @@
 		}
 	];
 
-	function TodoList(data) {
-		this.data = data;
-		this.render = function() {
+	class TodoList {
+		constructor(data) {
+			this.data = data;
+		}
+
+		render() {
 			const $todoList = document.getElementById('todo-list');
 			$todoList.innerHTML = this.data.map(todoItem => {
 				return `<div>${todoItem.text}</div>`;
