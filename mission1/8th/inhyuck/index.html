@@ -9,15 +9,28 @@
 <body>
 <div id="todo-list"></div>
 <script>
-	var data = [
+	const data = [
 		{
 			text: 'JS 공부하기'
 		},
 		{
 			text: 'JS 복습하기'
 		}
-	]
-	// 이곳에서 코딩을 시작하세요!
+	];
+
+	function TodoList(data) {
+		this.data = data;
+		this.render = function() {
+			const $todoList = document.getElementById('todo-list');
+			$todoList.innerHTML = this.data.map(todoItem => {
+				return `<div>${todoItem.text}</div>`;
+			}).join('');
+		};
+	}
+
+	const todoList = new TodoList(data);
+	todoList.render();
+
 </script>
 </body>
 </html>
