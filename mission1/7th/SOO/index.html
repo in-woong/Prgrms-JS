@@ -1,0 +1,115 @@
+<html>
+
+<head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="./index.css">
+</head>
+
+<body>
+    <div class="error-message"></div>
+    <div id='todoBOX'>
+        <h4 class="title txt"> MON</h4>
+        <ul id="todo-list1" class='todo-list'>
+        </ul>
+        <h4 class="title txt"> TUE</h4>
+        <ul id="todo-list2" class='todo-list'>
+        </ul>
+        <h4 class="title txt"> WED</h4>
+        <ul id="todo-list3" class='todo-list'>
+        </ul>
+    </div>
+    <script>
+        const todoList1 = [{
+            text: 'JS 공부하기',
+            isCompleted: false
+        }, {
+            text: 'JS 복습하기',
+            isCompleted: false
+        }]
+        const todoList2 = [{
+            text: '이빨닦기',
+            isCompleted: true
+
+        }, {
+            text: 'Mission1 보너스 문제 풀기',
+            isCompleted: true
+        }, {
+            text: '운동하기',
+            isCompleted: true
+
+        }]
+        const todoList3 = [{
+            text: '',
+            isCompleted: true
+        }, {
+            text: 'Mission3 보너스 문제 풀기',
+            isCompleted: false
+        }, {
+            text: '커맨트 보고 다시 코드쓰기',
+            isCompleted: true
+        }]
+        const todoInstance1 = [{
+            text: 'JS 공부안하기',
+            isCompleted: false
+        }, {
+            text: 'Mission 5',
+            isCompleted: false
+        }]
+
+        function isValid(todoList, newTarget) {
+            if (todoList.some((todoList) => !todoList.text)) {
+                throw new Error('⚠️리스트가 완성되지 않았습니다.')
+            }
+            if (!newTarget) {
+                throw new Error('⚠️create "new" component')
+            }
+            if (!Array.isArray(todoList)) {
+                throw new Error('⚠️list is not Array')
+            }
+            return todoList;
+        }
+
+        function printError(err) {
+            let errorHTML = document.querySelector('.error-message');
+            errorHTML.style.display = 'block';
+            errorHTML.textContent = `${err}`
+        }
+
+        function TodoList(todoList, htmlID) {
+            let newTarget = new.target;
+            this.render = function() {
+                try {
+                    this.todos = isValid(todoList, newTarget);
+                    document.getElementById(htmlID).innerHTML =
+                        this.todos
+                        .map(each => each.isCompleted ? `<li><del>${each.text}</del></li>` : `<li>${each.text}</li>`)
+                        .join('');
+                } catch (err) {
+                    console.trace('에러위치')
+                    console.log(`현재 발생한 에러는 "${err.message}"입니다. 확인해보세요`)
+                    printError(err.message);
+                }
+            }
+            this.render();
+
+            this.setState = function(instanceTodoList) {
+                try {
+                    this.todos = isValid(instanceTodoList, newTarget)
+                    this.render();
+                } catch (err) {
+                    console.trace('에러위치')
+                    console.log(`현재 발생한 에러는 "${err.message}"입니다. 확인해보세요`)
+                    printError(err.message);
+                }
+            }
+        }
+
+        const renderList1 = new TodoList(todoList1, 'todo-list1');
+        const renderList2 = new TodoList(todoList2, 'todo-list2');
+        const renderList3 = new TodoList(todoList3, 'todo-list3');
+        renderList1.setState(todoInstance1);
+    </script>
+</body>
+
+</html>
