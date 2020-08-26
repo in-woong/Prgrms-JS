@@ -1,0 +1,34 @@
+#app {
+    display: flex;
+    height: 100vh;
+}
+
+#users {
+    flex: 0 1 150px;
+    border-right: 1px solid gray;
+    padding-right: 10px;
+    margin-right: 10px;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+#todo {
+    flex: 1 0 auto;
+}
+
+.hand-cursor {
+    cursor: pointer;
+}
+
+.hand-cursor:hover {
+    font-weight: bolder;
+}
+
+#loading {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    font-weight: 900;
+    font-size: 50px;
+    transform: translate(-50%, -50%);
+}
