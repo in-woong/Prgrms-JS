@@ -5,6 +5,8 @@
   </head>
 
   <body>
+    <<<<<<< HEAD <<<<<<< HEAD ======= >>>>>>> d6309aac... refactor : 2주차 강의
+    내용 반영
     <h1>Vicky's TodoList</h1>
     <section id="todo-list">
       <h2>Todo List</h2>
@@ -18,6 +20,12 @@
       <h2>Togo List</h2>
       <ul class="content"></ul>
     </section>
+    <<<<<<< HEAD
+
+    <div id="todo-list"></div>
+    <div id="wish-list"></div>
+    <div id="togo-list"></div>
+    ======= >>>>>>> d6309aac... refactor : 2주차 강의 내용 반영
     <script>
       var data = [
         {
@@ -61,6 +69,11 @@
         if (!todoList.some((todo) => todo.hasOwnProperty('text'))) {
           throw new Error('text property all undefined!');
         }
+        this.setState = function (nextData) {
+          this.todos = nextData;
+          document.querySelector(`#${element}`).innerHTML = '';
+          this.render();
+        };
       }
 
       // error UI 구현
@@ -107,6 +120,18 @@
           // 에러를 catch하여 해당 엘리먼트에 error UI를 구현한다.
           renderErrorNotification(error, elementId);
         }
+      }
+
+      const todoList = new TodoList(data, 'todo-list');
+      todoList.setState && todoList.setState(place);
+      const wishList = new TodoList(wish, 'wish-list');
+      const togoList = new TodoList(place, 'togo-list');
+
+      try {
+        const todoList = new TodoList(data, 'todo-list');
+        todoList.setState(place);
+      } catch (error) {
+        ErrorNotification(error, 'todo-list');
       }
 
       const todoList = new TodoList(data, 'todo-list');

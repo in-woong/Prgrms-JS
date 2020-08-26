@@ -88,4 +88,4 @@ function App(elementId) {
 }
 
 const todoList = new App('todo-list');
-const wishList = new App('wish-list');
+// const wishList = new App('wish-list');
