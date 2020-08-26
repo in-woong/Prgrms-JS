@@ -1,0 +1,61 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list"></div>
+    <script>
+        const data = [
+            {
+                text: 'JS 공부하기',
+                isCompleted: true,
+            },
+            {
+                text: 'JS 복습하기',
+                isCompleted: false,
+            },
+        ];
+        
+        // 이곳에서 코딩을 시작하세요!
+        class TodoList {
+            constructor(data, elemId){
+                //isValidData(data);
+                this.data = data;
+                this.elemId = elemId;
+                this.render;
+            }
+
+            isValidData(data){
+                if(Array.isArray(data)===false){
+                    alert("given data is not array");
+                    return false;
+                }
+                if(data===undefined){
+                    alert("given data is undefined data");
+                    return false;
+                }
+                if(data===null){
+                    alert("given data is null data");
+                    return false;
+                }
+                return true;
+            }
+
+            render(){
+                data.forEach(item => {
+                    this.elemId.innerHTML += `<div>${item.text}</div>`
+                });
+            }
+
+        }
+        
+        var todoElem = document.querySelector('#todo-list');
+        var todolist = new TodoList(data,todoElem);
+        
+        todolist.render();
+
+    </script>
+  </body>
+</html>
