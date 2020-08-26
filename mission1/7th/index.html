@@ -1,105 +1,23 @@
 <html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
 
-<head>
-  <title>Mission 1 by Ykss</title>
-  <meta charset="utf-8" />
-</head>
-
-<body>
-  <div id="todo-list"></div>
-  <br>
-  <div id="toeat-list"></div>
-  <br>
-  <div id="togo-list"></div>
-  <script>
-    var toDoData = [
-      {
-        text: 'JS 공부하기',
-        isCompleted: true
-      },
-      {
-        text: 'JS 복습하기',
-        isCompleted: false
-      }
-    ];
-
-    var nextDoData = [
-      {
-        text: '코드리뷰 하기',
-        isCompleted: true
-      },
-      {
-        text: '리뷰한 것 정리하기',
-        isCompleted: false
-      }
-    ]
-
-    var toEatData = [
-      {
-        text: 'Sushi',
-        isCompleted: false
-      },
-      {
-        text: 'Pasta',
-        isCompleted: false
-      },
-      {
-        text: 'Pizza',
-        isCompleted: true
-      }
-    ]
-
-    var toGoData = [
-      {
-        text: 'London',
-        isCompleted: true
-      },
-      {
-        text: 'Madrid',
-        isCompleted: false
-      }
-    ]
-    
-    function isVaild(data){
-      if(!data){
-        throw new Error("data is invalid."); 
-      }else if(!Array.isArray(data)){
-        throw new Error("data is not array."); 
-      }
-    }
-
-    function TodoList(data, dataID) {
-      //파라미터로 넘어온 데이터 체크
-      isVaild(data);
-      //new로 호출되었는지 체크
-      if(!new.target) throw new Error('not called with new');
-      
-      const todoDataList = document.querySelector(`#${dataID}`);
-      this.data = data;
-
-      this.render = function () {
-        todoDataList.innerHTML = this.data.map((element) => {
-          const html = element.isCompleted ? `<li><s>${element.text}</s></li>` : `<li>${element.text}</li>`
-          return html;
-        }).join('');
-      }
-
-      this.setState = function (nextData) {
-        isVaild(nextData);
-        this.data = nextData;
-        this.render();
-      }
-    }
-
-    const toDoList = new TodoList(toDoData, 'todo-list');
-    const toEatList = new TodoList(toEatData, 'toeat-list');
-    const toGoList = new TodoList(toGoData, 'togo-list');
-    toDoList.render();
-    toEatList.render();
-    toGoList.render();
-    toDoList.setState(nextDoData);
-  </script>
-</body>
+  <body>
+    <div id="todo-list"></div>
+    <script>
+      const data = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false,
+        },
+      ];
+      // 이곳에서 코딩을 시작하세요!
+    </script>
+  </body>
 </html>
-
-
