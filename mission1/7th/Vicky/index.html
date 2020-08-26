@@ -1,0 +1,118 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <h1>Vicky's TodoList</h1>
+    <section id="todo-list">
+      <h2>Todo List</h2>
+      <ul class="content"></ul>
+    </section>
+    <section id="wish-list">
+      <h2>Wish List</h2>
+      <ul class="content"></ul>
+    </section>
+    <section id="togo-list">
+      <h2>Togo List</h2>
+      <ul class="content"></ul>
+    </section>
+    <script>
+      var data = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false,
+        },
+      ];
+      var wish = [
+        {
+          text: '캠핑카타고 전국일주',
+          isCompleted: false,
+        },
+        {
+          text: '세계적인 명소에서 스카이다이빙',
+          isCompleted: true,
+        },
+      ];
+      var place = [
+        {
+          text: '멕시코',
+          isCompleted: false,
+        },
+        {
+          text: '스페인',
+          isCompleted: false,
+        },
+      ];
+
+      // list의 존재 유무와 데이터 형식 및 타입 검사
+      function CheckDataFormat(todoList) {
+        if (!todoList.length) {
+          throw new Error('array is empty!');
+        }
+        if (!todoList || !Array.isArray(todoList)) {
+          throw new Error('invalid data format!');
+        }
+        if (!todoList.some((todo) => todo.hasOwnProperty('text'))) {
+          throw new Error('text property all undefined!');
+        }
+      }
+
+      // error UI 구현
+      function renderErrorNotification(errorMessage, elementId) {
+        console.error(errorMessage);
+        document.querySelector(
+          `#${elementId} .content`
+        ).innerHTML = `리스트 형식을 다시 확인해주세요 :)`;
+      }
+
+      function TodoList(todoList, elementId) {
+        // this 프로퍼티 정의, todoList 렌더링 및 리렌더링 기능 정의
+        this.todos = todoList;
+        this.elementDom = document.querySelector(`#${elementId} .content`);
+        this.render = () => {
+          this.elementDom.innerHTML = this.todos
+            .map((todo) => {
+              const { text, isCompleted = false } = todo;
+
+              if (!text) {
+                return;
+              }
+              return isCompleted
+                ? `<li><s>${text}</s></li>`
+                : `<li>${text}</li>`;
+            })
+            .join('');
+        };
+        this.setState = (nextData) => {
+          CheckDataFormat(nextData);
+          this.todos = nextData;
+          this.elementDom.innerHTML = '';
+          this.render();
+        };
+
+        try {
+          // new 생성자 함수 호출 여부 검증 및 todoList 데이터 적합성 검사
+          if (!(this instanceof TodoList)) {
+            throw new Error('error: invalid function call!');
+          }
+          CheckDataFormat(todoList);
+          this.render();
+        } catch (error) {
+          // 에러를 catch하여 해당 엘리먼트에 error UI를 구현한다.
+          renderErrorNotification(error, elementId);
+        }
+      }
+
+      const todoList = new TodoList(data, 'todo-list');
+      todoList.setState && todoList.setState(place);
+      const wishList = new TodoList(wish, 'wish-list');
+      const togoList = new TodoList(place, 'togo-list');
+    </script>
+  </body>
+</html>
