@@ -1,0 +1,32 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  margin: 0;
+  padding: 12px;
+  color: darkblue;
+}
+
+.todo-container {
+  text-align: center;
+}
+
+.todo-list {
+  padding: 0;
+  list-style-type: none;
+  font-size: 20px;
+}
+
+.todo-completed {
+  text-decoration: line-through red;
+}
+
+.button-remove {
+  border-radius: 5px;
+  background-color: gainsboro;
+  color: white;
+  border: none;
+  padding: 2px 5px;
+}
