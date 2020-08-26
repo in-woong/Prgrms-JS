@@ -1,0 +1,100 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="err-msg"></div>
+    <div id="todo-list"></div>
+    <div id="progress-list"></div>
+    <div id="done-list"></div>
+    <script>
+      var data = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: false,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false,
+        },
+      ]
+      // 이곳에서 코딩을 시작하세요!
+
+      var progress = [
+        { text: '프론트엔드 개발을 위한 자바스크립트', isCompleted: false },
+        { text: 'SAT10AM Study', isCompleted: true },
+      ]
+
+      var done = [
+        { text: '피티 신청하기', isCompleted: true },
+        { text: '주 3회 러닝', isCompleted: true },
+      ]
+
+      class TodoList {
+        constructor(data, target) {
+          this.target = document.querySelector(target)
+          this.validateData(data, target)
+          this.todos = data
+        }
+
+        render() {
+          this.target.innerHTML = `<ul>${this.todos
+            .map(this.makeTodoTag)
+            .join('')}</ul>`
+        }
+
+        setState(nextData) {
+          this.validateData(nextData)
+          this.todos = nextData
+
+          this.render()
+        }
+
+        validateData(data, target) {
+          if (!this.target) {
+            throw new Error('target Tag가 존재하지 않습니다.')
+          }
+
+          if (!data) {
+            throw new Error('to do data 를 넣어주세요.')
+          }
+
+          if (!Array.isArray(data)) {
+            throw new Error('data의 타입은 배열이어야 합니다.')
+          }
+
+          const checkDataFormat = data.every(
+            (item) =>
+              typeof item === 'object' &&
+              item.text !== undefined &&
+              typeof item.text === 'string'
+          )
+
+          if (!checkDataFormat) {
+            throw new Error('data의 내용이 Format과 다릅니다.')
+          }
+        }
+
+        makeTodoTag({ text, isCompleted }) {
+          if (isCompleted) {
+            return `<li><s>${text}</s></li>`
+          }
+          return `<li>${text}</li>`
+        }
+      }
+      try {
+        const todoList = new TodoList(data, '#todo-list')
+        const progressList = new TodoList(progress, '#progress-list')
+        const doneList = new TodoList(done, '#done-list')
+        todoList.render()
+        progressList.render()
+        doneList.render()
+      } catch (error) {
+        console.error(error)
+        document.querySelector('#err-msg').innerHTML = error
+      }
+    </script>
+  </body>
+</html>
