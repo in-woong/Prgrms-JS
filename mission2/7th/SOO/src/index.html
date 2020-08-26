@@ -1,0 +1,30 @@
+<html>
+
+<head>
+    <title>Mission 2</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+
+<body>
+    <section>
+        <div class="error-message"></div>
+        <form id="submitBOX">
+            <input id="submitInput" type="text">
+            <button id="submitButton" type="submit">〉</button>
+            <button id="removeAll" data-id="removeAll">전체삭제</button>
+        </form>
+        <div id='todoBOX'>
+            <ul id="todos">
+            </ul>
+        </div>
+    </section>
+
+    <div id="todoCount"></div>
+    <script type='module' src='./index.js'></script>
+    <script type='module' src='./components/App.js'></script>
+    <script type='module' src='./components/TodoInput.js'></script>
+    <script type='module' src='./components/TodoList.js'></script>
+</body>
+
+</html>
