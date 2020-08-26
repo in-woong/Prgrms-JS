@@ -1,0 +1,96 @@
+<html>
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <ul id="todo-list"></ul>
+  <ul id="todo-list2"></ul>
+  <ul id="todo-list3"></ul>
+
+  <script>
+    const data1 = [
+      {
+        text: '1111',
+        isCompleted:true
+      },
+      {
+        text: 'JS 복습하기',
+        isCompleted:false
+      }
+    ];
+    const data2 = [
+      {
+         text: '8시 기상',
+         isCompleted : false,
+      },
+      {
+        text: '공부하기',
+        isCompleted : true,
+      }
+    ];
+
+    const data3=[
+      {
+         text: '자전거 타기',
+         isCompleted : false,
+      },
+      {
+        text: '집청소',
+        isCompleted : true,
+      }
+    ];
+
+    function validInstance(instance){
+      if(!(instance instanceof TodoList)){
+        throw new Error('new 키워드로 함수로 생성해주세요');
+      }
+    }
+    
+    function validData(data){
+      if(data === ''|| data === 'undefined') throw new Error('타입이 올바르지 않습니다.');
+      if(!Array.isArray(data)) throw new Error('data는 배열이어야 합니다');
+      
+      data.some(function(value){
+        if(typeof value.text !== 'string'|| typeof value.isCompleted !== 'boolean') throw new Error('data의 내용이 올바르지 않습니다!');
+      });
+    }
+
+    function TodoList(data,elementId){
+      this.data=data;
+      this.elementId=elementId;
+
+      validInstance(this);
+      validData(this.data);
+
+      this.loadData=function(){
+        const html = this.data.map(d=>{
+          return d.isCompleted?`<li><s>${d.text}</s></li>`: `<li>${d.text}</li>`;
+        });
+        console.log(html);
+        document.querySelector(`#${this.elementId}`).innerHTML=html.join("");
+      };
+
+      this.render=function(){
+        this.loadData();   
+      };
+
+      this.setState=function(nextData){
+        this.data=nextData;
+        this.loadData(this.data);
+      } 
+    }
+
+    var todoList=new TodoList(data1,'todo-list');
+    todoList.render();
+
+    var todoList2=new TodoList(data2,'todo-list2');
+    todoList2.render();
+
+    var todoList3=new TodoList(data3,'todo-list3');
+    todoList3.render();
+   
+  </script>
+</body>
+</html>
