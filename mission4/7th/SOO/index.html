@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Mission 4</title>
+    <link rel="stylesheet" href="./index.css">
+</head>
+
+<body>
+    <div id="app">
+        <header id="header">
+            <section id="headerBOX">
+                <h1 id="header-title" class="visuallyhidden">
+                    TODO LIST</h1>
+                <h2 class="header-subtitle">welcome to programers' TODO LIST</h2>
+                <h3 id="list-owner-name"></h3>
+                <div class="loading-gif-wrap">
+                    <span class="loading-txt">리스트 로딩 파이어</span>
+                    <img class="loading-gif" src="./assets/loading.gif" alt="loading">
+                </div>
+            </section>
+        </header>
+        <main id="main">
+            <section id="todolistBOX">
+                <form id="inputBOX">
+                    <input type="text" id="todo-input" placeholder="할 일을 추가하세요.">
+                    <button type="button" id="add-todo-button">
+                        🔥
+                    </button>
+                </form>
+                <div id="doneyetBOX">
+                    <div id="done-wrap" class="list">
+                        <p class='title'>DONE</p>
+                        <ul id="todo-list-done" data-iscomplete="true" class="listUL">
+                        </ul>
+                    </div>
+                    <div id="yet-wrap" class="list">
+                        <p class='title'>YET</p>
+                        <ul id="todo-list-yet" data-iscomplete="false" class="listUL">
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            <section id="userlistBOX">
+                <p id="user-title">유저리스트</p>
+                <ul id="user-list"></ul>
+            </section>
+        </main>
+        <footer id="footer">
+            <section id="cowork">
+                <span>©rotoAPI</span>
+                <span>| soo</span>
+                <span>| github</span>
+            </section>
+        </footer>
+    </div>
+    <script type='module' src="./components/TodoList.js"></script>
+    <script type='module' src="./main.js"></script>
+</body>
+
+</html>
