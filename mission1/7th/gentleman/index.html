@@ -1,0 +1,112 @@
+<html>
+
+  <!-- TODO: HTML 태그 보정-->
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <!-- 각 list들은 todos 하위 카테고리이므로 div 보다 ul이나 ol 태그가 더 적합함-->
+  <div id="todos"></div><br>
+    <ul id="todo-list"></ul><br>
+    <ul id="todo-list-diet"></ul><br>
+    <ul id="todo-list-wife"></ul><br>
+  <script>
+    var data = [
+      {
+        text: 'JS 공부하기',
+        isCompleted: true
+      },
+      {
+        text: 'JS 복습하기',
+        isCompleted: false
+      }
+    ]
+    var dataDiet = [
+      {
+        text: '월 1회 야식',
+        isCompleted: true
+      },
+      {
+        text: '주 5회 운동',
+        isCompleted: false
+      }
+    ]
+    var dataWife = [
+      {
+        text: '주 2회 외식',
+        isCompleted: false
+      },
+      {
+        text: '분기 1회 여행',
+        isCompleted: true
+      }
+    ]
+
+    function isValidTodo(data){
+      // 보너스 구현(#50), 생성자 매개변수 값 유효성 확인
+      if(typeof data === undefined || data === null || !Array.isArray(data)){
+        return false
+      }
+
+      return true
+    }
+
+    function TodoList(data, selector){
+      // validation 부분 함수로 분리 권장(by 제프리)
+      if(!isValidTodo(data)){
+        throw new Error("생성자 매개변수가 유효하지 않습니다.")
+      }
+
+      // 보너스 구현(#50), 객체 TodoList 활용하여 인스턴스 todoList 생성 시 keyword 'new' 사용여부 확인
+      if(!new.target){
+        throw new Error("인스턴스 생성 시 'new'를 붙이세요.");
+      }
+
+      this.data = data;
+      // 필수 구현, for in 구문 활용 data 각 요소 순회하여 div(id=todo-list)에 렌더링
+      this.render = function(){
+        // 변수명 변경(str -> addTodoData), 의미 광범위하므로
+        var addTodoData = ''
+
+        // Array 내장함수 map 활용, 순회 권장(by 제프리)
+        this.data.map(function(eachData){
+          // 보너스 구현(#66), data 내 isCompleted 필드 값에 따라 S 태그 사용
+          // 코드 간소화를 위해 다음의 코드를 본문과 같이 수정 권장(by 문건우님), if (this.data[key].isCompleted === true)
+          // div 태그 대신 li 태그 사용(ul 태그 안에 들어가는 내용이므로), S 태그는 li 태그 안쪽으로 변경 
+          if(eachData.isCompleted){
+            addTodoData += `<li><S>${eachData.text}</S></li>`
+          }
+          else{
+            addTodoData += `<li>${eachData.text}</li>`
+          }
+        })
+        
+        // reflow를 최소화하기 위해 html 태그 접근을 최소화 권장(by 제프리)
+        document.querySelector(`#${selector}`).innerHTML = addTodoData
+      }
+      // 보너스 구현(#67), setState 함수 내 this 활용하여 함수 매개변수(nextData)를 객체 변수로 변경
+      this.setState = function(nextData){
+        if(!isValidTodo(nextData)){
+        throw new Error("생성자 매개변수가 유효하지 않습니다.")
+        }
+        this.data = nextData
+        this.render()
+      }
+    }
+
+    // 컴포넌트 간 중복요소 다수 식별에 따라 TodoList 단일 컴포넌트로 통합(by 제프리)
+    var todoList = new TodoList(data, 'todo-list');
+    todoList.render();
+    todoList.setState(dataDiet)
+
+    var todoListDiet = new TodoList(dataDiet, 'todo-list-diet');
+    todoListDiet.render();
+
+    var todoListWife = new TodoList(dataWife, 'todo-list-wife');
+    todoListWife.render();
+
+  </script>
+</body>
+</html>
