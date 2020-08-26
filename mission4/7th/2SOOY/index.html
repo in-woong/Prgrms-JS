@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mission 4</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main id="todo-app">
+      <h1>더 진화한 TodoList</h1>
+      <p class="loading-view active-loading">로딩</p>
+      <section class="user-list-container"></section>
+      <section class="todo-input-container">
+        <h2>뭐 하지? 🙉</h2>
+        <input
+          class="todo-input-text"
+          placeholder="할 일을 입력하세요"
+          autofocus
+        />
+        <button class="add-button">추가</button>
+      </section>
+      <section class="todo-list-container">
+        <section id="running-todo-container">
+          <h3>..ING</h3>
+          <ul id="running-todo-list"></ul>
+        </section>
+        <section id="completed-todo-container">
+          <h3>DONE</h3>
+          <ul id="completed-todo-list">
+        </section>
+      </section>
+      <p class="todo-count-container"></p>
+    </main>
+  </body>
+  <script type="module" src="./javascript/index.js"></script>
+</html>
