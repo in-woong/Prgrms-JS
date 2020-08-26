@@ -1,0 +1,101 @@
+<html>
+
+<head>
+    <title>Mission 1</title>
+    <meta charset="utf-8"/>
+</head>
+
+<body>
+<div id="todo-list"></div>
+<div id="doing-list"></div>
+<div id="done-list"></div>
+<script>
+  const todoData = [
+      {
+        text: 'JS 공부하기',
+        isCompleted: true,
+      },
+      {
+        text: 'JS 복습하기',
+        isCompleted: false,
+      },
+    ],
+    doingData = [
+      {
+        text: '리팩터링 공부하기',
+        isCompleted: true,
+      },
+      {
+        text: '리팩터링 복습하기',
+        isCompleted: false,
+      },
+    ],
+    doneData = [
+      {
+        text: 'JAVA 공부하기',
+        isCompleted: true,
+      },
+      {
+        text: 'JAVA 복습하기',
+        isCompleted: false,
+      },
+    ]
+
+  // 이곳에서 코딩을 시작하세요!
+
+  function TodoList(id, data) {
+    const todoListElement = document.createElement('ul')
+    let state = []
+
+    const validate = data => {
+      if (!data) {
+        throw new Error('TodoList() must be called with a non-null parameter.')
+      }
+      if (!Array.isArray(data)) {
+        throw new Error('TodoList() must be called with an array parameter.')
+      }
+      if (data.some(data => !(
+        typeof data.text === 'string' && typeof data.isCompleted === 'boolean'
+      ))) {
+        throw new Error('The parameter content is incorrect.')
+      }
+    }
+
+    this.render = () => {
+      todoListElement.innerHTML = state
+        .map(({ text, isCompleted }) => `<li>${isCompleted ? `<s>${text}</s>` : text}</li>`)
+        .join('')
+    }
+
+    this.setState = nextData => {
+      validate(nextData)
+      state = nextData
+      this.render()
+    }
+
+    if (!new.target) {
+      throw new Error('TodoList() must be called with new.')
+    }
+
+    this.setState(data)
+    document
+      .querySelector(`#${id}`)
+      .append(todoListElement)
+  }
+
+  let todoList = new TodoList('todo-list', todoData),
+    doingList = new TodoList('doing-list', doingData),
+    doneList = new TodoList('done-list', doneData)
+
+  setTimeout(() => {
+    todoList.setState([])
+    doingList.setState(todoData)
+    doneList.setState(doneData.concat(doingData))
+
+    todoList = null
+    doingList = null
+    doneList = null
+  }, 3000)
+</script>
+</body>
+</html>
