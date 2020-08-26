@@ -1,0 +1,67 @@
+.input-section {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+#todo-input {
+  font-size: 24px;
+  width: 300px;
+  margin-right: 16px;
+  height: 33px;
+  padding: 0;
+}
+
+#add-todo-button {
+  height: 100%;
+  margin-right: 16px;
+  height: 35px;
+}
+
+#loading-notice {
+  font-size: 16px;
+  height: 100%;
+}
+
+#loading-notice p {
+  margin: 0;
+}
+
+.list-section {
+  display: grid;
+  grid-template-areas: 'username username' 'todolist userlist';
+  font-size: 16px;
+}
+
+.list-title {
+  font-size: 20px;
+  list-style: none;
+  margin-bottom: 16px;
+  cursor: default;
+}
+
+.list-title p {
+  margin: 0;
+}
+
+#user-name {
+  grid-area: username;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+#todo-list {
+  grid-area: todolist;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+#user-list {
+  grid-area: userlist;
+}
+
+li {
+  user-select: none;
+  cursor: grab;
+  margin-bottom: 8px;
+}

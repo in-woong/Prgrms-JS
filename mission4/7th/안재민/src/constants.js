@@ -1,0 +1,12 @@
+export const BASE_URL = 'https://todo-api.roto.codes'
+export const REMOVE_BUTTON = 'remove-button'
+export const TODO_LIST = 'todo-list'
+export const TODO_INPUT = 'todo-input'
+export const ADD_TODO_BUTTON = 'add-todo-button'
+export const USER_LIST = 'user-list'
+export const USER_NAME = 'user-name'
+export const LOADING_NOTICE = 'loading-notice'
+export const COMPLETED_TODO_LIST = 'completed-todo-list'
+export const INCOMPLETED_TODO_LIST = 'incompleted-todo-list'
+export const USERNAME = 'jaemin'
+export const DELAY = 100
