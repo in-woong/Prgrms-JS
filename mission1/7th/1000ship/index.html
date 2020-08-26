@@ -1,0 +1,94 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <h3>Todo List</h3>
+  <div id="todo-list"></div>
+  <hr>
+  <h3>Homework List</h3>
+  <div id="homework-list"></div>
+  <hr>
+  <h3>Wish List</h3>
+  <div id="wish-list"></div>
+  <script>
+    var todoData = [{
+        text: 'JS 공부하기',
+        isCompleted: true,
+      },
+      {
+        text: 'JS 복습하기',
+        isCompleted: false,
+      },
+      null,
+      NaN,
+      undefined
+    ]
+
+    var homeworkData = [{
+        text: '딥러닝 데이터시각화',
+        isCompleted: true,
+      },
+      {
+        text: '컴퓨터구조 MIPS 구조 따라그리기',
+        isCompleted: true,
+      },
+      {
+        text: '알고리즘분석 OBST 구현',
+        isCompleted: true,
+      },
+    ]
+
+    var wishData = [{
+        text: '맥북프로 16인치 2020년형',
+        isCompleted: true,
+      },
+      {
+        text: '에어팟 프로',
+        isCompleted: false,
+      },
+      {
+        text: '아이폰 12 pro',
+        isCompleted: false,
+      },
+    ]
+    // 이곳에서 코딩을 시작하세요!
+
+    function TodoList(todos, $container) {
+      if (!(this instanceof TodoList))
+        throw new Error("TodoList can't be called by function")
+      if (!todos)
+        throw new Error("Data is invailid")
+      if (!(todos instanceof Array))
+        throw new Error("Data is not an array")
+
+      this.todos = todos.filter(todo => !!todo)
+      this.$container = $container
+      this.render = function () {
+        const contents = this.todos.map((todo) => (todo.isCompleted ? `<s>${todo.text}</s>` : todo.text)).join("<br>")
+        document.querySelector(this.$container).innerHTML = contents
+      }
+      this.setState = function (nextTodo) {
+        this.todos = nextTodo
+        this.render()
+      }
+      this.render()
+    }
+
+    var todoList = new TodoList(todoData, "#todo-list")
+    var homeworkList = new TodoList(homeworkData, "#homework-list")
+    var wishList = new TodoList(wishData, "#wish-list")
+
+    // setState 활용
+    newData = [{
+      text: "돈을 아끼자",
+      isCompleted: false
+    }]
+    wishList.setState(newData)
+  </script>
+</body>
+
+</html>
