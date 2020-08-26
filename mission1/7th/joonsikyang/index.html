@@ -1,0 +1,89 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <h1>Joon's Todo List</h1>
+    <section id="javascript-todo">
+      <h2>✔️ JavaScript</h2>
+    </section>
+    <section id="react-todo">
+      <h2>✔️ React</h2>
+    </section>
+    <section id="cs-todo">
+      <h2>✔️ CS</h2>
+    </section>
+    <script>
+      const javaScriptTodos = [
+        {
+          text: 'variables',
+          isCompleted: true,
+        },
+        {
+          text: '실행 context',
+          isCompleted: false,
+        },
+        {
+          text: 'async await',
+          isCompleted: true,
+        },
+      ]
+
+      const reactTodos = [
+        {
+          text: 'Redux',
+          isCompleted: true,
+        },
+        {
+          text: '코드 리뷰',
+          isCompleted: true,
+        },
+      ]
+
+      const csTodos = [
+        {
+          text: 'C언어 - 배열',
+          isCompleted: true,
+        },
+        {
+          text: '이진법',
+          isCompleted: true,
+        },
+        {
+          text: '메모리 할당',
+          isCompleted: false,
+        },
+      ]
+
+      function TodoList(todos, todosContainerId) {
+        if (!todos || !Array.isArray(todos) || !new.target)
+          throw new Error('error message')
+
+        this.data = todos
+        this.render = function () {
+          const todoList = document.getElementById(todosContainerId)
+          const ListContainer = document.createElement('ul')
+          ListContainer.innerHTML = `${this.data
+            .map((el) =>
+              el.isCompleted
+                ? `<li>${el.text}</li>`
+                : `<li><s>${el.text}<s></li>`
+            )
+            .join('')}`
+          todoList.appendChild(ListContainer)
+        }
+
+        this.render()
+      }
+
+      try {
+        const javascriptList = new TodoList(javaScriptTodos, 'javascript-todo')
+        const reactList = new TodoList(reactTodos, 'react-todo')
+        const csList = new TodoList(csTodos, 'cs-todo')
+      } catch (error) {
+        console.error(error)
+      }
+    </script>
+  </body>
+</html>
