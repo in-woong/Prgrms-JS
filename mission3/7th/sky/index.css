@@ -1,0 +1,25 @@
+#app h1, h2 {
+    position: absolute;
+    clip: rect(1px, 1px, 1px, 1px);
+}
+
+#search-result {
+    width: 1200px;
+    height: 500px;
+}
+
+#search-result ul {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+}
+
+#search-result ul > li{
+    margin-right: 20px;
+    margin-top: 20px;
+}
+
+#search-result p {
+    margin: 0;
+}
