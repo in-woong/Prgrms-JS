@@ -1,0 +1,9 @@
+export const todoListId = 'todo-list';
+export const todoInputId = 'user-input';
+export const todoCountId = 'todo-count';
+export const errorTextId = 'error-text';
+export const appId = 'app';
+export const userListId = 'user-list';
+export const todoDoneId = 'todo-list-done';
+export const isLoading = true;
+export const DEFAULT_DELAY_TIME = 0;
