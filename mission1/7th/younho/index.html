@@ -1,0 +1,103 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list"></div>
+  <div id="todo-list2"></div>
+  <div id="todo-list3"></div>
+  <script>
+    var data = [
+      {
+        text: 'JS 공부하기',
+        isCompleted : true
+      },
+      {
+        text: 'JS 복습하기',
+        isCompleted : false
+      }
+    ]
+
+    var data2 = [
+      {
+        text: 'JS 공부하기2',
+        isCompleted : true
+      },
+      {
+        text: 'JS 복습하기2',
+        isCompleted : false
+      }
+    ]
+
+    var data3 = [
+      {
+        text: 'JS 공부하기3',
+        isCompleted : true
+      },
+      {
+        text: 'JS 복습하기3',
+        isCompleted : false
+      }
+    ]
+
+    // 이곳에서 코딩을 시작하세요!
+    function TodoList(todoList, elementId){
+        
+        this.data = todoList; 
+        this.id = elementId;
+        this.target = document.getElementById(this.id);
+
+        //check error
+        if (!this.data)
+            throw new Error("error : null/undefined data");
+        
+        if ( Array.isArray(this.data) == false)
+            throw new Error("error : not Array");
+        
+        var htmltext ='';
+
+        this.render = function() {  
+            const arr = this.data.map(function(obj){
+                if (obj.isCompleted == false)
+                    return "<div>"+ obj.text + "</div>";
+                else
+                    return "<div><s>"+obj.text + "</s></div>";
+            });
+            htmltext = arr.join('');
+            this.target.innerHTML = htmltext;
+        }
+        
+        this.setState = function(nextData){
+            this.data = nextData;
+            this.render();
+            
+        }
+        
+        this.render();
+        
+    }
+
+
+    var todoList = new TodoList(data, "todo-list");
+    var todoList2 = new TodoList(data2, "todo-list2");
+    var todoList3 = new TodoList(data3, "todo-list3");
+
+    var nextData = [
+      {
+        text: 'CSS 공부하기',
+        isCompleted : true
+      },
+      {
+        text: 'CSS 복습하기3',
+        isCompleted : false
+      }
+    ]
+
+    todoList3.setState(nextData);
+
+  </script>
+</body>
+</html>
