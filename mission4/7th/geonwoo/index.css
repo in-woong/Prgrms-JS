@@ -1,0 +1,60 @@
+body {
+  box-sizing: border-box;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+#todo-list-section {
+  width: 100%;
+  height: 60vh;
+}
+
+#todo-list-box {
+  width: 100%;
+  height: 80%;
+  display: flex;
+}
+
+#will-todo,
+#completed-todo {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border: 1px solid black;
+  overflow-y: scroll;
+}
+
+#will-todo li,
+#completed-todo li {
+  border: 1px solid black;
+  border-radius: 15px;
+  text-align: center;
+  width: 50%;
+  height: 40px;
+}
+
+#user-list-section {
+  height: 30vh;
+  overflow-y: scroll;
+}
+#user-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+}
+#user-list li {
+  width: 150px;
+  height: 50px;
+  border: 1px solid black;
+  border-radius: 15px;
+  text-align: center;
+  line-height: 50px;
+}
+.toggle {
+  text-decoration: line-through;
+}

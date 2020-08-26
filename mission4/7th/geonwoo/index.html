@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Mission 4</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <main id="app">
+      <h1>모두의 TO DO LIST</h1>
+      <section>
+        <input type="text" id="todo-input" />
+        <button type="button" id="add-todo-button">
+          Add
+        </button>
+      </section>
+      <section id="todo-list-section">
+        <h2 id="todo-user"></h2>
+        <div id="todo-list-box">
+          <ul id="will-todo"></ul>
+          <ul id="completed-todo"></ul>
+        </div>
+      </section>
+      <section id="user-list-section">
+        <ul id="user-list"></ul>
+      </section>
+    </main>
+    <script type="module" src="./src/index.js"></script>
+  </body>
+</html>
