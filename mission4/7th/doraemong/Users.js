@@ -13,7 +13,6 @@ export default function Users({user,onClickUser}){
             .join('')
            $target.innerHTML = htmlString 
         }
-        
     }
     this.render();
 }

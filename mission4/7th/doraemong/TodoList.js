@@ -24,13 +24,13 @@ export default function TodoList(params) {
     const onDrop =(event)=>{
       console.log('onDrop')
     }
-    
     const htmlString = data.map(function(todo) {
       const contentHTML = todo.isCompleted
         ? ``
         : `${todo.content}`
 
       return `<li class="dragInner" draggable="true" ondragstart='${onDragStart(event)};'ondrop='${onDrop(event)};' data-id="${
+
         todo._id
       }">${contentHTML} <button class="remove-button">Remove</button></li>`
     })
@@ -38,7 +38,6 @@ export default function TodoList(params) {
       const contentHTML = todo.isCompleted
         ? `<strike>${todo.content}</strike>`
         : ``
-
         return `<li class="dragInner" draggable="true" data-id="${
           todo._id
         }">${contentHTML} <button class="remove-button">Remove</button></li>`
