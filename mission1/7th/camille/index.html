@@ -1,0 +1,157 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8"/>
+</head>
+
+<body>
+
+<div id="todo-list"></div>
+<div id="doing-list"></div>
+<div id="done-list"></div>
+
+<script>
+
+  const todoData = [
+    {
+      text: 'JS 공부하기',
+      isComplete: false
+    },
+    {
+      text: 'JS 복습하기',
+      isComplete: true
+    },
+  ]
+
+  const doingData = [
+    {
+      text: 'Vanilla JS 개발하기',
+      isComplete: false
+    },
+    {
+      text: 'Code Review 스터디하기',
+      isComplete: true
+    }
+  ]
+
+  const doneData = [
+    {
+      text: '점심에 치킨 아보카도 샐러드 먹기',
+      isComplete: true
+    },
+    {
+      text: '집 청소하기',
+      isComplete: true
+    }
+  ]
+
+  // 시작
+  const TodoList = function(todoListData, todoListContainerId) {
+    // Check constructor new keyword
+    if (!this instanceof TodoList) {
+      throw new Error('Check your class instance')
+    }
+
+    this.init(todoListData, todoListContainerId)
+
+  }
+
+  TodoList.prototype = {
+    todos: null,
+    $listContainer: null,
+
+    init(todoListData, todoListContainerId) {
+      this.$listContainer = document.getElementById(todoListContainerId)
+
+      try {
+        this.todos = todoListData
+        this.getData(this.todos)
+        this.render()
+
+      } catch (e) {
+        console.log(e)
+      }
+
+    },
+
+    getData(data) {
+      if (!this.isCorrectData(data)) {
+        this.todos = data
+      }
+
+    },
+
+    render() {
+      if (this.todos.length > 0) {
+        const template = this.todos.map((v) => {
+          if (v.isComplete) {
+            return `<p><del>${v.text}</del></p>`
+          } else {
+            return `<p>${v.text}</p>`
+          }
+        }).join('')
+        this.$listContainer.innerHTML = template
+      } else {
+        this.$listContainer.innerHTML = 'List data is empty'
+      }
+
+
+    },
+
+    // Check property / undefined / null
+    isCorrectData(data) {
+      // Data object property check
+      if ( !data.every((data) => data.hasOwnProperty('text')) ) {
+        throw new Error('Wrong property or data type')
+      }
+
+      if ( !data.every((data) => data.hasOwnProperty('isComplete')) ) {
+        throw new Error('Wrong property or data type')
+      }
+
+      // Data object property data type check
+      const checkDataType = data.forEach((v) => {
+        let { text, isComplete } = v
+
+        if (typeof text !== 'string') {
+          throw new Error('Warning : text property is not a string!')
+        }
+
+        if (typeof isComplete !== 'boolean') {
+          throw new Error('Warning : isComplete property is not a boolean')
+        }
+
+      })
+
+      // Check undefined, null
+      if (!data) {
+        throw new Error('No data!')
+      }
+
+      // Check array
+      if (!Array.isArray(data)) {
+        throw new Error('Not an array')
+      }
+
+      return false
+
+    },
+
+    setState(nextData) {
+      if (!this.isCorrectData(nextData)) {
+        this.todos = nextData
+      }
+      this.render()
+    }
+
+  }
+
+  const todoApp = new TodoList(todoData, 'todo-list')
+  const doingApp = new TodoList(doingData, 'doing-list')
+  const doneApp = new TodoList(doneData, 'done-list')
+
+
+</script>
+</body>
+</html>
