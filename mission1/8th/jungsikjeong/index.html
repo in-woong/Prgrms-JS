@@ -90,9 +90,9 @@
         // [미션1] 보너스 구현사항 - setState #67
         // 이 부분에서 조금 헤매고있습니다.
         this.setState = function (nextData) {
-          this.nextData = nextData;
+          this.data = nextData;
 
-          this.render(nextData);
+          this.render();
         };
 
         this.render();
