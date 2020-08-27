@@ -19,14 +19,24 @@
       function TodoList(data) {
         this.todos = data
         this.render = function () {
+          // data 파라미터 에러처리
+          if (!this.checkParam()) throw new Error('데이터가 올바르지 않습니다.')
           const html = this.todos
             .map((todo) => `<li>${todo.text}</li>`)
             .join('')
           document.querySelector('#todo-list').innerHTML = `<ul>${html}</ul>`
         }
+        // data가 올바르게 넘어왔는지 체크
+        this.checkParam = function () {
+          let result = true
+          if (!this.todos || !Array.isArray(this.todos)) result = false
+          return result
+        }
       }
       // 인스턴스 생성 및 render
       const todoList = new TodoList(data)
+      // function 형태의 선언인 경우 에러처리
+      if (!todoList) throw new Error('function 형태의 선언입니다.')
       todoList.render()
     </script>
   </body>
