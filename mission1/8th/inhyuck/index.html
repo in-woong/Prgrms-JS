@@ -18,20 +18,18 @@
 		}
 	];
 
-	class TodoList {
-		constructor(data) {
-			if (!validateTodoItems({todoItems: data})) {
-				throw new Error('error message');
-			}
-			this.data = data;
+	function TodoList(data) {
+		if (!validateTodoItems({todoItems: data})) {
+			throw new Error('error message');
 		}
+		this.data = data;
 
-		render() {
+		this.render = function() {
 			const $todoList = document.getElementById('todo-list');
 			$todoList.innerHTML = this.data.map(todoItem => {
 				return `<div>${todoItem.text}</div>`;
 			}).join('');
-		};
+		}
 	}
 
 	function validateTodoItems({todoItems}) {
