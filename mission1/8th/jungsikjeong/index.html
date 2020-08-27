@@ -7,33 +7,111 @@
   <body>
     <div id="todo-list"></div>
 
+    <!-- [미션1] 보너스 구현사항 - 다중 컴포넌트 #57 -->
+    <div id="todo-list-bonus1"></div>
+    <div id="todo-list-bonus2"></div>
+
     <script>
+      // [미션1] 보너스 구현사항 - isCompleted 처리 #66
       var data = [
         {
           text: 'JS 공부하기',
+          isCompleted: true,
         },
         {
           text: 'JS 복습하기',
+          isCompleted: true,
         },
       ];
 
-      function TodoList(data) {
+      // [미션1] 보너스 구현사항 - 다중 컴포넌트 #57
+      // [미션1] 보너스 구현사항 - isCompleted 처리 #66
+      var data1 = [
+        {
+          text: '열심히 하기',
+          isCompleted: true,
+        },
+        {
+          text: '최선을 다하기',
+          isCompleted: true,
+        },
+      ];
+
+      // [미션1] 보너스 구현사항 - 다중 컴포넌트 #57
+      var data2 = [
+        {
+          text: '열심히 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: '최선을 다해 공부하기',
+          isCompleted: true,
+        },
+      ];
+
+      function TodoList(data, elementId) {
         this.data = data;
+        this.elementId = elementId;
+
+        // null 혹은 undefined가 넘어오면?
+        if (!this.data) {
+          throw new Error('data가 없습니다.');
+        }
+
+        // array가 아닌 형태로 넘어오면?
+        if (!Array.isArray(this.data)) {
+          throw new Error('data가 배열이 아닙니다.');
+        }
+
+        // 데이터 내용이 이상하면?
+        this.data.forEach((data) => {
+          if (typeof data !== 'string' || data.text === '') {
+            throw new Error(
+              '데이터가 올바르지않은 타입이거나, 데이터가 비어있습니다.'
+            );
+          }
+        });
+
+        //new 키워드 안 붙이고 함수 실행 시 에러 발생하게 하기
+        if (!new.target) {
+          throw new Error('new 키워드를 사용해주세요!');
+        }
 
         this.render = function () {
-          const todoList = document.getElementById('todo-list');
+          const todoList = document.getElementById(this.elementId);
 
           const todoItems = this.data.map((todoItem) => {
-            return `${todoItem.text}`;
+            return `${todoItem.isCompleted} ? <s>${todoItem.text}</s> : ${todoItem.text} `;
           });
 
           todoList.innerHTML = todoItems;
         };
 
+        // [미션1] 보너스 구현사항 - setState #67
+        // 이 부분에서 조금 헤매고있습니다.
+        this.setState = function (nextData) {
+          this.nextData = nextData;
+
+          this.render(nextData);
+        };
+
         this.render();
       }
 
-      var todoList = new TodoList(data);
+      var todoList1 = new TodoList(data, '#todo-list');
+      var todoList2 = new TodoList(data1, '#todo-list-bonus1');
+      var todoList3 = new TodoList(data2, '#todo-list-bonus2');
+
+      todoList1.setState([
+        {
+          text: '화이팅',
+          isCompleted: true,
+        },
+        {
+          text: '아자아자!',
+          isCompleted: true,
+        },
+      ]);
     </script>
   </body>
 </html>
