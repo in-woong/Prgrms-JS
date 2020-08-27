@@ -1,7 +1,7 @@
 import { TodoList } from './todolist.js';
-import todo from './todo.js';
+import todoData from './todoData.js';
 
 (() => {
   const todoListElement = document.querySelector('#todo-list');
-  const TodoListComponent = new TodoList(todoListElement, todo);
+  const TodoListComponent = new TodoList(todoListElement, todoData);
 })()
