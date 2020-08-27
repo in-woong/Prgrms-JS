@@ -11,8 +11,8 @@ export class TodoList {
   }
 
   createView() {
-    return '<ul>' + this.todoList.map((element) => {
+    return `${this.todoList.map((element) => {
       return `<li>${element.text}</li>`;
-    }).join('')  + '</ul>';
+    }).join('')}</ul>`;
   }
 }
