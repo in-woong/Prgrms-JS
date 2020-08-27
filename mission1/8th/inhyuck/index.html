@@ -19,11 +19,14 @@
 	];
 
 	function TodoList(data) {
-		if (!validateTodoItems({todoItems: data})) {
-			throw new Error('error message');
+		if (!(this instanceof TodoList)) { //new 키워드로 호출하지 않은 경우
+			errorHandler();
 		}
-		this.data = data;
+		if (!validateTodoItems({todoItems: data})) {
+			errorHandler();
+		}
 
+		this.data = data;
 		this.render = function() {
 			const $todoList = document.getElementById('todo-list');
 			$todoList.innerHTML = this.data.map(todoItem => {
@@ -47,6 +50,10 @@
 		}
 
 		return true;
+	}
+
+	function errorHandler() {
+		throw new Error('error message');
 	}
 
 	const todoList = new TodoList(data);
