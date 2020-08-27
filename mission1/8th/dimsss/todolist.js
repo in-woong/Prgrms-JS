@@ -2,6 +2,8 @@ export class TodoList {
   constructor(todoEliment, todoList) {
     this.todoEliment = todoEliment;
     this.todoList = todoList;
+
+    this.render();
   }
 
   render() {
