@@ -20,6 +20,9 @@
 
 	class TodoList {
 		constructor(data) {
+			if (!validateTodoItems({todoItems: data})) {
+				throw new Error('error message');
+			}
 			this.data = data;
 		}
 
@@ -29,6 +32,23 @@
 				return `<div>${todoItem.text}</div>`;
 			}).join('');
 		};
+	}
+
+	function validateTodoItems({todoItems}) {
+		if (!todoItems)	{ //null or undefined
+			return false;
+		}
+
+		if (!Array.isArray(todoItems)) { //not array
+			return false;
+		}
+
+		if (todoItems.some(todoItem => !todoItem['text'])) {
+			//text 키를 갖고있지 않거나 text 값이 falsy 인 경우
+			return false;
+		}
+
+		return true;
 	}
 
 	const todoList = new TodoList(data);
