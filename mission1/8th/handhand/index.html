@@ -6,16 +6,37 @@
 </head>
 
 <body>
-  <div id="todo-list"></div>
+  <div id="todo-list1"></div>
+  <div id="todo-list2"></div>
+  <div id="todo-list3"></div>
+
   <script>
-    const data = [
+    const data1 = [
       {
         text: 'JS 공부하기'
       },
       {
         text: 'JS 복습하기'
       }
-    ]
+    ];
+
+    const data2 = [
+      {
+        text: '미션 수행하기'
+      },
+      {
+        text: 'PR 보내기'
+      }
+    ];
+
+    const data3 = [
+      {
+        text: '피드백 반영하기'
+      },
+      {
+        text: '리팩토링하기'
+      }
+    ];
     
     function checkValidation(todos) {
       if (!todos || !Array.isArray(todos)) { 
@@ -29,15 +50,16 @@
       })
     }
   
-    function TodoList(data) {
+    function TodoList(data, id) {
       if (!new.target) { throw new Error('new 키워드를 사용해주세요!'); }
       checkValidation(data);
       
       this.todos = data;
+      this.id = id;
     }
 
     TodoList.prototype.render = function() {
-      const todoDiv = document.querySelector('#todo-list');
+      const todoDiv = document.querySelector(this.id);
       const orderedList = document.createElement('ol');
       todoDiv.append(orderedList);
 
@@ -46,8 +68,12 @@
     }
     
     // 인스턴스를 생성하고 랜더링을 수행합니다.
-    const todoList = new TodoList(data);
-    todoList.render();
+    const todoList1 = new TodoList(data1, '#todo-list1');
+    const todoList2 = new TodoList(data2, '#todo-list2');
+    const todoList3 = new TodoList(data3, '#todo-list3');
+    todoList1.render();
+    todoList2.render();
+    todoList3.render();
   </script>
 </body>
 
