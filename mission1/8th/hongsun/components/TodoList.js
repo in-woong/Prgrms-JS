@@ -1,11 +1,25 @@
 class TodoList {
   constructor(data) {
-    this.data = data;
+    this.data = this.validateListData(data);
     this.rootRenderId = 'todo-list';
   }
 
+  validateListData(data) {
+    if (!data || !Array.isArray(data)) {
+      throw new Error('Data must be of Array type');
+    }
+    if (!data.every((todoItem) => todoItem.hasOwnProperty('text'))) {
+      throw new Error('Does not have a "text" property');
+    }
+    if (!data.every((todoItem) => typeof todoItem.text === 'string')) {
+      throw new Error('Invalid type "text" property');
+    }
+    return data;
+  }
+
   setTodoItem() {
-    return this.data.map((todoItem) => `<div>${todoItem.text}</div>`);
+    const filterData = this.data.filter((todoitem) => todoitem.text !== '');
+    return filterData.map((todoItem) => `<div>${todoItem.text}</div>`);
   }
 
   render() {
