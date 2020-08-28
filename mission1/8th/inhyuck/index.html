@@ -15,30 +15,37 @@
 	const data = [
 		{
 			text: 'JS 공부하기',
+			isCompleted: false,
 		},
 		{
 			text: 'JS 복습하기',
+			isCompleted: true,
 		},
 	];
 
 	const developerTodoItems = [
 		{
 			text: 'JS 스터디 열심히 참여하며 배운내용 잘 정리',
+			isCompleted: true,
 		},
 		{
 			text: '사이드 프로젝트 개선',
+			isCompleted: false,
 		},
 	];
 
 	const happyLifeTodoItems = [
 		{
 			text: '책 읽고 간단히라도 글 쓰기',
+			isCompleted: true,
 		},
 		{
 			text: '규칙적인 아침 기상',
+			isCompleted: false,
 		},
 		{
 			text: '조급해하지 않기',
+			isCompleted: true,
 		},
 	];
 
@@ -53,10 +60,19 @@
 		this.todoItems = todoItems;
 		this.render = function () {
 			const $todoList = document.getElementById(targetElementId);
-			$todoList.innerHTML = this.todoItems.map(todoItem => {
-				return `<div>${todoItem.text}</div>`;
-			}).join('');
+			$todoList.innerHTML = this.todoItems.map(todoItem => convertTodoItemToInnerHtml({todoItem})).join('');
 		};
+	}
+
+	function convertTodoItemToInnerHtml({todoItem}) {
+		const {text, isCompleted} = todoItem;
+		return `
+			<div>
+				${isCompleted ? '<s>' : ''}
+					${text}
+				${isCompleted ? '</s>' : ''}
+			</div>
+		`;
 	}
 
 	function validateTodoItems({todoItems}) {
