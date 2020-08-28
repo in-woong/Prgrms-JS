@@ -23,6 +23,13 @@
 		},
 	];
 
+	const nextData = [
+		{
+			text: 'HTML/CSS 공부하기',
+			isCompleted: false,
+		},
+	];
+
 	const developerTodoItems = [
 		{
 			text: 'JS 스터디 열심히 참여하며 배운내용 잘 정리',
@@ -31,6 +38,13 @@
 		{
 			text: '사이드 프로젝트 개선',
 			isCompleted: false,
+		},
+	];
+
+	const nextDeveloperTodoItems = [
+		{
+			text: 'HTTP 공부',
+			isCompleted: true,
 		},
 	];
 
@@ -49,6 +63,13 @@
 		},
 	];
 
+	const nextHappyLifeTodoItems = [
+		{
+			text: '규칙적인 운동',
+			isCompleted: false,
+		},
+	];
+
 	function TodoList({todoItems, targetElementId}) {
 		if (!(this instanceof TodoList)) { //new 키워드로 호출하지 않은 경우
 			errorHandler();
@@ -61,6 +82,10 @@
 		this.render = function () {
 			const $todoList = document.getElementById(targetElementId);
 			$todoList.innerHTML = this.todoItems.map(todoItem => convertTodoItemToInnerHtml({todoItem})).join('');
+		};
+		this.setState = function ({nextTodoItems}) {
+			this.todoItems = nextTodoItems;
+			this.render();
 		};
 	}
 
@@ -107,12 +132,15 @@
 
 	const todoList = new TodoList({todoItems: data, targetElementId: 'todo-list'});
 	todoList.render();
+	setTimeout(() => todoList.setState({nextTodoItems: nextData}), 500);
 
 	const developerTodoList = new TodoList({todoItems: developerTodoItems, targetElementId: 'developer-todo-list'});
 	developerTodoList.render();
+	setTimeout(() => developerTodoList.setState({nextTodoItems: nextDeveloperTodoItems}), 500);
 
 	const happyLifeTodoList = new TodoList({todoItems: happyLifeTodoItems, targetElementId: 'happy-life-todo-list'});
 	happyLifeTodoList.render();
+	setTimeout(() => happyLifeTodoList.setState({nextTodoItems: nextHappyLifeTodoItems}), 500);
 
 </script>
 </body>
