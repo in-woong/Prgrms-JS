@@ -3,7 +3,7 @@
 
 <head>
 	<title>Mission 1</title>
-	<meta charset="utf-8" />
+	<meta charset="utf-8"/>
 </head>
 
 <body>
@@ -14,11 +14,11 @@
 <script>
 	const data = [
 		{
-			text: 'JS 공부하기'
+			text: 'JS 공부하기',
 		},
 		{
-			text: 'JS 복습하기'
-		}
+			text: 'JS 복습하기',
+		},
 	];
 
 	const developerTodoItems = [
@@ -39,7 +39,7 @@
 		},
 		{
 			text: '조급해하지 않기',
-		}
+		},
 	];
 
 	function TodoList({todoItems, targetElementId}) {
@@ -51,16 +51,16 @@
 		}
 
 		this.todoItems = todoItems;
-		this.render = function() {
+		this.render = function () {
 			const $todoList = document.getElementById(targetElementId);
 			$todoList.innerHTML = this.todoItems.map(todoItem => {
 				return `<div>${todoItem.text}</div>`;
 			}).join('');
-		}
+		};
 	}
 
 	function validateTodoItems({todoItems}) {
-		if (!todoItems)	{ //null or undefined
+		if (!todoItems) { //null or undefined
 			return false;
 		}
 
