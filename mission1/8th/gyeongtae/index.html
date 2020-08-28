@@ -6,6 +6,8 @@
 
   <body>
     <div id="todo-list"></div>
+    <div id="todo-list2"></div>
+    <div id="todo-list3"></div>
     <script>
       const data = [
         {
@@ -17,8 +19,28 @@
           isCompleted: false,
         },
       ]
+      const data2 = [
+        {
+          text: '미션1 보너스 구현하기',
+          isCompleted: true,
+        },
+        {
+          text: '미션1 코드리뷰 하기',
+          isCompleted: false,
+        },
+      ]
+      const data3 = [
+        {
+          text: '미션1 코드리뷰 피드백 수정하기',
+          isCompleted: true,
+        },
+        {
+          text: '스터디 하면서 도움이 되는 자료 읽기',
+          isCompleted: false,
+        },
+      ]
       // function style TodoList 컴포넌트
-      function TodoList(data) {
+      function TodoList(querySelect, data) {
         // 만약 this가 window인경우 (생성자 함수에 new연산자를 붙이지 않은경우)
         // new 연산자를 붙이고 다시 생성자 함수를 실행한다
         if (this === window) {
@@ -50,12 +72,16 @@
         this.render = () => {
           this.data.forEach((data) => {
             const html = `<div>${data.text}</div>`
-            document.querySelector('#todo-list').innerHTML += html
+            document.querySelector(querySelect).innerHTML += html
           })
         }
       }
-      let todolist = new TodoList(data)
+      const todolist = new TodoList('#todo-list', data)
+      const todolist2 = new TodoList('#todo-list2', data2)
+      const todolist3 = new TodoList('#todo-list3', data3)
       todolist.render()
+      todolist2.render()
+      todolist3.render()
     </script>
   </body>
 </html>
