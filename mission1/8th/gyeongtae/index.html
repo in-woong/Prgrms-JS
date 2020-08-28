@@ -21,6 +21,10 @@
       ]
       const data2 = [
         {
+          text: '미션1 필수 구현사항 구현하기',
+          isCompleted: true,
+        },
+        {
           text: '미션1 보너스 구현하기',
           isCompleted: true,
         },
@@ -32,7 +36,7 @@
       const data3 = [
         {
           text: '미션1 코드리뷰 피드백 수정하기',
-          isCompleted: true,
+          isCompleted: false,
         },
         {
           text: '스터디 하면서 도움이 되는 자료 읽기',
@@ -71,7 +75,9 @@
         // data값에 따라 todo-list를 동적으로 렌더링한다
         this.render = () => {
           this.data.forEach((data) => {
-            const html = `<div>${data.text}</div>`
+            const html = `<div>${
+              data.isCompleted ? `<s>${data.text}</s>` : data.text
+            }</div>`
             document.querySelector(querySelect).innerHTML += html
           })
         }
