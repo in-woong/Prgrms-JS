@@ -7,7 +7,7 @@
   <body>
     <div id="todo-list"></div>
     <script>
-      let data = [
+      const data = [
         {
           text: 'JS 공부하기',
         },
@@ -15,29 +15,34 @@
           text: 'JS 복습하기',
         },
       ]
-      // todoList 컴포넌트
+
+      // TodoList 컴포넌트
       function TodoList(data) {
+        // function 형태의 선언인 경우 에러처리
+        if (!(this instanceof TodoList))
+          throw new Error('function 형태의 선언입니다.')
+        checkData(data) // data 파라미터 에러처리
+
         this.todos = data
         this.render = function () {
-          // data 파라미터 에러처리
-          if (!this.checkParam()) throw new Error('데이터가 올바르지 않습니다.')
           const html = this.todos
             .map((todo) => `<li>${todo.text}</li>`)
             .join('')
           document.querySelector('#todo-list').innerHTML = `<ul>${html}</ul>`
         }
-        // data가 올바르게 넘어왔는지 체크
-        this.checkParam = function () {
-          let result = true
-          if (!this.todos || !Array.isArray(this.todos)) result = false
-          return result
-        }
+        this.render()
       }
+
+      // data가 올바르게 넘어왔는지 체크
+      function checkData(data) {
+        if (!data || !Array.isArray(data))
+          throw new Error('data값이 유효하지 않습니다.') // data값 체크
+        if (data.some((value) => typeof value.text !== 'string' || !value.text))
+          throw new Error('text값이 유효하지 않습니다.') // text 체크
+      }
+
       // 인스턴스 생성 및 render
       const todoList = new TodoList(data)
-      // function 형태의 선언인 경우 에러처리
-      if (!todoList) throw new Error('function 형태의 선언입니다.')
-      todoList.render()
     </script>
   </body>
 </html>
