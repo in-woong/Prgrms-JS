@@ -53,7 +53,7 @@
 		if (!(this instanceof TodoList)) { //new 키워드로 호출하지 않은 경우
 			errorHandler();
 		}
-		if (!validateTodoItems({todoItems})) {
+		if (!isValidTodoItems({todoItems})) {
 			errorHandler();
 		}
 
@@ -75,7 +75,7 @@
 		`;
 	}
 
-	function validateTodoItems({todoItems}) {
+	function isValidTodoItems({todoItems}) {
 		if (!todoItems) { //null or undefined
 			return false;
 		}
@@ -84,8 +84,17 @@
 			return false;
 		}
 
-		if (todoItems.some(todoItem => !todoItem['text'])) {
-			//text 키를 갖고있지 않거나 text 값이 falsy 인 경우
+		return todoItems.every(todoItem => isValidTodoItem({todoItem}));
+	}
+
+	function isValidTodoItem({todoItem}) {
+		const {text, isCompleted} = todoItem;
+
+		if (typeof text !== 'string' || text.trim() === '') {
+			return false;
+		}
+
+		if (typeof isCompleted !== 'boolean') {
 			return false;
 		}
 
