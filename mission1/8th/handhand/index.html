@@ -37,12 +37,16 @@
     }
 
     TodoList.prototype.render = function() {
-      const renderData = this.todos.map(todo => `<div>${todo.text}</div>`).join('');
-      document.querySelector('#todo-list').innerHTML = renderData;
+      const todoDiv = document.querySelector('#todo-list');
+      const orderedList = document.createElement('ol');
+      todoDiv.append(orderedList);
+
+      const renderData = this.todos.map(todo => `<li>${todo.text}</li>`).join('');
+      orderedList.innerHTML = renderData;
     }
     
     // 인스턴스를 생성하고 랜더링을 수행합니다.
-    const todoList = new TodoList([]);
+    const todoList = new TodoList(data);
     todoList.render();
   </script>
 </body>
