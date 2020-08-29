@@ -42,9 +42,9 @@ const TodoItem = ($targetDom, data) => {
     const { text, isCompleted } = data;
     const textNode = document.createTextNode(text);
     if (isCompleted) {
-      const $textEl = document.createElement('s');
-      $textEl.appendChild(textNode);
-      return $textEl;
+      const textEl = document.createElement('s');
+      textEl.appendChild(textNode);
+      return textEl;
     }
     return textNode;
   };

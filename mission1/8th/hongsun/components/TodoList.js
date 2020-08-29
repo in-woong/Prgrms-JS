@@ -28,11 +28,14 @@ class TodoList {
 
   render() {
     this.$targetDom.innerHTML = '';
+
     const $listWrapper = document.createElement('ul');
-    const todoItemsFragement = document.createDocumentFragment();
     $listWrapper.className = 'todo-list';
+    const todoItemsFragement = document.createDocumentFragment();
+
     this.data.forEach((todoItem) => TodoItem(todoItemsFragement, todoItem));
     $listWrapper.appendChild(todoItemsFragement);
+
     this.$targetDom.appendChild($listWrapper);
   }
 }
