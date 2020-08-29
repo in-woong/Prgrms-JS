@@ -6,7 +6,9 @@
 
   <body>
     <div id="todo-list"></div>
+    <div>------------------</div>
     <div id="todo-list2"></div>
+    <div>------------------</div>
     <div id="todo-list3"></div>
     <script>
       /*-------- 선언영역 -------- */
@@ -42,6 +44,17 @@
           isCompleted: false,
         },
       ];
+
+      const newData = [
+        {
+          text: '다른 사람 코드리뷰',
+          isCompleted: false,
+        },
+        {
+          text: '미션1 풀리퀘스트',
+          isCompleted: true,
+        },
+      ];
       
       function validDataList(dataList){
         if(dataList === null || dataList === undefined){
@@ -69,11 +82,26 @@
         //파라미터
         validDataList(dataList);
         
+        this.items = dataList;
+        //const {items} = this; 
+        //객체 구조 분해 할당을 하면 안되는 이유?
+        //setState에서 해당 인스턴스 속성의 변하는 값이 반영되지 않는다.
+        //처음 new 키워드롤 생성했을 때 그 값이 선언되기 때문에 실시간으로 바뀌지 않는다.
         this.render = () => {
           const todoElem = document.querySelector(elemId); 
-          dataList.map((data)=>{
-             todoElem.innerHTML += `<div>${data.text}</div>`;
+          todoElem.innerHTML = ''; //초기화
+          this.items.map((item)=>{
+            const htmlStr = `<div>${
+              item.isCompleted? `<s>${item.text}</s>`: item.text
+              }</div>`;
+
+             todoElem.innerHTML += htmlStr;
           })
+        }
+
+        this.setState = (nextData) => {
+          this.items = nextData;
+          this.render();
         }
       }
 
@@ -84,9 +112,11 @@
         const todoList3 = new TodoList('#todo-list3',dataList3);
         todoList.render();
         todoList2.render();
-        todoList3.render(); 
+        todoList3.render();
+        todoList.setState(newData);
       } catch (e) {
         alert(e);
+        console.log(e);
       }
     </script>
 
