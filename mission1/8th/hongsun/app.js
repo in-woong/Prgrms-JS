@@ -8,4 +8,6 @@ todoList.render();
 csTodoList.render();
 jsTodoList.render();
 
-todoList.setState(nextData);
+setTimeout(() => {
+  todoList.setState(nextData);
+}, 3000);

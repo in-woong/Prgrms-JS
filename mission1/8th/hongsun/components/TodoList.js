@@ -18,9 +18,9 @@ class TodoList {
   }
 
   setState(nextData) {
-    const canRender = Object.is(this.data, nextData);
+    const needRender = !Object.is(this.data, nextData);
 
-    if (!canRender) {
+    if (needRender) {
       this.data = nextData;
       this.render();
     }
