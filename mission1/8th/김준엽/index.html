@@ -7,6 +7,8 @@
   <body>
     <div id="todo-list"></div>
     <script>
+
+      /*-------- 선언영역 -------- */
       const dataList = [
         {
           text: 'JS 공부하기',
@@ -18,14 +20,34 @@
         },
       ];
       
-      //매개변수 dataList를 받아서 바로 사용했습니다.
-      /*
-      ------------QnA--------------
-      1.this를 사용안해도 되지 않나요?
-      2.화살표함수와 그냥 함수 차이점? 용도?
-      -----------------------------
-      */
+      function validDataList(dataList){
+
+        if(dataList === null || dataList === undefined){
+          throw new Error('파라미터가 null 이거나 undefined 입니다.');
+        }
+        
+        if (!Array.isArray(dataList)){
+          throw new Error('파라미터가 배열이 아닙니다.');
+        } 
+        
+        //배열이면 데이터 내용 검사
+        dataList.map((data) => {
+            if( (data.text === undefined) || (data.isCompleted === undefined)){
+              throw new Error('파라미터 내용이 올바르지 않습니다.');
+            }
+         })
+        
+      }
+ 
       function TodoList(dataList){
+        //예외처리
+        //new 키워드
+        if(new.target === undefined){
+          throw new Error('new 키워드를 사용하지 않았습니다.');
+        }
+        //파라미터
+        validDataList(dataList);
+        
         this.render = () => {
           const todoElem = document.querySelector('#todo-list'); 
           dataList.map((data)=>{
@@ -34,9 +56,13 @@
         }
       }
 
-      //실행
-      const todoList = new TodoList(dataList);
-      todoList.render();
+      /*-------- 실행영역 -------- */
+      try {
+        const todoList = new TodoList(dataList);
+        todoList.render(); 
+      } catch (e) {
+        alert(e);
+      }
     </script>
 
   </body>
