@@ -93,6 +93,8 @@
 			this.todoItems = nextTodoItems;
 			this.render();
 		};
+
+		this.render();
 	}
 
 	function convertTodoItemToInnerHtml({todoItem}) {
@@ -135,15 +137,12 @@
 	}
 
 	const todoList = new TodoList({todoItems: data, selector: '#todo-list'});
-	todoList.render();
 	setTimeout(() => todoList.setState({nextTodoItems: nextData}), 500);
 
 	const developerTodoList = new TodoList({todoItems: developerTodoItems, selector: '#developer-todo-list'});
-	developerTodoList.render();
 	setTimeout(() => developerTodoList.setState({nextTodoItems: nextDeveloperTodoItems}), 500);
 
 	const happyLifeTodoList = new TodoList({todoItems: happyLifeTodoItems, selector: '#happy-life-todo-list'});
-	happyLifeTodoList.render();
 	setTimeout(() => happyLifeTodoList.setState({nextTodoItems: nextHappyLifeTodoItems}), 500);
 
 </script>
