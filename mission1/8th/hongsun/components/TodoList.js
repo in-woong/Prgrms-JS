@@ -28,10 +28,12 @@ class TodoList {
 
   render() {
     const data = this.validateData(this.data);
-    this.$targetDom.innerHTML = '';
+    // this.$targetDom.innerHTML = '';
     const $listWrapper = document.createElement('ul');
+    const todoItemsFragement = document.createDocumentFragment();
     $listWrapper.className = 'todo-list';
-    data.forEach((todoItem) => TodoItem($listWrapper, todoItem));
+    data.forEach((todoItem) => TodoItem(todoItemsFragement, todoItem));
+    $listWrapper.appendChild(todoItemsFragement);
     this.$targetDom.appendChild($listWrapper);
   }
 }
