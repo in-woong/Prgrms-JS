@@ -5,16 +5,16 @@ import ErrorMessageUtil from '../utils/ErrorMessageUtil.js';
 class TodoList {
   constructor(targetId, data) {
     this.data = data;
+    this.validateData();
     this.$targetDom = document.getElementById(targetId);
   }
 
-  validateData(data) {
-    if (!data || !Array.isArray(data)) {
+  validateData() {
+    if (!this.data || !Array.isArray(this.data)) {
       throw new Error(
         ErrorMessageUtil.getTodoItemErrorMessage(TODO_ERROR_TYPE.INVALID_DATA)
       );
     }
-    return data;
   }
 
   setState(nextData) {
@@ -27,12 +27,11 @@ class TodoList {
   }
 
   render() {
-    const data = this.validateData(this.data);
-    // this.$targetDom.innerHTML = '';
+    this.$targetDom.innerHTML = '';
     const $listWrapper = document.createElement('ul');
     const todoItemsFragement = document.createDocumentFragment();
     $listWrapper.className = 'todo-list';
-    data.forEach((todoItem) => TodoItem(todoItemsFragement, todoItem));
+    this.data.forEach((todoItem) => TodoItem(todoItemsFragement, todoItem));
     $listWrapper.appendChild(todoItemsFragement);
     this.$targetDom.appendChild($listWrapper);
   }
