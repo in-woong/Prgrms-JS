@@ -7,15 +7,17 @@ const tag = '[controller.js]';
 export default class Controller {
   constructor() {
     this.service = new Service();
-    this.listsView = new ListsView();
-
+    this.jsListsView = new ListsView('ul', 'js-lists');
+    this.vueListsView = new ListsView('ul', 'vue-lists');
+    this.reactListsView = new ListsView('ul', 'react-lists');
     this.service.isChangedHandler(this.onChangedHandler.bind(this));
   }
   init() {
     this.service.search('INITIALIZE');
-    this.listsView.setup();
   }
-  onChangedHandler(lists) {
-    this.listsView.render(lists);
+  onChangedHandler({ js, vue, react }) {
+    this.jsListsView.render(js);
+    this.vueListsView.render(vue);
+    this.reactListsView.render(react);
   }
 }

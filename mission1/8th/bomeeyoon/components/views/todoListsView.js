@@ -5,13 +5,16 @@ const log = console.log;
 const tag = '[todoListsView.js]';
 
 export default class ListsView extends View {
-  constructor() {
+  constructor(tag, className) {
     super();
+    this.tag = tag;
+    this.className = className;
     this.$root = getElement('#todo-list');
-    // return this;
+    this.setup();
+    return this;
   }
   setup() {
-    this.$element = createElement('ul', 'todo-lists');
+    this.$element = createElement(this.tag, this.className);
     this.$root.appendChild(this.$element);
   }
   render(lists = []) {
