@@ -6,6 +6,8 @@
 
   <body>
     <div id="todo-list"></div>
+    <div id="complete-list"></div>
+    <div id="wish-list"></div>
     <script>
       const data = [
         {
@@ -17,22 +19,49 @@
           isCompleted: false,
         },
       ];
+
+      const completeData = [
+      {
+          text: 'quiz 풀기',
+          isCompleted: true,
+        },
+        {
+          text: 'quiz 해설 복습하기',
+          isCompleted: true,
+        },
+      ];
+
+      const wishData = [
+      {
+          text: '파천갑주 얻기',
+          isCompleted: false,
+        },
+        {
+          text: '파천비곤얻기',
+          isCompleted: false,
+        },
+      ];
+
       // 이곳에서 코딩을 시작하세요!
 
-      function TodoList(param){
+      function TodoList(param, id){
         this.data = param;
         this.render = function(){
           let htmlString = '';
-          data.forEach(d=>{
-            
+          this.data.forEach(d=>{
             htmlString += `<div>${d.text}</div>`;
           });
-            document.querySelector('#todo-list').innerHTML = htmlString;
+            document.querySelector('#'+id).innerHTML = htmlString;
         }
       };
 
-      let todoList = new TodoList(data);
+      let todoList = new TodoList(data, 'todo-list');
+      let completeList = new TodoList(completeData, 'complete-list');
+      let wishList = new TodoList(wishData, 'wish-list');
+
       todoList.render();
+      completeList.render();
+      wishList.render();
     </script>
   </body>
 </html>
