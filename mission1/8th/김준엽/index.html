@@ -6,8 +6,9 @@
 
   <body>
     <div id="todo-list"></div>
+    <div id="todo-list2"></div>
+    <div id="todo-list3"></div>
     <script>
-
       /*-------- 선언영역 -------- */
       const dataList = [
         {
@@ -19,9 +20,30 @@
           isCompleted: false,
         },
       ];
+
+      const dataList2 = [
+        {
+          text: '다중 컴포넌트 만들기',
+          isCompleted: true,
+        },
+        {
+          text: '사직서 내기',
+          isCompleted: false,
+        },
+      ];
+
+      const dataList3 = [
+        {
+          text: '이사하기',
+          isCompleted: false,
+        },
+        {
+          text: '테슬라 매매',
+          isCompleted: false,
+        },
+      ];
       
       function validDataList(dataList){
-
         if(dataList === null || dataList === undefined){
           throw new Error('파라미터가 null 이거나 undefined 입니다.');
         }
@@ -36,10 +58,9 @@
               throw new Error('파라미터 내용이 올바르지 않습니다.');
             }
          })
-        
       }
  
-      function TodoList(dataList){
+      function TodoList(elemId,dataList){
         //예외처리
         //new 키워드
         if(new.target === undefined){
@@ -49,7 +70,7 @@
         validDataList(dataList);
         
         this.render = () => {
-          const todoElem = document.querySelector('#todo-list'); 
+          const todoElem = document.querySelector(elemId); 
           dataList.map((data)=>{
              todoElem.innerHTML += `<div>${data.text}</div>`;
           })
@@ -58,8 +79,12 @@
 
       /*-------- 실행영역 -------- */
       try {
-        const todoList = new TodoList(dataList);
-        todoList.render(); 
+        const todoList = new TodoList('#todo-list',dataList);
+        const todoList2 = new TodoList('#todo-list2',dataList2);
+        const todoList3 = new TodoList('#todo-list3',dataList3);
+        todoList.render();
+        todoList2.render();
+        todoList3.render(); 
       } catch (e) {
         alert(e);
       }
