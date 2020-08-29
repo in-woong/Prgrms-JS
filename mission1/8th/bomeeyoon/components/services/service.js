@@ -1,4 +1,4 @@
-import { getData } from '../states/viewData.js';
+import { getData } from '../states/dataStates.js';
 
 const log = console.log;
 

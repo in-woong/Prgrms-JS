@@ -1,5 +1,6 @@
 import View from './todoDefaultView.js';
 import { createElement, getElement } from '../lib/utils.js';
+import { errorMsg } from '../states/viewState.js';
 
 const log = console.log;
 const tag = '[todoListsView.js]';
@@ -18,7 +19,8 @@ export default class ListsView extends View {
     this.$root.appendChild(this.$element);
   }
   render(lists = []) {
-    if (!lists || !Array.isArray(lists)) return;
+    if (!Array.isArray(lists)) return;
+    if (!lists.length) return this.#errorHandler();
     this.$element.innerHTML = this.#getListsHTML(lists);
   }
   #getListsHTML(lists) {
@@ -29,5 +31,12 @@ export default class ListsView extends View {
     const $list = `<li data-completed=${isCompleted}>${text}</li>`;
     const $s = `<li data-completed=${isCompleted}><s>${text}</s></li>`;
     return isCompleted ? $s : $list;
+  }
+  #errorHandler() {
+    const className = this.#getClassName();
+    this.$element.textContent = errorMsg(className).NOTHING;
+  }
+  #getClassName() {
+    return this.$element.className;
   }
 }

@@ -37,7 +37,8 @@ export function getData() {
           isCompleted: false,
         },
       ];
-      res({ js, vue, react });
+      const typescript = [];
+      res({ js, vue, react, typescript });
     }, 300);
   });
 }
