@@ -29,4 +29,15 @@ const jsTodoData = [
   },
 ];
 
-export { data, csTodoData, jsTodoData };
+const nextData = [
+  {
+    text: 'JS 심화 공부하기',
+    isCompleted: true,
+  },
+  {
+    text: 'JS 심화 복습하기',
+    isCompleted: false,
+  },
+];
+
+export { data, csTodoData, jsTodoData, nextData };

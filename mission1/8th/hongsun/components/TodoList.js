@@ -4,7 +4,7 @@ import ErrorMessageUtil from '../utils/ErrorMessageUtil.js';
 
 class TodoList {
   constructor(targetId, data) {
-    this.data = this.validateData(data);
+    this.data = data;
     this.$targetDom = document.getElementById(targetId);
   }
 
@@ -17,10 +17,21 @@ class TodoList {
     return data;
   }
 
+  setState(nextData) {
+    const canRender = Object.is(this.data, nextData);
+
+    if (!canRender) {
+      this.data = nextData;
+      this.render();
+    }
+  }
+
   render() {
+    const data = this.validateData(this.data);
+    this.$targetDom.innerHTML = '';
     const $listWrapper = document.createElement('ul');
     $listWrapper.className = 'todo-list';
-    this.data.forEach((todoItem) => TodoItem($listWrapper, todoItem));
+    data.forEach((todoItem) => TodoItem($listWrapper, todoItem));
     this.$targetDom.appendChild($listWrapper);
   }
 }
