@@ -21,7 +21,7 @@ const checkValidPropertyType = (obj) => {
 };
 
 const TodoItem = ($targetDom, data) => {
-  const validateData = (data) => {
+  const validateData = () => {
     if (!checkRequiredProperty(data)) {
       throw new Error(
         ErrorMessageUtil.getTodoItemErrorMessage(ERROR_TYPE.REQUIRED_PROPERTY)
@@ -32,17 +32,33 @@ const TodoItem = ($targetDom, data) => {
         ErrorMessageUtil.getTodoItemErrorMessage(ERROR_TYPE.INVALID_PROPERTY)
       );
     }
-    return data;
   };
-  const itemData = validateData(data);
+  validateData();
 
-  const render = (data) => {
-    const $item = document.createElement('li');
-    $item.className = 'todo-item';
-    $item.textContent = data.text;
-    $targetDom.appendChild($item);
+  const setTextNode = () => {
+    const { text, isCompleted } = data;
+    const textNode = document.createTextNode(text);
+    if (isCompleted) {
+      const $textEl = document.createElement('s');
+      $textEl.appendChild(textNode);
+      return $textEl;
+    }
+    return textNode;
   };
-  render(itemData);
+
+  const setItem = () => {
+    const itemEl = document.createElement('li');
+    const text = setTextNode();
+    itemEl.className = 'todo-item';
+    itemEl.appendChild(text);
+    return itemEl;
+  };
+
+  const render = () => {
+    const item = setItem();
+    $targetDom.appendChild(item);
+  };
+  render();
 };
 
 export default TodoItem;
