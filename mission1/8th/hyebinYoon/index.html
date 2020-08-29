@@ -6,8 +6,26 @@
 
   <body>
     <div id="todo-list"></div>
+    <div id="wish-list"></div>
+    <div id="study-list"></div>
     <script>
-      const data = [
+      const todoData = [
+        {
+          text: '방 청소하기',
+        },
+        {
+          text: '치과 예약하기',
+        },
+      ]
+      const wishData = [
+        {
+          text: '에어팟 프로',
+        },
+        {
+          text: '맥북프로 16인치',
+        },
+      ]
+      const studyData = [
         {
           text: 'JS 공부하기',
         },
@@ -17,18 +35,21 @@
       ]
 
       // TodoList 컴포넌트
-      function TodoList(data) {
+      function TodoList(data, tagID) {
         // function 형태의 선언인 경우 에러처리
         if (!(this instanceof TodoList))
           throw new Error('function 형태의 선언입니다.')
         checkData(data) // data 파라미터 에러처리
 
         this.todos = data
+        this.tagID = tagID
         this.render = function () {
           const html = this.todos
             .map((todo) => `<li>${todo.text}</li>`)
             .join('')
-          document.querySelector('#todo-list').innerHTML = `<ul>${html}</ul>`
+          document.querySelector(
+            `#${this.tagID}-list`
+          ).innerHTML = `<ul>${html}</ul>`
         }
         this.render()
       }
@@ -42,7 +63,9 @@
       }
 
       // 인스턴스 생성 및 render
-      const todoList = new TodoList(data)
+      const todoList = new TodoList(todoData, 'todo')
+      const wishList = new TodoList(wishData, 'wish')
+      const studyList = new TodoList(studyData, 'study')
     </script>
   </body>
 </html>
