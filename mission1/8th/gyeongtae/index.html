@@ -59,27 +59,22 @@
           isCompleted: false,
         },
       ]
+      // TodoList data배열 객체의 파라미터가 text, isCompleted가 있으면 true 없으면 false를 리턴
+      const isCorrectData = (value) => {
+        return (
+          value.text &&
+          (value.isCompleted === true || value.isCompleted === false)
+        )
+      }
       // TodoList data체크 함수
       function todoListDataCheck(data) {
         if (data === null || data === undefined) {
           throw new Error('데이터가 null이거나 undefined상태입니다')
         } else if (!Array.isArray(data)) {
           throw new Error('데이터가 array상태가 아닙니다')
-        } else {
-          // 배열의 요소인 객체의 파라미터 text, isCompleted가 있으면 true 없으면 false를 리턴
-          const isCorrectData = (value) => {
-            if (
-              value.text &&
-              (value.isCompleted === true || value.isCompleted === false)
-            ) {
-              return true
-            }
-            return false
-          }
           // 배열의 요소중 하나라도 text, isCompleted프로퍼티중 하나가 없다면 false를 반환하여 error를 발생
-          if (!data.every(isCorrectData)) {
-            throw new Error('데이터 내용이 이상합니다')
-          }
+        } else if (!data.every(isCorrectData)) {
+          throw new Error('데이터 내용이 이상합니다')
         }
       }
       // function style TodoList 컴포넌트
