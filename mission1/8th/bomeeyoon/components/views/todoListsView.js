@@ -26,6 +26,8 @@ export default class ListsView extends View {
   }
   #getListHTML(list) {
     const { text, isCompleted } = list;
-    return `<li data-completed=${isCompleted}>${text}</li>`;
+    const $list = `<li data-completed=${isCompleted}>${text}</li>`;
+    const $s = `<li data-completed=${isCompleted}><s>${text}</s></li>`;
+    return isCompleted ? $s : $list;
   }
 }
