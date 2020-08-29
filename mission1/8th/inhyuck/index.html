@@ -71,12 +71,10 @@
 	];
 
 	function TodoList({todoItems, targetElementId}) {
-		if (!(this instanceof TodoList)) { //new 키워드로 호출하지 않은 경우
-			errorHandler();
+		if (!(this instanceof TodoList)) {
+			errorHandler({errorMessage: 'not exist new keyword'});
 		}
-		if (!isValidTodoItems({todoItems})) {
-			errorHandler();
-		}
+		validateTodoItems({todoItems});
 
 		this.todoItems = todoItems;
 		this.render = function () {
@@ -98,34 +96,34 @@
 		`;
 	}
 
-	function isValidTodoItems({todoItems}) {
-		if (!todoItems) { //null or undefined
-			return false;
+	function validateTodoItems({todoItems}) {
+		if (!todoItems) {
+			errorHandler({errorMessage: 'todoItems is empty'});
 		}
 
-		if (!Array.isArray(todoItems)) { //not array
-			return false;
+		if (!Array.isArray(todoItems)) {
+			errorHandler({errorMessage: 'todoItems is not Array'});
 		}
 
-		return todoItems.every(todoItem => isValidTodoItem({todoItem}));
+		todoItems.forEach(todoItem => validateTodoItem({todoItem}));
 	}
 
-	function isValidTodoItem({todoItem}) {
+	function validateTodoItem({todoItem}) {
 		const {text, isCompleted} = todoItem;
 
 		if (typeof text !== 'string' || text.trim() === '') {
-			return false;
+			errorHandler({errorMessage: 'text value is empty or is not string type'});
 		}
 
 		if (typeof isCompleted !== 'boolean') {
-			return false;
+			errorHandler({errorMessage: 'isCompleted value is empty or is not boolean type'});
 		}
 
 		return true;
 	}
 
-	function errorHandler() {
-		throw new Error('error message');
+	function errorHandler({errorMessage}) {
+		throw new Error(errorMessage);
 	}
 
 	const todoList = new TodoList({todoItems: data, targetElementId: 'todo-list'});
