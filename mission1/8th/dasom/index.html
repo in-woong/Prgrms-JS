@@ -8,6 +8,7 @@
     <div id="todo-list"></div>
     <div id="complete-list"></div>
     <div id="wish-list"></div>
+    <div id="setState-list"></div>
     <script>
       const data = [
         {
@@ -52,8 +53,12 @@
 
       function TodoList(param, id){
         this.data = param;
+        try{
         if(this == window){
           throw new Error('new 키워드를 붙여주세요.');
+        }
+        } catch(e){
+          console.log(e);
         }
         this.render = function(){
           try{
@@ -78,7 +83,11 @@
           if(!param.every(p=>{return p.text!=undefined && p.isCompleted!=undefined})){
             throw new Error('param의 data 형태가 잘못됐습니다.');
           }
-        };
+        },
+        this.setState = function(newParam){
+          this.data = newParam;
+          this.render();
+        }
       };
 
       let todoList = new TodoList(data, 'todo-list');
@@ -104,6 +113,10 @@
 
       let notNew = TodoList(data, 'todo-list');
    //   notNew.render();
+
+
+      let setStateList = new TodoList(data, 'setState-list');
+      setStateList.setState(completeData, 'setState-list');
     </script>
   </body>
 </html>
