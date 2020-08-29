@@ -23,7 +23,10 @@ class TodoList {
 	}
 
 	render() {
-		if (!this.data || !this.data.length) return this;
+		if (!this.data || !this.data.length) {
+			this.$todoList.innerHTML = '';
+			return this;
+		}
 
 		this.$todoList.innerHTML = this.data.map(t => `<li>
 			${t.isCompleted ? `<s>${t.text}</s>` : t.text}
