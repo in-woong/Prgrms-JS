@@ -60,6 +60,7 @@
             this.isValid();
             let htmlString = '';
             this.data.forEach(d=>{
+              d.isCompleted ? d.text = `<s>${d.text}</s>` : '';
               htmlString += `<div>${d.text}</div>`;
             });
             document.querySelector('#'+id).innerHTML = htmlString;
