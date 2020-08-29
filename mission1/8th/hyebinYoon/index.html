@@ -12,25 +12,31 @@
       const todoData = [
         {
           text: '방 청소하기',
+          isCompleted: false,
         },
         {
           text: '치과 예약하기',
+          isCompleted: true,
         },
       ]
       const wishData = [
         {
           text: '에어팟 프로',
+          isCompleted: false,
         },
         {
           text: '맥북프로 16인치',
+          isCompleted: false,
         },
       ]
       const studyData = [
         {
           text: 'JS 공부하기',
+          isCompleted: true,
         },
         {
           text: 'JS 복습하기',
+          isCompleted: false,
         },
       ]
 
@@ -45,7 +51,12 @@
         this.tagID = tagID
         this.render = function () {
           const html = this.todos
-            .map((todo) => `<li>${todo.text}</li>`)
+            .map(
+              (todo) =>
+                `<li>${
+                  todo.isCompleted ? `<s>${todo.text}</s>` : todo.text
+                }</li>`
+            )
             .join('')
           document.querySelector(
             `#${this.tagID}-list`
@@ -60,6 +71,8 @@
           throw new Error('data값이 유효하지 않습니다.') // data값 체크
         if (data.some((value) => typeof value.text !== 'string' || !value.text))
           throw new Error('text값이 유효하지 않습니다.') // text 체크
+        if (data.some((value) => typeof value.isCompleted !== 'boolean'))
+          throw new Error('isCompleted값이 유효하지 않습니다.') // isCompleted 체크
       }
 
       // 인스턴스 생성 및 render
