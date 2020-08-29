@@ -84,7 +84,10 @@
 		this.$todoList = $todoList;
 
 		this.render = function () {
-			this.$todoList.innerHTML = this.todoItems.map(todoItem => convertTodoItemToInnerHtml({todoItem})).join('');
+			this.$todoList.innerHTML =
+				`<ul>
+					${this.todoItems.map(todoItem => convertTodoItemToInnerHtml({todoItem})).join('')}
+				</ul>`;
 		};
 		this.setState = function ({nextTodoItems}) {
 			this.todoItems = nextTodoItems;
@@ -95,9 +98,9 @@
 	function convertTodoItemToInnerHtml({todoItem}) {
 		const {text, isCompleted} = todoItem;
 		return `
-			<div>
+			<li>
 				${isCompleted ? `<s>${text}</s>` : text}
-			</div>
+			</li>
 		`;
 	}
 
