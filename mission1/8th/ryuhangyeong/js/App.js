@@ -21,7 +21,9 @@ class App {
 			        }
 			    ]
 	    	} 
-	   	}).dom().render();
+	   	})
+	   	.dom()
+	   	.render();
 
 	   	this.csTodoList = new TodoList({ 
 	    	$target, 
@@ -33,11 +35,13 @@ class App {
 			        },
 			        {
 			            text: '운영체제 복습하기',
-			            isCompleted: false
+			            isCompleted: true
 			        }
 			    ]
 	    	} 
-	   	}).dom().render();
+	   	})
+	   	.dom()
+	   	.render();
 
 	   	this.stTodoList = new TodoList({ 
 	    	$target, 
@@ -45,7 +49,7 @@ class App {
 	    		data: [
 			        {
 			            text: '자료구조 공부하기',
-			            isCompleted: true
+			            isCompleted: false
 			        },
 			        {
 			            text: '자료구조 복습하기',
@@ -53,6 +57,23 @@ class App {
 			        }
 			    ]
 	    	} 
-	   	}).dom().render();
+	   	})
+	   	.dom()
+	   	.render();
+
+	   	// render() test
+	   	setTimeout(() => {
+	   		this.stTodoList
+	   			.setState([
+	   				{
+			            text: '자료구조 공부하기',
+			            isCompleted: true
+			        },
+			        {
+			            text: '자료구조 복습하기',
+			            isCompleted: true
+			        }
+	   			])
+	   	}, 3000);
 	}
 }

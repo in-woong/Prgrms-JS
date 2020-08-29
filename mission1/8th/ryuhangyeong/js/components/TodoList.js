@@ -5,7 +5,7 @@ class TodoList {
 
 	constructor({ $target, initialData }) {
 		this.$target = $target;
-		this.data = initialData.data || [];
+		this.data = initialData.data;
 	}
 
 	dom() {
@@ -15,6 +15,12 @@ class TodoList {
 		return this;
 	}
 
+	setState(nextData) {
+		this.data = nextData;
+		this.render();
+
+		return this;
+	}
 
 	render() {
 		if (!this.data || !this.data.length) return this;
