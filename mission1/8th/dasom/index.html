@@ -42,17 +42,42 @@
         },
       ];
 
+      const inCorrectData = [
+        {
+          text: '올바르지 않은 데이터'
+        }
+      ];
+
       // 이곳에서 코딩을 시작하세요!
 
       function TodoList(param, id){
         this.data = param;
-        this.render = function(){
-          let htmlString = '';
-          this.data.forEach(d=>{
-            htmlString += `<div>${d.text}</div>`;
-          });
-            document.querySelector('#'+id).innerHTML = htmlString;
+        if(this == window){
+          throw new Error('new 키워드를 붙여주세요.');
         }
+        this.render = function(){
+          try{
+            this.isValid();
+            let htmlString = '';
+            this.data.forEach(d=>{
+              htmlString += `<div>${d.text}</div>`;
+            });
+            document.querySelector('#'+id).innerHTML = htmlString;
+          } catch(e){
+            console.log(e);
+          }
+        },
+        this.isValid = function(){
+          if(param === null || param === undefined){
+            throw new Error('param이 null 혹은 undefinded입니다.');
+          }
+          if(!Array.isArray(param)){
+            throw new Error('param이 array형태가 아닙니다.');
+          }
+          if(!param.every(p=>{return p.text!=undefined && p.isCompleted!=undefined})){
+            throw new Error('param의 data 형태가 잘못됐습니다.');
+          }
+        };
       };
 
       let todoList = new TodoList(data, 'todo-list');
@@ -62,6 +87,22 @@
       todoList.render();
       completeList.render();
       wishList.render();
+      
+      let nullList = new TodoList();
+      nullList.render();
+
+      let notArray = new TodoList({
+          text: 'JS 공부하기',
+          isCompleted: true,
+        }, 'todo-list');
+      notArray.render();
+
+      // data가 text나 isCompleted를 가지고있지 않으면 잘못된 데이터 형태
+      let inCorrectDataType = new TodoList(inCorrectData, 'todo-list');
+      inCorrectDataType.render();
+
+      let notNew = TodoList(data, 'todo-list');
+   //   notNew.render();
     </script>
   </body>
 </html>
