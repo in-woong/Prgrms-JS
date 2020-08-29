@@ -93,9 +93,7 @@
 		const {text, isCompleted} = todoItem;
 		return `
 			<div>
-				${isCompleted ? '<s>' : ''}
-					${text}
-				${isCompleted ? '</s>' : ''}
+				${isCompleted ? `<s>${text}</s>` : text}
 			</div>
 		`;
 	}
