@@ -33,7 +33,6 @@ const TodoItem = ($targetDom, data) => {
       );
     }
   };
-  validateData();
 
   const setTextNode = () => {
     const { text, isCompleted } = data;
@@ -55,6 +54,7 @@ const TodoItem = ($targetDom, data) => {
   };
 
   const render = () => {
+    validateData();
     const item = setItem();
     $targetDom.appendChild(item);
   };
