@@ -13,28 +13,45 @@
   <script>
     const data1 = [
       {
-        text: 'JS 공부하기'
+        text: 'JS 공부하기',
+        isCompleted: true,
       },
       {
-        text: 'JS 복습하기'
+        text: 'JS 복습하기',
+        isCompleted: true,
       }
     ];
 
     const data2 = [
       {
-        text: '미션 수행하기'
+        text: '미션 수행하기',
+        isCompleted: true,
       },
       {
-        text: 'PR 보내기'
+        text: 'PR 보내기',
+        isCompleted: false,
       }
     ];
 
     const data3 = [
       {
-        text: '피드백 반영하기'
+        text: '피드백 반영하기',
+        isCompleted: false,
       },
       {
-        text: '리팩토링하기'
+        text: '리팩토링하기',
+        isCompleted: false,
+      }
+    ];
+
+    const data4 = [
+      {
+        text: '핸드폰 바꾸기',
+        isCompleted: false,
+      },
+      {
+        text: '귀여운 라이언',
+        isCompleted: false,
       }
     ];
     
@@ -60,11 +77,24 @@
 
     TodoList.prototype.render = function() {
       const todoDiv = document.querySelector(this.id);
-      const orderedList = document.createElement('ol');
-      todoDiv.append(orderedList);
+      let orderedList = null;
 
-      const renderData = this.todos.map(todo => `<li>${todo.text}</li>`).join('');
+      // ol 노드가 존재하면 사용하고 아니면 새로 만들어서 할당
+      if (!todoDiv.firstChild) {
+        orderedList = document.createElement('ol');
+        todoDiv.append(orderedList);
+      } else {
+        orderedList = todoDiv.firstChild;
+      }
+      
+      const renderData = this.todos.map(todo => 
+      `<li>${ todo.isCompleted ? `<s>${todo.text}</s>` : todo.text }</li>`).join('');
       orderedList.innerHTML = renderData;
+    }
+
+    TodoList.prototype.setState = function(nextData) {
+      this.todos = nextData;
+      this.render();
     }
     
     // 인스턴스를 생성하고 랜더링을 수행합니다.
@@ -74,6 +104,8 @@
     todoList1.render();
     todoList2.render();
     todoList3.render();
+
+    todoList1.setState(data4);
   </script>
 </body>
 
