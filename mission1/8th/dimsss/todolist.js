@@ -1,49 +1,43 @@
-class validDataCheckError {
+class ValidDataCheckError {
   constructor(todoData) {
-    this.isValidTodoData(todoData)
+    try {
+      this.isValidTodoData(todoData);
+    } catch(e) {
+      console.log(e);
+    }
+      
   }
 
   isValidTodoData(todoData) {
-    try {
-      if (todoData === null || todoData === undefined) {
-        throw new Error('입력 값이 비었습니다.');
-      } else if (!Array.isArray(todoData)) {
-        throw new Error('배열이 아닙니다.');
-      }
-  
-      todoData.forEach((todo) => {
-        if (typeof todo.text !== 'string') {
-          throw new Error('todo 내용이 이상합니다.')
-        }
-      })
-    } catch(e) {
-      console.log(e);
-      return e;
+    if (todoData === null || todoData === undefined) {
+      throw new Error('입력 값이 비었습니다.');
+    } else if (!Array.isArray(todoData)) {
+      throw new Error('배열이 아닙니다.');
     }
+
+    todoData.forEach((todo) => {
+      if (typeof todo.text !== 'string' || typeof todo.isCompleted !== 'boolean') {
+        throw new Error('todo 내용이 이상합니다.')
+      }
+    })
   }
 }
 
-export class TodoList extends validDataCheckError {
+export class TodoList extends ValidDataCheckError {
   constructor(todoEliment, todoList) {
-    try {
-      super(todoList);
-    
-      this.todoEliment = todoEliment;
-      this.todoList = todoList;
-  
-      this.render();
-    } catch(e) {
-      return;
-    }
+    super(todoList)
+
+    this.todoEliment = todoEliment
+    this.todoList = todoList
+
+    this.render()
   }
 
   render() {
-    this.todoEliment.innerHTML = this.createView(); 
+    this.todoEliment.innerHTML = this.createView()
   }
 
   createView() {
-    return `${this.todoList.map((element) => {
-      return `<li>${element.text}</li>`;
-    }).join('')}</ul>`;
+    return `<ul>${this.todoList.map((element) => `<li>${element.text}</li>`).join('')}</ul>`
   }
 }
