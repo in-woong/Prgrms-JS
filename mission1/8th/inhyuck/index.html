@@ -70,16 +70,21 @@
 		},
 	];
 
-	function TodoList({todoItems, targetElementId}) {
+	function TodoList({todoItems, selector}) {
 		if (!(this instanceof TodoList)) {
 			errorHandler({errorMessage: 'not exist new keyword'});
+		}
+		const $todoList = document.querySelector(selector);
+		if (!$todoList) {
+			errorHandler({errorMessage: 'target element is not found'});
 		}
 		validateTodoItems({todoItems});
 
 		this.todoItems = todoItems;
+		this.$todoList = $todoList;
+
 		this.render = function () {
-			const $todoList = document.getElementById(targetElementId);
-			$todoList.innerHTML = this.todoItems.map(todoItem => convertTodoItemToInnerHtml({todoItem})).join('');
+			this.$todoList.innerHTML = this.todoItems.map(todoItem => convertTodoItemToInnerHtml({todoItem})).join('');
 		};
 		this.setState = function ({nextTodoItems}) {
 			this.todoItems = nextTodoItems;
@@ -126,15 +131,15 @@
 		throw new Error(errorMessage);
 	}
 
-	const todoList = new TodoList({todoItems: data, targetElementId: 'todo-list'});
+	const todoList = new TodoList({todoItems: data, selector: '#todo-list'});
 	todoList.render();
 	setTimeout(() => todoList.setState({nextTodoItems: nextData}), 500);
 
-	const developerTodoList = new TodoList({todoItems: developerTodoItems, targetElementId: 'developer-todo-list'});
+	const developerTodoList = new TodoList({todoItems: developerTodoItems, selector: '#developer-todo-list'});
 	developerTodoList.render();
 	setTimeout(() => developerTodoList.setState({nextTodoItems: nextDeveloperTodoItems}), 500);
 
-	const happyLifeTodoList = new TodoList({todoItems: happyLifeTodoItems, targetElementId: 'happy-life-todo-list'});
+	const happyLifeTodoList = new TodoList({todoItems: happyLifeTodoItems, selector: '#happy-life-todo-list'});
 	happyLifeTodoList.render();
 	setTimeout(() => happyLifeTodoList.setState({nextTodoItems: nextHappyLifeTodoItems}), 500);
 
