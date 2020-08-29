@@ -50,38 +50,41 @@
                 text: '빨래 하기',
                 isCompleted : false
             }
-        ]
-        
-        function isValidData(data){
-            try{
-                if(data===undefined){
-                    throw new Error("given data is undefined data");
-                }
-                if(data===null){
-                    throw new Error("given data is null data");
-                }
-                if(Array.isArray(data)===false){
-                    throw new Error("given data is not array");
-                }
-                if(!data.every((item)=> (typeof item.text=== 'string')&&(typeof item.isCompleted==='boolean') )){
-                    throw new Error("given data's value type is incorrect");   
-                }
-            }   
-            catch(e){
-                alert(e);
-            }
-        }    
+        ]   
 
         // 이곳에서 코딩을 시작하세요!
+
         class TodoList {
             constructor(data, elemId){
-                isValidData(data)
                 this.data = data;
                 this.elemId = elemId;
+                this.isValidData;
                 this.render;
             }
 
+            isValidData(){
+                try{
+                    if(this.data===undefined){
+                        throw new Error("given data is undefined data");
+                    }
+                    if(this.data===null){
+                        throw new Error("given data is null data");
+                    }
+                    if(Array.isArray(this.data)===false){
+                        throw new Error("given data is not array");
+                    }
+                    if(!this.data.every((item)=> (typeof item.text=== 'string')&&(typeof item.isCompleted==='boolean') )){
+                        throw new Error("given data's value type is incorrect");   
+                    }
+                }   
+                catch(e){
+                    alert(e);
+                }
+            } 
+
             render(){
+                this.isValidData();
+                this.elemId.innerHTML ="";
                 this.data.forEach(item => {
                     this.elemId.innerHTML += `<div>${item.text}</div>`;
                     if(item.isCompleted){
@@ -92,15 +95,15 @@
 
             setState(nextdata){
                 this.data = nextdata;
-                this.elemId.innerHTML ="";
+                this.isValidData();
                 this.render();
             }
         }
 
+        //html element 가져오기
         var todoElem = document.querySelector('#todo-list');
         var algo_todoElem = document.querySelector('#algorithm-todo-list');
         var chores_todoElem = document.querySelector('#chores-todo-list');
-
 
         var todoList = new TodoList(data,todoElem);
         var algo_todoList = new TodoList(algo_data, algo_todoElem);
