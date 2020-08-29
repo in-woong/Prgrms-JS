@@ -61,10 +61,7 @@
       ]
       // TodoList data배열 객체의 파라미터가 text, isCompleted가 있으면 true 없으면 false를 리턴
       const isCorrectData = (value) => {
-        return (
-          value.text &&
-          (value.isCompleted === true || value.isCompleted === false)
-        )
+        return value.text && typeof value.isCompleted === 'boolean'
       }
       // TodoList data체크 함수
       function todoListDataCheck(data) {
