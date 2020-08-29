@@ -1,11 +1,20 @@
-#todo-wrapper {
+.todo-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid black;
+  box-sizing: border-box;
 }
 .todo-list {
   margin: 0;
   padding: 0;
   list-style: none;
+}
+.todo-list > li {
+  margin-top: 10px;
+}
+.todo-list > li:first-child {
+  margin-top: 0;
 }
