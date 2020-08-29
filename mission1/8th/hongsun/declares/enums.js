@@ -1,4 +1,4 @@
-export const ERROR_TYPE = Object.freeze({
+export const TODO_ERROR_TYPE = Object.freeze({
   INVALID_DATA: 'INVALID_DATA',
   REQUIRED_PROPERTY: 'REQUIRED_PROPERTY',
   INVALID_PROPERTY: 'INVALID_PROPERTY',

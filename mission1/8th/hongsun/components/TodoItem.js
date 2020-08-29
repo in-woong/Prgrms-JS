@@ -1,4 +1,4 @@
-import { ERROR_TYPE } from '../declares/enums.js';
+import { TODO_ERROR_TYPE } from '../declares/enums.js';
 import ErrorMessageUtil from '../utils/ErrorMessageUtil.js';
 
 const checkRequiredProperty = (obj) => {
@@ -24,12 +24,16 @@ const TodoItem = ($targetDom, data) => {
   const validateData = () => {
     if (!checkRequiredProperty(data)) {
       throw new Error(
-        ErrorMessageUtil.getTodoItemErrorMessage(ERROR_TYPE.REQUIRED_PROPERTY)
+        ErrorMessageUtil.getTodoItemErrorMessage(
+          TODO_ERROR_TYPE.REQUIRED_PROPERTY
+        )
       );
     }
     if (!checkValidPropertyType(data)) {
       throw new Error(
-        ErrorMessageUtil.getTodoItemErrorMessage(ERROR_TYPE.INVALID_PROPERTY)
+        ErrorMessageUtil.getTodoItemErrorMessage(
+          TODO_ERROR_TYPE.INVALID_PROPERTY
+        )
       );
     }
   };

@@ -1,5 +1,5 @@
 import TodoItem from './TodoItem.js';
-import { ERROR_TYPE } from '../declares/enums.js';
+import { TODO_ERROR_TYPE } from '../declares/enums.js';
 import ErrorMessageUtil from '../utils/ErrorMessageUtil.js';
 
 class TodoList {
@@ -11,7 +11,7 @@ class TodoList {
   validateData(data) {
     if (!data || !Array.isArray(data)) {
       throw new Error(
-        ErrorMessageUtil.getTodoItemErrorMessage(ERROR_TYPE.INVALID_DATA)
+        ErrorMessageUtil.getTodoItemErrorMessage(TODO_ERROR_TYPE.INVALID_DATA)
       );
     }
     return data;
