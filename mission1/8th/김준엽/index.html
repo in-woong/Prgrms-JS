@@ -7,7 +7,7 @@
   <body>
     <div id="todo-list"></div>
     <script>
-      const data = [
+      const dataList = [
         {
           text: 'JS 공부하기',
           isCompleted: true,
@@ -17,7 +17,27 @@
           isCompleted: false,
         },
       ];
-      // 이곳에서 코딩을 시작하세요!
+      
+      //매개변수 dataList를 받아서 바로 사용했습니다.
+      /*
+      ------------QnA--------------
+      1.this를 사용안해도 되지 않나요?
+      2.화살표함수와 그냥 함수 차이점? 용도?
+      -----------------------------
+      */
+      function TodoList(dataList){
+        this.render = () => {
+          const todoElem = document.querySelector('#todo-list'); 
+          dataList.map((data)=>{
+             todoElem.innerHTML += `<div>${data.text}</div>`;
+          })
+        }
+      }
+
+      //실행
+      const todoList = new TodoList(dataList);
+      todoList.render();
     </script>
+
   </body>
 </html>
