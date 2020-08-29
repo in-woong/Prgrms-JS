@@ -1,30 +1,28 @@
+import TodoItem from './TodoItem.js';
+import { ERROR_TYPE } from '../declares/enums.js';
+import ErrorMessageUtil from '../utils/ErrorMessageUtil.js';
+
 class TodoList {
-  constructor(data) {
-    this.data = this.validateListData(data);
-    this.rootRenderId = 'todo-list';
+  constructor(targetId, data) {
+    this.data = this.validateData(data);
+    this.$targetDom = document.getElementById(targetId);
   }
 
-  validateListData(data) {
+  validateData(data) {
     if (!data || !Array.isArray(data)) {
-      throw new Error('Data must be of Array type');
-    }
-    if (!data.every((todoItem) => todoItem.hasOwnProperty('text'))) {
-      throw new Error('Does not have a "text" property');
-    }
-    if (!data.every((todoItem) => typeof todoItem.text === 'string')) {
-      throw new Error('Invalid type "text" property');
+      throw new Error(
+        ErrorMessageUtil.getTodoItemErrorMessage(ERROR_TYPE.INVALID_DATA)
+      );
     }
     return data;
   }
 
-  setTodoItem() {
-    const filterData = this.data.filter((todoitem) => todoitem.text !== '');
-    return filterData.map((todoItem) => `<div>${todoItem.text}</div>`);
-  }
-
   render() {
-    const todoItems = this.setTodoItem(this.data);
-    const targetDom = document.getElementById(this.rootRenderId);
-    targetDom.innerHTML = todoItems.join('');
+    const $listWrapper = document.createElement('ul');
+    $listWrapper.className = 'todo-list';
+    this.data.forEach((todoItem) => TodoItem($listWrapper, todoItem));
+    this.$targetDom.appendChild($listWrapper);
   }
 }
+
+export default TodoList;

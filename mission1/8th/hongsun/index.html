@@ -2,11 +2,11 @@
   <head>
     <title>Mission 1</title>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="./styles/style.css" />
   </head>
 
   <body>
-    <div id="todo-list"></div>
-    <script src="./components/TodoList.js"></script>
+    <div id="todo-wrapper"></div>
     <script>
       const data = [
         {
@@ -18,8 +18,7 @@
           isCompleted: false,
         },
       ];
-      const todoList = new TodoList(data);
-      todoList.render();
     </script>
+    <script type="module" src="./app.js"></script>
   </body>
 </html>
