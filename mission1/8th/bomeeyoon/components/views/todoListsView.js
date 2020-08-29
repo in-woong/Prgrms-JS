@@ -14,7 +14,8 @@ export default class ListsView extends View {
     this.$element = createElement('ul', 'todo-lists');
     this.$root.appendChild(this.$element);
   }
-  render(lists) {
+  render(lists = []) {
+    if (!lists || !Array.isArray(lists)) return;
     this.$element.innerHTML = this.#getListsHTML(lists);
   }
   #getListsHTML(lists) {
