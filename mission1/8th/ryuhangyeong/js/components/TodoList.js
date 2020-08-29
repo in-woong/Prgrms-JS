@@ -1,11 +1,11 @@
 class TodoList {
 	$target = null;
 	$todoList = null;
-	todos = null;
+	data = null;
 
 	constructor({ $target, initialData }) {
 		this.$target = $target;
-		this.todos = initialData.todos || [];
+		this.data = initialData.data || [];
 	}
 
 	dom() {
@@ -17,7 +17,9 @@ class TodoList {
 
 
 	render() {
-		this.$todoList.innerHTML = this.todos.map(t => `<li>${t.text}</li>`).join(''); 
+		if (!this.data || !this.data.length) return this;
+		this.$todoList.innerHTML = this.data.map(t => `<li>${t.text}</li>`).join('');
+
 		return this;
 	}
 }
