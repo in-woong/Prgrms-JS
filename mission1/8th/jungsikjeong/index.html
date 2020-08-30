@@ -66,10 +66,10 @@
         // });
 
         // 데이터 내용이 이상하면?
-        this.data.every((todos) => {
-          typeof todos === 'string' &&
-            todos.text === '' &&
-            typeof todos.isCompleted !== 'boolean';
+        this.data.every((data) => {
+          typeof data === 'string' &&
+            data.text === '' &&
+            typeof data.isCompleted !== 'boolean';
         });
 
         // null 혹은 undefined가 넘어오면?
