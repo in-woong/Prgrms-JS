@@ -1,0 +1,111 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <h1>TODO-LIST</h1>
+    <div id="todo-list"></div>
+
+    <h1>ALGORITHM-TODO-LIST</h1>
+    <div id="algorithm-todo-list"></div>
+
+    <h1>CHORES-TODO-LIST</h1>
+    <div id="chores-todo-list"></div>
+
+    <script>
+        const data = [
+            {
+                text: 'JS 공부하기',
+                isCompleted: true,
+            },
+            {
+                text: 'JS 복습하기',
+                isCompleted: false,
+            },
+        ];
+
+        const algo_data = [
+            {
+                text: '트리 공부하기',
+                isCompleted : true
+            },
+            {
+                text: '해쉬맵 공부하기',
+                isCompleted : false
+            },
+            {
+                text: '그리디 공부하기',
+                isCompleted : false
+            }
+        ];
+
+        const chores_data = [
+            {
+                text: '방 청소하기',
+                isCompleted : true
+            },
+            {   
+                text: '빨래 하기',
+                isCompleted : false
+            }
+        ]   
+
+        // 이곳에서 코딩을 시작하세요!
+        class TodoList {
+            constructor(data, elemId){
+                this.data = data;
+                this.elemId = elemId;
+                this.isValidData();
+                this.render();
+            }
+
+            isValidData(){
+                try{
+                    if(this.data===undefined){
+                        throw new Error("given data is undefined data");
+                    }
+                    if(this.data===null){
+                        throw new Error("given data is null data");
+                    }
+                    if(!Array.isArray(this.data)){
+                        throw new Error("given data is not array");
+                    }
+                    if( !this.data.every( (item) => ( typeof item.text === 'string' ) && ( typeof item.isCompleted === 'boolean' ) )){
+                        throw new Error("given data's value type is incorrect");   
+                    }
+                }   
+                catch(e){
+                    console.error(e);
+                }
+            } 
+
+            render(){
+                let inner_html = "";
+                this.data.forEach(item => {
+                    inner_html += `<div>${item.isCompleted ? `<s>${item.text} </s>` : item.text }</div>`
+                });
+                this.elemId.innerHTML = inner_html;
+            }
+
+            setState(nextdata){
+                this.data = nextdata;
+                this.isValidData();
+                this.render();
+            }
+        }
+
+        //html element 가져오기
+        var $todoElem = document.querySelector('#todo-list');
+        var $algo_todoElem = document.querySelector('#algorithm-todo-list');
+        var $chores_todoElem = document.querySelector('#chores-todo-list');
+
+        var todoList = new TodoList(data,$todoElem);
+        var algo_todoList = new TodoList(algo_data, $algo_todoElem);
+        var chores_todoList = new TodoList(chores_data, $chores_todoElem);
+
+        todoList.setState(algo_data);
+    </script>
+  </body>
+</html>
