@@ -38,7 +38,7 @@ const TodoItem = ($targetDom, data) => {
     }
   };
 
-  const setTextNode = () => {
+  const getTextNode = () => {
     const { text, isCompleted } = data;
     const textNode = document.createTextNode(text);
     if (isCompleted) {
@@ -49,9 +49,9 @@ const TodoItem = ($targetDom, data) => {
     return textNode;
   };
 
-  const setItem = () => {
+  const getItem = () => {
     const itemEl = document.createElement('li');
-    const text = setTextNode();
+    const text = getTextNode();
     itemEl.className = 'todo-item';
     itemEl.appendChild(text);
     return itemEl;
@@ -59,9 +59,10 @@ const TodoItem = ($targetDom, data) => {
 
   const render = () => {
     validateData();
-    const item = setItem();
+    const item = getItem();
     $targetDom.appendChild(item);
   };
+
   render();
 };
 

@@ -7,6 +7,7 @@ class TodoList {
     this.data = data;
     this.validateData();
     this.$targetDom = document.getElementById(targetId);
+    this.render();
   }
 
   validateData() {
