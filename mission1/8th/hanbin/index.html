@@ -53,13 +53,12 @@
         ]   
 
         // 이곳에서 코딩을 시작하세요!
-
         class TodoList {
             constructor(data, elemId){
                 this.data = data;
                 this.elemId = elemId;
-                this.isValidData;
-                this.render;
+                this.isValidData();
+                this.render();
             }
 
             isValidData(){
@@ -70,10 +69,10 @@
                     if(this.data===null){
                         throw new Error("given data is null data");
                     }
-                    if(Array.isArray(this.data)===false){
+                    if(!Array.isArray(this.data)){
                         throw new Error("given data is not array");
                     }
-                    if(!this.data.every((item)=> (typeof item.text=== 'string')&&(typeof item.isCompleted==='boolean') )){
+                    if( !this.data.every( (item) => ( typeof item.text === 'string' ) && ( typeof item.isCompleted === 'boolean' ) )){
                         throw new Error("given data's value type is incorrect");   
                     }
                 }   
@@ -83,14 +82,11 @@
             } 
 
             render(){
-                this.isValidData();
-                this.elemId.innerHTML ="";
+                let inner_html = "";
                 this.data.forEach(item => {
-                    this.elemId.innerHTML += `<div>${item.text}</div>`;
-                    if(item.isCompleted){
-                        this.elemId.innerHTML = "<s>"+this.elemId.innerHTML+"</s>";
-                    }
+                    inner_html += `<div>${item.isCompleted ? `<s>${item.text} </s>` : item.text }</div>`
                 });
+                this.elemId.innerHTML = inner_html;
             }
 
             setState(nextdata){
@@ -101,20 +97,15 @@
         }
 
         //html element 가져오기
-        var todoElem = document.querySelector('#todo-list');
-        var algo_todoElem = document.querySelector('#algorithm-todo-list');
-        var chores_todoElem = document.querySelector('#chores-todo-list');
+        var $todoElem = document.querySelector('#todo-list');
+        var $algo_todoElem = document.querySelector('#algorithm-todo-list');
+        var $chores_todoElem = document.querySelector('#chores-todo-list');
 
-        var todoList = new TodoList(data,todoElem);
-        var algo_todoList = new TodoList(algo_data, algo_todoElem);
-        var chores_todoList = new TodoList(chores_data, chores_todoElem);
-
-        todoList.render();
-        algo_todoList.render();
-        chores_todoList.render();
+        var todoList = new TodoList(data,$todoElem);
+        var algo_todoList = new TodoList(algo_data, $algo_todoElem);
+        var chores_todoList = new TodoList(chores_data, $chores_todoElem);
 
         todoList.setState(algo_data);
-
     </script>
   </body>
 </html>
