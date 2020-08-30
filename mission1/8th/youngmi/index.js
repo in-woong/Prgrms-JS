@@ -1,7 +1,7 @@
 
 const data = [
   {
-    text: ' JS 공부하기',
+    text: 'js',
     isCompleted: true,
   },
   {
@@ -11,10 +11,24 @@ const data = [
 ];
 
 function TodoList(data) {
-  this.render = function() {
-    data.forEach(element => {
-      document.querySelector('#todo-list').innerHTML += `<div>${element.text}</div>`
-    })
+  if (Array.isArray(data)) {
+    let content = '';
+    this.render = function() {
+      data.forEach((todo) => {
+        content += `<div>${todo.text}</div>`
+      });
+      document.querySelector('#todo-list').innerHTML = content;
+    }
+  } else {
+    errorMsg(data);
+  }
+}
+
+function errorMsg(data) {
+  if (data === (null || undefined)) {
+    throw new Error("데이터가 올바르지 않습니다.");
+  } else if (!Array.isArray(data)) {
+    throw new Error("배열 형식에 맞게 넣어주시길 바랍니다.");
   }
 }
 
