@@ -5,8 +5,12 @@ function checkValidation(todos) {
   }
 
   todos.forEach(todo => {
-    if (!todo.hasOwnProperty('text') || !todo.text) {
+    if (!todo.hasOwnProperty('text') || !todo.hasOwnProperty('isCompleted')) {
       throw new Error('데이터 형식이 올바르지 않습니다!');
+    }
+
+    if (!todo.text || typeof todo.isCompleted !== 'boolean') {
+      throw new Error('프로퍼티 값 형식이 올바르지 않습니다!');
     }
   })
 }
