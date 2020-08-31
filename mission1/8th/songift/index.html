@@ -1,0 +1,117 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div style="color: blue" id="todo-list"></div>
+  <div style="color: red; font-size: 2em" id="job-todo-list"></div>
+  <div style="color: gold; font-size: 3em" id="life-todo-list"></div>
+  <script>
+    const data = [
+      {
+        text: 'JS 공부하기',
+        isCompleted: true,
+      },
+      {
+        text: 'JS 복습하기',
+        isCompleted: false,
+      },
+    ]
+
+    const job_plan = [
+      {
+        text: '올해 안에  프론트엔드 인턴쉽 시작',
+        isCompleted: false,
+      },
+      {
+        text: '매일 1시간 씩 UX/UI 트렌드 공부',
+        isCompleted: true,
+      },
+    ]
+
+    const life_plan = [
+      {
+        text: '충분한 수면시간 확보하기',
+        isCompleted: true,
+      },
+      {
+        text: '매일 운동 1시간씩 하기',
+        isCompleted: true,
+      },
+      {
+        text: '하루 12시간 공부량 지키기',
+        isCompleted: true,
+      },
+      {
+        text: '저녁시간에 나를 위한 온전한 휴식을 즐기기',
+        isCompleted: true,
+      },
+    ]
+
+    // 각각의 div 리스트들 
+    const todo_list = document.querySelector('#todo-list')
+    const job_todo_list = document.querySelector('#job-todo-list')
+    const life_todo_list = document.querySelector('#life-todo-list')
+
+    // 생성자 함수 
+    function TodoList(datas) {
+      // 1차 유효성
+      if (datas === null || datas === undefined || !Array.isArray(datas) || this === window) {
+        console.log('1차 유효성')
+        throw new Error('error message')
+      }
+
+      // 2차 유효성 - 데이터 검증
+      if (
+        datas.forEach((data) => {
+          if (
+            typeof data !== Object ||
+            typeof data.text !== String ||
+            data.text === '' ||
+            typeof data.isCompleted !== Boolean
+          )
+            return false
+        }) === false
+      ) {
+        throw new Error('error message')
+      }
+
+      // 검증통과한 datas를 실행컨텍스트에 할당
+      this.data = datas
+      var that = this
+
+      // render function
+      this.render = function () {
+        let str = ``
+        that.forEach((e) => {
+          str +=
+            e.isCompleted === true
+              ? `<s><div> todo : ${e.text} state : ${e.isCompleted}</div></s>`
+              : `<div> todo : ${e.text} state : ${e.isCompleted}</div>`
+        })
+        todo_list.innerHTML = str
+      }
+
+      // setState function
+      this.setState = function (nextData) {
+        that.data = nextData
+        that.render()
+      }
+    }
+
+    const t1 = new TodoList(data)
+    // const t2 = new TodoList(job_plan)
+    // const t3 = new TodoList(life_plan)
+
+    t1.render()
+    // t2.render()
+    // t3.render()
+
+    t1.setState(life_plan)
+  </script>
+</body>
+
+</html>
