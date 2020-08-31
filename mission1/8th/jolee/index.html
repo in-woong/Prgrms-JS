@@ -16,18 +16,42 @@
         },
       ];
       // 이곳에서 코딩을 시작하세요!
-      function TodoList(data) {
-        this.data = data
 
-        this.render = function() {
-          this.data.map((item) => {
-            document.querySelector('#todo-list').innerHTML +=`<div>${item.text}</div>`
-          })
+      function checkValidation(data) { // 재사용을 위해 별도 함수로 생성
+        if (data === null || data === undefined) {
+          throw new Error('[invalid] list is null or undefined');
+        };
+        if (!Array.isArray(data)) {
+          throw new Error('[invalid] list is not array');
+        };
+        data.map((item) => {
+          if (item.text === undefined || typeof item.text !== 'string') {
+            throw new Error('[invalid] missing text in list');
+          }
+        });
+      }
+
+      function TodoList(data) {
+        this.data = data;
+        try {
+          if(!(this instanceof TodoList)) {
+            throw new Error('[invalid] list is not new');
+          }
+          checkValidation(data);
+          this.render = function () {
+            this.data.map((item) => {
+              document.querySelector(
+                '#todo-list'
+              ).innerHTML += `<div>${item.text}</div>`;
+            });
+          };
+        } catch (e) {
+          alert(e.message);
         }
       }
-      
-      const todoList = new TodoList(data)
-      todoList.render()
+
+      const todoList = new TodoList(data);
+      todoList.render();
     </script>
   </body>
 </html>
