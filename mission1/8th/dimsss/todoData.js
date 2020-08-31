@@ -25,3 +25,12 @@ export const tomorrowTodoData = [{
   text: '코드리뷰 받기',
   isCompleted: false,
 }]
+
+export const newTodoData = [{
+  text: '새로운 할 일',
+  isCompleted: false,
+},
+{
+  text: '삭제 기능 추가',
+  isCompleted: false,
+}]
