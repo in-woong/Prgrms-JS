@@ -24,17 +24,22 @@ class ValidDataCheckError {
 }
 
 export class TodoList extends ValidDataCheckError {
-  constructor(todoEliment, todoList) {
+  constructor(todoElement, todoList) {
     super(todoList)
 
-    this.todoEliment = todoEliment
+    this.todoElement = todoElement
     this.todoList = todoList
 
     this.render()
   }
 
+  setState(nextData) {
+    this.todoList = nextData;
+    this.render();
+  }
+
   render() {
-    this.todoEliment.innerHTML = this.createView()
+    this.todoElement.innerHTML = this.createView()
   }
 
   createView() {
