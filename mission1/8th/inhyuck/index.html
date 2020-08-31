@@ -90,6 +90,8 @@
 				</ul>`;
 		};
 		this.setState = function ({nextTodoItems}) {
+			validateTodoItems({todoItems: nextTodoItems});
+
 			this.todoItems = nextTodoItems;
 			this.render();
 		};
