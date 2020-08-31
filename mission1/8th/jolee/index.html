@@ -63,6 +63,12 @@
             throw new Error('[invalid] list is not new');
           }
           checkValidation(data);
+
+          this.setState = function(nextData) {
+            this.data = nextData;
+            this.render();
+          };
+
           this.render = function () {
             let str = '';
             data.map((item) => {
@@ -79,14 +85,9 @@
         }
       }
 
-      const todoList = new TodoList(data, '#todo-list');
-      todoList.render();
-
-      const todoList2 = new TodoList(data2, '#todo-list2');
-      todoList2.render();
-
-      const todoList3 = new TodoList(data3, '#todo-list3');
-      todoList3.render();
+      const todoList = new TodoList(data, '#todo-list').setState(data);
+      const todoList2 = new TodoList(data2, '#todo-list2').setState(data2);
+      const todoList3 = new TodoList(data3, '#todo-list3').setState(data3);
     </script>
   </body>
 </html>
