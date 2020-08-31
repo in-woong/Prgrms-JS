@@ -12,27 +12,33 @@
       var data = [
         {
           text: 'JS 공부하기',
+          isCompleted: true
         },
         {
           text: 'JS 복습하기',
+          isCompleted: false
         },
       ];
 
       var data2 = [
         {
           text: 'JAVA 공부하기',
+          isCompleted: true
         },
         {
-          text: 'JAVA 복습하기'
+          text: 'JAVA 복습하기',
+          isCompleted: true
         }
       ];
 
       var data3 = [
         {
           text: 'C 공부하기',
+          isCompleted: false
         },
         {
-          text: 'C 복습하기'
+          text: 'C 복습하기',
+          isCompleted: false
         }
       ];
 
@@ -58,11 +64,15 @@
           }
           checkValidation(data);
           this.render = function () {
+            let str = '';
             data.map((item) => {
-              document.querySelector(
-                element
-              ).innerHTML += `<div>${item.text}</div>`;
+              if(item.isCompleted) {
+                str += `<div><s>${item.text}</s></div>`
+              } else {
+                str += `<div>${item.text}</div>`
+              }
             });
+            document.querySelector(element).innerHTML += str
           };
         } catch (e) {
           alert(e.message);
