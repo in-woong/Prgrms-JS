@@ -58,9 +58,17 @@ function TodoList(data){
     data.forEach((element)=>{
       const todoList = document.querySelector("#todo-list");
       const todo = document.createElement('div');
-      todo.innerHTML = element.text;
-      todoList.appendChild(todo);
-      
+      const todont = document.createElement('s');
+
+      if(element["isCompleted"] === true){
+        todo.innerHTML = element.text;
+        todoList.appendChild(todo);
+      }else {
+        todont.innerHTML = element.text;
+        todo.appendChild(todont);
+        todoList.appendChild(todo);
+      }
+     
     })
    
   }
@@ -70,10 +78,18 @@ function HobbyList(data){
   this.data = data;
   this.render = () => {
     data.forEach((element)=>{
-      const todoList = document.querySelector("#hobby-list");
-      const todo = document.createElement('div');
-      todo.innerHTML = element.text;
-      todoList.appendChild(todo);
+      const hobbyList = document.querySelector("#hobby-list");
+      const hobby = document.createElement('div');
+      const hobbydont = document.createElement('s');
+
+      if(element["isCompleted"] === true){
+        hobby.innerHTML = element.text;
+        hobbyList.appendChild(hobby);
+      }else {
+        hobbydont.innerHTML = element.text;
+        hobby.appendChild(hobbydont);
+        hobbyList.appendChild(hobby);
+      }
       
     })
    
@@ -84,10 +100,19 @@ function FoodList(data){
   this.data = data;
   this.render = () => {
     data.forEach((element)=>{
-      const todoList = document.querySelector("#food-list");
-      const todo = document.createElement('div');
-      todo.innerHTML = element.text;
-      todoList.appendChild(todo);
+      const foodList = document.querySelector("#food-list");
+      const food = document.createElement('div');
+      const fooddont = document.createElement('s');
+
+      if(element["isCompleted"] === true){
+        food.innerHTML = element.text;
+        foodList.appendChild(food);
+      }else {
+        fooddont.innerHTML = element.text;
+        food.appendChild(fooddont);
+        foodList.appendChild(food);
+      }
+      
       
     })
    
