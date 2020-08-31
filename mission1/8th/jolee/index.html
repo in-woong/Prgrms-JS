@@ -6,6 +6,8 @@
 
   <body>
     <div id="todo-list"></div>
+    <div id="todo-list2"></div>
+    <div id="todo-list3"></div>
     <script>
       var data = [
         {
@@ -15,8 +17,26 @@
           text: 'JS 복습하기',
         },
       ];
-      // 이곳에서 코딩을 시작하세요!
 
+      var data2 = [
+        {
+          text: 'JAVA 공부하기',
+        },
+        {
+          text: 'JAVA 복습하기'
+        }
+      ];
+
+      var data3 = [
+        {
+          text: 'C 공부하기',
+        },
+        {
+          text: 'C 복습하기'
+        }
+      ];
+
+      // 이곳에서 코딩을 시작하세요!
       function checkValidation(data) { // 재사용을 위해 별도 함수로 생성
         if (data === null || data === undefined) {
           throw new Error('[invalid] list is null or undefined');
@@ -31,17 +51,16 @@
         });
       }
 
-      function TodoList(data) {
-        this.data = data;
+      function TodoList(data, element) {
         try {
           if(!(this instanceof TodoList)) {
             throw new Error('[invalid] list is not new');
           }
           checkValidation(data);
           this.render = function () {
-            this.data.map((item) => {
+            data.map((item) => {
               document.querySelector(
-                '#todo-list'
+                element
               ).innerHTML += `<div>${item.text}</div>`;
             });
           };
@@ -50,8 +69,14 @@
         }
       }
 
-      const todoList = new TodoList(data);
+      const todoList = new TodoList(data, '#todo-list');
       todoList.render();
+
+      const todoList2 = new TodoList(data2, '#todo-list2');
+      todoList2.render();
+
+      const todoList3 = new TodoList(data3, '#todo-list3');
+      todoList3.render();
     </script>
   </body>
 </html>
