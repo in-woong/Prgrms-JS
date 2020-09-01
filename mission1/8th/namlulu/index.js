@@ -8,6 +8,16 @@ const dataTodo = [
     isCompleted: false
   },
 ];
+const newTodo = [
+  {
+    text: 'new JS 공부하기',
+    isCompleted: true
+  },
+  {
+    text: 'new JS 복습하기',
+    isCompleted: false
+  },
+];
 const dataHobby = [
   {
     text: '축구하기',
@@ -52,10 +62,10 @@ const checkArg = (data, that) => {
 
 function TodoList(data){
   const that = this
-  checkArg(data, that);
-  this.data = data;
+  this.todoItems = data;
+  checkArg(this.todoItems, that);
   this.render = () => {
-    data.forEach((element)=>{
+    this.todoItems.forEach((element)=>{
       const todoList = document.querySelector("#todo-list");
       const todo = document.createElement('div');
       const todont = document.createElement('s');
@@ -71,6 +81,14 @@ function TodoList(data){
      
     })
    
+  }
+  this.setState = (nextData) => {
+    const todoList = document.querySelector("#todo-list");
+    while(todoList.firstChild){
+      todoList.removeChild(todoList.firstChild)
+    }
+    this.todoItems = nextData;
+    this.render();
   }
 }
 
@@ -125,6 +143,7 @@ const food = new FoodList(dataFood);
 
 
 toDo.render();
+toDo.setState(newTodo);
 hobby.render();
 food.render();
 
