@@ -39,7 +39,16 @@
           isCompleted: false,
         },
       ]
-
+      const nextData = [
+        {
+          text: '스터디 코드리뷰하기',
+          isCompleted: false,
+        },
+        {
+          text: '스터디 세션 참가하기',
+          isCompleted: false,
+        },
+      ]
       // TodoList 컴포넌트
       function TodoList(data, tagID) {
         // function 형태의 선언인 경우 에러처리
@@ -49,6 +58,11 @@
 
         this.todos = data
         this.tagID = tagID
+        this.setState = function (nextData) {
+          checkData(nextData) // nextData 파라미터 에러처리
+          this.todos = nextData
+          this.render()
+        }
         this.render = function () {
           const html = this.todos
             .map(
@@ -79,6 +93,7 @@
       const todoList = new TodoList(todoData, 'todo')
       const wishList = new TodoList(wishData, 'wish')
       const studyList = new TodoList(studyData, 'study')
+      studyList.setState(nextData)
     </script>
   </body>
 </html>
