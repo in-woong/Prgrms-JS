@@ -54,9 +54,9 @@
 
         // 이곳에서 코딩을 시작하세요!
         class TodoList {
-            constructor(data, elemId){
+            constructor(data, $elem){
                 this.data = data;
-                this.elemId = elemId;
+                this.$elem = $elem;
                 this.isValidData();
                 this.render();
             }
@@ -64,16 +64,16 @@
             isValidData(){
                 try{
                     if(this.data===undefined){
-                        throw new Error("given data is undefined data");
+                        throw new Error("Given data is undefined data");
                     }
                     if(this.data===null){
-                        throw new Error("given data is null data");
+                        throw new Error("Given data is null data");
                     }
                     if(!Array.isArray(this.data)){
-                        throw new Error("given data is not array");
+                        throw new Error("Given data is not array");
                     }
-                    if( !this.data.every( (item) => ( typeof item.text === 'string' ) && ( typeof item.isCompleted === 'boolean' ) )){
-                        throw new Error("given data's value type is incorrect");   
+                    if(!this.data.every((item) => ( typeof item.text === 'string' ) && ( typeof item.isCompleted === 'boolean' ) )){
+                        throw new Error("Given data's value type is incorrect");   
                     }
                 }   
                 catch(e){
@@ -82,11 +82,9 @@
             } 
 
             render(){
-                let inner_html = "";
-                this.data.forEach(item => {
-                    inner_html += `<div>${item.isCompleted ? `<s>${item.text} </s>` : item.text }</div>`
-                });
-                this.elemId.innerHTML = inner_html;
+                this.$elem.innerHTML = this.data.map((item) => 
+                    item.isCompleted ? `<div><s>${item.text}</s></div>` : `<div>${item.text}</div>`)
+                    .join('');
             }
 
             setState(nextdata){
