@@ -10,21 +10,29 @@
   <script>
     const data = [
       {
-        text: 'JS 공부하기1'
+        text: 'JS 공부하기'
       },
       {
-        text: 'JS 복습하기2'
+        text: 'JS 복습하기'
       }
     ]
 
   class TodoList {
     constructor(data) {
       this.data = data;
+      this.checkData();
+    }
+
+    checkData() {
+      if (this.data === null || this.data === undefined) throw new Error("error message : this data is empty");
+      if (!Array.isArray(this.data)) throw new Error("error message");
+      
+      //데이터의 내용이 이상하면..?
     }
 
     render() {
       for (let i = 0 ; i < this.data.length; i++) {
-        let html = `<div> 할 일 ${i + 1} :   ${this.data[0].text}</div>`;
+        let html = `<div> 할 일 ${i + 1} : ${this.data[i].text}</div>`;
         document.querySelector('#todo-list').innerHTML += html;
       }
     }
