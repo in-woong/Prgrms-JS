@@ -31,8 +31,12 @@
         text: ""
       }
     ]
-    
+
     function TodoList(data){
+        if(!new.target){
+          throw new Error("new 키워드를 붙이지 않았습니다.");
+        }
+        
         this.data = data;
         this.render = function(){
             const todo = document.querySelector('#todo-list');
