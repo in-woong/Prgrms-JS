@@ -14,14 +14,34 @@
       },
       {
         text: 'JS 복습하기'
+      },
+      {
+        text: null
+      },
+      {
+        text: undefined
+      },
+      {
+        text: []
+      },
+      {
+        text: {}
+      },
+      {
+        text: ""
       }
     ]
-
+    
     function TodoList(data){
         this.data = data;
         this.render = function(){
             const todo = document.querySelector('#todo-list');
-            data.forEach((value) => (todo.innerHTML += `<div>${value.text}</div><br>`));    
+              data.forEach((value) => {
+                if(!value || !value.text || !value.text.length){
+                  throw new Error("올바른 파라메터를 사용하지 않았습니다.");
+                }
+                todo.innerHTML += `<div>${value.text}</div><br>`
+            });    
         }
     }
     const todoList = new TodoList(data);
