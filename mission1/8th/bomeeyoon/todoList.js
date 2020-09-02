@@ -49,13 +49,11 @@ function TodoList(data, $target) {
   this.$root = document.querySelector('#todo-list');
   this.$root.appendChild(this.$target);
 
-  this.checkError = () => {
-    checkNewKeyword(this);
-    checkEmptyData(this.data);
-  };
+  checkNewKeyword(this);
 
   this.render = () => {
-    this.checkError();
+    checkEmptyData(this.data);
+
     const html = this.data
       .map(({ isCompleted, text }) =>
         isCompleted ? `<li><s>${text}</s></li>` : `<li>${text}</li>`
