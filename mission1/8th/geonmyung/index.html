@@ -32,20 +32,32 @@
       }
     ]
 
+    function checkValidateData(data){
+      // 1. null, undefined 확인해주기
+      if(data == null || data == undefined){
+        throw new Error("null, undefined이 넘어왔습니다.");
+      }
+      if(!Array.isArray(data)){
+        throw new Error("array가 아닌 형태로 넘어왔습니다.");
+      }
+      data.forEach((value) => {
+        if(!value || !value.text){
+          throw new Error("데이터에 이상한 값이 넘어왔습니다.");
+        }
+      });
+    }
+    
     function TodoList(data){
         if(!new.target){
           throw new Error("new 키워드를 붙이지 않았습니다.");
         }
-        
+        checkValidateData(data);
         this.data = data;
         this.render = function(){
-            const todo = document.querySelector('#todo-list');
-              data.forEach((value) => {
-                if(!value || !value.text || !value.text.length){
-                  throw new Error("올바른 파라메터를 사용하지 않았습니다.");
-                }
-                todo.innerHTML += `<div>${value.text}</div><br>`
-            });    
+          const todo = document.querySelector('#todo-list');
+            data.forEach((value) => (
+              todo.innerHTML += `<div>${value.text}</div><br>`
+            ));
         }
     }
     const todoList = new TodoList(data);
