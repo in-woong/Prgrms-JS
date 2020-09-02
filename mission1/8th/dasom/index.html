@@ -53,22 +53,11 @@
 
       function TodoList(param, id){
         this.data = param;
-        try{
-        if(this == window){
-          throw new Error('new 키워드를 붙여주세요.');
-        }
-        } catch(e){
-          console.log(e);
-        }
         this.render = function(){
           try{
             this.isValid();
-            let htmlString = '';
-            this.data.forEach(d=>{
-              d.isCompleted ? d.text = `<s>${d.text}</s>` : '';
-              htmlString += `<div>${d.text}</div>`;
-            });
-            document.querySelector('#'+id).innerHTML = htmlString;
+            document.querySelector('#'+id).innerHTML = this.data.map(d=>{
+                return d.isCompleted ? `<div><s>${d.text}</s></div>`: `<div>${d.text}</div>`}).join(' ');
           } catch(e){
             console.log(e);
           }
@@ -83,6 +72,11 @@
           if(!param.every(p=>{return p.text!=undefined && p.isCompleted!=undefined})){
             throw new Error('param의 data 형태가 잘못됐습니다.');
           }
+          // if(new.target){
+          //   console.log('new target');
+          // } else {
+          //   throw new Error('new 키워드를 붙여주세요.');
+          // }
         },
         this.setState = function(newParam){
           this.data = newParam;
@@ -90,29 +84,29 @@
         }
       };
 
-      let todoList = new TodoList(data, 'todo-list');
-      let completeList = new TodoList(completeData, 'complete-list');
-      let wishList = new TodoList(wishData, 'wish-list');
+      const todoList = new TodoList(data, 'todo-list').render();
+      const completeList = new TodoList(completeData, 'complete-list').render();
+      const wishList = new TodoList(wishData, 'wish-list').render();
 
-      todoList.render();
-      completeList.render();
-      wishList.render();
+      // todoList.render();
+      // completeList.render();
+      // wishList.render();
       
-      let nullList = new TodoList();
-      nullList.render();
+      let nullList = new TodoList().render();
+      // nullList.render();
 
       let notArray = new TodoList({
           text: 'JS 공부하기',
           isCompleted: true,
-        }, 'todo-list');
-      notArray.render();
+        }, 'todo-list').render();
+      // notArray.render();
 
       // data가 text나 isCompleted를 가지고있지 않으면 잘못된 데이터 형태
-      let inCorrectDataType = new TodoList(inCorrectData, 'todo-list');
-      inCorrectDataType.render();
+      let inCorrectDataType = new TodoList(inCorrectData, 'todo-list').render();
+      // inCorrectDataType.render();
 
-      let notNew = TodoList(data, 'todo-list');
-   //   notNew.render();
+      let notNew = TodoList(data, 'todo-list')
+     // notNew.render();
 
 
       let setStateList = new TodoList(data, 'setState-list');
