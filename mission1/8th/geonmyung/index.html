@@ -17,15 +17,14 @@
       }
     ]
 
-    function TodoList(info){
-        this.info = info;
+    function TodoList(data){
+        this.data = data;
         this.render = function(){
             const todo = document.querySelector('#todo-list');
-            info.map((value) => (todo.innerHTML += `<div>${value.text}</div><br>`));    
+            data.forEach((value) => (todo.innerHTML += `<div>${value.text}</div><br>`));    
         }
     }
     const todoList = new TodoList(data);
-
     todoList.render();
 
   </script>
