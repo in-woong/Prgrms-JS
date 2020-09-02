@@ -31,6 +31,51 @@ var html = [
   },
 ];
 
+const checkNewKeyword = (context) => {
+  if (context === window) {
+    throw new Error('new keyword error');
+  }
+};
+
+const checkEmptyData = (data) => {
+  if (!data.length) {
+    throw new Error('empty data');
+  }
+};
+
+function TodoList(data, $target) {
+  this.data = data;
+  this.$target = document.createElement($target);
+  this.$root = document.querySelector('#todo-list');
+  this.$root.appendChild(this.$target);
+
+  this.checkError = () => {
+    checkNewKeyword(this);
+    checkEmptyData(this.data);
+  };
+
+  this.render = () => {
+    this.checkError();
+    const html = this.data
+      .map(({ isCompleted, text }) =>
+        isCompleted ? `<li><s>${text}</s></li>` : `<li>${text}</li>`
+      )
+      .join('');
+
+    this.$target.innerHTML = html;
+  };
+
+  this.setState = (nextData) => {
+    this.data = nextData;
+    this.render();
+  };
+}
+
+new TodoList(js, 'ul').render();
+new TodoList(css, 'ul').render();
+new TodoList(html, 'ul').render();
+
+/*
 class TodoLists {
   constructor(data) {
     this.data = data;
@@ -66,3 +111,5 @@ class TodoLists {
 new TodoLists(js).render();
 new TodoLists(css).render();
 new TodoLists(html).render();
+
+*/
