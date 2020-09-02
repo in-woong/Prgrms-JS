@@ -12,28 +12,34 @@
   <script>
     const data = [
       {
-        text: 'JS 공부하기'
+        text: 'JS 공부하기',
+        isCompleted: true
       },
       {
-        text: 'JS 복습하기'
+        text: 'JS 복습하기',
+        isCompleted: false
       }
     ]
 
     const exercise = [
       {
-        text: '클로이팅 홈트하기'
+        text: '클로이팅 홈트하기',
+        isCompleted: true
       },
       {
-        text: '스트레칭 하기'
+        text: '스트레칭 하기',
+        isCompleted: false
       }
     ]
 
     const project = [
       {
-        text: '로그인 화면 만들기'
+        text: '로그인 화면 만들기',
+        isCompleted: false
       },
       {
-        text: '회원가입 화면 만들기'
+        text: '회원가입 화면 만들기',
+        isCompleted: false
       }
     ]
 
@@ -53,7 +59,8 @@
 
     render() {
       for (let i = 0 ; i < this.data.length; i++) {
-        let html = `<div> 할 일 👉 ${this.data[i].text}</div>`;
+        let isCompleted = this.data[i].isCompleted;      
+        let html = isCompleted ? `<div>  ✅ <s> 할 일 👉 ${this.data[i].text}<s></div>` : `<div> 🔲 할 일 👉 ${this.data[i].text}</div>`;
         this.htmlId.innerHTML += html;
       }
 
