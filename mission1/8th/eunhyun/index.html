@@ -7,6 +7,8 @@
 
 <body>
   <div id="todo-list"></div>
+  <div id="todo-list-exercise"></div>
+  <div id="todo-list-project"></div>
   <script>
     const data = [
       {
@@ -17,9 +19,28 @@
       }
     ]
 
+    const exercise = [
+      {
+        text: '클로이팅 홈트하기'
+      },
+      {
+        text: '스트레칭 하기'
+      }
+    ]
+
+    const project = [
+      {
+        text: '로그인 화면 만들기'
+      },
+      {
+        text: '회원가입 화면 만들기'
+      }
+    ]
+
   class TodoList {
-    constructor(data) {
+    constructor(data, htmlId) {
       this.data = data;
+      this.htmlId = htmlId;
       this.checkData();
     }
 
@@ -32,14 +53,25 @@
 
     render() {
       for (let i = 0 ; i < this.data.length; i++) {
-        let html = `<div> 할 일 ${i + 1} : ${this.data[i].text}</div>`;
-        document.querySelector('#todo-list').innerHTML += html;
+        let html = `<div> 할 일 👉 ${this.data[i].text}</div>`;
+        this.htmlId.innerHTML += html;
       }
+
+      this.htmlId.innerHTML += `<br/>`;
     }
   }
 
-  const todoList = new TodoList(data);
-  todoList.render();
+  const todoList = document.querySelector('#todo-list');
+  const todoList1 = new TodoList(data, todoList);
+  todoList1.render();
+
+  const todoListExercise = document.querySelector('#todo-list-exercise');
+  const todoList2 = new TodoList(exercise, todoListExercise);
+  todoList2.render();
+
+  const todoListProject = document.querySelector('#todo-list-project');
+  const todoList3 = new TodoList(project, todoListProject);
+  todoList3.render();
 
   </script>
 </body>
