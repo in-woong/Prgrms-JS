@@ -80,6 +80,16 @@ function TodoList({ todoItems, selector }) {
         this.todoItems = nextTodoItems;
         this.render();
     };
+    this.addTodoItem = function ({ todoItemText }) {
+        const newTodoItem = {
+            text: todoItemText,
+            isCompleted: false,
+        };
+        validateTodoItem({todoItem: newTodoItem});
+
+        this.todoItems.push(newTodoItem);
+        this.render();
+    };
 
     this.render();
 }
