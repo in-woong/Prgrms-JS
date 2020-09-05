@@ -32,12 +32,12 @@ function TodoList(querySelect, data) {
   // data값에 따라 todo-list를 동적으로 렌더링한다
   this.render = () => {
     let html = ''
-    this.data.forEach((data) => {
+    this.data.forEach((data, index) => {
       console.log(data)
-      html += `<div><span>${
+      html += `<div key=${index}><span>${
         data.isCompleted ? `<s>${data.text}</s>` : data.text
       }</span>
-      <button>삭제</button></div>`
+      <button class="todo-list-remove-button">삭제</button></div>`
     })
     this.querySelect.innerHTML = html
   }
