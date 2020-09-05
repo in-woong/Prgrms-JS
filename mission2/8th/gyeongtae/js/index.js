@@ -1,10 +1,9 @@
-import TodoList from './TodoList.js'
-import { data, data2, data3, data4, data5 } from './data.js'
+import App from './App.js'
 
-const todolist = new TodoList('#todo-list', data)
+const app = new App()
 
 const TodoListInputEle = document.querySelector('#input-todo-list')
-const TodoListAddEle = document.querySelector('#add-todo-list-button')
+const TodoListFormEle = document.querySelector('#todo-list-input-form')
 
 // todo list 추가 함수
 function addTodoList(todoListComponent) {
@@ -47,28 +46,26 @@ function setEvenOnTodoListItems() {
   // todo list 삭제 이벤트 등록
   document.querySelectorAll('.todo-list-remove-button').forEach((ele) => {
     ele.addEventListener('click', (event) => {
-      removeTodoList(todolist, ele.closest('div').getAttribute('key'))
+      removeTodoList(app.todoList, ele.closest('div').getAttribute('key'))
       setEvenOnTodoListItems()
     })
   })
   // todo list 클릭 이벤트 등록
   document.querySelectorAll('.todo-list-item').forEach((ele) => {
     ele.addEventListener('click', (event) => {
-      setTodoListIsCompleted(todolist, ele.closest('div').getAttribute('key'))
+      setTodoListIsCompleted(
+        app.todoList,
+        ele.closest('div').getAttribute('key')
+      )
       setEvenOnTodoListItems()
     })
   })
 }
-
-TodoListAddEle.addEventListener('click', () => {
-  addTodoList(todolist)
+// todd list input form에 이벤트 등록
+TodoListFormEle.addEventListener('submit', (event) => {
+  event.preventDefault()
+  addTodoList(app.todoList)
   setEvenOnTodoListItems()
-})
-TodoListInputEle.addEventListener('keypress', (event) => {
-  if (event.keyCode == 13) {
-    addTodoList(todolist)
-    setEvenOnTodoListItems()
-  }
 })
 
 setEvenOnTodoListItems()
