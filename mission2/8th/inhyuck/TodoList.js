@@ -27,13 +27,6 @@ const developerTodoItems = [
     },
 ];
 
-const nextDeveloperTodoItems = [
-    {
-        text: 'HTTP 공부',
-        isCompleted: true,
-    },
-];
-
 const happyLifeTodoItems = [
     {
         text: '책 읽고 간단히라도 글 쓰기',
@@ -46,13 +39,6 @@ const happyLifeTodoItems = [
     {
         text: '조급해하지 않기',
         isCompleted: true,
-    },
-];
-
-const nextHappyLifeTodoItems = [
-    {
-        text: '규칙적인 운동',
-        isCompleted: false,
     },
 ];
 
@@ -73,6 +59,19 @@ function TodoList({ todoItems, selector }) {
         this.$todoList.innerHTML = `<ul>
                   ${this.todoItems.map((todoItem) => convertTodoItemToInnerHtml({ todoItem })).join('')}
             </ul>`;
+
+        const $todoItems = this.$todoList.querySelectorAll('ul > li');
+        Array.from($todoItems).forEach(($todoItem, index) => {
+            $todoItem.querySelector('.txt').addEventListener('click', () => {
+                this.todoItems[index].isCompleted = !this.todoItems[index].isCompleted;
+                this.render();
+            });
+
+            $todoItem.querySelector('.remove-btn').addEventListener('click', () => {
+                this.todoItems.splice(index, 1);
+                this.render();
+            });
+        });
     };
     this.setState = function ({ nextTodoItems }) {
         validateTodoItems({ todoItems: nextTodoItems });
@@ -97,8 +96,9 @@ function TodoList({ todoItems, selector }) {
 function convertTodoItemToInnerHtml({ todoItem }) {
     const { text, isCompleted } = todoItem;
     return `
-          <li>
-            ${isCompleted ? `<s>${text}</s>` : text}
+          <li class="item-wrap">
+            <span class="txt ${isCompleted ? 'completed' : ''}">${text}</span>
+            <button type="button" class="remove-btn">Remove</button>
           </li>
         `;
 }

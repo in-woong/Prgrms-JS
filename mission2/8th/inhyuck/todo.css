@@ -1,0 +1,8 @@
+.item-wrap {
+    cursor: pointer;
+}
+
+.item-wrap .txt.completed {
+    text-decoration: line-through;
+    color: #9E9E9E;
+}
