@@ -1,10 +1,22 @@
 const data = [
   {
     text: 'JS 공부하기',
-    isCompleted: true,
+    isCompleted: false,
   },
   {
     text: 'JS 복습하기',
+    isCompleted: false,
+  },
+  {
+    text: '미션1 필수 구현사항 구현하기',
+    isCompleted: false,
+  },
+  {
+    text: '미션1 보너스 구현하기',
+    isCompleted: false,
+  },
+  {
+    text: '미션1 코드리뷰 요청 하기',
     isCompleted: false,
   },
 ]

@@ -34,9 +34,10 @@ function TodoList(querySelect, data) {
     let html = ''
     this.data.forEach((data) => {
       console.log(data)
-      html += `<div>${
+      html += `<div><span>${
         data.isCompleted ? `<s>${data.text}</s>` : data.text
-      }</div>`
+      }</span>
+      <button>삭제</button></div>`
     })
     this.querySelect.innerHTML = html
   }
