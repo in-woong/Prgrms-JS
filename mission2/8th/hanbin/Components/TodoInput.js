@@ -1,4 +1,4 @@
-export default function TodoInput($target) {
+export default function TodoInput($target, addTodo) {
 
     this.$target = $target;
 
@@ -15,5 +15,16 @@ export default function TodoInput($target) {
         this.$target.appendChild(submitBtn);
     }
     
+    this.makeAddEvent = function(){
+        const inputBox = document.querySelector('.inputBox');
+        const submitBtn = document.querySelector('.submitBtn');
+
+        submitBtn.addEventListener('click', () => {
+            addTodo(inputBox.value);
+            inputBox.value ='';
+        });
+    }
+
     this.render();
+    this.makeAddEvent();
 }
