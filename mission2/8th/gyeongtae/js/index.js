@@ -47,28 +47,26 @@ function setTodoListIsCompleted(app, key) {
   app.todoCount.setState(todoListData)
 }
 
-// todd list item들에 이벤트 등록
-function setEvenOnTodoListItems() {
-  // todo list 삭제 이벤트 등록
-  document.querySelectorAll('.todo-list-remove-button').forEach((ele) => {
-    ele.addEventListener('click', (event) => {
-      removeTodoList(app, ele.closest('div').getAttribute('key'))
-      setEvenOnTodoListItems()
-    })
+// todd list에 이벤트 등록
+function setEvenOnTodoList() {
+  document.querySelector('#todo-list').addEventListener('click', (event) => {
+    const target = event.target
+    // todo list 삭선처리 이벤트 등록
+    if (target.className === 'todo-list-item') {
+      return setTodoListIsCompleted(
+        app,
+        target.closest('div').getAttribute('key')
+      )
+    }
+    // todo list 삭제 이벤트 등록
+    if (target.className === 'todo-list-remove-button') {
+      return removeTodoList(app, target.closest('div').getAttribute('key'))
+    }
   })
-  // todo list 클릭 이벤트 등록
-  document.querySelectorAll('.todo-list-item').forEach((ele) => {
-    ele.addEventListener('click', (event) => {
-      setTodoListIsCompleted(app, ele.closest('div').getAttribute('key'))
-      setEvenOnTodoListItems()
-    })
+  // todd list 추가 이벤트 등록
+  TodoListFormEle.addEventListener('submit', (event) => {
+    event.preventDefault()
+    addTodoList(app)
   })
 }
-// todd list input form에 이벤트 등록
-TodoListFormEle.addEventListener('submit', (event) => {
-  event.preventDefault()
-  addTodoList(app)
-  setEvenOnTodoListItems()
-})
-
-setEvenOnTodoListItems()
+setEvenOnTodoList()

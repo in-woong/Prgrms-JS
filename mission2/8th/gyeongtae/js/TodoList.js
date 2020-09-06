@@ -33,10 +33,11 @@ function TodoList(querySelect, data) {
   this.render = () => {
     let html = ''
     this.data.forEach((data, index) => {
-      console.log(data)
-      html += `<div key=${index}><span class="todo-list-item">${
-        data.isCompleted ? `<s>${data.text}</s>` : data.text
-      }</span>
+      html += `<div key=${index}>${
+        data.isCompleted
+          ? `<s class="todo-list-item">${data.text}</s>`
+          : `<span class="todo-list-item">${data.text}</span>`
+      }
       <button class="todo-list-remove-button">삭제</button></div>`
     })
     this.querySelect.innerHTML = html
