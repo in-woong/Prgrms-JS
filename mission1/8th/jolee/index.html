@@ -12,7 +12,7 @@
       var data = [
         {
           text: 'JS 공부하기',
-          isCompleted: true
+          isCompleted: 123
         },
         {
           text: 'JS 복습하기',
@@ -52,7 +52,7 @@
         if (!Array.isArray(this.data)) {
           throw new Error('[invalid] list is not array');
         }
-        this.data.map(({ isCompleted, text }) => {
+        this.data.some(({ isCompleted, text }) => {
           if (
             text === undefined ||
             typeof text !== 'string' ||
