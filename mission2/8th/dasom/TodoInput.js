@@ -16,7 +16,7 @@ function TodoInput($target, addTodo){
     }
 
 
-    this.initAddEvent = () => {
+    this.todoAddInputEventListener = () => {
         this.$inputBtn.addEventListener('click', this.addTodo); 
     }
 
@@ -31,5 +31,5 @@ function TodoInput($target, addTodo){
    
 
     this.render();
-    this.initAddEvent();
+    this.todoAddInputEventListener();
 }

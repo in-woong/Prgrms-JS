@@ -41,8 +41,18 @@ function App(){
     this.render();
   }
 
+  this.countTodo = () => {
+    const completeTodo = this.data.filter(d=>{return d.isCompleted}).length;
+    const countTodoObj = {
+      completeTodo: completeTodo,
+      incompleteTodo : this.data.length - completeTodo
+    }
+    return countTodoObj;
+  }
+
   this.render = () => {
     this.todoList.setState(this.data);
+    this.todoCount.render();
   }
 
   
@@ -50,6 +60,7 @@ function App(){
   const $target = document.querySelector('#todo-list');
   this.todoList = new TodoList(this.data, $target, this.isValid, this.toggleTodo, this.deleteTodo);
   this.todoInput = new TodoInput($target, this.addTodo);
+  this.todoCount = new TodoCount($target, this.countTodo);
   
     
 }

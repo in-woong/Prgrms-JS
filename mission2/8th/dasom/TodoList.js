@@ -9,25 +9,16 @@ function TodoList(data, $target, isValid, toggleTodo, deleteTodo){
         throw new Error('new 키워드로 작성해주세요.');
     }
     isValid();
-    
     this.render = () => {
-        this.$ul.innerHTML = '';
-        this.data.forEach((d, idx) => {
-            const $li = document.createElement('li');
-            const $btn = document.createElement('button');
-            $li.dataset.index = idx;
-            $btn.innerHTML = `삭제`;
-
-            if(d.isCompleted){
-                $li.setAttribute("class", 'font-red');
-                $li.innerHTML = `<s>${d.text}</s>`;
-                $li.innerHTML = '(완료) ' + $li.innerHTML;
-            } else {
-                $li.innerHTML = `${d.text}`;
-            }
-            $li.appendChild($btn);
-            this.$ul.appendChild($li);
-        })
+        this.$ul.innerHTML = this.data.map((todo, index) => {
+            return todo.isCompleted ? `
+              <li data-index=${index}>
+                (완료) <s class="font-red">${todo.text}</s>
+              </li>
+            ` : `
+              <li data-index=${index}>${todo.text}</li>
+            `
+          }).join('');
         this.$target.prepend(this.$ul);
     }
 
@@ -36,7 +27,7 @@ function TodoList(data, $target, isValid, toggleTodo, deleteTodo){
         this.render();
     }
 
-    this.initAddEvent = () => {
+    this.todoListAddEventListner = () => {
         this.$ul.addEventListener('click', (e)=>{
             if(e.target.tagName === 'LI' || e.target.tagName === 'S'){
                 toggleTodo(e.target.closest("li").dataset.index);
@@ -48,7 +39,7 @@ function TodoList(data, $target, isValid, toggleTodo, deleteTodo){
     }
 
     this.render();
-    this.initAddEvent();
+    this.todoListAddEventListner();
 }
 
 function isValid(that){
