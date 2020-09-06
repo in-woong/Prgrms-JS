@@ -32,6 +32,13 @@ function removeTodoList(app, key) {
   app.todoCount.setState(todoListData)
 }
 
+// todo list 전체 삭제 함수
+function removeAllTodoList(app) {
+  let todoListData = []
+  app.todoList.setState(todoListData)
+  app.todoCount.setState(todoListData)
+}
+
 // todo list IsCompleted값 설정 함수
 function setTodoListIsCompleted(app, key) {
   let todoListData = [...app.todoList.data]
@@ -49,7 +56,8 @@ function setTodoListIsCompleted(app, key) {
 
 // todd list에 이벤트 등록
 function setEvenOnTodoList() {
-  document.querySelector('#todo-list').addEventListener('click', (event) => {
+  const todoListElement = document.querySelector('#todo-list')
+  todoListElement.addEventListener('click', (event) => {
     const target = event.target
     // todo list 삭선처리 이벤트 등록
     if (target.className === 'todo-list-item') {
@@ -63,10 +71,24 @@ function setEvenOnTodoList() {
       return removeTodoList(app, target.closest('div').getAttribute('key'))
     }
   })
+
   // todd list 추가 이벤트 등록
   TodoListFormEle.addEventListener('submit', (event) => {
     event.preventDefault()
     addTodoList(app)
   })
+
+  // todo list 전체 삭제 이벤트 등록
+  todoListElement.addEventListener('removeAll', (event) => {
+    removeAllTodoList(app)
+  })
+  // removeAll Event를 커스텀으로 만들어
+  // todo-remove-all-button을 클릭시 removeAll 이벤트를 todoListElement에 전달
+  const removeAllEvent = new Event('removeAll')
+  document
+    .querySelector('#todo-remove-all-button')
+    .addEventListener('click', (event) => {
+      todoListElement.dispatchEvent(removeAllEvent)
+    })
 }
 setEvenOnTodoList()
