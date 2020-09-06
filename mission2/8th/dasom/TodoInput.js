@@ -10,21 +10,24 @@ function TodoInput($target, addTodo){
         this.$input.setAttribute('type', 'text');
         this.$div.appendChild(this.$input);
 
-        var inputBtnText = document.createTextNode( 'Click' );
+        const inputBtnText = document.createTextNode( 'Click' );
         this.$inputBtn.appendChild(inputBtnText);
         this.$div.appendChild(this.$inputBtn);
     }
 
-    this.setState = () => {
-        this.$target.appendChild(this.$div);
-    }
 
     this.initAddEvent = () => {
-        this.$inputBtn.addEventListener('click', (e) => {
-            addTodo();
-        }) 
+        this.$inputBtn.addEventListener('click', this.addTodo); 
     }
 
+    this.resetInputValue = () => {
+        this.$input.value = '';
+    }
+
+    this.addTodo = () => {
+        addTodo(this.$input.value);
+        this.resetInputValue();
+    }
    
 
     this.render();
