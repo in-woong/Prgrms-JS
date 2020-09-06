@@ -33,6 +33,11 @@ function App(){
       this.render();
   }  
 
+  this.deleteAllTodo = () => {
+      this.data = [];
+      this.render();
+  }
+
   this.addTodo = (todo) => {
     this.data.push({
       text: todo,
@@ -59,7 +64,7 @@ function App(){
   this.data = data;
   const $target = document.querySelector('#todo-list');
   this.todoList = new TodoList(this.data, $target, this.isValid, this.toggleTodo, this.deleteTodo);
-  this.todoInput = new TodoInput($target, this.addTodo);
+  this.todoInput = new TodoInput($target, this.addTodo, this.deleteAllTodo);
   this.todoCount = new TodoCount($target, this.countTodo);
   
     

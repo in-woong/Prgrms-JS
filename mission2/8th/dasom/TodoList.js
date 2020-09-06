@@ -14,9 +14,12 @@ function TodoList(data, $target, isValid, toggleTodo, deleteTodo){
             return todo.isCompleted ? `
               <li data-index=${index}>
                 (완료) <s class="font-red">${todo.text}</s>
+                <button>삭제</button>
               </li>
             ` : `
-              <li data-index=${index}>${todo.text}</li>
+              <li data-index=${index}>${todo.text}
+                <button>삭제</button>
+              </li>
             `
           }).join('');
         this.$target.prepend(this.$ul);
