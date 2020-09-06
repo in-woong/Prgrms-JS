@@ -1,6 +1,10 @@
-export default function TodoRemoveAll() {
+export default function TodoRemoveAll(renderEle) {
+  this.renderEle = renderEle
+  this.todoRemoveAllEle = document.createElement('div')
+  renderEle.append(this.todoRemoveAllEle)
+
   this.render = () => {
-    document.querySelector('#todo-remove-all').innerHTML += `
+    this.todoRemoveAllEle.innerHTML = `
     <button id = "todo-remove-all-button">Todo전체 삭제</button>
     `
   }
