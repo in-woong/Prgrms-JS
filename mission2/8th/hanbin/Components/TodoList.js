@@ -3,23 +3,24 @@ export default function TodoList(data, $target) {
     this.data = data;
     this.$target = $target;
 
-    this.isValidData = function(){
+    this.isValidData = function(data){
         try{
-            if(this.data===undefined){
+            if(data===undefined){
                 throw new Error("Given data is undefined data");
             }
-            if(this.data===null){
+            if(data===null){
                 throw new Error("Given data is null data");
             }
-            if(!Array.isArray(this.data)){
+            if(!Array.isArray(data)){
                 throw new Error("Given data is not array");
             }
-            if(!this.data.every((item) => (typeof item.text === 'string') && (typeof item.isCompleted === 'boolean'))){
+            if(!data.every((item) => (typeof item.text === 'string') && (item.text!=='') && (typeof item.isCompleted === 'boolean'))){
                 throw new Error("Given data's value type is incorrect");   
             }
             if(!this instanceof TodoList){
                 throw new Error("function was call without new operation");
             }
+            return true;
         }   
         catch(e){
             console.error(e);
@@ -50,7 +51,7 @@ export default function TodoList(data, $target) {
     }
 
     this.addEventListenertoElems = function(){
-        this.$listElem.addEventListener("click", function(evt){
+        this.$listElem.addEventListener("click", evt => {
             if(evt.target.tagName==="DIV"){
                 this.data[evt.target.className].isCompleted = true;
             } else if(evt.target.tagName==="S"){
@@ -59,24 +60,24 @@ export default function TodoList(data, $target) {
                 this.data.splice(evt.target.className, 1);
             }
             this.render();
-        }.bind(this))
+        })
     }
 
     this.makeAddEvent = function(){
         const inputBox = document.querySelector('.inputBox');
         const submitBtn = document.querySelector('.submitBtn');
 
-        submitBtn.addEventListener('click', function(){
-            this.data.push({
-                text : inputBox.value,
-                isCompleted : false
-            })
-            inputBox.value ='';
-            this.render();
-        }.bind(this));
+        submitBtn.addEventListener('click', () => {
+            const inputData = [{text : inputBox.value, isCompleted : false}];
+            if(this.isValidData(inputData)){
+                this.data.push(inputData[0])
+                inputBox.value ='';
+                this.render();
+            }
+        });
     }
 
-    this.isValidData();
+    this.isValidData(this.data);
     this.prerender();
     this.render();
     this.addEventListenertoElems();

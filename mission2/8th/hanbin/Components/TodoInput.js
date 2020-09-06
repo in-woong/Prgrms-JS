@@ -15,7 +15,5 @@ export default function TodoInput($target) {
         this.$target.appendChild(submitBtn);
     }
     
-
-
     this.render();
 }
