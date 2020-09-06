@@ -5,9 +5,9 @@
   </head>
 
   <body>
-    <div id="todo-list"></div>
-    <div id="todo-list2"></div>
-    <div id="todo-list3"></div>
+    <ul id="todo-list"></ul>
+    <ul id="todo-list2"></ul>
+    <ul id="todo-list3"></ul>
     <script>
       var data = [
         {
@@ -17,7 +17,7 @@
         {
           text: 'JS 복습하기',
           isCompleted: false
-        },
+        }
       ];
 
       var data2 = [
@@ -43,51 +43,66 @@
       ];
 
       // 이곳에서 코딩을 시작하세요!
-      function checkValidation(data) { // 재사용을 위해 별도 함수로 생성
-        if (data === null || data === undefined) {
+      function checkValidation(data) {
+        this.data = data;
+        // 재사용을 위해 별도 함수로 생성
+        if (this.data === null || this.data === undefined) {
           throw new Error('[invalid] list is null or undefined');
-        };
-        if (!Array.isArray(data)) {
+        }
+        if (!Array.isArray(this.data)) {
           throw new Error('[invalid] list is not array');
-        };
-        data.map((item) => {
-          if (item.text === undefined || typeof item.text !== 'string') {
+        }
+        this.data.map(({ isCompleted, text }) => {
+          if (
+            text === undefined ||
+            typeof text !== 'string' ||
+            isCompleted === undefined ||
+            typeof isCompleted !== 'boolean'
+          ) {
             throw new Error('[invalid] missing text in list');
           }
         });
       }
 
-      function TodoList(data, element) {
+      function TodoList(data, targetElement) {
         try {
-          if(!(this instanceof TodoList)) {
+          if (!(this instanceof TodoList)) {
             throw new Error('[invalid] list is not new');
           }
           checkValidation(data);
 
-          this.setState = function(nextData) {
+          this.data = data;
+          this.targetElement = targetElement;
+
+          this.setState = function (nextData) {
             this.data = nextData;
             this.render();
           };
 
           this.render = function () {
-            let str = '';
-            data.map((item) => {
-              if(item.isCompleted) {
-                str += `<div><s>${item.text}</s></div>`
-              } else {
-                str += `<div>${item.text}</div>`
-              }
-            });
-            document.querySelector(element).innerHTML += str
+            const htmlString = this.data
+              .map(({ isCompleted, text }) =>
+                isCompleted ? `<li><s>${text}</s></li>` : `<li>${text}</li>`
+              )
+              .join('');
+            this.targetElement.innerHTML = htmlString;
           };
+
+          this.render();
         } catch (e) {
           alert(e.message);
         }
       }
 
-      const todoList = new TodoList(data, '#todo-list').setState(data);
-      const todoList2 = new TodoList(data2, '#todo-list2').setState(data2);
-      const todoList3 = new TodoList(data3, '#todo-list3').setState(data3);
+      const todoList = new TodoList(data, document.querySelector('#todo-list'));
+      const todoList2 = new TodoList(
+        data2,
+        document.querySelector('#todo-list2')
+      );
+      const todoList3 = new TodoList(
+        data3,
+        document.querySelector('#todo-list3')
+      );
     </script>
   </body>
 </html>
