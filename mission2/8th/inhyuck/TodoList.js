@@ -1,52 +1,8 @@
-const data = [
-    {
-        text: 'JS 공부하기',
-        isCompleted: false,
-    },
-    {
-        text: 'JS 복습하기',
-        isCompleted: true,
-    },
-];
-
-const nextData = [
-    {
-        text: 'HTML/CSS 공부하기',
-        isCompleted: false,
-    },
-];
-
-const developerTodoItems = [
-    {
-        text: 'JS 스터디 열심히 참여하며 배운내용 잘 정리',
-        isCompleted: true,
-    },
-    {
-        text: '사이드 프로젝트 개선',
-        isCompleted: false,
-    },
-];
-
-const happyLifeTodoItems = [
-    {
-        text: '책 읽고 간단히라도 글 쓰기',
-        isCompleted: true,
-    },
-    {
-        text: '규칙적인 아침 기상',
-        isCompleted: false,
-    },
-    {
-        text: '조급해하지 않기',
-        isCompleted: true,
-    },
-];
-
-function TodoList({ todoItems, selector }) {
+function TodoList({ $targetElement, todoItems }) {
     if (!(this instanceof TodoList)) {
         errorHandler({ errorMessage: 'not exist new keyword' });
     }
-    const $todoList = document.querySelector(selector);
+    const $todoList = $targetElement;
     if (!$todoList) {
         errorHandler({ errorMessage: 'target element is not found' });
     }
