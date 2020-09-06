@@ -16,34 +16,42 @@ function TodoList({ $targetElement, todoItems }) {
                   ${this.todoItems.map((todoItem) => convertTodoItemToInnerHtml({ todoItem })).join('')}
             </ul>`;
 
+        this.mounted();
+    };
+
+    this.mounted = function () {
         const $todoItems = this.$todoList.querySelectorAll('ul > li');
         Array.from($todoItems).forEach(($todoItem, index) => {
             $todoItem.querySelector('.txt').addEventListener('click', () => {
-                this.todoItems[index].isCompleted = !this.todoItems[index].isCompleted;
-                this.render();
+                const newTodoItems = [...this.todoItems];
+                newTodoItems[index].isCompleted = !newTodoItems[index].isCompleted;
+                this.setState({newTodoItems});
             });
 
             $todoItem.querySelector('.remove-btn').addEventListener('click', () => {
-                this.todoItems.splice(index, 1);
-                this.render();
+                const newTodoItems = [...this.todoItems];
+                newTodoItems.splice(index, 1);
+                this.setState({newTodoItems});
             });
         });
     };
-    this.setState = function ({ nextTodoItems }) {
-        validateTodoItems({ todoItems: nextTodoItems });
 
-        this.todoItems = nextTodoItems;
+    this.setState = function ({ newTodoItems }) {
+        validateTodoItems({ todoItems: newTodoItems });
+
+        this.todoItems = newTodoItems;
         this.render();
     };
-    this.addTodoItem = function ({ todoItemText }) {
-        const newTodoItem = {
-            text: todoItemText,
-            isCompleted: false,
-        };
-        validateTodoItem({todoItem: newTodoItem});
 
-        this.todoItems.push(newTodoItem);
-        this.render();
+    this.addTodoItem = function ({ todoItemText }) {
+        const newTodoItems = [
+            ...this.todoItems,
+            {
+                text: todoItemText,
+                isCompleted: false,
+            }
+        ];
+        this.setState({newTodoItems});
     };
 
     this.render();
