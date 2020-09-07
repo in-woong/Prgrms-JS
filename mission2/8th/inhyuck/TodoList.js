@@ -1,4 +1,4 @@
-function TodoList({ $targetElement, todoItems }) {
+function TodoList({ $targetElement, todoItems, onChangeTodoItems }) {
     if (!(this instanceof TodoList)) {
         errorHandler({ errorMessage: 'not exist new keyword' });
     }
@@ -41,6 +41,7 @@ function TodoList({ $targetElement, todoItems }) {
 
         this.todoItems = newTodoItems;
         this.render();
+        onChangeTodoItems({todoItems: newTodoItems});
     };
 
     this.addTodoItem = function ({ todoItemText }) {
