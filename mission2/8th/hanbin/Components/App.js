@@ -4,7 +4,6 @@ import TodoCount from './TodoCount.js'
 
 export default function App($target) {
     
-    console.log(window.localStorage.getItem('todo'));
     this.data = window.localStorage.getItem('todo') ?
                 JSON.parse(window.localStorage.getItem('todo')) : [];
     
