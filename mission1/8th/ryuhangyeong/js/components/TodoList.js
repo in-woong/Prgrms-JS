@@ -3,8 +3,9 @@ class TodoList {
   $todoList = null
   data = null
 
-  constructor({ $target, initialData }) {
+  constructor({ $target, initialData = [] }) {
     this.$target = $target
+    this.isValidData(initialData)
     this.data = initialData
 
     this.$todoList = document.createElement('ul')
@@ -18,13 +19,25 @@ class TodoList {
     this.render()
   }
 
-  render() {
-    if (!this.data || !this.data.length) return
+  isValidData(data) {
+    if (
+      data.some(
+        ({ text, isCompleted }) =>
+          !!!text ||
+          typeof text !== 'string' ||
+          isCompleted === undefined ||
+          typeof isCompleted !== 'boolean'
+      )
+    ) {
+      throw new Error('awrong todo data')
+    }
+  }
 
+  render() {
     this.$todoList.innerHTML = this.data
       .map(
-        (t) => `<li>
-			${t.isCompleted ? `<s>${t.text}</s>` : t.text}
+        ({ text, isCompleted }) => `<li>
+			${isCompleted ? `<s>${text}</s>` : text}
 		</li>`
       )
       .join('')
