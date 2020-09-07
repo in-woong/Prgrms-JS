@@ -18,15 +18,14 @@
 
       function TodoList(data) {
         this.data = data
-        this.render = function () {
-          this.data.forEach((list) => {
-            const text = list.text
-            document.querySelector('#todo-list').innerHTML += `<div>${text}</div>`
-          })
+
+        this.render = () => {
+          const $todoList = document.querySelector("#todo-list")
+          $todoList.innerHTML = this.data.map(todo => `<div>${todo.text}</div>`).join("")
         }
+        this.render()
       }
       var todo = new TodoList(data)
-      todo.render()
     </script>
   </body>
 </html>
