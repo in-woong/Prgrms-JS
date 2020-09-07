@@ -1,20 +1,7 @@
-export default function TodoStorage() {
-  this.init = () => {
-    this.todoStorage = window.localStorage;
-    if (!this.getLocalStorageLength() || !this.todoStorage['todos']) {
-      this.todoStorage.setItem('todos', JSON.stringify([]));
-    }
-  }
+export default function storage() {
+  this.storage = window.localStorage;
 
-  this.getLocalStorageLength = () => {
-    return window.localStorage.length;
-  }
-
-  this.todoSetItem = (todos) => {
-    this.todoStorage.setItem('todos', JSON.stringify(todos));
-  }
-
-  this.todoGetItem = () => {
-    return this.getLocalStorageLength() === 0 ? [] : JSON.parse(this.todoStorage.getItem('todos'));
+  this.getAllTodoData = () => {
+    return JSON.parse(this.storage);
   }
 }

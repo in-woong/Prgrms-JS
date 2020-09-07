@@ -1,8 +1,8 @@
-import App from './Components/App.js';
-import TodoList from './Components/TodoList.js';
-import TodoCount from './Components/TodoCount.js';
-import TodoInput from './Components/TodoInput.js';
-import TodoRemoveAllButton from './Components/TodoRemoveButton.js';
+import App from './components/App.js';
+import TodoList from './components/TodoList.js.js';
+import TodoCount from './components/TodoCount.js';
+import TodoInput from './components/TodoInput.js';
+import TodoRemoveAllButton from './components/TodoRemoveButton.js';
 
 import TodoLocalStorage from './storage.js';
 
