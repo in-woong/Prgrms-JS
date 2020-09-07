@@ -10,16 +10,18 @@ class App {
       isCompleted: false,
     },
   ]
+  todoInput = null
   todoList = null
+  todoCount = null
 
   constructor($target) {
     this.$target = $target
 
-    new TodoInput({
+    this.todoInput = new TodoInput({
       $target,
       onCreate: (text) => {
         this.todos.unshift({ text, isCompleted: false })
-        this.todoList.setState(this.todos)
+        this.setState(this.todos)
       },
     })
 
@@ -28,12 +30,23 @@ class App {
       initialData: this.todos,
       onToggle: (idx) => {
         this.todos[idx].isCompleted = !this.todos[idx].isCompleted
-        this.todoList.setState(this.todos)
+        this.setState(this.todos)
       },
       onRemove: (idx) => {
         this.todos.splice(idx, 1)
-        this.todoList.setState(this.todos)
+        this.setState(this.todos)
       },
     })
+
+    this.todoCount = new TodoCount({
+      $target,
+      initialData: this.todos,
+    })
+  }
+
+  setState(nextData) {
+    this.todos = nextData
+    this.todoList.setState(this.todos)
+    this.todoCount.setState(this.todos)
   }
 }
