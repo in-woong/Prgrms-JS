@@ -7,7 +7,7 @@ class TodoList {
 
   constructor({ $target, initialData = [], onToggle, onRemove }) {
     this.$target = $target
-    this.isValidData(initialData)
+    isValidTodos(initialData)
     this.data = initialData
     this.onToggle = onToggle
     this.onRemove = onRemove
@@ -30,23 +30,9 @@ class TodoList {
   }
 
   setState(nextData) {
-    this.isValidData(nextData)
+    isValidTodos(nextData)
     this.data = nextData
     this.render()
-  }
-
-  isValidData(data) {
-    if (
-      data.some(
-        ({ text, isCompleted }) =>
-          !!!text ||
-          typeof text !== 'string' ||
-          isCompleted === undefined ||
-          typeof isCompleted !== 'boolean'
-      )
-    ) {
-      throw new Error('awrong todo data')
-    }
   }
 
   render() {

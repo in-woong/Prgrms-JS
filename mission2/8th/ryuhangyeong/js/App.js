@@ -45,6 +45,7 @@ class App {
   }
 
   setState(nextData) {
+    isValidTodos(nextData)
     this.todos = nextData
     this.todoList.setState(this.todos)
     this.todoCount.setState(this.todos)
