@@ -1,30 +1,39 @@
-export default function TodoInput($target, addTodo) {
+export default function TodoInput($target, addTodo, removeAllTodo) {
 
     this.$target = $target;
 
     this.render = function() {
-        const inputBox = document.createElement('input');
-        inputBox.className = 'inputBox';
-        inputBox.type = 'text';
-        inputBox.placeholder = '할 일 입력';
-        this.$target.appendChild(inputBox);
+        this.inputBox = document.createElement('input');
+        this.inputBox.className = 'inputBox';
+        this.inputBox.type = 'text';
+        this.inputBox.placeholder = '할 일 입력';
+        this.$target.appendChild(this.inputBox);
 
-        const submitBtn = document.createElement('button');
-        submitBtn.className = 'submitBtn';
-        submitBtn.innerHTML = '+';
-        this.$target.appendChild(submitBtn);
+        this.submitBtn = document.createElement('button');
+        this.submitBtn.className = 'submitBtn';
+        this.submitBtn.innerHTML = '+';
+        this.$target.appendChild(this.submitBtn);
+
+        this.removeAllBtn = document.createElement('button');
+        this.removeAllBtn.className = 'removeAllBtn';
+        this.removeAllBtn.innerHTML = '모두 삭제';
+        this.$target.appendChild(this.removeAllBtn);
     }
     
     this.makeAddEvent = function(){
-        const inputBox = document.querySelector('.inputBox');
-        const submitBtn = document.querySelector('.submitBtn');
-
-        submitBtn.addEventListener('click', () => {
-            addTodo(inputBox.value);
-            inputBox.value ='';
+        this.submitBtn.addEventListener('click', () => {
+            addTodo(this.inputBox.value);
+            this.inputBox.value ='';
         });
+    }
+
+    this.makeRemoveAllEvent = function(){
+        this.removeAllBtn.addEventListener('click', () => {
+            removeAllTodo();
+        })
     }
 
     this.render();
     this.makeAddEvent();
+    this.makeRemoveAllEvent();
 }

@@ -1,9 +1,12 @@
 import TodoList from './TodoList.js'
 import TodoInput from './TodoInput.js'
+import TodoCount from './TodoCount.js'
 
-export default function App(data, $target) {
+export default function App($target) {
     
-    this.data = data;
+    console.log(window.localStorage.getItem('todo'));
+    this.data = window.localStorage.getItem('todo') ?
+                JSON.parse(window.localStorage.getItem('todo')) : [];
     
     this.isValidData = function(data){
         try{
@@ -32,26 +35,43 @@ export default function App(data, $target) {
                 text,
                 isCompleted: false
             });
+            this.saveDatainLocalStorage(this.data);
         }
         this.render();
     }
 
-    this.removeTodo = function(idx){
+    this.removeTodo = (idx) => {
         this.data.splice(idx, 1);
+        this.saveDatainLocalStorage(this.data);
         this.render();
     }
 
-    this.toggleCompleted = function(idx){
+    this.toggleCompleted = (idx) => {
         this.data[idx].isCompleted = !this.data[idx].isCompleted;
+        this.saveDatainLocalStorage(this.data);
         this.render();
+    }
+
+    this.removeAllTodo = () => {
+        this.data.length = 0;
+        this.saveDatainLocalStorage(this.data);
+        this.render();
+    }
+
+    this.saveDatainLocalStorage = (newData) => {
+        console.log(newData);
+        window.localStorage.setItem('todo', JSON.stringify(newData));
+        console.log(window.localStorage.getItem('todo'));
     }
 
     this.render = function(){
         if(this.isValidData(this.data)){
             this.todoList.render();
+            this.todoCount.render();
         }
     }
 
-    this.todoInput = new TodoInput($target, this.addTodo);
-    this.todoList = new TodoList(data, $target, this.removeTodo, this.toggleCompleted);
+    this.todoInput = new TodoInput($target, this.addTodo, this.removeAllTodo);
+    this.todoList = new TodoList(this.data, $target, this.removeTodo, this.toggleCompleted);
+    this.todoCount = new TodoCount($target, this.data);
 }
