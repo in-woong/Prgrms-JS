@@ -1,4 +1,4 @@
-import { checkValidation } from '../utils.js';
+import { checkValidation, setTodoAtStorage } from '../utils.js'
 
 
 function TodoList({ $target, todos, doneTodo, removeTodo }) {
@@ -38,6 +38,7 @@ TodoList.prototype.render = function () {
 
 TodoList.prototype.setState = function (nextData) {
   this.todos = nextData;
+  setTodoAtStorage(this.todos);
   this.render();
 }
 

@@ -15,4 +15,26 @@ function checkValidation(todos) {
   })
 }
 
-export { checkValidation };
+function getTodoFromStorage() {
+  try {
+    const todos = JSON.parse(localStorage.getItem('todos'));
+    return todos; 
+  } catch(err) {
+    console.log(err);
+  }
+}
+
+function setTodoAtStorage(todos) {
+  try {
+    localStorage.setItem('todos', JSON.stringify(todos));
+  } catch(err) {
+    console.log(err);
+  }
+}
+
+
+export { 
+  checkValidation,
+  getTodoFromStorage,
+  setTodoAtStorage, 
+};

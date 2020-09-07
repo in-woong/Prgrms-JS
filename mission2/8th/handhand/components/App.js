@@ -1,10 +1,11 @@
 import TodoInput from './TodoInput.js';
 import TodoList from './TodoList.js';
 import TodoCount from './TodoCount.js';
+import { getTodoFromStorage } from '../utils.js';
 
 
 function App($app) {
-  this.todos = [];
+  this.todos = getTodoFromStorage() || [];
   this.todoInput = new TodoInput({
     $target: $app,
     addTodo: this.addTodo.bind(this),
