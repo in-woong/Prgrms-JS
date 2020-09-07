@@ -1,7 +1,7 @@
 import { checkValidation } from '../utils.js';
 
 
-function TodoList({ $target, todos }) {
+function TodoList({ $target, todos, doneTodo, removeTodo }) {
   if (!new.target) { throw new Error('new 키워드를 사용해주세요!'); }
   checkValidation(todos);
   
@@ -9,6 +9,12 @@ function TodoList({ $target, todos }) {
   this.$target = $target;
   this.olExist = false;
   this.$todoList = document.createElement('div');
+  this.$todoList.addEventListener('click', (event) => {
+    const keyString = event.target.closest('li').dataset.key;
+    if (event.target.className === 'remove') removeTodo(keyString);
+    else if (event.target.closest('span').className === 'content') doneTodo(keyString);
+  });
+
   this.$target.append(this.$todoList);
   this.render();
 }
@@ -26,7 +32,7 @@ TodoList.prototype.render = function () {
   }
 
   const todoHtmlString = this.todos.map(todo =>
-    `<li>${todo.isCompleted ? `<s>${todo.text}</s>` : todo.text}</li>`).join('');
+    `<li data-key="${todo.hash}"><span class="content">${todo.isCompleted ? `<s>${todo.text}</s>` : todo.text}</span><button class="remove">삭제</button></li>`).join('');
   orderedList.innerHTML = todoHtmlString;
 }
 

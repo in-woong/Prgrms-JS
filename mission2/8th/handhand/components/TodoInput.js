@@ -9,6 +9,7 @@ function TodoInput({ $target, addTodo }) {
     addTodo({
       text: this.$input.value,
       isCompleted: false,
+      hash: this.hashCode(),
     });
     this.$input.value = '';
     this.$input.focus();
@@ -22,5 +23,8 @@ TodoInput.prototype.render = function() {
   this.$target.append(this.$addBtn);
 }
 
+TodoInput.prototype.hashCode = function () {
+  return Math.random().toString(36).slice(2, 12);
+}
 
 export default TodoInput;
