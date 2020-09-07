@@ -6,17 +6,22 @@ export default function TodoRemoveAllButton(elementId, eventName) {
     return `<button id="${this.elementId}">할일 목록 전체 삭제</button>`;
   }
 
-  this.createCustomEvent = () => {
-    return (e) => {
-      
-      if (e.target.id === this.elementId) {
-        const removeAllTodo = () => {
-          this.root.child['todoList'].setState([]);
-          this.root.storage.todoSetItem([]);
-          this.root.render(this.root.createHTML());
-        }
-        e.target.dispatchEvent(new CustomEvent('removeAll', { bubbles: true, detail: { removeAllTodo } }));
-      }
+  this.addEvent = () => {
+    const removeAllEventHandler = (e) => {
+      const todoListElement = document.querySelector('#todo-list');
+      todoListElement.dispatchEvent(new CustomEvent('removeAll'));
     }
+  
+    this.element.addEventListener('click', removeAllEventHandler);
   }
+
+  this.init = () => {
+    const parentElement = document.querySelector('#app');
+    parentElement.insertAdjacentHTML('beforeend', this.createView());
+    this.element = document.querySelector(`#${this.elementId}`);
+
+    this.addEvent();
+  }
+
+  this.init();
 }

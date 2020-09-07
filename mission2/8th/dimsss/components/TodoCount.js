@@ -1,27 +1,45 @@
+import { storage } from '../storage.js';
+
 export default function TodoCount(elementId) {
   this.elementId = elementId
   
-  this.createView = () => {
-    return `<div id="${elementId}">해야될 todo 갯수 : ${this.setTodoCount()} 완료된 todo 갯수 : ${this.setCompletedTodoCount()}</div>`;
+  this.createView = (todoCount) => {
+    return `<div id="${elementId}">해야될 todo 갯수 : ${todoCount.inCompleteCount} 완료된 todo 갯수 : ${todoCount.completeCount}</div>`;
   }
 
-  this.setTodoCount = () => {
-    const todoListComponent = this.root.child['todoList'].state;
-
-    return todoListComponent.filter((todo) => {
-      if (!todo.isComplete) {
-        return todo;
-      }
-    }).length;
+  this.addEvent = () => {
+    this.element.addEventListener('receiveTodoList', (e) => {
+      this.render(e.detail.todoList);
+    })
   }
 
-  this.setCompletedTodoCount = () => {
-    const todoListComponent = this.root.child['todoList'].state;
-    
-    return todoListComponent.filter((todo) => {
+  this.setTodoCount = (todoList) => {
+    return todoList.reduce((acc, todo) => {
       if (todo.isComplete) {
-        return todo;
+        acc.completeCount = acc.completeCount + 1
+      } else {
+        acc.inCompleteCount = acc.inCompleteCount + 1
       }
-    }).length;
+    
+      return acc
+    }, {
+      completeCount: 0,
+      inCompleteCount: 0
+    })
   }
+
+  this.render = (todoList) => {
+    this.element.innerHTML = this.createView(this.setTodoCount(todoList));
+  }
+
+  this.init = () => {
+    this.parentElement = document.querySelector('#app');
+    this.todoListElement = document.querySelector('#todo-list');
+
+    this.parentElement.insertAdjacentHTML('beforeend', this.createView(this.setTodoCount(storage.getAllTodoData())));
+    this.element = document.querySelector(`#${this.elementId}`);
+    this.addEvent();
+  }
+
+  this.init();  
 }
