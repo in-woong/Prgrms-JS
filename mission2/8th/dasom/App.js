@@ -1,16 +1,5 @@
 
 function App(){
-  var data = [
-      {
-        text: 'JS 공부하기',
-        isCompleted: true
-      },
-      {
-        text: 'JS 복습하기',
-        isCompleted: false
-      }
-    ];
-  
   this.isValid = () => {
     if(this.data === null || this.data === undefined) {
       throw new Error('data가 null 혹은 undefinded입니다.');
@@ -39,15 +28,16 @@ function App(){
   }
 
   this.addTodo = (todo) => {
-    this.data.push({
+    const newData = {
       text: todo,
       isCompleted: false
-    });
+    }
+    this.data.push(newData);
     this.render();
   }
 
   this.countTodo = () => {
-    const completeTodo = this.data.filter(d=>{return d.isCompleted}).length;
+    const completeTodo = this.data.filter((item)=>item.isCompleted);
     const countTodoObj = {
       completeTodo: completeTodo,
       incompleteTodo : this.data.length - completeTodo
@@ -58,11 +48,13 @@ function App(){
   this.render = () => {
     this.todoList.setState(this.data);
     this.todoCount.render();
+    this.localStorage.setData(this.data);
   }
 
   
-  this.data = data;
   const $target = document.querySelector('#todo-list');
+  this.localStorage = new LocalStorage();
+  this.data = this.localStorage.getData();
   this.todoList = new TodoList(this.data, $target, this.isValid, this.toggleTodo, this.deleteTodo);
   this.todoInput = new TodoInput($target, this.addTodo, this.deleteAllTodo);
   this.todoCount = new TodoCount($target, this.countTodo);
