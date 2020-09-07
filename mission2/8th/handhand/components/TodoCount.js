@@ -16,8 +16,8 @@ function TodoCount({ $target, totalTodoCount, doneTodoCount }) {
 }
 
 TodoCount.prototype.render = function() {
-  this.$total.innerHTML = `전체: ${this.totalTodo()}`;
-  this.$done.innerHTML = `다함: ${this.doneTodo()}`;
+  this.$total.innerHTML = `할일 전체: ${this.totalTodo()}`;
+  this.$done.innerHTML = `다한 일: ${this.doneTodo()}`;
 }
 
 export default TodoCount;

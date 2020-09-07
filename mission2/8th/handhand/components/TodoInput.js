@@ -1,8 +1,9 @@
 
-function TodoInput({ $target, addTodo }) {
+function TodoInput({ $target, addTodo, removeAllTodo }) {
   this.$target = $target;
   this.$input = document.createElement('input');
   this.$input.value = '';
+
   this.$addBtn = document.createElement('button');
   this.$addBtn.innerHTML = '할일 추가하기';
   this.$addBtn.addEventListener('click', () => {
@@ -15,12 +16,23 @@ function TodoInput({ $target, addTodo }) {
     this.$input.focus();
   });
 
+  this.$removeBtn = document.createElement('button');
+  this.$removeBtn.innerHTML = '할일 모두 삭제하기';
+  this.$removeBtn.addEventListener('removeAll', () => {
+    removeAllTodo();
+  });
+  this.$removeBtn.addEventListener('click', () => {
+    const event = new Event('removeAll');
+    this.$removeBtn.dispatchEvent(event);
+  });
+
   this.render();
 }
 
 TodoInput.prototype.render = function() {
   this.$target.append(this.$input);
-  this.$target.append(this.$addBtn);
+  this.$input.after(this.$addBtn);
+  this.$addBtn.after(this.$removeBtn);
 }
 
 TodoInput.prototype.hashCode = function () {

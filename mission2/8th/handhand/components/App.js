@@ -8,6 +8,7 @@ function App($app) {
   this.todoInput = new TodoInput({
     $target: $app,
     addTodo: this.addTodo.bind(this),
+    removeAllTodo: this.removeAllTodo.bind(this),
   });
   this.todoList = new TodoList({
     $target: $app,
@@ -42,6 +43,12 @@ App.prototype.removeTodo = function(key) {
   newTodos.splice(newTodos.findIndex(todo => todo.hash === key), 1);
   this.todos = newTodos;
   this.todoList.setState(this.todos);
+  this.todoCount.render();
+}
+
+App.prototype.removeAllTodo = function() {
+  this.todos = [];
+  this.todoList.setState([]);
   this.todoCount.render();
 }
 
