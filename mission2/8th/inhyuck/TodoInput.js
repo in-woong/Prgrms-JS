@@ -8,10 +8,12 @@ function TodoInput({$targetElement, onSaveTodoItem}) {
             <label for="todo-item-add-input">Enter what to do</label>
             <input type="text" id="todo-item-add-input">
             <button id="todo-item-add-button">Save</button>
+            <button id="todo-item-remove-all-button">Remove All</button>
         `;
 
     this.$todoItemAddInput = $targetElement.querySelector('#todo-item-add-input');
     this.$todoItemAddButton = $targetElement.querySelector('#todo-item-add-button');
+    this.$todoItemRemoveAllButton = $targetElement.querySelector('#todo-item-remove-all-button');
 
     const saveTodoItem = () => {
         onSaveTodoItem({todoItemText: this.$todoItemAddInput.value});
@@ -28,6 +30,12 @@ function TodoInput({$targetElement, onSaveTodoItem}) {
     //Save 버튼 클릭 시 저장 TodoItem 추가
     this.$todoItemAddButton.addEventListener('click', () => {
         saveTodoItem();
+    });
+
+    this.$todoItemRemoveAllButton.addEventListener('click', event => {
+        event.target.dispatchEvent(new CustomEvent('removeAll', {
+            bubbles: true,
+        }));
     });
 }
 

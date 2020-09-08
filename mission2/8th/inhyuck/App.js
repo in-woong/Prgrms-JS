@@ -32,6 +32,13 @@ function App({selector}) {
         this.todoCount.setState({todoItems: this.todoItems});
     };
 
+    this.$app.addEventListener('removeAll', event => {
+        event.stopPropagation();
+        this.todoItems = [];
+        this.todoList.setState({newTodoItems: this.todoItems});
+        this.todoCount.setState({todoItems: this.todoItems});
+    });
+
     this.render = function () {
         this.$app.innerHTML = `
             <div id="todo-list"></div>
