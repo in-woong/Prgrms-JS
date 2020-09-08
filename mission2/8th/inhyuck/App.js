@@ -4,12 +4,15 @@ function App({selector}) {
         text: 'default todoItem!',
         isCompleted: false,
     }];
+    validateTodoItems({todoItems: this.todoItems});
 
     const onSaveTodoItem = ({todoItemText}) => {
-        this.todoItems.push({
+        const newTodoItem = {
             text: todoItemText,
             isCompleted: false,
-        });
+        };
+        validateTodoItem({todoItem: newTodoItem});
+        this.todoItems.push(newTodoItem);
 
         this.todoList.setState({newTodoItems: this.todoItems});
         this.todoCount.setState({todoItems: this.todoItems});
@@ -47,4 +50,32 @@ function App({selector}) {
     };
 
     this.render();
+}
+
+function validateTodoItems({ todoItems }) {
+    if (!todoItems) {
+        errorHandler({ errorMessage: 'todoItems is null or undefined' });
+    }
+
+    if (!Array.isArray(todoItems)) {
+        errorHandler({ errorMessage: 'todoItems is not Array' });
+    }
+
+    todoItems.forEach((todoItem) => validateTodoItem({ todoItem }));
+}
+
+function validateTodoItem({ todoItem }) {
+    const { text, isCompleted } = todoItem;
+
+    if (typeof text !== 'string' || text.trim() === '') {
+        errorHandler({ errorMessage: 'text value is empty or is not string type' });
+    }
+
+    if (typeof isCompleted !== 'boolean') {
+        errorHandler({ errorMessage: 'isCompleted value is empty or is not boolean type' });
+    }
+}
+
+function errorHandler({ errorMessage }) {
+    throw new Error(errorMessage);
 }

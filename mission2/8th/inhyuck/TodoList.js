@@ -2,14 +2,9 @@ function TodoList({ $targetElement, todoItems, onRemoveTodoItem, onCompleteTodoI
     if (!(this instanceof TodoList)) {
         errorHandler({ errorMessage: 'not exist new keyword' });
     }
-    const $todoList = $targetElement;
-    if (!$todoList) {
-        errorHandler({ errorMessage: 'target element is not found' });
-    }
-    validateTodoItems({ todoItems });
 
     this.todoItems = todoItems;
-    this.$todoList = $todoList;
+    this.$todoList = $targetElement;
 
     this.render = function () {
         this.$todoList.innerHTML = `<ul>
@@ -33,8 +28,6 @@ function TodoList({ $targetElement, todoItems, onRemoveTodoItem, onCompleteTodoI
     };
 
     this.setState = function ({ newTodoItems }) {
-        validateTodoItems({ todoItems: newTodoItems });
-
         this.todoItems = newTodoItems;
         this.render();
     };
@@ -50,32 +43,4 @@ function convertTodoItemToInnerHtml({ todoItem }) {
             <button type="button" class="remove-btn">Remove</button>
           </li>
         `;
-}
-
-function validateTodoItems({ todoItems }) {
-    if (!todoItems) {
-        errorHandler({ errorMessage: 'todoItems is null or undefined' });
-    }
-
-    if (!Array.isArray(todoItems)) {
-        errorHandler({ errorMessage: 'todoItems is not Array' });
-    }
-
-    todoItems.forEach((todoItem) => validateTodoItem({ todoItem }));
-}
-
-function validateTodoItem({ todoItem }) {
-    const { text, isCompleted } = todoItem;
-
-    if (typeof text !== 'string' || text.trim() === '') {
-        errorHandler({ errorMessage: 'text value is empty or is not string type' });
-    }
-
-    if (typeof isCompleted !== 'boolean') {
-        errorHandler({ errorMessage: 'isCompleted value is empty or is not boolean type' });
-    }
-}
-
-function errorHandler({ errorMessage }) {
-    throw new Error(errorMessage);
 }
