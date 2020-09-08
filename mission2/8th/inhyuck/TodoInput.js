@@ -1,8 +1,3 @@
-const ALLOWED_ADD_TODO_ITEM_KEY = {
-    ENTER: 'Enter',
-    TAB: 'Tab',
-};
-
 function TodoInput({$targetElement, onSaveTodoItem}) {
     $targetElement.innerHTML = `
             <label for="todo-item-add-input">Enter what to do</label>
@@ -18,12 +13,12 @@ function TodoInput({$targetElement, onSaveTodoItem}) {
     const saveTodoItem = () => {
         onSaveTodoItem({todoItemText: this.$todoItemAddInput.value});
         this.$todoItemAddInput.value = '';
-        setTimeout(() => this.$todoItemAddInput.focus(), 0);
+        this.$todoItemAddInput.focus();
     };
 
-    //입력창에서 Enter, Tab 키 동작 시 TodoItem 추가
+    //입력창에서 Enter 키 동작 시 TodoItem 추가
     this.$todoItemAddInput.addEventListener('keydown', event => {
-        if (Object.values(ALLOWED_ADD_TODO_ITEM_KEY).some(key => key === event.key)) {
+        if (event.key === 'Enter') {
             saveTodoItem();
         }
     });
