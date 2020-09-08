@@ -1,17 +1,17 @@
 // TodoList 컴포넌트
-function TodoList({ data, tagID }) {
+function TodoList({ data, $target, deleteTodo, toggleTodo }) {
   // function 형태의 선언인 경우 에러처리
   if (!(this instanceof TodoList))
     throw new Error('function 형태의 선언입니다.')
   checkData(data) // data 파라미터 에러처리
 
   this.todos = data
-  this.tagID = tagID
   this.setState = function (nextData) {
     checkData(nextData) // nextData 파라미터 에러처리
     this.todos = nextData
     this.render()
   }
+
   this.render = function () {
     const html = this.todos
       .map(
@@ -22,37 +22,21 @@ function TodoList({ data, tagID }) {
       </li>`
       )
       .join('')
-    document.querySelector(`#${this.tagID}-list`).innerHTML = `<ul>${html}</ul>`
+    $target.innerHTML = `<ul>${html}</ul>`
     document.querySelector('ul').addEventListener('click', (event) => {
       if (!event.target) {
         return
       }
-      const target = event.target
-      const id = parseInt(target.parentNode.id)
-      if (target.tagName == 'BUTTON') {
+      const eventTarget = event.target
+      const id = parseInt(eventTarget.parentNode.id)
+      if (eventTarget.tagName == 'BUTTON') {
         // 삭제
-        this.deleteTodo(id)
+        deleteTodo(id)
       } else {
         // 완료
-        this.toggleTodo(id)
+        toggleTodo(id)
       }
     })
-  }
-
-  this.deleteTodo = function (id) {
-    const newTodos = this.todos.filter((todo) => {
-      return todo.id !== id
-    })
-    this.todos = newTodos
-    this.setState(this.todos)
-  }
-
-  this.toggleTodo = function (id) {
-    const newTodos = this.todos.map((todo) =>
-      todo.id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo
-    )
-    this.todos = newTodos
-    this.setState(this.todos)
   }
   this.render()
 }
@@ -66,3 +50,5 @@ function checkData(data) {
   if (data.some((value) => typeof value.isCompleted !== 'boolean'))
     throw new Error('isCompleted값이 유효하지 않습니다.') // isCompleted 체크
 }
+
+export default TodoList
