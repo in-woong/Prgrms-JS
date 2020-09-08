@@ -1,5 +1,5 @@
 // TodoList 컴포넌트
-function TodoList(data, tagID) {
+function TodoList({ data, tagID }) {
   // function 형태의 선언인 경우 에러처리
   if (!(this instanceof TodoList))
     throw new Error('function 형태의 선언입니다.')
@@ -16,10 +16,43 @@ function TodoList(data, tagID) {
     const html = this.todos
       .map(
         (todo) =>
-          `<li>${todo.isCompleted ? `<s>${todo.text}</s>` : todo.text}</li>`
+          `<li id="${todo.id}">
+      ${todo.isCompleted ? `<s>${todo.text}</s>` : `<span>${todo.text}</span>`}
+      <button >❌</button>
+      </li>`
       )
       .join('')
     document.querySelector(`#${this.tagID}-list`).innerHTML = `<ul>${html}</ul>`
+    document.querySelector('ul').addEventListener('click', (event) => {
+      if (!event.target) {
+        return
+      }
+      const target = event.target
+      const id = parseInt(target.parentNode.id)
+      if (target.tagName == 'BUTTON') {
+        // 삭제
+        this.deleteTodo(id)
+      } else {
+        // 완료
+        this.toggleTodo(id)
+      }
+    })
+  }
+
+  this.deleteTodo = function (id) {
+    const newTodos = this.todos.filter((todo) => {
+      return todo.id !== id
+    })
+    this.todos = newTodos
+    this.setState(this.todos)
+  }
+
+  this.toggleTodo = function (id) {
+    const newTodos = this.todos.map((todo) =>
+      todo.id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo
+    )
+    this.todos = newTodos
+    this.setState(this.todos)
   }
   this.render()
 }
