@@ -11,10 +11,6 @@ function TodoList({ $targetElement, todoItems, onRemoveTodoItem, onCompleteTodoI
                   ${this.todoItems.map((todoItem) => convertTodoItemToInnerHtml({ todoItem })).join('')}
             </ul>`;
 
-        this.mounted();
-    };
-
-    this.mounted = function () {
         const $todoItems = this.$todoList.querySelectorAll('ul > li');
         Array.from($todoItems).forEach(($todoItem, index) => {
             $todoItem.querySelector('.txt').addEventListener('click', () => {
