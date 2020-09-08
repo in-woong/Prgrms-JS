@@ -1,18 +1,19 @@
-function TodoCount({$targetElement}) {
+function TodoCount({$targetElement, todoItems}) {
     this.$todoCount = $targetElement;
-    this.todoItemTotalCount = 0;
-    this.todoItemCompletedCount = 0;
+    this.todoItems = todoItems;
 
     this.render = function () {
+        const todoItemTotalCount = this.todoItems.length;
+        const todoItemCompletedCount = this.todoItems.filter(todoItem => todoItem.isCompleted).length;
+
         this.$todoCount.innerHTML = `
-            <span>total: ${this.todoItemTotalCount}</span>
-            <span>, completed: ${this.todoItemCompletedCount}</span> 
+            <span>total: ${todoItemTotalCount}</span>
+            <span>, completed: ${todoItemCompletedCount}</span> 
         `;
     };
 
-    this.setState = function ({todoItemTotalCount, todoItemCompletedCount}) {
-        this.todoItemTotalCount = todoItemTotalCount;
-        this.todoItemCompletedCount = todoItemCompletedCount;
+    this.setState = function ({todoItems}) {
+        this.todoItems = todoItems;
         this.render();
     };
 

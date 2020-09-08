@@ -1,4 +1,4 @@
-function TodoList({ $targetElement, todoItems, onChangeTodoItems }) {
+function TodoList({ $targetElement, todoItems, onRemoveTodoItem, onCompleteTodoItem }) {
     if (!(this instanceof TodoList)) {
         errorHandler({ errorMessage: 'not exist new keyword' });
     }
@@ -23,15 +23,11 @@ function TodoList({ $targetElement, todoItems, onChangeTodoItems }) {
         const $todoItems = this.$todoList.querySelectorAll('ul > li');
         Array.from($todoItems).forEach(($todoItem, index) => {
             $todoItem.querySelector('.txt').addEventListener('click', () => {
-                const newTodoItems = [...this.todoItems];
-                newTodoItems[index].isCompleted = !newTodoItems[index].isCompleted;
-                this.setState({newTodoItems});
+                onCompleteTodoItem({todoItemIndex: index});
             });
 
             $todoItem.querySelector('.remove-btn').addEventListener('click', () => {
-                const newTodoItems = [...this.todoItems];
-                newTodoItems.splice(index, 1);
-                this.setState({newTodoItems});
+                onRemoveTodoItem({todoItemIndex: index});
             });
         });
     };
@@ -41,18 +37,6 @@ function TodoList({ $targetElement, todoItems, onChangeTodoItems }) {
 
         this.todoItems = newTodoItems;
         this.render();
-        onChangeTodoItems({todoItems: newTodoItems});
-    };
-
-    this.addTodoItem = function ({ todoItemText }) {
-        const newTodoItems = [
-            ...this.todoItems,
-            {
-                text: todoItemText,
-                isCompleted: false,
-            }
-        ];
-        this.setState({newTodoItems});
     };
 
     this.render();

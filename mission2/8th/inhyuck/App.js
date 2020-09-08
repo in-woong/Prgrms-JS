@@ -6,17 +6,41 @@ function App({selector}) {
             <div id="todo-input"></div>
         `;
 
-    this.todoList = new TodoList({$targetElement: this.$app.querySelector('#todo-list'), todoItems: [], onChangeTodoItems});
-    this.todoInput = new TodoInput({$targetElement: this.$app.querySelector('#todo-input'), onSaveTodoItem});
-    this.todoCount = new TodoCount({$targetElement: this.$app.querySelector('#todo-count')});
+    this.todoItems = [{
+        text: 'default todoItem!',
+        isCompleted: false,
+    }];
 
     const onSaveTodoItem = ({todoItemText}) => {
-        this.todoList.addTodoItem({todoItemText});
+        this.todoItems.push({
+            text: todoItemText,
+            isCompleted: false,
+        });
+
+        this.todoList.setState({newTodoItems: this.todoItems});
+        this.todoCount.setState({todoItems: this.todoItems});
     };
 
-    const onChangeTodoItems = ({todoItems}) => {
-        const todoItemTotalCount = todoItems.length;
-        const todoItemCompletedCount = todoItems.filter(todoItem => todoItem.isCompleted).length;
-        this.todoCount.setState({todoItemTotalCount, todoItemCompletedCount});
+    const onRemoveTodoItem = ({todoItemIndex}) => {
+        this.todoItems.splice(todoItemIndex, 1);
+
+        this.todoList.setState({newTodoItems: this.todoItems});
+        this.todoCount.setState({todoItems: this.todoItems});
     };
+
+    const onCompleteTodoItem = ({todoItemIndex}) => {
+        this.todoItems[todoItemIndex].isCompleted = !this.todoItems[todoItemIndex].isCompleted;
+
+        this.todoList.setState({newTodoItems: this.todoItems});
+        this.todoCount.setState({todoItems: this.todoItems});
+    };
+
+    this.todoList = new TodoList({
+        $targetElement: this.$app.querySelector('#todo-list'),
+        todoItems: this.todoItems,
+        onRemoveTodoItem,
+        onCompleteTodoItem,
+    });
+    this.todoInput = new TodoInput({$targetElement: this.$app.querySelector('#todo-input'), onSaveTodoItem});
+    this.todoCount = new TodoCount({$targetElement: this.$app.querySelector('#todo-count'), todoItems: this.todoItems});
 }
