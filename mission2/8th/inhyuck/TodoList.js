@@ -5,22 +5,23 @@ function TodoList({ $targetElement, todoItems, onRemoveTodoItem, onCompleteTodoI
 
     this.todoItems = todoItems;
     this.$todoList = $targetElement;
+    this.$todoList.addEventListener('click', event => {
+        event.stopPropagation();
+        const {clickAction, todoItemIndex} = event.target.dataset;
+        if (clickAction === 'toggleComplete') {
+            onCompleteTodoItem({todoItemIndex});
+            return;
+        }
+        if (clickAction === 'remove') {
+            onRemoveTodoItem({todoItemIndex});
+            return;
+        }
+    });
 
     this.render = function () {
         this.$todoList.innerHTML = `<ul>
-                  ${this.todoItems.map((todoItem) => convertTodoItemToInnerHtml({ todoItem })).join('')}
+                  ${this.todoItems.map((todoItem, index) => convertTodoItemToInnerHtml({ todoItem, todoItemIndex: index })).join('')}
             </ul>`;
-
-        const $todoItems = this.$todoList.querySelectorAll('ul > li');
-        Array.from($todoItems).forEach(($todoItem, index) => {
-            $todoItem.querySelector('.txt').addEventListener('click', () => {
-                onCompleteTodoItem({todoItemIndex: index});
-            });
-
-            $todoItem.querySelector('.remove-btn').addEventListener('click', () => {
-                onRemoveTodoItem({todoItemIndex: index});
-            });
-        });
     };
 
     this.setState = function ({ newTodoItems }) {
@@ -31,12 +32,12 @@ function TodoList({ $targetElement, todoItems, onRemoveTodoItem, onCompleteTodoI
     this.render();
 }
 
-function convertTodoItemToInnerHtml({ todoItem }) {
+function convertTodoItemToInnerHtml({ todoItem, todoItemIndex }) {
     const { text, isCompleted } = todoItem;
     return `
           <li class="item-wrap">
-            <span class="txt ${isCompleted ? 'completed' : ''}">${text}</span>
-            <button type="button" class="remove-btn">Remove</button>
+            <span class="txt ${isCompleted ? 'completed' : ''}" data-click-action="toggleComplete" data-todo-item-index="${todoItemIndex}">${text}</span>
+            <button type="button" class="remove-btn" data-click-action="remove" data-todo-item-index="${todoItemIndex}">Remove</button>
           </li>
         `;
 }
