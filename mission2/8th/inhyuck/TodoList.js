@@ -74,8 +74,6 @@ function validateTodoItem({ todoItem }) {
     if (typeof isCompleted !== 'boolean') {
         errorHandler({ errorMessage: 'isCompleted value is empty or is not boolean type' });
     }
-
-    return true;
 }
 
 function errorHandler({ errorMessage }) {
