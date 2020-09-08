@@ -12,24 +12,35 @@ function App({selector}) {
             isCompleted: false,
         };
         validateTodoItem({todoItem: newTodoItem});
-        this.todoItems.push(newTodoItem);
-        this.resetChildState();
+        this.setState({
+            todoItems: [
+              ...this.todoItems,
+              newTodoItem,
+            ]
+        });
     };
 
     const onRemoveTodoItem = ({todoItemIndex}) => {
-        this.todoItems.splice(todoItemIndex, 1);
-        this.resetChildState();
+        const newTodoItems = [...this.todoItems];
+        newTodoItems.splice(todoItemIndex, 1);
+        this.setState({
+            todoItems: newTodoItems,
+        });
     };
 
     const onCompleteTodoItem = ({todoItemIndex}) => {
-        this.todoItems[todoItemIndex].isCompleted = !this.todoItems[todoItemIndex].isCompleted;
-        this.resetChildState();
+        const newTodoItems = [...this.todoItems];
+        newTodoItems[todoItemIndex].isCompleted = !newTodoItems[todoItemIndex].isCompleted;
+        this.setState({
+            todoItems: newTodoItems,
+        });
     };
 
     this.$app.addEventListener('removeAll', event => {
         event.stopPropagation();
-        this.todoItems = [];
-        this.resetChildState();
+        this.setState({
+            todoItems: [],
+        });
     });
 
     this.render = function () {
@@ -49,7 +60,8 @@ function App({selector}) {
         this.todoCount = new TodoCount({$targetElement: this.$app.querySelector('#todo-count'), todoItems: this.todoItems});
     };
 
-    this.resetChildState = function () {
+    this.setState = function ({todoItems}) {
+        this.todoItems = todoItems;
         this.todoList.setState({newTodoItems: this.todoItems});
         this.todoCount.setState({todoItems: this.todoItems});
     };
