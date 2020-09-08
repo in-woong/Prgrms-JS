@@ -1,9 +1,6 @@
 function App({selector}) {
     this.$app = document.querySelector(selector);
-    this.todoItems = [{
-        text: 'default todoItem!',
-        isCompleted: false,
-    }];
+    this.todoItems = getStorage({key: 'todoItems'}) || [];
     validateTodoItems({todoItems: this.todoItems});
 
     const onSaveTodoItem = ({todoItemText}) => {
@@ -62,8 +59,9 @@ function App({selector}) {
 
     this.setState = function ({todoItems}) {
         this.todoItems = todoItems;
-        this.todoList.setState({newTodoItems: this.todoItems});
-        this.todoCount.setState({todoItems: this.todoItems});
+        this.todoList.setState({newTodoItems: todoItems});
+        this.todoCount.setState({todoItems: todoItems});
+        setStorage({key: 'todoItems', value: todoItems})
     };
 
     this.render();
@@ -91,6 +89,18 @@ function validateTodoItem({ todoItem }) {
     if (typeof isCompleted !== 'boolean') {
         errorHandler({ errorMessage: 'isCompleted value is empty or is not boolean type' });
     }
+}
+
+//localStorage get/set
+function getStorage({key}) {
+    try {
+        return JSON.parse(window.localStorage.getItem(key));
+    } catch(error) {
+        errorHandler({errorMessage: error.message});
+    }
+}
+function setStorage({key, value}) {
+    window.localStorage.setItem(key, JSON.stringify(value));
 }
 
 function errorHandler({ errorMessage }) {
