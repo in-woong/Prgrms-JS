@@ -45,4 +45,6 @@ function App({selector}) {
         this.todoInput = new TodoInput({$targetElement: this.$app.querySelector('#todo-input'), onSaveTodoItem});
         this.todoCount = new TodoCount({$targetElement: this.$app.querySelector('#todo-count'), todoItems: this.todoItems});
     };
+
+    this.render();
 }

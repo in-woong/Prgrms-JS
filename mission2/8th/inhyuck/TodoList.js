@@ -54,7 +54,7 @@ function convertTodoItemToInnerHtml({ todoItem }) {
 
 function validateTodoItems({ todoItems }) {
     if (!todoItems) {
-        errorHandler({ errorMessage: 'todoItems is empty' });
+        errorHandler({ errorMessage: 'todoItems is null or undefined' });
     }
 
     if (!Array.isArray(todoItems)) {
