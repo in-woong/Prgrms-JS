@@ -1,15 +1,6 @@
 class App {
   $target
-  todos = [
-    {
-      text: 'JS 공부하기',
-      isCompleted: true,
-    },
-    {
-      text: 'JS 복습하기',
-      isCompleted: false,
-    },
-  ]
+  todos = store.get('todos') || []
   todoAllRemoveBtn = null
   todoInput = null
   todoList = null
@@ -66,5 +57,6 @@ class App {
     this.todos = nextData
     this.todoList.setState(this.todos)
     this.todoCount.setState(this.todos)
+    store.set('todos', this.todos)
   }
 }
