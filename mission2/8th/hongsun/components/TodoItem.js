@@ -32,7 +32,7 @@ export default class TodoItem {
     deleteButtonEl.addEventListener('click', this.onRemove);
     return deleteButtonEl;
   }
-  
+
   getTodoItemElement() {
     const itemEl = document.createElement('li');
     itemEl.setAttribute('data-id', this.data.id);
@@ -51,7 +51,7 @@ export default class TodoItem {
     itemEl.appendChild(deleteButtonEl);
     return itemEl;
   }
-  
+
   render() {
     const todoItem = this.getTodoItemElement(this.data);
     this.targetEl.appendChild(todoItem);

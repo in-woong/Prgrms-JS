@@ -29,12 +29,14 @@ export default class TodoInput {
     this.value = nextValue;
     this.render();
   }
-  
+
   render() {
     const prevInput = this.targetEl.querySelector('input');
     prevInput && prevInput.remove();
     const todoInputWrapper = this.getTodoInputWrapperElement();
-    const removeButton = document.getElementById('todo-input-wrpper')?.querySelector('button');
+    const removeButton = document
+      .getElementById('todo-input-wrpper')
+      ?.querySelector('button');
     !removeButton && new TodoRemoveButton(todoInputWrapper, this.onRemoveAll);
     const todoInput = this.getTodoInputElement();
     todoInputWrapper.prepend(todoInput);

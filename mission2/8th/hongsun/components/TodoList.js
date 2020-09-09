@@ -45,7 +45,9 @@ export default class TodoList {
     const prevList = this.targetEl.querySelector('ul');
     prevList && prevList.remove();
     const todoList = this.getTodoListElement();
-    this.data.map(todoItem => new TodoItem(todoList, todoItem, this.onRemove));
+    this.data.map(
+      (todoItem) => new TodoItem(todoList, todoItem, this.onRemove)
+    );
     this.targetEl.appendChild(todoList);
   }
 }
