@@ -10,12 +10,17 @@ class App {
       isCompleted: false,
     },
   ]
+  todoAllRemoveBtn = null
   todoInput = null
   todoList = null
   todoCount = null
 
   constructor($target) {
     this.$target = $target
+
+    this.todoAllRemoveBtn = new TodoAllRemoveBtn({
+      $target,
+    })
 
     this.todoInput = new TodoInput({
       $target,
@@ -42,6 +47,18 @@ class App {
       $target,
       initialData: this.todos,
     })
+
+    this.eventListener()
+  }
+
+  eventListener() {
+    this.todoAllRemoveBtn.$todoAllRemoveBtn.addEventListener(
+      'removeAll',
+      (e) => {
+        this.todos = []
+        this.setState(this.todos)
+      }
+    )
   }
 
   setState(nextData) {
