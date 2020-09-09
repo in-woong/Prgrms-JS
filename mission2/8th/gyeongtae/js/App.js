@@ -5,21 +5,23 @@ import TodoRemoveAll from './TodoRemoveAll.js'
 
 // TodoList data배열 객체의 파라미터가 text, isCompleted가 있으면 true 없으면 false를 리턴
 const isCorrectData = (value) => {
-  return (
-    typeof value.text === 'string' && typeof value.isCompleted === 'boolean'
-  )
+  typeof value.text === 'string' && typeof value.isCompleted === 'boolean'
 }
 // TodoList data체크 함수
 function todoListDataCheck(data) {
-  if (data === null || data === undefined) {
-    throw new Error('데이터가 null이거나 undefined상태입니다')
+  if (!data) {
+    if (!typeof data === 'boolean') {
+      throw new Error('데이터가 null이거나 undefined상태입니다')
+    }
   }
   if (!Array.isArray(data)) {
     throw new Error('데이터가 array상태가 아닙니다')
   }
   // 배열의 요소중 하나라도 text, isCompleted프로퍼티중 하나가 없다면 false를 반환하여 error를 발생
-  if (!data.every(isCorrectData)) {
-    throw new Error('데이터 내용이 이상합니다')
+  if (!data.length === 0) {
+    if (!data.every(isCorrectData)) {
+      throw new Error('데이터 내용이 이상합니다')
+    }
   }
 }
 
@@ -30,11 +32,8 @@ export default function App(data, renderEle) {
     throw new Error('이 함수는 생성자 함수입니다 new 연산자를 붙여주세요')
   }
   // data 초기화
-  if (data) {
-    this.data = JSON.parse(data)
-  } else {
-    this.data = []
-  }
+  this.data = data
+
   this.renderEle = renderEle
   // TodoList data체크
   todoListDataCheck(this.data)
