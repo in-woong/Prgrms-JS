@@ -39,10 +39,10 @@ class App {
       initialData: this.todos,
     })
 
-    this.eventListener()
+    this.subscribe()
   }
 
-  eventListener() {
+  subscribe() {
     this.todoAllRemoveBtn.$todoAllRemoveBtn.addEventListener(
       'removeAll',
       (e) => {
