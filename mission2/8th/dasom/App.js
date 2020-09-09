@@ -39,8 +39,8 @@ function App(){
   this.countTodo = () => {
     const completeTodo = this.data.filter((item)=>item.isCompleted);
     const countTodoObj = {
-      completeTodo: completeTodo,
-      incompleteTodo : this.data.length - completeTodo
+      completeTodo: completeTodo.length,
+      incompleteTodo : this.data.length - completeTodo.length
     }
     return countTodoObj;
   }
