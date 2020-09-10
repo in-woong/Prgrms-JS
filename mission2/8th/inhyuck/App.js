@@ -40,19 +40,19 @@ function App({selector}) {
 
     this.render = function () {
         this.$targetElement.innerHTML = `
-            <div id="todo-list"></div>
-            <div id="todo-count"></div>
-            <div id="todo-input"></div>
+            <div class="todo-list"></div>
+            <div class="todo-count"></div>
+            <div class="todo-input"></div>
         `;
 
         this.todoList = new TodoList({
-            $targetElement: this.$targetElement.querySelector('#todo-list'),
+            $targetElement: this.$targetElement.querySelector('.todo-list'),
             todoItems: this.todoItems,
             onRemoveTodoItem,
             onCompleteTodoItem,
         });
-        this.todoInput = new TodoInput({$targetElement: this.$targetElement.querySelector('#todo-input'), onSaveTodoItem});
-        this.todoCount = new TodoCount({$targetElement: this.$targetElement.querySelector('#todo-count'), todoItems: this.todoItems});
+        this.todoInput = new TodoInput({$targetElement: this.$targetElement.querySelector('.todo-input'), onSaveTodoItem});
+        this.todoCount = new TodoCount({$targetElement: this.$targetElement.querySelector('.todo-count'), todoItems: this.todoItems});
     };
 
     this.setState = function ({todoItems}) {
