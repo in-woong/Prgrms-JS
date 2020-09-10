@@ -1,38 +1,51 @@
 function TodoInput({$targetElement, onSaveTodoItem}) {
     this.$targetElement = $targetElement;
 
-    this.$targetElement.innerHTML = `
+    this.render = function () {
+        this.$targetElement.innerHTML = `
             <label for="todo-item-add-input">Enter what to do</label>
             <input type="text" id="todo-item-add-input">
             <button id="todo-item-add-button">Save</button>
             <button id="todo-item-remove-all-button">Remove All</button>
         `;
 
-    this.$todoItemAddInput = this.$targetElement.querySelector('#todo-item-add-input');
-    this.$todoItemAddButton = this.$targetElement.querySelector('#todo-item-add-button');
-    this.$todoItemRemoveAllButton = this.$targetElement.querySelector('#todo-item-remove-all-button');
-
-    const saveTodoItem = () => {
-        onSaveTodoItem({todoItemText: this.$todoItemAddInput.value});
-        this.$todoItemAddInput.value = '';
-        this.$todoItemAddInput.focus();
+        bindEvents();
     };
 
-    //입력창에서 Enter 키 동작 시 TodoItem 추가
-    this.$todoItemAddInput.addEventListener('keydown', event => {
-        if (event.key === 'Enter') {
-            saveTodoItem();
-        }
-    });
-    //Save 버튼 클릭 시 저장 TodoItem 추가
-    this.$todoItemAddButton.addEventListener('click', () => {
-        saveTodoItem();
-    });
+    this.setState = function () {
+        /* state 를 갖고있지 않는 컴포넌트 */
+        this.render();
+    };
 
-    this.$todoItemRemoveAllButton.addEventListener('click', event => {
-        event.target.dispatchEvent(new CustomEvent('removeAll', {
-            bubbles: true,
-        }));
-    });
+    const bindEvents = () => {
+        const $todoItemAddInput = this.$targetElement.querySelector('#todo-item-add-input');
+        const $todoItemAddButton = this.$targetElement.querySelector('#todo-item-add-button');
+        const $todoItemRemoveAllButton = this.$targetElement.querySelector('#todo-item-remove-all-button');
+
+        const saveTodoItem = () => {
+            onSaveTodoItem({todoItemText: $todoItemAddInput.value});
+            $todoItemAddInput.value = '';
+            $todoItemAddInput.focus();
+        };
+
+        //입력창에서 Enter 키 동작 시 TodoItem 추가
+        $todoItemAddInput.addEventListener('keydown', event => {
+            if (event.key === 'Enter') {
+                saveTodoItem();
+            }
+        });
+        //Save 버튼 클릭 시 저장 TodoItem 추가
+        $todoItemAddButton.addEventListener('click', () => {
+            saveTodoItem();
+        });
+
+        $todoItemRemoveAllButton.addEventListener('click', event => {
+            event.target.dispatchEvent(new CustomEvent('removeAll', {
+                bubbles: true,
+            }));
+        });
+    }
+
+    this.render();
 }
 
