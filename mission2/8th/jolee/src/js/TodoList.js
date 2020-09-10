@@ -1,9 +1,13 @@
-function TodoList($target, data) {
-  this.$target = $target
-  this.data = data
+function TodoList(toggleTodo, deleteTodo) {
+  this.data = []
+
+  this.toggleTodo = toggleTodo
+  this.deleteTodo = deleteTodo
+
+  const $todoList = document.querySelector('#todo-list')
 
   this.render = function () {
-    this.$target.innerHTML = this.data
+    $todoList.innerHTML = this.data
       .map(
         (todo) =>
           `<li class="todo-item">${
@@ -15,16 +19,14 @@ function TodoList($target, data) {
     const $todoItems = document.querySelectorAll('.todo-item')
     $todoItems.forEach(($todoItem, index) => {
       $todoItem.addEventListener('click', () => {
-        this.data[index].isCompleted = !this.data[index].isCompleted
-        this.render()
+        this.toggleTodo(index)
       })
     })
 
     const $deleteTodoBtns = document.querySelectorAll('.delete-button')
     $deleteTodoBtns.forEach(($deleteTodoBtn, index) => {
       $deleteTodoBtn.addEventListener('click', () => {
-        data.splice(index, 1)
-        this.render()
+        this.deleteTodo(index)
       })
     })
   }
@@ -34,16 +36,17 @@ function TodoList($target, data) {
     this.render()
   }
 
-  this.addTodoItem = function ({ todoText }) {
-    const newTodoItem = {
-      text: todoText,
-      isCompleted: false,
-    }
-
-    this.data.push(newTodoItem)
+  this.toggleTodo = function (index) {
+    this.data[index].isCompleted = !this.data[index].isCompleted
     this.render()
-    console.log(this.data)
+  }
+
+  this.deleteTodo = function (index) {
+    this.data.splice(index, 1)
+    this.render()
   }
 
   this.render()
 }
+
+export default TodoList
