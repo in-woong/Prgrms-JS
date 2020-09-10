@@ -1,14 +1,16 @@
 function TodoInput({$targetElement, onSaveTodoItem}) {
-    $targetElement.innerHTML = `
+    this.$targetElement = $targetElement;
+
+    this.$targetElement.innerHTML = `
             <label for="todo-item-add-input">Enter what to do</label>
             <input type="text" id="todo-item-add-input">
             <button id="todo-item-add-button">Save</button>
             <button id="todo-item-remove-all-button">Remove All</button>
         `;
 
-    this.$todoItemAddInput = $targetElement.querySelector('#todo-item-add-input');
-    this.$todoItemAddButton = $targetElement.querySelector('#todo-item-add-button');
-    this.$todoItemRemoveAllButton = $targetElement.querySelector('#todo-item-remove-all-button');
+    this.$todoItemAddInput = this.$targetElement.querySelector('#todo-item-add-input');
+    this.$todoItemAddButton = this.$targetElement.querySelector('#todo-item-add-button');
+    this.$todoItemRemoveAllButton = this.$targetElement.querySelector('#todo-item-remove-all-button');
 
     const saveTodoItem = () => {
         onSaveTodoItem({todoItemText: this.$todoItemAddInput.value});

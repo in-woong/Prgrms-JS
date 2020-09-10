@@ -4,8 +4,8 @@ function TodoList({ $targetElement, todoItems, onRemoveTodoItem, onCompleteTodoI
     }
 
     this.todoItems = todoItems;
-    this.$todoList = $targetElement;
-    this.$todoList.addEventListener('click', event => {
+    this.$targetElement = $targetElement;
+    this.$targetElement.addEventListener('click', event => {
         event.stopPropagation();
         const {clickAction, todoItemIndex} = event.target.dataset;
         if (clickAction === 'toggleComplete') {
@@ -19,7 +19,7 @@ function TodoList({ $targetElement, todoItems, onRemoveTodoItem, onCompleteTodoI
     });
 
     this.render = function () {
-        this.$todoList.innerHTML = `<ul>
+        this.$targetElement.innerHTML = `<ul>
                   ${this.todoItems.map((todoItem, index) => convertTodoItemToInnerHtml({ todoItem, todoItemIndex: index })).join('')}
             </ul>`;
     };

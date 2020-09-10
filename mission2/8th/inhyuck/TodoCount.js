@@ -1,12 +1,12 @@
 function TodoCount({$targetElement, todoItems}) {
-    this.$todoCount = $targetElement;
+    this.$targetElement = $targetElement;
     this.todoItems = todoItems;
 
     this.render = function () {
         const todoItemTotalCount = this.todoItems.length;
         const todoItemCompletedCount = this.todoItems.filter(todoItem => todoItem.isCompleted).length;
 
-        this.$todoCount.innerHTML = `
+        this.$targetElement.innerHTML = `
             <span>total: ${todoItemTotalCount}</span>
             <span>, completed: ${todoItemCompletedCount}</span> 
         `;

@@ -1,5 +1,5 @@
 function App({selector}) {
-    this.$app = document.querySelector(selector);
+    this.$targetElement = document.querySelector(selector);
     this.todoItems = getStorage({key: 'todoItems'}) || [];
     validateTodoItems({todoItems: this.todoItems});
 
@@ -33,7 +33,7 @@ function App({selector}) {
         });
     };
 
-    this.$app.addEventListener('removeAll', event => {
+    this.$targetElement.addEventListener('removeAll', event => {
         event.stopPropagation();
         this.setState({
             todoItems: [],
@@ -41,20 +41,20 @@ function App({selector}) {
     });
 
     this.render = function () {
-        this.$app.innerHTML = `
+        this.$targetElement.innerHTML = `
             <div id="todo-list"></div>
             <div id="todo-count"></div>
             <div id="todo-input"></div>
         `;
 
         this.todoList = new TodoList({
-            $targetElement: this.$app.querySelector('#todo-list'),
+            $targetElement: this.$targetElement.querySelector('#todo-list'),
             todoItems: this.todoItems,
             onRemoveTodoItem,
             onCompleteTodoItem,
         });
-        this.todoInput = new TodoInput({$targetElement: this.$app.querySelector('#todo-input'), onSaveTodoItem});
-        this.todoCount = new TodoCount({$targetElement: this.$app.querySelector('#todo-count'), todoItems: this.todoItems});
+        this.todoInput = new TodoInput({$targetElement: this.$targetElement.querySelector('#todo-input'), onSaveTodoItem});
+        this.todoCount = new TodoCount({$targetElement: this.$targetElement.querySelector('#todo-count'), todoItems: this.todoItems});
     };
 
     this.setState = function ({todoItems}) {
