@@ -4,15 +4,13 @@ function App({selector}) {
     validateTodoItems({todoItems: this.todoItems});
 
     const onSaveTodoItem = ({todoItemText}) => {
-        const newTodoItem = {
-            text: todoItemText,
-            isCompleted: false,
-        };
-        validateTodoItem({todoItem: newTodoItem});
         this.setState({
             todoItems: [
-              ...this.todoItems,
-              newTodoItem,
+                ...this.todoItems,
+                {
+                    text: todoItemText,
+                    isCompleted: false,
+                },
             ]
         });
     };
@@ -58,6 +56,7 @@ function App({selector}) {
     };
 
     this.setState = function ({todoItems}) {
+        validateTodoItems({todoItems});
         this.todoItems = todoItems;
         this.todoList.setState({newTodoItems: todoItems});
         this.todoCount.setState({todoItems: todoItems});
