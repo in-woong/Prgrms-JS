@@ -1,3 +1,5 @@
+import TodoCount from './TodoCount.js'
+
 function TodoList(toggleTodo, deleteTodo) {
   this.data = []
 
@@ -29,6 +31,8 @@ function TodoList(toggleTodo, deleteTodo) {
         this.deleteTodo(index)
       })
     })
+
+    this.todoCount = new TodoCount(this.data)
   }
 
   this.setState = function (nextData) {
