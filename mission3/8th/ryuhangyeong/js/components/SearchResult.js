@@ -1,4 +1,4 @@
-class SearchResult {
+export default class SearchResult {
   $target = null
   $searchResult = null
   data = null

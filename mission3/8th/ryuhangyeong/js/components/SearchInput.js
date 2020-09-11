@@ -1,4 +1,4 @@
-class SearchInput {
+export default class SearchInput {
   $target = null
   $searchInput = null
   onSearch = null

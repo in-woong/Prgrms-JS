@@ -1,3 +1,6 @@
-const END_POINT = 'https://jjalbot.com/api/jjals'
+import { request } from './request.js'
 
-const getListByKeyword = (keyword) => request(`${END_POINT}?text=${keyword}`)
+export const END_POINT = 'https://jjalbot.com/api/jjals'
+
+export const getListByKeyword = (keyword) =>
+  request(`${END_POINT}?text=${keyword}`)

@@ -1,4 +1,4 @@
-class SearchHistory {
+export default class SearchHistory {
   $target = null
   $searchHistory = null
   data = null

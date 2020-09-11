@@ -1,4 +1,8 @@
-class App {
+import { SearchHistory, SearchInput, SearchResult } from './components/index.js'
+import { getListByKeyword } from './utils/api/jjalbot.js'
+import { debounce } from './utils/etc/performance.js'
+
+export default class App {
   state = {
     historyData: [],
   }
