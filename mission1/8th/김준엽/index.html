@@ -1,124 +1,124 @@
 <html>
-  <head>
+
+<head>
     <title>Mission 1</title>
     <meta charset="utf-8" />
-  </head>
+</head>
 
-  <body>
-    <div id="todo-list"></div>
-    <div>------------------</div>
+<body>
+    <div id="todo-list">1423422</div>
+    <hr>
     <div id="todo-list2"></div>
-    <div>------------------</div>
+    <hr>
     <div id="todo-list3"></div>
+
     <script>
-      /*-------- 선언영역 -------- */
-      const dataList = [
-        {
-          text: 'JS 공부하기',
-          isCompleted: true,
-        },
-        {
-          text: 'JS 복습하기',
-          isCompleted: false,
-        },
-      ];
+        /*-------- 선언영역 -------- */
+        const dataList = [{
+                text: 'JS 공부하기',
+                isCompleted: true,
+            },
+            {
+                text: 'JS 복습하기',
+                isCompleted: false,
+            },
+        ];
 
-      const dataList2 = [
-        {
-          text: '다중 컴포넌트 만들기',
-          isCompleted: true,
-        },
-        {
-          text: '사직서 내기',
-          isCompleted: false,
-        },
-      ];
+        const dataList2 = [{
+                text: '다중 컴포넌트 만들기',
+                isCompleted: true,
+            },
+            {
+                text: '사직서 내기',
+                isCompleted: false,
+            },
+        ];
 
-      const dataList3 = [
-        {
-          text: '이사하기',
-          isCompleted: false,
-        },
-        {
-          text: '테슬라 매매',
-          isCompleted: false,
-        },
-      ];
+        const dataList3 = [{
+                text: '이사하기',
+                isCompleted: false,
+            },
+            {
+                text: '테슬라 매매',
+                isCompleted: false,
+            },
+        ];
 
-      const newData = [
-        {
-          text: '다른 사람 코드리뷰',
-          isCompleted: false,
-        },
-        {
-          text: '미션1 풀리퀘스트',
-          isCompleted: true,
-        },
-      ];
-      
-      function validDataList(dataList){
-        if(dataList === null || dataList === undefined){
-          throw new Error('파라미터가 null 이거나 undefined 입니다.');
-        }
-        
-        if (!Array.isArray(dataList)){
-          throw new Error('파라미터가 배열이 아닙니다.');
-        } 
-        
-        //배열이면 데이터 내용 검사
-        dataList.map((data) => {
-            if( (data.text === undefined) || (data.isCompleted === undefined)){
-              throw new Error('파라미터 내용이 올바르지 않습니다.');
+        const newData = [{
+                text: '다른 사람 코드리뷰',
+                isCompleted: false,
+            },
+            {
+                text: '미션1 풀리퀘스트',
+                isCompleted: true,
+            },
+        ];
+
+        const validDataList = (dataList) => {
+            if (dataList === null || dataList === undefined) {
+                throw new Error('파라미터가 null 이거나 undefined 입니다.');
             }
-         })
-      }
- 
-      function TodoList(elemId,dataList){
-        //예외처리
-        //new 키워드
-        if(new.target === undefined){
-          throw new Error('new 키워드를 사용하지 않았습니다.');
-        }
-        //파라미터
-        validDataList(dataList);
-        
-        this.items = dataList;
-        //const {items} = this; 
-        //객체 구조 분해 할당을 하면 안되는 이유?
-        //setState에서 해당 인스턴스 속성의 변하는 값이 반영되지 않는다.
-        //처음 new 키워드롤 생성했을 때 그 값이 선언되기 때문에 실시간으로 바뀌지 않는다.
-        this.render = () => {
-          const todoElem = document.querySelector(elemId); 
-          todoElem.innerHTML = ''; //초기화
-          this.items.map((item)=>{
-            const htmlStr = `<div>${
-              item.isCompleted? `<s>${item.text}</s>`: item.text
-              }</div>`;
 
-             todoElem.innerHTML += htmlStr;
-          })
+            if (!Array.isArray(dataList)) {
+                throw new Error('파라미터가 배열이 아닙니다.');
+            }
+
+            //배열이면 데이터 내용 검사
+            dataList.forEach(({text, isCompleted}) => {
+                if ((typeof(text) !== 'string') && (typeof(isCompleted) !== 'boolean')) {
+                    throw new Error('파라미터 타입이 올바르지 않습니다.');
+                }
+            })
         }
 
-        this.setState = (nextData) => {
-          this.items = nextData;
-          this.render();
-        }
-      }
+        function TodoList({$target, dataList}) {
+            
+            /**예외처리**/
+            //new 키워드
+            if (!new.target) {
+                throw new Error('new 키워드를 사용하지 않았습니다.');
+            }
+            //파라미터
+            validDataList(dataList);
+            
+            this.items = dataList;
+            this.$target = $target;
 
-      /*-------- 실행영역 -------- */
-      try {
-        const todoList = new TodoList('#todo-list',dataList);
-        const todoList2 = new TodoList('#todo-list2',dataList2);
-        const todoList3 = new TodoList('#todo-list3',dataList3);
-        todoList.render();
-        todoList2.render();
-        todoList3.render();
-        todoList.setState(newData);
-      } catch (e) {
-        alert(e);
-        console.log(e);
-      }
+            this.render = () => {
+                $target.innerHTML = this.items.map(({text, isCompleted}) => 
+                    `<div> ${isCompleted ? `<s>${text}</s>` : text}</div>`
+                ).join('')
+            }
+
+            this.setState = (nextData) => {
+                this.items = nextData;
+                this.render();
+            }
+
+            this.render();
+        }
+
+        /*-------- 실행영역 -------- */
+        try {
+            const todoList = new TodoList({
+                $target: document.querySelector('#todo-list'),
+                dataList
+            });
+            const todoList2 = new TodoList({
+                $target: document.querySelector('#todo-list2'),
+                dataList : dataList2
+             });
+             const todoList3 = new TodoList({
+                $target: document.querySelector('#todo-list3'),
+                dataList : dataList3
+             });
+            todoList.setState(newData);
+        } catch (e) {
+            alert(e);
+            console.log(e);
+        }
     </script>
 
-  </body>
+</body>
+
 </html>
