@@ -1,37 +1,43 @@
 import TodoInput from './TodoInput.js'
 import TodoList from './TodoList.js'
+import {setStorage, getStorageData} from './storage.js'
 
 function App(element) {
   const $app = element
 
   this.$removeAll = document.querySelector('#todo-remove-all-button')
-  this.data = []
+  this.data = getStorageData({key: 'data'}) || []
 
   this.init = function () {
     this.todoInput = new TodoInput(addTodo)
     this.todoList = new TodoList(this.data, toggleTodo, deleteTodo)
   }
 
+  this.setState = (data) => {
+    this.todoList.setState(data)
+    setStorage({key: 'data', value: data})
+  }
+
   const addTodo = (newTodo) => {
     this.data.push(newTodo)
-    this.todoList.setState(this.data)
+    this.setState(this.data)
   }
 
   const toggleTodo = (todoIndex) => {
     this.data[todoIndex].isCompleted = !this.data[todoIndex].isCompleted
     console.log(this.data)
-    this.todoList.setState(this.data)
+    this.setState(this.data)
   }
 
   const deleteTodo = (index) => {
     this.data.splice(index, 1)
-    this.todoList.setState(this.data)
+    this.setState(this.data)
   }
 
   this.$removeAll.addEventListener('click', () => {
     event.stopPropagation()
     this.data = []
-    this.todoList.setState(this.data)
+    this.setState(this.data)
   })
 
   this.init()
