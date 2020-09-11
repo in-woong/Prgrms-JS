@@ -6,22 +6,40 @@ function TodoList(app, data, todoListWrap) {
     this.render = function() {
         this.$todoListWrap.innerHTML = this.data.map((todo, key) => {
             return todo.isCompleted ?
-                `<div class="list">${todo.text}<button key=${key} class="btnDeleteTodo">X</button></div>`
+                `<div key=${key} class="list">
+                    <s class="strike">${todo.text}</s>
+                    <button class="btnDeleteTodo">X</button>
+                </div>`
                 :
-                `<div class="list"><s>${todo.text}</s><button key=${key} class="btnDeleteTodo">X</button></div>`
+                `<div key=${key} class="list">
+                    <span class="text">${todo.text}</span>
+                    <button class="btnDeleteTodo">X</button>
+                </div>`
         }).join('');
     }
 
+    // 삭제버튼 클릭 -> 삭제
     this.deleteTodo = e => {
         if (e.target.className === 'btnDeleteTodo') {
-            const deleteIdx = e.target.getAttribute('key');
-            this.data.splice(deleteIdx, 1);
-            this.setState(this.data);
+            const deleteIdx = e.target.parentNode.getAttribute('key');
+            this.app.deleteTodo(deleteIdx);
         }
     }
     this.$todoListWrap.addEventListener('click', this.deleteTodo);
 
 
+    // 글자클릭스 밑줄 온/오프
+    this.switchTodo = (e) => {
+        if (e.target.className === 'strike') { // isCompleted : true상태임 -> false
+            const key = e.target.parentNode.getAttribute('key');
+            this.app.switchTodo(key, 'strike');
+        } else if (e.target.className === 'text') { // isCompleted : false상태임 -> true
+            const key = e.target.parentNode.getAttribute('key');
+            this.app.switchTodo(key, 'text');
+        }
+
+    }
+    this.$todoListWrap.addEventListener('click', this.switchTodo);
 
 
     this.setState = function(nextData) {
