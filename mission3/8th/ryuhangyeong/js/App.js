@@ -2,10 +2,12 @@ class App {
   constructor($target) {
     this.searchKeyword = new SearchKeyword({
       $target,
-      onSearch: async (value) => {
+      onSearch: (value) => {
         try {
-          const data = await getListByKeyword(value)
-          this.searchResult.setState(data)
+          debounce(async () => {
+            const data = await getListByKeyword(value)
+            this.searchResult.setState(data)
+          }, 400)
         } catch (e) {
           alert(e)
         }
