@@ -1,4 +1,4 @@
-export default function SearchResult(data, target) {
+export default function SearchHistory(data, target) {
   this.data = data
   this.target = document.querySelector(target)
 
@@ -6,11 +6,7 @@ export default function SearchResult(data, target) {
     const htmlString = this.data
       .map(
         (element) => `
-      <div class='serch-result'>
-      <img src="${element.imageUrl}">
-      <h3>${element.title}</h3>
-      <h6>#${element.tags.join('#')}</h6>
-      </div>
+        <span class="search-history">${element}</span>
       `
       )
       .join('')
