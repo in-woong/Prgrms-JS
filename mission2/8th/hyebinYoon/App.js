@@ -17,6 +17,10 @@ function App() {
   ]
 
   this.todos = todoData
+  this.$todoList = document.querySelector(`#todo-list`)
+  this.$insertForm = document.querySelector('#insert-form')
+  this.$removeAllBtn = document.querySelector('.remove-btn')
+
   this.setState = function (newData) {
     this.todos = newData
     this.todoList.setState(this.todos)
@@ -25,8 +29,12 @@ function App() {
 
   // Todo 추가
   const onInsertTodo = (text) => {
+    const lastId =
+      this.todos.length !== 0
+        ? parseInt(this.todos[this.todos.length - 1].id)
+        : 0
     this.todos.push({
-      id: parseInt(this.todos[this.todos.length - 1].id) + 1,
+      id: lastId + 1,
       text: text,
       isCompleted: false,
     })
@@ -59,10 +67,17 @@ function App() {
     return { total, completed }
   }
 
-  this.render = function () {
-    this.$todoList = document.querySelector(`#todo-list`)
-    this.$insertForm = document.querySelector('#insert-form')
+  // 모두삭제 커스텀 이벤트
+  this.$removeAllBtn.addEventListener('click', (e) => {
+    const removeAllEvent = new CustomEvent('removeAll')
+    this.$todoList.dispatchEvent(removeAllEvent)
+  })
+  this.$todoList.addEventListener('removeAll', (e) => {
+    this.todos = []
+    this.setState(this.todos)
+  })
 
+  this.render = function () {
     this.todoList = new TodoList({
       data: this.todos,
       $target: this.$todoList,
