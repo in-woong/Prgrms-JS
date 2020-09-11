@@ -15,7 +15,8 @@ export default class App {
           const data = await getListByKeyword(value)
           this.searchResult.setState(data)
         } catch (e) {
-          alert(e)
+          // alert(e)
+          throw e
         }
       },
     })
@@ -33,7 +34,8 @@ export default class App {
             historyData.unshift(value)
             this.searchHistory.setState(historyData)
           } catch (e) {
-            alert(e)
+            // alert(e)
+            throw e
           }
         }, 400)
       },
