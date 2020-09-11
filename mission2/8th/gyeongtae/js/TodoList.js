@@ -8,7 +8,7 @@ export default function TodoList(renderEle, data) {
   // data값에 따라 todo-list를 동적으로 렌더링한다
   this.render = () => {
     let html = ''
-    this.data.forEach((data, index) => {
+    this.data.map((data, index) => {
       html += `<div key=${index}>${
         data.isCompleted
           ? `<s class="todo-list-item">${data.text}</s>`

@@ -1,29 +1,8 @@
 import TodoList from './TodoList.js'
 import TodoInput from './TodoInput.js'
 import TodoCount from './TodoCount.js'
-import TodoRemoveAll from './TodoRemoveAll.js'
-
-// TodoList data배열 객체의 파라미터가 text, isCompleted가 있으면 true 없으면 false를 리턴
-const isCorrectData = (value) => {
-  typeof value.text === 'string' && typeof value.isCompleted === 'boolean'
-}
-// TodoList data체크 함수
-function todoListDataCheck(data) {
-  if (!data) {
-    if (!typeof data === 'boolean') {
-      throw new Error('데이터가 null이거나 undefined상태입니다')
-    }
-  }
-  if (!Array.isArray(data)) {
-    throw new Error('데이터가 array상태가 아닙니다')
-  }
-  // 배열의 요소중 하나라도 text, isCompleted프로퍼티중 하나가 없다면 false를 반환하여 error를 발생
-  if (!data.length === 0) {
-    if (!data.every(isCorrectData)) {
-      throw new Error('데이터 내용이 이상합니다')
-    }
-  }
-}
+import TodoRemoveAllButton from './TodoRemoveAllButton.js'
+import todoListDataCheck from './utilForDataCheck.js'
 
 export default function App(data, renderEle) {
   // 만약 this가 window인경우 (생성자 함수에 new연산자를 붙이지 않은경우)
@@ -41,21 +20,23 @@ export default function App(data, renderEle) {
   this.todoList = new TodoList(this.renderEle, this.data)
   this.todoCount = new TodoCount(this.renderEle, this.data)
   this.todoInput = new TodoInput(this.renderEle)
-  this.TodoRemoveAll = new TodoRemoveAll(this.renderEle)
+  this.todoRemoveAll = new TodoRemoveAllButton(this.renderEle)
   this.firstRender = true
 
-  const TodoListInputEle = this.todoInput.todoInputEle.firstChild
+  const todoListInputEle = this.todoInput.todoInputEle.firstChild
+    .nextElementSibling
+  const removeAllButtonEle = this.todoRemoveAll.todoRemoveAllEle.firstChild
     .nextElementSibling
   const localStorage = window.localStorage
 
   // todo list 추가 함수
   this.addTodoList = () => {
     // input값이 없으면 return
-    if (TodoListInputEle.value.length === 0) {
+    if (todoListInputEle.value.length === 0) {
       return alert('내용을 입력해주세요.')
     }
     const todoListItem = {
-      text: TodoListInputEle.value,
+      text: todoListInputEle.value,
       isCompleted: false,
     }
     this.data.push(todoListItem)
@@ -63,9 +44,10 @@ export default function App(data, renderEle) {
     this.render()
     localStorage.setItem('todoList', JSON.stringify(this.data))
     // input값 초기화 및 input에 값 바로 입력할 수 있도록 함
-    TodoListInputEle.value = ''
-    TodoListInputEle.focus()
+    todoListInputEle.value = ''
+    todoListInputEle.focus()
   }
+
   // todo list 삭제 함수
   this.removeTodoList = (key) => {
     this.data.splice(key, 1)
@@ -96,10 +78,9 @@ export default function App(data, renderEle) {
     this.todoList.render()
     this.todoCount.render()
   }
-  this.render()
 
   // todd list에 이벤트 등록
-  this.setEvenOnTodoList = () => {
+  this.setEventOnTodoList = () => {
     this.todoList.todoListEle.addEventListener('click', (event) => {
       const target = event.target
       // todo list 삭선처리 이벤트 등록
@@ -127,12 +108,10 @@ export default function App(data, renderEle) {
     // removeAll Event를 커스텀으로 만들어
     // todo-remove-all-button을 클릭시 removeAll 이벤트를 todoListElement에 전달
     const removeAllEvent = new Event('removeAll')
-    this.TodoRemoveAll.todoRemoveAllEle.firstChild.nextElementSibling.addEventListener(
-      'click',
-      (event) => {
-        this.renderEle.dispatchEvent(removeAllEvent)
-      }
-    )
+    removeAllButtonEle.addEventListener('click', (event) => {
+      this.renderEle.dispatchEvent(removeAllEvent)
+    })
   }
-  this.setEvenOnTodoList()
+  this.render()
+  this.setEventOnTodoList()
 }

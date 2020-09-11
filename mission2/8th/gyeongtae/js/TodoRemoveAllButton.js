@@ -1,4 +1,4 @@
-export default function TodoRemoveAll(renderEle) {
+export default function TodoRemoveAllButton(renderEle) {
   this.renderEle = renderEle
   this.todoRemoveAllEle = document.createElement('div')
   renderEle.append(this.todoRemoveAllEle)

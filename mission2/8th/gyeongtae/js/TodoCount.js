@@ -3,16 +3,15 @@ export default function TodoCount(renderEle, data) {
   this.todoCountEle = document.createElement('div')
   renderEle.append(this.todoCountEle)
 
-  this.render = () => {
+  this.setTodoCount = (data) => {
     this.todoCount = data.length
-    this.todoCompletedCount = 0
+    this.todoCompletedCount = data.filter((element) => {
+      return element.isCompleted
+    }).length
+  }
 
-    data.forEach((element) => {
-      if (element.isCompleted) {
-        this.todoCompletedCount++
-      }
-    })
-
+  this.render = () => {
+    this.setTodoCount(data)
     this.todoCountEle.innerHTML = `
       <div>
       <div>Todo수 : ${this.todoCount}개</div>
@@ -21,13 +20,7 @@ export default function TodoCount(renderEle, data) {
       `
   }
   this.setState = (nextData) => {
-    this.todoCount = nextData.length
-    this.todoCompletedCount = 0
-    nextData.forEach((element) => {
-      if (element.isCompleted) {
-        this.todoCompletedCount++
-      }
-    })
+    this.setTodoCount(nextData)
     this.render()
   }
   this.render()
