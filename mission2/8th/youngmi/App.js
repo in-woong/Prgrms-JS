@@ -32,14 +32,14 @@ function App() {
     }
 
     //삭제 
-    this.deleteTodo = e => {
-        if (e.target.className === 'btnDeleteTodo') {
-            const deleteIdx = e.target.getAttribute('key');
-            this.data.splice(deleteIdx, 1);
-            todoList.setState(this.data);
-        }
-    }
-    $todoListWrap.addEventListener('click', this.deleteTodo);
+    // this.deleteTodo = e => {
+    //     if (e.target.className === 'btnDeleteTodo') {
+    //         const deleteIdx = e.target.getAttribute('key');
+    //         this.data.splice(deleteIdx, 1);
+    //         todoList.setState(this.data);
+    //     }
+    // }
+    // $todoListWrap.addEventListener('click', this.deleteTodo);
 
 }
 

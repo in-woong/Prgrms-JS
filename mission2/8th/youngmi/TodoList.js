@@ -12,6 +12,17 @@ function TodoList(app, data, todoListWrap) {
         }).join('');
     }
 
+    this.deleteTodo = e => {
+        if (e.target.className === 'btnDeleteTodo') {
+            const deleteIdx = e.target.getAttribute('key');
+            this.data.splice(deleteIdx, 1);
+            this.setState(this.data);
+        }
+    }
+    this.$todoListWrap.addEventListener('click', this.deleteTodo);
+
+
+
 
     this.setState = function(nextData) {
         this.data = nextData;
