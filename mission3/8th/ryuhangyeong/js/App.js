@@ -1,5 +1,5 @@
 import { SearchHistory, SearchInput, SearchResult } from './components/index.js'
-import { getListByKeyword } from './utils/api/jjalbot.js'
+import { getListByKeyword } from './utils/api/jjals.js'
 import { debounce } from './utils/etc/performance.js'
 
 export default class App {
