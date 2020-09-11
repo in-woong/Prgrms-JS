@@ -1,7 +1,7 @@
 import TodoCount from './TodoCount.js'
 
-function TodoList(toggleTodo, deleteTodo) {
-  this.data = []
+function TodoList(data, toggleTodo, deleteTodo) {
+  this.data = data
 
   this.toggleTodo = toggleTodo
   this.deleteTodo = deleteTodo
@@ -34,16 +34,6 @@ function TodoList(toggleTodo, deleteTodo) {
 
   this.setState = function (nextData) {
     this.data = nextData
-    this.render()
-  }
-
-  this.toggleTodo = function (index) {
-    this.data[index].isCompleted = !this.data[index].isCompleted
-    this.render()
-  }
-
-  this.deleteTodo = function (index) {
-    this.data.splice(index, 1)
     this.render()
   }
 

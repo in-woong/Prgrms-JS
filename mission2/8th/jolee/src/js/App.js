@@ -3,27 +3,37 @@ import TodoList from './TodoList.js'
 
 function App(element) {
   const $app = element
+
+  this.$removeAll = document.querySelector('#todo-remove-all-button')
   this.data = []
 
   this.init = function () {
-    this.todoInput = new TodoInput(this.addTodo)
-    this.todoList = new TodoList(this.toggleTodo, this.deleteTodo)
+    this.todoInput = new TodoInput(addTodo)
+    this.todoList = new TodoList(this.data, toggleTodo, deleteTodo)
   }
 
-  this.addTodo = (newTodo) => {
+  const addTodo = (newTodo) => {
     this.data.push(newTodo)
     this.todoList.setState(this.data)
   }
 
-  this.toggleTodo = ($todoItem, index) => {
-    this.data[index].isCompleted = !this.data[index].isCompleted
-    this.todoList.toggleItem($todoItem, index)
+  const toggleTodo = (todoIndex) => {
+    this.data[todoIndex].isCompleted = !this.data[todoIndex].isCompleted
+    console.log(this.data)
+    this.todoList.setState(this.data)
   }
 
-  this.deleteTodo = (index) => {
+  const deleteTodo = (index) => {
     this.data.splice(index, 1)
-    this.todoList.deleteItem(index)
+    this.todoList.setState(this.data)
   }
+
+  this.$removeAll.addEventListener('click', () => {
+    event.stopPropagation()
+    this.data = []
+    this.todoList.setState(this.data)
+  })
+
   this.init()
 }
 
