@@ -6,7 +6,7 @@ class App {
         getListByKeyword(value)
           .then((data) => this.searchResult.setState(data))
           .catch((e) => {
-            console.log(e)
+            alert(e)
           })
       },
     })
