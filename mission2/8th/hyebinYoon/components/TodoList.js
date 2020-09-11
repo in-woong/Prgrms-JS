@@ -1,11 +1,30 @@
 // TodoList 컴포넌트
-function TodoList({ data, $target, deleteTodo, toggleTodo }) {
+function TodoList({ data, $target, onRemoveTodo, onToggleTodo }) {
   // function 형태의 선언인 경우 에러처리
   if (!(this instanceof TodoList))
     throw new Error('function 형태의 선언입니다.')
   checkData(data) // data 파라미터 에러처리
 
   this.todos = data
+
+  // click 이벤트
+  this.bindEvents = function () {
+    $target.querySelector('ul').addEventListener('click', (event) => {
+      if (!event.target) {
+        return
+      }
+      const eventTarget = event.target
+      const id = parseInt(eventTarget.parentNode.id)
+      if (eventTarget.tagName == 'BUTTON') {
+        // 삭제
+        onRemoveTodo(id)
+      } else {
+        // 완료
+        onToggleTodo(id)
+      }
+    })
+  }
+
   this.setState = function (nextData) {
     checkData(nextData) // nextData 파라미터 에러처리
     this.todos = nextData
@@ -23,20 +42,7 @@ function TodoList({ data, $target, deleteTodo, toggleTodo }) {
       )
       .join('')
     $target.innerHTML = `<ul>${html}</ul>`
-    document.querySelector('ul').addEventListener('click', (event) => {
-      if (!event.target) {
-        return
-      }
-      const eventTarget = event.target
-      const id = parseInt(eventTarget.parentNode.id)
-      if (eventTarget.tagName == 'BUTTON') {
-        // 삭제
-        deleteTodo(id)
-      } else {
-        // 완료
-        toggleTodo(id)
-      }
-    })
+    this.bindEvents()
   }
   this.render()
 }
