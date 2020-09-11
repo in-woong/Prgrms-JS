@@ -4,7 +4,14 @@ function setEvent() {
   document
     .querySelector('#search-keyword')
     .addEventListener('keyup', function (e) {
-      setSearchResult(e.target.value, searchResult)
+      // 잦은 함수 호출을 막기 위해
+      // debounce 기법적용
+      if (timer) {
+        clearTimeout(timer)
+      }
+      timer = setTimeout(() => {
+        setSearchResult(e.target.value, searchResult)
+      }, 200)
     })
 }
 
@@ -16,9 +23,11 @@ async function getSearchResult(value) {
 }
 // 짤봇 api를 통해 가져온 짤 데이터를 컴포넌트에 설정함
 async function setSearchResult(value, SearchResultComponent) {
+  console.log(value)
   const searchResult = await getSearchResult(value)
   SearchResultComponent.setState(searchResult)
 }
 
+let timer = null
 const searchResult = new SearchResult([], '#search-results')
 setEvent()
