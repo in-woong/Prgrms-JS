@@ -1,13 +1,14 @@
-const request = (url) =>
-  new Promise((resolve, reject) => {
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        if (!data.length) {
-          reject(new Error('검색 결과가 존재하지 않습니다.'))
-          return
-        }
-        resolve(data)
-      })
-      .catch((e) => reject(e))
-  })
+const request = async (url, opts = {}) => {
+  try {
+    const res = await fetch(url, opts)
+    const data = await res.json()
+
+    if (!data.length) {
+      throw new Error('검색 결과가 존재하지 않습니다.')
+    } else {
+      return data
+    }
+  } catch (e) {
+    throw e
+  }
+}
