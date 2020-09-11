@@ -3,26 +3,46 @@ import TodoInput from './components/TodoInput.js'
 import TodoCount from './components/TodoCount.js'
 
 function App() {
-  let todoData = [
-    {
-      id: 1,
-      text: '방 청소하기',
-      isCompleted: false,
-    },
-    {
-      id: 2,
-      text: '치과 예약하기',
-      isCompleted: true,
-    },
-  ]
-
-  this.todos = todoData
   this.$todoList = document.querySelector(`#todo-list`)
   this.$insertForm = document.querySelector('#insert-form')
   this.$removeAllBtn = document.querySelector('.remove-btn')
 
+  this.init = function () {
+    this.getLocalData()
+
+    // 모두삭제 커스텀 이벤트
+    this.$removeAllBtn.addEventListener('click', (e) => {
+      const removeAllEvent = new CustomEvent('removeAll')
+      this.$todoList.dispatchEvent(removeAllEvent)
+    })
+    this.$todoList.addEventListener('removeAll', (e) => {
+      this.todos = []
+      this.setState(this.todos)
+    })
+  }
+
+  // localStorage에서 todolist 조회
+  this.getLocalData = function () {
+    try {
+      const data = JSON.parse(localStorage.getItem('todos')) || []
+      this.todos = data
+    } catch (err) {
+      throw new Error('localStorage 가져오기 실패')
+    }
+  }
+
+  // localStorage에 todolist 저장
+  this.setLocalData = function (newData) {
+    try {
+      localStorage.setItem('todos', JSON.stringify(newData))
+    } catch (err) {
+      throw new Error('localStorage 저장 실패')
+    }
+  }
+
   this.setState = function (newData) {
     this.todos = newData
+    this.setLocalData(this.todos)
     this.todoList.setState(this.todos)
     this.todoCount.setState(this.todos)
   }
@@ -67,16 +87,6 @@ function App() {
     return { total, completed }
   }
 
-  // 모두삭제 커스텀 이벤트
-  this.$removeAllBtn.addEventListener('click', (e) => {
-    const removeAllEvent = new CustomEvent('removeAll')
-    this.$todoList.dispatchEvent(removeAllEvent)
-  })
-  this.$todoList.addEventListener('removeAll', (e) => {
-    this.todos = []
-    this.setState(this.todos)
-  })
-
   this.render = function () {
     this.todoList = new TodoList({
       data: this.todos,
@@ -94,6 +104,7 @@ function App() {
       onCountTodo,
     })
   }
+  this.init()
   this.render()
 }
 
