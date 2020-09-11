@@ -19,8 +19,8 @@ class App {
     this.searchInput = new SearchInput({
       $target,
       onSearch: (value) => {
-        try {
-          debounce(async () => {
+        debounce(async () => {
+          try {
             const data = await getListByKeyword(value)
             const { historyData } = this.state
 
@@ -28,10 +28,10 @@ class App {
 
             historyData.unshift(value)
             this.searchHistory.setState(historyData)
-          }, 400)
-        } catch (e) {
-          alert(e)
-        }
+          } catch (e) {
+            alert(e)
+          }
+        }, 400)
       },
     })
 
