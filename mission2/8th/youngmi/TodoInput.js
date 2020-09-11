@@ -1,19 +1,19 @@
 // Todo 추가하는 함수
 const $todoInput = document.querySelector('.todoInput');
 
-function TodoInput(data, todoList) {
-    this.data = data;
-    this.$todoList = todoList;
+function TodoInput(app) {
+    this.app = app;
 
-    if (e.key == 'Enter') {
-        const newTodo = {
-            text: e.target.value,
-            isCompleted: true
-        };
-        this.data.push(newTodo);
-        this.$todoList.setState(this.data);
-        $todoInput.value = '';
+    this.addTodo = (e) => {
+        if (e.key == 'Enter' && e.target.value !== '') {
+            const newTodo = e.target.value;
+            this.app.addTodo({
+                text: newTodo,
+                isCompleted: true
+            })
+            $todoInput.value = '';
+        }
     }
-
-    $todoInput.addEventListener('keypress', todoInput);
+    $todoInput.addEventListener('keypress', this.addTodo);
 }
+export default TodoInput;

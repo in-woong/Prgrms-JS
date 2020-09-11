@@ -1,22 +1,26 @@
-
-function TodoList(data, todoList) {
+function TodoList(app, data, todoListWrap) {
+    this.app = app;
     this.data = data;
-    this.$todoList = todoList;
+    this.$todoListWrap = todoListWrap;
 
     this.render = function() {
-        this.element.innerHTML = this.data.map((todo, key) => {
+        this.$todoListWrap.innerHTML = this.data.map((todo, key) => {
             return todo.isCompleted ?
-                `<div>${todo.text}</div><button key=${key} class="btnDeleteTodo">X</button>`
+                `<div class="list">${todo.text}<button key=${key} class="btnDeleteTodo">X</button></div>`
                 :
-                `<div><s>${todo.text}</s></div><button key=${key} class="btnDeleteTodo">X</button>`
+                `<div class="list"><s>${todo.text}</s><button key=${key} class="btnDeleteTodo">X</button></div>`
         }).join('');
     }
+
 
     this.setState = function(nextData) {
         this.data = nextData;
         this.render();
     }
+    this.render();
+}
 
+export default TodoList;
 
     // this.validateData = function() {
     //     if (!Array.isArray(this.data)) {
@@ -45,9 +49,6 @@ function TodoList(data, todoList) {
     // this.validateData();
     // }
 
-
-
-}
 
 
 
