@@ -1,5 +1,6 @@
-export default function TodoInput(renderEle) {
+export default function TodoInput(renderEle, addTodoList) {
   this.renderEle = renderEle
+  this.addTodoList = addTodoList
   this.todoInputEle = document.createElement('form')
   renderEle.append(this.todoInputEle)
 

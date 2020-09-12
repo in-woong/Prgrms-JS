@@ -17,20 +17,9 @@ export default function App(data, renderEle) {
   // TodoList data체크
   todoListDataCheck(this.data)
 
-  this.todoList = new TodoList(this.renderEle, this.data)
-  this.todoCount = new TodoCount(this.renderEle, this.data)
-  this.todoInput = new TodoInput(this.renderEle)
-  this.todoRemoveAll = new TodoRemoveAllButton(this.renderEle)
-  this.firstRender = true
-
-  const todoListInputEle = this.todoInput.todoInputEle.firstChild
-    .nextElementSibling
-  const removeAllButtonEle = this.todoRemoveAll.todoRemoveAllEle.firstChild
-    .nextElementSibling
-  const localStorage = window.localStorage
-
   // todo list 추가 함수
-  this.addTodoList = () => {
+  this.addTodoList = (event) => {
+    const todoListInputEle = event.target.firstElementChild
     // input값이 없으면 return
     if (todoListInputEle.value.length === 0) {
       return alert('내용을 입력해주세요.')
@@ -41,7 +30,7 @@ export default function App(data, renderEle) {
     }
     this.data.push(todoListItem)
     todoListDataCheck(this.data)
-    this.render()
+    this.setState(this.data)
     localStorage.setItem('todoList', JSON.stringify(this.data))
     // input값 초기화 및 input에 값 바로 입력할 수 있도록 함
     todoListInputEle.value = ''
@@ -51,21 +40,21 @@ export default function App(data, renderEle) {
   // todo list 삭제 함수
   this.removeTodoList = (key) => {
     this.data.splice(key, 1)
-    this.render()
+    this.setState(this.data)
     localStorage.setItem('todoList', JSON.stringify(this.data))
   }
   // todo list 전체 삭제 함수
   this.removeAllTodoList = () => {
     localStorage.setItem('todoList', '[]')
     this.data.length = 0
-    this.render()
+    this.setState(this.data)
   }
   // todo list IsCompleted값 설정 함수
   this.setTodoListIsCompleted = (key) => {
     // 만약 todoList데이터 isCompleted값이
     //true면 false false면 true로 설정
     this.data[key].isCompleted = !this.data[key].isCompleted
-    this.render()
+    this.setState(this.data)
     localStorage.setItem('todoList', JSON.stringify(this.data))
   }
 
@@ -78,7 +67,11 @@ export default function App(data, renderEle) {
     this.todoList.render()
     this.todoCount.render()
   }
-
+  this.setState = (nextData) => {
+    this.data = nextData
+    this.todoList.render()
+    this.todoCount.render()
+  }
   // todd list에 이벤트 등록
   this.setEventOnTodoList = () => {
     this.todoList.todoListEle.addEventListener('click', (event) => {
@@ -98,7 +91,7 @@ export default function App(data, renderEle) {
     // todd list 추가 이벤트 등록
     this.todoInput.todoInputEle.addEventListener('submit', (event) => {
       event.preventDefault()
-      this.addTodoList()
+      this.todoInput.addTodoList(event)
     })
 
     // todo list 전체 삭제 이벤트 등록
@@ -112,6 +105,17 @@ export default function App(data, renderEle) {
       this.renderEle.dispatchEvent(removeAllEvent)
     })
   }
+
+  this.todoList = new TodoList(this.renderEle, this.data)
+  this.todoCount = new TodoCount(this.renderEle, this.data)
+  this.todoInput = new TodoInput(this.renderEle, this.addTodoList)
+  this.todoRemoveAll = new TodoRemoveAllButton(this.renderEle)
+  this.firstRender = true
+
+  const removeAllButtonEle = this.todoRemoveAll.todoRemoveAllEle.firstChild
+    .nextElementSibling
+  const localStorage = window.localStorage
+
   this.render()
   this.setEventOnTodoList()
 }
