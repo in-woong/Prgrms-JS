@@ -24,11 +24,12 @@ function App() {
     const todoList = new TodoList(this, this.data, $todoListWrap);
     const todoInput = new TodoInput(this);
 
+
     // 추가된 데이터 받아서 새로 그리기
     this.addTodo = (newTodo) => {
         this.data.push(newTodo);
         todoList.setState(this.data);
-        console.log(this.data);
+        // console.log(this.data);
     }
 
     // 삭제하는 데이터
@@ -38,15 +39,15 @@ function App() {
     }
 
     // 글자 클릭시 isCompleted수정
-    this.switchTodo = (key, onOff) => {
+    this.onOffTodo = (key, onOff) => {
         if (onOff === 'strike') {
             this.data[key].isCompleted = false;
             todoList.setState(this.data);
-            console.log(this.data);
+            // console.log(this.data);
         } else if (onOff === 'text') {
             this.data[key].isCompleted = true;
             todoList.setState(this.data);
-            console.log(this.data);
+            // console.log(this.data);
         }
     }
 }

@@ -9,7 +9,7 @@ function TodoInput(app) {
             const newTodo = e.target.value;
             this.app.addTodo({
                 text: newTodo,
-                isCompleted: true
+                isCompleted: false
             })
             $todoInput.value = '';
         }

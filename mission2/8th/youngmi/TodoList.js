@@ -1,3 +1,5 @@
+import TodoCount from './TodoCount.js';
+
 function TodoList(app, data, todoListWrap) {
     this.app = app;
     this.data = data;
@@ -28,23 +30,29 @@ function TodoList(app, data, todoListWrap) {
     this.$todoListWrap.addEventListener('click', this.deleteTodo);
 
 
-    // 글자클릭스 밑줄 온/오프
-    this.switchTodo = (e) => {
+    // 글자클릭시 밑줄 온/오프
+    this.onOffTodo = (e) => {
         if (e.target.className === 'strike') { // isCompleted : true상태임 -> false
             const key = e.target.parentNode.getAttribute('key');
-            this.app.switchTodo(key, 'strike');
+            this.app.onOffTodo(key, 'strike');
         } else if (e.target.className === 'text') { // isCompleted : false상태임 -> true
             const key = e.target.parentNode.getAttribute('key');
-            this.app.switchTodo(key, 'text');
+            this.app.onOffTodo(key, 'text');
         }
 
     }
-    this.$todoListWrap.addEventListener('click', this.switchTodo);
+    this.$todoListWrap.addEventListener('click', this.onOffTodo);
+
+    const $total = document.querySelector('.total');
+    const $completed = document.querySelector('.completed');
+
+    const todoCount = new TodoCount(this.data, $total, $completed);
 
 
     this.setState = function(nextData) {
         this.data = nextData;
         this.render();
+        todoCount.setState(this.data);
     }
     this.render();
 }
