@@ -1,5 +1,5 @@
 class App {
-  $target
+  $target = null
   todos = store.get('todos') || []
   todoAllRemoveBtn = null
   todoInput = null
@@ -16,7 +16,7 @@ class App {
     this.todoInput = new TodoInput({
       $target,
       onCreate: (text) => {
-        this.todos.unshift({ text, isCompleted: false })
+        this.todos = [{ text, isCompleted: false }, ...this.todos]
         this.setState(this.todos)
       },
     })
@@ -36,7 +36,7 @@ class App {
 
     this.todoCount = new TodoCount({
       $target,
-      initialData: this.todos,
+      initialData: getTodoStatus(this.todos),
     })
 
     this.subscribe()
@@ -45,7 +45,7 @@ class App {
   subscribe() {
     this.todoAllRemoveBtn.$todoAllRemoveBtn.addEventListener(
       'removeAll',
-      (e) => {
+      () => {
         this.todos = []
         this.setState(this.todos)
       }
@@ -56,7 +56,7 @@ class App {
     isValidTodos(nextData)
     this.todos = nextData
     this.todoList.setState(this.todos)
-    this.todoCount.setState(this.todos)
+    this.todoCount.setState(getTodoStatus(this.todos))
     store.set('todos', this.todos)
   }
 }

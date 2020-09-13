@@ -3,7 +3,7 @@ class TodoCount {
   $todoCount = null
   data = null
 
-  constructor({ $target, initialData }) {
+  constructor({ $target, initialData = { all: 0, completed: 0 } }) {
     this.$target = $target
     this.data = initialData
 
@@ -20,10 +20,8 @@ class TodoCount {
 
   render() {
     this.$todoCount.innerHTML = `
-      <p>총 Todo의 갯수 : ${this.data.length}</p>
-      <p>완료처리된 Todo의 갯수${
-        this.data.filter((t) => t.isCompleted).length
-      }</p>
+      <p>총 Todo의 갯수 : ${this.data.all}</p>
+      <p>완료처리된 Todo의 갯수${this.data.completed}</p>
     `
   }
 }

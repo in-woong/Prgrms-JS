@@ -7,6 +7,10 @@ const store = {
     }
   },
   get(key) {
-    return JSON.parse(localStorage.getItem(key))
+    try {
+      return JSON.parse(localStorage.getItem(key))
+    } catch {
+      console.log('localStorage not working')
+    }
   },
 }
