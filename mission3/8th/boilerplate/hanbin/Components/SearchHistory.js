@@ -1,18 +1,28 @@
-export default function SearchHistory($target,data) {
+export default function SearchHistory($target,updateData) {
 
     this.$target = $target;
-    this.data = data;
+    this.updateData = updateData;
 
     this.prerender = () => {
-        const 
+        this.historyHeader = document.createElement('h1');
+        this.historyHeader.innerHTML = "검색 기록";
+
+        this.searchHistory = document.createElement('ul');
+        this.searchHistory.id = 'search-history';
+
+        $target.appendChild(this.historyHeader);
+        $target.appendChild(this.searchHistory);
     }
     
-    this.setState = (newData) => {
-        this.data = newData;
-        this.render();
+    this.addHistoryElem = (inputValue) => {
+        const historyElem = document.createElement('li');
+        console.log(inputValue);
+        historyElem.innerHTML = `${inputValue}`;
+        historyElem.addEventListener('click', function(){
+            updateData(inputValue);
+        })
+        this.searchHistory.appendChild(historyElem);
     }
-
     
-
-
+    this.prerender();
 }

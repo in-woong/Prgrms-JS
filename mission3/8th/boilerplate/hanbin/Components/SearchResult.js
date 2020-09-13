@@ -4,9 +4,9 @@ export default function earchResult(data, $target){
     this.$target = $target;
 
     this.prerender = () => {
-        const searchResult = document.createElement('div');
-        searchResult.id = 'search-result';
-        $target.appendChild(searchResult);
+        this.searchResult = document.createElement('div');
+        this.searchResult.id = 'search-result';
+        $target.appendChild(this.searchResult);
     }
 
     this.setState = (newData) => {
@@ -15,7 +15,7 @@ export default function earchResult(data, $target){
     }
 
     this.render = () => {
-        document.querySelector('#search-result').innerHTML = this.data
+        document.querySelector('#search-result').innerHTML = this.data;
     }
 
     this.prerender();
