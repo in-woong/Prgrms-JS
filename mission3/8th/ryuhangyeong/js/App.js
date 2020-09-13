@@ -1,6 +1,6 @@
 import { SearchHistory, SearchInput, SearchResult } from './components/index.js'
 import { getListByKeyword } from './utils/api/jjals.js'
-import { debounce } from './utils/etc/performance.js'
+import debounce from './utils/etc/debounce.js'
 
 export default class App {
   state = {
@@ -34,7 +34,7 @@ export default class App {
             alert(e)
             // throw e
           }
-        }, 400)
+        }, 700)
       },
     })
 
