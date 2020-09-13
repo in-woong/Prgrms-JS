@@ -21,7 +21,7 @@ export default function SearchInput($target, updateData, addHistory){
                     updateData(this.searchInput.value);
                     addHistory(this.searchInput.value);
                 }
-            }, 200);
+            }, 500);
         })
     }
 

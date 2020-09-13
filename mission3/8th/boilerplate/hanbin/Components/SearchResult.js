@@ -1,6 +1,5 @@
-export default function earchResult(data, $target){
+export default function earchResult($target){
 
-    this.data = data;
     this.$target = $target;
 
     this.prerender = () => {

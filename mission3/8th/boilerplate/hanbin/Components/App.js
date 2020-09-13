@@ -28,5 +28,5 @@ export default function App($target) {
 
     this.searchHistory = new SearchHistory(this.$target, this.updateData);
     this.searchInput = new SearchInput(this.$target, this.updateData, this.addHistory);
-    this.searchResult = new SearchResult(this.data,this.$target);
+    this.searchResult = new SearchResult(this.$target);
 }

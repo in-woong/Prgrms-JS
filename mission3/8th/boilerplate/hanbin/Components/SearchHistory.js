@@ -1,4 +1,4 @@
-export default function SearchHistory($target,updateData) {
+export default function SearchHistory($target, updateData) {
 
     this.$target = $target;
     this.updateData = updateData;
@@ -16,9 +16,8 @@ export default function SearchHistory($target,updateData) {
     
     this.addHistoryElem = (inputValue) => {
         const historyElem = document.createElement('li');
-        console.log(inputValue);
         historyElem.innerHTML = `${inputValue}`;
-        historyElem.addEventListener('click', function(){
+        historyElem.addEventListener('click', () => {
             updateData(inputValue);
         })
         this.searchHistory.appendChild(historyElem);
