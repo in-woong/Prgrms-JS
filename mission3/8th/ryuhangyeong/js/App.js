@@ -23,12 +23,17 @@ export default class App {
 
     this.searchInput = new SearchInput({
       $target,
-      onSearch: (value) => {
+      onSearch: async (value) => {
         debounce(async () => {
           try {
+            let { historyData } = this.state
+
+            if (historyData.indexOf(value) > -1) return
+
             const data = await getListByKeyword(value)
+
             this.searchResult.setState(data)
-            this.state.historyData = [value, ...this.state.historyData]
+            this.state.historyData = [value, ...historyData]
             this.searchHistory.setState(this.state.historyData)
           } catch (e) {
             alert(e)
