@@ -1,4 +1,4 @@
-const validateData = (data) => {
+export const validateData = (data) => {
   if (!Array.isArray(data)) {
     throw new Error('argument is not array')
   }
@@ -14,15 +14,19 @@ const validateData = (data) => {
   })
 }
 
-const searchWord = async (url, text) => {
-  const response = await await fetch(`${url}/jjals?text=${text}`).then((x) =>
-    x.json()
-  )
-  return response
+export const searchWord = async (url, text) => {
+  try {
+    const response = await await fetch(`${url}/jjals?text=${text}`).then((x) =>
+      x.json()
+    )
+    return response
+  } catch (error) {
+    throw new Error(error)
+  }
 }
 
 let timer = null
-const debounce = (callback, timer) => {
+export const debounce = (callback, timer) => {
   if (timer) {
     clearTimeout()
   }
