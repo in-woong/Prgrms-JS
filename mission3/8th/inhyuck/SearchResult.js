@@ -1,15 +1,17 @@
-function SearchResult(data, target) {
-    this.data = data;
+function SearchResult({searchedItems}, target) {
+    this.data = {searchedItems};
     this.$target = document.querySelector(target);
 
     this.render = function () {
-        this.$target.innerHTML = `${this.data
-          .map(d => `<img src="${d.imageUrl}">`)
-          .join('')}`;
+        this.$target.innerHTML = `
+              ${this.data.searchedItems
+          .map(searchedItem => `<img src="${searchedItem.imageUrl}">`)
+          .join('')}
+        `;
     };
 
-    this.setState = function (data) {
-        this.data = data;
+    this.setState = function ({searchedItems}) {
+        this.data = {searchedItems};
         this.render();
     };
 
