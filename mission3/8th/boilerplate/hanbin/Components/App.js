@@ -6,16 +6,12 @@ export default function App($target) {
     this.$target = $target;
     this.data = '';
 
-    this.updateData = (inputValue) => {
-        fetch(`https://jjalbot.com/api/jjals?text=${inputValue}`)
-        .then(x => x.json())
-        .then(data => {
-            console.log(JSON.stringify(data, null, 2));
-            const htmlString = `${data
-                .map(d => `<img src="${d.imageUrl}">`)
-                .join('')}`;
-            this.setState(htmlString);     
-        })
+    this.updateData = async (inputValue) => {
+        const fetchData = await fetch(`https://jjalbot.com/api/jjals?text=${inputValue}`);
+        const jsonObject = await fetchData.json();
+        
+        const htmlString = jsonObject.map(d => `<img src="${d.imageUrl}">`).join('');
+        this.setState(htmlString);
     }
 
     this.setState = (newData) => {
