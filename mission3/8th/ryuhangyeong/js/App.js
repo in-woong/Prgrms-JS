@@ -27,12 +27,9 @@ export default class App {
         debounce(async () => {
           try {
             const data = await getListByKeyword(value)
-            const { historyData } = this.state
-
             this.searchResult.setState(data)
-
-            historyData.unshift(value)
-            this.searchHistory.setState(historyData)
+            this.state.historyData = [value, ...this.state.historyData]
+            this.searchHistory.setState(this.state.historyData)
           } catch (e) {
             alert(e)
             // throw e
