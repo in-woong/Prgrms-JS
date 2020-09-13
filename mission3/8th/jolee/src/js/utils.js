@@ -20,3 +20,11 @@ const searchWord = async (url, text) => {
   )
   return response
 }
+
+let timer = null
+const debounce = (callback, timer) => {
+  if (timer) {
+    clearTimeout()
+  }
+  timer = setTimeout(callback, timer)
+}
