@@ -11,9 +11,18 @@ export default function SearchInput($target, updateData){
 
     this.handleEvent = () => {
         const searchInput = document.querySelector("#search-input");
+        let timer;
         searchInput.addEventListener('keyup', function(){
-            updateData(searchInput.value);
+            //디바운스 구현
+            if (timer) {
+                clearTimeout(timer);
+            }
+            timer = setTimeout(function() {
+                updateData(searchInput.value);
+            }, 200);
         })
+
+
     }
 
     this.prerender();
