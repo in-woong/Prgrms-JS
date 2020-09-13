@@ -85,18 +85,14 @@ const dummyData = [
   },
 ]
 
-;(function () {
+;(async () => {
   const searchResult = new SearchResult(dummyData, '#search-result')
   searchResult.render()
 
   document
     .querySelector('#search-keyword')
-    .addEventListener('keyup', function (e) {
-      fetch(`https://jjalbot.com/api/jjals?text=${e.target.value}`)
-        .then((x) => x.json())
-        .then((data) => {
-          console.log(JSON.stringify(data, null, 2))
-          searchResult.setState()
-        })
+    .addEventListener('keyup', async function (e) {
+      const data = await searchWord(`https://jjalbot.com/api`, e.target.value)
+      searchResult.setState(data)
     })
 })()

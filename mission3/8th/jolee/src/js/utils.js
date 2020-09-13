@@ -13,3 +13,10 @@ const validateData = (data) => {
     }
   })
 }
+
+const searchWord = async (url, text) => {
+  const response = await await fetch(`${url}/jjals?text=${text}`).then((x) =>
+    x.json()
+  )
+  return response
+}

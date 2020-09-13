@@ -13,8 +13,8 @@ function SearchResult(data, target) {
       .join('')}`
   }
 
-  this.setState = function () {
-    this.data = data
+  this.setState = function (nextData) {
+    this.data = nextData
     this.render()
   }
 }
