@@ -1,4 +1,4 @@
-function SearchResult({searchedItems}, target) {
+export default function SearchResult({searchedItems}, target) {
     this.data = {searchedItems};
     this.$target = document.querySelector(target);
 

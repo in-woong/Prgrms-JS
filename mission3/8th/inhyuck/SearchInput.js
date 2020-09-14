@@ -1,4 +1,6 @@
-function SearchInput({searchText}, target, onKeyupSearchInput) {
+import {debounce} from './utils/debounce.js';
+
+export default function SearchInput({searchText}, target, onKeyupSearchInput) {
     this.data = {searchText};
     this.$target = document.querySelector(target);
     this.$target.addEventListener('keyup', event => {

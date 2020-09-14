@@ -1,4 +1,4 @@
-function SearchHistory({searchTexts}, target, onClickSearchText) {
+export default function SearchHistory({searchTexts}, target, onClickSearchText) {
     this.data = {searchTexts};
     this.$target = document.querySelector(target);
     this.$target.addEventListener('click', event => {

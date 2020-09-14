@@ -1,4 +1,9 @@
-function App(target) {
+import SearchInput from './SearchInput.js';
+import SearchHistory from './SearchHistory.js';
+import SearchResult from './SearchResult.js';
+import {fetchSearchResult} from './apis/fetchSearchResult.js';
+
+export default function App(target) {
     this.$target = document.querySelector(target);
     this.data = {
         searchText: '',

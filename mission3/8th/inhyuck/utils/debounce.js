@@ -1,6 +1,6 @@
 let timer;
 
-function debounce({callbackFn, delay}) {
+export function debounce({callbackFn, delay}) {
     if (timer) {
         window.clearTimeout(timer);
     }

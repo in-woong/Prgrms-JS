@@ -1,3 +1,3 @@
-;(function () {
-    new App('#app');
-})();
+import App from './App.js';
+
+new App('#app');
