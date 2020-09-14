@@ -28,15 +28,12 @@ function App(target) {
         searchResult = new SearchResult({searchedItems: this.data.searchedItems}, '.search-result');
     };
 
-    this.setState = function({searchText}) {
+    this.setState = async function({searchText}) {
         this.data.searchText = searchText;
-        fetchSearchResult({searchText})
-          .then(searchedItems => {
-              this.data.searchedItems = searchedItems;
-              searchKeyword.setState({searchText});
-              searchResult.setState({searchedItems: this.data.searchedItems});
-              this.render();
-          });
+        this.data.searchedItems = await fetchSearchResult({searchText});
+        searchKeyword.setState({searchText});
+        searchResult.setState({searchedItems: this.data.searchedItems});
+        this.render();
     };
 
     this.render();
