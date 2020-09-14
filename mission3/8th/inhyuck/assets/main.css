@@ -6,7 +6,16 @@ ul > li {
     cursor: pointer;
     list-style: none;
     width: fit-content;
-    padding-bottom: 5px;
+    padding: 0 5px 5px 0;
     font-weight: bold;
     font-style: italic;
+}
+
+ul > li.img {
+    display: inline-block;
+}
+
+img {
+    width: 300px;
+    height: 300px;
 }

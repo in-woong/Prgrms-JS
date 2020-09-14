@@ -4,9 +4,13 @@ export default function SearchResult({searchedItems}, target) {
 
     this.render = function () {
         this.$target.innerHTML = `
-              ${this.data.searchedItems
-          .map(searchedItem => `<img src="${searchedItem.imageUrl}">`)
-          .join('')}
+            <ul>
+              ${this.data.searchedItems.map(searchedItem => `
+                    <li class="img">
+                        <img src="${searchedItem.imageUrl}" alt="${searchedItem.title}">
+                    </li>
+                `).join('')}
+            </ul> 
         `;
     };
 
