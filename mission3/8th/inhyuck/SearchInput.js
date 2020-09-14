@@ -1,10 +1,12 @@
-import {debounce} from './utils/debounce.js';
+import { getDebounce } from './utils/debounce.js';
 
 export default function SearchInput({searchText}, target, onKeyupSearchInput) {
     this.data = {searchText};
     this.$target = document.querySelector(target);
+
+    const debounce = getDebounce({callbackFn: ({searchText}) => onKeyupSearchInput({searchText}), delay: 500});
     this.$target.addEventListener('keyup', event => {
-        debounce({callbackFn: () => onKeyupSearchInput({searchText: event.target.value}), delay: 500});
+        debounce({searchText: event.target.value});
     });
 
     let $searchKeyword;
