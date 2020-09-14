@@ -1,0 +1,12 @@
+ul {
+    padding-left: 10px;
+}
+
+ul > li {
+    cursor: pointer;
+    list-style: none;
+    width: fit-content;
+    padding-bottom: 5px;
+    font-weight: bold;
+    font-style: italic;
+}
