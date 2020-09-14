@@ -1,18 +1,15 @@
-function SearchResult(app, data) {
-    const $resultBox = document.querySelector('#search-result');
+function SearchResult(data, target) {
 
-    this.app = app;
     this.data = data;
+    this.$resultBox = target;
 
     this.render = () => {
-        $resultBox.innerHTML = this.data.map((jjal, key) => {
+        this.$resultBox.innerHTML = this.data.map((jjal, key) => {
             return jjal.videoUrl ?
                 `<li key=${key}><video src="${jjal.videoUrl}"></li>`
                 :
-                `<img key=${key}><img src="${jjal.imageUrl}"></img>`
-                ;
+                `<li key=${key}><img src="${jjal.imageUrl}"/></li>`;
         }).join('');
-        // console.log(resultData);
     }
 
 
