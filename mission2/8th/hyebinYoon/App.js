@@ -4,6 +4,7 @@ import TodoCount from './components/TodoCount.js'
 
 function App() {
   this.$todoList = document.querySelector(`#todo-list`)
+  this.$todoCount = document.querySelector(`.count-box`)
   this.$insertForm = document.querySelector('#insert-form')
   this.$removeAllBtn = document.querySelector('.remove-btn')
 
@@ -27,7 +28,8 @@ function App() {
       const data = JSON.parse(localStorage.getItem('todos')) || []
       this.todos = data
     } catch (err) {
-      throw new Error('localStorage 가져오기 실패')
+      console.log(err)
+      this.todos = []
     }
   }
 
@@ -36,7 +38,7 @@ function App() {
     try {
       localStorage.setItem('todos', JSON.stringify(newData))
     } catch (err) {
-      throw new Error('localStorage 저장 실패')
+      console.log(err)
     }
   }
 
@@ -49,12 +51,8 @@ function App() {
 
   // Todo 추가
   const onInsertTodo = (text) => {
-    const lastId =
-      this.todos.length !== 0
-        ? parseInt(this.todos[this.todos.length - 1].id)
-        : 0
     this.todos.push({
-      id: lastId + 1,
+      id: Date.now(),
       text: text,
       isCompleted: false,
     })
@@ -79,14 +77,6 @@ function App() {
     this.setState(this.todos)
   }
 
-  // Todo Count
-  const onCountTodo = () => {
-    const total = this.todos.length
-    const completed = this.todos.filter((todo) => todo.isCompleted == true)
-      .length
-    return { total, completed }
-  }
-
   this.render = function () {
     this.todoList = new TodoList({
       data: this.todos,
@@ -100,8 +90,7 @@ function App() {
     })
     this.todoCount = new TodoCount({
       data: this.todos,
-      $target: this.$todoList,
-      onCountTodo,
+      $target: this.$todoCount,
     })
   }
   this.init()

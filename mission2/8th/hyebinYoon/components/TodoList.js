@@ -14,7 +14,7 @@ function TodoList({ data, $target, onRemoveTodo, onToggleTodo }) {
         return
       }
       const eventTarget = event.target
-      const id = parseInt(eventTarget.parentNode.id)
+      const id = parseInt(eventTarget.closest('li').id)
       if (eventTarget.tagName == 'BUTTON') {
         // 삭제
         onRemoveTodo(id)
@@ -36,14 +36,14 @@ function TodoList({ data, $target, onRemoveTodo, onToggleTodo }) {
       .map(
         (todo) =>
           `<li id="${todo.id}">
-      ${todo.isCompleted ? `<s>${todo.text}</s>` : `<span>${todo.text}</span>`}
+      ${todo.isCompleted ? `<s>${todo.text}</s>` : `${todo.text}`}
       <button >❌</button>
       </li>`
       )
       .join('')
-    $target.innerHTML = `<ul>${html}</ul>`
-    this.bindEvents()
+    $target.querySelector('ul').innerHTML = html
   }
+  this.bindEvents()
   this.render()
 }
 
@@ -51,10 +51,14 @@ function TodoList({ data, $target, onRemoveTodo, onToggleTodo }) {
 function checkData(data) {
   if (!data || !Array.isArray(data))
     throw new Error('data값이 유효하지 않습니다.') // data값 체크
-  if (data.some((value) => typeof value.text !== 'string' || !value.text))
-    throw new Error('text값이 유효하지 않습니다.') // text 체크
-  if (data.some((value) => typeof value.isCompleted !== 'boolean'))
-    throw new Error('isCompleted값이 유효하지 않습니다.') // isCompleted 체크
+  if (
+    data.some(
+      (value) =>
+        typeof value.text !== 'string' || typeof value.isCompleted !== 'boolean'
+    )
+  ) {
+    throw new Error('text 또는 isCompleted 값이 유효하지 않습니다.')
+  }
 }
 
 export default TodoList
