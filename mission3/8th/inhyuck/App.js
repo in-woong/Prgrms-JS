@@ -14,8 +14,8 @@ function App(target) {
 
     this.render = function() {
         if (this.$target.innerHTML) {
-            this.searchKeyword.render();
-            this.searchResult.render();
+            searchResult.render();
+            searchKeyword.render();
             return;
         }
 

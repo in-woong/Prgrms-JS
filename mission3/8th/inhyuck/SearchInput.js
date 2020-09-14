@@ -23,7 +23,7 @@ function SearchInput({searchText}, target, onKeyupSearchInput) {
     const bindEvents = () => {
         const $searchKeyword = this.$target.querySelector('#search-keyword');
         $searchKeyword.addEventListener('keyup', event => {
-            onKeyupSearchInput({searchText: event.target.value});
+            debounce({callbackFn: () => onKeyupSearchInput({searchText: event.target.value}), delay: 200});
         });
     };
 
