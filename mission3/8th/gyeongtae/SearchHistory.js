@@ -1,6 +1,9 @@
-export default function SearchHistory(data, target) {
+export default function SearchHistory(data, renderEle, clickSearchHistory) {
   this.data = data
-  this.target = document.querySelector(target)
+  this.renderEle = document.createElement('ul')
+  this.renderEle.id = 'search-historys'
+  renderEle.append(this.renderEle)
+  this.clickSearchHistory = clickSearchHistory
 
   this.render = () => {
     const htmlString = this.data
@@ -10,7 +13,7 @@ export default function SearchHistory(data, target) {
       `
       )
       .join('')
-    this.target.innerHTML = htmlString
+    this.renderEle.innerHTML = htmlString
   }
   this.setState = (nextData) => {
     this.data = nextData
@@ -30,4 +33,5 @@ export default function SearchHistory(data, target) {
     this.setState(this.data)
   }
   this.render()
+  this.renderEle.addEventListener('click', this.clickSearchHistory)
 }

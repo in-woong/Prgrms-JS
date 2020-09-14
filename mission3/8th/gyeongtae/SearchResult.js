@@ -1,8 +1,10 @@
 import { getJJal } from './getJjal.js'
 
-export default function SearchResult(data, target) {
+export default function SearchResult(data, renderEle) {
   this.data = data
-  this.target = document.querySelector(target)
+  this.renderEle = document.createElement('ul')
+  this.renderEle.id = 'search-results'
+  renderEle.append(this.renderEle)
 
   this.render = () => {
     const htmlString = this.data
@@ -21,7 +23,7 @@ export default function SearchResult(data, target) {
       `
       )
       .join('')
-    this.target.innerHTML = htmlString
+    this.renderEle.innerHTML = htmlString
   }
   this.setState = (nextData) => {
     this.data = nextData
