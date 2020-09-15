@@ -1,5 +1,12 @@
-export default function SearchHistory({searchTexts}, target, onClickSearchText) {
-    this.data = {searchTexts};
+/**
+ * @param {object} props
+ * @param {string[]} props.searchTexts
+ * @param {string} target
+ * @param {SearchHistory~onClickSearchText} onClickSearchText
+ * @constructor
+ */
+export default function SearchHistory(props, target, onClickSearchText) {
+    this.data = props;
     this.$target = document.querySelector(target);
     this.$target.addEventListener('click', event => {
         if (event.target.tagName === 'LI') {

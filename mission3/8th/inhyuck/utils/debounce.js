@@ -1,7 +1,7 @@
 /**
  * debounce Factory 함수
- * @param callbackFn
- * @param delay
+ * @param {callback} callbackFn
+ * @param {number} delay
  */
 export function getDebounce({callbackFn, delay}) {
     let timer;

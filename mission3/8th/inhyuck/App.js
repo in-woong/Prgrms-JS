@@ -3,6 +3,10 @@ import SearchHistory from './SearchHistory.js';
 import SearchResult from './SearchResult.js';
 import {fetchSearchResult} from './apis/fetchSearchResult.js';
 
+/**
+ * @param {string} target
+ * @constructor
+ */
 export default function App(target) {
     this.$target = document.querySelector(target);
     this.data = {
@@ -15,11 +19,19 @@ export default function App(target) {
     let searchInput = null;
     let searchResult = null;
 
+    /**
+     * @callback SearchHistory~onClickSearchText
+     * @param {string} searchTextIndex
+     */
     const onClickSearchText = ({searchTextIndex}) => {
         const clickedSearchText = this.data.searchTexts[searchTextIndex];
         this.setState({searchText: clickedSearchText});
     };
 
+    /**
+     * @callback SearchInput~onKeyupSearchInput
+     * @param {string} searchText
+     */
     const onKeyupSearchInput = ({searchText}) => {
         const searchTexts = [
               ...this.data.searchTexts,

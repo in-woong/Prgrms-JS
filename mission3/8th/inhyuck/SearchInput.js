@@ -1,7 +1,14 @@
 import { getDebounce } from './utils/debounce.js';
 
-export default function SearchInput({searchText}, target, onKeyupSearchInput) {
-    this.data = {searchText};
+/**
+ * @param {object} props
+ * @param {string} props.searchText
+ * @param {string} target
+ * @param {SearchInput~onKeyupSearchInput} onKeyupSearchInput
+ * @constructor
+ */
+export default function SearchInput(props, target, onKeyupSearchInput) {
+    this.data = props;
     this.$target = document.querySelector(target);
 
     const debounce = getDebounce({
@@ -19,13 +26,15 @@ export default function SearchInput({searchText}, target, onKeyupSearchInput) {
     let $searchKeyword;
 
     this.render = function () {
+        const {searchText} = this.data;
+
         if (this.$target.innerHTML) {
-            $searchKeyword.value = this.data.searchText;
+            $searchKeyword.value = searchText;
             return;
         }
         this.$target.innerHTML = `
             <label for="search-keyword">움짤검색 키워드 : </label>
-            <input id="search-keyword" value="${this.data.searchText}"/>
+            <input id="search-keyword" value="${searchText}"/>
         `;
 
         $searchKeyword = this.$target.querySelector('#search-keyword');
