@@ -1,4 +1,5 @@
 import { fetchImageData } from '../api/index.js';
+import { debounce } from '../utils/index.js';
 
 
 function SearchInput({ onChangeData }) {
@@ -6,7 +7,7 @@ function SearchInput({ onChangeData }) {
 
   this.init = () => {
     const $keywordInput = document.querySelector('#search-keyword');
-    $keywordInput.addEventListener('keyup', this.onKeyupInput);
+    $keywordInput.addEventListener('keyup', debounce(this.onKeyupInput, 200))
   };
 
   this.getState = () => this.keyword;
@@ -17,6 +18,8 @@ function SearchInput({ onChangeData }) {
 
   this.onKeyupInput = async (event) => {
     const keyword = event.target.value;
+    if (!keyword) return;
+
     this.setState(keyword);
     const datas = await fetchImageData(keyword);
     onChangeData(datas);
