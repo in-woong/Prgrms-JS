@@ -55,6 +55,7 @@ export default function App(target) {
         searchHistory.setState({searchTexts: this.data.searchTexts});
         searchResult.setState({searchedItems: this.data.searchedItems});
         this.render();
+        document.title = `Mission3 - 움짤검색기: ${searchText}`;
     };
 
     this.render();
