@@ -12,7 +12,7 @@ export default function App(target) {
     };
 
     let searchHistory = null;
-    let searchKeyword = null;
+    let searchInput = null;
     let searchResult = null;
 
     const onClickSearchText = ({searchTextIndex}) => {
@@ -32,7 +32,7 @@ export default function App(target) {
         if (this.$target.innerHTML) {
             searchHistory.render();
             searchResult.render();
-            searchKeyword.render();
+            searchInput.render();
             return;
         }
 
@@ -43,7 +43,7 @@ export default function App(target) {
         `;
 
         searchHistory = new SearchHistory({searchTexts: this.data.searchTexts}, '.search-history', onClickSearchText);
-        searchKeyword = new SearchInput({searchText: this.data.searchText}, '.search-input', onKeyupSearchInput);
+        searchInput = new SearchInput({searchText: this.data.searchText}, '.search-input', onKeyupSearchInput);
         searchResult = new SearchResult({searchedItems: this.data.searchedItems}, '.search-result');
     };
 
@@ -51,7 +51,7 @@ export default function App(target) {
         this.data.searchText = searchText;
         this.data.searchTexts = searchTexts;
         this.data.searchedItems = await fetchSearchResult({searchText});
-        searchKeyword.setState({searchText});
+        searchInput.setState({searchText});
         searchHistory.setState({searchTexts: this.data.searchTexts});
         searchResult.setState({searchedItems: this.data.searchedItems});
         this.render();
