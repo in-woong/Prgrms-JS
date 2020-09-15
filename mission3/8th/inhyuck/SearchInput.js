@@ -4,7 +4,14 @@ export default function SearchInput({searchText}, target, onKeyupSearchInput) {
     this.data = {searchText};
     this.$target = document.querySelector(target);
 
-    const debounce = getDebounce({callbackFn: ({searchText}) => onKeyupSearchInput({searchText}), delay: 500});
+    const debounce = getDebounce({
+        callbackFn: ({searchText}) => {
+            if (searchText) {
+                onKeyupSearchInput({searchText});
+            }
+        },
+        delay: 500
+    });
     this.$target.addEventListener('keyup', event => {
         debounce({searchText: event.target.value});
     });
