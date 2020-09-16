@@ -4,7 +4,6 @@ function SearchResult(data, target) {
     this.$resultBox = target;
 
     this.render = () => {
-        // console.log(this.data);  //질문) setState의 새로운 데이터가 덮..
         this.$resultBox.innerHTML = this.data.map((jjal, key) => {
             return jjal.videoUrl ?
                 `<li key=${key}><video src="${jjal.videoUrl}"></li>`

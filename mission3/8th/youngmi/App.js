@@ -10,7 +10,6 @@ function App() {
     const searchInput = new SearchInput(this);
     const searchResult = new SearchResult(this.data, $resultBox);
 
-    // this.sendData = (newData) => {
     this.sendData = (newData) => {
         this.data = newData;
         searchResult.setState(this.data);
@@ -18,4 +17,3 @@ function App() {
 }
 
 export default App;
-new App();
