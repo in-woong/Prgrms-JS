@@ -23,14 +23,16 @@ export default function SearchHistory({ $app, initialData, onClick }) {
 
   this.render = () => {
     if (this.data) {
-      this.$target.innerHTML = this.data.map(
-        (keyword, index) =>
-          `
+      this.$target.innerHTML = this.data
+        .map(
+          (keyword, index) =>
+            `
         <li class="search-history-keyword" data-index="${index}">
           ${keyword}
         </li>
         `
-      )
+        )
+        .join('')
     } else {
       this.$target.innerHTML = ''
     }
