@@ -1,4 +1,4 @@
-export default function earchResult($target){
+export default function SearchResult($target){
 
     this.$target = $target;
 
@@ -9,12 +9,14 @@ export default function earchResult($target){
     }
 
     this.setState = (newData) => {
+        //SearchResult의 this.data는 App this.data.searchedDatas
         this.data = newData;
         this.render();
     }
 
     this.render = () => {
-        document.querySelector('#search-result').innerHTML = this.data;
+        this.searchResult.innerHTML = 
+            this.data.map(d => `<img src="${d.imageUrl}">`).join('');
     }
 
     this.prerender();

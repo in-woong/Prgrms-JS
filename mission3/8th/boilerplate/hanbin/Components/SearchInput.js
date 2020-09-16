@@ -1,7 +1,7 @@
-export default function SearchInput($target, updateData, addHistory){
+export default function SearchInput($target, onKeyUpInput){
 
     this.$target = $target;
-    this.updateData = updateData;
+    this.onKeyUpInput = onKeyUpInput;
 
     this.prerender = () => {
         this.searchInput = document.createElement('input');
@@ -9,22 +9,20 @@ export default function SearchInput($target, updateData, addHistory){
         $target.appendChild(this.searchInput);
     }
 
-    this.handleEvent = () => {
+    this.bindOnKeyUpEvent = () => {
         let timer;
         this.searchInput.addEventListener('keyup', () => {
-            //디바운스 구현
             if (timer) {
                 clearTimeout(timer);
             }
             timer = setTimeout(() => {
-                if(this.searchInput.value!==''){
-                    updateData(this.searchInput.value);
-                    addHistory(this.searchInput.value);
+                if(this.searchInput.value !== ''){
+                    this.onKeyUpInput(this.searchInput.value);
                 }
-            }, 500);
+            }, 1000);
         })
     }
 
     this.prerender();
-    this.handleEvent();
+    this.bindOnKeyUpEvent();
 }

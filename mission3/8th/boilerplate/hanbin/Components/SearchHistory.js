@@ -1,7 +1,7 @@
-export default function SearchHistory($target, updateData) {
+export default function SearchHistory($target, onClickHistory) {
 
     this.$target = $target;
-    this.updateData = updateData;
+    this.onClickHistory = onClickHistory;
 
     this.prerender = () => {
         this.historyHeader = document.createElement('h1');
@@ -14,13 +14,27 @@ export default function SearchHistory($target, updateData) {
         $target.appendChild(this.searchHistory);
     }
     
-    this.addHistoryElem = (inputValue) => {
-        const historyElem = document.createElement('li');
-        historyElem.innerHTML = `${inputValue}`;
-        historyElem.addEventListener('click', () => {
-            updateData(inputValue);
+    this.bindOnClickEvent = () => {
+        this.searchHistory.addEventListener('click', (evt) => {
+            if(evt.target.tagName === 'LI'){
+                onClickHistory(evt.target.innerHTML);
+            }
         })
-        this.searchHistory.appendChild(historyElem);
+    }
+
+    this.setState = (newData) => {
+        //SearchHistory의 this.data는 App this.data.searchedTexts
+        this.data = newData;
+        this.render();
+    }
+
+    this.render = () => {
+        this.searchHistory.innerHTML = `
+            ${this.data.map(d =>
+                `<li>${d}</li>`
+            ).join('')}
+        `;
+        this.bindOnClickEvent();
     }
     
     this.prerender();
