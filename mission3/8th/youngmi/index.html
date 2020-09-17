@@ -10,20 +10,31 @@
             }
             ul{
                 overflow: hidden;
+                margin: 0;
             }
             li {
                 float: left;
                 list-style: none;
-                border: 1px solid purple;
+            }
+            #search-history li{
+                  display: inline-block;
+                padding: 5px 10px;
+                border-radius: 12px;
+                background-color: #ccc;
+                margin-right: 10px;
+            }
+            #search-result li{
+                    border: 1px solid purple;
                 height: 200px;
             }
+            
         </style>
     </head>
 
     <body>
         <div id="app">
             <input id="search-keyword" />
-            <ul class="search-history"></ul>
+            <ul id="search-history"></ul>
             <div id="search-result"></div>
         </div>
         <script type="module" src="./index.js"></script>
