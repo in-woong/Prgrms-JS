@@ -1,4 +1,4 @@
-function TodoInput({ $targetElement, onSaveTodoItem }) {
+export default function TodoInput({ $targetElement, onSaveTodoItem }) {
     this.$targetElement = $targetElement;
 
     this.render = function () {

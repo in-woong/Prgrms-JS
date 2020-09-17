@@ -1,4 +1,4 @@
-function TodoCount({ $targetElement, todoItems }) {
+export default function TodoCount({ $targetElement, todoItems }) {
     this.$targetElement = $targetElement;
     this.todoItems = todoItems;
 

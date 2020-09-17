@@ -1,6 +1,12 @@
-function App({ selector }) {
+import TodoList from './components/TodoList.js';
+import TodoInput from './components/TodoInput.js';
+import TodoCount from './components/TodoCount.js';
+import localStorage from './utils/localStorage.js';
+import { validateTodoItems } from './utils/validateTodo.js';
+
+export default function App({ selector }) {
     this.$targetElement = document.querySelector(selector);
-    this.todoItems = getStorage({ key: 'todoItems' }) || [];
+    this.todoItems = localStorage.getStorage({ key: 'todoItems' }) || [];
     validateTodoItems({ todoItems: this.todoItems });
 
     const onSaveTodoItem = ({ todoItemText }) => {
@@ -66,7 +72,7 @@ function App({ selector }) {
         this.todoItems = todoItems;
         this.todoList.setState({ newTodoItems: todoItems });
         this.todoCount.setState({ todoItems: todoItems });
-        setStorage({
+        localStorage.setStorage({
             key: 'todoItems',
             value: todoItems,
         });
@@ -75,48 +81,3 @@ function App({ selector }) {
     this.render();
 }
 
-function validateTodoItems({ todoItems }) {
-    if (!todoItems) {
-        errorHandler({ errorMessage: 'todoItems is null or undefined' });
-    }
-
-    if (!Array.isArray(todoItems)) {
-        errorHandler({ errorMessage: 'todoItems is not Array' });
-    }
-
-    todoItems.forEach((todoItem) => validateTodoItem({ todoItem }));
-}
-
-function validateTodoItem({ todoItem }) {
-    const { text, isCompleted } = todoItem;
-
-    if (typeof text !== 'string' || text.trim() === '') {
-        errorHandler({ errorMessage: 'text value is empty or is not string type' });
-    }
-
-    if (typeof isCompleted !== 'boolean') {
-        errorHandler({ errorMessage: 'isCompleted value is empty or is not boolean type' });
-    }
-}
-
-//localStorage get/set
-function getStorage({ key }) {
-    try {
-        return JSON.parse(window.localStorage.getItem(key));
-    } catch (error) {
-        errorHandler({ errorMessage: error.message });
-    }
-}
-
-function setStorage({ key, value }) {
-    try {
-        window.localStorage.setItem(key, JSON.stringify(value));
-    } catch (error) {
-        //저장공간을 초과하거나 브라우저설정에 따라 QUOTA_EXCEEDED_ERR 에러가 발생할 수 있음.
-        errorHandler({ errorMessage: error.message });
-    }
-}
-
-function errorHandler({ errorMessage }) {
-    throw new Error(errorMessage);
-}

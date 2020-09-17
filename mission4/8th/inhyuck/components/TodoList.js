@@ -1,4 +1,6 @@
-function TodoList({ $targetElement, todoItems, onRemoveTodoItem, onCompleteTodoItem }) {
+import { errorHandler } from '../utils/errorHandler.js';
+
+export default function TodoList({ $targetElement, todoItems, onRemoveTodoItem, onCompleteTodoItem }) {
     if (!(this instanceof TodoList)) {
         errorHandler({ errorMessage: 'not exist new keyword' });
     }
