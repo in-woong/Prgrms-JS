@@ -1,3 +1,3 @@
 import App from './App.js';
 
-new App({selector: '#app'});
+new App({$target: document.querySelector('#app')});

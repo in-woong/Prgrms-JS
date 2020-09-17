@@ -4,15 +4,18 @@ import TodoCount from './components/TodoCount.js';
 import localStorage from './utils/localStorage.js';
 import { validateTodoItems } from './utils/validateTodo.js';
 
-export default function App({ selector }) {
-    this.$targetElement = document.querySelector(selector);
-    this.todoItems = localStorage.getStorage({ key: 'todoItems' }) || [];
-    validateTodoItems({ todoItems: this.todoItems });
+export default function App({ $target, initData = {} }) {
+    this.$target = $target;
+    this.data = initData;
+    if (!this.data.todoItems) {
+        this.data.todoItems = localStorage.getStorage({ key: 'todoItems' }) || [];
+    }
+    validateTodoItems({ todoItems: this.data.todoItems });
 
     const onSaveTodoItem = ({ todoItemText }) => {
         this.setState({
             todoItems: [
-                ...this.todoItems,
+                ...this.data.todoItems,
                 {
                     text: todoItemText,
                     isCompleted: false,
@@ -22,7 +25,7 @@ export default function App({ selector }) {
     };
 
     const onRemoveTodoItem = ({ todoItemIndex }) => {
-        const newTodoItems = [...this.todoItems];
+        const newTodoItems = [...this.data.todoItems];
         newTodoItems.splice(todoItemIndex, 1);
         this.setState({
             todoItems: newTodoItems,
@@ -30,14 +33,14 @@ export default function App({ selector }) {
     };
 
     const onCompleteTodoItem = ({ todoItemIndex }) => {
-        const newTodoItems = [...this.todoItems];
+        const newTodoItems = [...this.data.todoItems];
         newTodoItems[todoItemIndex].isCompleted = !newTodoItems[todoItemIndex].isCompleted;
         this.setState({
             todoItems: newTodoItems,
         });
     };
 
-    this.$targetElement.addEventListener('removeAll', event => {
+    this.$target.addEventListener('removeAll', event => {
         event.stopPropagation();
         this.setState({
             todoItems: [],
@@ -45,33 +48,35 @@ export default function App({ selector }) {
     });
 
     this.render = function () {
-        this.$targetElement.innerHTML = `
+        this.$target.innerHTML = `
             <div class="todo-list"></div>
             <div class="todo-count"></div>
             <div class="todo-input"></div>
         `;
 
         this.todoList = new TodoList({
-            $targetElement: this.$targetElement.querySelector('.todo-list'),
-            todoItems: this.todoItems,
+            $target: this.$target.querySelector('.todo-list'),
+            initData: {todoItems: this.data.todoItems},
             onRemoveTodoItem,
             onCompleteTodoItem,
         });
         this.todoInput = new TodoInput({
-            $targetElement: this.$targetElement.querySelector('.todo-input'),
+            $target: this.$target.querySelector('.todo-input'),
             onSaveTodoItem,
         });
         this.todoCount = new TodoCount({
-            $targetElement: this.$targetElement.querySelector('.todo-count'),
-            todoItems: this.todoItems,
+            $target: this.$target.querySelector('.todo-count'),
+            initData: {todoItems: this.data.todoItems},
         });
     };
 
-    this.setState = function ({ todoItems }) {
+    this.setState = function (nextData) {
+        const {todoItems} = nextData;
         validateTodoItems({ todoItems });
-        this.todoItems = todoItems;
-        this.todoList.setState({ newTodoItems: todoItems });
-        this.todoCount.setState({ todoItems: todoItems });
+
+        this.data = nextData;
+        this.todoList.setState({ todoItems: this.data.todoItems });
+        this.todoCount.setState({ todoItems: this.data.todoItems });
         localStorage.setStorage({
             key: 'todoItems',
             value: todoItems,
