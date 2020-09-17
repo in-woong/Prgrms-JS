@@ -3,9 +3,7 @@ function debounce(cb, time) {
     if (timer) {
         clearTimeout(timer);
     }
-    timer = setTimeout(function() {
-        cb;
-    }, time);
+    timer = setTimeout(cb, time);
 }
 export default debounce;
 
