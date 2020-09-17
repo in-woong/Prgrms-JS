@@ -6,9 +6,9 @@ function TodoInput(app) {
 
     this.addTodo = (e) => {
         if (e.key == 'Enter' && e.target.value !== '') {
-            const newTodo = e.target.value;
+            const newTodoText = e.target.value;
             this.app.addTodo({
-                text: newTodo,
+                text: newTodoText,
                 isCompleted: false
             })
             $todoInput.value = '';

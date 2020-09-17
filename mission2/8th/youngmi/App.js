@@ -55,22 +55,10 @@ function App() {
     }
     btnDeleteAll.addEventListener('click', this.deleteAll);
 
-
     // 글자 클릭시 isCompleted수정
     this.onOffTodo = (key, onOff) => {
-        if (onOff === 'strike') {
-            this.data[key].isCompleted = false;
-            todoList.setState(this.data);
-            localStorage.setItem('todoStorage', JSON.stringify(this.data));
-            // console.log(this.data);
-        } else if (onOff === 'text') {
-            this.data[key].isCompleted = true;
-            todoList.setState(this.data);
-            localStorage.setItem('todoStorage', JSON.stringify(this.data));
-            // console.log(this.data);
-        }
+        this.data[key].isCompleted = !onOff;
+        todoList.setState(this.data);
     }
 }
-
-new App();
-
+export default App;

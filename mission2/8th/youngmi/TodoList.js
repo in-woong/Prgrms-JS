@@ -29,23 +29,18 @@ function TodoList(app, data, todoListWrap) {
     }
     this.$todoListWrap.addEventListener('click', this.deleteTodo);
 
-
     // 글자클릭시 밑줄 온/오프
     this.onOffTodo = (e) => {
-        if (e.target.className === 'strike') { // isCompleted : true상태임 -> false
-            const key = e.target.parentNode.getAttribute('key');
-            this.app.onOffTodo(key, 'strike');
-        } else if (e.target.className === 'text') { // isCompleted : false상태임 -> true
-            const key = e.target.parentNode.getAttribute('key');
-            this.app.onOffTodo(key, 'text');
-        }
-
+        const key = e.target.parentNode.getAttribute('key');
+        const onOff = this.data[key].isCompleted;
+        this.app.onOffTodo(key, onOff);
     }
     this.$todoListWrap.addEventListener('click', this.onOffTodo);
 
+
+
     const $total = document.querySelector('.total');
     const $completed = document.querySelector('.completed');
-
     const todoCount = new TodoCount(this.data, $total, $completed);
 
 
