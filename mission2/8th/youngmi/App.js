@@ -3,27 +3,13 @@ import TodoList from './TodoList.js';
 
 function App() {
 
-    this.data = [
-        // {
-        //     text: 'test1',
-        //     isCompleted: true
-        // },
-        // {
-        //     text: 'test2',
-        //     isCompleted: false
-        // },
-        // {
-        //     text: 'test3',
-        //     isCompleted: true
-        // }
-    ];
+    this.data = [];
 
     console.log(this.data);
     const localStorage = window.localStorage;
     localStorage.setItem('todoStorage', JSON.stringify(this.data));
 
     const $todoListWrap = document.querySelector('#todo-list');
-    const btnDelete = document.querySelectorAll('.btnDeleteTodo');
     const btnDeleteAll = document.querySelector('#deleteAll');
 
 
