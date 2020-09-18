@@ -16,8 +16,10 @@ export default class SearchHistory {
     this.render()
 
     this.$searchHistory.addEventListener('click', (e) => {
-      const { target } = e
-      const { tagName } = target
+      const {
+        target,
+        target: { tagName },
+      } = e
 
       if (tagName === 'LI') this.onSearch(target.innerText)
     })
