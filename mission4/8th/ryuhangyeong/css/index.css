@@ -29,3 +29,8 @@ ul {
 .TodoList p.completed {
   text-decoration: line-through;
 }
+
+.UserList {
+  height: 200px;
+  overflow-y: scroll;
+}

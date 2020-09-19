@@ -21,3 +21,5 @@ export const toggleTodoCompleted = ({ username, _id }) =>
   request(`${END_POINT}/${username}/${_id}/toggle`, {
     method: 'PUT',
   })
+
+export const getUserList = () => request(`${END_POINT}/users`)

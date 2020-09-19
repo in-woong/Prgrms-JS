@@ -1,9 +1,10 @@
-import { TodoCount, TodoInput, TodoList } from './components/index.js'
+import { TodoCount, TodoInput, TodoList, UserList } from './components/index.js'
 import {
   getTodoList,
   createTodo,
   removeTodo,
   toggleTodoCompleted,
+  getUserList,
 } from './utils/api/todo.js'
 import { isValidTodos } from './utils/validate.js'
 import { getTodoStatus } from './utils/computed/todo.js'
@@ -11,13 +12,25 @@ import { getTodoStatus } from './utils/computed/todo.js'
 export default class App {
   username = 'ryuhangyeong'
   todos = []
+  users = []
 
   constructor($target) {
     this.init($target)
   }
 
   async init($target) {
-    this.todos = (await getTodoList({ username: this.username })) || []
+    this.todos = await getTodoList({ username: this.username })
+    this.users = await getUserList()
+
+    this.userList = new UserList({
+      $target,
+      initialData: this.users,
+      onSearch: async (username) => {
+        this.username = username
+        this.todos = await getTodoList({ username: this.username })
+        this.setState(this.todos)
+      },
+    })
 
     this.todoInput = new TodoInput({
       $target,
