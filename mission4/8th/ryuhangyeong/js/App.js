@@ -1,4 +1,10 @@
-import { TodoCount, TodoInput, TodoList, UserList } from './components/index.js'
+import {
+  TodoCount,
+  TodoInput,
+  TodoList,
+  UserList,
+  UserName,
+} from './components/index.js'
 import {
   getTodoList,
   createTodo,
@@ -29,10 +35,16 @@ export default class App {
         this.username = username
         this.todos = await getTodoList({ username: this.username })
         this.setState(this.todos)
+        this.UserName.setState(this.username)
       },
     })
 
-    this.todoInput = new TodoInput({
+    this.UserName = new UserName({
+      $target,
+      initialData: this.username,
+    })
+
+    this.TodoInput = new TodoInput({
       $target,
       onCreate: async (value) => {
         const data = await createTodo({
@@ -46,7 +58,7 @@ export default class App {
       },
     })
 
-    this.todoList = new TodoList({
+    this.TodoList = new TodoList({
       $target,
       initialData: this.todos,
       onToggle: async (_id) => {
@@ -64,7 +76,7 @@ export default class App {
       },
     })
 
-    this.todoCount = new TodoCount({
+    this.TodoCount = new TodoCount({
       $target,
       initialData: getTodoStatus(this.todos),
     })
@@ -73,7 +85,7 @@ export default class App {
   setState(nextData) {
     isValidTodos(nextData)
     this.todos = nextData
-    this.todoList.setState(this.todos)
-    this.todoCount.setState(getTodoStatus(this.todos))
+    this.TodoList.setState(this.todos)
+    this.TodoCount.setState(getTodoStatus(this.todos))
   }
 }
