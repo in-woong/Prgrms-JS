@@ -6,10 +6,7 @@ const defaultOpts = {
 }
 
 export default async (url, opts = {}) => {
-  opts = Object.assign(defaultOpts, opts)
-
-  const res = await fetch(url, opts)
-
+  const res = await fetch(url, { ...defaultOpts, ...opts })
   if (res.ok) {
     return await res.json()
   } else {
