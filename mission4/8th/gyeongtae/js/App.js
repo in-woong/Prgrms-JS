@@ -36,7 +36,6 @@ export default function App(data, renderEle) {
     todoListInputEle.value = ''
     todoListInputEle.focus()
   }
-
   // todo list 삭제 함수
   this.removeTodoList = (key) => {
     this.data.splice(key, 1)
@@ -66,54 +65,37 @@ export default function App(data, renderEle) {
     }
     this.todoList.render()
     this.todoCount.render()
+    this.todoInput.render()
+    this.todoRemoveAll.render()
   }
   this.setState = (nextData) => {
     this.data = nextData
-    this.todoList.render()
-    this.todoCount.render()
+    this.todoList.setState(this.data)
+    this.todoCount.setState(this.data)
+    this.todoInput.setState(this.data)
+    this.todoRemoveAll.setState(this.data)
   }
-  // todd list에 이벤트 등록
+  // 이벤트 등록
   this.setEventOnTodoList = () => {
-    this.todoList.todoListEle.addEventListener('click', (event) => {
-      const target = event.target
-      // todo list 삭선처리 이벤트 등록
-      if (target.className === 'todo-list-item') {
-        return this.setTodoListIsCompleted(
-          target.closest('div').getAttribute('key')
-        )
-      }
-      // todo list 삭제 이벤트 등록
-      if (target.className === 'todo-list-remove-button') {
-        return this.removeTodoList(target.closest('div').getAttribute('key'))
-      }
-    })
-
-    // todd list 추가 이벤트 등록
-    this.todoInput.todoInputEle.addEventListener('submit', (event) => {
-      event.preventDefault()
-      this.todoInput.addTodoList(event)
-    })
-
     // todo list 전체 삭제 이벤트 등록
     this.renderEle.addEventListener('removeAll', (event) => {
       this.removeAllTodoList()
     })
-    // removeAll Event를 커스텀으로 만들어
-    // todo-remove-all-button을 클릭시 removeAll 이벤트를 todoListElement에 전달
-    const removeAllEvent = new Event('removeAll')
-    removeAllButtonEle.addEventListener('click', (event) => {
-      this.renderEle.dispatchEvent(removeAllEvent)
-    })
   }
 
-  this.todoList = new TodoList(this.renderEle, this.data)
+  this.todoList = new TodoList(
+    this.renderEle,
+    this.data,
+    this.setTodoListIsCompleted,
+    this.removeTodoList
+  )
   this.todoCount = new TodoCount(this.renderEle, this.data)
   this.todoInput = new TodoInput(this.renderEle, this.addTodoList)
-  this.todoRemoveAll = new TodoRemoveAllButton(this.renderEle)
+  this.todoRemoveAll = new TodoRemoveAllButton(this.renderEle, () => {
+    this.renderEle.dispatchEvent(new Event('removeAll'))
+  })
   this.firstRender = true
 
-  const removeAllButtonEle = this.todoRemoveAll.todoRemoveAllEle.firstChild
-    .nextElementSibling
   const localStorage = window.localStorage
 
   this.render()
