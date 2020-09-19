@@ -1,27 +1,39 @@
 const END_POINT = 'https://todo-api.roto.codes'
 const username = 'hyebinYoon'
 
+const request = async (url, data) => {
+  try {
+    const res = await fetch(url, data)
+    if (res.ok) {
+      if (!data) return await res.json()
+    } else {
+      throw new Error('fetch error')
+    }
+  } catch (e) {
+    throw e
+  }
+}
+
 // 조회
 export const fetchData = async () => {
-  const res = await fetch(`${END_POINT}/${username}`)
-  return await res.json()
+  return await request(`${END_POINT}/${username}`)
 }
 
 // 삭제
 export const removeData = async (id) => {
-  await fetch(`${END_POINT}/${username}/${id}`, {
+  await request(`${END_POINT}/${username}/${id}`, {
     method: 'DELETE',
   })
 }
 // 토글
 export const toggleData = async (id) => {
-  await fetch(`${END_POINT}/${username}/${id}/toggle`, {
+  await request(`${END_POINT}/${username}/${id}/toggle`, {
     method: 'PUT',
   })
 }
 // 추가
 export const insertData = async (todoText) => {
-  await fetch(`${END_POINT}/${username}`, {
+  await request(`${END_POINT}/${username}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
