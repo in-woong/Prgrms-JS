@@ -1,56 +1,33 @@
-;(async function () {
-  const username = 'roto'
+const END_POINT = 'https://todo-api.roto.codes'
+const username = 'hyebinYoon'
 
-  async function fetchData() {
-    const res = await fetch(`https://todo-api.roto.codes/${username}`)
-    return await res.json()
-  }
+// 조회
+export const fetchData = async () => {
+  const res = await fetch(`${END_POINT}/${username}`)
+  return await res.json()
+}
 
-  const data = await fetchData()
-
-  const todoList = new TodoList({
-    $target: document.querySelector('#todo-list'),
-    data: data,
-    onClick: async function (id) {
-      await fetch(`https://todo-api.roto.codes/${username}/${id}/toggle`, {
-        method: 'PUT',
-      })
-
-      // 데이터 추가 후 서버에서 목록 다시 불러서 다시 그리기
-      const updatedData = await fetchData()
-      todoList.setState(updatedData)
-    },
-    onRemove: async function (id) {
-      await fetch(`https://todo-api.roto.codes/${username}/${id}`, {
-        method: 'DELETE',
-      })
-
-      // 데이터 추가 후 서버에서 목록 다시 불러서 다시 그리기
-      const updatedData = await fetchData()
-      todoList.setState(updatedData)
-    },
+// 삭제
+export const removeData = async (id) => {
+  await fetch(`${END_POINT}/${username}/${id}`, {
+    method: 'DELETE',
   })
-
-  document
-    .querySelector('#add-todo-button')
-    .addEventListener('click', async function () {
-      const todoText = document.querySelector('#todo-input').value
-
-      if (todoText.length > 0) {
-        // 데이터 추가하기
-        await fetch(`https://todo-api.roto.codes/${username}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            content: todoText,
-          }),
-        })
-
-        // 데이터 추가 후 서버에서 목록 다시 불러서 다시 그리기
-        const updatedData = await fetchData()
-        todoList.setState(updatedData)
-      }
-    })
-})()
+}
+// 토글
+export const toggleData = async (id) => {
+  await fetch(`${END_POINT}/${username}/${id}/toggle`, {
+    method: 'PUT',
+  })
+}
+// 추가
+export const insertData = async (todoText) => {
+  await fetch(`${END_POINT}/${username}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      content: todoText,
+    }),
+  })
+}

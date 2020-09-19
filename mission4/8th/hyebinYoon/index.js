@@ -1,2 +1,7 @@
 import App from './App.js'
-new App()
+try {
+  new App()
+} catch (e) {
+  console.error(e)
+  alert(e.message)
+}

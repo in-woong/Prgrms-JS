@@ -1,4 +1,4 @@
-function TodoCount({ data, $target }) {
+export default function TodoCount({ data, $target }) {
   if (!(this instanceof TodoCount))
     throw new Error('function 형태의 선언입니다.')
 
@@ -28,5 +28,3 @@ function TodoCount({ data, $target }) {
   countTodo()
   this.render()
 }
-
-export default TodoCount
