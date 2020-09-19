@@ -12,7 +12,7 @@ export default function TodoRemoveAllButton(renderEle, dispatchReoveAllEvent) {
   this.bindEvent = () => {
     // removeAll Event를 커스텀으로 만들어
     // todo-remove-all-button을 클릭시 removeAll 이벤트를 todoListElement에 전달
-    removeAllButtonEle.addEventListener('click', (event) => {
+    this.todoRemoveAllEle.addEventListener('click', (event) => {
       this.dispatchReoveAllEvent()
     })
   }
