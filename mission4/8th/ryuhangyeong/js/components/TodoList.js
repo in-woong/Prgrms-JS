@@ -15,8 +15,10 @@ export default class TodoList {
     this.render()
 
     this.$todoList.addEventListener('click', (e) => {
-      const { target } = e
-      const { tagName } = target
+      const {
+        target,
+        target: { tagName },
+      } = e
 
       const id = target.closest('li').dataset.id
 
