@@ -15,9 +15,10 @@ export default function SearchHistory($target, onClickHistory) {
     }
     
     this.bindOnClickEvent = () => {
-        this.searchHistory.addEventListener('click', (evt) => {
+       
+        this.searchHistory.addEventListener('click', evt => {
             if(evt.target.tagName === 'LI'){
-                onClickHistory(evt.target.innerHTML);
+                this.onClickHistory(evt.target.innerHTML);
             }
         })
     }
@@ -34,8 +35,9 @@ export default function SearchHistory($target, onClickHistory) {
                 `<li>${d}</li>`
             ).join('')}
         `;
-        this.bindOnClickEvent();
+        
+        
     }
-    
     this.prerender();
+    this.bindOnClickEvent();
 }

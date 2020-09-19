@@ -1,28 +1,28 @@
 import SearchResult from './SearchResult.js';
 import SearchInput from './SearchInput.js';
 import SearchHistory from './SearchHistory.js';
+import { fetchJjal } from '../Util/api.js';
 
 export default function App($target) {
 
     this.$target = $target;
     this.data = {
-        searchText: '',
         searchedDatas: [],
         searchedTexts: []
     }
 
-    this.onClickHistory = (clickedText) => {
+    this.onClickHistory = async (clickedText) => {
+        const newSearchedDatas = await fetchJjal(clickedText);
         this.setState({
-            searchText: clickedText,
-            searchedDatas: this.data.searchedDatas,
-            searchedTexts: this.data.searchedTexts
-        });
+            ...this.data,
+            searchedDatas: newSearchedDatas
+        })
     }
 
-    this.onKeyUpInput = (inputText) => {
+    this.onKeyUpInput = async (inputText) => {
+        const newSearchedDatas = await fetchJjal(inputText);
         this.setState({
-            searchText: inputText,
-            searchResults: this.data.searchDatas,
+            searchedDatas: newSearchedDatas,
             searchedTexts: [
                 ...this.data.searchedTexts,
                 inputText
@@ -30,11 +30,8 @@ export default function App($target) {
         });
     }
 
-    this.setState = async (newData) => {
+    this.setState = (newData) => {
         this.data = newData;
-        const fetchData = await fetch(`https://jjalbot.com/api/jjals?text=${this.data.searchText}`);
-        const jsonObject = await fetchData.json();
-        this.data.searchedDatas = jsonObject;
         this.searchResult.setState(this.data.searchedDatas);
         this.searchHistory.setState(this.data.searchedTexts);
         this.render();
