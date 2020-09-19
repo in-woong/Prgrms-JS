@@ -1,6 +1,6 @@
 import { SearchHistory, SearchInput, SearchResult } from './components/index.js'
 import { getJjalListByKeyword } from './utils/api/jjals.js'
-import debounce from './utils/etc/debounce.js'
+import { caching, debounce } from './utils/etc/index.js'
 
 export default class App {
   state = {
@@ -8,12 +8,19 @@ export default class App {
   }
 
   constructor($target) {
+    this.init($target)
+  }
+
+  init($target) {
     try {
+      const JjalListcacheWrap = caching(getJjalListByKeyword)
+
       this.searchHistory = new SearchHistory({
         $target,
         onSearch: async (value) => {
-          const data = await getJjalListByKeyword(value)
+          const data = await JjalListcacheWrap(value)
           this.searchResult.setState(data)
+          this.searchInput.$searchInput.value = value
         },
       })
 
@@ -28,7 +35,7 @@ export default class App {
 
             if (idx > -1) this.state.historyData.splice(idx, 1)
 
-            const data = await getJjalListByKeyword(value)
+            const data = await JjalListcacheWrap(value)
 
             this.searchResult.setState(data)
             this.state.historyData = [value, ...historyData]
@@ -41,7 +48,8 @@ export default class App {
         $target,
       })
     } catch (e) {
-      alert(e) // 에러 전파가 정상적으로 되지 않는 듯 합니다. 어느 부분을 살펴보면 좋을까요? 혹은 힌트라도 주시면 찾아서 해보겠습니다!
+      // 하위 컴포넌트에서 발생한 에러를 정상적으로 캐치하지 못합니다. 해결 방법에 대한 힌트를 주실 수 있으실까요?
+      alert(e)
     }
   }
 }
