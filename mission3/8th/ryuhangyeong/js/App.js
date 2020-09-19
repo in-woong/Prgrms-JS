@@ -13,12 +13,12 @@ export default class App {
 
   init($target) {
     try {
-      const JjalListcacheWrap = caching(getJjalListByKeyword)
+      const JjalListcacheWrapper = caching(getJjalListByKeyword)
 
       this.searchHistory = new SearchHistory({
         $target,
         onSearch: async (value) => {
-          const data = await JjalListcacheWrap(value)
+          const data = await JjalListcacheWrapper(value)
           this.searchResult.setState(data)
           this.searchInput.$searchInput.value = value
         },
@@ -35,7 +35,7 @@ export default class App {
 
             if (idx > -1) this.state.historyData.splice(idx, 1)
 
-            const data = await JjalListcacheWrap(value)
+            const data = await JjalListcacheWrapper(value)
 
             this.searchResult.setState(data)
             this.state.historyData = [value, ...historyData]
