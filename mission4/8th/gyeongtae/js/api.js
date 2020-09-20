@@ -12,7 +12,12 @@ async function requert(url, init) {
     console.log(error)
   }
 }
-
+// users가져오기
+export async function getUsers() {
+  const response = await requert('users')
+  const responseToJson = await response.json()
+  return responseToJson
+}
 // TodoList 가져오기
 export async function getTodoList(userName) {
   const response = await requert(userName)

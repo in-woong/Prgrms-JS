@@ -3,6 +3,7 @@ import TodoInput from './TodoInput.js'
 import TodoCount from './TodoCount.js'
 import TodoRemoveAllButton from './TodoRemoveAllButton.js'
 import todoListDataCheck from './utilForDataCheck.js'
+import Users from './Users.js'
 import {
   getTodoList,
   addTodoList,
@@ -11,7 +12,7 @@ import {
   toggleTodoList,
 } from './api.js'
 
-export default function App(data, renderEle, userName) {
+export default function App(data, renderEle, userName, users) {
   // 만약 this가 window인경우 (생성자 함수에 new연산자를 붙이지 않은경우)
   // new 연산자를 붙이고 다시 생성자 함수를 실행한다
   if (!new.target) {
@@ -20,6 +21,7 @@ export default function App(data, renderEle, userName) {
   this.data = data
   this.renderEle = renderEle
   this.userName = userName
+  this.users = users
   // TodoList data체크
   todoListDataCheck(this.data)
 
@@ -83,6 +85,11 @@ export default function App(data, renderEle, userName) {
     this.setState(this.data)
   }
 
+  this.clickUser = async (userName) => {
+    this.userName = userName
+    await this.initData()
+  }
+
   this.render = () => {
     // 처음 app컴포넌트를 객체화 했을때 하위 컴포넌트 객체를 생성하면서 자동적으로 render링이 되어
     // 처음 render함수가 호출될때는 하위 컴포넌트의 render함수를 호출 하지않음
@@ -96,7 +103,7 @@ export default function App(data, renderEle, userName) {
   }
   this.setState = (nextData) => {
     this.data = nextData
-    this.todoList.setState(this.data)
+    this.todoList.setState(this.data, this.userName)
     this.todoCount.setState(this.data)
     this.todoInput.setState(this.data)
     this.todoRemoveAll.setState(this.data)
@@ -109,11 +116,13 @@ export default function App(data, renderEle, userName) {
     })
   }
 
+  this.users = new Users(this.renderEle, this.users, this.clickUser)
   this.todoList = new TodoList(
     this.renderEle,
     this.data,
     this.setTodoListIsCompleted,
-    this.removeTodoList
+    this.removeTodoList,
+    this.userName
   )
   this.todoCount = new TodoCount(this.renderEle, this.data)
   this.todoInput = new TodoInput(this.renderEle, this.addTodoList)
@@ -121,8 +130,6 @@ export default function App(data, renderEle, userName) {
     this.renderEle.dispatchEvent(new Event('removeAll'))
   })
   this.firstRender = true
-
-  const localStorage = window.localStorage
 
   this.render()
   this.setEventOnTodoList()

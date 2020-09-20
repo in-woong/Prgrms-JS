@@ -1,4 +1,4 @@
-import { getTodoList } from './api.js'
+import { getTodoList, getUsers } from './api.js'
 import App from './App.js'
 
 // app 초기화
@@ -6,8 +6,10 @@ async function initApp(userName, querySelector) {
   // data 초기화
   let data = await getTodoList(userName)
   data = data ? data : []
-  console.log(data)
-  return new App(data, querySelector, userName)
+  // users 초기화
+  let users = await getUsers()
+  users = users ? users : [userName]
+  return await new App(data, querySelector, userName, users)
 }
 
 try {
