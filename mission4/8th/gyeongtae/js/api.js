@@ -1,9 +1,9 @@
 const todoApiUrl = 'https://todo-api.roto.codes/'
 
 // api 요청하기
-async function requert(url, init) {
+async function requert(url, init, delay) {
   try {
-    const response = await fetch(todoApiUrl + url, init)
+    const response = await fetch(todoApiUrl + url + '?delay=' + delay, init)
     if (!response.ok) {
       throw new Error('api요청에 에러가 발생하였습니다.')
     }
@@ -19,8 +19,8 @@ export async function getUsers() {
   return responseToJson
 }
 // TodoList 가져오기
-export async function getTodoList(userName) {
-  const response = await requert(userName)
+export async function getTodoList(userName, delay) {
+  const response = await requert(userName, null, delay)
   const responseToJson = await response.json()
   return responseToJson
 }

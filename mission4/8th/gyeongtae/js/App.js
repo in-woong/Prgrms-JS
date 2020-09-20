@@ -11,6 +11,7 @@ import {
   removeAllTodoList,
   toggleTodoList,
 } from './api.js'
+import Loading from './Loading.js'
 
 export default function App(data, renderEle, userName, users) {
   // 만약 this가 window인경우 (생성자 함수에 new연산자를 붙이지 않은경우)
@@ -38,7 +39,7 @@ export default function App(data, renderEle, userName, users) {
       return alert('내용을 입력해주세요.')
     }
     const content = todoListInputEle.value
-    await addTodoList(this.userName, content)
+    addTodoList(this.userName, content)
 
     const todoListItem = {
       content: content,
@@ -117,6 +118,7 @@ export default function App(data, renderEle, userName, users) {
   }
 
   this.users = new Users(this.renderEle, this.users, this.clickUser)
+  this.loading = new Loading(this.renderEle, './img/Spinner.gif', true)
   this.todoList = new TodoList(
     this.renderEle,
     this.data,
