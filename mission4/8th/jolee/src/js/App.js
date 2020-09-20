@@ -12,10 +12,8 @@ function App(element) {
     this.todoInput = new TodoInput({
       $target: document.querySelector('#todo-input-text'),
       addTodo: async (todoText) => {
-        console.log(todoText)
         await addItem(this.username, todoText)
         const updateTodoList = await getItems(this.username)
-        console.log(updateTodoList)
         this.todoList.setState(updateTodoList)
       },
     })
@@ -28,7 +26,7 @@ function App(element) {
         this.todoList.setState(updateTodoList)
       },
       deleteTodo: async (id) => {
-        await deleteItem(this.username.id)
+        await deleteItem(this.username, id)
         const updateTodoList = await getItems(this.username)
         this.todoList.setState(updateTodoList)
       },

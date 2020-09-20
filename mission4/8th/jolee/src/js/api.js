@@ -4,7 +4,7 @@ export const getItems = async (username) => {
 }
 
 export const addItem = async (username, todoText) => {
-  await fetch(`https://todo-api.roto.codes/${username}`, {
+  return fetch(`https://todo-api.roto.codes/${username}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

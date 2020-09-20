@@ -7,13 +7,13 @@ function TodoList(params) {
   let data = params.data || []
 
   this.todoEventListener = () => {
-    this.$target.addEventListener('click', (e) => {
+    this.$target.addEventListener('click', (event) => {
       if (event.target.className === 'todo-item') {
-        const index = Number(event.target.getAttribute('key'))
-        toggleTodo(index)
+        const id = event.target.closest('li').dataset.id
+        toggleTodo(id)
       } else if (event.target.className === 'delete-button') {
-        const index = Number(event.target.parentNode.getAttribute('key'))
-        deleteTodo(index)
+        const id = event.target.closest('li').dataset.id
+        deleteTodo(id)
       }
     })
   }
@@ -21,9 +21,9 @@ function TodoList(params) {
   this.render = function () {
     this.$target.innerHTML = data
       .map(
-        (todo, index) =>
-          `<li key="${index}" class="todo-item">${
-            todo.isCompleted ? `<s>${todo.text}</s>` : `${todo.text}`
+        (todo) =>
+          `<li data-id="${todo._id}" class="todo-item">${
+            todo.isCompleted ? `<s>${todo.content}</s>` : `${todo.content}`
           } <button class="delete-button">삭제</button></li>`
       )
       .join('')
