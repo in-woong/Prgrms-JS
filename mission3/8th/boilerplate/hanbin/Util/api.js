@@ -11,7 +11,7 @@ const request = async (url) => {
         }
     }
     catch(e){
-        throw e;
+        console.error(e);
     }
 }
 

@@ -3,7 +3,7 @@ export default function SearchResult($target){
     this.$target = $target;
 
     this.prerender = () => {
-        this.searchResult = document.createElement('div');
+        this.searchResult = document.createElement('ul');
         this.searchResult.id = 'search-result';
         $target.appendChild(this.searchResult);
     }
@@ -16,7 +16,7 @@ export default function SearchResult($target){
 
     this.render = () => {
         this.searchResult.innerHTML = 
-            this.data.map(d => `<img src="${d.imageUrl}">`).join('');
+            this.data.map(d => `<li><img alt ="jjal" src="${d.imageUrl}"></li>`).join('');
     }
 
     this.prerender();

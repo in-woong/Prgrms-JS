@@ -1,3 +1,5 @@
+import {debounce} from '../Util/debounce.js'
+
 export default function SearchInput($target, onKeyUpInput){
 
     this.$target = $target;
@@ -10,16 +12,12 @@ export default function SearchInput($target, onKeyUpInput){
     }
 
     this.bindOnKeyUpEvent = () => {
-        let timer;
         this.searchInput.addEventListener('keyup', () => {
-            if (timer) {
-                clearTimeout(timer);
-            }
-            timer = setTimeout(() => {
+            debounce(async () => {
                 if(this.searchInput.value !== ''){
                     this.onKeyUpInput(this.searchInput.value);
                 }
-            }, 1000);
+            },500)
         })
     }
 
