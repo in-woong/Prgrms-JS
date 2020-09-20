@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <title>Mission 2</title>
+    <meta charset="utf-8" />
+    <script type="module" src="./src/js/index.js" defer></script>
+  </head>
+  <body>
+    <div id="app">
+      <p>
+        총 Todo : <span id="total-todo"></span>/ 완료된 Todo:
+        <span id="completed-todo"></span>
+      </p>
+      <div>
+        <input
+          type="text"
+          id="todo-input-text"
+          placeholder="Todo item을 입력해주세요."
+        />
+        <button type="button" id="todo-add-button">할일 추가하기</button>
+        <button type="button" id="todo-remove-all-button">
+          할일 전부 삭제
+        </button>
+      </div>
+      <ul id="todo-list"></ul>
+    </div>
+  </body>
+</html>
