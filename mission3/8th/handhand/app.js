@@ -3,37 +3,33 @@ import SearchResult from './components/SearchResult.js'
 import SearchHistory from './components/SearchHistory.js'
 
 function App() {
-  this.datas = []
+  this.images = []
+  this.histories = []
   this.$app = document.querySelector('#app')
-  this.$searchResult = document.querySelector('#search-result')
 
   this.init = () => {
-    this.searchHistory = new SearchHistory({ $parent: this.$app })
+    this.searchHistory = new SearchHistory({
+      onClickHistory: this.onClickHistory,
+    })
 
     this.searchInput = new SearchInput({
-      $parent: this.$app,
       onChangeData: this.setState,
     })
 
     this.searchResult = new SearchResult({
-      data: this.datas,
-      $target: this.$searchResult,
-    })
-
-    this.$app.addEventListener('new-keyword', (event) => {
-      const keyword = event.detail.keyword
-      this.searchHistory.pushHistory(keyword)
-    })
-
-    this.$app.addEventListener('search-history', (event) => {
-      const keyword = event.detail.keyword
-      this.searchInput.getImagesWithoutHistory(keyword)
+      data: this.images,
     })
   }
 
-  this.setState = (newDatas) => {
-    this.datas = newDatas
-    this.searchResult.setState(this.datas)
+  this.onClickHistory = (keyword) => {
+    this.searchInput.setState(keyword, true)
+  }
+
+  this.setState = (newDatas, keyword, isHistory) => {
+    if (!isHistory) this.histories.push(keyword)
+    this.images = newDatas
+    this.searchResult.setState(this.images)
+    this.searchHistory.render(this.histories)
   }
 
   this.init()

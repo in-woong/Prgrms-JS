@@ -1,29 +1,19 @@
-function SearchHistory({ $parent }) {
-  this.histories = []
+function SearchHistory({ onClickHistory }) {
   this.$searchHistory = document.querySelector('#search-history')
 
   this.init = () => {
     this.$searchHistory.addEventListener('click', (event) => {
       if (event.target.tagName === 'LI') {
         const keyword = event.target.innerHTML
-        $parent.dispatchEvent(
-          new CustomEvent('search-history', {
-            detail: { keyword },
-          })
-        )
+        onClickHistory(keyword)
       }
     })
   }
 
-  this.pushHistory = (newHistory) => {
-    this.histories.push(newHistory)
-    this.render()
-  }
-
-  this.render = () => {
-    this.$searchHistory.innerHTML = `<ul>${this.histories
+  this.render = (histories) => {
+    this.$searchHistory.innerHTML = `${histories
       .map((history) => `<li>${history}</li>`)
-      .join('')}</ul>`
+      .join('')}`
   }
 
   this.init()
