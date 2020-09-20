@@ -5,6 +5,10 @@ function TodoList(app, data, todoListWrap) {
     this.data = data;
     this.$todoListWrap = todoListWrap;
 
+    const $total = document.querySelector('.total');
+    const $completed = document.querySelector('.completed');
+    const todoCount = new TodoCount(this.data, $total, $completed);
+
     this.render = function() {
         this.$todoListWrap.innerHTML = this.data.map((todo, key) => {
             return todo.isCompleted ?
@@ -36,13 +40,6 @@ function TodoList(app, data, todoListWrap) {
         this.app.onOffTodo(key, onOff);
     }
     this.$todoListWrap.addEventListener('click', this.onOffTodo);
-
-
-
-    const $total = document.querySelector('.total');
-    const $completed = document.querySelector('.completed');
-    const todoCount = new TodoCount(this.data, $total, $completed);
-
 
     this.setState = function(nextData) {
         this.data = nextData;
