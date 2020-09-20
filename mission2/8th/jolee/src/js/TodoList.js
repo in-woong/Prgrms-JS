@@ -5,7 +5,7 @@ function TodoList(data, toggleTodo, deleteTodo) {
 
   const $todoList = document.querySelector('#todo-list')
 
-  $todoList.addEventListener('click', (event) => {
+  this.todoEventListener = (event) => {
     event.stopPropagation()
     if (event.target.className === 'todo-item') {
       const index = Number(event.target.getAttribute('key'))
@@ -14,7 +14,7 @@ function TodoList(data, toggleTodo, deleteTodo) {
       const index = Number(event.target.parentNode.getAttribute('key'))
       deleteTodo(index)
     }
-  })
+  }
 
   this.render = function () {
     $todoList.innerHTML = this.data
@@ -27,6 +27,7 @@ function TodoList(data, toggleTodo, deleteTodo) {
       .join('')
 
     this.todoCount = new TodoCount(this.data)
+    $todoList.addEventListener('click', this.todoEventListener)
   }
 
   this.setState = function (nextData) {
@@ -35,6 +36,7 @@ function TodoList(data, toggleTodo, deleteTodo) {
   }
 
   this.render()
+  $todoList.addEventListener('click', this.todoEventListener)
 }
 
 export default TodoList
