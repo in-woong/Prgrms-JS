@@ -1,23 +1,25 @@
 import TodoCount from './TodoCount.js'
 
-function TodoList(data, toggleTodo, deleteTodo) {
-  this.data = data
+function TodoList(params) {
+  this.$target = params.$target
+  const toggleTodo = params.toggleTodo
+  const deleteTodo = params.deleteTodo
+  let data = params.data || []
 
-  const $todoList = document.querySelector('#todo-list')
-
-  this.todoEventListener = (event) => {
-    event.stopPropagation()
-    if (event.target.className === 'todo-item') {
-      const index = Number(event.target.getAttribute('key'))
-      toggleTodo(index)
-    } else if (event.target.className === 'delete-button') {
-      const index = Number(event.target.parentNode.getAttribute('key'))
-      deleteTodo(index)
-    }
+  this.todoEventListener = () => {
+    this.$target.addEventListener('click', (e) => {
+      if (event.target.className === 'todo-item') {
+        const index = Number(event.target.getAttribute('key'))
+        toggleTodo(index)
+      } else if (event.target.className === 'delete-button') {
+        const index = Number(event.target.parentNode.getAttribute('key'))
+        deleteTodo(index)
+      }
+    })
   }
 
   this.render = function () {
-    $todoList.innerHTML = this.data
+    this.$target.innerHTML = data
       .map(
         (todo, index) =>
           `<li key="${index}" class="todo-item">${
@@ -26,17 +28,16 @@ function TodoList(data, toggleTodo, deleteTodo) {
       )
       .join('')
 
-    this.todoCount = new TodoCount(this.data)
-    $todoList.addEventListener('click', this.todoEventListener)
+    this.todoCount = new TodoCount(data)
   }
 
   this.setState = function (nextData) {
-    this.data = nextData
+    data = nextData
     this.render()
   }
 
   this.render()
-  $todoList.addEventListener('click', this.todoEventListener)
+  this.todoEventListener()
 }
 
 export default TodoList

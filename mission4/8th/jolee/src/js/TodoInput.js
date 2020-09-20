@@ -1,7 +1,8 @@
 const ENTER_KEY_CODE = 13
 
-function TodoInput(addTodo) {
-  this.addTodo = addTodo
+function TodoInput(params) {
+  this.$target = params.$target
+  this.addTodo = params.addTodo
 
   this.addTodoItem = function ({ todoText }) {
     const newTodoItem = {
@@ -10,19 +11,18 @@ function TodoInput(addTodo) {
     }
 
     this.addTodo(newTodoItem)
-    $inputTodoText.value = ''
+    this.$target.value = ''
   }
 
-  const $inputTodoText = document.querySelector('#todo-input-text')
   const $addTodoButton = document.querySelector('#todo-add-button')
 
   $addTodoButton.addEventListener('click', () => {
-    this.addTodoItem({ todoText: $inputTodoText.value })
+    this.addTodoItem({ todoText: this.$target.value })
   })
 
-  $inputTodoText.addEventListener('keyup', (event) => {
+  this.$target.addEventListener('keyup', (event) => {
     if (event.keyCode === ENTER_KEY_CODE) {
-      this.addTodoItem({ todoText: $inputTodoText.value })
+      this.addTodoItem({ todoText: this.$target.value })
     }
   })
 }
