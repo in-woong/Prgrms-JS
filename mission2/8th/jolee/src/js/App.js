@@ -5,7 +5,7 @@ import {setStorage, getStorageData} from './storage.js'
 function App(element) {
   const $app = element
 
-  this.$removeAll = document.querySelector('#todo-remove-all-button')
+  this.$removeAllButton = document.querySelector('#todo-remove-all-button')
   this.data = getStorageData({key: 'data'}) || []
 
   this.init = function () {
@@ -25,7 +25,6 @@ function App(element) {
 
   const toggleTodo = (todoIndex) => {
     this.data[todoIndex].isCompleted = !this.data[todoIndex].isCompleted
-    console.log(this.data)
     this.setState(this.data)
   }
 
@@ -34,10 +33,9 @@ function App(element) {
     this.setState(this.data)
   }
 
-  this.$removeAll.addEventListener('click', () => {
+  this.$removeAllButton.addEventListener('click', () => {
     event.stopPropagation()
-    this.data = []
-    this.setState(this.data)
+    this.setState([])
   })
 
   this.init()

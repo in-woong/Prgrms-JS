@@ -1,3 +1,5 @@
+const ENTER_KEY_CODE = 13
+
 function TodoInput(addTodo) {
   this.addTodo = addTodo
 
@@ -19,7 +21,6 @@ function TodoInput(addTodo) {
   })
 
   $inputTodoText.addEventListener('keyup', (event) => {
-    const ENTER_KEY_CODE = 13
     if (event.keyCode === ENTER_KEY_CODE) {
       this.addTodoItem({ todoText: $inputTodoText.value })
     }

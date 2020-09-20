@@ -6,11 +6,7 @@ function TodoCount(data) {
     const $completedTodo = document.querySelector('#completed-todo')
 
     let totalTodoCnt = data.length
-    let completedTodoCnt = 0
-
-    this.data.forEach(({ isCompleted }) => {
-      isCompleted ? completedTodoCnt++ : completedTodoCnt
-    })
+    let completedTodoCnt = this.data.filter((item) => item.isCompleted).length
 
     $totalTodo.innerHTML = totalTodoCnt
     $completedTodo.innerHTML = completedTodoCnt

@@ -3,19 +3,16 @@ import TodoCount from './TodoCount.js'
 function TodoList(data, toggleTodo, deleteTodo) {
   this.data = data
 
-  this.toggleTodo = toggleTodo
-  this.deleteTodo = deleteTodo
-
   const $todoList = document.querySelector('#todo-list')
 
   $todoList.addEventListener('click', (event) => {
     event.stopPropagation()
     if (event.target.className === 'todo-item') {
       const index = Number(event.target.getAttribute('key'))
-      this.toggleTodo(index)
+      toggleTodo(index)
     } else if (event.target.className === 'delete-button') {
       const index = Number(event.target.parentNode.getAttribute('key'))
-      this.deleteTodo(index)
+      deleteTodo(index)
     }
   })
 

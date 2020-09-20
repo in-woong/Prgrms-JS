@@ -7,10 +7,6 @@ export const setStorage = (key, data) => {
 }
 
 export const getStorageData = (key) => {
-  try {
-    const data = localStorage.getItem('data')
+  const data = localStorage.getItem('data')
     return data ? JSON.parse(data[key]) : []
-  } catch (error) {
-    throw new Error(error)
-  }
 }
