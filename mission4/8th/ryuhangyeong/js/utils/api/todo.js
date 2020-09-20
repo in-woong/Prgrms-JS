@@ -3,6 +3,8 @@ import request from './request.js'
 const END_POINT = 'https://todo-api.roto.codes'
 
 export const getTodoList = ({ username }) => request(`${END_POINT}/${username}`)
+export const getTodoListDelay = ({ username, delay }) =>
+  request(`${END_POINT}/${username}/?delay=${delay}`)
 
 export const createTodo = ({ username, content }) =>
   request(`${END_POINT}/${username}`, {
@@ -17,7 +19,7 @@ export const removeTodo = ({ username, _id }) =>
     method: 'DELETE',
   })
 
-export const toggleTodoCompleted = ({ username, _id }) =>
+export const toggleCompletedTodo = ({ username, _id }) =>
   request(`${END_POINT}/${username}/${_id}/toggle`, {
     method: 'PUT',
   })

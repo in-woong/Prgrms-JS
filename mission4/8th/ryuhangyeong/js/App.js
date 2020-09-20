@@ -4,14 +4,18 @@ import {
   TodoList,
   UserList,
   UserName,
+  Loader,
 } from './components/index.js'
+
 import {
   getTodoList,
   createTodo,
   removeTodo,
-  toggleTodoCompleted,
+  toggleCompletedTodo,
   getUserList,
+  getTodoListDelay,
 } from './utils/api/todo.js'
+
 import { isValidTodos } from './utils/validate.js'
 import { getTodoStatus } from './utils/computed/todo.js'
 
@@ -25,17 +29,33 @@ export default class App {
   }
 
   async init($target) {
-    this.todos = await getTodoList({ username: this.username })
+    this.Loader = new Loader({
+      $target,
+    })
+
+    this.todos = await getTodoListDelay({
+      username: this.username,
+      delay: 2000,
+    })
+
     this.users = await getUserList()
+
+    this.Loader.hide()
 
     this.userList = new UserList({
       $target,
       initialData: this.users,
       onSearch: async (username) => {
+        this.Loader.show()
+
         this.username = username
-        this.todos = await getTodoList({ username: this.username })
+        this.todos = await getTodoList({
+          username: this.username,
+        })
         this.setState(this.todos)
         this.UserName.setState(this.username)
+
+        this.Loader.hide()
       },
     })
 
@@ -62,7 +82,7 @@ export default class App {
       $target,
       initialData: this.todos,
       onToggle: async (_id) => {
-        await toggleTodoCompleted({ username: this.username, _id })
+        await toggleCompletedTodo({ username: this.username, _id })
         const idx = this.todos.findIndex((todo) => todo._id === _id)
 
         this.todos[idx].isCompleted = !this.todos[idx].isCompleted
