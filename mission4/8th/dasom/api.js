@@ -1,7 +1,8 @@
-const ENP_POINT = 'https://todo-api.roto.codes/:dasom';
+const TODO_API = 'https://todo-api.roto.codes';
+const USER_API = 'https://todo-api.roto.codes/users ';
 
-const saveTodos = async (url, newData) => {
-    await fetch(url, {
+const saveTodos = async (url, user, newData) => {
+    await fetch(url+'/'+user, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -12,25 +13,30 @@ const saveTodos = async (url, newData) => {
     })
 }
 
-const getTodos = async (url) => {
-  const res = await fetch(url)
+const getTodos = async (url, user) => {
+  const res = await fetch(url+'/'+user)
   return await res.json();
 }
 
-const deleteTodos = async (url, id) => {
-    await fetch(`${url}/${id}`, {
+const deleteTodos = async (url, user, id) => {
+    await fetch(`${url}/${user}/${id}`, {
     method: 'DELETE',
   })
 }
 
-const toggleTodos = async (url, id) => {
-    await fetch(`${url}/${id}/toggle`, {
+const toggleTodos = async (url, user, id) => {
+    await fetch(`${url}/${user}/${id}/toggle`, {
         method: 'PUT'
     })
 }
- 
 
-export const getTodo = () => getTodos(ENP_POINT);
-export const saveTodo = (newData) => saveTodos(ENP_POINT, newData);
-export const deleteTodo = (id) => deleteTodos(ENP_POINT, id);
-export const toggleTodo = (id) => toggleTodos(ENP_POINT, id);
+const getUsers = async(url) => {
+    const res = await fetch(url)
+    return await res.json();
+}
+
+export const getTodo = (user) => getTodos(TODO_API, user);
+export const saveTodo = (newData, user) => saveTodos(TODO_API, user, newData);
+export const deleteTodo = (id, user) => deleteTodos(TODO_API, user, id);
+export const toggleTodo = (id, user) => toggleTodos(TODO_API, user, id);
+export const getUser = () => getUsers(USER_API);
