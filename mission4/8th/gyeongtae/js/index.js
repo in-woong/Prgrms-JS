@@ -4,7 +4,7 @@ import App from './App.js'
 // app 초기화
 async function initApp(userName, querySelector) {
   // data 초기화
-  let data = await getTodoList(userName)
+  let data = await getTodoList(userName, 5000)
   data = data ? data : []
   // users 초기화
   let users = await getUsers()

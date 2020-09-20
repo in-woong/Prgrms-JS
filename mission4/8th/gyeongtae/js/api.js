@@ -1,12 +1,15 @@
 const todoApiUrl = 'https://todo-api.roto.codes/'
+import { hideLoading, showLoading } from './Loading.js'
 
 // api 요청하기
 async function requert(url, init, delay) {
   try {
+    showLoading()
     const response = await fetch(todoApiUrl + url + '?delay=' + delay, init)
     if (!response.ok) {
       throw new Error('api요청에 에러가 발생하였습니다.')
     }
+    hideLoading()
     return response
   } catch (error) {
     console.log(error)
