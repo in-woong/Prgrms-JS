@@ -18,8 +18,8 @@ export default function TodoList(
       .map((data, index) => {
         return `<div key=${index}>${
           data.isCompleted
-            ? `<s class="todo-list-item">${data.text}</s>`
-            : `<span class="todo-list-item">${data.text}</span>`
+            ? `<s class="todo-list-item">${data.content}</s>`
+            : `<span class="todo-list-item">${data.content}</span>`
         }
       <button class="todo-list-remove-button">삭제</button></div>`
       })

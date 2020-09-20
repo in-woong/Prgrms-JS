@@ -3,58 +3,84 @@ import TodoInput from './TodoInput.js'
 import TodoCount from './TodoCount.js'
 import TodoRemoveAllButton from './TodoRemoveAllButton.js'
 import todoListDataCheck from './utilForDataCheck.js'
+import {
+  getTodoList,
+  addTodoList,
+  removeTodoList,
+  removeAllTodoList,
+  toggleTodoList,
+} from './api.js'
 
-export default function App(data, renderEle) {
+export default function App(data, renderEle, userName) {
   // 만약 this가 window인경우 (생성자 함수에 new연산자를 붙이지 않은경우)
   // new 연산자를 붙이고 다시 생성자 함수를 실행한다
   if (!new.target) {
     throw new Error('이 함수는 생성자 함수입니다 new 연산자를 붙여주세요')
   }
-  // data 초기화
   this.data = data
-
   this.renderEle = renderEle
+  this.userName = userName
   // TodoList data체크
   todoListDataCheck(this.data)
 
+  // 데이터 초기화
+  this.initData = async () => {
+    this.data = await getTodoList(this.userName)
+    this.setState(this.data)
+  }
   // todo list 추가 함수
-  this.addTodoList = (event) => {
+  this.addTodoList = async (event) => {
     const todoListInputEle = event.target.firstElementChild
     // input값이 없으면 return
     if (todoListInputEle.value.length === 0) {
       return alert('내용을 입력해주세요.')
     }
+    const content = todoListInputEle.value
+    await addTodoList(this.userName, content)
+
     const todoListItem = {
-      text: todoListInputEle.value,
+      content: content,
       isCompleted: false,
     }
     this.data.push(todoListItem)
-    todoListDataCheck(this.data)
+
     this.setState(this.data)
-    localStorage.setItem('todoList', JSON.stringify(this.data))
     // input값 초기화 및 input에 값 바로 입력할 수 있도록 함
     todoListInputEle.value = ''
     todoListInputEle.focus()
   }
   // todo list 삭제 함수
-  this.removeTodoList = (key) => {
+  this.removeTodoList = async (key) => {
+    //(addTodoList를 호출하고 getTodoList를 호출할때 바로 추가된 데이터를 불러올 수 없어서 키값이 없을때마다 get)
+    // todoList데이터의 id값이 없을때
+    // 서버에있는 todoList데이터 id값을 가져온다
+    if (!this.data[key]._id) {
+      await this.initData()
+      console.log(this.data)
+    }
+    await removeTodoList(this.userName, this.data[key]._id)
     this.data.splice(key, 1)
     this.setState(this.data)
-    localStorage.setItem('todoList', JSON.stringify(this.data))
   }
   // todo list 전체 삭제 함수
-  this.removeAllTodoList = () => {
-    localStorage.setItem('todoList', '[]')
+  this.removeAllTodoList = async () => {
+    await removeAllTodoList(this.userName)
     this.data.length = 0
     this.setState(this.data)
   }
   // todo list IsCompleted값 설정 함수
-  this.setTodoListIsCompleted = (key) => {
+  this.setTodoListIsCompleted = async (key) => {
+    //(addTodoList를 호출하고 getTodoList를 호출할때 바로 추가된 데이터를 불러올 수 없어서 키값이 없을때마다 get)
+    // todoList데이터의 id값이 없을때
+    // 서버에있는 todoList데이터 id값을 가져온다
+    if (!this.data[key]._id) {
+      await this.initData()
+    }
+    await toggleTodoList(this.userName, this.data[key]._id)
     // 만약 todoList데이터 isCompleted값이
     //true면 false false면 true로 설정
     this.data[key].isCompleted = !this.data[key].isCompleted
     this.setState(this.data)
-    localStorage.setItem('todoList', JSON.stringify(this.data))
   }
 
   this.render = () => {

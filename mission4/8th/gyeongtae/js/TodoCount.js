@@ -1,4 +1,5 @@
 export default function TodoCount(renderEle, data) {
+  this.data = data
   this.renderEle = renderEle
   this.todoCountEle = document.createElement('div')
   renderEle.append(this.todoCountEle)
@@ -11,7 +12,7 @@ export default function TodoCount(renderEle, data) {
   }
 
   this.render = () => {
-    this.setTodoCount(data)
+    this.setTodoCount(this.data)
     this.todoCountEle.innerHTML = `
       <div>
       <div>Todo수 : ${this.todoCount}개</div>
@@ -20,7 +21,7 @@ export default function TodoCount(renderEle, data) {
       `
   }
   this.setState = (nextData) => {
-    this.setTodoCount(nextData)
+    this.data = nextData
     this.render()
   }
   this.render()
