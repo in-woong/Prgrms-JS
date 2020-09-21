@@ -61,3 +61,8 @@ export async function removeTodoItem({todoId}) {
     const {message} = await defaultApi.delete({path: `/${USER_NAME}/${todoId}`});
     console.log(message);
 }
+
+export async function removeAllTodoItems() {
+    const {message} = await defaultApi.delete({path: `/${USER_NAME}/all`});
+    console.log(message);
+}

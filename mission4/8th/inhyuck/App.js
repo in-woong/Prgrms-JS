@@ -2,11 +2,16 @@ import TodoList from './components/TodoList.js';
 import TodoInput from './components/TodoInput.js';
 import TodoCount from './components/TodoCount.js';
 import { validateTodoItem, validateTodoItems } from './utils/validateTodo.js';
-import { addTodoItem, fetchTodoItems, removeTodoItem } from './api.js';
+import { addTodoItem, fetchTodoItems, removeAllTodoItems, removeTodoItem } from './api.js';
 
 export default function App({ $target, initData = {todoItems: []} }) {
     this.$target = $target;
     this.data = initData;
+
+    const refreshTodoItems = async () => {
+        const fetchedTodoItems = await fetchTodoItems();
+        this.setState({todoItems: fetchedTodoItems});
+    }
 
     const onSaveTodoItem = async ({ todoItemText }) => {
         const newTodoItem = {text: todoItemText, isCompleted: false};
@@ -23,9 +28,7 @@ export default function App({ $target, initData = {todoItems: []} }) {
 
     const onRemoveTodoItem = async ({ todoItemIndex }) => {
         await removeTodoItem({todoId: this.data.todoItems[todoItemIndex].id});
-
-        const fetchedTodoItems = await fetchTodoItems();
-        this.setState({todoItems: fetchedTodoItems});
+        await refreshTodoItems();
     };
 
     const onCompleteTodoItem = ({ todoItemIndex }) => {
@@ -36,11 +39,10 @@ export default function App({ $target, initData = {todoItems: []} }) {
         });
     };
 
-    this.$target.addEventListener('removeAll', event => {
+    this.$target.addEventListener('removeAll', async (event) => {
         event.stopPropagation();
-        this.setState({
-            todoItems: [],
-        });
+        await removeAllTodoItems();
+        await refreshTodoItems();
     });
 
     this.render = function () {
@@ -77,8 +79,7 @@ export default function App({ $target, initData = {todoItems: []} }) {
 
     this.initialize = async () => {
         this.render();
-        const fetchedTodoItems = await fetchTodoItems();
-        this.setState({todoItems: fetchedTodoItems});
+        await refreshTodoItems();
     };
 
     this.initialize(); //컴포넌트의 생성자함수를 async 로 명시할 수 없다. 하지만 찜찜하다...?
