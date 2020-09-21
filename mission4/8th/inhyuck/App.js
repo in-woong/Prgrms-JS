@@ -75,9 +75,12 @@ export default function App({ $target, initData = {todoItems: []} }) {
         this.todoCount.setState({ todoItems: this.data.todoItems });
     };
 
-    this.render();
-    fetchTodoItems((todoItems) => {
-        this.setState({todoItems});
-    });
+    this.initialize = async () => {
+        this.render();
+        const fetchedTodoItems = await fetchTodoItems();
+        this.setState({todoItems: fetchedTodoItems});
+    };
+
+    this.initialize();
 }
 
