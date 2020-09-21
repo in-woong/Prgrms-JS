@@ -2,6 +2,7 @@ import TodoList from './components/TodoList.js';
 import TodoInput from './components/TodoInput.js';
 import TodoCount from './components/TodoCount.js';
 import { validateTodoItems } from './utils/validateTodo.js';
+import { fetchTodoItems } from './api.js';
 
 export default function App({ $target, initData = {todoItems: []} }) {
     this.$target = $target;
@@ -75,20 +76,8 @@ export default function App({ $target, initData = {todoItems: []} }) {
     };
 
     this.render();
-
-    fetch('https://todo-api.roto.codes/inhyuck')
-      .then(res => res.json())
-      .then(todoItems => {
-          console.log(todoItems);
-          validateTodoItems({ todoItems: this.data.todoItems });
-          this.setState({
-              todoItems: todoItems.map(todoItem => {
-                    return {
-                        text: todoItem.content,
-                        isCompleted: todoItem.isCompleted,
-                    };
-              }),
-          })
-      });
+    fetchTodoItems((todoItems) => {
+        this.setState({todoItems});
+    });
 }
 
