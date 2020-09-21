@@ -1,16 +1,11 @@
 import TodoList from './components/TodoList.js';
 import TodoInput from './components/TodoInput.js';
 import TodoCount from './components/TodoCount.js';
-import localStorage from './utils/localStorage.js';
 import { validateTodoItems } from './utils/validateTodo.js';
 
-export default function App({ $target, initData = {} }) {
+export default function App({ $target, initData = {todoItems: []} }) {
     this.$target = $target;
     this.data = initData;
-    if (!this.data.todoItems) {
-        this.data.todoItems = localStorage.getStorage({ key: 'todoItems' }) || [];
-    }
-    validateTodoItems({ todoItems: this.data.todoItems });
 
     const onSaveTodoItem = ({ todoItemText }) => {
         this.setState({
@@ -77,12 +72,23 @@ export default function App({ $target, initData = {} }) {
         this.data = nextData;
         this.todoList.setState({ todoItems: this.data.todoItems });
         this.todoCount.setState({ todoItems: this.data.todoItems });
-        localStorage.setStorage({
-            key: 'todoItems',
-            value: todoItems,
-        });
     };
 
     this.render();
+
+    fetch('https://todo-api.roto.codes/inhyuck')
+      .then(res => res.json())
+      .then(todoItems => {
+          console.log(todoItems);
+          validateTodoItems({ todoItems: this.data.todoItems });
+          this.setState({
+              todoItems: todoItems.map(todoItem => {
+                    return {
+                        text: todoItem.content,
+                        isCompleted: todoItem.isCompleted,
+                    };
+              }),
+          })
+      });
 }
 
