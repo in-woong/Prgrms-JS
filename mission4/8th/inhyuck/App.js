@@ -10,13 +10,15 @@ import {
     toggleTodoItem,
 } from './api.js';
 
-export default function App({ $target, initData = {todoItems: []} }) {
+const DEFAULT_USER_NAME = 'inhyuck';
+
+export default function App({ $target, initData = {username: DEFAULT_USER_NAME, todoItems: []} }) {
     this.$target = $target;
     this.data = initData;
 
     //추가, 삭제, 전체삭제, 토글 등 api 를 호출하고 성공했을 때 전체 갱신 vs 부분만 임의갱신 => 고민해볼만한 문제...!
     const refreshTodoItems = async () => {
-        const fetchedTodoItems = await fetchTodoItems();
+        const fetchedTodoItems = await fetchTodoItems({username: this.data.username});
         this.setState({todoItems: fetchedTodoItems});
     }
 
@@ -24,7 +26,7 @@ export default function App({ $target, initData = {todoItems: []} }) {
         const newTodoItem = {text: todoItemText, isCompleted: false};
         validateTodoItem({todoItem: newTodoItem});
 
-        const addedTodoItem = await addTodoItem(newTodoItem);
+        const addedTodoItem = await addTodoItem({username: this.data.username, ...newTodoItem});
         this.setState({
             todoItems: [
                 ...this.data.todoItems,
@@ -34,12 +36,18 @@ export default function App({ $target, initData = {todoItems: []} }) {
     };
 
     const onRemoveTodoItem = async ({ todoItemIndex }) => {
-        await removeTodoItem({todoId: this.data.todoItems[todoItemIndex].id});
+        await removeTodoItem({
+            username: this.data.username,
+            todoId: this.data.todoItems[todoItemIndex].id
+        });
         await refreshTodoItems();
     };
 
     const onCompleteTodoItem = async ({ todoItemIndex }) => {
-        await toggleTodoItem({todoId: this.data.todoItems[todoItemIndex].id});
+        await toggleTodoItem({
+            username: this.data.username,
+            todoId: this.data.todoItems[todoItemIndex].id
+        });
 
         const newTodoItems = [...this.data.todoItems];
         newTodoItems[todoItemIndex].isCompleted = !newTodoItems[todoItemIndex].isCompleted;
@@ -50,7 +58,7 @@ export default function App({ $target, initData = {todoItems: []} }) {
 
     this.$target.addEventListener('removeAll', async (event) => {
         event.stopPropagation();
-        await removeAllTodoItems();
+        await removeAllTodoItems({username: this.data.username});
         await refreshTodoItems();
     });
 
@@ -78,10 +86,12 @@ export default function App({ $target, initData = {todoItems: []} }) {
     };
 
     this.setState = function (nextData) {
-        const {todoItems} = nextData;
-        validateTodoItems({ todoItems });
+        validateTodoItems({ todoItems: nextData.todoItems });
 
-        this.data = nextData;
+        this.data = {
+            ...this.data,
+            ...nextData,
+        };
         this.todoList.setState({ todoItems: this.data.todoItems });
         this.todoCount.setState({ todoItems: this.data.todoItems });
     };

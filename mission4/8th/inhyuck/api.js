@@ -1,14 +1,13 @@
 const END_POINT = 'https://todo-api.roto.codes';
-const USER_NAME = 'inhyuck';
 
 const defaultApi = {
     get: async ({path}) => {
-        const res = await fetch(`${END_POINT}${path}`);
+        const res = await fetch(END_POINT + path);
         return await res.json();
     },
 
     post: async ({path, body}) => {
-        const res = await fetch(`${END_POINT}${path}`, {
+        const res = await fetch(END_POINT + path, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -19,7 +18,7 @@ const defaultApi = {
     },
 
     put: async ({path, body}) => {
-        const res = await fetch(`${END_POINT}${path}`, {
+        const res = await fetch(END_POINT + path, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -30,15 +29,15 @@ const defaultApi = {
     },
 
     delete: async ({path}) => {
-        const res = await fetch(`${END_POINT}${path}`, {
+        const res = await fetch(END_POINT + path, {
             method: 'DELETE',
         });
         return await res.json();
     },
 };
 
-export async function fetchTodoItems() {
-    const fetchedTodoItems = await defaultApi.get({path: `/${USER_NAME}`});
+export async function fetchTodoItems({username}) {
+    const fetchedTodoItems = await defaultApi.get({path: `/${username}`});
     return fetchedTodoItems.map(todoItem => {
         return {
             id: todoItem._id,
@@ -49,12 +48,13 @@ export async function fetchTodoItems() {
 }
 
 /**
+ * @param {string} username
  * @param {string} text
  * @param {boolean} isCompleted
  */
-export async function addTodoItem({text, isCompleted}) {
+export async function addTodoItem({username, text, isCompleted}) {
     const newTodoItem = await defaultApi.post({
-        path: `/${USER_NAME}`,
+        path: `/${username}`,
         body: {
             content: text,
             isCompleted: isCompleted,
@@ -68,17 +68,17 @@ export async function addTodoItem({text, isCompleted}) {
     };
 }
 
-export async function removeTodoItem({todoId}) {
-    const {message} = await defaultApi.delete({path: `/${USER_NAME}/${todoId}`});
+export async function removeTodoItem({username, todoId}) {
+    const {message} = await defaultApi.delete({path: `/${username}/${todoId}`});
     console.log(message);
 }
 
-export async function removeAllTodoItems() {
-    const {message} = await defaultApi.delete({path: `/${USER_NAME}/all`});
+export async function removeAllTodoItems({username}) {
+    const {message} = await defaultApi.delete({path: `/${username}/all`});
     console.log(message);
 }
 
-export async function toggleTodoItem({todoId}) {
-    const {message} = await defaultApi.put({path: `/${USER_NAME}/${todoId}/toggle`});
+export async function toggleTodoItem({username,todoId}) {
+    const {message} = await defaultApi.put({path: `/${username}/${todoId}/toggle`});
     console.log(message);
 }
