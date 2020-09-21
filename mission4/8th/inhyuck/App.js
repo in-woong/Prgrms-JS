@@ -2,20 +2,18 @@ import TodoList from './components/TodoList.js';
 import TodoInput from './components/TodoInput.js';
 import TodoCount from './components/TodoCount.js';
 import { validateTodoItems } from './utils/validateTodo.js';
-import { fetchTodoItems } from './api.js';
+import { addTodoItem, fetchTodoItems } from './api.js';
 
 export default function App({ $target, initData = {todoItems: []} }) {
     this.$target = $target;
     this.data = initData;
 
-    const onSaveTodoItem = ({ todoItemText }) => {
+    const onSaveTodoItem = async ({ todoItemText }) => {
+        const newTodoItem = await addTodoItem({text: todoItemText, isCompleted: false});
         this.setState({
             todoItems: [
                 ...this.data.todoItems,
-                {
-                    text: todoItemText,
-                    isCompleted: false,
-                },
+                newTodoItem,
             ],
         });
     };
@@ -81,6 +79,6 @@ export default function App({ $target, initData = {todoItems: []} }) {
         this.setState({todoItems: fetchedTodoItems});
     };
 
-    this.initialize();
+    this.initialize(); //컴포넌트의 생성자함수를 async 로 명시할 수 없다. 하지만 찜찜하다...?
 }
 

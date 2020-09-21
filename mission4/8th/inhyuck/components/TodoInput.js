@@ -22,21 +22,21 @@ export default function TodoInput({ $target, onSaveTodoItem }) {
         const $todoItemAddButton = this.$target.querySelector('.todo-item-add-button');
         const $todoItemRemoveAllButton = this.$target.querySelector('.todo-item-remove-all-button');
 
-        const saveTodoItem = () => {
-            onSaveTodoItem({ todoItemText: $todoItemAddInput.value });
+        const saveTodoItem = async () => {
+            await onSaveTodoItem({ todoItemText: $todoItemAddInput.value });
             $todoItemAddInput.value = '';
             $todoItemAddInput.focus();
         };
 
         //입력창에서 Enter 키 동작 시 TodoItem 추가
-        $todoItemAddInput.addEventListener('keydown', event => {
+        $todoItemAddInput.addEventListener('keydown', async (event) => {
             if (event.key === 'Enter') {
-                saveTodoItem();
+                await saveTodoItem();
             }
         });
         //Save 버튼 클릭 시 저장 TodoItem 추가
-        $todoItemAddButton.addEventListener('click', () => {
-            saveTodoItem();
+        $todoItemAddButton.addEventListener('click', async () => {
+            await saveTodoItem();
         });
 
         $todoItemRemoveAllButton.addEventListener('click', event => {
