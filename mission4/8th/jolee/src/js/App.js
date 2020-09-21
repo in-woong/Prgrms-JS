@@ -1,6 +1,6 @@
 import TodoInput from './TodoInput.js'
 import TodoList from './TodoList.js'
-import { getItems, addItem, toggleItem, deleteItem } from './api.js'
+import { getItems, addItem, toggleItem, deleteItem, deleteAllItem } from './api.js'
 import { setStorage, getStorageData } from './storage.js'
 
 function App(element) {
@@ -34,11 +34,11 @@ function App(element) {
   }
 
   this.$removeAllButton = document.querySelector('#todo-remove-all-button')
-  this.data = getStorageData({ key: 'data' }) || []
 
-  this.$removeAllButton.addEventListener('click', () => {
-    event.stopPropagation()
-    this.setState([])
+  this.$removeAllButton.addEventListener('click', async () => {
+    await deleteAllItem(this.username)
+    const updateTodoList = await getItems(this.username)
+    this.todoList.setState(updateTodoList)
   })
 
   this.render()

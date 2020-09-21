@@ -26,3 +26,9 @@ export const deleteItem = async (username, id) => {
     method: 'DELETE',
   })
 }
+
+export const deleteAllItem = async (username) => {
+  return fetch(`https://todo-api.roto.codes/${username}/all`, {
+    method: 'DELETE',
+  })
+}
