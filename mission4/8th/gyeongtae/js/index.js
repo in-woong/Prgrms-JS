@@ -4,12 +4,11 @@ import App from './App.js'
 // app 초기화
 async function initApp(userName, querySelector) {
   // data 초기화
-  let data = await getTodoList(userName, 5000)
-  data = data ? data : []
-  // users 초기화
-  let users = await getUsers()
-  users = users ? users : [userName]
-  return await new App(data, querySelector, userName, users)
+  const data = {}
+  data.todoList = await getTodoList(userName, 0)
+  data.users = await getUsers()
+  data.userName = userName
+  return await new App(data, querySelector)
 }
 
 try {

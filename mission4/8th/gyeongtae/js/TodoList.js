@@ -3,37 +3,33 @@ export default function TodoList(
   renderEle,
   data,
   setTodoListIsCompleted,
-  removeTodoList,
-  userName
+  removeTodoList
 ) {
-  this.data = data
+  this.data = data.todoList
   this.renderEle = renderEle
-  this.todoListEle = document.createElement('ol')
+  this.todoListEle = document.createElement('ul')
+  this.todoListEle.className = 'todoList'
   renderEle.append(this.todoListEle)
   this.setTodoListIsCompleted = setTodoListIsCompleted
   this.removeTodoList = removeTodoList
-  this.userName = userName
 
   // data값에 따라 todo-list를 동적으로 렌더링한다
   this.render = () => {
-    const html =
-      `${this.userName}의 TodoList` +
-      this.data
-        .map((data, index) => {
-          return `<li key=${index}>${
-            data.isCompleted
-              ? `<s class="todo-list-item">${data.content}</s>`
-              : `<span class="todo-list-item">${data.content}</span>`
-          }
+    const html = this.data
+      .map((data, index) => {
+        return `<li key=${index}>${
+          data.isCompleted
+            ? `<s class="todo-list-item">${data.content}</s>`
+            : `<span class="todo-list-item">${data.content}</span>`
+        }
       <button class="todo-list-remove-button">삭제</button></li>`
-        })
-        .join('')
+      })
+      .join('')
     this.todoListEle.innerHTML = html
   }
   // data값을 바꾸고 컴포넌트를 다시 렌더링한다
-  this.setState = (nextData, userName) => {
-    this.data = nextData
-    this.userName = userName
+  this.setState = (nextData) => {
+    this.data = nextData.todoList
     this.render()
   }
 

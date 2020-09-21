@@ -1,5 +1,5 @@
 export default function TodoCount(renderEle, data) {
-  this.data = data
+  this.data = data.todoList
   this.renderEle = renderEle
   this.todoCountEle = document.createElement('div')
   renderEle.append(this.todoCountEle)
@@ -21,7 +21,7 @@ export default function TodoCount(renderEle, data) {
       `
   }
   this.setState = (nextData) => {
-    this.data = nextData
+    this.data = nextData.todoList
     this.render()
   }
   this.render()

@@ -10,3 +10,7 @@
   position: relative;
   top: 30%;
 }
+
+.todoList {
+  display: inline-block;
+}

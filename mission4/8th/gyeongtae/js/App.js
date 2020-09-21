@@ -4,6 +4,7 @@ import TodoCount from './TodoCount.js'
 import TodoRemoveAllButton from './TodoRemoveAllButton.js'
 import todoListDataCheck from './utilForDataCheck.js'
 import Users from './Users.js'
+import User from './User.js'
 import {
   getTodoList,
   addTodoList,
@@ -12,7 +13,7 @@ import {
   toggleTodoList,
 } from './api.js'
 
-export default function App(data, renderEle, userName, users) {
+export default function App(data, renderEle) {
   // 만약 this가 window인경우 (생성자 함수에 new연산자를 붙이지 않은경우)
   // new 연산자를 붙이고 다시 생성자 함수를 실행한다
   if (!new.target) {
@@ -20,14 +21,12 @@ export default function App(data, renderEle, userName, users) {
   }
   this.data = data
   this.renderEle = renderEle
-  this.userName = userName
-  this.users = users
   // TodoList data체크
-  todoListDataCheck(this.data)
+  todoListDataCheck(this.data.todoList)
 
   // 데이터 초기화
-  this.initData = async () => {
-    this.data = await getTodoList(this.userName)
+  this.initTodoListData = async () => {
+    this.data.todoList = await getTodoList(this.data.userName)
     this.setState(this.data)
   }
   // todo list 추가 함수
@@ -38,13 +37,13 @@ export default function App(data, renderEle, userName, users) {
       return alert('내용을 입력해주세요.')
     }
     const content = todoListInputEle.value
-    addTodoList(this.userName, content)
+    addTodoList(this.data.userName, content)
 
     const todoListItem = {
       content: content,
       isCompleted: false,
     }
-    this.data.push(todoListItem)
+    this.data.todoList.push(todoListItem)
 
     this.setState(this.data)
     // input값 초기화 및 input에 값 바로 입력할 수 있도록 함
@@ -56,18 +55,17 @@ export default function App(data, renderEle, userName, users) {
     //(addTodoList를 호출하고 getTodoList를 호출할때 바로 추가된 데이터를 불러올 수 없어서 키값이 없을때마다 get)
     // todoList데이터의 id값이 없을때
     // 서버에있는 todoList데이터 id값을 가져온다
-    if (!this.data[key]._id) {
-      await this.initData()
-      console.log(this.data)
+    if (!this.data.todoList[key]._id) {
+      await this.initTodoListData()
     }
-    await removeTodoList(this.userName, this.data[key]._id)
-    this.data.splice(key, 1)
+    await removeTodoList(this.data.userName, this.data.todoList[key]._id)
+    this.data.todoList.splice(key, 1)
     this.setState(this.data)
   }
   // todo list 전체 삭제 함수
   this.removeAllTodoList = async () => {
-    await removeAllTodoList(this.userName)
-    this.data.length = 0
+    await removeAllTodoList(this.data.userName)
+    this.data.todoList.length = 0
     this.setState(this.data)
   }
   // todo list IsCompleted값 설정 함수
@@ -75,19 +73,19 @@ export default function App(data, renderEle, userName, users) {
     //(addTodoList를 호출하고 getTodoList를 호출할때 바로 추가된 데이터를 불러올 수 없어서 키값이 없을때마다 get)
     // todoList데이터의 id값이 없을때
     // 서버에있는 todoList데이터 id값을 가져온다
-    if (!this.data[key]._id) {
-      await this.initData()
+    if (!this.data.todoList[key]._id) {
+      await this.initTodoListData()
     }
-    await toggleTodoList(this.userName, this.data[key]._id)
+    await toggleTodoList(this.data.userName, this.data.todoList[key]._id)
     // 만약 todoList데이터 isCompleted값이
     //true면 false false면 true로 설정
-    this.data[key].isCompleted = !this.data[key].isCompleted
+    this.data.todoList[key].isCompleted = !this.data.todoList[key].isCompleted
     this.setState(this.data)
   }
 
   this.clickUser = async (userName) => {
-    this.userName = userName
-    await this.initData()
+    this.data.userName = userName
+    await this.initTodoListData()
   }
 
   this.render = () => {
@@ -96,17 +94,11 @@ export default function App(data, renderEle, userName, users) {
     if (this.firstRender) {
       return (this.firstRender = false)
     }
-    this.todoList.render()
-    this.todoCount.render()
-    this.todoInput.render()
-    this.todoRemoveAll.render()
+    this.components.forEach((element) => element.render())
   }
   this.setState = (nextData) => {
     this.data = nextData
-    this.todoList.setState(this.data, this.userName)
-    this.todoCount.setState(this.data)
-    this.todoInput.setState(this.data)
-    this.todoRemoveAll.setState(this.data)
+    this.components.forEach((element) => element.setState(this.data))
   }
   // 이벤트 등록
   this.setEventOnTodoList = () => {
@@ -116,19 +108,28 @@ export default function App(data, renderEle, userName, users) {
     })
   }
 
-  this.users = new Users(this.renderEle, this.users, this.clickUser)
-  this.todoList = new TodoList(
-    this.renderEle,
-    this.data,
-    this.setTodoListIsCompleted,
-    this.removeTodoList,
-    this.userName
-  )
-  this.todoCount = new TodoCount(this.renderEle, this.data)
-  this.todoInput = new TodoInput(this.renderEle, this.addTodoList)
-  this.todoRemoveAll = new TodoRemoveAllButton(this.renderEle, () => {
-    this.renderEle.dispatchEvent(new Event('removeAll'))
-  })
+  this.components = [
+    new Users(this.renderEle, this.data, this.clickUser),
+    new User(this.renderEle, this.data),
+    new TodoList(
+      this.renderEle,
+      this.data,
+      this.setTodoListIsCompleted,
+      this.removeTodoList
+    ),
+    new TodoList(
+      this.renderEle,
+      this.data,
+      this.setTodoListIsCompleted,
+      this.removeTodoList
+    ),
+    new TodoCount(this.renderEle, this.data),
+    new TodoInput(this.renderEle, this.addTodoList),
+    new TodoRemoveAllButton(this.renderEle, () => {
+      this.renderEle.dispatchEvent(new Event('removeAll'))
+    }),
+  ]
+
   this.firstRender = true
 
   this.render()

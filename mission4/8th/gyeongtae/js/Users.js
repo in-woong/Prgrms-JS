@@ -1,12 +1,11 @@
 export default function Users(renderEle, data, clickUser) {
-  this.data = data
+  this.data = data.users
   this.renderEle = renderEle
   this.usersEle = document.createElement('ul')
   this.renderEle.append(this.usersEle)
   this.clickUser = clickUser
 
   this.render = () => {
-    console.log(this.data)
     this.usersEle.innerHTML = this.data
       .map((element) => {
         return `<li>${element}</li>`
@@ -14,7 +13,7 @@ export default function Users(renderEle, data, clickUser) {
       .join('')
   }
   this.setState = (nextData) => {
-    this.data = nextData
+    this.data = nextData.users
     this.render()
   }
   this.bindEvent = () => {
