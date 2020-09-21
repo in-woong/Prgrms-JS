@@ -115,13 +115,15 @@ export default function App(data, renderEle) {
       this.renderEle,
       this.data,
       this.setTodoListIsCompleted,
-      this.removeTodoList
+      this.removeTodoList,
+      false
     ),
     new TodoList(
       this.renderEle,
       this.data,
       this.setTodoListIsCompleted,
-      this.removeTodoList
+      this.removeTodoList,
+      true
     ),
     new TodoCount(this.renderEle, this.data),
     new TodoInput(this.renderEle, this.addTodoList),

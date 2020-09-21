@@ -13,4 +13,5 @@
 
 .todoList {
   display: inline-block;
+  list-style: none;
 }

@@ -3,7 +3,8 @@ export default function TodoList(
   renderEle,
   data,
   setTodoListIsCompleted,
-  removeTodoList
+  removeTodoList,
+  isDisplayCompleted
 ) {
   this.data = data.todoList
   this.renderEle = renderEle
@@ -12,19 +13,28 @@ export default function TodoList(
   renderEle.append(this.todoListEle)
   this.setTodoListIsCompleted = setTodoListIsCompleted
   this.removeTodoList = removeTodoList
+  this.isDisplayCompleted = isDisplayCompleted
+  this.todoListEle.setAttribute('isDisplayCompleted', isDisplayCompleted)
 
   // data값에 따라 todo-list를 동적으로 렌더링한다
   this.render = () => {
-    const html = this.data
+    const html = `
+    ${!this.isDisplayCompleted ? 'TodoList' : '완료된 TodoList'}
+    ${this.data
       .map((data, index) => {
-        return `<li key=${index}>${
-          data.isCompleted
-            ? `<s class="todo-list-item">${data.content}</s>`
-            : `<span class="todo-list-item">${data.content}</span>`
+        if (this.isDisplayCompleted === data.isCompleted) {
+          return `<li key=${index}>${
+            data.isCompleted
+              ? `<s class="todo-list-item" draggable="true" >${data.content}</s>`
+              : `<span class="todo-list-item" draggable="true" >${data.content}</span>`
+          }
+           <button class="todo-list-remove-button">삭제</button>
+           </li>`
         }
-      <button class="todo-list-remove-button">삭제</button></li>`
       })
-      .join('')
+      .join('')}
+      `
+
     this.todoListEle.innerHTML = html
   }
   // data값을 바꾸고 컴포넌트를 다시 렌더링한다
@@ -44,6 +54,32 @@ export default function TodoList(
       // todo list 삭제 이벤트 등록
       if (target.className === 'todo-list-remove-button') {
         return this.removeTodoList(target.closest('li').getAttribute('key'))
+      }
+    })
+
+    this.todoListEle.addEventListener('dragstart', (event) => {
+      const { target } = event
+      event.dataTransfer.setData(
+        'dragStartElementsIsDisplayCompleted',
+        target.closest('ul').getAttribute('isDisplayCompleted')
+      )
+      event.dataTransfer.setData(
+        'key',
+        target.closest('li').getAttribute('key')
+      )
+    })
+    this.todoListEle.addEventListener('dragover', (event) => {
+      event.preventDefault()
+    })
+    this.todoListEle.addEventListener('drop', (event) => {
+      // 드래그하여 드랍한곳이 동일한곳 (ex: TodoList에서 완료된 TodoList로 리스트를 옮기지 않은경우)
+      // 이라면 핸들러를 호출하지 않는다
+      if (
+        event.dataTransfer.getData('dragStartElementsIsDisplayCompleted') !==
+        event.target.closest('ul').getAttribute('isDisplayCompleted')
+      ) {
+        event.preventDefault()
+        this.setTodoListIsCompleted(event.dataTransfer.getData('key'))
       }
     })
   }
