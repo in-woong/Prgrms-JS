@@ -12,7 +12,7 @@ export default function TodoList({ $target, initData, onRemoveTodoItem, onComple
         event.stopPropagation();
         const { clickAction, todoItemIndex } = event.target.dataset;
         if (clickAction === 'toggleComplete') {
-            onCompleteTodoItem({ todoItemIndex });
+            await onCompleteTodoItem({ todoItemIndex });
             return;
         }
         if (clickAction === 'remove') {

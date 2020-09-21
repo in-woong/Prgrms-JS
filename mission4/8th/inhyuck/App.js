@@ -2,12 +2,19 @@ import TodoList from './components/TodoList.js';
 import TodoInput from './components/TodoInput.js';
 import TodoCount from './components/TodoCount.js';
 import { validateTodoItem, validateTodoItems } from './utils/validateTodo.js';
-import { addTodoItem, fetchTodoItems, removeAllTodoItems, removeTodoItem } from './api.js';
+import {
+    addTodoItem,
+    fetchTodoItems,
+    removeAllTodoItems,
+    removeTodoItem,
+    toggleTodoItem,
+} from './api.js';
 
 export default function App({ $target, initData = {todoItems: []} }) {
     this.$target = $target;
     this.data = initData;
 
+    //추가, 삭제, 전체삭제, 토글 등 api 를 호출하고 성공했을 때 전체 갱신 vs 부분만 임의갱신 => 고민해볼만한 문제...!
     const refreshTodoItems = async () => {
         const fetchedTodoItems = await fetchTodoItems();
         this.setState({todoItems: fetchedTodoItems});
@@ -31,7 +38,9 @@ export default function App({ $target, initData = {todoItems: []} }) {
         await refreshTodoItems();
     };
 
-    const onCompleteTodoItem = ({ todoItemIndex }) => {
+    const onCompleteTodoItem = async ({ todoItemIndex }) => {
+        await toggleTodoItem({todoId: this.data.todoItems[todoItemIndex].id});
+
         const newTodoItems = [...this.data.todoItems];
         newTodoItems[todoItemIndex].isCompleted = !newTodoItems[todoItemIndex].isCompleted;
         this.setState({

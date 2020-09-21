@@ -18,6 +18,17 @@ const defaultApi = {
         return await res.json();
     },
 
+    put: async ({path, body}) => {
+        const res = await fetch(`${END_POINT}${path}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body),
+        });
+        return await res.json();
+    },
+
     delete: async ({path}) => {
         const res = await fetch(`${END_POINT}${path}`, {
             method: 'DELETE',
@@ -64,5 +75,10 @@ export async function removeTodoItem({todoId}) {
 
 export async function removeAllTodoItems() {
     const {message} = await defaultApi.delete({path: `/${USER_NAME}/all`});
+    console.log(message);
+}
+
+export async function toggleTodoItem({todoId}) {
+    const {message} = await defaultApi.put({path: `/${USER_NAME}/${todoId}/toggle`});
     console.log(message);
 }
