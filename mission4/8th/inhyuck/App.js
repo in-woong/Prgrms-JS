@@ -9,6 +9,7 @@ import {
     removeTodoItem,
     toggleTodoItem,
 } from './api.js';
+import Users from './components/Users.js';
 
 const DEFAULT_USER_NAME = 'inhyuck';
 
@@ -64,11 +65,18 @@ export default function App({ $target, initData = {username: DEFAULT_USER_NAME, 
 
     this.render = function () {
         this.$target.innerHTML = `
+            <div class="user-list"></div>
+            
+            <h1>${this.data.username}'s todoList</h1>
             <div class="todo-list"></div>
             <div class="todo-count"></div>
             <div class="todo-input"></div>
         `;
 
+        this.userList = new Users({
+            $target: this.$target.querySelector('.user-list'),
+            initData: {selectedUsername: this.data.username},
+        });
         this.todoList = new TodoList({
             $target: this.$target.querySelector('.todo-list'),
             initData: {todoItems: this.data.todoItems},

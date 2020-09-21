@@ -6,3 +6,13 @@
     text-decoration: line-through;
     color: #9E9E9E;
 }
+
+.user-list ul {
+    height: 400px;
+    overflow-y: scroll;
+}
+
+.user-list ul .selected {
+    color: blue;
+    font-weight: bold;
+}

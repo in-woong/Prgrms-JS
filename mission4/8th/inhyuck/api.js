@@ -82,3 +82,7 @@ export async function toggleTodoItem({username,todoId}) {
     const {message} = await defaultApi.put({path: `/${username}/${todoId}/toggle`});
     console.log(message);
 }
+
+export async function fetchUsers() {
+    return await defaultApi.get({path: '/users'});
+}
