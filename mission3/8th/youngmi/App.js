@@ -5,7 +5,6 @@ import SearchHistory from './SearchHistory.js';
 function App() {
 
     this.data = [];
-
     const $resultBox = document.querySelector('#search-result');
     const $historyBox = document.querySelector('#search-history');
 
@@ -13,7 +12,7 @@ function App() {
     const searchResult = new SearchResult(this.data, $resultBox);
     const searchHistory = new SearchHistory(this, $historyBox);
 
-    this.sendData = (newData, keyword) => {
+    this.setState = (newData, keyword) => {
         this.data = newData;
         searchResult.setState(this.data);
         searchHistory.addHistory(keyword); // input컴포넌트에서 엔터쳐야 실행되는데 왜 처음부터 실행되지.....

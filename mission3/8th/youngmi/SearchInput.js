@@ -8,14 +8,16 @@ function SearchInput(app) {
         const keyword = e.target.value;
         const url = `https://jjalbot.com/api/jjals?text=${keyword}`;
 
-        const fetchData = await fetch(url)
-            .then(data => data.json())
-            .then(data => {
-                // console.log(data);
-                this.app.sendData(data, keyword);
-            });
-        debounce(fetchData, 1000);
+        try {
+            const response = await fetch(url)
+            const jjals = await response.json()
+            this.app.setState(jjals, keyword)
+        } catch (error) {
+            console.log(error)
+        }
     }
-    $searchInput.addEventListener('keyup', this.searchData);
+
+    $searchInput.addEventListener('keyup', debounce(this.searchData, 1000));
 }
+
 export default SearchInput;
