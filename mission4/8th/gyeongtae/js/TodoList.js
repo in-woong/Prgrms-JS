@@ -45,12 +45,6 @@ export default function TodoList(
 
   this.bindEvent = () => {
     this.todoListEle.addEventListener('click', ({ target }) => {
-      // todo list 삭선처리 이벤트 등록
-      if (target.className === 'todo-list-item') {
-        return this.setTodoListIsCompleted(
-          target.closest('li').getAttribute('key')
-        )
-      }
       // todo list 삭제 이벤트 등록
       if (target.className === 'todo-list-remove-button') {
         return this.removeTodoList(target.closest('li').getAttribute('key'))
