@@ -2,7 +2,7 @@ const END_POINT = 'https://todo-api.roto.codes';
 const USER_NAME = 'inhyuck';
 
 const defaultApi = {
-    get: async (path) => {
+    get: async ({path}) => {
         const res = await fetch(`${END_POINT}${path}`);
         return await res.json();
     },
@@ -17,13 +17,20 @@ const defaultApi = {
         });
         return await res.json();
     },
+
+    delete: async ({path}) => {
+        const res = await fetch(`${END_POINT}${path}`, {
+            method: 'DELETE',
+        });
+        return await res.json();
+    },
 };
 
 export async function fetchTodoItems() {
-    const fetchedTodoItems = await defaultApi.get(`/${USER_NAME}`);
+    const fetchedTodoItems = await defaultApi.get({path: `/${USER_NAME}`});
     return fetchedTodoItems.map(todoItem => {
         return {
-            id: todoItem.id,
+            id: todoItem._id,
             text: todoItem.content,
             isCompleted: todoItem.isCompleted,
         };
@@ -48,4 +55,9 @@ export async function addTodoItem({text, isCompleted}) {
         text: newTodoItem.content,
         isCompleted: newTodoItem.isCompleted,
     };
+}
+
+export async function removeTodoItem({todoId}) {
+    const {message} = await defaultApi.delete({path: `/${USER_NAME}/${todoId}`});
+    console.log(message);
 }

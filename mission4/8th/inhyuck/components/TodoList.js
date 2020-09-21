@@ -8,7 +8,7 @@ export default function TodoList({ $target, initData, onRemoveTodoItem, onComple
     this.$target = $target;
     this.data = initData;
 
-    this.$target.addEventListener('click', event => {
+    this.$target.addEventListener('click', async (event) => {
         event.stopPropagation();
         const { clickAction, todoItemIndex } = event.target.dataset;
         if (clickAction === 'toggleComplete') {
@@ -16,7 +16,7 @@ export default function TodoList({ $target, initData, onRemoveTodoItem, onComple
             return;
         }
         if (clickAction === 'remove') {
-            onRemoveTodoItem({ todoItemIndex });
+            await onRemoveTodoItem({ todoItemIndex });
             return;
         }
     });

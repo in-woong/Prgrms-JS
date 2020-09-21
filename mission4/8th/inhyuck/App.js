@@ -1,29 +1,31 @@
 import TodoList from './components/TodoList.js';
 import TodoInput from './components/TodoInput.js';
 import TodoCount from './components/TodoCount.js';
-import { validateTodoItems } from './utils/validateTodo.js';
-import { addTodoItem, fetchTodoItems } from './api.js';
+import { validateTodoItem, validateTodoItems } from './utils/validateTodo.js';
+import { addTodoItem, fetchTodoItems, removeTodoItem } from './api.js';
 
 export default function App({ $target, initData = {todoItems: []} }) {
     this.$target = $target;
     this.data = initData;
 
     const onSaveTodoItem = async ({ todoItemText }) => {
-        const newTodoItem = await addTodoItem({text: todoItemText, isCompleted: false});
+        const newTodoItem = {text: todoItemText, isCompleted: false};
+        validateTodoItem({todoItem: newTodoItem});
+
+        const addedTodoItem = await addTodoItem(newTodoItem);
         this.setState({
             todoItems: [
                 ...this.data.todoItems,
-                newTodoItem,
+                addedTodoItem,
             ],
         });
     };
 
-    const onRemoveTodoItem = ({ todoItemIndex }) => {
-        const newTodoItems = [...this.data.todoItems];
-        newTodoItems.splice(todoItemIndex, 1);
-        this.setState({
-            todoItems: newTodoItems,
-        });
+    const onRemoveTodoItem = async ({ todoItemIndex }) => {
+        await removeTodoItem({todoId: this.data.todoItems[todoItemIndex].id});
+
+        const fetchedTodoItems = await fetchTodoItems();
+        this.setState({todoItems: fetchedTodoItems});
     };
 
     const onCompleteTodoItem = ({ todoItemIndex }) => {
