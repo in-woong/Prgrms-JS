@@ -41,6 +41,9 @@ export default function TodoList(appElement, initData) {
           }
         }
         break;
+      case 'allDelete':
+        this.state = newState;
+        break;
       default:
         this.state = newState;
     }

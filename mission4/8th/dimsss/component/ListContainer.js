@@ -5,7 +5,7 @@ import TodoRemoveAllButton from './TodoRemoveAllButton.js';
 
 import isStrValidation from '../util/validation.js';
 import debounce from '../util/debounce.js';
-import { getTodo, updateTodoState, addTodo } from '../util/api.js';
+import { getTodo, updateTodoState, addTodo, deleteAllTodo } from '../util/api.js';
 import generateRandomStr from '../util/randomString.js';
 
 export default function TodoContainer(appElement) {
@@ -54,20 +54,32 @@ export default function TodoContainer(appElement) {
 
   this.addEvent = () => {
     this.element.addEventListener('input', (e) => {
-      if (e.target.id === 'todo-input' && isStrValidation(e.target.value)) {
-        const todoData = {
-          _id: generateRandomStr(),
-          content: e.target.value,
-          isCompleted: false
-        }
-
-        const addTodoResult = debounce(addTodo.bind(this, this.todoUser, todoData.content));
-
-        if (addTodoResult) {
-          this.setState('add', {todoData: addTodoResult})
+      const handler = async () => {
+        if (e.target.id === 'todo-input' && isStrValidation(e.target.value)) {
+          const newTodoData = {
+            _id: generateRandomStr(),
+            content: e.target.value,
+            isCompleted: false
+          }
+  
+          const addTodoResult = await addTodo(this.todoUser, newTodoData.content);
+  
+          if (addTodoResult) {
+            this.setState('add', {todoData: newTodoData})
+          }
         }
       }
+
+      debounce(handler);
+
     });
+
+    this.element.addEventListener('click', async (e) => {
+      if (e.target.className === 'todo-remove-button') {
+        await deleteAllTodo(this.todoUser);
+        this.setState('allDelete', {todoData: [], doneTodoData: []});
+      }
+    })
 
     this.element.addEventListener('dragover', (e) => {
       e.preventDefault();

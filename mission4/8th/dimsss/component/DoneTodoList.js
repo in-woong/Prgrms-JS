@@ -38,6 +38,9 @@ export default function DoneTodoList(parentElement, initData) {
           }
         }
         break;
+      case 'allDelete':
+        this.state = newState;
+        break;
       default:
         this.state = newState;
     }

@@ -8,7 +8,7 @@ export default function UserList(appElement) {
     const users = await getAllUsers();
     
     if (users) {
-      this.state = users
+      this.state = users;
       
       appElement.appendChild(this.element);
 

@@ -45,11 +45,11 @@ async function addTodo(username, data) {
   }
 }
 
-async function deleteAllTodo(username, data) {
+async function deleteAllTodo(username) {
   requestParam.method = 'DELETE';
 
   try {
-    const response = await fetch(`${SERVER_URL}/${username}/${data}`, requestParam);
+    const response = await fetch(`${SERVER_URL}/${username}/all`, requestParam);
     return await responseHandler(response);
   } catch (e) {
     throw e
