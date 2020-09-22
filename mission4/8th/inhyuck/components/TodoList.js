@@ -21,11 +21,28 @@ export default function TodoList({ $target, initData, onRemoveTodoItem, onComple
         }
     });
 
+    this.$target.addEventListener('dragstart', (event) => {
+        const { todoItemIndex } = event.target.dataset;
+        event.dataTransfer.setData('text/plain', todoItemIndex);
+        event.dataTransfer.dropEffect = 'move';
+    });
+
+    this.$target.addEventListener('dragover', (event) => {
+        event.preventDefault();
+        event.dataTransfer.dropEffect = 'move';
+    });
+
+    this.$target.addEventListener('drop', (event) => {
+        event.preventDefault();
+        const todoItemIndex = event.dataTransfer.getData('text/plain');
+        console.log(todoItemIndex);
+    });
+
     const convertTodoItemToInnerHtml = function ({ todoItem, todoItemIndex }) {
         const { text, isCompleted } = todoItem;
         return `
           <li class="item-wrap">
-            <span class="txt ${isCompleted ? 'completed' : ''}" data-click-action="toggleComplete" data-todo-item-index="${todoItemIndex}">${text}</span>
+            <span class="txt ${isCompleted ? 'completed' : ''}" draggable="true" data-click-action="toggleComplete" data-todo-item-index="${todoItemIndex}">${text}</span>
             <button type="button" class="remove-btn" data-click-action="remove" data-todo-item-index="${todoItemIndex}">Remove</button>
           </li>
         `;
