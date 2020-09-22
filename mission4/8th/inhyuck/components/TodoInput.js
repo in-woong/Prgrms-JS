@@ -29,7 +29,7 @@ export default function TodoInput({ $target, onSaveTodoItem }) {
         };
 
         //입력창에서 Enter 키 동작 시 TodoItem 추가
-        $todoItemAddInput.addEventListener('keydown', async (event) => {
+        $todoItemAddInput.addEventListener('keypress', async (event) => {
             if (event.key === 'Enter') {
                 await saveTodoItem();
             }
