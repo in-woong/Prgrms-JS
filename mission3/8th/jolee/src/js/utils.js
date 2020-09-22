@@ -16,9 +16,14 @@ export const validateData = (data) => {
 
 export const serachJjals = async (url, text) => {
   try {
-    const response = await await fetch(`${url}/jjals?text=${text}`).then((x) =>
-      x.json()
-    )
+    const response = await fetch(`${url}/jjals?text=${text}`).then(function (
+      response
+    ) {
+      if (response.ok) {
+        return response.json()
+      }
+      throw new Error('Network response was not ok.')
+    })
     return response
   } catch (error) {
     throw new Error(error)
@@ -26,9 +31,9 @@ export const serachJjals = async (url, text) => {
 }
 
 let timer = null
-export const debounce = (callback, timer) => {
-  if (timer) {
-    clearTimeout()
+export const debounce = (callback, debounceMs) => {
+  if(timer !== null) {
+    clearTimeout(timer)
   }
-  timer = setTimeout(callback, timer)
+  timer = setTimeout(callback, debounceMs)
 }
