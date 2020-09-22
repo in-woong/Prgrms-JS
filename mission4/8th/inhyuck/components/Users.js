@@ -24,7 +24,7 @@ export default function Users({$target, initData, onChangeUser}) {
         }
 
         this.$target.innerHTML = `
-            <h1>usernames</h1>
+            <h2><mark>usernames</mark></h1>
             <ul>
                 ${this.data.usernames.map((username, index) => {
                     return `<li>

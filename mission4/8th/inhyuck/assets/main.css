@@ -58,3 +58,7 @@
 .todo-list ul li span {
     min-width: 100px;
 }
+
+mark {
+    background-color: #b7f274;
+}

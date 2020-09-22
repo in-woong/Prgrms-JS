@@ -33,7 +33,7 @@ export default function TodoList({ $target, initData, onRemoveTodoItem, onComple
 
     this.render = function () {
         this.$target.innerHTML = `
-            <h1>${this.data.username}'s todoList</h1>
+            <h2><mark>${this.data.username}</mark>'s todoList</h1>
             <ul>
                   ${this.data.todoItems.map((todoItem, index) => convertTodoItemToInnerHtml({
                       todoItem,
