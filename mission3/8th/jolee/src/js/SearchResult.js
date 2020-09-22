@@ -6,12 +6,14 @@ function SearchResult(data, $target) {
   }
   validateData(data)
 
-  this.$target = $target
+  this.$target = document.querySelector($target)
   this.data = data
 
   this.render = function () {
-    document.querySelector(this.$target).innerHTML = `${this.data
-      .map((item) => `<li><img src="${item.imageUrl}"></li>`)
+    this.$target.innerHTML = `${this.data
+      .map(
+        (item) => `<li><img src="${item.imageUrl}" alt="${item.title}"></li>`
+      )
       .join('')}`
   }
 

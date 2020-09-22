@@ -14,7 +14,7 @@ export const validateData = (data) => {
   })
 }
 
-export const searchWord = async (url, text) => {
+export const serachJjals = async (url, text) => {
   try {
     const response = await await fetch(`${url}/jjals?text=${text}`).then((x) =>
       x.json()

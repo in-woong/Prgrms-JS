@@ -1,6 +1,6 @@
 import SearchResult from './SearchResult.js'
 import dummyData from './dummyData.js'
-import { searchWord, debounce } from './utils.js'
+import { serachJjals, debounce } from './utils.js'
 
 
 function App() {
@@ -17,7 +17,7 @@ function App() {
 
   const keyupEventListener = (e) =>
     debounce(async () => {
-      const data = await searchWord(`https://jjalbot.com/api`, e.target.value)
+      const data = await serachJjals(`https://jjalbot.com/api`, e.target.value)
       this.setState(data)
     })
 
