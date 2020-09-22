@@ -6,9 +6,16 @@
  */
 import { fetchUsers } from '../api.js';
 
-export default function Users({$target, initData}) {
+export default function Users({$target, initData, onChangeUser}) {
     this.$target = $target;
     this.data = initData;
+
+    this.$target.addEventListener('click', async (event) => {
+        const {clickAction, index} = event.target.dataset;
+        if (clickAction === 'changeUser') {
+            await onChangeUser(this.data.usernames[index]);
+        }
+    });
 
     this.render  = () => {
         if (!this.data.usernames || this.data.usernames.length === 0) {
@@ -19,9 +26,9 @@ export default function Users({$target, initData}) {
         this.$target.innerHTML = `
             <h1>usernames</h1>
             <ul>
-                ${this.data.usernames.map(username => {
+                ${this.data.usernames.map((username, index) => {
                     return `<li>
-                                <button type="button" class="${username === this.data.selectedUsername ? 'selected' : ''}">
+                                <button type="button" data-click-action="changeUser" data-index="${index}" class="${username === this.data.selectedUsername ? 'selected' : ''}">
                                     ${username}
                                 </button>
                             </li>`;

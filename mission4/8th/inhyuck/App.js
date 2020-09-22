@@ -23,6 +23,11 @@ export default function App({ $target, initData = {username: DEFAULT_USER_NAME, 
         this.setState({todoItems: fetchedTodoItems});
     }
 
+    const onChangeUser = async (username) => {
+        this.setState({username});
+        await refreshTodoItems();
+    };
+
     const onSaveTodoItem = async ({ todoItemText }) => {
         const newTodoItem = {text: todoItemText, isCompleted: false};
         validateTodoItem({todoItem: newTodoItem});
@@ -64,22 +69,43 @@ export default function App({ $target, initData = {username: DEFAULT_USER_NAME, 
     });
 
     this.render = function () {
-        this.$target.innerHTML = `
-            <div class="user-list"></div>
-            
-            <h1>${this.data.username}'s todoList</h1>
-            <div class="todo-list"></div>
-            <div class="todo-count"></div>
-            <div class="todo-input"></div>
-        `;
+        if (!this.$target.innerHTML) {
+            this.$target.innerHTML = `
+                <div class="user-list"></div>
+                <div class="todo-list"></div>
+                <div class="todo-count"></div>
+                <div class="todo-input"></div>
+            `;
+        }
+    };
+
+    this.setState = function (nextData) {
+        if (nextData.todoItems) {
+            validateTodoItems({ todoItems: nextData.todoItems });
+        }
+
+        this.data = {
+            ...this.data,
+            ...nextData,
+        };
+
+        this.userList.setState({ selectedUsername: this.data.username })
+        this.todoList.setState({ todoItems: this.data.todoItems, username: this.data.username });
+        this.todoCount.setState({ todoItems: this.data.todoItems });
+        this.render();
+    };
+
+    this.initialize = async () => {
+        this.render();
 
         this.userList = new Users({
             $target: this.$target.querySelector('.user-list'),
             initData: {selectedUsername: this.data.username},
+            onChangeUser,
         });
         this.todoList = new TodoList({
             $target: this.$target.querySelector('.todo-list'),
-            initData: {todoItems: this.data.todoItems},
+            initData: {todoItems: this.data.todoItems, username: this.data.username},
             onRemoveTodoItem,
             onCompleteTodoItem,
         });
@@ -91,21 +117,7 @@ export default function App({ $target, initData = {username: DEFAULT_USER_NAME, 
             $target: this.$target.querySelector('.todo-count'),
             initData: {todoItems: this.data.todoItems},
         });
-    };
 
-    this.setState = function (nextData) {
-        validateTodoItems({ todoItems: nextData.todoItems });
-
-        this.data = {
-            ...this.data,
-            ...nextData,
-        };
-        this.todoList.setState({ todoItems: this.data.todoItems });
-        this.todoCount.setState({ todoItems: this.data.todoItems });
-    };
-
-    this.initialize = async () => {
-        this.render();
         await refreshTodoItems();
     };
 
