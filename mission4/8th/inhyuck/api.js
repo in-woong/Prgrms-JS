@@ -37,7 +37,8 @@ const defaultApi = {
 };
 
 export async function fetchTodoItems({username}) {
-    const fetchedTodoItems = await defaultApi.get({path: `/${username}`});
+    const randomDelay = getRandomDelay();
+    const fetchedTodoItems = await defaultApi.get({path: `/${username}?delay=${randomDelay}`});
     return fetchedTodoItems.map(todoItem => {
         return {
             id: todoItem._id,
@@ -85,4 +86,8 @@ export async function toggleTodoItem({username,todoId}) {
 
 export async function fetchUsers() {
     return await defaultApi.get({path: '/users'});
+}
+
+function getRandomDelay() {
+    return Math.floor(Math.random() * 3000);
 }
