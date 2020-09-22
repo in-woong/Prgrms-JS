@@ -8,8 +8,10 @@
 }
 
 .user-list ul {
-    height: 400px;
+    height: 300px;
     overflow-y: scroll;
+    list-style: none;
+    padding-left: 20px;
 }
 
 .user-list ul .selected {
@@ -19,4 +21,40 @@
 
 .user-list ul li {
     cursor: pointer;
+    margin-bottom: 5px;
+}
+
+.pending-area {
+    background-color: #f2f2f290;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.pending-area .contents {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 50px;
+    padding-left: 20px;
+    background-color: #333;
+    color: hsla(0,0%,100%,.87);
+}
+
+.todo-list ul {
+    height: 300px;
+    overflow-y: scroll;
+    list-style: decimal;
+    padding-left: 40px;
+}
+
+.todo-list ul li {
+    margin-bottom: 5px;
+}
+
+.todo-list ul li span {
+    min-width: 100px;
 }

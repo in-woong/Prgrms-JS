@@ -10,6 +10,7 @@ import {
     toggleTodoItem,
 } from './api.js';
 import Users from './components/Users.js';
+import { errorHandler } from './utils/errorHandler.js';
 
 const DEFAULT_USER_NAME = 'inhyuck';
 
@@ -19,7 +20,17 @@ export default function App({ $target, initData = {username: DEFAULT_USER_NAME, 
 
     //추가, 삭제, 전체삭제, 토글 등 api 를 호출하고 성공했을 때 전체 갱신 vs 부분만 임의갱신 => 고민해볼만한 문제...!
     const refreshTodoItems = async () => {
-        const fetchedTodoItems = await fetchTodoItems({username: this.data.username});
+        let fetchedTodoItems = this.data.todoItems;
+
+        this.setState({isPending: true});
+        try {
+            fetchedTodoItems = await fetchTodoItems({username: this.data.username});
+        } catch (e) {
+            errorHandler({errorMessage: e.message});
+        } finally {
+            this.setState({isPending: false}); //pending 은 에러가 발생해도 닫아줘야 함
+        }
+
         this.setState({todoItems: fetchedTodoItems});
     }
 
@@ -75,8 +86,15 @@ export default function App({ $target, initData = {username: DEFAULT_USER_NAME, 
                 <div class="todo-list"></div>
                 <div class="todo-count"></div>
                 <div class="todo-input"></div>
+                
+                <div class="pending-area">
+                    <span class="contents">todoList 를 불러오는 중입니다...</span>
+                </div>
             `;
         }
+
+        const $pendingArea = this.$target.querySelector('.pending-area');
+        $pendingArea.style.display = this.data.isPending ? 'block' : 'none';
     };
 
     this.setState = function (nextData) {
