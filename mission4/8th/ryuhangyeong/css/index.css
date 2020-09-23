@@ -35,18 +35,18 @@ ul {
   overflow-y: scroll;
 }
 
-.Loader {
+.Loading {
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
 }
 
-.Loader-inner {
+.Loading-inner {
   border: 16px solid #f3f3f3;
   border-top: 16px solid #3498db;
   border-radius: 50%;

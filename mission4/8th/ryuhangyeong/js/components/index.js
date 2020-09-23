@@ -3,6 +3,6 @@ import TodoInput from './TodoInput.js'
 import TodoList from './TodoList.js'
 import UserList from './UserList.js'
 import UserName from './UserName.js'
-import Loader from './Loader.js'
+import Loading from './Loading.js'
 
-export { TodoCount, TodoInput, TodoList, UserList, UserName, Loader }
+export { TodoCount, TodoInput, TodoList, UserList, UserName, Loading }

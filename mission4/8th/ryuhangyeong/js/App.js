@@ -4,7 +4,7 @@ import {
   TodoList,
   UserList,
   UserName,
-  Loader,
+  Loading,
 } from './components/index.js'
 
 import {
@@ -29,9 +29,11 @@ export default class App {
   }
 
   async init($target) {
-    this.Loader = new Loader({
+    this.Loading = new Loading({
       $target,
     })
+
+    this.Loading.show()
 
     this.todos = await getTodoListDelay({
       username: this.username,
@@ -40,13 +42,13 @@ export default class App {
 
     this.users = await getUserList()
 
-    this.Loader.hide()
+    this.Loading.hide()
 
     this.userList = new UserList({
       $target,
       initialData: this.users,
       onSearch: async (username) => {
-        this.Loader.show()
+        this.Loading.show()
 
         this.username = username
         this.todos = await getTodoList({
@@ -55,7 +57,7 @@ export default class App {
         this.setState(this.todos)
         this.UserName.setState(this.username)
 
-        this.Loader.hide()
+        this.Loading.hide()
       },
     })
 
