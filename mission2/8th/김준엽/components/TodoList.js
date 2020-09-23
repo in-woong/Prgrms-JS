@@ -1,4 +1,4 @@
-export default function TodoList($target,dataList) {
+export default function TodoList($target,dataList,toggleCompleted) {
             
     /**예외처리**/
     if (!new.target) {
@@ -8,7 +8,7 @@ export default function TodoList($target,dataList) {
     this.dataList = dataList;
     this.$target = $target;
 
-    this.preRender = () => {
+    this.init = () => {
         this.$listElem = document.createElement('ul');
         this.$listElem.id = 'todo-list';
         this.$target.appendChild(this.$listElem);
@@ -33,16 +33,16 @@ export default function TodoList($target,dataList) {
             if(eTaget.tagName === "BUTTON"){
                 this.dataList.splice(eTaget.id, 1);
             } else if (eTaget.tagName === "LI"){
-                this.dataList[eTaget.id].isCompleted = true;
+                toggleCompleted(eTaget.id);
             } else if (eTaget.tagName === "S"){
-                this.dataList[eTaget.parentNode.id].isCompleted = false;
+                toggleCompleted(eTaget.parentNode.id);
             }
 
             this.render();
         })
     }
     
-    this.preRender();
+    this.init();
     this.render();
     this.addEvent();
 }
