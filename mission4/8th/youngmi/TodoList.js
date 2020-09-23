@@ -3,6 +3,7 @@ import TodoCount from './TodoCount.js';
 function TodoList(app, data, todoListWrap) {
     this.app = app;
     this.data = data;
+
     this.$todoListWrap = todoListWrap;
 
     const $total = document.querySelector('.total');
@@ -12,13 +13,13 @@ function TodoList(app, data, todoListWrap) {
     this.render = function() {
         this.$todoListWrap.innerHTML = this.data.map((todo, key) => {
             return todo.isCompleted ?
-                `<div key=${key} class="list">
-                    <s class="strike">${todo.text}</s>
+                `<div id=${todo._id} class="list">
+                    <s class="strike">${todo.content}</s>
                     <button class="btnDeleteTodo">X</button>
                 </div>`
                 :
-                `<div key=${key} class="list">
-                    <span class="text">${todo.text}</span>
+                `<div id=${todo._id} class="list">
+                    <span class="text">${todo.content}</span>
                     <button class="btnDeleteTodo">X</button>
                 </div>`
         }).join('');
@@ -27,17 +28,16 @@ function TodoList(app, data, todoListWrap) {
     // 삭제버튼 클릭 -> 삭제
     this.deleteTodo = e => {
         if (e.target.className === 'btnDeleteTodo') {
-            const deleteIdx = e.target.parentNode.getAttribute('key');
-            this.app.deleteTodo(deleteIdx);
+            const deleteId = e.target.parentNode.id;
+            this.app.deleteTodo(deleteId);
         }
     }
     this.$todoListWrap.addEventListener('click', this.deleteTodo);
 
     // 글자클릭시 밑줄 온/오프
     this.onOffTodo = (e) => {
-        const key = e.target.parentNode.getAttribute('key');
-        const onOff = this.data[key].isCompleted;
-        this.app.onOffTodo(key, onOff);
+        const toggleId = e.target.parentNode.id;
+        this.app.onOffTodo(toggleId);
     }
     this.$todoListWrap.addEventListener('click', this.onOffTodo);
 
