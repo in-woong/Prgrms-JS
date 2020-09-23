@@ -1,10 +1,4 @@
+import App from "./components/App.js";
 
-try {
-    const todoList = new TodoList({ 
-        $target: document.querySelector('#todo-list') 
-    });
-
-} catch (e) {
-    alert(e);
-    console.log(e);
-}
+const $target = document.querySelector('#app');
+new App($target);
