@@ -11,6 +11,7 @@ import {
 } from './api.js';
 import Users from './components/Users.js';
 import { errorHandler } from './utils/errorHandler.js';
+import { COMPLETE_MODE } from './consts/completeMode.js';
 
 const DEFAULT_USER_NAME = 'inhyuck';
 
@@ -52,25 +53,43 @@ export default function App({ $target, initData = {username: DEFAULT_USER_NAME, 
         });
     };
 
-    const onRemoveTodoItem = async ({ todoItemIndex }) => {
+    const onRemoveTodoItem = async ({ todoId }) => {
         await removeTodoItem({
             username: this.data.username,
-            todoId: this.data.todoItems[todoItemIndex].id
+            todoId,
         });
         await refreshTodoItems();
     };
 
-    const onCompleteTodoItem = async ({ todoItemIndex }) => {
+    const onCompleteTodoItem = async ({ todoId }) => {
         await toggleTodoItem({
             username: this.data.username,
-            todoId: this.data.todoItems[todoItemIndex].id
+            todoId,
         });
 
         const newTodoItems = [...this.data.todoItems];
-        newTodoItems[todoItemIndex].isCompleted = !newTodoItems[todoItemIndex].isCompleted;
+        const toggledTodoItem = newTodoItems.find(todoItem => todoItem.id === todoId);
+        toggledTodoItem.isCompleted = !toggledTodoItem.isCompleted;
         this.setState({
             todoItems: newTodoItems,
         });
+    };
+
+    const onDropTodoItem = async ({todoId, completeMode}) => {
+        const todoItem = this.data.todoItems.find(todoItem => todoItem.id === todoId);
+        if (availableToggleTodoItem({isCompleted: todoItem.isCompleted, completeMode})) {
+            await onCompleteTodoItem({todoId});
+        }
+    };
+
+    const availableToggleTodoItem = function ({isCompleted, completeMode}) {
+        if (isCompleted && completeMode === COMPLETE_MODE.NON_COMPLETED) {
+            return true;
+        }
+        if (!isCompleted && completeMode === COMPLETE_MODE.COMPLETED) {
+            return true;
+        }
+        return false;
     };
 
     this.$target.addEventListener('removeAll', async (event) => {
@@ -83,7 +102,10 @@ export default function App({ $target, initData = {username: DEFAULT_USER_NAME, 
         if (!this.$target.innerHTML) {
             this.$target.innerHTML = `
                 <div class="user-list"></div>
-                <div class="todo-list"></div>
+                
+                <div class="todo-list non-completed"></div>
+                <div class="todo-list completed"></div>
+                
                 <div class="todo-count"></div>
                 <div class="todo-input"></div>
                 
@@ -108,7 +130,14 @@ export default function App({ $target, initData = {username: DEFAULT_USER_NAME, 
         };
 
         this.userList.setState({ selectedUsername: this.data.username })
-        this.todoList.setState({ todoItems: this.data.todoItems, username: this.data.username });
+        this.nonCompletedTodoList.setState({
+            todoItems: this.data.todoItems.filter(todoItem => !todoItem.isCompleted),
+            username: this.data.username
+        });
+        this.completedTodoList.setState({
+            todoItems: this.data.todoItems.filter(todoItem => todoItem.isCompleted),
+            username: this.data.username
+        });
         this.todoCount.setState({ todoItems: this.data.todoItems });
         this.render();
     };
@@ -121,12 +150,31 @@ export default function App({ $target, initData = {username: DEFAULT_USER_NAME, 
             initData: {selectedUsername: this.data.username},
             onChangeUser,
         });
-        this.todoList = new TodoList({
-            $target: this.$target.querySelector('.todo-list'),
-            initData: {todoItems: this.data.todoItems, username: this.data.username},
+
+        this.nonCompletedTodoList = new TodoList({
+            $target: this.$target.querySelector('.todo-list.non-completed'),
+            initData: {
+                todoItems: this.data.todoItems.filter(todoItem => !todoItem.isCompleted),
+                username: this.data.username,
+                completeMode: COMPLETE_MODE.NON_COMPLETED,
+            },
             onRemoveTodoItem,
             onCompleteTodoItem,
+            onDropTodoItem,
         });
+
+        this.completedTodoList = new TodoList({
+            $target: this.$target.querySelector('.todo-list.completed'),
+            initData: {
+                todoItems: this.data.todoItems.filter(todoItem => todoItem.isCompleted),
+                username: this.data.username,
+                completeMode: COMPLETE_MODE.COMPLETED,
+            },
+            onRemoveTodoItem,
+            onCompleteTodoItem,
+            onDropTodoItem,
+        });
+
         this.todoInput = new TodoInput({
             $target: this.$target.querySelector('.todo-input'),
             onSaveTodoItem,

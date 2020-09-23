@@ -1,0 +1,4 @@
+export const COMPLETE_MODE = {
+    COMPLETED: 'COMPLETED',
+    NON_COMPLETED: 'NON_COMPLETED',
+};

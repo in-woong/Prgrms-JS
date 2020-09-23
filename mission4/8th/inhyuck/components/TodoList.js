@@ -1,6 +1,16 @@
 import { errorHandler } from '../utils/errorHandler.js';
 
-export default function TodoList({ $target, initData, onRemoveTodoItem, onCompleteTodoItem }) {
+/**
+ * @param $target
+ * @param initData
+ * @param initData.todoItems
+ * @param initData.username
+ * @param {COMPLETE_MODE} initData.completeMode
+ * @param onRemoveTodoItem
+ * @param onCompleteTodoItem
+ * @constructor
+ */
+export default function TodoList({ $target, initData, onRemoveTodoItem, onCompleteTodoItem, onDropTodoItem }) {
     if (!(this instanceof TodoList)) {
         errorHandler({ errorMessage: 'not exist new keyword' });
     }
@@ -11,19 +21,21 @@ export default function TodoList({ $target, initData, onRemoveTodoItem, onComple
     this.$target.addEventListener('click', async (event) => {
         event.stopPropagation();
         const { clickAction, todoItemIndex } = event.target.dataset;
+        const todoId = this.data.todoItems[todoItemIndex].id;
+
         if (clickAction === 'toggleComplete') {
-            await onCompleteTodoItem({ todoItemIndex });
+            await onCompleteTodoItem({ todoId });
             return;
         }
         if (clickAction === 'remove') {
-            await onRemoveTodoItem({ todoItemIndex });
+            await onRemoveTodoItem({ todoId });
             return;
         }
     });
 
     this.$target.addEventListener('dragstart', (event) => {
         const { todoItemIndex } = event.target.dataset;
-        event.dataTransfer.setData('text/plain', todoItemIndex);
+        event.dataTransfer.setData('text/plain', this.data.todoItems[todoItemIndex].id);
         event.dataTransfer.dropEffect = 'move';
     });
 
@@ -32,10 +44,10 @@ export default function TodoList({ $target, initData, onRemoveTodoItem, onComple
         event.dataTransfer.dropEffect = 'move';
     });
 
-    this.$target.addEventListener('drop', (event) => {
+    this.$target.addEventListener('drop', async (event) => {
         event.preventDefault();
-        const todoItemIndex = event.dataTransfer.getData('text/plain');
-        console.log(todoItemIndex);
+        const todoId = event.dataTransfer.getData('text/plain');
+        await onDropTodoItem({todoId, completeMode: this.data.completeMode});
     });
 
     const convertTodoItemToInnerHtml = function ({ todoItem, todoItemIndex }) {
@@ -50,7 +62,7 @@ export default function TodoList({ $target, initData, onRemoveTodoItem, onComple
 
     this.render = function () {
         this.$target.innerHTML = `
-            <h2><mark>${this.data.username}</mark>'s todoList</h1>
+            <h2><mark>${this.data.username}</mark>'s todoList (${this.data.completeMode})</h1>
             <ul>
                   ${this.data.todoItems.map((todoItem, index) => convertTodoItemToInnerHtml({
                       todoItem,
@@ -60,7 +72,10 @@ export default function TodoList({ $target, initData, onRemoveTodoItem, onComple
     };
 
     this.setState = function (nextData) {
-        this.data = nextData;
+        this.data = {
+            ...this.data,
+            ...nextData,
+        };
         this.render();
     };
 

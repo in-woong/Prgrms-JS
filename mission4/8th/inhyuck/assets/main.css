@@ -51,7 +51,7 @@ body {
 }
 
 .todo-list ul {
-    height: 300px;
+    height: 150px;
     overflow-y: scroll;
     list-style: decimal;
     padding-left: 40px;
