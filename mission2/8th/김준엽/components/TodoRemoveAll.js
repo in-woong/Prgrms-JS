@@ -1,4 +1,4 @@
-export default function TodoRemoveAll ($target) {
+export default function TodoRemoveAll($target) {
     this.render = () => {
         let $div = document.createElement('div');
         let $delBtn = document.createElement('button');

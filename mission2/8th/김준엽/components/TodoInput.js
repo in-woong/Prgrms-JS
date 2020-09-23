@@ -14,16 +14,15 @@ export default function TodoInput($target, addTodo) {
         this.addBtn.innerHTML = '추가';
         this.$target.appendChild(this.addBtn);
     }
-    
+
     this.attachEvent = () => {
         this.addBtn.addEventListener("click", () => {
             addTodo(this.inputBox.value);
             this.inputBox.value = "";
             this.inputBox.focus();
-        })  
+        })
     }
-    
+
     this.render();
     this.attachEvent();
 }
-

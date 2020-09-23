@@ -1,5 +1,5 @@
-export default function TodoCount($target,dataList){
-    
+export default function TodoCount($target, dataList) {
+
     this.$target = $target;
     //this.dataList = dataList;
 
@@ -13,7 +13,7 @@ export default function TodoCount($target,dataList){
         const totalCnt = dataList.length;
         let endCnt = 0;
         dataList.forEach(data => {
-            if(data.isCompleted) endCnt++;
+            if (data.isCompleted) endCnt++;
         })
         this.$todoCnt.innerHTML = `총 개수 : ${totalCnt} 완료 개수 : ${endCnt}`
     }

@@ -1,10 +1,10 @@
-export default function TodoList($target,dataList,toggleCompleted) {
-            
+export default function TodoList($target, dataList, toggleCompleted, delTodo) {
+
     /**예외처리**/
     if (!new.target) {
-         throw new Error('new 키워드를 사용하지 않았습니다.');
+        throw new Error('new 키워드를 사용하지 않았습니다.');
     }
-    
+
     this.dataList = dataList;
     this.$target = $target;
 
@@ -16,7 +16,10 @@ export default function TodoList($target,dataList,toggleCompleted) {
 
     this.render = () => {
         validDataList(dataList); //데이터 검증
-        this.$listElem.innerHTML = this.dataList.map(({txt, isCompleted},index) => 
+        this.$listElem.innerHTML = this.dataList.map(({
+                txt,
+                isCompleted
+            }, index) =>
             `<li id="${index}"> ${isCompleted ? `<s>${txt}</s>` : txt} 
             <button id="${index}">삭제</button> </li>`
         ).join('')
@@ -28,20 +31,20 @@ export default function TodoList($target,dataList,toggleCompleted) {
     // }
 
     this.addEvent = () => {
-        this.$listElem.addEventListener("click", (event)=>{
+        this.$listElem.addEventListener("click", (event) => {
             const eTaget = event.target;
-            if(eTaget.tagName === "BUTTON"){
-                this.dataList.splice(eTaget.id, 1);
-            } else if (eTaget.tagName === "LI"){
+            if (eTaget.tagName === "BUTTON") {
+                delTodo(eTaget.id);
+            } else if (eTaget.tagName === "LI") {
                 toggleCompleted(eTaget.id);
-            } else if (eTaget.tagName === "S"){
+            } else if (eTaget.tagName === "S") {
                 toggleCompleted(eTaget.parentNode.id);
             }
 
             this.render();
         })
     }
-    
+
     this.init();
     this.render();
     this.addEvent();
@@ -57,8 +60,11 @@ const validDataList = (dataList) => {
     }
 
     //배열이면 데이터 내용 검사
-    dataList.forEach(({text, isCompleted}) => {
-        if ((typeof(text) !== 'string') && (typeof(isCompleted) !== 'boolean')) {
+    dataList.forEach(({
+        text,
+        isCompleted
+    }) => {
+        if ((typeof (text) !== 'string') && (typeof (isCompleted) !== 'boolean')) {
             throw new Error('파라미터 타입이 올바르지 않습니다.');
         }
     })
