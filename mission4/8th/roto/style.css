@@ -1,0 +1,35 @@
+html,
+body {
+  margin: 0;
+}
+
+.app {
+  display: flex;
+  flex-direction: row;
+}
+
+.users {
+  width: 200px;
+  height: 100vh;
+  overflow-y: scroll;
+  background-color: #999;
+}
+
+.users li {
+  list-style: none;
+  margin: 10px 0;
+  padding: 10px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.users li:hover {
+  background-color: #eee;
+  color: black;
+  }
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+}
