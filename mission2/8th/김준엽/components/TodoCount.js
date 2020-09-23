@@ -5,7 +5,6 @@ export default function TodoCount($target,dataList){
 
     this.init = () => {
         this.$todoCnt = document.createElement('div');
-        //this.inputBox.id = 'inputBox';
         this.$todoCnt.id = 'todo-cnt';
         this.$target.appendChild(this.$todoCnt);
     }

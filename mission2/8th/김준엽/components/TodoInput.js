@@ -23,7 +23,6 @@ export default function TodoInput($target, addTodo) {
         })  
     }
     
-
     this.render();
     this.attachEvent();
 }
