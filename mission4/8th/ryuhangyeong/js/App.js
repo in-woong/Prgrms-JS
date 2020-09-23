@@ -86,11 +86,11 @@ export default class App {
         const idx = this.todos.findIndex((todo) => todo._id === _id)
 
         this.todos[idx].isCompleted = !this.todos[idx].isCompleted
-
         this.setState(this.todos)
       },
       onRemove: async (_id) => {
         await removeTodo({ username: this.username, _id })
+
         this.todos = this.todos.filter((todo) => todo._id !== _id)
         this.setState(this.todos)
       },

@@ -7,9 +7,6 @@ const defaultOpts = {
 
 export default async (url, opts = {}) => {
   const res = await fetch(url, { ...defaultOpts, ...opts })
-  if (res.ok) {
-    return await res.json()
-  } else {
-    throw new Error('잘못된 요청입니다.')
-  }
+  if (res.ok) return await res.json()
+  throw new Error('잘못된 요청입니다.')
 }
