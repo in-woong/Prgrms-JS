@@ -13,7 +13,6 @@ import {
   removeTodo,
   toggleCompletedTodo,
   getUserList,
-  getTodoListDelay,
 } from './utils/api/todo.js'
 
 import { isValidTodos } from './utils/validate.js'
@@ -25,7 +24,7 @@ export default class App {
     username: 'ryuhangyeong',
     todos: [],
     users: [],
-    loading_visible: false,
+    isLoading: false,
   }
 
   constructor($target) {
@@ -35,11 +34,11 @@ export default class App {
   async willMount($target) {
     this.loading = new Loading({
       $target,
-      initialData: this.state.loading_visible,
+      initialData: this.state.isLoading,
     })
 
     wrapLoading(async () => {
-      this.state.todos = await getTodoListDelay({
+      this.state.todos = await getTodoList({
         username: this.username,
         delay: 1000,
       })
@@ -69,10 +68,18 @@ export default class App {
         $target,
         onCreate: (value) =>
           wrapError(async () => {
+            this.state.isLoading = true
+            this.todoInput.setState(this.state.isLoading)
+
             const data = await createTodo({
               username: this.state.username,
               content: value,
+              delay: 2000,
             })
+
+            this.state.isLoading = false
+            this.todoInput.setState(this.state.isLoading)
+
             const { id: _id, content, isCompleted } = data
 
             this.state.todos = [

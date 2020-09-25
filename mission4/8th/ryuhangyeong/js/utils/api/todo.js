@@ -2,12 +2,11 @@ import request from './request.js'
 
 const END_POINT = 'https://todo-api.roto.codes'
 
-export const getTodoList = ({ username }) => request(`${END_POINT}/${username}`)
-export const getTodoListDelay = ({ username, delay }) =>
+export const getTodoList = ({ username, delay = 0 }) =>
   request(`${END_POINT}/${username}/?delay=${delay}`)
 
-export const createTodo = ({ username, content }) =>
-  request(`${END_POINT}/${username}`, {
+export const createTodo = ({ username, content, delay = 0 }) =>
+  request(`${END_POINT}/${username}/?delay=${delay}`, {
     method: 'POST',
     body: JSON.stringify({
       content,

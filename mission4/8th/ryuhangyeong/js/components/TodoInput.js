@@ -1,6 +1,7 @@
 export default class TodoInput {
-  constructor({ $target, onCreate }) {
+  constructor({ $target, initialData = false, onCreate }) {
     this.$target = $target
+    this.data = initialData
     this.onCreate = onCreate
 
     this.$todoInput = document.createElement('input')
@@ -11,6 +12,7 @@ export default class TodoInput {
     this.$todoInput.addEventListener('keyup', (e) => {
       const { target, key } = e
       const { value } = target
+
       if (!value) return
 
       if (key === 'Enter') {
@@ -18,5 +20,16 @@ export default class TodoInput {
         this.onCreate(value)
       }
     })
+
+    this.toggleDisabled()
+  }
+
+  setState(nextData) {
+    this.data = nextData
+    this.toggleDisabled()
+  }
+
+  toggleDisabled() {
+    this.$todoInput.disabled = this.data
   }
 }
