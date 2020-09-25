@@ -67,7 +67,7 @@ export default class App {
       this.todoInput = new TodoInput({
         $target,
         onCreate: (value) =>
-          wrapError(async () => {
+          wrapLoading(async () => {
             this.state.isLoading = true
             this.todoInput.setState(this.state.isLoading)
 
@@ -87,7 +87,7 @@ export default class App {
               { _id, content, isCompleted },
             ]
             this.setState(this.state.todos)
-          }),
+          }, this.loading),
       })
 
       this.todoList = new TodoList({
