@@ -18,96 +18,107 @@ import {
 
 import { isValidTodos } from './utils/validate.js'
 import { getTodoStatus } from './utils/computed/todo.js'
+import { wrapError, wrapLoading } from './utils/etc/wrapper.js'
 
 export default class App {
-  username = 'ryuhangyeong'
-  todos = []
-  users = []
-
-  constructor($target) {
-    this.init($target)
+  state = {
+    username: 'ryuhangyeong',
+    todos: [],
+    users: [],
+    loading_visible: false,
   }
 
-  async init($target) {
-    this.Loading = new Loading({
+  constructor($target) {
+    this.willMount($target)
+  }
+
+  async willMount($target) {
+    this.loading = new Loading({
       $target,
+      initialData: this.state.loading_visible,
     })
 
-    this.Loading.show()
+    wrapLoading(async () => {
+      this.state.todos = await getTodoListDelay({
+        username: this.username,
+        delay: 1000,
+      })
 
-    this.todos = await getTodoListDelay({
-      username: this.username,
-      delay: 2000,
-    })
+      this.users = await getUserList()
 
-    this.users = await getUserList()
+      this.userList = new UserList({
+        $target,
+        initialData: this.users,
+        onSearch: (username) =>
+          wrapLoading(async () => {
+            this.state.username = username
+            this.state.todos = await getTodoList({
+              username: this.state.username,
+            })
+            this.setState(this.state.todos)
+            this.userName.setState(this.state.username)
+          }, this.loading),
+      })
 
-    this.Loading.hide()
+      this.userName = new UserName({
+        $target,
+        initialData: this.state.username,
+      })
 
-    this.userList = new UserList({
-      $target,
-      initialData: this.users,
-      onSearch: async (username) => {
-        this.Loading.show()
+      this.todoInput = new TodoInput({
+        $target,
+        onCreate: (value) =>
+          wrapError(async () => {
+            const data = await createTodo({
+              username: this.state.username,
+              content: value,
+            })
+            const { id: _id, content, isCompleted } = data
 
-        this.username = username
-        this.todos = await getTodoList({
-          username: this.username,
-        })
-        this.setState(this.todos)
-        this.UserName.setState(this.username)
+            this.state.todos = [
+              ...this.state.todos,
+              { _id, content, isCompleted },
+            ]
+            this.setState(this.state.todos)
+          }),
+      })
 
-        this.Loading.hide()
-      },
-    })
+      this.todoList = new TodoList({
+        $target,
+        initialData: this.state.todos,
+        onToggle: (_id) =>
+          wrapError(async () => {
+            await toggleCompletedTodo({ username: this.state.username, _id })
+            const idx = this.state.todos.findIndex((todo) => todo._id === _id)
 
-    this.UserName = new UserName({
-      $target,
-      initialData: this.username,
-    })
+            this.state.todos[idx].isCompleted = !this.state.todos[idx]
+              .isCompleted
+            this.setState(this.state.todos)
+          }),
+        onRemove: (_id) =>
+          wrapError(async () => {
+            await removeTodo({ username: this.state.username, _id })
 
-    this.TodoInput = new TodoInput({
-      $target,
-      onCreate: async (value) => {
-        const data = await createTodo({
-          username: this.username,
-          content: value,
-        })
-        const { id: _id, content, isCompleted } = data
+            this.state.todos = this.state.todos.filter(
+              (todo) => todo._id !== _id
+            )
+            this.setState(this.state.todos)
+          }),
+      })
 
-        this.todos = [...this.todos, { _id, content, isCompleted }]
-        this.setState(this.todos)
-      },
-    })
-
-    this.TodoList = new TodoList({
-      $target,
-      initialData: this.todos,
-      onToggle: async (_id) => {
-        await toggleCompletedTodo({ username: this.username, _id })
-        const idx = this.todos.findIndex((todo) => todo._id === _id)
-
-        this.todos[idx].isCompleted = !this.todos[idx].isCompleted
-        this.setState(this.todos)
-      },
-      onRemove: async (_id) => {
-        await removeTodo({ username: this.username, _id })
-
-        this.todos = this.todos.filter((todo) => todo._id !== _id)
-        this.setState(this.todos)
-      },
-    })
-
-    this.TodoCount = new TodoCount({
-      $target,
-      initialData: getTodoStatus(this.todos),
-    })
+      this.todoCount = new TodoCount({
+        $target,
+        initialData: getTodoStatus(this.state.todos),
+      })
+    }, this.loading)
   }
 
   setState(nextData) {
-    isValidTodos(nextData)
-    this.todos = nextData
-    this.TodoList.setState(this.todos)
-    this.TodoCount.setState(getTodoStatus(this.todos))
+    wrapLoading(() => {
+      isValidTodos(nextData)
+      this.state.todos = nextData
+      this.todoList.setState(this.state.todos)
+      this.todoCount.setState(getTodoStatus(this.state.todos))
+    }, this.loading)
   }
 }

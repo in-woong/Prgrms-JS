@@ -13,14 +13,6 @@ export default class Loading {
     this.$target.appendChild(this.$wrapper)
   }
 
-  show() {
-    this.setState(true)
-  }
-
-  hide() {
-    this.setState(false)
-  }
-
   setState(nextData) {
     this.data = nextData
     this.render()
@@ -29,8 +21,8 @@ export default class Loading {
   render() {
     if (this.data) {
       this.$wrapper.style.display = 'flex'
-    } else {
-      this.$wrapper.style.display = 'none'
+      return
     }
+    this.$wrapper.style.display = 'none'
   }
 }
