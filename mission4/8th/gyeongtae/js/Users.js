@@ -1,5 +1,5 @@
-export default function Users(renderEle, data, clickUser) {
-  this.data = data.users
+export default function Users({ renderEle, data, clickUser }) {
+  this.data = data
   this.renderEle = renderEle
   this.usersEle = document.createElement('ul')
   this.renderEle.append(this.usersEle)
@@ -13,12 +13,12 @@ export default function Users(renderEle, data, clickUser) {
       .join('')
   }
   this.setState = (nextData) => {
-    this.data = nextData.users
+    this.data = nextData
     this.render()
   }
   this.bindEvent = () => {
     this.usersEle.addEventListener('click', ({ target }) => {
-      if (target.nodeName == 'LI') {
+      if (target.nodeName === 'LI') {
         this.clickUser(target.innerText)
       }
     })

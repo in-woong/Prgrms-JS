@@ -14,7 +14,10 @@ async function initApp(userName, querySelector) {
 try {
   //const userName = prompt('이름을 입력해주세요.')
   const userName = 'gyeongtae'
-  const app = initApp(userName, document.querySelector('#app'))
+  let app
+  initApp(userName, document.querySelector('#app')).then((value) => {
+    app = value
+  })
 } catch (error) {
   console.log(error)
 }

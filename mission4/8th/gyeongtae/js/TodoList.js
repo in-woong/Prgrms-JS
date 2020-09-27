@@ -1,12 +1,12 @@
 // function style TodoList 컴포넌트
-export default function TodoList(
+export default function TodoList({
   renderEle,
   data,
   setTodoListIsCompleted,
   removeTodoList,
-  isDisplayCompleted
-) {
-  this.data = data.todoList
+  isDisplayCompleted,
+}) {
+  this.data = data
   this.renderEle = renderEle
   this.todoListEle = document.createElement('ul')
   this.todoListEle.className = 'todoList'
@@ -39,7 +39,7 @@ export default function TodoList(
   }
   // data값을 바꾸고 컴포넌트를 다시 렌더링한다
   this.setState = (nextData) => {
-    this.data = nextData.todoList
+    this.data = nextData
     this.render()
   }
 

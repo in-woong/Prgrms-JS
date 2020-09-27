@@ -2,34 +2,34 @@ const todoApiUrl = 'https://todo-api.roto.codes/'
 import { hideLoading, showLoading } from './Loading.js'
 
 // api 요청하기
-async function requert(url, init, delay) {
+async function requert(url, fetchParameter, delay) {
   try {
     showLoading()
-    const response = await fetch(todoApiUrl + url + '?delay=' + delay, init)
+    const response = await fetch(
+      `${todoApiUrl}${url}?delay=${delay}`,
+      fetchParameter
+    )
     if (!response.ok) {
       throw new Error('api요청에 에러가 발생하였습니다.')
     }
+    const responseToJson = await response.json()
     hideLoading()
-    return response
+    return responseToJson
   } catch (error) {
     console.log(error)
   }
 }
 // users가져오기
 export async function getUsers() {
-  const response = await requert('users')
-  const responseToJson = await response.json()
-  return responseToJson
+  return await requert('users')
 }
 // TodoList 가져오기
 export async function getTodoList(userName, delay) {
-  const response = await requert(userName, null, delay)
-  const responseToJson = await response.json()
-  return responseToJson
+  return await requert(userName, null, delay)
 }
 // TodoList 추가하기
 export function addTodoList(userName, content) {
-  const init = {
+  const fetchParameter = {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -38,26 +38,26 @@ export function addTodoList(userName, content) {
       content: content,
     }),
   }
-  requert(userName, init)
+  requert(userName, fetchParameter)
 }
 // TodoList 삭제하기
 export function removeTodoList(userName, todoId) {
-  const init = {
+  const fetchParameter = {
     method: 'DELETE',
   }
-  requert(`${userName}/${todoId}`, init)
+  requert(`${userName}/${todoId}`, fetchParameter)
 }
 // TodoList 전체 삭제하기
 export function removeAllTodoList(userName) {
-  const init = {
+  const fetchParameter = {
     method: 'DELETE',
   }
-  requert(`${userName}/all`, init)
+  requert(`${userName}/all`, fetchParameter)
 }
 // TodoList 토글
 export function toggleTodoList(userName, todoId) {
-  const init = {
+  const fetchParameter = {
     method: 'PUT',
   }
-  requert(`${userName}/${todoId}/toggle`, init)
+  requert(`${userName}/${todoId}/toggle`, fetchParameter)
 }

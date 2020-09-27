@@ -23,32 +23,22 @@ export default function App(data, renderEle) {
   this.renderEle = renderEle
   // TodoList data체크
   todoListDataCheck(this.data.todoList)
-
   // 데이터 초기화
   this.initTodoListData = async () => {
-    this.data.todoList = await getTodoList(this.data.userName)
-    this.setState(this.data)
+    this.setState({
+      ...this.data,
+      todoList: await getTodoList(this.data.userName),
+    })
   }
   // todo list 추가 함수
-  this.addTodoList = async (event) => {
-    const todoListInputEle = event.target.firstElementChild
-    // input값이 없으면 return
-    if (todoListInputEle.value.length === 0) {
-      return alert('내용을 입력해주세요.')
-    }
-    const content = todoListInputEle.value
+  this.addTodoList = async (content) => {
     addTodoList(this.data.userName, content)
-
     const todoListItem = {
       content: content,
       isCompleted: false,
     }
     this.data.todoList.push(todoListItem)
-
     this.setState(this.data)
-    // input값 초기화 및 input에 값 바로 입력할 수 있도록 함
-    todoListInputEle.value = ''
-    todoListInputEle.focus()
   }
   // todo list 삭제 함수
   this.removeTodoList = async (key) => {
@@ -65,7 +55,7 @@ export default function App(data, renderEle) {
   // todo list 전체 삭제 함수
   this.removeAllTodoList = async () => {
     await removeAllTodoList(this.data.userName)
-    this.data.todoList.length = 0
+    this.data.todoList = []
     this.setState(this.data)
   }
   // todo list IsCompleted값 설정 함수
@@ -94,11 +84,20 @@ export default function App(data, renderEle) {
     if (this.firstRender) {
       return (this.firstRender = false)
     }
-    this.components.forEach((element) => element.render())
+    for (let component in this.components) {
+      console.log(component)
+      this.components[component].render()
+    }
   }
   this.setState = (nextData) => {
     this.data = nextData
-    this.components.forEach((element) => element.setState(this.data))
+    this.components.usersComponent.setState(this.data.users)
+    this.components.userComponent.setState(this.data.userName)
+    this.components.unCompletedtodoListComponent.setState(this.data.todoList)
+    this.components.completedTodoListComponent.setState(this.data.todoList)
+    this.components.todoCountComponent.setState(this.data.todoList)
+    this.components.todoInputComponent.setState()
+    this.components.todoRemoveAllButtonComponent.setState()
   }
   // 이벤트 등록
   this.setEventOnTodoList = () => {
@@ -108,29 +107,45 @@ export default function App(data, renderEle) {
     })
   }
 
-  this.components = [
-    new Users(this.renderEle, this.data, this.clickUser),
-    new User(this.renderEle, this.data),
-    new TodoList(
-      this.renderEle,
-      this.data,
-      this.setTodoListIsCompleted,
-      this.removeTodoList,
-      false
-    ),
-    new TodoList(
-      this.renderEle,
-      this.data,
-      this.setTodoListIsCompleted,
-      this.removeTodoList,
-      true
-    ),
-    new TodoCount(this.renderEle, this.data),
-    new TodoInput(this.renderEle, this.addTodoList),
-    new TodoRemoveAllButton(this.renderEle, () => {
-      this.renderEle.dispatchEvent(new Event('removeAll'))
+  this.components = {
+    usersComponent: new Users({
+      renderEle: this.renderEle,
+      data: this.data.users,
+      clickUser: this.clickUser,
     }),
-  ]
+    userComponent: new User({
+      renderEle: this.renderEle,
+      data: this.data.userName,
+    }),
+    unCompletedtodoListComponent: new TodoList({
+      renderEle: this.renderEle,
+      data: this.data.todoList,
+      setTodoListIsCompleted: this.setTodoListIsCompleted,
+      removeTodoList: this.removeTodoList,
+      isDisplayCompleted: false,
+    }),
+    completedTodoListComponent: new TodoList({
+      renderEle: this.renderEle,
+      data: this.data.todoList,
+      setTodoListIsCompleted: this.setTodoListIsCompleted,
+      removeTodoList: this.removeTodoList,
+      isDisplayCompleted: true,
+    }),
+    todoCountComponent: new TodoCount({
+      renderEle: this.renderEle,
+      data: this.data.todoList,
+    }),
+    todoInputComponent: new TodoInput({
+      renderEle: this.renderEle,
+      addTodoList: this.addTodoList,
+    }),
+    todoRemoveAllButtonComponent: new TodoRemoveAllButton({
+      renderEle: this.renderEle,
+      dispatchReoveAllEvent: () => {
+        this.renderEle.dispatchEvent(new Event('removeAll'))
+      },
+    }),
+  }
 
   this.firstRender = true
 
