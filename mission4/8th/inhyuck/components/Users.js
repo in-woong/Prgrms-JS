@@ -47,7 +47,6 @@ export default function Users({$target, initData, onChangeUser}) {
     };
 
     this.initialize = async () => {
-        this.render();
         this.setState({
             usernames: await fetchUsers()
         });
