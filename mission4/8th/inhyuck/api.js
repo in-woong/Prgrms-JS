@@ -2,12 +2,12 @@ const END_POINT = 'https://todo-api.roto.codes';
 
 const defaultApi = {
     get: async ({path}) => {
-        const res = await fetch(END_POINT + path);
+        const res = await fetch(`${END_POINT}${path}`);
         return await res.json();
     },
 
     post: async ({path, body}) => {
-        const res = await fetch(END_POINT + path, {
+        const res = await fetch(`${END_POINT}${path}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -18,7 +18,7 @@ const defaultApi = {
     },
 
     put: async ({path, body}) => {
-        const res = await fetch(END_POINT + path, {
+        const res = await fetch(`${END_POINT}${path}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -29,7 +29,7 @@ const defaultApi = {
     },
 
     delete: async ({path}) => {
-        const res = await fetch(END_POINT + path, {
+        const res = await fetch(`${END_POINT}${path}`, {
             method: 'DELETE',
         });
         return await res.json();
