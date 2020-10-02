@@ -40,14 +40,7 @@ export default function App(target) {
         this.setState({searchText, searchTexts});
     };
 
-    this.render = function() {
-        if (this.$target.innerHTML) {
-            searchHistory.render();
-            searchResult.render();
-            searchInput.render();
-            return;
-        }
-
+    this.initialize = () => {
         this.$target.innerHTML = `
             <div class="search-history"></div>
             <div class="search-input"></div>
@@ -57,6 +50,12 @@ export default function App(target) {
         searchHistory = new SearchHistory({searchTexts: this.data.searchTexts}, '.search-history', onClickSearchText);
         searchInput = new SearchInput({searchText: this.data.searchText}, '.search-input', onKeyupSearchInput);
         searchResult = new SearchResult({searchedItems: this.data.searchedItems}, '.search-result');
+    };
+
+    this.render = function() {
+        searchHistory.render();
+        searchResult.render();
+        searchInput.render();
     };
 
     this.setState = async function({searchText = this.data.searchText, searchTexts = this.data.searchTexts}) {
@@ -70,5 +69,5 @@ export default function App(target) {
         document.title = `Mission3 - 움짤검색기: ${searchText}`;
     };
 
-    this.render();
+    this.initialize();
 }
