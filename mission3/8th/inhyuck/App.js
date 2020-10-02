@@ -25,6 +25,7 @@ export default function App(target) {
      */
     const onClickSearchText = (searchTextIndex) => {
         const clickedSearchText = this.data.searchTexts[searchTextIndex];
+        document.title = `Mission3 - 움짤검색기: ${clickedSearchText}`;
         this.setState({searchText: clickedSearchText});
     };
 
@@ -37,6 +38,7 @@ export default function App(target) {
               ...this.data.searchTexts,
               searchText,
         ];
+        document.title = `Mission3 - 움짤검색기: ${searchText}`;
         this.setState({searchText, searchTexts});
     };
 
@@ -66,7 +68,6 @@ export default function App(target) {
         searchHistory.setState({searchTexts: this.data.searchTexts});
         searchResult.setState({searchedItems: this.data.searchedItems});
         this.render();
-        document.title = `Mission3 - 움짤검색기: ${searchText}`;
     };
 
     this.initialize();
