@@ -10,7 +10,7 @@ export default function SearchHistory(props, target, onClickSearchText) {
     this.$target = document.querySelector(target);
     this.$target.addEventListener('click', event => {
         if (event.target.tagName === 'LI') {
-            onClickSearchText({searchTextIndex: event.target.dataset.index});
+            onClickSearchText(event.target.dataset.index);
         }
     });
 

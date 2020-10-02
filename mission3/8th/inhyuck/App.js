@@ -1,7 +1,7 @@
 import SearchInput from './SearchInput.js';
 import SearchHistory from './SearchHistory.js';
 import SearchResult from './SearchResult.js';
-import {fetchSearchResult} from './apis/fetchSearchResult.js';
+import { fetchSearchResult } from './apis/fetchSearchResult.js';
 
 /**
  * @param {string} target
@@ -23,7 +23,7 @@ export default function App(target) {
      * @callback SearchHistory~onClickSearchText
      * @param {string} searchTextIndex
      */
-    const onClickSearchText = ({searchTextIndex}) => {
+    const onClickSearchText = (searchTextIndex) => {
         const clickedSearchText = this.data.searchTexts[searchTextIndex];
         this.setState({searchText: clickedSearchText});
     };
