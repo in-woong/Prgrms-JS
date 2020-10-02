@@ -14,7 +14,7 @@ export default function SearchInput(props, target, onKeyupSearchInput) {
     const debounce = getDebounce({
         callbackFn: ({searchText}) => {
             if (searchText) {
-                onKeyupSearchInput({searchText});
+                onKeyupSearchInput(searchText);
             }
         },
         delay: 500

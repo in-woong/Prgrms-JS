@@ -32,7 +32,7 @@ export default function App(target) {
      * @callback SearchInput~onKeyupSearchInput
      * @param {string} searchText
      */
-    const onKeyupSearchInput = ({searchText}) => {
+    const onKeyupSearchInput = (searchText) => {
         const searchTexts = [
               ...this.data.searchTexts,
               searchText,
