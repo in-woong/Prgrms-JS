@@ -3,7 +3,7 @@
  * @param {callback} callbackFn
  * @param {number} delay
  */
-export function getDebounce({callbackFn, delay}) {
+export function makeDebouncedFn({callbackFn, delay}) {
     let timer;
     return (params) => {
         if (timer) {

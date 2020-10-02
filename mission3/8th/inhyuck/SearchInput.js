@@ -1,4 +1,4 @@
-import { getDebounce } from './utils/debounce.js';
+import { makeDebouncedFn } from './utils/debounce.js';
 
 /**
  * @param {object} props
@@ -11,7 +11,7 @@ export default function SearchInput(props, target, onKeyupSearchInput) {
     this.data = props;
     this.$target = document.querySelector(target);
 
-    const debounce = getDebounce({
+    const debouncedOnKeyUp = makeDebouncedFn({
         callbackFn: ({searchText}) => {
             if (searchText) {
                 onKeyupSearchInput(searchText);
@@ -20,7 +20,7 @@ export default function SearchInput(props, target, onKeyupSearchInput) {
         delay: 500
     });
     this.$target.addEventListener('keyup', event => {
-        debounce({searchText: event.target.value});
+        debouncedOnKeyUp({searchText: event.target.value});
     });
 
     let $searchKeyword;
