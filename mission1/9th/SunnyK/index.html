@@ -28,6 +28,8 @@
         })
       })(data)
       
+      if(!new.target) throw new Error("new 키워드가 없음")
+
       this.data = data
 
       this.render = () => {
