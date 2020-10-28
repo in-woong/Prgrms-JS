@@ -18,27 +18,50 @@
     ]
     
     function TodoList1(data) {
+      (function(data) {
+        if(data === null || data === undefined) throw new Error("데이터가 존재하지 않음")
+
+        if(!Array.isArray(data)) throw new Error("올바르지 않은 데이터 타입")
+
+        data.forEach(todo => {
+          if(todo.text === undefined) throw new Error("올바르지 않은 데이터 형식")
+        })
+      })(data)
+      
       this.data = data
 
       this.render = () => {
         const html = this.data.map( todo => `<div>${todo.text}</div>`).join('')
-        document.querySelector('#todo-list').insertAdjacentHTML('beforeend', html)
-      }
-    }
 
-    class TodoList2 {
-      constructor(data) {
-        this.data = data
-      }
-
-      render() {
-        const html = `<ul>${this.data.map(todo => `<li>${todo.text}</li>`).join('')}</ul>`
         document.querySelector('#todo-list').insertAdjacentHTML('beforeend', html)
       }
     }
 
     const todoList1 = new TodoList1(data)
     todoList1.render()
+
+    class TodoList2 {
+      constructor(data) {
+        this.data = data
+        this.checkData()
+      }
+
+      checkData() {
+        if(this.data === null || this.data === undefined) throw new Error("데이터가 존재하지 않음")
+
+        if(!Array.isArray(this.data)) throw new Error("올바르지 않은 데이터 타입")
+
+        this.data.forEach(todo => {
+          if(todo.text === undefined) throw new Error("올바르지 않은 데이터 형식")
+        })
+      }
+
+      render() {
+        const html = `<ul>${this.data.map(todo => `<li>${todo.text}</li>`).join('')}</ul>`
+
+        document.querySelector('#todo-list').insertAdjacentHTML('beforeend', html)
+      }
+    }
 
     const todoList2 = new TodoList2(data)
     todoList2.render()
