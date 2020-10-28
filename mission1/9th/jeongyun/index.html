@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission 1</title>
+    <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+    <div id="todo-list"></div>
+    <script>
+         const data = [
+            {
+            text: 'JS 공부하기'
+            },
+            {
+            text: 'JS 복습하기'
+            }
+        ]
+
+        function TodoList(id, data) {
+            // 파라메터로 받은 data this.data에 할당
+            this.id = id
+            this.toDos = data;
+            
+            this.addToDo = (element, toDos) => {
+              toDos.forEach(toDo => {
+                const child = document.createElement("li");
+                child.className = "toDo";
+                child.innerHTML = toDo.text;
+                element.appendChild(child);
+              })
+            }
+
+            this.render = (toDos) => {
+                const element = document.createElement("ul")
+                this.addToDo(element, toDos)
+                document.querySelector(this.id).appendChild(element)
+            }
+
+            this.render(this.toDos);
+        }
+        
+        const todoList = new TodoList("#todo-list", data);
+    </script>
+</body>
+</html>
