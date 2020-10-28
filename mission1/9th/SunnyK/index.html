@@ -51,7 +51,13 @@
         if(!Array.isArray(data)) throw new Error("올바르지 않은 데이터 타입")
 
         data.forEach(todo => {
-          if(todo.text === undefined) throw new Error("올바르지 않은 데이터 형식")
+          if(
+            todo.text === undefined ||
+            todo.isCompleted === undefined || 
+            typeof todo.isCompleted !== "boolean"
+          ) {
+            throw new Error("올바르지 않은 데이터 형식")
+          }
         })
       })(data)
       
@@ -76,6 +82,7 @@
     todoList2.render()
     todoList3.render()
 
+
     // class 이용
     class TodoList2 {
       constructor(data, targetId) {
@@ -91,7 +98,13 @@
         if(!Array.isArray(this.data)) throw new Error("올바르지 않은 데이터 타입")
 
         this.data.forEach(todo => {
-          if(todo.text === undefined) throw new Error("올바르지 않은 데이터 형식")
+          if(
+            todo.text === undefined ||
+            todo.isCompleted === undefined || 
+            typeof todo.isCompleted !== "boolean"
+          ) {
+            throw new Error("올바르지 않은 데이터 형식")
+          }
         })
       }
 
