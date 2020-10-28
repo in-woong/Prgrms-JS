@@ -6,8 +6,9 @@
 
 <body>
   <div id="todo-list"></div>
+
   <script>
-    var data = [
+    const data = [
       {
         text: 'JS 공부하기'
       },
@@ -15,7 +16,32 @@
         text: 'JS 복습하기'
       }
     ]
-	// 이곳에서 코딩을 시작하세요!
+    
+    function TodoList1(data) {
+      this.data = data
+
+      this.render = () => {
+        const html = this.data.map( todo => `<div>${todo.text}</div>`).join('')
+        document.querySelector('#todo-list').insertAdjacentHTML('beforeend', html)
+      }
+    }
+
+    class TodoList2 {
+      constructor(data) {
+        this.data = data
+      }
+
+      render() {
+        const html = `<ul>${this.data.map(todo => `<li>${todo.text}</li>`).join('')}</ul>`
+        document.querySelector('#todo-list').insertAdjacentHTML('beforeend', html)
+      }
+    }
+
+    const todoList1 = new TodoList1(data)
+    todoList1.render()
+
+    const todoList2 = new TodoList2(data)
+    todoList2.render()
   </script>
 </body>
 </html>
