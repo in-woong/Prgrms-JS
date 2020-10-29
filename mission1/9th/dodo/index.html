@@ -65,10 +65,23 @@
             }
         }
 
+        static findListById(id){
+            if(typeof id !== 'string'){
+                throw new Error('list id is not string');
+            }
+
+            const elList = document.getElementById(id);
+            if(elList === null){
+                throw new Error('list id does not exists');
+            }
+
+            return elList;
+        }
+
         constructor(data,listId){
             TodoList.checkTypeOfData(data);
             this.data = data;
-            this.$list = document.querySelector('#'+listId);
+            this.$list = TodoList.findListById(listId);
         }
 
         render(){
@@ -85,11 +98,14 @@
         }
     }
 
+    // render 테스트 
     const totalTodoList = [new TodoList(data,'todo-list'),new TodoList(data2,'todo-list2'),new TodoList(data3,'todo-list3')];
     totalTodoList.forEach((todoList)=>{
         todoList.render();
     });
 
+
+    // setState 테스트 
     const nextData = [
         {
             text:'새로운 데이터입니다',
