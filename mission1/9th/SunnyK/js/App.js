@@ -17,4 +17,3 @@ const todoList6 = new TodoList2(data3, 'todo-list3')
 todoList4.render()
 todoList5.render()
 todoList6.render()
-

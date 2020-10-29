@@ -9,7 +9,7 @@ export default class TodoList2 {
 
   checkData() {
     try {
-      if(this.data === null || this.data === undefined) throw new Error("데이터가 존재하지 않음")
+      if(!this.data) throw new Error("데이터가 존재하지 않음")
 
       if(!Array.isArray(this.data)) throw new Error("올바르지 않은 데이터 타입")
 

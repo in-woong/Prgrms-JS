@@ -2,7 +2,7 @@
 export default function TodoList1(data, targetId) {
   ((data) => {
     try {
-      if(data === null || data === undefined) throw new Error("데이터가 존재하지 않음")
+      if(!data) throw new Error("데이터가 존재하지 않음")
 
       if(!Array.isArray(data)) throw new Error("올바르지 않은 데이터 타입")
 
