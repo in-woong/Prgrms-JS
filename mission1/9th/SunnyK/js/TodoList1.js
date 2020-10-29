@@ -17,8 +17,8 @@ export default function TodoList1(data, targetId) {
 
       data.forEach(todo => {
         if(
-          !(todo.hasOwnProperty("text") &&
-          todo.hasOwnProperty("text") && 
+          !("text" in todo &&
+          todo.hasOwnProperty("isCompleted") && 
           typeof todo.isCompleted === "boolean")
         ) {
           throw new Error("올바르지 않은 데이터 형식")
@@ -30,7 +30,7 @@ export default function TodoList1(data, targetId) {
   }
 
   this.validData(data)
-  
+
   this.data = data
 
   this.render = () => {
@@ -40,4 +40,6 @@ export default function TodoList1(data, targetId) {
 
     document.getElementById(targetId).insertAdjacentHTML('beforeend', html)
   }
+
+  this.render()
 }

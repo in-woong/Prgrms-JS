@@ -9,6 +9,7 @@ export default class TodoList2 {
     this.targetId = targetId
 
     this.validData()
+    this.render()
   }
 
   validData() {
