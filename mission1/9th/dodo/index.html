@@ -12,28 +12,34 @@
   <script>
     const data = [
       {
-        text: 'JS 공부하기'
+        text: 'JS 공부하기',
+        isCompleted:true
       },
       {
-        text: 'JS 복습하기'
+        text: 'JS 복습하기',
+        isCompleted:false
       }
     ];
 
     const data2 = [
       {
-        text: 'React 공부하기'
+        text: 'React 공부하기',
+        isCompleted:true
       },
       {
-        text: 'React 복습하기'
+        text: 'React 복습하기',
+        isCompleted:true
       }
     ];
 
     const data3 = [
       {
-        text: 'CS 공부하기'
+        text: 'CS 공부하기',
+        isCompleted:false
       },
       {
-        text: 'CS 복습하기'
+        text: 'CS 복습하기',
+        isCompleted:false
       }
     ];
     
@@ -46,7 +52,15 @@
 
             for(let i = 0; i < data.length; i+=1){
                 if(!("text" in data[i])){
-                    throw new Error(`data[${i}] have no text property`);
+                    throw new Error(`data[${i}] has no text property`);
+                }
+
+                if(!("isCompleted" in data[i])){
+                    throw new Error(`data[${i}] has no isCompleted property`);
+                }
+
+                if(typeof data[i].isCompleted !== "boolean"){
+                    throw new Error(`data[${i}].isCompleted is not boolean`);
                 }
             }
         }
@@ -59,7 +73,8 @@
 
         render(){
             this.$list.innerHTML = this.data.reduce((acc,datum)=>{
-                return acc + `<div>${datum.text}</div>`;
+                let htmlString = datum.isCompleted ? `<s>${datum.text}</s>` : datum.text;
+                return acc + `<div>${htmlString}</div>`;
             },'');
         }
     }
