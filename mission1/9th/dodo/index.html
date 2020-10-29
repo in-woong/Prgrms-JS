@@ -1,0 +1,52 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list"></div>
+  <script>
+    const data = [
+      {
+        text: 'JS 공부하기'
+      },
+      {
+        text: 'JS 복습하기'
+      }
+    ]
+    
+    class TodoList {
+
+        static checkTypeOfData(data){
+            if(!Array.isArray(data)){
+                throw new Error('data is not array');
+            }
+
+            for(let i = 0; i < data.length; i+=1){
+                if(!("text" in data[i])){
+                    throw new Error(`data[${i}] have no text property`);
+                }
+            }
+        }
+
+        constructor(data){
+            TodoList.checkTypeOfData(data);
+            this.data = data;
+            this.$list = document.querySelector('#todo-list');
+        }
+
+        render(){
+            this.$list.innerHTML = this.data.reduce((acc,datum)=>{
+                return acc + `<div>${datum.text}</div>`;
+            },'');
+        }
+    }
+
+    const todoList = new TodoList(data);
+    todoList.render();
+
+  </script>
+</body>
+</html>
