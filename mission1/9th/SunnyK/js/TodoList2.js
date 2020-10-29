@@ -8,13 +8,11 @@ export default class TodoList2 {
     this.data = data
     this.targetId = targetId
 
-    this.checkData()
+    this.validData()
   }
 
-  checkData() {
+  validData() {
     try {
-      if(!this.data) throw new Error("데이터가 존재하지 않음")
-
       if(!Array.isArray(this.data)) throw new Error("올바르지 않은 데이터 타입")
 
       this.data.forEach(todo => {
