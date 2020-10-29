@@ -1,0 +1,38 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list"></div>
+  <script>
+    const data = [
+      {
+        text: 'JS 공부하기'
+      },
+      {
+        text: 'JS 복습하기'
+      }
+    ]
+
+    function TodoList(data) {
+      if (data === null || !Array.isArray(data)) return
+
+      this.data = data;
+      this.render = () => {
+        let content = `<ul>
+          ${this.data.map((item) => `<div>${item.text}</div>`).join('')}</ul>`;
+        document.querySelector('#todo-list').innerHTML = content;
+      }
+    }
+
+    //보통 함수를 다 작성 후 인스턴스생성? 아니면 먼저 생성?
+    const todo = new TodoList(data);
+    todo.render();
+
+  </script>
+</body>
+
+</html>
