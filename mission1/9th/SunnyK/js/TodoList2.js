@@ -1,5 +1,9 @@
 // class문법으로 작성
 export default class TodoList2 {
+  /**
+   * @param {Array} data 
+   * @param {String} targetId 
+   */
   constructor(data, targetId) {
     this.data = data
     this.targetId = targetId

@@ -1,5 +1,10 @@
-// function문법으로 작성
+/**
+ * TodoList1
+ * @param {Array} data 
+ * @param {String} targetId 
+ */
 export default function TodoList1(data, targetId) {
+
   ((data) => {
     try {
       if(!data) throw new Error("데이터가 존재하지 않음")
