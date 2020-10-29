@@ -18,10 +18,12 @@ const checkData = (data) => {
 const addToDo = (element, toDos) => {
   toDos.forEach(toDo => {
     const child = document.createElement("li");
-    child.innerHTML = toDo.text;
+    child.innerHTML = toDo.isCompleted ? `<s>${toDo.text}</s>` : toDo.text;
     element.appendChild(child);
   })
 }
+
+
 
 function TodoList(id, data) {
   // new 키워드 안 붙이고 함수 실행 시 에러 처리
