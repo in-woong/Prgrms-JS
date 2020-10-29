@@ -24,10 +24,6 @@ export const data = [
     {
       text: '[mission1] 보너스 구현사항 - isCompleted 처리',
       isCompleted: false
-    },
-    {
-      text: '[mission1] 보너스 구현사항 - setState',
-      isCompleted: false
     }
   ],
   data3 = [
