@@ -11,14 +11,14 @@ export default function TodoList1(data, targetId) {
     console.error(e)
   }
 
-  this.validData = (data) => {
+  this.validData = (todoData) => {
     try {
-      if(!Array.isArray(data)) throw new Error("올바르지 않은 데이터 타입")
+      if(!Array.isArray(todoData)) throw new Error("올바르지 않은 데이터 타입")
 
-      data.forEach(todo => {
+      todoData.forEach(todo => {
         if(
           !("text" in todo &&
-          todo.hasOwnProperty("isCompleted") && 
+          "isCompleted" in todo && 
           typeof todo.isCompleted === "boolean")
         ) {
           throw new Error("올바르지 않은 데이터 형식")
@@ -32,13 +32,20 @@ export default function TodoList1(data, targetId) {
   this.validData(data)
 
   this.data = data
+  this.targetId = targetId
+
+  this.setState = (nextData) => {
+    this.validData(nextData)
+    this.data = nextData
+    this.render()
+  }
 
   this.render = () => {
     const html = this.data.map( todo => 
       (todo.isCompleted) ? `<div>${todo.text}</div>` : `<s><div>${todo.text}</div></s>`
     ).join('')
 
-    document.getElementById(targetId).insertAdjacentHTML('beforeend', html)
+    document.getElementById(this.targetId).insertAdjacentHTML('beforeend', html)
   }
 
   this.render()

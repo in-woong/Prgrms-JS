@@ -8,19 +8,19 @@ export default class TodoList2 {
     this.data = data
     this.targetId = targetId
 
-    this.validData()
+    this.validData(data)
     this.render()
   }
 
-  validData() {
+  validData(todoData) {
     try {
-      if(!Array.isArray(this.data)) throw new Error("올바르지 않은 데이터 타입")
+      if(!Array.isArray(todoData)) throw new Error("올바르지 않은 데이터 타입")
 
-      this.data.forEach(todo => {
+      todoData.forEach(todo => {
         if(
-          todo.text === undefined ||
-          todo.isCompleted === undefined || 
-          typeof todo.isCompleted !== "boolean"
+          !("text" in todo &&
+          "isCompleted" in todo && 
+          typeof todo.isCompleted === "boolean")
         ) {
           throw new Error("올바르지 않은 데이터 형식")
         }
@@ -28,6 +28,12 @@ export default class TodoList2 {
     } catch(e) {
       console.error(e)
     }
+  }
+
+  setState(nextData) {
+    this.validData(nextData)
+    this.data = nextData
+    this.render()
   }
 
   render() {

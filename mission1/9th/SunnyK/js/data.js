@@ -31,4 +31,11 @@ const data3 = [
   }
 ]
 
-export { data1, data2, data3 }
+const nextData = [
+  {
+    text: '꿀잠자기', 
+    isCompleted: true
+  }
+]
+
+export { data1, data2, data3, nextData }
