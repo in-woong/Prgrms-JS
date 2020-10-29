@@ -19,6 +19,7 @@ export default function TodoList1(data, targetId) {
         if(
           !("text" in todo &&
           "isCompleted" in todo && 
+          typeof todo.text === "string" &&
           typeof todo.isCompleted === "boolean")
         ) {
           throw new Error("올바르지 않은 데이터 형식")
