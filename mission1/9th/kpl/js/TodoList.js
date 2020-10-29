@@ -30,7 +30,7 @@ function TodoList(data, target) {
 // 데이터 밸리데이션 체크
 function validCheck(data, target) {
   // data가 없거나 Array 가 아닐경우
-  if (!(data && data instanceof Array)) {
+  if (!(data && Array.isArray(data))) {
     throw new Error('올바른 데이터를 넘겨주세요.')
   }
 
