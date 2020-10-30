@@ -10,6 +10,10 @@ class TodoList {
                 throw new Error(`data[${i}] has no text property`);
             }
 
+            if(typeof data[i].text !== "string"){
+                throw new Error(`data[${i}].text is not string`);
+            }
+
             if(!("isCompleted" in data[i])){
                 throw new Error(`data[${i}] has no isCompleted property`);
             }
