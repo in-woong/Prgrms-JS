@@ -7,6 +7,8 @@
 
 <body>
   <div id="todo-list"></div>
+  <div id="play-list"></div>
+  <div id="work-time"></div>
   <script>
     var data = [
       {
@@ -16,11 +18,27 @@
         text: 'JS 복습하기'
       }
     ]
+    var data2 = [
+      {
+        text: '농구'
+      },
+      {
+        text: '보드게임'
+      }
+    ]
+    var data3 = [
+      {
+        text: '일찍 출근'
+      },
+      {
+        text: '일찍 퇴근'
+      }
+    ]
 
 
-    function TodoList (data) {
+    function TodoList (data, id) {
         Validator(data)
-        const element = document.querySelector("#todo-list")
+        const element = document.querySelector(id)
         this.data = data
         this.render = function () {
             for(let i = 0 ; i < data.length ; i++){
@@ -43,9 +61,12 @@
         }
     }
 
-
-    var todoList = new TodoList(data)
-    todoList.render()
+    var todoList1 = new TodoList(data, "#todo-list")
+    var todoList2 = new TodoList(data2, "#play-list")
+    var todoList3 = new TodoList(data3, "#work-time")
+    todoList1.render()
+    todoList2.render()
+    todoList3.render()
   </script>
 </body>
 </html>
