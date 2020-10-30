@@ -20,6 +20,13 @@
     function TodoList(todo){
         this.todo = todo;
 
+        if (!new.target) {
+            throw new Error('new 키워드를 사용해주세요!');
+        }
+
+        if(todo === null || todo === undefined) throw new Error("error message");
+        if(!Array.isArray(todo)) throw new Error("error message");
+
         this.render = function() {
             document.querySelector("#todo-list").innerHTML = `<ul>` + data.map(element =>
                 `<li>${element.text}</li>`
