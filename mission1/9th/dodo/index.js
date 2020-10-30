@@ -3,10 +3,6 @@ import TodoList from './modules/TodoList.mjs';
    
    // render 테스트 
    const totalTodoList = [new TodoList(data,'todo-list'),new TodoList(data2,'todo-list2'),new TodoList(data3,'todo-list3')];
-   totalTodoList.forEach((todoList)=>{
-       todoList.render();
-   });
-
 
    // setState 테스트 
    const nextData = [

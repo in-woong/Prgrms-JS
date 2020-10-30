@@ -37,6 +37,7 @@ class TodoList {
         TodoList.checkTypeOfData(data);
         this.data = data;
         this.$list = TodoList.findListById(listId);
+        this.render();
     }
 
     render(){
