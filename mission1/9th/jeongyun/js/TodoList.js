@@ -13,7 +13,7 @@ const checkData = (data) => {
     if(!item.text) {
       throw new Error('ReferenceError: item.text is not defined');
     }
-    if(!typeof item.text === 'string') {
+    if(typeof item.text !== 'string') {
       throw new Error('TypeError: item.text  is not string');
     }
   })
@@ -21,7 +21,7 @@ const checkData = (data) => {
 
 /**
  * update TodoList to data
- * @param {HTMLLIElement} element 
+ * @param {HTMLUListElement} element 
  * @param {Array} data 
  */
 const addToDo = (element, data) => {
@@ -36,7 +36,7 @@ function TodoList(id, data) {
   // 파라메터로 받은 data this.data에 할당
   this.id = id;
   this.toDos = data;
-
+  this.element = document.createElement("ul");
   // new 키워드 안 붙이고 함수 실행 시 에러 처리
   if (!new.target) {
     throw new Error('not called with new');
@@ -51,23 +51,21 @@ function TodoList(id, data) {
     const target = document.querySelector(`${this.id}`);
     target.removeChild(target.childNodes[0]);
     // 수정할 데이터로 ul 다시 생성
-    const element = document.createElement("ul");
-    addToDo(element, nextData);
-    document.querySelector(this.id).appendChild(element);
+    addToDo(this.element, nextData);
+    document.querySelector(this.id).appendChild(this.element);
   }
 
  /**
   * create TodoList 
   * @param {Array} data 
   */
-  this.render = (data) => {
-    const element = document.createElement("ul");
-    addToDo(element, data);
-    document.querySelector(this.id).appendChild(element);
+  this.render = () => {
+    addToDo(this.element, this.toDos);
+    document.querySelector(this.id).appendChild(this.element);
   }
 
   checkData(this.toDos);
-  this.render(this.toDos);
+  this.render();
 }
 
 export default TodoList;
