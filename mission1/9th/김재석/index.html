@@ -17,7 +17,9 @@
       }
     ]
 
+
     function TodoList (data) {
+        Validator(data)
         const element = document.querySelector("#todo-list")
         this.data = data
         this.render = function () {
@@ -26,7 +28,22 @@
             }
         }
     }
-    
+
+    function Validator (data) {
+        if(data == null || data == undefined){
+            throw new Error("data가 비었습니다.")
+        } else if (data[0] == undefined) {
+            throw new Error("data가 배열이 아닙니다")
+        } else {
+            for(let i = 0 ; i < data.length ; i++){
+                if(data[i].text == undefined || typeof(data[i].text) != "string")
+                    throw new Error(`${i+1}번째 데이터 내용이 이상합니다.`)
+            }
+            return true
+        }
+    }
+
+
     var todoList = new TodoList(data)
     todoList.render()
   </script>
