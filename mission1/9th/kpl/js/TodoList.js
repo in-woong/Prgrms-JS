@@ -8,7 +8,7 @@ function TodoList(data, target) {
   this.data = data
   this.target = target
   this.render = function () {
-    let contents =
+    const contents =
       '<ul>' +
       this.data
         .map((todo) => {
@@ -22,9 +22,11 @@ function TodoList(data, target) {
     document.querySelector(`#${target}`).innerHTML = contents
   }
   this.setState = function (nextData) {
+    stateValidCheck(nextData)
     this.data = nextData
     this.render()
   }
+  this.setState(data)
 }
 
 // 데이터 밸리데이션 체크
@@ -37,6 +39,12 @@ function validCheck(data, target) {
   // target이 존재하지 않을 경우
   if (!(target && document.querySelector(`#${target}`))) {
     throw new Error('target이 존재하지 않습니다.')
+  }
+}
+
+function stateValidCheck(data) {
+  if (!Array.isArray(data)) {
+    throw new Error('올바른 데이터를 넘겨주세요.')
   }
 }
 
