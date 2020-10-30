@@ -58,8 +58,9 @@ function TodoList(data, selector) {
     const createHTMLString = ( {text, isCompleted} ) => {
         return `<div>${isCompleted ? `<s>${text}</s>` : `${text}`}</div>`
     }
-    this.setState = (nextData) => {
+    this.setState = (nextData,selector) => {
         dataValidCheck(nextData)
+        this.selector = selector;
         this.data = nextData;
         this.render()
     }
@@ -69,7 +70,7 @@ function TodoList(data, selector) {
         document.querySelector(selector).innerHTML = todoHTMLString
     }
 }
-const todoList = new TodoList(todo_data, '#todo-list');
-setTimeout(() => { todoList.setState(todo_data) }, 0)
-setTimeout(() => { todoList.setState(song_data) }, 3000)
-setTimeout(() => { todoList.setState(hobby_data) }, 6000)
+const todoList = new TodoList(todo_data,"#todo-list");
+setTimeout(() => { todoList.setState(todo_data,'#todo-list') }, 0)
+setTimeout(() => { todoList.setState(song_data,'#song-list') }, 3000)
+setTimeout(() => { todoList.setState(hobby_data,'#hobby-list') }, 6000)
