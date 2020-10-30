@@ -30,14 +30,10 @@ export default function TodoList1(data, targetId) {
     }
   }
 
-  this.validData(data)
-
-  this.data = data
-  this.targetId = targetId
-
-  this.setState = (nextData) => {
+  this.setState = (nextData, targetId) => {
     this.validData(nextData)
     this.data = nextData
+    if(targetId) this.targetId = targetId
     this.render()
   }
 
@@ -49,5 +45,5 @@ export default function TodoList1(data, targetId) {
     document.getElementById(this.targetId).insertAdjacentHTML('beforeend', html)
   }
 
-  this.render()
+  this.setState(data, targetId)
 }

@@ -5,11 +5,7 @@ export default class TodoList2 {
    * @param {String} targetId 
    */
   constructor(data, targetId) {
-    this.data = data
-    this.targetId = targetId
-
-    this.validData(data)
-    this.render()
+    this.setState(data, targetId)
   }
 
   validData(todoData) {
@@ -31,9 +27,10 @@ export default class TodoList2 {
     }
   }
 
-  setState(nextData) {
+  setState(nextData, targetId) {
     this.validData(nextData)
     this.data = nextData
+    if(targetId) this.targetId = targetId
     this.render()
   }
 
