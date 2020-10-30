@@ -14,7 +14,13 @@ const checkData = (data) => {
       throw new Error('ReferenceError: item.text is not defined');
     }
     if(typeof item.text !== 'string') {
-      throw new Error('TypeError: item.text  is not string');
+      throw new Error('TypeError: item.text is not string');
+    }
+    if(!item.isCompleted) {
+      throw new Error('ReferenceError: item.isCompleted is not defined');
+    }
+    if(typeof item.isCompleted !== 'boolean') {
+      throw new Error('TypeError: item.isCompleted is not boolean');
     }
   })
 }
