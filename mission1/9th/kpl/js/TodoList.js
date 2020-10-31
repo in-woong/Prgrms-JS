@@ -36,6 +36,8 @@ function validCheck(data, target) {
     throw new Error('올바른 데이터를 넘겨주세요.')
   }
 
+  arrayDataValidCheck(data)
+
   // target이 존재하지 않을 경우
   if (!(target && document.querySelector(`#${target}`))) {
     throw new Error('target이 존재하지 않습니다.')
@@ -43,10 +45,11 @@ function validCheck(data, target) {
 }
 
 function stateValidCheck(data) {
-  arrayDataValidCheck(data)
   if (!Array.isArray(data)) {
     throw new Error('올바른 데이터를 넘겨주세요.')
   }
+
+  arrayDataValidCheck(data)
 }
 
 function arrayDataValidCheck(arr) {
