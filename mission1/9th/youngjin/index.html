@@ -6,6 +6,8 @@
 
   <body>
     <div id="todo-list"></div>
+    <div id="todo-list-week"></div>
+    <div id="todo-list-month"></div>
     <script>
       const data = [
         {
@@ -15,8 +17,24 @@
           text: 'JS 복습하기',
         },
       ]
+      const dataWeek = [
+        {
+          text: 'Mission 1 완료하기',
+        },
+        {
+          text: '추가적으로 보충해보기 ',
+        },
+      ]
+      const dataMonth = [
+        {
+          text: '바닐라 자바스크립트 공부하기',
+        },
+        {
+          text: 'css 공부하기',
+        },
+      ]
 
-      const checkData = (data) => {
+      const checkTodoListData = (data) => {
         if (!data) {
           throw new Error('data 가 존재하지 않습니다. ')
         }
@@ -32,21 +50,33 @@
       }
 
       class TodoList {
-        constructor(data) {
-          checkData(data)
+        constructor({ data, domId }) {
+          checkTodoListData(data)
           this.data = data
+          this.domId = domId
         }
 
-        render() {
-          const todoListDiv = document.querySelector('#todo-list')
+        render(id) {
+          const todoListDiv = document.querySelector(this.domId)
           const dataHtmlString = this.data
             .map((d) => `<div>${d.text}</div>`)
             .join('')
           todoListDiv.innerHTML = dataHtmlString
         }
       }
-      const todoList = new TodoList(data)
+      const todoList = new TodoList({ data, domId: '#todo-list' })
+      const todoListWeek = new TodoList({
+        data: dataWeek,
+        domId: '#todo-list-week',
+      })
+      const todoListMonth = new TodoList({
+        data: dataMonth,
+        domId: '#todo-list-month',
+      })
+
       todoList.render()
+      todoListWeek.render()
+      todoListMonth.render()
     </script>
   </body>
 </html>
