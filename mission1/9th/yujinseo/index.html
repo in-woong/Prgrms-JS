@@ -18,8 +18,11 @@
     ]
 
     function TodoList(data) {
-      if (data === null || !Array.isArray(data)) return
-
+      if (data === null || data === undefined || !Array.isArray(data)) return
+      if (!data[0].hasOwnProperty('text')) return
+      if (!(this instanceof arguments.callee)) {
+        throw new Error('new 키워드를 붙여 생성해주세요.');
+      }
       this.data = data;
       this.render = () => {
         let content = `<ul>
@@ -28,7 +31,6 @@
       }
     }
 
-    //보통 함수를 다 작성 후 인스턴스생성? 아니면 먼저 생성?
     const todo = new TodoList(data);
     todo.render();
 
