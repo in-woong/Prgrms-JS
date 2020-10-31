@@ -16,10 +16,36 @@
         },
       ]
 
+      // var data = [{ text: 123 }]
+
       class TodoList {
         constructor(data) {
+          // data가 안전한지 판단
+          if (!this.checkDataError(data)) {
+            throw new Error('데이터 형식이 잘못되었습니다.')
+          }
           this.data = data
           this.el = document.getElementById('todo-list')
+          this.render()
+        }
+
+        checkDataError(data) {
+          // data가 배열이 아닌 경우
+          if (!Array.isArray(data)) {
+            return false
+          }
+          // 배열이지만, 요소가 객체(배열, null이 아닌)인지 아닌지
+          // 요소가 객체이지만 text라는 프로퍼티가 있는지 없는지
+          // text라는 프로퍼티의 값이 문자열인지 아닌지 검사
+          const isDataSafe = data.every(
+            (item) =>
+              typeof item === 'object' &&
+              !Array.isArray(item) &&
+              item !== null &&
+              item.hasOwnProperty('text') &&
+              typeof item.text === 'string'
+          )
+          return isDataSafe
         }
 
         render() {
@@ -32,7 +58,7 @@
       }
 
       const todoList = new TodoList(data)
-      todoList.render()
+      // todoList.render()
     </script>
   </body>
 </html>
