@@ -12,25 +12,31 @@
       var data01 = [
         {
           text: 'JS 공부하기',
+          isCompleted: true,
         },
         {
           text: 'JS 복습하기',
+          isCompleted: false,
         },
       ]
       var data02 = [
         {
           text: '주말 장보기',
+          isCompleted: false,
         },
         {
           text: '락스로 화장실 대청소',
+          isCompleted: true,
         },
       ]
       var data03 = [
         {
           text: '블로그 작성하기',
+          isCompleted: false,
         },
         {
           text: '업무일지 정리하기',
+          isCompleted: true,
         },
       ]
 
@@ -59,6 +65,7 @@
               !Array.isArray(item) &&
               item !== null &&
               item.hasOwnProperty('text') &&
+              item.hasOwnProperty('isCompleted') &&
               typeof item.text === 'string'
           )
           return isDataSafe
@@ -66,7 +73,10 @@
 
         render() {
           const todoListData = this.data.reduce((todoList, todo) => {
-            return todoList + `<li>${todo.text}</li>`
+            const todoElement = todo.isCompleted
+              ? `<li><s>${todo.text}</s></li>`
+              : `<li>${todo.text}</li>`
+            return todoList + todoElement
           }, '<ul>')
 
           this.el.innerHTML = todoListData + '</ul>'
