@@ -12,28 +12,34 @@
     <script>
         const data1 = [
             {
-                text: 'JS 공부하기'
+                text: 'JS 공부하기',
+                isCompleted: true
             },
             {
-                text: 'JS 복습하기'
+                text: 'JS 복습하기',
+                isCompleted: false
             }
         ];
 
         const data2 = [
             {
-                text: '밀린 강의듣기'
+                text: '밀린 강의듣기',
+                isCompleted: false
             },
             {
-                text: '텀프 제출하기'
+                text: '텀프 제출하기',
+                isCompleted: true
             }
         ];
 
         const data3 = [
             {
-                text: '파이썬 공부하기'
+                text: '파이썬 공부하기',
+                isCompleted: false
             },
             {
-                text: '해커톤 준비하기'
+                text: '해커톤 준비하기',
+                isCompleted: false
             }
         ];
 
@@ -47,7 +53,7 @@
             this.data = data;
             this.id = id;
             this.render = () => {
-                const todoListHtml = this.data.map(todo => `<li>${todo.text}</li>`).join('');
+                const todoListHtml = this.data.map(todo => (todo.isCompleted) ? `<li>${todo.text}</li>` : `<li><s>${todo.text}</s></li>`).join('');
                 document.querySelector(`#${id}`).innerHTML = `<ul>${todoListHtml}</ul>`;
             }
         }
