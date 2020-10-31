@@ -3,23 +3,23 @@ function checkTypeOfData(data, listId){
         throw new Error('data is not array');
     }
 
-    for(let i = 0; i < data.length; i+=1){
-        if(!("text" in data[i])){
-            throw new Error(`<listId : ${listId}> data[${i}] has no text property`);
+    data.forEach((datum,index)=>{
+        if(!("text" in datum)){
+            throw new Error(`<listId : ${listId}> data[${index}] has no text property`);
         }
 
-        if(typeof data[i].text !== "string"){
-            throw new Error(`<listId : ${listId}> data[${i}].text is not string`);
+        if(typeof datum.text !== "string"){
+            throw new Error(`<listId : ${listId}> data[${index}].text is not string`);
         }
 
-        if(!("isCompleted" in data[i])){
-            throw new Error(`<listId : ${listId}> data[${i}] has no isCompleted property`);
+        if(!("isCompleted" in datum)){
+            throw new Error(`<listId : ${listId}> data[${index}] has no isCompleted property`);
         }
 
-        if(typeof data[i].isCompleted !== "boolean"){
-            throw new Error(`<listId : ${listId}> data[${i}].isCompleted is not boolean`);
+        if(typeof datum.isCompleted !== "boolean"){
+            throw new Error(`<listId : ${listId}> data[${index}].isCompleted is not boolean`);
         }
-    }
+    })
 }
 
 class TodoList {
