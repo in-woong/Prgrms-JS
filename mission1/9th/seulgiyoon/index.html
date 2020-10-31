@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list"></div>
+    <script>
+      var data = [
+        {
+          text: 'JS 공부하기',
+        },
+        {
+          text: 'JS 복습하기',
+        },
+      ]
+
+      class TodoList {
+        constructor(data) {
+          this.data = data
+          this.el = document.getElementById('todo-list')
+        }
+
+        render() {
+          const todoListData = this.data.reduce((todoList, todo) => {
+            return todoList + `<li>${todo.text}</li>`
+          }, '<ul>')
+
+          this.el.innerHTML = todoListData + '</ul>'
+        }
+      }
+
+      const todoList = new TodoList(data)
+      todoList.render()
+    </script>
+  </body>
+</html>
