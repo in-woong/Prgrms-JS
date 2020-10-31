@@ -16,8 +16,24 @@
         },
       ]
 
+      const checkData = (data) => {
+        if (!data) {
+          throw new Error('data 가 존재하지 않습니다. ')
+        }
+        if (!Array.isArray(data)) {
+          throw new Error('data 는 array 이어야 합니다. ')
+        }
+        const hasFaultData = data.some(
+          (d) => !d.text || typeof d.text !== 'string'
+        )
+        if (hasFaultData) {
+          throw new Error('data 는 string 타입의 "text" 필드를 가져야 합니다.')
+        }
+      }
+
       class TodoList {
         constructor(data) {
+          checkData(data)
           this.data = data
         }
 
