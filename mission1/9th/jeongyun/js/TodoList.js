@@ -16,7 +16,7 @@ const checkData = (data) => {
     if(typeof item.text !== 'string') {
       throw new Error('TypeError: item.text is not string');
     }
-    if(!item.isCompleted) {
+    if(!item.hasOwnProperty) {
       throw new Error('ReferenceError: item.isCompleted is not defined');
     }
     if(typeof item.isCompleted !== 'boolean') {
@@ -34,13 +34,15 @@ const addToDo = (element, data) => {
   // 데이터 검증
   checkData(data);
   // toDo 항목 생성
-  data.forEach(item => {
-    const child = document.createElement("li");
-    child.innerHTML = item.isCompleted ? `<s>${item.text}</s>` : item.text;
-    element.appendChild(child);
-  })
+  const toDoList = data.map(item => item.isCompleted ? `<li><s>${item.text}</s><li>` : `<li>${item.text}<li>`)
+  element.innerHTML = toDoList.join("");
 }
 
+/**
+ * 
+ * @param {string} id 
+ * @param {Array} data 
+ */
 function TodoList(id, data) {
   // 파라메터로 받은 data this.data에 할당
   this.id = id;

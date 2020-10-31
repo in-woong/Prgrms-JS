@@ -7,6 +7,7 @@ new TodoList("#todo-list3", data3);
 const todoList = new TodoList("#todo-list2", data2);
 
 todoList.setState ([
+    ...data2,
     {
         text: '[mission1] 보너스 구현사항 - setState',
         isCompleted: false
