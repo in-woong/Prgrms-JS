@@ -14,29 +14,35 @@
   <script>
     const data1 = [
       {
-        text: 'JS 공부하기'
+        text: 'JS 공부하기',
+        isCompleted: true
       },
       {
-        text: 'JS 복습하기'
+        text: 'JS 복습하기',
+        isCompleted: true
       }
     ]
 
     const data2 = [
       {
-        text: '다이어리 쓰기'
+        text: '다이어리 쓰기',
+        isCompleted: true
       },
       {
-        text: '책 읽기'
+        text: '책 읽기',
+        isCompleted: false
       }
 
     ]
 
     const data3 = [
       {
-        text: '마라탕 먹기'
+        text: '마라탕 먹기',
+        isCompleted: false
       },
       {
-        text: '치킨 먹기'
+        text: '치킨 치킨',
+        isCompleted: false
       }
     ]
 
@@ -52,10 +58,11 @@
 
       this.render = function () {
         document.querySelector(`#${listName}`).innerHTML = `<ul>` + todo.map(element =>
-          `<li>${element.text}</li>`
+          (element.isCompleted) ? `<li>${element.text}</li>` : `<li><s>${element.text}</s></li>`
         ).join('') + `</ul>`;
       }
     }
+    
     const todoList1 = new TodoList(data1, 'todo-list1');
     todoList1.render();
 
