@@ -6,9 +6,13 @@
 </head>
 
 <body>
-  <div id="todo-list"></div>
+  <h1>To Do List</h1>
+  <div id="todo-list1"></div>
+  <div id="todo-list2"></div>
+  <div id="todo-list3"></div>
+
   <script>
-    const data = [
+    const data1 = [
       {
         text: 'JS 공부하기'
       },
@@ -17,26 +21,51 @@
       }
     ]
 
-    function TodoList(todo){
-        this.todo = todo;
+    const data2 = [
+      {
+        text: '다이어리 쓰기'
+      },
+      {
+        text: '책 읽기'
+      }
 
-        if (!new.target) {
-            throw new Error('new 키워드를 사용해주세요!');
-        }
+    ]
 
-        if(todo === null || todo === undefined) throw new Error("error message");
-        if(!Array.isArray(todo)) throw new Error("error message");
+    const data3 = [
+      {
+        text: '마라탕 먹기'
+      },
+      {
+        text: '치킨 먹기'
+      }
+    ]
 
-        this.render = function() {
-            document.querySelector("#todo-list").innerHTML = `<ul>` + data.map(element =>
-                `<li>${element.text}</li>`
-            ).join('') + `</ul>`;
-        }
+    function TodoList(todo, listName) {
+      this.todo = todo;
+
+      if (!new.target) {
+        throw new Error('error message');
+      }
+
+      if (todo === null || todo === undefined) throw new Error("error message");
+      if (!Array.isArray(todo)) throw new Error("error message");
+
+      this.render = function () {
+        document.querySelector(`#${listName}`).innerHTML = `<ul>` + todo.map(element =>
+          `<li>${element.text}</li>`
+        ).join('') + `</ul>`;
+      }
     }
+    const todoList1 = new TodoList(data1, 'todo-list1');
+    todoList1.render();
 
-    const todoList = new TodoList(data);
-    todoList.render();
+    const todoList2 = new TodoList(data2, 'todo-list2');
+    todoList2.render();
+
+    const todoList3 = new TodoList(data3, 'todo-list3');
+    todoList3.render();
 
   </script>
 </body>
+
 </html>
