@@ -7,17 +7,37 @@
 
 <body>
   <div id="todo-list"></div>
+  <div id="todo-list-2"></div>
+  <div id="todo-list-3"></div>
   <script>
-    const data = [
+    const todos = [
       {
         text: 'JS 공부하기'
       },
       {
         text: 'JS 복습하기'
       }
+    ];
+
+    const todos2 = [
+      {
+        text: '운동하기'
+      },
+      {
+        text: '과제하기'
+      }
+    ];
+
+    const todos3 = [
+      {
+        text: '유튜브시청'
+      },
+      {
+        text: '분리수거하기'
+      }
     ]
 
-    function TodoList(data) {
+    function TodoList(el, data) {
       if (data === null || data === undefined || !Array.isArray(data)) return
       if (!data[0].hasOwnProperty('text')) return
       if (!(this instanceof arguments.callee)) {
@@ -27,12 +47,14 @@
       this.render = () => {
         let content = `<ul>
           ${this.data.map((item) => `<div>${item.text}</div>`).join('')}</ul>`;
-        document.querySelector('#todo-list').innerHTML = content;
+        document.querySelector(`${el}`).innerHTML = content;
       }
+      this.render();
     }
 
-    const todo = new TodoList(data);
-    todo.render();
+    new TodoList('#todo-list', todos);
+    new TodoList('#todo-list-2', todos2);
+    new TodoList('#todo-list-3', todos3);
 
   </script>
 </body>
