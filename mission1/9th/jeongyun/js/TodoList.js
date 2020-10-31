@@ -35,7 +35,6 @@ function TodoList(id, data) {
   // 파라메터로 받은 data this.data에 할당
   this.id = id;
   this.toDos = data;
-  this.element = document.createElement('ul');
 
   // new 키워드 안 붙이고 함수 실행 시 에러 처리
   if (!new.target) {
@@ -58,9 +57,8 @@ function TodoList(id, data) {
     // 데이터 검증
     checkData(this.toDos);
     // toDo 항목 생성
-    element.innerHTML = data.map(item => 
-      item.isCompleted ? `<li><s>${item.text}</s><li>` : `<li>${item.text}<li>`).join('');
-    document.querySelector(this.id).appendChild(this.element);
+    document.querySelector(this.id).innerHTML = `<ul>${this.toDos.map(item => 
+      item.isCompleted ? `<li><s>${item.text}</s><li>` : `<li>${item.text}<li>`).join('')}</ul>`
   }
 
   this.render();
