@@ -5,76 +5,7 @@
   <meta charset="utf-8" />
 </head>
 
-<body>
-  <div id="todo-list"></div>
-  <div id="todo-list2"></div>
-  <div id="todo-list3"></div>
-  <script>
-    const data = [
-      {
-        text: 'JS 공부하기',
-        isCompleted: true
-      },
-      {
-        text: 'JS 복습하기',
-        isCompleted: false
-      }
-    ]
-    const data2 = [
-        {
-            text: "사이버펑크 기다리기",
-            isCompleted: true
-        },
-        {
-            text: "프론트엔드 취업하기",
-            isCompleted: false
-        }
-    ];    
-    const data3 = [
-        {
-            text: "운동하기",
-            isCompleted: true
-        },
-        {
-            text: "자격증공부하기",
-            isCompleted: true
-        }
-    ];
-    // 이곳에서 코딩을 시작하세요!
-    class TodoList{
-        constructor(data,id){
-            console.log(Array.isArray(data));
-            if(data === null || data === undefined || Array.isArray(data) === false || data.length === 0){
-                throw new Error("error message");
-            }
-            this.data = data;
-            this.id = id;
-        }
-        render(){
-            const todoList = document.getElementById(this.id);
-            const mData = this.data;
-            todoList.innerHTML = "";
-
-            mData.forEach( (data) => {
-                if(data.isCompleted){
-                    todoList.innerHTML += `<s>${data.text}</s><br/>`;
-                }
-                else{
-                    todoList.innerHTML += `${data.text}<br/>`;
-                }
-            })
-        }
-        setState(nextData){
-            this.data = nextData;
-            this.render();
-        }
-    }
-    let todoList= new TodoList(data,"todo-list");
-    let todoList2= new TodoList(data2,"todo-list2");
-    let todoList3= new TodoList(data3,"todo-list3");
-    todoList.render();
-    todoList2.render();
-    todoList3.render();
-  </script>
+<body id="App">
+    <script src=App.js></script>
 </body>
 </html>
