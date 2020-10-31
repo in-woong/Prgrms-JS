@@ -57,6 +57,11 @@
         document.querySelector(`${el}`).innerHTML = content;
       }
       this.render();
+
+      this.setState = (nextData) => {
+        this.data = nextData;
+        this.render();
+      }
     }
 
     new TodoList('#todo-list', todos);
