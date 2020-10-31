@@ -1,5 +1,5 @@
-import TodoList from './TodoList.js'
-import * as Data from './data.js'
+import TodoList from './src/TodoList.js'
+import * as Data from './src/data.js'
 
 const todoList = new TodoList({ data: Data.data, domId: '#todo-list' })
 const todoListWeek = new TodoList({
