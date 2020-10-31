@@ -32,7 +32,6 @@
         text: '책 읽기',
         isCompleted: false
       }
-
     ]
 
     const data3 = [
@@ -41,20 +40,21 @@
         isCompleted: false
       },
       {
-        text: '치킨 치킨',
-        isCompleted: false
+        text: '치킨 먹기',
+        isCompleted: true
       }
     ]
 
     function TodoList(todo, listName) {
       this.todo = todo;
 
-      if (!new.target) {
-        throw new Error('error message');
+      if (!new.target) throw new Error('new 키워드를 붙이지 않았습니다.');
+      if (todo === null || todo === undefined) throw new Error("data가 null이거나 undefined입니다.");
+      if (!Array.isArray(todo)) throw new Error("data가 array형식이 아닙니다.");
+      
+      for(var i=0;i<todo.length;i++){
+        if(!todo[i].hasOwnProperty('text') || !todo[i].hasOwnProperty('isCompleted')) throw new Error('data의 key가 유효하지 않습니다.');
       }
-
-      if (todo === null || todo === undefined) throw new Error("error message");
-      if (!Array.isArray(todo)) throw new Error("error message");
 
       this.render = function () {
         document.querySelector(`#${listName}`).innerHTML = `<ul>` + todo.map(element =>
