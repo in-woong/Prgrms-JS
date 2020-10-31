@@ -56,6 +56,12 @@
                 const todoListHtml = this.data.map(todo => (todo.isCompleted) ? `<li>${todo.text}</li>` : `<li><s>${todo.text}</s></li>`).join('');
                 document.querySelector(`#${id}`).innerHTML = `<ul>${todoListHtml}</ul>`;
             }
+            this.render();
+
+            this.setState = (nextData) => {
+                this.data = nextData;
+                this.render();
+            }
         }
 
         function checkDataValidation(data) {
@@ -75,13 +81,10 @@
             }
         }
 
-        const todoList = new TodoList(data1, "todo-list");
-        const todoList2 = new TodoList(data2, "todo-day");
-        const todoList3 = new TodoList(data3, "todo-week");
+        new TodoList(data1, "todo-list");
+        new TodoList(data2, "todo-day");
+        new TodoList(data3, "todo-week");
 
-        todoList.render();
-        todoList2.render();
-        todoList3.render();
     </script>
 </body>
 
