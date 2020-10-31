@@ -25,18 +25,6 @@ const checkData = (data) => {
   })
 }
 
-/**
- * update TodoList to data
- * @param {HTMLUListElement} element 
- * @param {Array} data 
- */
-const addToDo = (element, data) => {
-  // 데이터 검증
-  checkData(data);
-  // toDo 항목 생성
-  const toDoList = data.map(item => item.isCompleted ? `<li><s>${item.text}</s><li>` : `<li>${item.text}<li>`)
-  element.innerHTML = toDoList.join('');
-}
 
 /**
  * 
@@ -59,16 +47,19 @@ function TodoList(id, data) {
   * @param {Array} nextData 
   */
   this.setState = (nextData) => {
-    addToDo(this.element, nextData);
-    document.querySelector(this.id).appendChild(this.element);
+    this.toDos = nextData;
+    this.render();
   }
 
  /**
   * create TodoList 
-  * @param {Array} data 
   */
   this.render = () => {
-    addToDo(this.element, this.toDos);
+    // 데이터 검증
+    checkData(this.toDos);
+    // toDo 항목 생성
+    element.innerHTML = data.map(item => 
+      item.isCompleted ? `<li><s>${item.text}</s><li>` : `<li>${item.text}<li>`).join('');
     document.querySelector(this.id).appendChild(this.element);
   }
 
