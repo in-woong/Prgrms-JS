@@ -43,9 +43,24 @@ function validCheck(data, target) {
 }
 
 function stateValidCheck(data) {
+  arrayDataValidCheck(data)
   if (!Array.isArray(data)) {
     throw new Error('올바른 데이터를 넘겨주세요.')
   }
+}
+
+function arrayDataValidCheck(arr) {
+  arr.forEach((element, index) => {
+    if (typeof element.text !== 'string') {
+      throw new Error(`${index} 번째 요소의 text 속성은 string 이어야 합니다.`)
+    }
+
+    if (typeof element.isCompleted !== 'boolean') {
+      throw new Error(
+        `${index} 번째 요소의 isComplete 속성은 boolean 이어야 합니다.`
+      )
+    }
+  })
 }
 
 export default TodoList
