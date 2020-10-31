@@ -37,10 +37,7 @@ class TodoList {
     }
 
     render(){
-        this.$list.innerHTML = this.data.reduce((acc,datum)=>{
-            let htmlString = datum.isCompleted ? `<s>${datum.text}</s>` : datum.text;
-            return acc + `<div>${htmlString}</div>`;
-        },'');
+        this.$list.innerHTML = this.data.reduce((acc,datum)=>(acc + `<div>${datum.isCompleted ? `<s>${datum.text}</s>` : datum.text}</div>`),'');
     }
 
     setState(nextData){
