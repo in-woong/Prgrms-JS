@@ -5,9 +5,11 @@
   </head>
 
   <body>
-    <div id="todo-list"></div>
+    <div id="todo-list-01"></div>
+    <div id="todo-list-02"></div>
+    <div id="todo-list-03"></div>
     <script>
-      var data = [
+      var data01 = [
         {
           text: 'JS 공부하기',
         },
@@ -15,17 +17,31 @@
           text: 'JS 복습하기',
         },
       ]
-
-      // var data = [{ text: 123 }]
+      var data02 = [
+        {
+          text: '주말 장보기',
+        },
+        {
+          text: '락스로 화장실 대청소',
+        },
+      ]
+      var data03 = [
+        {
+          text: '블로그 작성하기',
+        },
+        {
+          text: '업무일지 정리하기',
+        },
+      ]
 
       class TodoList {
-        constructor(data) {
+        constructor(data, el) {
           // data가 안전한지 판단
           if (!this.checkDataError(data)) {
             throw new Error('데이터 형식이 잘못되었습니다.')
           }
           this.data = data
-          this.el = document.getElementById('todo-list')
+          this.el = document.getElementById(el)
           this.render()
         }
 
@@ -57,8 +73,9 @@
         }
       }
 
-      const todoList = new TodoList(data)
-      // todoList.render()
+      const todoList01 = new TodoList(data01, 'todo-list-01')
+      const todoList02 = new TodoList(data02, 'todo-list-02')
+      const todoList03 = new TodoList(data03, 'todo-list-03')
     </script>
   </body>
 </html>
