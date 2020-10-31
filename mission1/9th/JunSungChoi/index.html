@@ -7,8 +7,10 @@
 
 <body>
   <div id="todo-list"></div>
+  <div id="todo-list2"></div>
   <script src="TodoList.js"></script>
   <script>
+
     var data = [
       {
         text: 'JS 공부하기'
@@ -18,8 +20,9 @@
       }
     ]
 
-    var todoList = new TodoList(data);
-    todoList.render()
+    var todoList = new TodoList(data)
+    window.data = data
+    
   </script>
 </body>
 </html>
