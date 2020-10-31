@@ -72,15 +72,15 @@ class TodoList{
     }
     render(){
         const todoList = document.getElementById(this.id);
-        todoList.innerHTML = "";
-        this.data.forEach( item => {
+        const text = this.data.map( item => {
             if(item.isCompleted){
-                todoList.innerHTML += `<s>${item.text}</s><br/>`;
+                return `<s>${item.text}</s><br/>`;
             }
             else{
-                todoList.innerHTML += `${item.text}<br/>`;
+                return `${item.text}<br/>`;
             }
-        })
+        }).join("");
+        todoList.innerHTML = text;
     }
     setState(nextData){
         this.data = nextData;
