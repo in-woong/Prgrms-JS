@@ -1,4 +1,4 @@
-export const data = [
+const data = [
     {
       text: 'JS 공부하기',
       isCompleted:true
@@ -9,7 +9,7 @@ export const data = [
     }
   ];
 
-export const data2 = [
+const data2 = [
     {
       text: 'React 공부하기',
       isCompleted:true
@@ -20,7 +20,7 @@ export const data2 = [
     }
   ];
 
-export  const data3 = [
+const data3 = [
     {
       text: 'CS 공부하기',
       isCompleted:false
@@ -30,4 +30,5 @@ export  const data3 = [
       isCompleted:false
     }
   ];
-  
+
+  export default [{data, listId : 'todo-list'},{data:data2,listId:'todo-list2'},{data:data3,listId:'todo-list3'}];
