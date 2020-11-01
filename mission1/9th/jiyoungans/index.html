@@ -15,20 +15,25 @@
                 text: 'JS 복습하기'
             }
         ];
+        const selector = "todo-list";
 
-        function TodoList(doList) {
-          this.doList = doList;
+        function TodoList(data, selector) {
+          this.data = data;
           this.template = "";
           this.render = function() {
-            this.doList.forEach(item => {
-              this.template += `<div>${item.text}</div>`;
-            });
-            document.querySelector("#todo-list").innerHTML = this.template;
+            this.template = this.data.map((item) => {
+              return `<div>${item.text}</div>`
+            }).join("");
+            // this.template = this.data.reduce((acc, cur) => {
+            //   return acc.concat(`<div>${cur.text}</div>`)
+            // }, "");
+            document.querySelector(`#${selector}`).innerHTML = this.template;
           }
+
+          this.render();
         }
 
-        let todoList = new TodoList(data);
-        todoList.render();
+        new TodoList(data, selector);
     </script>
 </body>
 </html>
