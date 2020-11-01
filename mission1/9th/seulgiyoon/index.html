@@ -52,57 +52,63 @@
 
       class TodoList {
         constructor(targetEl, data, dataTypeInfo) {
-          // data가 안전한지 판단
-          this.throwError(data, dataTypeInfo)
-          this.errorMessage = ''
-          this.el = document.getElementById(targetEl)
           this.data = data
+          this.dataTypeInfo = dataTypeInfo
+          this.errorMessage = ''
+          this.checkDataValid()
+          this.el = document.getElementById(targetEl)
           this.render()
         }
 
-        // 프로퍼티가 없거나 값의 타입이 다르면 에러
-        checkValueType(targetObject, dataInfo) {
-          const isCorrectType = dataInfo.every((data) => {
-            if (data.key in targetObject) {
-              this.errorMessage = `데이터 요소 속 ${data.key}의 타입이 ${data.type}와(과) 다릅니다.`
-              return typeof targetObject[data.key] === data.type
-            }
-            this.errorMessage = `데이터 요소에 ${data.key}이(가) 없습니다.`
-            return false
+        throwError() {
+          throw new Error(this.errorMessage)
+        }
+
+        // 요소에 프로퍼티가 없거나 값의 타입이 다르면 에러
+        checkValueType() {
+          this.data.forEach((targetObj) => {
+            this.dataTypeInfo.forEach((info) => {
+              if (
+                info.key in targetObj &&
+                typeof targetObj[info.key] !== info.type
+              ) {
+                this.errorMessage = `데이터 요소 속 ${info.key}의 타입이 ${info.type}와(과) 다릅니다.`
+                this.throwError()
+              } else if (!(info.key in targetObj)) {
+                this.errorMessage = `데이터 요소에 ${info.key}이(가) 없습니다.`
+                this.throwError()
+              }
+            })
           })
-          return isCorrectType
         }
 
         // 데이터는 배열이지만, 요소가 객체(배열, null이 아닌)가 아니면 에러
-        checkDataType(data, dataInfo) {
-          if (
-            data === null ||
-            typeof data !== 'object' ||
-            Array.isArray(data)
-          ) {
-            this.errorMessage = '데이터 요소가 객체가 아닙니다.'
-            return false
-          }
-          return this.checkValueType(data, dataInfo)
+        checkDataType() {
+          this.data.forEach((item) => {
+            if (
+              item === null ||
+              typeof item !== 'object' ||
+              Array.isArray(item)
+            ) {
+              this.errorMessage = '데이터 요소가 객체가 아닙니다.'
+              this.throwError()
+            }
+          })
+          return this
         }
 
-        checkDataError(data, dataTypeInfo) {
-          // data가 배열이 아니면 에러
-          if (!Array.isArray(data)) {
+        // data가 배열이 아니면 에러
+        checkDataIsArray() {
+          if (!Array.isArray(this.data)) {
             this.errorMessage = '데이터가 배열이 아닙니다.'
-            return false
+            this.throwError()
           }
-
-          const isDataSafe = data.every((item) =>
-            this.checkDataType(item, dataTypeInfo)
-          )
-          return isDataSafe
+          return this
         }
 
-        throwError(data) {
-          if (!this.checkDataError(data, dataTypeInfo)) {
-            throw new Error(this.errorMessage)
-          }
+        // 데이터가 안전한지 판단
+        checkDataValid() {
+          this.checkDataIsArray().checkDataType().checkValueType()
         }
 
         render() {
@@ -118,8 +124,8 @@
         }
 
         setState(nextData) {
-          this.throwError(nextData)
           this.data = nextData
+          this.checkDataValid()
           this.render()
         }
       }
