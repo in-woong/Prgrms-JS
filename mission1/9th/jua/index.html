@@ -12,26 +12,32 @@
   <script>
     const data = [
       {
-        text: 'JS 공부하기'
+        text: 'JS 공부하기',
+        isCompleted: false
       },
       {
-        text: 'JS 복습하기'
+        text: 'JS 복습하기',
+        isCompleted: false
       }
     ]
     const inProgressive = [
       {
-        text: '코딩테스트 공부하기'
+        text: '코딩테스트 공부하기',
+        isCompleted: false
       },
       {
-        text: '자바스크립트 공부하기'
+        text: '자바스크립트 공부하기',
+        isCompleted: false
       }
     ]
     const done = [
       {
-        text: '인턴 지원하기'
+        text: '인턴 지원하기',
+        isCompleted: true
       },
       {
-        text: '자바스크립트 스터디 신청하기'
+        text: '자바스크립트 스터디 신청하기',
+        isCompleted: true
       }
     ]
 
@@ -57,7 +63,9 @@
 
       this.data = data;
       this.render = function() {
-        const htmlString = this.data.map(data => `<div>${data.text}</div>`).join("\n");
+        const htmlString = this.data.map(data =>
+          data.isCompleted ? `<div><s>${data.text}</s></div>` : `<div>${data.text}</div>`
+        ).join("\n");
         document.querySelector("#" + listID).innerHTML = htmlString;
       }
     }
