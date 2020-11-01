@@ -11,8 +11,8 @@ const todo_data = [
 ]
 const song_data = [
     {
-        text: 'bluemoon-창모&효린',
-        isCompleted: true
+        text: 'Bluemoon - 창모&효린',
+        isCompleted: null
     },
     {
         text: 'Creep - Radiohead',
@@ -31,11 +31,12 @@ const hobby_data = [
 ]
 
 //error data
-const error = {
-    INVALID_DATA: "유효하지 않은 데이터입니다.",
+const ERROR_MESSAGES = {
+    NOT_INCLUDE_DATA: "유효하지 않은 데이터입니다.",
+    INVALIDS_ISCOMPLETED_DATATYPE : "isComplted 값이 올바르지 않습니다.",
     NOT_ARRAY_DATA: "데이터 타입이 ARRAY가 아닙니다.",
     NOT_NEW: "인스턴스가 아닙니다. new 키워드를 사용해 생성자를 만들어주세요.",
-    NOT_POSSIBLE_DATA: "해당 값이 null이거나 undefined입니다. 유효한 값을 입력해 주세요."
+    INVALID_TEXT_DATATYPE: "text 값이 null이거나 undefined입니다. 유효한 값을 입력해 주세요."
 }
 
 // 이곳에서 코딩을 시작하세요!
@@ -43,12 +44,13 @@ const error = {
 //error check
 const dataValidCheck = (data) => {
     //배열여부 검사
-    if (Array.isArray(data) === false) throw new Error(error.NOT_ARRAY_DATA)
+    if (!Array.isArray(data)) throw new Error(ERROR_MESSAGES.NOT_ARRAY_DATA)
     //text 데이터를 가지고 있는지 여부 검사
     data.forEach(data => {
         // console.log(data)
-        if (!data.hasOwnProperty('text')) throw new Error(error.INVALID_DATA)
-        if (data.text === (null || undefined)) throw new Error(error.NOT_POSSIBLE_DATA)
+        if (!data.hasOwnProperty('text')) throw new Error(ERROR_MESSAGES.NOT_INCLUDE_DATA)
+        if (data.isCompleted !==true && data.isCompleted !==false) throw new Error(ERROR_MESSAGES.INVALIDS_ISCOMPLETED_DATATYPE)
+        if (data.text === null ||data.text=== undefined) throw new Error(ERROR_MESSAGES.INVALID_TEXT_DATATYPE)
     })
 }
 
@@ -71,6 +73,6 @@ function TodoList(data, selector) {
     }
 }
 const todoList = new TodoList(todo_data,"#todo-list");
-setTimeout(() => { todoList.setState(todo_data,'#todo-list') }, 0)
-setTimeout(() => { todoList.setState(song_data,'#song-list') }, 3000)
-setTimeout(() => { todoList.setState(hobby_data,'#hobby-list') }, 6000)
+setTimeout(() => { todoList.setState(todo_data) }, 0)
+setTimeout(() => { todoList.setState(song_data) }, 3000)
+setTimeout(() => { todoList.setState(hobby_data) }, 6000)
