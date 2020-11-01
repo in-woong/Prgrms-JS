@@ -106,14 +106,15 @@
         }
 
         render() {
-          const todoListData = this.data.reduce((todoList, todo) => {
-            const todoElement = todo.isCompleted
-              ? `<li><s>${todo.text}</s></li>`
-              : `<li>${todo.text}</li>`
-            return todoList + todoElement
-          }, '<ul>')
-
-          this.el.innerHTML = todoListData + '</ul>'
+          const dataListString = this.data
+            .map(
+              (item) =>
+                `<li>${
+                  item.isCompleted ? `<s>${item.text}</s>` : item.text
+                }</li>`
+            )
+            .join('')
+          this.el.innerHTML = `<ul>${dataListString}</ul>`
         }
 
         setState(nextData) {
