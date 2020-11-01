@@ -8,7 +8,6 @@
 <body>
   <div id="todo-list"></div>
   <script>
-
     const data = [
       {
         text: 'JS 공부하기'
@@ -17,8 +16,24 @@
         text: 'JS 복습하기'
       }
     ]
+
     // 이곳에서 코딩을 시작하세요!
     function Todo(data) {
+      if (typeof(data) === "undefined" || data === null) {
+        throw new Error("Data is empty")
+      }
+      if (!Array.isArray(data)) {
+        throw new Error("Data is not Array")
+      }
+      if (!(this instanceof Todo)) {
+        throw new Error("Keyword new is be omitted")
+      }
+      // 데이터 내용이 이상한 경우
+      const invalidArray = data.filter(data => typeof(data.text) !== "string")
+      if (invalidArray.length > 0) {
+        throw new Error("Invalid data is included")
+      }
+
       this.data = data;
       this.render = function() {
         const htmlString = this.data.map(data => `<div>${data.text}</div>`).join("\n");
@@ -27,7 +42,7 @@
     }
 
     const todoList = new Todo(data);
-    todoList.render()
+    todoList.render();
 
   </script>
 </body>
