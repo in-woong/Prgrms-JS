@@ -7,6 +7,8 @@
 
 <body>
   <div id="todo-list"></div>
+  <div id="in-progressive-list"></div>
+  <div id="done-list"></div>
   <script>
     const data = [
       {
@@ -16,9 +18,24 @@
         text: 'JS 복습하기'
       }
     ]
+    const inProgressive = [
+      {
+        text: '코딩테스트 공부하기'
+      },
+      {
+        text: '자바스크립트 공부하기'
+      }
+    ]
+    const done = [
+      {
+        text: '인턴 지원하기'
+      },
+      {
+        text: '자바스크립트 스터디 신청하기'
+      }
+    ]
 
-    // 이곳에서 코딩을 시작하세요!
-    function Todo(data) {
+    function Todo(data, listID) {
       if (typeof(data) === "undefined" || data === null) {
         throw new Error("Data is empty")
       }
@@ -33,16 +50,26 @@
       if (invalidArray.length > 0) {
         throw new Error("Invalid data is included")
       }
+      // id가 잘못된 경우
+      if (!document.querySelector(`#${listID}`)) {
+        throw new Error("Id is not valid")
+      }
 
       this.data = data;
       this.render = function() {
         const htmlString = this.data.map(data => `<div>${data.text}</div>`).join("\n");
-        document.querySelector('#todo-list').innerHTML = htmlString;
+        document.querySelector("#" + listID).innerHTML = htmlString;
       }
     }
 
-    const todoList = new Todo(data);
+    const todoList = new Todo(data, "todo-list");
     todoList.render();
+
+    const inProgressiveList = new Todo(inProgressive, "in-progressive-list")
+    inProgressiveList.render();
+
+    const doneList = new Todo(done, "done-list")
+    doneList.render();
 
   </script>
 </body>
