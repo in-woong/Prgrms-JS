@@ -1,11 +1,11 @@
-function isEmpty (data) {
+const isEmpty = (data) => {
   if (data === null || data === undefined) {
       return true
     }
   return false
 }
 
-function propertyChecker (data) {
+const propertyChecker = (data) => {
   let isValid = true
 
   data.forEach(item => {
@@ -16,7 +16,7 @@ function propertyChecker (data) {
   return isValid
 }
 
-function TodoList (data) {
+function TodoList (id, data) {
   if (isEmpty(data) || !Array.isArray(data) || !propertyChecker(data)) {
     throw new Error ('잘못된 데이터 입니다.')
   }
@@ -27,9 +27,19 @@ function TodoList (data) {
   }
 
   this.data = data
-  this.render = function () {
-    document.querySelector('#todo-list').innerHTML = data.map(item => `<p>${item.text}</p>`).join('')
+  this.id = id
+
+  const renderItem = () => this.data.map(item => item.isCompleted ? `<s>${item.text}</s>` : item.text).join('</br>')
+
+  this.render = () => {
+    document.querySelector(this.id).innerHTML = renderItem()
   }
+
+  this.setState = (nextData) => {
+    this.data = nextData
+    this.render()
+  }
+  
 
   this.render()
 }
