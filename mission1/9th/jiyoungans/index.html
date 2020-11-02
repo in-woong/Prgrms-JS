@@ -6,6 +6,9 @@
 
 <body>
     <div id="todo-list"></div>
+    <div id="todo-list-2" style="border-top: 1px solid #858585;"></div>
+    <div id="todo-list-3" style="border-top: 1px solid #858585;"></div>
+
     <script>
         const ERR_CODE = new Map([
             ["NVL", "todo 값이 null입니다."],
@@ -20,6 +23,22 @@
             {
                 text: 'JS 복습하기'
             }
+        ];
+        const data2 = [
+          {
+            text: '늦잠자지 않기'
+          },
+          {
+            text: '운동하기'
+          }
+        ];
+        const data3 = [
+          {
+            text: '아침챙겨먹기'
+          },
+          {
+            text: '지갑챙겨가기'
+          }
         ];
         const selector = "todo-list";
 
@@ -55,6 +74,8 @@
         }
 
         new TodoList(data, selector);
+        new TodoList(data2, selector.concat("-2"));
+        new TodoList(data3, selector.concat("-3"));
     </script>
 </body>
 </html>
