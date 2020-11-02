@@ -7,6 +7,12 @@
 <body>
     <div id="todo-list"></div>
     <script>
+        const ERR_CODE = new Map([
+            ["NVL", "todo 값이 null입니다."],
+            ["UND", "todo 값이 undefined입니다."],
+            ["NO_ARR", "todo 값이 array 형태가 아닙니다."],
+            ["NO_NEW", "TodoList가 new 키워드로 선언되지 않았습니다."]
+        ]);
         const data = [
             {
                 text: 'JS 공부하기'
@@ -18,19 +24,34 @@
         const selector = "todo-list";
 
         function TodoList(data, selector) {
+          if(!new.target) {
+            throw new Error(ERR_CODE.get("NO_NEW"));
+          }
+
+          validateData(data);
+
           this.data = data;
           this.template = "";
           this.render = function() {
             this.template = this.data.map((item) => {
               return `<div>${item.text}</div>`
             }).join("");
-            // this.template = this.data.reduce((acc, cur) => {
-            //   return acc.concat(`<div>${cur.text}</div>`)
-            // }, "");
             document.querySelector(`#${selector}`).innerHTML = this.template;
           }
 
           this.render();
+        }
+
+        function validateData(param) {
+          if(param == null) {
+            throw new Error(ERR_CODE.get("NVL"));
+          } else if(typeof param === "undefined") {
+            throw new Error(ERR_CODE.get("UND"));
+          } else if(!(param instanceof Array)) {
+            throw new Error(ERR_CODE.get("NO_ARR"));
+          }
+
+          return true;
         }
 
         new TodoList(data, selector);
