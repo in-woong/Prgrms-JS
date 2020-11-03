@@ -35,10 +35,10 @@ export default class TodoList2 {
   }
 
   render() {
-    const html = `<ul>${this.data.map(todo => 
+    const htmlString = `<ul>${this.data.map(todo => 
       (todo.isCompleted) ? `<li>${todo.text}</li>` : `<li><s>${todo.text}</s></li>`
     ).join('')}</ul>`
 
-    document.getElementById(this.targetId).insertAdjacentHTML('beforeend', html)
+    document.getElementById(this.targetId).innerHTML = htmlString
   }
 }

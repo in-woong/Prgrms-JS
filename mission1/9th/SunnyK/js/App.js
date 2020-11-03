@@ -8,10 +8,11 @@ new TodoList1(data3, 'todo-list3')
 
 setTimeout(() => todoList1.setState(nextData), 1000)
 
+setTimeout(() => {
+  new TodoList2(data1, 'todo-list1')
+  new TodoList2(data2, 'todo-list2')
+  const todoList2 = new TodoList2(data3, 'todo-list3')
 
-new TodoList2(data1, 'todo-list1')
-new TodoList2(data2, 'todo-list2')
-const todoList2 = new TodoList2(data3, 'todo-list3')
-
-setTimeout(() => todoList2.setState(nextData), 1000)
+  setTimeout(() => todoList2.setState(nextData), 1000)
+}, 2000)
 

@@ -38,11 +38,11 @@ export default function TodoList1(data, targetId) {
   }
 
   this.render = () => {
-    const html = this.data.map( todo => 
+    const htmlString = this.data.map( todo => 
       (todo.isCompleted) ? `<div>${todo.text}</div>` : `<s><div>${todo.text}</div></s>`
     ).join('')
 
-    document.getElementById(this.targetId).insertAdjacentHTML('beforeend', html)
+    document.getElementById(this.targetId).innerHTML = htmlString
   }
 
   this.setState(data, targetId)
