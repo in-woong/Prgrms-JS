@@ -62,7 +62,7 @@
           if (!Array.isArray(data)) throw Error('데이터가 배열이 아닙니다.')
 
           data.forEach((item) => {
-            if (Object.prototype.toString.call(item) === '[object Object]')
+            if (Object.prototype.toString.call(item) !== '[object Object]')
               throw Error('데이터 요소가 객체가 아닙니다.')
             if (!item.hasOwnProperty('text'))
               throw Error('text값이 없습니다.')
