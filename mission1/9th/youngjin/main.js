@@ -1,13 +1,13 @@
 import TodoList from './src/TodoList.js'
-import * as Data from './src/data.js'
+import * as data from './src/data.js'
 
-const todoList = new TodoList({ data: Data.data, domId: '#todo-list' })
+const todoList = new TodoList({ data: data.dataDefault, domId: '#todo-list' })
 const todoListWeek = new TodoList({
-  data: Data.dataWeek,
+  data: data.dataWeek,
   domId: '#todo-list-week',
 })
 const todoListMonth = new TodoList({
-  data: Data.dataMonth,
+  data: data.dataMonth,
   domId: '#todo-list-month',
 })
 
@@ -15,4 +15,4 @@ todoList.render()
 todoListWeek.render()
 todoListMonth.render()
 
-todoList.setState(Data.newData)
+todoList.setState(data.newData)

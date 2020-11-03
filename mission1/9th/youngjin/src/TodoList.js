@@ -8,11 +8,11 @@ export default class TodoList {
   render() {
     const todoListDiv = document.querySelector(this.domId)
     const dataHtmlString = this.data
-      .map((d) => {
-        let className = 'todo'
-        if (d.isCompleted) {
-          className += ' completed-todo'
-        }
+      .map((dataElement) => {
+        const className = dataElement.isCompleted
+          ? 'todo'
+          : 'todo completed-todo'
+
         return `<div class="${className}" >${d.text}</div>`
       })
       .join('')
@@ -33,10 +33,9 @@ const checkTodoListData = (data) => {
     throw new Error('data 는 array 이어야 합니다. ')
   }
   const hasFaultData = data.some(
-    (d) =>
-      !d.text ||
-      typeof d.text !== 'string' ||
-      typeof d.isCompleted !== 'boolean'
+    (dataElement) =>
+      typeof dataElement.text !== 'string' ||
+      typeof dataElement.isCompleted !== 'boolean'
   )
   if (hasFaultData) {
     throw new Error(

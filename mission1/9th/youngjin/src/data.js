@@ -1,4 +1,4 @@
-export const data = [
+export const dataDefault = [
   {
     text: 'JS 공부하기',
     isCompleted: true,
