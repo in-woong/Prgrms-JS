@@ -52,7 +52,7 @@
     ]
 
     function Todo(data, id) {
-      this.isValidInitialization = function(id) {
+      this.checkInitialization = function(id) {
         if (!(this instanceof Todo)) {
           throw new Error("'this' is not instance of Todo");
         }
@@ -62,7 +62,7 @@
         }
       }
 
-      this.isValidData = function(data) {
+      this.checkTodoListData = function(data) {
         if (!Array.isArray(data)) {
           throw new Error("Data is not Array");
         }
@@ -74,8 +74,8 @@
         }
       }
 
-      this.isValidInitialization(id);
-      this.isValidData(data);
+      this.checkInitialization(id);
+      this.checkTodoListData(data);
       this.data = data;
       this.id = id;
 
@@ -87,7 +87,7 @@
       }
 
       this.setState = function(data) {
-        this.isValidData(data);
+        this.checkTodoListData(data);
         this.data = data;
         this.render();
       }
