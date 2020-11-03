@@ -13,7 +13,7 @@ export default class TodoList {
           ? 'todo'
           : 'todo completed-todo'
 
-        return `<div class="${className}" >${d.text}</div>`
+        return `<div class="${className}" >${dataElement.text}</div>`
       })
       .join('')
     todoListDiv.innerHTML = dataHtmlString
