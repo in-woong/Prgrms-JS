@@ -91,17 +91,16 @@
         this.data = data;
         this.render();
       }
+
+      this.render();
     }
 
     const todoList = new Todo(data, "todo-list");
-    todoList.render();
     todoList.setState(newData)
 
     const inProgressiveList = new Todo(inProgressive, "in-progressive-list");
-    inProgressiveList.render();
 
     const doneList = new Todo(done, "done-list");
-    doneList.render();
 
   </script>
 </body>
