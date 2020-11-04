@@ -63,13 +63,31 @@
                     let html = datas.map(({text, isCompleted}) =>  isCompleted ? `<s>\n${text}</s>` : `\n${text}`).join('')
                     document.querySelector(selector).innerHTML = html;
                 } 
+
                 this.render()
+
+                this.setState = (nextData) => {
+                    validData(nextData)
+                    this.datas = nextData
+                    this.render()
+                }
+                
             }
             
             let todoList1 = new TodoList('#todo-list1',data1);
             let todoList2 = new TodoList('#todo-list2',data2);
             let todoList3 = new TodoList('#todo-list3',data3);
 
+            todoList1.setState([
+                {
+                    text: '영화보기',
+                    isCompleted: false
+                },
+                {
+                    text: '운동하기',
+                    isCompleted: true
+                }
+            ])
         </script>
     </body>
 </html>
