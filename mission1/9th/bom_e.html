@@ -8,31 +8,38 @@
         <div id="todo-list2"></div>
         <div id="todo-list3"></div>
         <script>
-            var data1 = [
+            let data1 = [
             {
-                text: 'JS °øºÎÇÏ±â'
+                text: 'JS ê³µë¶€í•˜ê¸°',
+                isCompleted: true
             },
             {
-                text: 'JS º¹½ÀÇÏ±â'
+                text: 'JS ë³µìŠµí•˜ê¸°',
+                isCompleted: true
             }
             ]
-            var data2 = [
+            let data2 = [
             {
-                text: 'JS °øºÎÇÏ±â'
+                text: 'JS ê³µë¶€í•˜ê¸°',
+                isCompleted: false
             },
             {
-                text: 'JS º¹½ÀÇÏ±â'
+                text: 'JS ë³µìŠµí•˜ê¸°',
+                isCompleted: false
             }
             ]
 
-            var data3 = [
+            let data3 = [
             {
-                text: 'JS °øºÎÇÏ±â'
+                text: 'JS ê³µë¶€í•˜ê¸°',
+                isCompleted: false
             },
             {
-                text: 'JS º¹½ÀÇÏ±â'
+                text: 'JS ë³µìŠµí•˜ê¸°',
+                isCompleted: true
             }
             ]
+            
             
             function TodoList(selector,datas){
                 if(!datas || !Array.isArray(datas) || !new.target){
@@ -44,16 +51,19 @@
                     }
                 })
                 this.datas = datas;
+                function createHTML(text, isCompleted){
+                    $isCompleted ? `\n<strike>${text}</strike>` : `\n${text}`
+                }
                 this.render = function() {
-                    var html = datas.map(({text}) => `\n${text}`).join('')
-                    document.querySelector(selector).innerHTML += html;
+                    let html = datas.map(({text, isCompleted}) =>  isCompleted ? `<s>\n${text}</s>` : `\n${text}`).join('')
+                    document.querySelector(selector).innerHTML = html;
                 }
                 this.render();  
             }
             
-            var todoList1 = new TodoList('#todo-list1',data1);
-            var todoList2 = new TodoList('#todo-list2',data2);
-            var todoList3 = new TodoList('#todo-list3',data3);
+            let todoList1 = new TodoList('#todo-list1',data1);
+            let todoList2 = new TodoList('#todo-list2',data2);
+            let todoList3 = new TodoList('#todo-list3',data3);
         </script>
     </body>
 </html>
