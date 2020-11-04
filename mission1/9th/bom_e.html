@@ -8,41 +8,41 @@
         <div id="todo-list2"></div>
         <div id="todo-list3"></div>
         <script>
-            let data1 = [
-            {
-                text: 'JS 공부하기',
-                isCompleted: true
-            },
-            {
-                text: 'JS 복습하기',
-                isCompleted: true
-            }
+            const data1 = [
+                {
+                    text: 'JS 공부하기',
+                    isCompleted: true
+                },
+                {
+                    text: 'JS 복습하기',
+                    isCompleted: true
+                }
             ]
-            let data2 = [
-            {
-                text: 'JS 공부하기',
-                isCompleted: false
-            },
-            {
-                text: 'JS 복습하기',
-                isCompleted: false
-            }
+            const data2 = [
+                {
+                    text: 'JS 공부하기',
+                    isCompleted: false
+                },
+                {
+                    text: 'JS 복습하기',
+                    isCompleted: false
+                }
             ]
 
-            let data3 = [
-            {
-                text: 'JS 공부하기',
-                isCompleted: false
-            },
-            {
-                text: 'JS 복습하기',
-                isCompleted: true
-            }
+            const data3 = [
+                {
+                    text: 'JS 공부하기',
+                    isCompleted: false
+                },
+                {
+                    text: 'JS 복습하기',
+                    isCompleted: true
+                }
             ]
+
             
-            
-            function TodoList(selector,datas){
-                if(!datas || !Array.isArray(datas) || !new.target){
+            function validData(datas){
+                if(!datas || !Array.isArray(datas)){
                     throw new Error('error message')
                 } 
                 datas.forEach((data) => {
@@ -50,20 +50,26 @@
                         throw new Error('error message')
                     }
                 })
-                this.datas = datas;
-                function createHTML(text, isCompleted){
-                    $isCompleted ? `\n<strike>${text}</strike>` : `\n${text}`
+            }
+            
+            function TodoList(selector,datas){
+                if(!new.target) {
+                    throw new Error('error message')
                 }
+                validData(datas)
+
+                this.datas = datas;
                 this.render = function() {
                     let html = datas.map(({text, isCompleted}) =>  isCompleted ? `<s>\n${text}</s>` : `\n${text}`).join('')
                     document.querySelector(selector).innerHTML = html;
-                }
-                this.render();  
+                } 
+                this.render()
             }
             
             let todoList1 = new TodoList('#todo-list1',data1);
             let todoList2 = new TodoList('#todo-list2',data2);
             let todoList3 = new TodoList('#todo-list3',data3);
+
         </script>
     </body>
 </html>
