@@ -1,3 +1,5 @@
+import { useNewKeyword, isArrayState, checkTypes } from './Validation.js'
+
 // class문법으로 작성
 export default class TodoList2 {
   /**
@@ -8,23 +10,13 @@ export default class TodoList2 {
     this.setState(data, targetId)
   }
 
-  validData(todoData) {
-    try {
-      if(!Array.isArray(todoData)) throw new Error("올바르지 않은 데이터 타입")
-
-      todoData.forEach(todo => {
-        if(
-          !("text" in todo &&
-          "isCompleted" in todo && 
-          typeof todo.text === "string" &&
-          typeof todo.isCompleted === "boolean")
-        ) {
-          throw new Error("올바르지 않은 데이터 형식")
-        }
-      })
-    } catch(e) {
-      console.error(e)
-    }
+  validData(state) {
+    isArrayState(state)
+    checkTypes(
+      state, 
+      ({ text, isCompleted }) => 
+        typeof text === 'string' && typeof isCompleted === 'boolean'
+    )
   }
 
   setState(nextData, targetId) {
