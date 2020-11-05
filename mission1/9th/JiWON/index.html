@@ -1,5 +1,4 @@
 <html>
-
 <head>
   <title>Mission 1</title>
   <meta charset="utf-8" />
@@ -44,35 +43,42 @@
         isCompleted: true
       }
     ]
-
-    function TodoList(todo, listName) {
-      this.todo = todo;
+    
+    function TodoList(data, listName) {
+      this.data = data;
 
       if (!new.target) throw new Error('new 키워드를 붙이지 않았습니다.');
-      if (todo === null || todo === undefined) throw new Error("data가 null이거나 undefined입니다.");
-      if (!Array.isArray(todo)) throw new Error("data가 array형식이 아닙니다.");
+
+      this.isValidation = function(data){
+        if (data === null || data === undefined || !Array.isArray(data)) throw new Error("data가 올바른 형식이 아닙니다.");
+        for(let i=0;i<data.length;i++){
+          if(!data[i].hasOwnProperty('text') || !data[i].hasOwnProperty('isCompleted')) throw new Error('data의 key가 유효하지 않습니다.');
+        }
+      }
       
-      for(var i=0;i<todo.length;i++){
-        if(!todo[i].hasOwnProperty('text') || !todo[i].hasOwnProperty('isCompleted')) throw new Error('data의 key가 유효하지 않습니다.');
+      this.isValidation(data);
+      
+      this.render = function () {
+        document.querySelector(`#${listName}`).innerHTML = `<ul>${this.data.map((element) => 
+          element.isCompleted ? `<li>${element.text}</li>` : `<li><s>${element.text}</s></li>`).join('')}<ul>`
       }
 
-      this.render = function () {
-        document.querySelector(`#${listName}`).innerHTML = `<ul>` + todo.map(element =>
-          (element.isCompleted) ? `<li>${element.text}</li>` : `<li><s>${element.text}</s></li>`
-        ).join('') + `</ul>`;
+      this.render();
+
+      this.setState = function(nextData){
+        this.isValidation(nextData);
+
+        this.data = nextData;
+        this.render();
       }
     }
-    
+
     const todoList1 = new TodoList(data1, 'todo-list1');
-    todoList1.render();
-
     const todoList2 = new TodoList(data2, 'todo-list2');
-    todoList2.render();
-
     const todoList3 = new TodoList(data3, 'todo-list3');
-    todoList3.render();
+
+    setTimeout(() => { todoList1.setState(data2) }, 2000);
 
   </script>
 </body>
-
 </html>
