@@ -1,4 +1,4 @@
-import { validateTypeOfDataArray } from './validator.js'
+import { validateTypeOfDataArray, validateDOMElement } from './validator.js'
 
 const validateTypeOfTodo = ({ text, isCompleted }) => {
   return typeof text === 'string' && typeof isCompleted === 'boolean'
@@ -7,8 +7,9 @@ const validateTypeOfTodo = ({ text, isCompleted }) => {
 const validateTypeOfTodoList = validateTypeOfDataArray(validateTypeOfTodo)
 
 export default class TodoList {
-  constructor({ target, initialData }) {
+  constructor({ target, initialData = [] }) {
     try {
+      if (!validateDOMElement(target)) throw Error('target is not found')
       this.$target = target
       if (validateTypeOfTodoList(initialData)) this.state = initialData
       this.render()
@@ -29,10 +30,11 @@ export default class TodoList {
   }
 
   render() {
-    this.$target.innerHTML = this.state.reduce(
-      (htmlString, { text, isCompleted }) =>
-        htmlString + `<li>${isCompleted ? `<s>${text}</s>` : text}</li>`,
-      ''
-    )
+    this.$target.innerHTML =
+      this.state.reduce(
+        (htmlString, { text, isCompleted }) =>
+          htmlString + `<li>${isCompleted ? `<s>${text}</s>` : text}</li>`,
+        ''
+      ) || ''
   }
 }

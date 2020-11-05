@@ -10,3 +10,7 @@ export const validateTypeOfDataArray = (validate) => {
     return true
   }
 }
+
+export const validateDOMElement = (element) => {
+  return element instanceof HTMLElement
+}
