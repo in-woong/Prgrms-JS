@@ -29,3 +29,4 @@ export default function TodoList(data, $htmlid) {
     this.validation(this.data);
     this.render();
 }
+
