@@ -19,12 +19,21 @@ export default class TodoList {
     }
   }
 
+  toggleComplete(target) {
+    if (target.classList[0] === 'complete') {
+      target.classList.remove('complete')
+    } else {
+      target.classList.add('complete')
+    }
+  }
+
   delete(target) {
     target.parentNode.remove()
   }
 
   onClick(event) {
-    const action = event.target.dataset.action
+    const action =
+      event.target.dataset.action || event.currentTarget.dataset.action
     if (!action) return
     this[action](event.target)
   }
@@ -45,9 +54,9 @@ export default class TodoList {
       this.state.reduce(
         (htmlString, { text, isCompleted }) =>
           htmlString +
-          `<li><span>${
-            isCompleted ? `<s>${text}</s>` : text
-          }</span><button data-action="delete">삭제</button></li>`,
+          `<li><span data-action="toggleComplete" class=${
+            isCompleted ? 'complete' : ''
+          }>${text}</span><button data-action="delete">삭제</button></li>`,
         ''
       ) || ''
   }
