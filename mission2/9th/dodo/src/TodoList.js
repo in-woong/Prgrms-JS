@@ -28,7 +28,11 @@ export default class TodoList {
   }
 
   delete(target) {
-    target.parentNode.remove()
+    const index = Number(target.parentNode.dataset.index)
+    this.setState([
+      ...this.state.slice(0, index),
+      ...this.state.slice(index + 1),
+    ])
   }
 
   onClick(event) {
@@ -52,9 +56,9 @@ export default class TodoList {
   render() {
     this.$target.innerHTML =
       this.state.reduce(
-        (htmlString, { text, isCompleted }) =>
+        (htmlString, { text, isCompleted }, index) =>
           htmlString +
-          `<li><span data-action="toggleComplete" class=${
+          `<li data-index=${index}><span data-action="toggleComplete" class=${
             isCompleted ? 'complete' : ''
           }>${text}</span><button data-action="delete">삭제</button></li>`,
         ''
