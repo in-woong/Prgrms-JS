@@ -11,3 +11,5 @@ elInput.addEventListener('keypress', (e) => {
   ])
   elInput.value = ''
 })
+
+elInput.focus()
