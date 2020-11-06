@@ -41,8 +41,7 @@ export default class TodoList {
   }
 
   onClick(event) {
-    const action =
-      event.target.dataset.action || event.currentTarget.dataset.action
+    const action = event.target.dataset.action
     if (!action) return
     this[action](event.target)
   }
