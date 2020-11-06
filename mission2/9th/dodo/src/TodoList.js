@@ -20,11 +20,16 @@ export default class TodoList {
   }
 
   toggleComplete(target) {
-    if (target.classList[0] === 'complete') {
-      target.classList.remove('complete')
-    } else {
-      target.classList.add('complete')
-    }
+    const index = Number(target.parentNode.dataset.index)
+    const { text, isCompleted } = this.state[index]
+    this.setState([
+      ...this.state.slice(0, index),
+      {
+        text,
+        isCompleted: !isCompleted,
+      },
+      ...this.state.slice(index + 1),
+    ])
   }
 
   delete(target) {
