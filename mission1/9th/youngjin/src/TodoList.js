@@ -20,6 +20,7 @@ export default class TodoList {
   }
 
   setState(nextData) {
+    checkTodoListData(nextData)
     this.data = nextData
     this.render()
   }
