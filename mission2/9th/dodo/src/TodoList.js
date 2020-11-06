@@ -11,11 +11,22 @@ export default class TodoList {
     try {
       if (!validateDOMElement(target)) throw Error('target is not found')
       this.$target = target
+      this.$target.addEventListener('click', this.onClick.bind(this))
       if (validateTypeOfTodoList(initialData)) this.state = initialData
       this.render()
     } catch (err) {
       console.log(err)
     }
+  }
+
+  delete(target) {
+    target.parentNode.remove()
+  }
+
+  onClick(event) {
+    const action = event.target.dataset.action
+    if (!action) return
+    this[action](event.target)
   }
 
   setState(newData) {
@@ -33,7 +44,10 @@ export default class TodoList {
     this.$target.innerHTML =
       this.state.reduce(
         (htmlString, { text, isCompleted }) =>
-          htmlString + `<li>${isCompleted ? `<s>${text}</s>` : text}</li>`,
+          htmlString +
+          `<li><span>${
+            isCompleted ? `<s>${text}</s>` : text
+          }</span><button data-action="delete">삭제</button></li>`,
         ''
       ) || ''
   }
