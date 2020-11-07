@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Syncopate&display=swap');
+
+html body {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: large;
+  margin: 0;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+button,
+input[type='button'] {
+  cursor: pointer !important;
+  margin: 0;
+  font-family: 'Syncopate', sans-serif;
+  box-sizing: border-box;
+}
+
+button:focus,
+input:focus {
+  outline: none;
+}
+
+#app {
+  width: 60%;
+  max-width: 700px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+#app > div {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#todo-input {
+  height: 50px;
+  margin-top: 50px;
+  padding: 5px 0;
+  border-bottom: 1.5px solid black;
+}
+
+#todo-input * {
+  height: 100%;
+}
+
+.todo-text-input {
+  flex-grow: 1;
+  margin-right: 15px;
+  padding-left: 10px;
+  border: none;
+  font-size: 1.5em;
+  font-weight: 700;
+}
+
+.todo-input-btn {
+  width: 50px;
+  min-width: 50px;
+  font-size: 2.7em;
+  line-height: 45px;
+  border: 1.5px solid #555;
+  border-radius: 50%;
+  background-color: transparent;
+  color: #666;
+}
+
+.todo-input-btn:hover {
+  border-color: black;
+  color: black;
+}
+
+#todo-list {
+  margin-top: 20px;
+  font-size: 1.2em;
+}
+
+#todo-list > ul {
+  width: 100%;
+}
+
+#todo-list li {
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  border-bottom: 1.2px solid #555;
+}
+
+#todo-list li:last-child {
+  border: none;
+}
+
+.todo-label {
+  padding: 10px 0;
+}
+
+.todo-label,
+.todo-text {
+  flex-grow: 1;
+}
+
+.todo-checkbox:checked + span {
+  text-decoration: line-through;
+}
+
+.todo-delete-btn {
+  width: 50px;
+  min-width: 50px;
+  height: 100%;
+  font-size: 1.3em;
+  line-height: 1.3em;
+  color: #aaa;
+  background-color: transparent;
+  border: none;
+}
+
+.todo-delete-btn:hover {
+  color: red;
+}
+
+@media screen and (max-width: 600px) {
+  #app {
+    width: 90%;
+  }
+}

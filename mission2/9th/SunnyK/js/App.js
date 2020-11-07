@@ -44,11 +44,11 @@ export default class App {
 
   insertTodo(newTodoText) {
     const nextTodoData = [
-      ...this.todoData,
       {
         text: newTodoText,
         isCompleted: false,
       },
+      ...this.todoData,
     ]
 
     this.setState(nextTodoData)

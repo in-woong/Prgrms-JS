@@ -30,7 +30,7 @@ export default function TodoInput({ $target }) {
   this.render = () => {
     $target.innerHTML = `
       <input class="${TODO_INPUT_CLASS_NAMES.textInput}" type="text" />
-      <input class="${TODO_INPUT_CLASS_NAMES.inputBtn}" type="button" value="추가하기"/>
+      <input class="${TODO_INPUT_CLASS_NAMES.inputBtn}" type="button" value="+"/>
     `
   }
 

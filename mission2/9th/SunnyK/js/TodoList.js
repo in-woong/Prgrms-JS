@@ -18,12 +18,14 @@ export default function TodoList({ todoData, $target }) {
   }
 
   this.createTodoHTMLString = ({ text, isCompleted }, index) => {
-    const DELETE_BTN_HTML_STRING = '<button>삭제</button>'
+    const DELETE_BTN_HTML_STRING = '<button class="todo-delete-btn">X</button>'
     return `
       <li data-id=${index}>
-        <label>
-          <input type="checkbox" ${isCompleted ? 'checked' : ''}/>
-          ${text}
+        <label class="todo-label">
+          <input class="todo-checkbox" type="checkbox" ${
+            isCompleted ? 'checked' : ''
+          }/>
+          <span class="todo-text">${text}</span>
         </label>
         
         ${DELETE_BTN_HTML_STRING}
