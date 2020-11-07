@@ -6,7 +6,7 @@ const TODO_INPUT_CLASS_NAMES = {
 export default function TodoInput({ $target }) {
   this.$target = $target
 
-  this.setEvent = () => {
+  this.setAddTodoEvent = () => {
     const $todoTextInput = document.querySelector(
       `.${TODO_INPUT_CLASS_NAMES.textInput}`
     )
@@ -35,5 +35,5 @@ export default function TodoInput({ $target }) {
   }
 
   this.render()
-  this.setEvent()
+  this.setAddTodoEvent()
 }
