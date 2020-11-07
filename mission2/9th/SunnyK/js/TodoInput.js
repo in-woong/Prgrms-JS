@@ -26,8 +26,11 @@ export default function TodoInput({ $target }) {
   }
 
   this.addTodo = ($todoTextInput) => {
-    this.insertTodo($todoTextInput.value)
-    $todoTextInput.value = ''
+    if ($todoTextInput.value === '') alert('할 일을 입력하세요!')
+    else {
+      this.insertTodo($todoTextInput.value)
+      $todoTextInput.value = ''
+    }
     $todoTextInput.focus()
   }
 
