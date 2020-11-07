@@ -27,6 +27,12 @@ export default function TodoList({ todoData, $target }) {
     `
   }
 
+  this.deleteTodoEvent = $target.addEventListener('click', (e) => {
+    if (e.target.tagName === 'BUTTON') {
+      this.deleteTodo(e.target.parentNode.dataset.id)
+    }
+  })
+
   this.render = () => {
     this.$target.innerHTML = `
       <ul>

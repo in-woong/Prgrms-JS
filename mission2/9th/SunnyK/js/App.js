@@ -28,6 +28,7 @@ export default class App {
   }
 
   init() {
+    this.todoList.deleteTodo = this.deleteTodo.bind(this)
     this.todoInput.insertTodo = this.insertTodo.bind(this)
   }
 
@@ -48,6 +49,13 @@ export default class App {
         isCompleted: false,
       },
     ]
+
+    this.setState(nextTodoData)
+  }
+
+  deleteTodo(deleteTodoIndex) {
+    const nextTodoData = this.todoData.slice()
+    nextTodoData.splice(deleteTodoIndex, 1)
 
     this.setState(nextTodoData)
   }
