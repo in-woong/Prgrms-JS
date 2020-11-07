@@ -1,4 +1,4 @@
-import { checkTodoListData } from './data/validation.js'
+import { checkTodoListData } from '../data/validation.js'
 
 export default class TodoList {
   constructor({ data, domId }) {

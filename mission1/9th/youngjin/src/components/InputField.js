@@ -8,7 +8,7 @@ export default class InputField {
   render() {
     const inputComponent = document.querySelector(this.domId)
     inputComponent.innerHTML = `<input id="input-field" type="text" autofocus />
-    <button id='input-submit-button' type='button'>추가</button>`
+    <button id='input-submit-button' class="input-submit-button" type='button'>추가</button>`
 
     const submitButton = document
       .querySelector(this.domId)

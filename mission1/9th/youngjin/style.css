@@ -14,8 +14,12 @@ body {
   padding: 5px;
   width: 300px;
   position: relative;
-
+  border: 1px solid white;
   cursor: pointer;
+}
+
+.todo:hover {
+  border: 1px solid black;
 }
 
 .completed-todo {
@@ -25,9 +29,13 @@ body {
 
 .input-component {
   display: flex;
-  justify-content: center;
+
   align-items: center;
   margin: 20px;
+}
+
+.input-submit-button {
+  margin-left: 5px;
 }
 
 .todo-delete-button {
