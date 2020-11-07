@@ -21,9 +21,21 @@ export default function TodoList({ todoData, $target }) {
     const DELETE_BTN_HTML_STRING = '<button>삭제</button>'
     return `
       <li data-id=${index}>
-        ${isCompleted ? `<s>${text}</s>` : text}
+        <label>
+          <input type="checkbox" ${isCompleted ? 'checked' : ''}/>
+          ${text}
+        </label>
+        
         ${DELETE_BTN_HTML_STRING}
       </li>
+    `
+  }
+
+  this.render = () => {
+    this.$target.innerHTML = `
+      <ul>
+        ${this.todoData.map(this.createTodoHTMLString).join('')}
+      </ul>
     `
   }
 
@@ -33,13 +45,11 @@ export default function TodoList({ todoData, $target }) {
     }
   })
 
-  this.render = () => {
-    this.$target.innerHTML = `
-      <ul>
-        ${this.todoData.map(this.createTodoHTMLString).join('')}
-      </ul>
-    `
-  }
+  this.toggleTodoEvent = $target.addEventListener('click', (e) => {
+    if (e.target.tagName === 'LABEL') {
+      this.toggleTodo(e.target.parentNode.dataset.id)
+    }
+  })
 
   this.render()
 }

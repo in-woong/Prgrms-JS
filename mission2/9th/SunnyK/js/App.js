@@ -28,6 +28,7 @@ export default class App {
   }
 
   init() {
+    this.todoList.toggleTodo = this.toggleTodo.bind(this)
     this.todoList.deleteTodo = this.deleteTodo.bind(this)
     this.todoInput.insertTodo = this.insertTodo.bind(this)
   }
@@ -56,6 +57,16 @@ export default class App {
   deleteTodo(deleteTodoIndex) {
     const nextTodoData = this.todoData.slice()
     nextTodoData.splice(deleteTodoIndex, 1)
+
+    this.setState(nextTodoData)
+  }
+
+  toggleTodo(toggleTodoIndex) {
+    const nextTodoData = this.todoData.slice()
+    nextTodoData.splice(toggleTodoIndex, 1, {
+      text: nextTodoData[toggleTodoIndex].text,
+      isCompleted: !nextTodoData[toggleTodoIndex].isCompleted,
+    })
 
     this.setState(nextTodoData)
   }
