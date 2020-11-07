@@ -1,0 +1,37 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.todo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: lightgray;
+  border-radius: 25px;
+  margin: 10px;
+  padding: 5px;
+  width: 300px;
+  position: relative;
+
+  cursor: pointer;
+}
+
+.completed-todo {
+  text-decoration: line-through;
+  text-decoration-color: lightcoral;
+}
+
+.input-component {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+}
+
+.todo-delete-button {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+}
