@@ -9,7 +9,7 @@ const validateTypeOfTodoList = validateTypeOfDataArray(validateTypeOfTodo)
 export default class TodoList {
   constructor({ target, initialData = [] }) {
     try {
-      if (!validateDOMElement(target)) throw Error('target is not found')
+      validateDOMElement(target)
       this.$target = target
       this.$target.addEventListener('click', this.onClick.bind(this))
       if (validateTypeOfTodoList(initialData)) this.state = initialData

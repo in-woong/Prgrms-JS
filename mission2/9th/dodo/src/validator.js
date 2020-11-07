@@ -12,5 +12,6 @@ export const validateTypeOfDataArray = (validate) => {
 }
 
 export const validateDOMElement = (element) => {
-  return element instanceof HTMLElement
+  if (element instanceof HTMLElement) return true
+  throw Error('target is not found')
 }
