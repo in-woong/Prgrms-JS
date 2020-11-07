@@ -1,9 +1,13 @@
+import { useNewKeyword } from './Validation.js'
+
 const TODO_INPUT_CLASS_NAMES = {
   textInput: 'todo-text-input',
   inputBtn: 'todo-input-btn',
 }
 
 export default function TodoInput({ $target }) {
+  useNewKeyword()
+
   this.$target = $target
 
   this.setAddTodoEvent = () => {
