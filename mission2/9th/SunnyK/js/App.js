@@ -5,7 +5,7 @@ import { useNewKeyword, isArrayState, checkTypes } from './Validation.js'
 import data from './data.js'
 
 export default class App {
-  constructor() {
+  constructor({ $todoListTarget, $todoCountTarget, $todoInputTarget }) {
     useNewKeyword(this)
     this.validData(data)
 
@@ -13,15 +13,15 @@ export default class App {
 
     this.todoList = new TodoList({
       todoData: this.todoData,
-      $target: document.querySelector('#todo-list'),
+      $target: $todoListTarget,
     })
     this.todoCount = new TodoCount({
       noTodo: this.todoData.length,
       noCompleteTodo: this.todoData.filter((todo) => todo.isCompleted).length,
-      $target: document.querySelector('#todo-count'),
+      $target: $todoCountTarget,
     })
     this.todoInput = new TodoInput({
-      $target: document.querySelector('#todo-input'),
+      $target: $todoInputTarget,
     })
 
     this.init()
