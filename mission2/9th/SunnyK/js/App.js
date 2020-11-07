@@ -1,28 +1,54 @@
 import TodoList from './TodoList.js'
-import { data } from './data.js'
+import TodoInput from './TodoInput.js'
+import { useNewKeyword, isArrayState, checkTypes } from './Validation.js'
+import data from './data.js'
 
-const todoList = new TodoList(data, 'todo-list')
+export default class App {
+  constructor() {
+    useNewKeyword(this)
+    this.validData(data)
 
-document.querySelector('#todo-text-input').addEventListener('keypress', (e) => {
-  const ENTER_KEY_CODE = 13
-  if (e.keyCode === ENTER_KEY_CODE) addTodo(e.target)
-})
+    this.todoData = data
+    this.todoList = new TodoList({
+      todoData: this.todoData,
+      $target: document.querySelector('#todo-list'),
+    })
+    this.todoInput = new TodoInput({
+      $target: document.querySelector('#todo-input'),
+    })
 
-document
-  .querySelector('#todo-input-btn')
-  .addEventListener('click', (e) =>
-    addTodo(document.querySelector('#todo-text-input'))
-  )
+    this.init()
+  }
 
-function addTodo($todoTextInput) {
-  todoList.setState([
-    ...todoList.data,
-    {
-      text: $todoTextInput.value,
-      isCompleted: false,
-    },
-  ])
+  setState(nextTodoData) {
+    this.validData(nextTodoData)
+    this.todoData = nextTodoData
 
-  $todoTextInput.value = ''
-  $todoTextInput.focus()
+    this.todoList.setState({ nextData: this.todoData })
+  }
+
+  init() {
+    this.todoInput.insertTodo = this.insertTodo.bind(this)
+  }
+
+  validData(todoData) {
+    isArrayState(todoData)
+    checkTypes(
+      todoData,
+      ({ text, isCompleted }) =>
+        typeof text === 'string' && typeof isCompleted === 'boolean'
+    )
+  }
+
+  insertTodo(newTodoText) {
+    const nextTodoData = [
+      ...this.todoData,
+      {
+        text: newTodoText,
+        isCompleted: false,
+      },
+    ]
+
+    this.setState(nextTodoData)
+  }
 }

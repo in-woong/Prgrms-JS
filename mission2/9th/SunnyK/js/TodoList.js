@@ -1,37 +1,39 @@
-import { useNewKeyword, isArrayState, checkTypes } from './Validation.js'
+import { useNewKeyword } from './Validation.js'
 
 /**
  * TodoList 컴포넌트
  * @param {Array} todoData
  * @param {String} targetId
  */
-export default function TodoList1(todoData, targetId) {
-  this.validData = (todoData) => {
-    useNewKeyword(this)
-    isArrayState(todoData)
-    checkTypes(
-      todoData,
-      ({ text, isCompleted }) =>
-        typeof text === 'string' && typeof isCompleted === 'boolean'
-    )
-  }
+export default function TodoList({ todoData, $target }) {
+  useNewKeyword(this)
 
-  this.setState = (nextData, targetId) => {
-    this.validData(nextData)
+  this.todoData = todoData
+  this.$target = $target
+
+  this.setState = ({ nextData, $target }) => {
     this.todoData = nextData
-    if (targetId) this.$target = document.getElementById(targetId)
+    if ($target) this.$target = $target
     this.render()
   }
 
-  this.render = () => {
-    const htmlString = this.todoData
-      .map(({ text, isCompleted }) =>
-        isCompleted ? `<li><s>${text}</s></li>` : `<li>${text}</li>`
-      )
-      .join('')
-
-    this.$target.innerHTML = `<ul>${htmlString}</ul>`
+  this.createTodoHTMLString = ({ text, isCompleted }, index) => {
+    const DELETE_BTN_HTML_STRING = '<button>삭제</button>'
+    return `
+      <li data-id=${index}>
+        ${isCompleted ? `<s>${text}</s>` : text}
+        ${DELETE_BTN_HTML_STRING}
+      </li>
+    `
   }
 
-  this.setState(todoData, targetId)
+  this.render = () => {
+    this.$target.innerHTML = `
+      <ul>
+        ${this.todoData.map(this.createTodoHTMLString).join('')}
+      </ul>
+    `
+  }
+
+  this.render()
 }
