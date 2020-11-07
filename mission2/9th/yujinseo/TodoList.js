@@ -1,4 +1,5 @@
 import { useNewKeyword, useArrayState, checkTypes } from './validation.js'
+import TodoCount from './TodoCount.js';
 
 function TodoList(data, removeTodo, toggleTodo) {
   this.data = data;
@@ -32,6 +33,7 @@ function TodoList(data, removeTodo, toggleTodo) {
           isCompleted ? `<li key=${index} class="todo-item"><s>${text}</s><button type="button" class="todo-remove-btn">삭제</button></li>` : `<li key=${index} class="todo-item">${text}<button type="button" class="todo-remove-btn">삭제</button></li>`).join('')}</ul>` : '';
     $target.innerHTML = content;
     $target.addEventListener('click', this.todoEventController);
+    this.todoCount = new TodoCount(this.data);
   }
 
   this.setState = (nextState) => {

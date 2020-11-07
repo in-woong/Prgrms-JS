@@ -1,6 +1,7 @@
 import { data } from './data.js';
 import TodoList from './TodoList.js';
 import TodoInput from './TodoInput.js';
+import TodoCount from './TodoCount.js';
 
 function App() {
   this.data = data;
