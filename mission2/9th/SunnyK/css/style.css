@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Syncopate&display=swap');
 
 html body {
@@ -76,6 +76,13 @@ input:focus {
 .todo-input-btn:hover {
   border-color: black;
   color: black;
+}
+
+#todo-count {
+  margin-top: 6px;
+  color: #444;
+  font-size: medium;
+  font-weight: 400;
 }
 
 #todo-list {

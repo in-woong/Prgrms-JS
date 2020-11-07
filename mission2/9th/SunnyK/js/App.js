@@ -1,5 +1,6 @@
 import TodoList from './TodoList.js'
 import TodoInput from './TodoInput.js'
+import TodoCount from './TodoCount.js'
 import { useNewKeyword, isArrayState, checkTypes } from './Validation.js'
 import data from './data.js'
 
@@ -9,9 +10,15 @@ export default class App {
     this.validData(data)
 
     this.todoData = data
+
     this.todoList = new TodoList({
       todoData: this.todoData,
       $target: document.querySelector('#todo-list'),
+    })
+    this.todoCount = new TodoCount({
+      noTodo: this.todoData.length,
+      noCompleteTodo: this.todoData.filter((todo) => todo.isCompleted).length,
+      $target: document.querySelector('#todo-count'),
     })
     this.todoInput = new TodoInput({
       $target: document.querySelector('#todo-input'),
@@ -25,6 +32,10 @@ export default class App {
     this.todoData = nextTodoData
 
     this.todoList.setState({ nextData: this.todoData })
+    this.todoCount.setState({
+      noTodo: this.todoData.length,
+      noCompleteTodo: this.todoData.filter((todo) => todo.isCompleted).length,
+    })
   }
 
   init() {
