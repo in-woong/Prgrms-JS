@@ -1,7 +1,7 @@
 export default class TodoInput {
-  constructor() {
-    this.formEl = document.querySelector('form')
-    this.inputEl = document.querySelector('input')
+  constructor(targetEl) {
+    this.formEl = document.getElementById(targetEl)
+    this.inputEl = this.formEl.querySelector('input')
   }
 
   addSubmitEvent(callback) {
