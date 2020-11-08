@@ -1,4 +1,4 @@
-import { checkNewKeyword, checkTarget } from './validation.js'
+import { checkNewKeyword, checkTarget } from '../validation.js'
 
 export default function TodoInput($todoInput, $todoForm, app) {
   this.validation = () => {

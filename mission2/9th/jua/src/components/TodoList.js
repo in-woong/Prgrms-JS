@@ -1,4 +1,4 @@
-import { checkNewKeyword, checkTarget, checkTodoListData } from './validation.js';
+import { checkNewKeyword, checkTarget, checkTodoListData } from '../validation.js';
 
 export default function TodoList(data, $todoList, app) {
   this.validation = () => {
