@@ -21,7 +21,6 @@ function TodoInput(target, todoList) {
         });
     };
     this.setState = (nextData) => {
-        this.validation();
         this.todoList = nextData;
         this.render();
     };
