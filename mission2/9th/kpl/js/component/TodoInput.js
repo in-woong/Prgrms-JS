@@ -1,5 +1,5 @@
 import TodoList from './TodoList.js';
-import { useNewKeyword, validTextValudCheck, checkTarget, validObjectType } from '../validator/validation.js'
+import { useNewKeyword, validTextValueCheck, checkTarget, validObjectType } from '../validator/validation.js'
 function TodoInput(targetId, todoList) {
     this.targetId = targetId;
     this.todoList = todoList;
@@ -14,7 +14,7 @@ function TodoInput(targetId, todoList) {
             if(event.key === 'Enter') {
                 let target = event.target;
                 let inputData = {text : target && target.value , isCompleted : false};
-                validTextValudCheck(inputData);
+                validTextValueCheck(inputData);
                 addTodoItem(inputData, todoList);
                 target.value = "";
             }

@@ -49,7 +49,7 @@ export const checkTypes = (data, checkCallback) => {
  * @param {inputData} inputData 
  * to-do 항목을 입력할 때 빈값 확인.
  */
-export const validTextValudCheck = (inputData) => {
+export const validTextValueCheck = (inputData) => {
     if(!inputData.text) {
         throw new Error('to-do 항목을 입력해주세요.');
     }
