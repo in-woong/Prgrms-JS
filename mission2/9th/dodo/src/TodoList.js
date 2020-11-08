@@ -47,13 +47,11 @@ export default class TodoList {
   }
 
   setState(newData) {
-    const prevState = this.state
     try {
       if (validateTypeOfTodoList(newData)) this.state = newData
       this.render()
     } catch (err) {
       console.log(err)
-      this.state = prevState
     }
   }
 

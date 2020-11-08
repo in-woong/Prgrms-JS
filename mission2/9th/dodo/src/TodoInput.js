@@ -17,7 +17,6 @@ export default class TodoInput {
 
   onInput(e) {
     e.preventDefault()
-    console.log(e.target.value)
     this.setState(e.target.value)
   }
 
