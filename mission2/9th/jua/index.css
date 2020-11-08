@@ -1,0 +1,31 @@
+body {
+    display: grid;
+    place-items: center;
+}
+
+ul {
+    width: 20rem;
+    padding: 0;
+}
+
+li {
+    font-size: 16px;
+    line-height: 1.5em;
+    cursor: pointer;
+}
+
+button {
+    float: right;
+    background: #faed7d;
+    border-radius: 10%;
+    border: none;
+    height: 1.5em;
+}
+
+form {
+    width: 20rem;
+}
+
+input {
+    width: 17.5rem;
+}

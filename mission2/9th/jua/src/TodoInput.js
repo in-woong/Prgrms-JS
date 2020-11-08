@@ -1,6 +1,6 @@
 import { checkNewKeyword, checkTarget } from './validation.js'
 
-export default function TodoInput($todoInput, $todoForm, data, todoList) {
+export default function TodoInput($todoInput, $todoForm, app) {
   this.validation = () => {
     checkNewKeyword();
     checkTarget($todoInput);
@@ -13,9 +13,11 @@ export default function TodoInput($todoInput, $todoForm, data, todoList) {
 
   this.addTodo = (e) => {
     const { value } = this.$todoInput;
-    data.push({ text: value, isCompleted: false });
-    todoList.setState(data);
+    if (value) {
+      app.addTodo(value);
+    }
     this.$todoInput.value = '';
+    // submit 이후에도 막힘없이 추가할 수 있도록
     e.preventDefault();
     this.$todoInput.focus();
   };

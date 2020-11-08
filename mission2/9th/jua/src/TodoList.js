@@ -1,6 +1,6 @@
-import { checkNewKeyword, checkTarget, checkTodoListData } from './validation.js'
+import { checkNewKeyword, checkTarget, checkTodoListData } from './validation.js';
 
-export default function TodoList(data, $todoList) {
+export default function TodoList(data, $todoList, app) {
   this.validation = () => {
     checkNewKeyword(this);
     checkTarget($todoList);
@@ -12,16 +12,30 @@ export default function TodoList(data, $todoList) {
   this.$todoList = $todoList;
 
   this.render = () => {
-    const htmlString = this.data.map((data) => (
+    const htmlString = this.data.map((data, index) => (
       data.isCompleted
-        ? `<li>
-              <s>${data.text}</s> <button> x </button>
+        ? `<li id=${index}>
+              <s> ${data.text} </s> 
+              <button> x </button>
             </li>`
-        : `<li>
-              ${data.text} <button> x </button>
+        : `<li id=${index}>
+              <span> ${data.text} </span>
+              <button> x </button>
            </li> `
     )).join('\n');
     this.$todoList.innerHTML = `<ul>${htmlString}</ul>`;
+  };
+
+  this.bindEvent = () => {
+    $todoList.addEventListener('click', (e) => {
+      const { id } = e.target.parentNode;
+      if (e.target.tagName === 'BUTTON') {
+        app.deleteTodo(id);
+      }
+      if (e.target.tagName === 'SPAN' || e.target.tagName === 'S') {
+        app.completeTodo(id);
+      }
+    });
   };
 
   this.setState = (data) => {
@@ -31,4 +45,5 @@ export default function TodoList(data, $todoList) {
   };
 
   this.render();
+  this.bindEvent();
 }
