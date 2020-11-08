@@ -1,5 +1,5 @@
 import { useNewKeyword, useArrayState, checkTarget, checkTypes } from '../validator/validation.js'
-import { convertBoolean } from '../util/util.js'
+import { convertStringToBoolean } from '../util/util.js'
 function TodoList(data, targetId) {
     this.data = data;
     this.targetId = targetId;
@@ -60,7 +60,7 @@ function TodoList(data, targetId) {
                 event.stopPropagation();
                 const currentTarget = event.currentTarget;
                 const index = currentTarget.dataset.index;
-                const isCompleted = convertBoolean(currentTarget.dataset.completed);
+                const isCompleted = convertStringToBoolean(currentTarget.dataset.completed);
                 const items = this.data;
                 
                 if(items[index]) {

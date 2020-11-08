@@ -12,8 +12,8 @@ function TodoInput(targetId, todoList) {
         const $input = document.getElementById(this.targetId);
         $input.addEventListener('keypress', (event) => {
             if(event.key === 'Enter') {
-                let target = event.target;
-                let inputData = {text : target && target.value , isCompleted : false};
+                const target = event.target;
+                const inputData = {text : target && target.value , isCompleted : false};
                 validateTextValueCheck(inputData);
                 addTodoItem(inputData, todoList);
                 target.value = "";
