@@ -12,7 +12,8 @@ const data = [
   },
 ];
 
-const todoList = new TodoList(data, 'todo-list');
+const $todoList = document.querySelector('#todo-list');
+const todoList = new TodoList(data, $todoList);
 
 const $todoForm = document.querySelector('.todo-form');
 const $todoInput = document.querySelector('.todo-input');

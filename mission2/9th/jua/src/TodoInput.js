@@ -1,22 +1,24 @@
+import { checkNewKeyword, checkTarget } from './validation.js'
+
 export default function TodoInput($todoInput, $todoForm, data, todoList) {
-  this.checkInitialization = () => {
-    if (!$todoInput || !$todoForm) {
-      throw new Error('DOM is not valid');
-    }
+  this.validation = () => {
+    checkNewKeyword();
+    checkTarget($todoInput);
+    checkTarget($todoForm);
   };
 
-  this.checkInitialization();
-  this.todoInput = $todoInput;
-  this.todoForm = $todoForm;
+  this.validation();
+  this.$todoInput = $todoInput;
+  this.$todoForm = $todoForm;
 
   this.addTodo = (e) => {
-    const { value } = this.todoInput;
+    const { value } = this.$todoInput;
     data.push({ text: value, isCompleted: false });
     todoList.setState(data);
-    this.todoInput.value = '';
+    this.$todoInput.value = '';
     e.preventDefault();
-    this.todoInput.focus();
+    this.$todoInput.focus();
   };
 
-  this.todoForm.addEventListener('submit', this.addTodo);
+  this.$todoForm.addEventListener('submit', this.addTodo);
 }
