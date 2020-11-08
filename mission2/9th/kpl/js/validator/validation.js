@@ -1,16 +1,5 @@
 /**
  * 
- * @param {context} context 
- * new 키워드로 인스턴스를 생성했는지 확인.
- */
-export const useNewKeyword = (context) => {
-    if (context === window) {
-        throw new Error('new 키워드로 함수의 인스턴스를 생성해야 합니다.')
-    }
-}
-
-/**
- * 
  * @param {data} data 
  * 파라미터로 넘어온 data 가 null, undefined 거나 배열여부 확인.
  */

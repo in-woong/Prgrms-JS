@@ -1,10 +1,12 @@
 import TodoList from './TodoList.js';
-import { useNewKeyword, validateTextValueCheck, checkTarget, validateObjectType } from '../validator/validation.js'
+import { validateTextValueCheck, checkTarget, validateObjectType } from '../validator/validation.js'
 function TodoInput(targetId, todoList) {
     this.targetId = targetId;
     this.todoList = todoList;
     this.validate = () => {
-        useNewKeyword(this);
+        if (new.target !== TodoInput) {
+            throw new Error('new 키워드로 함수의 인스턴스를 생성해야 합니다.')
+        }
         checkTarget(this.targetId);
         validateObjectType(todoList, TodoList);
     };

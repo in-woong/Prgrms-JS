@@ -1,10 +1,12 @@
-import { useNewKeyword, useArrayState, checkTarget, checkTypes } from '../validator/validation.js'
+import { useArrayState, checkTarget, checkTypes } from '../validator/validation.js'
 import { convertStringToBoolean } from '../util/util.js'
 function TodoList(data, targetId) {
     this.data = data;
     this.targetId = targetId;
     this.validate = (data) => {
-        useNewKeyword(this);
+        if (new.target !== TodoList) {
+          throw new Error('new 키워드로 함수의 인스턴스를 생성해야 합니다.')
+        }
         useArrayState(data);
         checkTarget(this.targetId);
         checkTypes(
