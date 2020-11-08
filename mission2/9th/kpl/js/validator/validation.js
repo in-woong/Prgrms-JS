@@ -49,7 +49,7 @@ export const checkTypes = (data, checkCallback) => {
  * @param {inputData} inputData 
  * to-do 항목을 입력할 때 빈값 확인.
  */
-export const validTextValueCheck = (inputData) => {
+export const validateTextValueCheck = (inputData) => {
     if(!inputData.text) {
         throw new Error('to-do 항목을 입력해주세요.');
     }
@@ -61,7 +61,7 @@ export const validTextValueCheck = (inputData) => {
  * @param {constructor} constructor 
  * checkData가 obj 형식인지 확인
  */
-export const validObjectType = (checkData, obj) => {
+export const validateObjectType = (checkData, obj) => {
     if(!checkData.constructor === obj) {
         throw new Error('Object 형식이 맞지 않습니다.')
     }

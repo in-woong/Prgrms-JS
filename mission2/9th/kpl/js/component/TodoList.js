@@ -3,7 +3,7 @@ import { convertBoolean } from '../util/util.js'
 function TodoList(data, targetId) {
     this.data = data;
     this.targetId = targetId;
-    this.validation = (data) => {
+    this.validate = (data) => {
         useNewKeyword(this);
         useArrayState(data);
         checkTarget(this.targetId);
@@ -30,7 +30,7 @@ function TodoList(data, targetId) {
       document.querySelector(`#${targetId}`).innerHTML = contents;
     };
     this.setState = (nextData) => {
-      this.validation(nextData);
+      this.validate(nextData);
       this.data = nextData;
       this.render();
       this.setEvent();

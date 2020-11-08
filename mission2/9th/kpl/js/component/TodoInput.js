@@ -1,12 +1,12 @@
 import TodoList from './TodoList.js';
-import { useNewKeyword, validTextValueCheck, checkTarget, validObjectType } from '../validator/validation.js'
+import { useNewKeyword, validateTextValueCheck, checkTarget, validateObjectType } from '../validator/validation.js'
 function TodoInput(targetId, todoList) {
     this.targetId = targetId;
     this.todoList = todoList;
-    this.validation = () => {
+    this.validate = () => {
         useNewKeyword(this);
         checkTarget(this.targetId);
-        validObjectType(todoList, TodoList);
+        validateObjectType(todoList, TodoList);
     };
     this.render = () => {
         const $input = document.getElementById(this.targetId);
@@ -14,14 +14,14 @@ function TodoInput(targetId, todoList) {
             if(event.key === 'Enter') {
                 let target = event.target;
                 let inputData = {text : target && target.value , isCompleted : false};
-                validTextValueCheck(inputData);
+                validateTextValueCheck(inputData);
                 addTodoItem(inputData, todoList);
                 target.value = "";
             }
         });
     };
     this.setState = (nextData) => {
-        this.validation();
+        this.validate();
         this.todoList = nextData;
         this.render();
     };
