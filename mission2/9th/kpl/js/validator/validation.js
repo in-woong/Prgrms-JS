@@ -25,8 +25,8 @@ export const useArrayState = (data) => {
  * @param {target} target 
  * 파라미터로 넘어온 target이 존재하는지 확인.
  */
-export const checkTarget = (target) => {
-    let curTarget = document.querySelector(`#${target}`);
+export const checkTarget = (targetId) => {
+    let curTarget = document.querySelector(`#${targetId}`);
     if (!curTarget) {
         throw new Error('target이 올바르지 않습니다.')
     }

@@ -1,12 +1,12 @@
 import { useNewKeyword, useArrayState, checkTarget, checkTypes } from '../validator/validation.js'
 import { convertBoolean } from '../util/util.js'
-function TodoList(data, target) {
+function TodoList(data, targetId) {
     this.data = data;
-    this.target = target;
+    this.targetId = targetId;
     this.validation = (data) => {
         useNewKeyword(this);
         useArrayState(data);
-        checkTarget(this.target);
+        checkTarget(this.targetId);
         checkTypes(
             data,
             ({ text, isCompleted }) =>
@@ -27,7 +27,7 @@ function TodoList(data, target) {
           .join('') +
         '</ul>';
   
-      document.querySelector(`#${target}`).innerHTML = contents;
+      document.querySelector(`#${targetId}`).innerHTML = contents;
     };
     this.setState = (nextData) => {
       this.validation(nextData);
@@ -75,7 +75,6 @@ function TodoList(data, target) {
             })
         });
     };
-    this.validation(data);
     this.setState(data);
   }
   
