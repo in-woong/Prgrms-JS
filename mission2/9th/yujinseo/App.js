@@ -1,9 +1,9 @@
-import { data } from './data.js';
+import { setTodoData, getTodoData } from './data.js';
 import TodoList from './TodoList.js';
 import TodoInput from './TodoInput.js';
 
 function App() {
-  this.data = data;
+  this.data = getTodoData || [];
 
   this.$removeAllBtn = document.querySelector('#todo-remove-all');
 
@@ -19,6 +19,7 @@ function App() {
   const removeTodo = (index) => {
     this.data.splice(index, 1);
     this.setState(this.data);
+    setTodoData(this.data);
   }
 
   const toggleTodo = (index) => {
@@ -29,11 +30,13 @@ function App() {
   const addTodo = (newTodo) => {
     this.data.push(newTodo);
     this.setState(this.data);
+    setTodoData(this.data);
   }
 
   this.$removeAllBtn.addEventListener('click', () => {
     this.data = [];
     this.setState(this.data);
+    setTodoData([]);
   })
 
   this.init();
