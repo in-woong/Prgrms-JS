@@ -1,10 +1,11 @@
 import { data } from './data.js';
 import TodoList from './TodoList.js';
 import TodoInput from './TodoInput.js';
-import TodoCount from './TodoCount.js';
 
 function App() {
   this.data = data;
+
+  this.$removeAllBtn = document.querySelector('#todo-remove-all');
 
   this.init = function () {
     this.todoInput = new TodoInput(addTodo);
@@ -29,6 +30,11 @@ function App() {
     this.data.push(newTodo);
     this.setState(this.data);
   }
+
+  this.$removeAllBtn.addEventListener('click', () => {
+    this.data = [];
+    this.setState(this.data);
+  })
 
   this.init();
 }

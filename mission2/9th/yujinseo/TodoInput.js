@@ -13,6 +13,11 @@ function TodoInput(addTodo) {
   }
 
   const $todoInput = document.querySelector('#todo-input');
+  const $todoAddButton = document.querySelector('#todo-add');
+
+  $todoAddButton.addEventListener('click', (e) => {
+    this.addTodoItem({ text: $todoInput.value });
+  })
 
   $todoInput.addEventListener('keyup', (e) => {
     if (e.keyCode === ENTER_KEY_CODE) {

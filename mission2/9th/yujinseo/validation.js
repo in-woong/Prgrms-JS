@@ -17,7 +17,7 @@ export const checkTarget = ($target) => {
 }
 
 export const checkTypes = (state, checkCallback) => {
-  if (!state.some(checkCallback)) {
+  if (state.length !== 0 && !state.some(checkCallback)) {
     throw new Error('잘못된 state 입니다.')
   }
 }
