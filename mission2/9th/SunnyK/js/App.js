@@ -23,8 +23,9 @@ export default class App {
     })
 
     this.todoCount = new TodoCount({
-      noTodo: this.todoData.length,
-      noCompleteTodo: this.todoData.filter((todo) => todo.isCompleted).length,
+      numOfTodo: this.todoData.length,
+      numOfCompleteTodo: this.todoData.filter((todo) => todo.isCompleted)
+        .length,
       $target: $todoCountTarget,
     })
 
@@ -40,8 +41,9 @@ export default class App {
 
     this.todoList.setState({ nextData: this.todoData })
     this.todoCount.setState({
-      noTodo: this.todoData.length,
-      noCompleteTodo: this.todoData.filter((todo) => todo.isCompleted).length,
+      numOfTodo: this.todoData.length,
+      numOfCompleteTodo: this.todoData.filter((todo) => todo.isCompleted)
+        .length,
     })
   }
 
