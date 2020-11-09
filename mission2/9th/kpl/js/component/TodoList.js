@@ -77,6 +77,7 @@ function TodoList(data, targetId) {
             })
         });
     };
+    
     this.setState(data);
   }
   

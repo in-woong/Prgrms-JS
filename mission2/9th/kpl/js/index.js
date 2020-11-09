@@ -1,8 +1,3 @@
-import TodoList from './component/TodoList.js'
-import TodoInput from './component/TodoInput.js'
-import { data } from './data/data.js'
+import App from './component/App.js'
 
-
-const todoList = new TodoList(data, 'todo-list');
-new TodoInput('todo-input', todoList);
-
+new App();
