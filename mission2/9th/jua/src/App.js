@@ -1,5 +1,5 @@
 import TodoList from './components/TodoList.js';
-import TodoInput from './components/TodoInput.js'
+import TodoInput from './components/TodoInput.js';
 import TodoCount from './components/TodoCount.js';
 import TodoRemoveBtn from './components/TodoRemoveBtn.js';
 
@@ -17,11 +17,6 @@ export default function App() {
   const $todoInput = document.querySelector('.todo-input');
   const $todoCount = document.querySelector('.todo-count');
   const $removeAllBtn = document.querySelector('.remove-all-btn');
-
-  const todoList = new TodoList(data, $todoList, this);
-  const todoCount = new TodoCount($todoCount, data);
-  new TodoInput($todoInput, $todoForm, this);
-  new TodoRemoveBtn($removeAllBtn);
 
   this.countTodo = (data) => {
     const totalCount = data.length;
@@ -54,6 +49,16 @@ export default function App() {
     data = [];
     this.setState(data);
   });
+
+  const todoList = new TodoList({
+    data,
+    $todoList,
+    deleteTodo: this.deleteTodo,
+    completeTodo: this.completeTodo,
+  });
+  const todoCount = new TodoCount($todoCount, data);
+  new TodoInput($todoInput, $todoForm, this.addTodo);
+  new TodoRemoveBtn($removeAllBtn);
 
   this.setState(data);
 }

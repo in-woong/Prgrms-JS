@@ -1,6 +1,6 @@
 import { checkNewKeyword, checkTarget, checkTodoListData } from '../validation.js';
 
-export default function TodoList(data, $todoList, app) {
+export default function TodoList({ data, $todoList, deleteTodo, completeTodo }) {
   this.validation = () => {
     checkNewKeyword(this);
     checkTarget($todoList);
@@ -30,10 +30,10 @@ export default function TodoList(data, $todoList, app) {
     $todoList.addEventListener('click', (e) => {
       const { id } = e.target.parentNode;
       if (e.target.tagName === 'BUTTON') {
-        app.deleteTodo(id);
+        deleteTodo(id);
       }
       if (e.target.tagName === 'SPAN' || e.target.tagName === 'S') {
-        app.completeTodo(id);
+        completeTodo(id);
       }
     });
   };
