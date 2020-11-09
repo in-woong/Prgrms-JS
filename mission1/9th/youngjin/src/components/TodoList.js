@@ -1,11 +1,11 @@
 import { checkTodoListData } from '../data/validation.js'
 
 export default class TodoList {
-  constructor({ data, domId }) {
+  constructor({ data, domElement }) {
     checkTodoListData(data)
     this.data = data
-    this.domId = domId
-    this.domElement = document.querySelector(this.domId)
+    this.domElement = domElement
+    this.todoListComponent = domElement.querySelector('#todo-component')
 
     const clickTodoCardHandler = (e) => {
       const targetKey = e.target.getAttribute('key')
@@ -18,7 +18,9 @@ export default class TodoList {
       }
       e.stopPropagation()
     }
-    this.domElement.addEventListener('click', clickTodoCardHandler)
+    this.todoListComponent.addEventListener('click', clickTodoCardHandler)
+
+    this.render()
   }
 
   render() {
@@ -27,12 +29,12 @@ export default class TodoList {
         const className = dataElement.isCompleted
           ? 'todo completed-todo'
           : 'todo'
-        return `<div key="${index}" class="${className}" >${dataElement.text}
+        return `<li key="${index}" class="${className}" >${dataElement.text}
         <button key="${index}" type='text' id="todo-delete-button" class='todo-delete-button'>X</button>
-        </div>`
+        </li>`
       })
       .join('')
-    this.domElement.innerHTML = dataHtmlString
+    this.todoListComponent.innerHTML = dataHtmlString
   }
 
   setState(nextDataArray) {
@@ -56,7 +58,6 @@ export default class TodoList {
   }
 
   toggleDataCompleted(togleDataIndex) {
-    console.log('toggleDataIndex', togleDataIndex)
     this.data[togleDataIndex].isCompleted = !this.data[togleDataIndex]
       .isCompleted
     this.render()
