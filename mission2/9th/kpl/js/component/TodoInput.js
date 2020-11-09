@@ -10,6 +10,7 @@ function TodoInput(addTodoItem ,targetId) {
         
     };
     this.init = () => {
+        this.validate();
         const $input = document.getElementById(this.targetId);
         $input.addEventListener('keypress', (event) => {
             if(event.key === 'Enter') {

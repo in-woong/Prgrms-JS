@@ -1,6 +1,6 @@
 import { useArrayState, checkTarget, checkTypes } from '../validator/validation.js'
 import { convertStringToBoolean } from '../util/util.js'
-function TodoList(data, targetId) {
+function TodoList(data, countTodoItem, targetId) {
     this.data = data;
     this.targetId = targetId;
     this.validate = (data) => {
@@ -34,6 +34,7 @@ function TodoList(data, targetId) {
     this.setState = (nextData) => {
       this.validate(nextData);
       this.data = nextData;
+      countTodoItem(this.data);
       this.render();
       this.setEvent();
     };
