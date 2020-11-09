@@ -20,7 +20,9 @@ function App() {
         this.todoList = new TodoList(data, countTodoItem, 'todo-list');
         this.todoInput = new TodoInput(addTodoItem, 'todo-input');
         this.TodoRemoveAll = new TodoRemoveAll('todo-remove-all');
-        this.TodoRemoveAll.$removeAllBtn.addEventListener('remove-all', (event) => {
+
+        const removeAllBtn = this.TodoRemoveAll.$removeAllBtn;
+        removeAllBtn.addEventListener('remove-all', (event) => {
             this.data = [];
             this.todoList.setState(this.data);
         });
