@@ -1,3 +1,7 @@
+form {
+  float: left;
+}
+
 p,
 button {
   cursor: pointer;

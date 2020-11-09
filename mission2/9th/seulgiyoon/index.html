@@ -6,12 +6,15 @@
   </head>
 
   <body>
-    <form id="todo-form">
-      <input type="text" autofocus />
-      <button>할 일 추가하기</button>
-    </form>
-    <div id="todo-list"><ul></ul></div>
-    <div id="todo-counter"></div>
+    <div id="app">
+      <form id="todo-form">
+        <input type="text" autofocus />
+        <button>할 일 추가하기</button>
+      </form>
+      <button id="todo-reset">할 일 모두 삭제</button>
+      <div id="todo-list"><ul></ul></div>
+      <div id="todo-counter"></div>
+    </div>
     <script type="module" src="./main.js"></script>
   </body>
 </html>
