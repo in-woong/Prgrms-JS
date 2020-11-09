@@ -1,18 +1,21 @@
 import TodoList from './components/TodoList.js';
 import TodoInput from './components/TodoInput.js'
 import TodoCount from './components/TodoCount.js';
+import TodoRemoveBtn from './components/TodoRemoveBtn.js';
 
 export default function App() {
-  const data = [];
+  let data = [];
 
   const $todoList = document.querySelector('#todo-list');
   const $todoForm = document.querySelector('.todo-form');
   const $todoInput = document.querySelector('.todo-input');
   const $todoCount = document.querySelector('.todo-count');
+  const $removeAllBtn = document.querySelector('.remove-all-btn');
 
   const todoList = new TodoList(data, $todoList, this);
-  const todoInput = new TodoInput($todoInput, $todoForm, this);
   const todoCount = new TodoCount($todoCount, data);
+  const todoInput = new TodoInput($todoInput, $todoForm, this);
+  const removeAllBtn = new TodoRemoveBtn($removeAllBtn);
 
   this.countTodo = (data) => {
     const totalCount = data.length;
@@ -20,23 +23,30 @@ export default function App() {
     todoCount.setState(totalCount, completedCount);
   };
 
+  this.setState = (data) => {
+    this.countTodo(data);
+    todoList.setState(data);
+  };
+
   this.addTodo = (text) => {
     data.push({ text, isCompleted: false });
-    todoList.setState(data);
-    this.countTodo(data);
+    this.setState(data);
   };
 
   this.deleteTodo = (index) => {
     data.splice(index, 1);
-    todoList.setState(data);
-    this.countTodo(data);
+    this.setState(data);
   };
 
   this.completeTodo = (index) => {
     data[index].isCompleted = !data[index].isCompleted;
-    todoList.setState(data);
-    this.countTodo(data);
+    this.setState(data);
   };
+
+  $removeAllBtn.addEventListener('removeAll', () => {
+    data = [];
+    this.setState(data);
+  });
 
   this.countTodo(data);
 }
