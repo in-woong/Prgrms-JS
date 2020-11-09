@@ -6,6 +6,12 @@ import TodoRemoveBtn from './components/TodoRemoveBtn.js';
 export default function App() {
   let data = [];
 
+  try {
+    data = JSON.parse(localStorage.getItem('todo-list')) || [];
+  } catch (error) {
+    data = [];
+  }
+
   const $todoList = document.querySelector('#todo-list');
   const $todoForm = document.querySelector('.todo-form');
   const $todoInput = document.querySelector('.todo-input');
@@ -24,6 +30,7 @@ export default function App() {
   };
 
   this.setState = (data) => {
+    localStorage.setItem('todo-list', JSON.stringify(data));
     this.countTodo(data);
     todoList.setState(data);
   };
@@ -48,5 +55,5 @@ export default function App() {
     this.setState(data);
   });
 
-  this.countTodo(data);
+  this.setState(data);
 }
