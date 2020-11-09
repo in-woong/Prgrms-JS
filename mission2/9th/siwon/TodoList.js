@@ -26,8 +26,8 @@ export default function TodoList(data, $targetId) {
     this.render = () => {
         const todoListHtml = this.data
             .map(({text, isCompleted}, index) => ((isCompleted 
-                ? `<li data-index="${index}" class="li-todo completed">` : `<li data-index="${index}" class="li-todo">`) 
-                + `${text} <button id="${index}" class="btn-delete">삭제</button></li>`))
+                ? `<li data-index="${index}" class="todo-item completed">` : `<li data-index="${index}" class="todo-item">`) 
+                + `${text} <button data-index="${index}" class="btn-delete">삭제</button></li>`))
             .join('');
         document.querySelector(`${this.$targetId}`).innerHTML = `<ul>${todoListHtml}</ul>`;
     }
@@ -47,7 +47,7 @@ export default function TodoList(data, $targetId) {
 
     this.deleteTodo = (e) => {
         if(e.target.className === 'btn-delete') {
-            const deleteIndex = e.target.getAttribute('id');
+            const deleteIndex = e.target.getAttribute('data-index');
             this.data.splice(deleteIndex, 1);
             this.setState(this.data);
         }
@@ -55,13 +55,16 @@ export default function TodoList(data, $targetId) {
 
     this.toggleTodo = (e) => {
         if (e.target.tagName.toLowerCase() === 'li') {
-            e.target.classList.toggle('completed');
-        } 
+            const toggleIndex = e.target.getAttribute('data-index');
+            this.data[toggleIndex].isCompleted = !this.data[toggleIndex].isCompleted;
+            this.render();
+            console.log(data);
+        }
     }
 
     document.querySelector(`${this.$targetId}`).addEventListener('click', this.deleteTodo);
     document.querySelector(`${this.$targetId}`).addEventListener('click', this.toggleTodo);
 
-    this.render();
     this.validation(this.data);
+    this.render();
 }
