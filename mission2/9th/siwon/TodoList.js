@@ -25,15 +25,42 @@ export default function TodoList(data, $targetId) {
 
     this.render = () => {
         const todoListHtml = this.data
-            .map(({text, isCompleted}) => (isCompleted ? `<li><s>${text}</s></li>` : `<li>${text}</li>`))
+            .map(({text, isCompleted}, index) => ((isCompleted 
+                ? `<li data-index="${index}" class="li-todo completed">` : `<li data-index="${index}" class="li-todo">`) 
+                + `${text} <button id="${index}" class="btn-delete">삭제</button></li>`))
             .join('');
         document.querySelector(`${this.$targetId}`).innerHTML = `<ul>${todoListHtml}</ul>`;
     }
 
     this.setState = (nextData) => {
         this.data = nextData;
+
+        // check newData validation
+        checkData(this.data);
+        checkDataTypes(
+            data,
+            (data) => typeof data.text === 'string' && typeof data.isCompleted === 'boolean'
+        )
+
         this.render();
     }
+
+    this.deleteTodo = (e) => {
+        if(e.target.className === 'btn-delete') {
+            const deleteIndex = e.target.getAttribute('id');
+            this.data.splice(deleteIndex, 1);
+            this.setState(this.data);
+        }
+    }
+
+    this.toggleTodo = (e) => {
+        if (e.target.tagName.toLowerCase() === 'li') {
+            e.target.classList.toggle('completed');
+        } 
+    }
+
+    document.querySelector(`${this.$targetId}`).addEventListener('click', this.deleteTodo);
+    document.querySelector(`${this.$targetId}`).addEventListener('click', this.toggleTodo);
 
     this.render();
     this.validation(this.data);
