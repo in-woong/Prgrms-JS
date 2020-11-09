@@ -1,6 +1,6 @@
 import { validateTextValueCheck, checkTarget } from '../validator/validation.js'
 
-function TodoInput(addTodoItem ,targetId) {
+function TodoInput(addTodoItem, targetId) {
     this.targetId = targetId;
     this.validate = () => {
         if (new.target !== TodoInput) {
