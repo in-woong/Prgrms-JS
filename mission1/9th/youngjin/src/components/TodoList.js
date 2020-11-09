@@ -5,10 +5,18 @@ export default class TodoList {
     checkTodoListData(data)
     this.data = data
     this.domId = domId
+    this.domElement = document.querySelector(this.domId)
+
+    const clickDeleteHandler = (e) => {
+      if (e.target.id === 'todo-delete-button') {
+        const targetKey = e.target.getAttribute('key')
+        this.deleteData(targetKey)
+      }
+    }
+    this.domElement.addEventListener('click', clickDeleteHandler)
   }
 
   render() {
-    const todoListDiv = document.querySelector(this.domId)
     const dataHtmlString = this.data
       .map((dataElement, index) => {
         const className = dataElement.isCompleted
@@ -19,17 +27,7 @@ export default class TodoList {
         </div>`
       })
       .join('')
-    todoListDiv.innerHTML = dataHtmlString
-
-    const deleteButtons = document
-      .querySelector(this.domId)
-      .querySelectorAll('#todo-delete-button')
-    deleteButtons.forEach((deleteButton) => {
-      deleteButton.addEventListener('click', (e) => {
-        const targetKey = e.target.getAttribute('key')
-        this.deleteData(targetKey)
-      })
-    })
+    this.domElement.innerHTML = dataHtmlString
   }
 
   setState(nextDataArray) {
