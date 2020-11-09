@@ -5,23 +5,21 @@ import {
     checkDataTypes 
 } from './validation.js';
 
-export default function TodoList(data, $targetId) {
-    if (!(this instanceof TodoList)) {
-        throw new Error("TodoList의 instance가 아닙니다.");
-    }
-
-    this.data = data;
-    this.$targetId = $targetId;
+export default function TodoList(data, $todoList, app) {
 
     this.validation = (data) => {
         checkInstance(this);
-        checkTarget(this.$targetId);
+        checkTarget($todoList);
         checkData(data);
         checkDataTypes(
             data,
             (data) => typeof data.text === 'string' && typeof data.isCompleted === 'boolean'
-        )
+        );
     }
+
+    this.validation(data);
+    this.data = data;
+    this.$todoList = $todoList;
 
     this.render = () => {
         const todoListHtml = this.data
@@ -29,42 +27,37 @@ export default function TodoList(data, $targetId) {
                 ? `<li data-index="${index}" class="todo-item completed">` : `<li data-index="${index}" class="todo-item">`) 
                 + `${text} <button data-index="${index}" class="btn-delete">삭제</button></li>`))
             .join('');
-        document.querySelector(`${this.$targetId}`).innerHTML = `<ul>${todoListHtml}</ul>`;
+        this.$todoList.innerHTML = `<ul>${todoListHtml}</ul>`;
     }
 
     this.setState = (nextData) => {
-        this.data = nextData;
-
         // check newData validation
-        checkData(this.data);
+        checkData(nextData);
         checkDataTypes(
-            data,
-            (data) => typeof data.text === 'string' && typeof data.isCompleted === 'boolean'
-        )
+            nextData,
+            (nextData) => typeof nextData.text === 'string' && typeof nextData.isCompleted === 'boolean'
+        );
 
+        this.data = nextData;
         this.render();
     }
 
     this.deleteTodo = (e) => {
         if(e.target.className === 'btn-delete') {
             const deleteIndex = e.target.getAttribute('data-index');
-            this.data.splice(deleteIndex, 1);
-            this.setState(this.data);
+            app.deleteTodo(deleteIndex);
         }
     }
 
     this.toggleTodo = (e) => {
         if (e.target.tagName.toLowerCase() === 'li') {
             const toggleIndex = e.target.getAttribute('data-index');
-            this.data[toggleIndex].isCompleted = !this.data[toggleIndex].isCompleted;
-            this.render();
-            console.log(data);
+            app.toggleTodo(toggleIndex);
         }
     }
 
-    document.querySelector(`${this.$targetId}`).addEventListener('click', this.deleteTodo);
-    document.querySelector(`${this.$targetId}`).addEventListener('click', this.toggleTodo);
-
-    this.validation(this.data);
+    this.$todoList.addEventListener('click', this.deleteTodo);
+    this.$todoList.addEventListener('click', this.toggleTodo);
+    
     this.render();
 }
