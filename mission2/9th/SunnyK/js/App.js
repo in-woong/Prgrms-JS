@@ -32,6 +32,7 @@ export default class App {
     this.todoInput = new TodoInput({
       $target: $todoInputTarget,
       insertTodo: this.insertTodo.bind(this),
+      deleteAllTodo: this.deleteAllTodo.bind(this),
     })
   }
 
@@ -68,13 +69,6 @@ export default class App {
     this.setState(nextTodoData)
   }
 
-  deleteTodo(deleteTodoIndex) {
-    const nextTodoData = this.todoData.slice()
-    nextTodoData.splice(deleteTodoIndex, 1)
-
-    this.setState(nextTodoData)
-  }
-
   toggleTodo(toggleTodoIndex) {
     const nextTodoData = this.todoData.slice()
 
@@ -84,5 +78,16 @@ export default class App {
     })
 
     this.setState(nextTodoData)
+  }
+
+  deleteTodo(deleteTodoIndex) {
+    const nextTodoData = this.todoData.slice()
+    nextTodoData.splice(deleteTodoIndex, 1)
+
+    this.setState(nextTodoData)
+  }
+
+  deleteAllTodo() {
+    this.setState([])
   }
 }

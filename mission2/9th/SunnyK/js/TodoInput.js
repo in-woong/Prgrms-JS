@@ -4,13 +4,15 @@ const ENTER_KEY_CODE = 13
 const TODO_INPUT_CLASS_NAMES = {
   textInput: 'todo-text-input',
   inputBtn: 'todo-input-btn',
+  deleteAllTodoBtn: 'todo-delete-all-btn',
 }
 
-export default function TodoInput({ $target, insertTodo }) {
+export default function TodoInput({ $target, insertTodo, deleteAllTodo }) {
   useNewKeyword(new.target)
 
   this.$target = $target
   this.insertTodo = insertTodo
+  this.deleteAllTodo = deleteAllTodo
 
   this.setAddTodoEvent = () => {
     const $todoTextInput = document.querySelector(
@@ -39,9 +41,14 @@ export default function TodoInput({ $target, insertTodo }) {
     $target.innerHTML = `
       <input class="${TODO_INPUT_CLASS_NAMES.textInput}" type="text" />
       <input class="${TODO_INPUT_CLASS_NAMES.inputBtn}" type="button" value="+"/>
+      <input class="${TODO_INPUT_CLASS_NAMES.deleteAllTodoBtn}" type="button" value="전체삭제"/>
     `
   }
 
   this.render()
   this.setAddTodoEvent()
+
+  document
+    .querySelector(`.${TODO_INPUT_CLASS_NAMES.deleteAllTodoBtn}`)
+    .addEventListener('click', this.deleteAllTodo)
 }

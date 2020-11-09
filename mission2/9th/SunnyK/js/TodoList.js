@@ -53,13 +53,13 @@ export default function TodoList({
     `
   }
 
-  this.deleteTodoEvent = $target.addEventListener('click', (e) => {
+  $target.addEventListener('click', (e) => {
     if (e.target.className === TODOLIST_CALSS_NAMES.todoDeleteBtn) {
       this.deleteTodo(e.target.parentNode.dataset.id)
     }
   })
 
-  this.toggleTodoEvent = $target.addEventListener('click', (e) => {
+  $target.addEventListener('click', (e) => {
     if (e.target.className === TODOLIST_CALSS_NAMES.todoCheckbox) {
       this.toggleTodo(e.target.parentNode.parentNode.dataset.id)
     }
