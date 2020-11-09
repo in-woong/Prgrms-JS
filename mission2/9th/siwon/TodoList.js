@@ -25,7 +25,7 @@ export default function TodoList(data, $targetId) {
 
     this.render = () => {
         const todoListHtml = this.data
-            .map(({text, isCompleted}) => (isCompleted ? `<li>${text}</li>` : `<li><s>${text}</s></li>`))
+            .map(({text, isCompleted}) => (isCompleted ? `<li><s>${text}</s></li>` : `<li>${text}</li>`))
             .join('');
         document.querySelector(`${this.$targetId}`).innerHTML = `<ul>${todoListHtml}</ul>`;
     }

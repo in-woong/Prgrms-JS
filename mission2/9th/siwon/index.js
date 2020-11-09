@@ -1,17 +1,14 @@
 import TodoList from './TodoList.js';
 
-const data1 = [
+let data = [
     {
         text: 'JS 공부하기',
-        isCompleted: false
+        isCompleted: true
     },
     {
         text: 'JS 복습하기',
-        isCompleted: false
-    }
-];
-
-const data2 = [
+        isCompleted: true
+    },
     {
         text: '낮잠자기',
         isCompleted: false
@@ -19,20 +16,31 @@ const data2 = [
     {
         text: '텀프 제출하기',
         isCompleted: true
-    }
-];
-
-const data3 = [
-    {
-        text: '낮잠 또 자기',
-        isCompleted: true
     },
-    {
-        text: '넷플릭스 보기',
-        isCompleted: false
-    }
 ];
 
-new TodoList(data1, "#todo-list");
-new TodoList(data2, "#todo-day");
-new TodoList(data3, "#todo-week");
+const todoList = new TodoList(data, "#todo-list");
+
+document.querySelector("#todo-input").addEventListener("keyup", (e) => {
+    const KEY_CODE = 13;    // for enter
+    if (e.keyCode === KEY_CODE) { 
+        if (e.target.value.length === 0) {
+            alert("할일을 입력해주세요");
+        } else {
+            addTodo(e.target);
+        }
+    }
+});
+
+function addTodo($inputTarget) {
+    console.log($inputTarget);
+    todoList.setState([
+        ...todoList.data,
+        {
+            text: $inputTarget.value,
+            isCompleted: false
+        },
+    ])
+    $inputTarget.value = null;
+    $inputTarget.focus();
+}
