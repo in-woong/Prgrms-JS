@@ -1,7 +1,7 @@
 import App from './App.js';
 import TodoList from './TodoList.js';
 
-let data = [
+const data = [
     {
         text: 'JS 공부하기',
         isCompleted: true

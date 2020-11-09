@@ -1,34 +1,25 @@
-import TodoList from './TodoList.js';
 import { 
-    checkTarget, 
-    checkData, 
-    checkDataTypes 
+    checkTarget
 } from './validation.js';
 
 const ENTER_KEY_CODE = 13;    // for enter
 
-export default function TodoInput($todoInput, app) {
+export default function TodoInput($todoInput, addTodo) {
 
     this.validation = () => {
         checkTarget($todoInput);
     }
     this.$todoInput = $todoInput;
 
-    this.addTodo = ($target) => {
-        console.log("this is addTodo function in TodoInput.")
-        
-        app.addTodo(this.$todoInput.value);
-
-        this.$todoInput.value = null;
-        this.$todoInput.focus();
-    }
-
     this.$todoInput.addEventListener("keyup", (e) => {
         if (e.keyCode === ENTER_KEY_CODE) { 
             if (e.target.value.length === 0) {
                 alert("할일을 입력해주세요!!");
             } else {
-                this.addTodo(e.target);
+                addTodo(this.$todoInput.value);
+                // 새로운 input을 위한 초기화 및 바로 입력가능하도록 focus 지정
+                this.$todoInput.value = null;
+                this.$todoInput.focus();
             }
         }
     });

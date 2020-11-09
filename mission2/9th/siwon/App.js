@@ -10,14 +10,9 @@ export default function App(initialData) {
     const $todoList = document.querySelector("#todo-list");
     const $todoCount = document.querySelector("#todo-count");
 
-    this.todoInput = new TodoInput($todoInput, this);
-    this.todoList = new TodoList(data, $todoList, this);
-    this.todoCount = new TodoCount(data, $todoCount, this);
-
     // input으로 입력한 todo를 추가하는 함수
     this.addTodo = (newTodo) => {
         data.push({ text: newTodo, isCompleted: false });
-        console.log(data);
         this.todoList.setState(data);
         this.todoCount.countCompleted(data);
     }
@@ -27,7 +22,6 @@ export default function App(initialData) {
         data.splice(index, 1);
         this.todoList.setState(data);
         this.todoCount.countCompleted(data);
-        console.log(data);
     }
 
     // 특정 index의 todo의 완료여부를 변경하는 함수
@@ -35,6 +29,9 @@ export default function App(initialData) {
         data[index].isCompleted = !data[index].isCompleted;
         this.todoList.setState(data);
         this.todoCount.countCompleted(data);
-        console.log(data);
     }
+
+    this.todoInput = new TodoInput($todoInput, this.addTodo);
+    this.todoList = new TodoList(data, $todoList, this.deleteTodo, this.toggleTodo);
+    this.todoCount = new TodoCount(data, $todoCount);
 }

@@ -1,12 +1,11 @@
 // TodoCount : 총 Todo의 개수, 완료처리된 Todo의 개수를 표시함
-export default function TodoList(data, $todoCount, app) {
+export default function TodoList(data, $todoCount) {
     this.$todoCount = $todoCount;
 
     this.countCompleted = (data) => {
         const completedTodoCount = data.reduce((pre, { text, isCompleted }) => {
             if (isCompleted) {
                 pre += 1;
-                console.log(pre);
             }
             return pre;
         }, 0);

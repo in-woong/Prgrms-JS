@@ -10,12 +10,6 @@ export const checkTarget = ($targetId) => {
     }
 }
 
-export const checkData = (data) => {
-    if (!data) { // data가 null, undefined, 공백문자 일 때
-        throw new Error("data가 올바르지 않습니다");
-    }
-}
-
 export const checkDataTypes = (data, checkCallback) => {
     if (!Array.isArray(data)) {
         throw new Error("data가 array 형식이 아닙니다");
