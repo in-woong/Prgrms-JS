@@ -6,3 +6,8 @@
   color: gray;
   text-decoration: line-through;
 }
+
+.todo-count {
+  color: darkgray;
+  font-size: small;
+}
