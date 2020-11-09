@@ -21,13 +21,13 @@ export default function App() {
   this.countTodo = (data) => {
     const totalCount = data.length;
     const completedCount = data.filter(({ isCompleted }) => isCompleted === true).length;
-    todoCount.setState(totalCount, completedCount);
+    this.todoCount.setState(totalCount, completedCount);
   };
 
   this.setState = (data) => {
     localStorage.setItem('todo-list', JSON.stringify(data));
     this.countTodo(data);
-    todoList.setState(data);
+    this.todoList.setState(data);
   };
 
   this.addTodo = (text) => {
@@ -50,15 +50,18 @@ export default function App() {
     this.setState(data);
   });
 
-  const todoList = new TodoList({
-    data,
-    $todoList,
-    deleteTodo: this.deleteTodo,
-    completeTodo: this.completeTodo,
-  });
-  const todoCount = new TodoCount($todoCount, data);
-  new TodoInput($todoInput, $todoForm, this.addTodo);
-  new TodoRemoveBtn($removeAllBtn);
+  this.init = () => {
+    this.todoList = new TodoList({
+      data,
+      $todoList,
+      deleteTodo: this.deleteTodo,
+      completeTodo: this.completeTodo,
+    });
+    this.todoCount = new TodoCount($todoCount, data);
+    (() => new TodoInput($todoInput, $todoForm, this.addTodo))();
+    (() => new TodoRemoveBtn($removeAllBtn))();
+  };
 
+  this.init();
   this.setState(data);
 }
