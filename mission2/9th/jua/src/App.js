@@ -14,8 +14,8 @@ export default function App() {
 
   const todoList = new TodoList(data, $todoList, this);
   const todoCount = new TodoCount($todoCount, data);
-  const todoInput = new TodoInput($todoInput, $todoForm, this);
-  const removeAllBtn = new TodoRemoveBtn($removeAllBtn);
+  new TodoInput($todoInput, $todoForm, this);
+  new TodoRemoveBtn($removeAllBtn);
 
   this.countTodo = (data) => {
     const totalCount = data.length;
