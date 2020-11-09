@@ -1,7 +1,7 @@
 import InputField from './InputField.js'
 import TodoList from './TodoList.js'
 
-const App = ({ domElement, dataId }) => {
+const TodoListModule = ({ domElement, dataId }) => {
   domElement.innerHTML = `<div id="input-component" class="input-component"></div>
   <ul id='todo-component' class='todo-component'></ul>`
 
@@ -29,4 +29,4 @@ const getDataFromLocalStorage = (dataId) => {
   return data
 }
 
-export default App
+export default TodoListModule
