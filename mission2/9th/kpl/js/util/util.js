@@ -7,7 +7,8 @@ export const convertStringToBoolean = (text) => {
     try {
         return JSON.parse(text.toLowerCase())
     } catch (error) {
-        console.log(`error name : ${error.name}
+        console.error(` 에러가 발생하였습니다.
+        error name : ${error.name}
         error message : ${error.message}
         error stack : ${error.stack}`);
     }

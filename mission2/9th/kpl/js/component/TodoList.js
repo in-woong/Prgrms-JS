@@ -16,8 +16,7 @@ function TodoList(data, countTodoItem, targetId) {
           );
     };
     this.render = () => {
-      const contents =
-        '<ul>' +
+      const contents = '<ul id="todoUl">' +
         this.data
           .map((todo, index) => {
             const delBtnHtml = `<button class="deleteBtn" type="button" data-index=${index}> 삭제 </button>`;
@@ -40,42 +39,30 @@ function TodoList(data, countTodoItem, targetId) {
     };
 
     this.setEvent = () => {
-        // 삭제 버튼에 대한 이벤트 설정
-        const deleteBtnItems = document.querySelectorAll('.deleteBtn');
-        deleteBtnItems.forEach((target) => {
-            target.addEventListener('click', (event) => {
-                // 상위로 이벤트 전파를 막기위해 사용 (버튼 클릭하였을때)
-                event.stopPropagation();
-                const currentTarget = event.currentTarget;
-                const index = currentTarget.dataset.index;
-                const items = this.data;
-
-                items.splice(index,1);
-                this.setState(items);
-            })
-        });
-
-        // Todo text에 대한 이벤트 설정
+        // 이벤트 위임 : 요소마다 이벤트 핸들러를 할당하지 않고, 요소들의 공통 조상에 이벤트 핸들러를 할당하여 관리.
         const todoLiItems = document.querySelectorAll('.todoLi');
-        todoLiItems.forEach((target) => {
-            target.addEventListener('click', (event) => {
-                // 상위로 이벤트 전파를 막기위해 사용 (li 클릭하였을때)
-                event.stopPropagation();
-                const currentTarget = event.currentTarget;
-                const index = currentTarget.dataset.index;
-                const isCompleted = convertStringToBoolean(currentTarget.dataset.completed);
-                const items = this.data;
-                
-                if(items[index]) {
-                    if(isCompleted) {
-                        items[index] = {text : items[index].text , isCompleted : false};
-                    } else {
-                        items[index] = {text : items[index].text , isCompleted : true};
-                    }
-                    this.setState(items);
-                }
+        const todoUl = document.querySelector('#todoUl');
 
-            })
+        todoUl.addEventListener('click', (event) => {
+          const target = event.target;
+          const todoLi = target.closest('li'); // closest : selector와 일치하는 가장 근접한 상위요소 반환
+          const todoDelBtn = target.closest('button');
+          const index = todoLi.dataset.index;
+          const isCompleted = convertStringToBoolean(todoLi.dataset.completed);
+          const items = this.data;
+          
+          if(todoLi && items[index]) {
+            if(isCompleted) {
+                items[index] = {text : items[index].text , isCompleted : false};
+            } else {
+                items[index] = {text : items[index].text , isCompleted : true};
+            }
+          }
+
+          if(todoDelBtn) {
+            items.splice(index,1);
+          }
+          this.setState(items);
         });
     };
     

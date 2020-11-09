@@ -20,14 +20,10 @@ function App() {
         this.todoInput = new TodoInput(addTodoItem, 'todo-input');
         
     };
-    
-    
-
     const addTodoItem = (newTodoItem) => {
         this.data.push(newTodoItem);
         this.todoList.setState(this.data);
     };
-
     const countTodoItem = (todoItem) => {
         const completedTodoList = todoItem.filter((data) => {
             return data.isCompleted === true;
@@ -36,7 +32,6 @@ function App() {
             allTodoListCount : todoItem.length,
             completedTodoListCount : completedTodoList.length
         };
-        
         this.todoCount.setState(countTodoData);
     };
 
