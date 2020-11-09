@@ -7,13 +7,18 @@ export default class TodoList {
     this.domId = domId
     this.domElement = document.querySelector(this.domId)
 
-    const clickDeleteHandler = (e) => {
+    const clickTodoCardHandler = (e) => {
+      const targetKey = e.target.getAttribute('key')
       if (e.target.id === 'todo-delete-button') {
-        const targetKey = e.target.getAttribute('key')
-        this.deleteData(targetKey)
+        const deleteIndex = targetKey
+        this.deleteData(deleteIndex)
+      } else {
+        const toggleIndex = targetKey
+        this.toggleDataCompleted(toggleIndex)
       }
+      e.stopPropagation()
     }
-    this.domElement.addEventListener('click', clickDeleteHandler)
+    this.domElement.addEventListener('click', clickTodoCardHandler)
   }
 
   render() {
@@ -47,6 +52,13 @@ export default class TodoList {
       ...this.data.slice(0, deleteDataIndex),
       ...this.data.slice(deleteDataIndex + 1),
     ]
+    this.render()
+  }
+
+  toggleDataCompleted(togleDataIndex) {
+    console.log('toggleDataIndex', togleDataIndex)
+    this.data[togleDataIndex].isCompleted = !this.data[togleDataIndex]
+      .isCompleted
     this.render()
   }
 }
