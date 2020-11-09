@@ -53,14 +53,8 @@ export default function TodoList({ todoData, $target }) {
   })
 
   this.toggleTodoEvent = $target.addEventListener('click', (e) => {
-    if (
-      e.target.className ===
-      (TODOLIST_CALSS_NAMES.todoLabel &&
-        TODOLIST_CALSS_NAMES.todoText &&
-        TODOLIST_CALSS_NAMES.todoCheckbox)
-    ) {
-      // Internet Explorer는 closest() 지원 안함
-      this.toggleTodo(e.target.closest('li').dataset.id)
+    if (e.target.className === TODOLIST_CALSS_NAMES.todoCheckbox) {
+      this.toggleTodo(e.target.parentNode.parentNode.dataset.id)
     }
   })
 
