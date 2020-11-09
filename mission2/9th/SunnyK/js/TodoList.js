@@ -1,4 +1,4 @@
-import { useNewKeyword } from './Validation.js'
+import { useNewKeyword } from './validation.js'
 
 const TODOLIST_CALSS_NAMES = {
   todoDeleteBtn: 'todo-delete-btn',
@@ -13,7 +13,7 @@ const TODOLIST_CALSS_NAMES = {
  * @param {String} targetId
  */
 export default function TodoList({ todoData, $target }) {
-  useNewKeyword(this)
+  useNewKeyword(new.target)
 
   this.todoData = todoData
   this.$target = $target

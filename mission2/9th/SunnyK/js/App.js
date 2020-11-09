@@ -1,15 +1,19 @@
 import TodoList from './TodoList.js'
 import TodoInput from './TodoInput.js'
 import TodoCount from './TodoCount.js'
-import { useNewKeyword, isArrayState, checkTypes } from './Validation.js'
-import data from './data.js'
+import { useNewKeyword, isArrayState, checkTypes } from './validation.js'
 
 export default class App {
-  constructor({ $todoListTarget, $todoCountTarget, $todoInputTarget }) {
-    useNewKeyword(this)
-    this.validData(data)
+  constructor({
+    $todoListTarget,
+    $todoCountTarget,
+    $todoInputTarget,
+    todoData,
+  }) {
+    useNewKeyword(new.target)
+    this.validData(todoData)
 
-    this.todoData = data
+    this.todoData = todoData
 
     this.todoList = new TodoList({
       todoData: this.todoData,

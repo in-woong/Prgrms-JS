@@ -1,7 +1,7 @@
-import { useNewKeyword } from './Validation.js'
+import { useNewKeyword } from './validation.js'
 
 export default function TodoCount({ noTodo, noCompleteTodo, $target }) {
-  useNewKeyword()
+  useNewKeyword(new.target)
 
   this.noTodo = noTodo
   this.noCompleteTodo = noCompleteTodo

@@ -1,4 +1,4 @@
-import { useNewKeyword } from './Validation.js'
+import { useNewKeyword } from './validation.js'
 
 const TODO_INPUT_CLASS_NAMES = {
   textInput: 'todo-text-input',
@@ -6,7 +6,7 @@ const TODO_INPUT_CLASS_NAMES = {
 }
 
 export default function TodoInput({ $target }) {
-  useNewKeyword()
+  useNewKeyword(new.target)
 
   this.$target = $target
 
