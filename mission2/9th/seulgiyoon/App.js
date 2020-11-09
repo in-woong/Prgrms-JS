@@ -55,4 +55,11 @@ export default class App {
       this.reRender(newData)
     })
   }
+
+  addCustomEvent(event) {
+    this.el.addEventListener(event, () => {
+      const newData = []
+      this.reRender(newData)
+    })
+  }
 }
