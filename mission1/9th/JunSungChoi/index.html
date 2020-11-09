@@ -12,7 +12,7 @@
   <script src="TodoList.js"></script>
   <script>
 
-    var data = [
+    let data = [
       {
         text: 'JS 공부하기',
         isCompleted: true,
@@ -23,7 +23,7 @@
       }
     ]
 
-    var data2 = [
+    let data2 = [
       {
         text: '코드리뷰 하기',
         isCompleted: false,
@@ -34,7 +34,7 @@
       }
     ]
 
-    var data3 = [
+    let data3 = [
       {
         text: 'React 공부하기',
         isCompleted: false,
@@ -46,9 +46,9 @@
     ]
     
 
-    var todoList = new TodoList('#todo-list', data)
-    var todoList2 = new TodoList('#todo-list2', data2)
-    var todoList3 = new TodoList('#todo-list3', data3)
+    let todoList = new TodoList('#todo-list', data)
+    let todoList2 = new TodoList('#todo-list2', data2)
+    let todoList3 = new TodoList('#todo-list3', data3)
     
     todoList2.setState([
       {

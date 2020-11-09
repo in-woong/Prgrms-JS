@@ -36,6 +36,10 @@ function TodoList (id, data) {
   }
 
   this.setState = (nextData) => {
+    if (isEmpty(nextData) || !Array.isArray(nextData) || !propertyChecker(nextData)) {
+      throw new Error ('잘못된 데이터 입니다.')
+    }
+
     this.data = nextData
     this.render()
   }
