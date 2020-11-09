@@ -9,6 +9,7 @@ export default function App(initialData) {
     const $todoInput = document.querySelector("#todo-input");
     const $todoList = document.querySelector("#todo-list");
     const $todoCount = document.querySelector("#todo-count");
+    const $btnClear = document.querySelector("#btn-clear");
 
     // input으로 입력한 todo를 추가하는 함수
     this.addTodo = (newTodo) => {
@@ -30,6 +31,21 @@ export default function App(initialData) {
         this.todoList.setState(data);
         this.todoCount.countCompleted(data);
     }
+
+    this.clearTodo = () => {
+        data.splice(0, data.length);
+        this.todoList.setState(data);
+        this.todoCount.countCompleted(data);
+    }
+
+    const clearEvent = new CustomEvent('clearAll');
+    $btnClear.addEventListener('click', (e) => {
+        $todoList.dispatchEvent(clearEvent);
+    });
+
+    $todoList.addEventListener('clearAll', () => {
+        this.clearTodo();
+    })
 
     this.todoInput = new TodoInput($todoInput, this.addTodo);
     this.todoList = new TodoList(data, $todoList, this.deleteTodo, this.toggleTodo);
