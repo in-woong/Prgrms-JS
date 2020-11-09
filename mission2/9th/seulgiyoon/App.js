@@ -14,6 +14,10 @@ export default class App {
 
   init() {
     this.input.addSubmitEvent(this.addNewItem.bind(this))
+    this.list.addClickEvent(
+      this.removeItem.bind(this),
+      this.completeItem.bind(this)
+    )
     this.addListClickEvent()
   }
 
@@ -43,17 +47,6 @@ export default class App {
         : item
     )
     this.reRender(newData)
-  }
-
-  addListClickEvent() {
-    const todoListElement = document.querySelector('ul')
-    todoListElement.addEventListener('click', (e) => {
-      if (e.target.className === 'close_btn') {
-        this.removeItem(e.target.parentNode.dataset.text)
-      } else if (e.target.className === 'text' || 'text_complete') {
-        this.completeItem(e.target.parentNode.dataset.text)
-      }
-    })
   }
 
   addCustomResetEvent(event) {

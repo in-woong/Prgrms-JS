@@ -18,6 +18,16 @@ export default class TodoList {
     })
   }
 
+  addClickEvent(callback1, callback2) {
+    this.el.addEventListener('click', (e) => {
+      if (e.target.className === 'close_btn') {
+        callback1(text)
+      } else if (e.target.className === 'text' || 'text_complete') {
+        callback2(text)
+      }
+    })
+  }
+
   render() {
     const dataListString = this.data
       .map(
