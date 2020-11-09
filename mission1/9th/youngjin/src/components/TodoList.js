@@ -1,9 +1,10 @@
 import { checkTodoListData } from '../data/validation.js'
 
 export default class TodoList {
-  constructor({ data, domElement }) {
+  constructor({ data, domElement, dataId }) {
     checkTodoListData(data)
     this.data = data
+    this.dataId = dataId
     this.domElement = domElement
     this.todoListComponent = domElement.querySelector('#todo-component')
 
@@ -40,26 +41,36 @@ export default class TodoList {
   setState(nextDataArray) {
     checkTodoListData(nextDataArray)
     this.data = nextDataArray
+    this.saveOnLocalStorage({ data: this.data, dataId: this.dataId })
     this.render()
   }
 
   addData(nextData) {
     checkTodoListData([nextData])
     this.data = [...this.data, nextData]
+    this.saveOnLocalStorage({ data: this.data, dataId: this.dataId })
     this.render()
   }
 
   deleteData(deleteDataIndex) {
     this.data = [
-      ...this.data.slice(0, deleteDataIndex),
-      ...this.data.slice(deleteDataIndex + 1),
+      ...this.data.slice(0, +deleteDataIndex),
+      ...this.data.slice(+deleteDataIndex + 1),
     ]
+
+    this.saveOnLocalStorage({ data: this.data, dataId: this.dataId })
     this.render()
   }
 
   toggleDataCompleted(togleDataIndex) {
     this.data[togleDataIndex].isCompleted = !this.data[togleDataIndex]
       .isCompleted
+    this.saveOnLocalStorage({ data: this.data, dataId: this.dataId })
     this.render()
+  }
+
+  saveOnLocalStorage({ data, dataId }) {
+    const stringData = JSON.stringify(data)
+    localStorage.setItem(dataId, stringData)
   }
 }

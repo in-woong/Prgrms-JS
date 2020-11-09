@@ -1,14 +1,16 @@
 import InputField from './InputField.js'
 import TodoList from './TodoList.js'
-import * as data from '../data/index.js'
 
-const App = ({ domElement }) => {
+const App = ({ domElement, dataId }) => {
   domElement.innerHTML = `<div id="input-component" class="input-component"></div>
   <ul id='todo-component' class='todo-component'></ul>`
 
+  const data = getDataFromLocalStorage(dataId)
+
   const todoList = new TodoList({
-    data: data.dataDefault,
+    data,
     domElement,
+    dataId,
   })
 
   new InputField({
@@ -19,6 +21,12 @@ const App = ({ domElement }) => {
   domElement.addEventListener('removeAll', (e) => {
     todoList.setState([])
   })
+}
+
+const getDataFromLocalStorage = (dataId) => {
+  const stringData = localStorage.getItem(dataId)
+  const data = stringData ? JSON.parse(stringData) : []
+  return data
 }
 
 export default App
