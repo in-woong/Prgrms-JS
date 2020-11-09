@@ -5,10 +5,11 @@ const TODO_INPUT_CLASS_NAMES = {
   inputBtn: 'todo-input-btn',
 }
 
-export default function TodoInput({ $target }) {
+export default function TodoInput({ $target, insertTodo }) {
   useNewKeyword(new.target)
 
   this.$target = $target
+  this.insertTodo = insertTodo
 
   this.setAddTodoEvent = () => {
     const $todoTextInput = document.querySelector(

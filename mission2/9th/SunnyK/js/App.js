@@ -18,17 +18,20 @@ export default class App {
     this.todoList = new TodoList({
       todoData: this.todoData,
       $target: $todoListTarget,
+      toggleTodo: this.toggleTodo.bind(this),
+      deleteTodo: this.deleteTodo.bind(this),
     })
+
     this.todoCount = new TodoCount({
       noTodo: this.todoData.length,
       noCompleteTodo: this.todoData.filter((todo) => todo.isCompleted).length,
       $target: $todoCountTarget,
     })
+
     this.todoInput = new TodoInput({
       $target: $todoInputTarget,
+      insertTodo: this.insertTodo.bind(this),
     })
-
-    this.init()
   }
 
   setState(nextTodoData) {
@@ -40,12 +43,6 @@ export default class App {
       noTodo: this.todoData.length,
       noCompleteTodo: this.todoData.filter((todo) => todo.isCompleted).length,
     })
-  }
-
-  init() {
-    this.todoList.toggleTodo = this.toggleTodo.bind(this)
-    this.todoList.deleteTodo = this.deleteTodo.bind(this)
-    this.todoInput.insertTodo = this.insertTodo.bind(this)
   }
 
   validData(todoData) {
@@ -78,6 +75,7 @@ export default class App {
 
   toggleTodo(toggleTodoIndex) {
     const nextTodoData = this.todoData.slice()
+
     nextTodoData.splice(toggleTodoIndex, 1, {
       text: nextTodoData[toggleTodoIndex].text,
       isCompleted: !nextTodoData[toggleTodoIndex].isCompleted,

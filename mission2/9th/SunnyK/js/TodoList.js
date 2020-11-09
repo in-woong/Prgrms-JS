@@ -12,11 +12,18 @@ const TODOLIST_CALSS_NAMES = {
  * @param {Array} todoData
  * @param {String} targetId
  */
-export default function TodoList({ todoData, $target }) {
+export default function TodoList({
+  todoData,
+  $target,
+  toggleTodo,
+  deleteTodo,
+}) {
   useNewKeyword(new.target)
 
   this.todoData = todoData
   this.$target = $target
+  this.toggleTodo = toggleTodo
+  this.deleteTodo = deleteTodo
 
   this.setState = ({ nextData, $target }) => {
     this.todoData = nextData
