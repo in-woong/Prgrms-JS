@@ -3,6 +3,15 @@ import TodoList from './TodoList.js'
 import * as data from '../data/index.js'
 
 const App = () => {
+  document.addEventListener('removeAll', (e) => {
+    const typeTodoListMap = {
+      todoListDay,
+      todoListWeek,
+      todoListMonth,
+    }
+    typeTodoListMap[e.detail.todoListType].setState([])
+  })
+
   const todoListDay = new TodoList({
     data: data.dataDefault,
     domId: '#todo-list-day',
@@ -28,14 +37,17 @@ const App = () => {
   const dayInputComponent = new InputField({
     domId: '#input-for-day',
     onSubmit: onSubmitDay,
+    todoList: 'todoListDay',
   })
   const weekInputComponent = new InputField({
     domId: '#input-for-week',
     onSubmit: onSubmitWeek,
+    todoList: 'todoListWeek',
   })
   const monthInputComponent = new InputField({
     domId: '#input-for-month',
     onSubmit: onSubmitMonth,
+    todoList: 'todoListMonth',
   })
 }
 
