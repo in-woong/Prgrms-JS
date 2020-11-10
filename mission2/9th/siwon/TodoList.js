@@ -29,22 +29,18 @@ export default function TodoList(data, $todoList, appDeleteTodo, appToggleTodo) 
         this.render();
     }
 
-    this.deleteTodo = (e) => {
-        if(e.target.className === 'btn-delete') {
-            const deleteIndex = e.target.getAttribute('data-index');
-            appDeleteTodo(deleteIndex);
-        }
-    }
-
-    this.toggleTodo = (e) => {
-        if (e.target.tagName.toLowerCase() === 'li') {
+    this.$todoList.addEventListener('click', (e) => {
+        // todo LI 요소를 클릭했을 경우 toggleTodo
+        if (e.target && e.target.nodeName === 'LI') {
             const toggleIndex = e.target.getAttribute('data-index');
             appToggleTodo(toggleIndex);
         }
-    }
-
-    this.$todoList.addEventListener('click', this.deleteTodo);
-    this.$todoList.addEventListener('click', this.toggleTodo);
+        // delete button 요소를 클릭했을 경우 deleteTodo
+        if (e.target && e.target.nodeName === 'BUTTON') {
+            const deleteIndex = e.target.getAttribute('data-index');
+            appDeleteTodo(deleteIndex);
+        }
+    })
     
     this.render();
 }
