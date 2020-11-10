@@ -2,6 +2,7 @@ import App from "./components/App.js";
 
 const $listElement = document.querySelector("#todo-list");
 const $inputElement = document.querySelector("#todo-input");
+const $countElement = document.querySelector("#todo-count");
 const data = [
   {
     text: "JS 공부하기",
@@ -13,4 +14,4 @@ const data = [
   }
 ];
 
-new App(data, $listElement, $inputElement);
+new App(data, $listElement, $inputElement, $countElement);
