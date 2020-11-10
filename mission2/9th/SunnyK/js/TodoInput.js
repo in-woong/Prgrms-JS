@@ -13,7 +13,6 @@ export default function TodoInput({ $target, insertTodo, deleteAllTodo }) {
   this.$target = $target
   this.insertTodo = insertTodo
   this.deleteAllTodo = deleteAllTodo
-  this.removeAllEvent = new Event('removeAll')
 
   this.setAddTodoEvent = () => {
     const $todoTextInput = document.querySelector(
@@ -39,6 +38,7 @@ export default function TodoInput({ $target, insertTodo, deleteAllTodo }) {
   }
 
   this.setDeleteAllEvent = () => {
+    const removeAllEvent = new Event('removeAll')
     const $deleteAllBtn = document.querySelector(
       `.${TODO_INPUT_CLASS_NAMES.deleteAllTodoBtn}`
     )
@@ -46,7 +46,7 @@ export default function TodoInput({ $target, insertTodo, deleteAllTodo }) {
     $deleteAllBtn.addEventListener('removeAll', this.deleteAllTodo)
 
     $deleteAllBtn.addEventListener('click', (e) => {
-      e.target.dispatchEvent(this.removeAllEvent)
+      e.target.dispatchEvent(removeAllEvent)
     })
   }
 
