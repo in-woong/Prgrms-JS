@@ -8,7 +8,7 @@ function TodoList(data, target) {
   this.data = data
   this.target = target
   this.render = function () {
-    const contents =
+    const todoListStringHtml =
       '<ul>' +
       this.data
         .map((todo) => {
@@ -19,7 +19,7 @@ function TodoList(data, target) {
         .join('') +
       '</ul>'
 
-    document.querySelector(`#${target}`).innerHTML = contents
+    document.querySelector(`#${target}`).innerHTML = todoListStringHtml
   }
   this.setState = function (nextData) {
     stateValidCheck(nextData)
