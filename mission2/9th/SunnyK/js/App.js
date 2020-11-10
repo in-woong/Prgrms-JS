@@ -3,17 +3,14 @@ import TodoInput from './TodoInput.js'
 import TodoCount from './TodoCount.js'
 import { useNewKeyword, isArrayState, checkTypes } from './validation.js'
 
-export default class App {
-  constructor({
-    $todoListTarget,
-    $todoCountTarget,
-    $todoInputTarget,
-    todoData,
-  }) {
-    useNewKeyword(new.target)
-    this.validData(todoData)
+const LOCAL_STORAGE_TODO_DATA_NAME = 'todoData'
 
-    this.todoData = todoData
+export default class App {
+  constructor({ $todoListTarget, $todoCountTarget, $todoInputTarget }) {
+    useNewKeyword(new.target)
+
+    this.todoData = this.initTodoData()
+    this.validData(this.todoData)
 
     this.todoList = new TodoList({
       todoData: this.todoData,
@@ -36,16 +33,54 @@ export default class App {
     })
   }
 
-  setState(nextTodoData) {
-    this.validData(nextTodoData)
-    this.todoData = nextTodoData
+  initTodoData() {
+    try {
+      const todoDataInLocalStorage = localStorage.getItem(
+        LOCAL_STORAGE_TODO_DATA_NAME
+      )
 
-    this.todoList.setState({ nextData: this.todoData })
-    this.todoCount.setState({
-      numOfTodo: this.todoData.length,
-      numOfCompleteTodo: this.todoData.filter((todo) => todo.isCompleted)
-        .length,
-    })
+      if (todoDataInLocalStorage) {
+        try {
+          const todoData = JSON.parse(todoDataInLocalStorage)
+          this.validData(todoData)
+
+          return todoData
+        } catch (error2) {
+          console.error(error2)
+        }
+      }
+    } catch (error1) {
+      alert('할 일 데이터를 가져오는 중에 오류가 발생했습니다!')
+      console.error(error1)
+    }
+
+    return []
+  }
+
+  setState(nextTodoData) {
+    try {
+      try {
+        this.validData(nextTodoData)
+        this.todoData = nextTodoData
+      } catch (error2) {
+        console.error(error2)
+      }
+
+      localStorage.setItem(
+        LOCAL_STORAGE_TODO_DATA_NAME,
+        JSON.stringify(this.todoData)
+      )
+
+      this.todoList.setState({ nextData: this.todoData })
+      this.todoCount.setState({
+        numOfTodo: this.todoData.length,
+        numOfCompleteTodo: this.todoData.filter((todo) => todo.isCompleted)
+          .length,
+      })
+    } catch (error1) {
+      alert('할 일 데이터를 업데이트하는 중에 오류가 발생했습니다!')
+      console.error(error1)
+    }
   }
 
   validData(todoData) {
