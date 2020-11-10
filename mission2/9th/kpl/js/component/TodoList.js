@@ -16,7 +16,7 @@ function TodoList(data, countTodoItem, targetId) {
           );
     };
     this.render = () => {
-      const contents = '<ul id="todoUl">' +
+      const todoListStringHtml = '<ul id="todoUl">' +
         this.data
           .map((todo, index) => {
             const delBtnHtml = `<button class="deleteBtn" type="button" data-index=${index}> 삭제 </button>`;
@@ -28,7 +28,7 @@ function TodoList(data, countTodoItem, targetId) {
           .join('') +
         '</ul>';
   
-      document.querySelector(`#${targetId}`).innerHTML = contents;
+      document.querySelector(`#${targetId}`).innerHTML = todoListStringHtml;
     };
     this.setState = (nextData) => {
       this.validate(nextData);

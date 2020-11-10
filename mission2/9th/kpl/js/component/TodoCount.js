@@ -11,18 +11,18 @@ function TodoCount(targetId) {
     this.render = () => {
         const $todoCount = document.querySelector(`#${this.targetId}`);
         const countTodoData = this.countTodoData;
-        let contents = '';
+        let todoCountStringHtml = '';
 
         if (countTodoData && countTodoData.allTodoListCount > 0
             && countTodoData.allTodoListCount === countTodoData.completedTodoListCount) {
-            contents = `총 ${countTodoData.allTodoListCount} 건 모두 완료하였습니다.`;
+            todoCountStringHtml = `총 ${countTodoData.allTodoListCount} 건 모두 완료하였습니다.`;
         } else if(countTodoData && countTodoData.allTodoListCount > 0) {
-            contents = `총 ${countTodoData.allTodoListCount} 건 중 ${countTodoData.completedTodoListCount} 건 완료하였습니다.`;
+            todoCountStringHtml = `총 ${countTodoData.allTodoListCount} 건 중 ${countTodoData.completedTodoListCount} 건 완료하였습니다.`;
         } else {
-            contents = '해야할일이 없습니다.';
+            todoCountStringHtml = '해야할일이 없습니다.';
         }
 
-        $todoCount.innerHTML = contents;
+        $todoCount.innerHTML = todoCountStringHtml;
     };
     this.setState = (countTodoData) => {
         this.validate();
