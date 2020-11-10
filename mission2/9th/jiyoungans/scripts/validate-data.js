@@ -1,3 +1,5 @@
+import TodoList from "../components/TodoList.js";
+
 const ERR_CODE = new Map([
   ["NVL", "todo 값이 null입니다."],
   ["UND", "todo 값이 undefined입니다."],
@@ -31,3 +33,5 @@ function validateData(param) {
     throw new Error(ERR_CODE.get("EVL"));
   }
 }
+
+export { validateDataList, validateData };
