@@ -1,8 +1,11 @@
 import { checkArray, checkTarget, checkNewKeyword, checkTypes } from './validation.js'
 
-export default function TodoList(data, $target) {
+export default function TodoList(data, $target, removeTodo , reverseTodo) {
     this.data = data
     this.$target = $target;
+
+    this.removeTodo = removeTodo;
+    this.reverseTodo = reverseTodo;
 
     this.validation = (data) => {
         checkArray(data);
@@ -11,56 +14,31 @@ export default function TodoList(data, $target) {
         checkTypes(data
             , ({ text, isCompleted }) => typeof text === 'string' && typeof isCompleted === 'boolean')
     }
-    
-    //add
-    document.querySelector('#input-todo').addEventListener('keydown', (e) => {
-        if(e.key === "Enter") {
-            this.addTodo(e.target);
-        } 
-    })
-    
-    document.querySelector('#button-add').addEventListener('click', () => {
-       this.addTodo(document.querySelector('#input-todo'));           
-    })
 
-    //delete 
-    $target.addEventListener('click' , (e ) => {
+
+    $target.addEventListener('click', (e) => {
         const idNum = e.target.id;
-    
-        if(e.target.className === 'remove-btn'){
+
+        if (e.target.className === 'remove-btn') {
             this.removeTodo(idNum)
         }
 
-        else if(e.target.className === 'todo-item'){
-            this.reverseIsCompleted(idNum)
+        else if (e.target.className === 'todo-item') {
+            this.reverseTodo(idNum)
         }
     })
 
+    // this.removeTodo = (idx) => {
+    //     this.data.splice(idx,1);
+    //     this.render();
+    // }
 
+    // this.reverseTodo = (idx) => {
+    //     let data = this.data[idx];
+    //     data.isCompleted = !data.isCompleted
+    //     this.render();
+    // }
 
-    this.addTodo = ($input_target) => {
-        const newInputData = {
-            text : $input_target.value,
-            isCompleted : false,
-        }
-        this.setState([...this.data , newInputData])
-        $input_target.value = "";
-        $input_target.focus();
-    }
-
-
-    this.removeTodo = (idx) => {
-        this.data.splice(idx,1);
-        this.render();
-    }
-
-    this.reverseIsCompleted = (idx) => {
-        let data = this.data[idx];
-        data.isCompleted = !data.isCompleted
-        this.render();
-        
-    }
-    
 
     this.render = () => {
         let htmlString = '<ul>'

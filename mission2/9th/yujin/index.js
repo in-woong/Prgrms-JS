@@ -1,4 +1,4 @@
-import TodoList from './todolist.js'
+import App from './App.js' 
 
 let data = [
     {
@@ -13,7 +13,7 @@ let data = [
 
 
 try {
-    let todo = new TodoList(data, document.querySelector('#todo-list'))
+    let tmp = new App(data);
 
 } catch (e) {
     alert(e.message)
