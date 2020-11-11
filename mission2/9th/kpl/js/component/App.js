@@ -2,7 +2,7 @@ import TodoList from './TodoList.js'
 import TodoInput from './TodoInput.js'
 import TodoCount from './TodoCount.js'
 import TodoRemoveAll from './TodoRemoveAll.js'
-import { TODO_STORAGE_KEY } from '../data/constant.js'
+import { TODO_STORAGE_KEY, REMOVE_ALL_EVENT } from '../data/constant.js'
 import { jsonParse, jsonStringify } from '../util/util.js'
 
 /**
@@ -61,7 +61,7 @@ function App() {
 
     this.initRemoveAllBtn = () => {
         const removeAllBtn = this.TodoRemoveAll.$removeAllBtn;
-        removeAllBtn.addEventListener('remove-all', (event) => {
+        removeAllBtn.addEventListener(REMOVE_ALL_EVENT, (event) => {
             localStorage.clear();
             this.data = [];
             this.todoList.setState(this.data);

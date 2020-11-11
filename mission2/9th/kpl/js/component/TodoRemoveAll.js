@@ -1,4 +1,5 @@
 import { checkTarget } from '../validator/validation.js'
+import { REMOVE_ALL_EVENT } from '../data/constant.js'
 
 function TodoRemoveAll(targetId) {
     this.targetId = targetId;
@@ -11,7 +12,7 @@ function TodoRemoveAll(targetId) {
     };
     this.addRemoveAllEvent = () => {
         this.$removeAllBtn.addEventListener('click', (event) => {
-            const removeAllEvent = new CustomEvent('remove-all');
+            const removeAllEvent = new CustomEvent(REMOVE_ALL_EVENT);
             event.target.dispatchEvent(removeAllEvent);
         })
     };
