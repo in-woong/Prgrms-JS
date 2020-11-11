@@ -1,5 +1,6 @@
 import { useArrayState, checkTarget, checkTypes } from '../validator/validation.js'
-import { convertStringToBoolean } from '../util/util.js'
+import { convertStringToBoolean, jsonStringify } from '../util/util.js'
+import { TODO_STORAGE_KEY } from '../data/constant.js'
 function TodoList(data, countTodoItem, targetId) {
     this.data = data;
     this.targetId = targetId;
@@ -40,7 +41,6 @@ function TodoList(data, countTodoItem, targetId) {
 
     this.setEvent = () => {
         // 이벤트 위임 : 요소마다 이벤트 핸들러를 할당하지 않고, 요소들의 공통 조상에 이벤트 핸들러를 할당하여 관리.
-        const todoLiItems = document.querySelectorAll('.todoLi');
         const todoUl = document.querySelector('#todoUl');
 
         todoUl.addEventListener('click', (event) => {
@@ -62,6 +62,7 @@ function TodoList(data, countTodoItem, targetId) {
           if(todoDelBtn) {
             items.splice(index,1);
           }
+          localStorage.setItem(TODO_STORAGE_KEY, jsonStringify(items));
           this.setState(items);
         });
     };

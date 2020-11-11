@@ -2,7 +2,8 @@ import TodoList from './TodoList.js'
 import TodoInput from './TodoInput.js'
 import TodoCount from './TodoCount.js'
 import TodoRemoveAll from './TodoRemoveAll.js'
-import { data } from '../data/data.js'
+import { TODO_STORAGE_KEY } from '../data/constant.js'
+import { jsonParse, jsonStringify } from '../util/util.js'
 
 /**
  * 관심사의 분리
@@ -15,22 +16,20 @@ import { data } from '../data/data.js'
 function App() {
     
     this.init = () => {
-        this.data = data;
+        this.initLocalStorage();
         this.todoCount = new TodoCount('todo-count');
-        this.todoList = new TodoList(data, countTodoItem, 'todo-list');
+        this.todoList = new TodoList(this.data, countTodoItem, 'todo-list');
         this.todoInput = new TodoInput(addTodoItem, 'todo-input');
         this.TodoRemoveAll = new TodoRemoveAll('todo-remove-all');
-
-        const removeAllBtn = this.TodoRemoveAll.$removeAllBtn;
-        removeAllBtn.addEventListener('remove-all', (event) => {
-            this.data = [];
-            this.todoList.setState(this.data);
-        });
+        this.initRemoveAllBtn();
+        
     };
     const addTodoItem = (newTodoItem) => {
         this.data.push(newTodoItem);
-        this.todoList.setState(this.data);
+        localStorage.setItem(TODO_STORAGE_KEY, jsonStringify(this.data));
+        this.todoList.setState(jsonParse(localStorage.getItem(TODO_STORAGE_KEY)));
     };
+
     const countTodoItem = (todoItem) => {
         const completedTodoList = todoItem.filter((data) => {
             return data.isCompleted === true;
@@ -42,6 +41,25 @@ function App() {
         this.todoCount.setState(countTodoData);
     };
     
+    this.initLocalStorage = () => {
+        const localStorageItem = localStorage.getItem(TODO_STORAGE_KEY);
+        if(localStorageItem !== null) {
+            const todoData = jsonParse(localStorageItem);
+            this.data = todoData;
+        } else {
+            this.data = [];
+        }
+    };
+
+    this.initRemoveAllBtn = () => {
+        const removeAllBtn = this.TodoRemoveAll.$removeAllBtn;
+        removeAllBtn.addEventListener('remove-all', (event) => {
+            localStorage.clear();
+            this.data = [];
+            this.todoList.setState(this.data);
+        });
+    };
+
     this.init();
 }
 
