@@ -20,7 +20,7 @@ export default class TodoList {
   }
 
   toggleComplete(target) {
-    const index = Number(target.parentNode.dataset.index)
+    const index = parseInt(target.parentNode.dataset.index)
     const { text, isCompleted } = this.state[index]
     this.setState([
       ...this.state.slice(0, index),
@@ -33,7 +33,7 @@ export default class TodoList {
   }
 
   delete(target) {
-    const index = Number(target.parentNode.dataset.index)
+    const index = parseInt(target.parentNode.dataset.index)
     this.setState([
       ...this.state.slice(0, index),
       ...this.state.slice(index + 1),
