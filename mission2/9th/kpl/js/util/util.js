@@ -30,9 +30,9 @@ export const jsonParse = (parseData) => {
  * JSON stringify를 실행한다.
  */
 export const jsonStringify = (jsonData) => {
-    try {
+    try{
         return JSON.stringify(jsonData);
-    } catch (error) {
+    }catch(error) {
         throw new Error('JSON stringify시 오류가 발생했습니다.');
     }
 }

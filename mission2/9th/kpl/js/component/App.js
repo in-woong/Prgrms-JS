@@ -25,9 +25,13 @@ function App() {
         
     };
     const addTodoItem = (newTodoItem) => {
-        this.data.push(newTodoItem);
-        localStorage.setItem(TODO_STORAGE_KEY, jsonStringify(this.data));
-        this.todoList.setState(jsonParse(localStorage.getItem(TODO_STORAGE_KEY)));
+        try{
+            this.data.push(newTodoItem);
+            localStorage.setItem(TODO_STORAGE_KEY, jsonStringify(this.data));
+            this.todoList.setState(jsonParse(localStorage.getItem(TODO_STORAGE_KEY)));
+        }catch(error){
+            throw new Error(`항목추가시 에러가 발생하였습니다. ${error}`);
+        }
     };
 
     const countTodoItem = (todoItem) => {
@@ -42,12 +46,16 @@ function App() {
     };
     
     this.initLocalStorage = () => {
-        const localStorageItem = localStorage.getItem(TODO_STORAGE_KEY);
-        if(localStorageItem !== null) {
-            const todoData = jsonParse(localStorageItem);
-            this.data = todoData;
-        } else {
-            this.data = [];
+        try{
+            const localStorageItem = localStorage.getItem(TODO_STORAGE_KEY);
+            if(localStorageItem !== null) {
+                const todoData = jsonParse(localStorageItem);
+                this.data = todoData;
+            } else {
+                this.data = [];
+            }
+        }catch(error) {
+            throw new Error(`localStorage 초기화시 에러가 발생하였습니다. ${error}`);
         }
     };
 

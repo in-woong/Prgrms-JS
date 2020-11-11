@@ -62,8 +62,15 @@ function TodoList(data, countTodoItem, targetId) {
           if(todoDelBtn) {
             items.splice(index,1);
           }
-          localStorage.setItem(TODO_STORAGE_KEY, jsonStringify(items));
-          this.setState(items);
+
+          try{
+            localStorage.setItem(TODO_STORAGE_KEY, jsonStringify(items));
+            this.setState(items);
+          }catch(error){
+            throw new Error(`localStorage 저장시 에러가 발생하였습니다. ${error}`);
+          }
+
+          
         });
     };
     
