@@ -4,7 +4,7 @@ export const validateTypeOfDataArray = (validate) => {
       throw Error('data is not array')
     }
 
-    if (!dataArr.some((data) => validate(data))) {
+    if (dataArr.some((data) => !validate(data))) {
       throw Error('data type is wrong')
     }
     return true
