@@ -5,14 +5,18 @@ export default class TodoInput {
     try {
       validateDOMElement(target)
       this.$target = target
-      this.$target.addEventListener('input', this.onInput.bind(this))
-      this.$target.addEventListener('keypress', this.onSubmit.bind(this))
       this.state = ''
       this.addTodo = addTodo
       this.$target.focus()
+      this.initEventListner()
     } catch (err) {
       console.log(err)
     }
+  }
+
+  initEventListner() {
+    this.$target.addEventListener('input', this.onInput.bind(this))
+    this.$target.addEventListener('keypress', this.onSubmit.bind(this))
   }
 
   onInput(e) {
