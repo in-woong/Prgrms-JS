@@ -1,4 +1,3 @@
-import { checkArray, checkTarget, checkNewKeyword, checkTypes } from './validation.js'
 
 export default function TodoList(data, $target, removeTodo , reverseTodo) {
     this.data = data
@@ -7,16 +6,7 @@ export default function TodoList(data, $target, removeTodo , reverseTodo) {
     this.removeTodo = removeTodo;
     this.reverseTodo = reverseTodo;
 
-    this.validation = (data) => {
-        checkArray(data);
-        checkTarget($target);
-        checkNewKeyword(this);
-        checkTypes(data
-            , ({ text, isCompleted }) => typeof text === 'string' && typeof isCompleted === 'boolean')
-    }
-
-
-    $target.addEventListener('click', (e) => {
+    addEventListener('click', (e) => {
         const idNum = e.target.id;
 
         if (e.target.className === 'remove-btn') {
@@ -27,18 +17,6 @@ export default function TodoList(data, $target, removeTodo , reverseTodo) {
             this.reverseTodo(idNum)
         }
     })
-
-    // this.removeTodo = (idx) => {
-    //     this.data.splice(idx,1);
-    //     this.render();
-    // }
-
-    // this.reverseTodo = (idx) => {
-    //     let data = this.data[idx];
-    //     data.isCompleted = !data.isCompleted
-    //     this.render();
-    // }
-
 
     this.render = () => {
         let htmlString = '<ul>'
@@ -52,12 +30,10 @@ export default function TodoList(data, $target, removeTodo , reverseTodo) {
     }
 
     this.setState = (nextState) => {
-        this.validation(nextState)
         this.data = nextState
         this.render()
     }
 
-    this.validation(this.data);
     this.render();
 }
 

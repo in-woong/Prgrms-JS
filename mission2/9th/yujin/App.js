@@ -1,21 +1,30 @@
-
+import { checkArray, checkTarget, checkNewKeyword, checkTypes } from './validation.js'
 import TodoList from './TodoList.js' 
 import TodoInput from './TodoInput.js' 
 
-export default function App(data) {
+export default function App(data, $target) {
 
     this.data = data;
-    const $target = document.querySelector('#todo-list')
+    this.$target = $target;
+
+    this.validation = (data) => {
+        checkArray(data);
+        checkTarget($target);
+        checkNewKeyword(this);
+        checkTypes(data
+            , ({ text, isCompleted }) => typeof text === 'string' && typeof isCompleted === 'boolean')
+    }
     
     this.init = () =>{
-        //this.TodoList = new TodoList(data, document.querySelector('#todo-list'))
         this.TodoList = new TodoList(data, $target, removeTodo , reverseTodo)
         this.TodoInput = new TodoInput(addTodo)
     }
 
     this.setState = (data) => {
+        this.validation(data)
         this.TodoList.setState(data);
     }
+
 
     const addTodo = (newTodo) =>{
         this.data.push(newTodo);
@@ -33,6 +42,7 @@ export default function App(data) {
         this.setState(this.data);
     }
 
+    this.validation(this.data);
     this.init();
 
 }
