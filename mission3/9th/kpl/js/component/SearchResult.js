@@ -1,27 +1,27 @@
 import { checkTarget, isArrayData } from '../validator/validation.js'
 
-function SearchResult({$app, data}) {
+function SearchResult({$app, searchResultData}) {
     const $target = document.createElement('div');
     $target.id = 'search-result';
     $app.appendChild($target);
 
     this.$target = $target;
-    this.data = data;
+    this.searchResultData = searchResultData;
     
     this.validate = () => {
         checkTarget(this.$target.id);
-        isArrayData(this.data);
+        isArrayData(this.searchResultData);
     };
 
     this.render = () => {
-        const resultHtmlString = `${this.data
+        const resultHtmlString = `${this.searchResultData
             .map( resultData => `<img src= "${resultData.imageUrl}">` )
             .join('')}`;
         $target.innerHTML = resultHtmlString;
     };
 
     this.setState = (nextData) => {
-        this.data = nextData;
+        this.searchResultData = nextData;
         this.validate();
         this.render();
     };

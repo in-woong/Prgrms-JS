@@ -3,11 +3,11 @@ import SearchResult from './SearchResult.js'
 
 function App({$app}) {
     this.$app = $app;
-    this.data = [];
+    this.searchResultData = [];
     this.setState = (searchResultData) => {
-        this.data = searchResultData;
+        this.searchResultData = searchResultData;
         this.components.forEach((component) => {
-            component.setState && component.setState(this.data);
+            component.setState && component.setState(this.searchResultData);
         });
     };
 
@@ -18,7 +18,7 @@ function App({$app}) {
         }),
         new SearchResult({
             $app,
-            data: this.data
+            searchResultData: this.searchResultData
         })
     ];
 }
