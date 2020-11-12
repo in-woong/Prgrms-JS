@@ -5,12 +5,13 @@ function App({$app}) {
     this.$app = $app;
     this.data = [];
     this.components = [
-        new SearchKeyword({$app,
-            onSearchResult: (searchResultData) => {
-                this.setState(searchResultData);
-            }
+        new SearchKeyword({
+            $app,
+            onSearchResult: this.setState
+            
         }),
-        new SearchResult({$app,
+        new SearchResult({
+            $app,
             data: this.data
         })
     ];
