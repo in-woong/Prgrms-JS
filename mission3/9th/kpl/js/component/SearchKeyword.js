@@ -15,7 +15,7 @@ function SearchKeyword({$app, onSearchResult}) {
             const { value } = event.target;
             if (value) {
                 fetch(`https://jjalbot.com/api/jjals?text=${value}`)
-                .then(x => x.json())
+                .then(response => response.json())
                 .then(data => {
                     this.data = data;
                     isArrayData(this.data);
