@@ -13,10 +13,10 @@ function SearchKeyword({$app, onSearchResult}) {
     this.fetchData = async (inputValue) => {
         try {
             const response = await fetch(`https://jjalbot.com/api/jjals?text=${inputValue}`);
-            const data = await response.json();
-            this.data = data;
-            isArrayData(this.data);
-            onSearchResult(this.data);
+            const searchResultData = await response.json();
+            this.searchResultData = searchResultData;
+            isArrayData(this.searchResultData);
+            onSearchResult(this.searchResultData);
         } catch (error) {
             console.error(`Error : ${error}`);
         }
