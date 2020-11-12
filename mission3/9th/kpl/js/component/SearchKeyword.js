@@ -10,24 +10,26 @@ function SearchKeyword({$app, onSearchResult}) {
     this.validate = () => {
         checkTarget(this.$target.id);
     };
+    this.fetchData = async (inputValue) => {
+        try {
+            const response = await fetch(`https://jjalbot.com/api/jjals?text=${inputValue}`);
+            const data = await response.json();
+            this.data = data;
+            isArrayData(this.data);
+            onSearchResult(this.data);
+        } catch (error) {
+            console.error(`Error : ${error}`);
+        }
+    };
     this.initEvent = () => {
         this.$target.addEventListener('keyup', (event) => {
             const { value } = event.target;
             if (value) {
-                fetch(`https://jjalbot.com/api/jjals?text=${value}`)
-                .then(response => response.json())
-                .then(data => {
-                    this.data = data;
-                    isArrayData(this.data);
-                    onSearchResult(this.data);
-                })
-                .catch(error => console.error(`Error : ${error}`));
+                this.fetchData(value);
             }
         });
     };
     
-    
-
     this.validate();
     this.initEvent();
 }
