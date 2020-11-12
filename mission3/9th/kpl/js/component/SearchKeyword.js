@@ -22,10 +22,16 @@ function SearchKeyword({$app, onSearchResult}) {
         }
     };
     this.initEvent = () => {
+        let timer;
         this.$target.addEventListener('keyup', (event) => {
             const { value } = event.target;
             if (value) {
-                this.fetchData(value);
+                if (timer) {
+                    clearTimeout(timer);
+                }
+                timer = setTimeout(() => {
+                    this.fetchData(value);
+                }, 500);
             }
         });
     };
