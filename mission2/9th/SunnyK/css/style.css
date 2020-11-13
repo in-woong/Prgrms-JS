@@ -42,14 +42,14 @@ input:focus {
   align-items: center;
 }
 
-#todo-input {
+.TodoInput {
   height: 50px;
   margin-top: 50px;
   padding: 5px 0;
   border-bottom: 1.5px solid black;
 }
 
-#todo-input > * {
+.TodoInput > * {
   height: 100%;
   margin-right: 15px;
 }
@@ -90,30 +90,30 @@ input:focus {
   color: black;
 }
 
-#todo-count {
+.TodoCount {
   margin-top: 6px;
   color: #444;
   font-size: medium;
   font-weight: 400;
 }
 
-#todo-list {
+.TodoList {
   margin-top: 20px;
   font-size: 1.2em;
 }
 
-#todo-list > ul {
+.TodoList > ul {
   width: 100%;
 }
 
-#todo-list li {
+.TodoList li {
   display: flex;
   align-items: center;
   padding: 0 10px;
   border-bottom: 1.2px solid #555;
 }
 
-#todo-list li:last-child {
+.TodoList li:last-child {
   border: none;
 }
 

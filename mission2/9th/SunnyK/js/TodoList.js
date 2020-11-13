@@ -12,13 +12,13 @@ const TODOLIST_CALSS_NAMES = {
  * @param {Array} todoData
  * @param {String} targetId
  */
-export default function TodoList({
-  todoData,
-  $target,
-  toggleTodo,
-  deleteTodo,
-}) {
+export default function TodoList({ $app, todoData, toggleTodo, deleteTodo }) {
   useNewKeyword(new.target)
+
+  const $target = document.createElement('div')
+  $target.className = 'TodoList'
+  this.$target = $target
+  $app.appendChild($target)
 
   this.todoData = todoData
   this.$target = $target

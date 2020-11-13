@@ -1,7 +1,12 @@
 import { useNewKeyword } from './validation.js'
 
-export default function TodoCount({ numOfTodo, numOfCompleteTodo, $target }) {
+export default function TodoCount({ $app, numOfTodo, numOfCompleteTodo }) {
   useNewKeyword(new.target)
+
+  const $target = document.createElement('div')
+  $target.className = 'TodoCount'
+  this.$target = $target
+  $app.appendChild($target)
 
   this.numOfTodo = numOfTodo
   this.numOfCompleteTodo = numOfCompleteTodo

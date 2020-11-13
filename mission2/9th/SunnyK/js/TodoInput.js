@@ -7,10 +7,14 @@ const TODO_INPUT_CLASS_NAMES = {
   deleteAllTodoBtn: 'todo-delete-all-btn',
 }
 
-export default function TodoInput({ $target, insertTodo, deleteAllTodo }) {
+export default function TodoInput({ $app, insertTodo, deleteAllTodo }) {
   useNewKeyword(new.target)
 
+  const $target = document.createElement('div')
+  $target.className = 'TodoInput'
   this.$target = $target
+  $app.appendChild($target)
+
   this.insertTodo = insertTodo
   this.deleteAllTodo = deleteAllTodo
 

@@ -6,30 +6,31 @@ import { useNewKeyword, isArrayState, checkTypes } from './validation.js'
 const LOCAL_STORAGE_TODO_DATA_NAME = 'todoData'
 
 export default class App {
-  constructor({ $todoListTarget, $todoCountTarget, $todoInputTarget }) {
+  constructor({ $app }) {
     useNewKeyword(new.target)
 
+    this.$app = $app
     this.todoData = this.initTodoData()
     this.validData(this.todoData)
 
-    this.todoList = new TodoList({
-      todoData: this.todoData,
-      $target: $todoListTarget,
-      toggleTodo: this.toggleTodo.bind(this),
-      deleteTodo: this.deleteTodo.bind(this),
+    this.todoInput = new TodoInput({
+      $app: this.$app,
+      insertTodo: this.insertTodo.bind(this),
+      deleteAllTodo: this.deleteAllTodo.bind(this),
     })
 
     this.todoCount = new TodoCount({
+      $app: this.$app,
       numOfTodo: this.todoData.length,
       numOfCompleteTodo: this.todoData.filter((todo) => todo.isCompleted)
         .length,
-      $target: $todoCountTarget,
     })
 
-    this.todoInput = new TodoInput({
-      $target: $todoInputTarget,
-      insertTodo: this.insertTodo.bind(this),
-      deleteAllTodo: this.deleteAllTodo.bind(this),
+    this.todoList = new TodoList({
+      $app: this.$app,
+      todoData: this.todoData,
+      toggleTodo: this.toggleTodo.bind(this),
+      deleteTodo: this.deleteTodo.bind(this),
     })
   }
 
