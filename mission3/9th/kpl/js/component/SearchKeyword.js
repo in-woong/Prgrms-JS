@@ -1,4 +1,6 @@
 import { checkTarget, isArrayData } from '../validator/validation.js'
+import { onFetch, onDebounce } from '../util/util.js'
+import { JJALBOT_DELAY_TIME, JJALBOT_API_URL } from '../constant/constant.js'
 
 function SearchKeyword({$app, onSearchResult}) {
     const $target = document.createElement('input');
@@ -7,31 +9,27 @@ function SearchKeyword({$app, onSearchResult}) {
 
     this.$target = $target;
     this.onSearchResult = onSearchResult;
+    this.timer = null;
     this.validate = () => {
         checkTarget(this.$target.id);
     };
     this.fetchData = async (inputValue) => {
-        try {
-            const response = await fetch(`https://jjalbot.com/api/jjals?text=${inputValue}`);
-            const searchResultData = await response.json();
-            this.searchResultData = searchResultData;
-            isArrayData(this.searchResultData);
-            onSearchResult(this.searchResultData);
-        } catch (error) {
-            console.error(`Error : ${error}`);
-        }
+        this.searchResultData = await onFetch({
+            url : JJALBOT_API_URL,
+            inputValue
+        });
+        isArrayData(this.searchResultData);
+        onSearchResult(this.searchResultData);
     };
     this.initEvent = () => {
-        let timer;
         this.$target.addEventListener('keyup', (event) => {
             const { value } = event.target;
             if (value) {
-                if (timer) {
-                    clearTimeout(timer);
-                }
-                timer = setTimeout(() => {
-                    this.fetchData(value);
-                }, 500);
+                onDebounce.bind(this)({
+                    inputValue: value,
+                    fetchFunction : this.fetchData,
+                    delay: JJALBOT_DELAY_TIME
+                });
             }
         });
     };
