@@ -21,9 +21,7 @@ export default class App {
 
     this.todoCount = new TodoCount({
       $app: this.$app,
-      numOfTodo: this.todoData.length,
-      numOfCompleteTodo: this.todoData.filter((todo) => todo.isCompleted)
-        .length,
+      todoData: this.todoData,
     })
 
     this.todoList = new TodoList({
@@ -47,6 +45,7 @@ export default class App {
 
           return todoData
         } catch (error2) {
+          alert('할 일 데이터의 형식이 올바르지 않습니다.')
           console.error(error2)
         }
       }
@@ -64,6 +63,7 @@ export default class App {
         this.validData(nextTodoData)
         this.todoData = nextTodoData
       } catch (error2) {
+        alert('할 일 데이터의 형식이 올바르지 않습니다.')
         console.error(error2)
       }
 
@@ -73,11 +73,7 @@ export default class App {
       )
 
       this.todoList.setState({ nextData: this.todoData })
-      this.todoCount.setState({
-        numOfTodo: this.todoData.length,
-        numOfCompleteTodo: this.todoData.filter((todo) => todo.isCompleted)
-          .length,
-      })
+      this.todoCount.setState({ nextData: this.todoData })
     } catch (error1) {
       alert('할 일 데이터를 업데이트하는 중에 오류가 발생했습니다!')
       console.error(error1)
