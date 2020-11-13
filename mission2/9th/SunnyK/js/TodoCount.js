@@ -11,10 +11,8 @@ export default function TodoCount({ $app, todoData }) {
   this.todoData = todoData
   this.$target = $target
 
-  this.setState = ({ nextData, $target }) => {
+  this.setState = (nextData) => {
     this.todoData = nextData
-    if (!$target) this.$target = $target
-
     this.render()
   }
 

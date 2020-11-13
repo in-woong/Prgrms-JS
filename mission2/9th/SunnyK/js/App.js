@@ -13,23 +13,23 @@ export default class App {
     this.todoData = this.initTodoData()
     this.validData(this.todoData)
 
-    this.todoInput = new TodoInput({
-      $app: this.$app,
-      onAddTodo: this.insertTodo.bind(this),
-      onDeleteAllTodo: this.deleteAllTodo.bind(this),
-    })
-
-    this.todoCount = new TodoCount({
-      $app: this.$app,
-      todoData: this.todoData,
-    })
-
-    this.todoList = new TodoList({
-      $app: this.$app,
-      todoData: this.todoData,
-      onToggleTodo: this.toggleTodo.bind(this),
-      onDeleteTodo: this.deleteTodo.bind(this),
-    })
+    this.components = [
+      new TodoInput({
+        $app: this.$app,
+        onAddTodo: this.insertTodo.bind(this),
+        onDeleteAllTodo: this.deleteAllTodo.bind(this),
+      }),
+      new TodoCount({
+        $app: this.$app,
+        todoData: this.todoData,
+      }),
+      new TodoList({
+        $app: this.$app,
+        todoData: this.todoData,
+        onToggleTodo: this.toggleTodo.bind(this),
+        onDeleteTodo: this.deleteTodo.bind(this),
+      }),
+    ]
   }
 
   initTodoData() {
@@ -72,8 +72,9 @@ export default class App {
         JSON.stringify(this.todoData)
       )
 
-      this.todoList.setState({ nextData: this.todoData })
-      this.todoCount.setState({ nextData: this.todoData })
+      this.components.forEach(
+        (component) => component.setState && component.setState(this.todoData)
+      )
     } catch (error1) {
       alert('할 일 데이터를 업데이트하는 중에 오류가 발생했습니다!')
       console.error(error1)

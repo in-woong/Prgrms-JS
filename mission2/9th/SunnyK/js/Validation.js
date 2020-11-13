@@ -12,7 +12,7 @@ export const isArrayState = (state) => {
  * @param {Function} checkCallback
  */
 export const checkTypes = (state, checkCallback) => {
-  if (!state.some(checkCallback)) {
+  if (state.length > 0 && !state.some(checkCallback)) {
     throw new Error('올바르지 않은 데이터 형식')
   }
 }
@@ -31,7 +31,7 @@ export const useNewKeyword = (newTarget) => {
  * @param {String} elementId
  * @returns {Element} elementId를 아이디로 가진 엘리먼트
  */
-export const checkValidElement = (elementId) => {
+export const checkValidElementId = (elementId) => {
   const $element = document.getElementById(elementId)
 
   if (!$element) {

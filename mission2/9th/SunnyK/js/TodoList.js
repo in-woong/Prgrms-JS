@@ -30,9 +30,8 @@ export default function TodoList({
   this.onToggleTodo = onToggleTodo
   this.onDeleteTodo = onDeleteTodo
 
-  this.setState = ({ nextData, $target }) => {
+  this.setState = (nextData) => {
     this.todoData = nextData
-    if ($target) this.$target = $target
     this.render()
   }
 

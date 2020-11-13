@@ -1,4 +1,4 @@
 import App from './App.js'
-import { checkValidElement } from './validation.js'
+import { checkValidElementId } from './validation.js'
 
-new App({ $app: document.querySelector('#app') })
+new App({ $app: checkValidElementId('app') })
