@@ -12,7 +12,12 @@ const TODOLIST_CALSS_NAMES = {
  * @param {Array} todoData
  * @param {String} targetId
  */
-export default function TodoList({ $app, todoData, toggleTodo, deleteTodo }) {
+export default function TodoList({
+  $app,
+  todoData,
+  onToggleTodo,
+  onDeleteTodo,
+}) {
   useNewKeyword(new.target)
 
   const $target = document.createElement('div')
@@ -22,8 +27,8 @@ export default function TodoList({ $app, todoData, toggleTodo, deleteTodo }) {
 
   this.todoData = todoData
   this.$target = $target
-  this.toggleTodo = toggleTodo
-  this.deleteTodo = deleteTodo
+  this.onToggleTodo = onToggleTodo
+  this.onDeleteTodo = onDeleteTodo
 
   this.setState = ({ nextData, $target }) => {
     this.todoData = nextData
@@ -55,13 +60,11 @@ export default function TodoList({ $app, todoData, toggleTodo, deleteTodo }) {
 
   $target.addEventListener('click', (e) => {
     if (e.target.className === TODOLIST_CALSS_NAMES.todoDeleteBtn) {
-      this.deleteTodo(e.target.parentNode.dataset.id)
+      this.onDeleteTodo(e.target.parentNode.dataset.id)
     }
-  })
 
-  $target.addEventListener('click', (e) => {
     if (e.target.className === TODOLIST_CALSS_NAMES.todoCheckbox) {
-      this.toggleTodo(e.target.parentNode.parentNode.dataset.id)
+      this.onToggleTodo(e.target.parentNode.parentNode.dataset.id)
     }
   })
 

@@ -7,7 +7,7 @@ const TODO_INPUT_CLASS_NAMES = {
   deleteAllTodoBtn: 'todo-delete-all-btn',
 }
 
-export default function TodoInput({ $app, insertTodo, deleteAllTodo }) {
+export default function TodoInput({ $app, onAddTodo, onDeleteAllTodo }) {
   useNewKeyword(new.target)
 
   const $target = document.createElement('div')
@@ -15,39 +15,37 @@ export default function TodoInput({ $app, insertTodo, deleteAllTodo }) {
   this.$target = $target
   $app.appendChild($target)
 
-  this.insertTodo = insertTodo
-  this.deleteAllTodo = deleteAllTodo
-
-  this.setAddTodoEvent = () => {
-    const $todoTextInput = document.querySelector(
-      `.${TODO_INPUT_CLASS_NAMES.textInput}`
-    )
-
-    $todoTextInput.addEventListener('keypress', (e) => {
-      if (e.keyCode === ENTER_KEY_CODE) this.addTodo(e.target)
-    })
-
-    document
-      .querySelector(`.${TODO_INPUT_CLASS_NAMES.inputBtn}`)
-      .addEventListener('click', (e) => this.addTodo($todoTextInput))
-  }
-
-  this.addTodo = ($todoTextInput) => {
+  this.onDeleteAllTodo = onDeleteAllTodo
+  this.onAddTodo = ($todoTextInput) => {
     if ($todoTextInput.value === '') alert('할 일을 입력하세요!')
     else {
-      this.insertTodo($todoTextInput.value)
+      onAddTodo($todoTextInput.value)
       $todoTextInput.value = ''
     }
     $todoTextInput.focus()
   }
 
-  this.setDeleteAllEvent = () => {
+  this.bindAddTodoEvent = () => {
+    const $todoTextInput = document.querySelector(
+      `.${TODO_INPUT_CLASS_NAMES.textInput}`
+    )
+
+    $todoTextInput.addEventListener('keypress', (e) => {
+      if (e.keyCode === ENTER_KEY_CODE) this.onAddTodo(e.target)
+    })
+
+    document
+      .querySelector(`.${TODO_INPUT_CLASS_NAMES.inputBtn}`)
+      .addEventListener('click', (e) => this.onAddTodo($todoTextInput))
+  }
+
+  this.bindDeleteAllEvent = () => {
     const removeAllEvent = new Event('removeAll')
     const $deleteAllBtn = document.querySelector(
       `.${TODO_INPUT_CLASS_NAMES.deleteAllTodoBtn}`
     )
 
-    $deleteAllBtn.addEventListener('removeAll', this.deleteAllTodo)
+    $deleteAllBtn.addEventListener('removeAll', this.onDeleteAllTodo)
 
     $deleteAllBtn.addEventListener('click', (e) => {
       e.target.dispatchEvent(removeAllEvent)
@@ -63,6 +61,6 @@ export default function TodoInput({ $app, insertTodo, deleteAllTodo }) {
   }
 
   this.render()
-  this.setAddTodoEvent()
-  this.setDeleteAllEvent()
+  this.bindAddTodoEvent()
+  this.bindDeleteAllEvent()
 }

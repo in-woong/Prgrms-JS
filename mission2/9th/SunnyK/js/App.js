@@ -15,8 +15,8 @@ export default class App {
 
     this.todoInput = new TodoInput({
       $app: this.$app,
-      insertTodo: this.insertTodo.bind(this),
-      deleteAllTodo: this.deleteAllTodo.bind(this),
+      onAddTodo: this.insertTodo.bind(this),
+      onDeleteAllTodo: this.deleteAllTodo.bind(this),
     })
 
     this.todoCount = new TodoCount({
@@ -29,8 +29,8 @@ export default class App {
     this.todoList = new TodoList({
       $app: this.$app,
       todoData: this.todoData,
-      toggleTodo: this.toggleTodo.bind(this),
-      deleteTodo: this.deleteTodo.bind(this),
+      onToggleTodo: this.toggleTodo.bind(this),
+      onDeleteTodo: this.deleteTodo.bind(this),
     })
   }
 
