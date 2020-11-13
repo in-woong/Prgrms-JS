@@ -12,7 +12,7 @@ export const isArrayState = (state) => {
  * @param {Function} checkCallback
  */
 export const checkTypes = (state, checkCallback) => {
-  if (!state.every(checkCallback)) {
+  if (!state.some(checkCallback)) {
     throw new Error('올바르지 않은 데이터 형식')
   }
 }
