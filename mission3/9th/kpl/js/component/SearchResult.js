@@ -1,6 +1,11 @@
 import { checkTarget, isArrayData } from '../validator/validation.js'
 
 function SearchResult({$app, searchResultData}) {
+
+    if(new.target !== SearchResult) {
+        throw new Error('new 키워드로 함수의 인스턴스를 생성해야 합니다.')
+    }
+
     const $target = document.createElement('div');
     $target.id = 'search-result';
     $app.appendChild($target);

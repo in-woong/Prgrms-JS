@@ -3,6 +3,11 @@ import { onFetch, onDebounce } from '../util/util.js'
 import { JJALBOT_DELAY_TIME, JJALBOT_API_URL } from '../constant/constant.js'
 
 function SearchKeyword({$app, onSearchResult}) {
+
+    if(new.target !== SearchKeyword) {
+        throw new Error('new 키워드로 함수의 인스턴스를 생성해야 합니다.')
+    }
+
     const $target = document.createElement('input');
     $target.id = 'search-keyword';
     $app.appendChild($target);
