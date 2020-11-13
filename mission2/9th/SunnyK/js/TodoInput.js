@@ -1,6 +1,5 @@
 import { useNewKeyword } from './validation.js'
 
-const ENTER_KEY_CODE = 13
 const TODO_INPUT_CLASS_NAMES = {
   textInput: 'todo-text-input',
   inputBtn: 'todo-input-btn',
@@ -31,7 +30,7 @@ export default function TodoInput({ $app, onAddTodo, onDeleteAllTodo }) {
     )
 
     $todoTextInput.addEventListener('keypress', (e) => {
-      if (e.keyCode === ENTER_KEY_CODE) this.onAddTodo(e.target)
+      if (e.key === 'Enter') this.onAddTodo(e.target)
     })
 
     document
