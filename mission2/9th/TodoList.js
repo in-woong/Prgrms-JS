@@ -5,8 +5,11 @@ import {
     checkTypes,
   } from './validation.js'
 
-  export default function TodoList($target, initialState) {
+  export default function TodoList({$app, initialState, changeState}) {
     this.state = initialState
+    const $target = document.createElement('div')
+    $target.className = 'TodoList'
+    $app.appendChild($target)
     this.$target = $target
   
     this.validation = (state) => {
@@ -25,7 +28,9 @@ import {
         this.state.length > 0
           ? `<ul>${this.state
               .map(({ text, isCompleted }, index) =>
-                isCompleted ? `<li id='${index}'><s>${text}</s></li><button id='${index}'>DELETE</button>` : `<li id='${index}'>${text}</li><button id='${index}'>DELETE</button>`
+                `<li id='${index}'>
+                  ${isCompleted ? `<s id='${index}'>${text}</s>` : text}
+                  </li><button id='${index}'>DELETE</button>`
               )
               .join('')}</ul>`
           : ''
@@ -39,22 +44,24 @@ import {
       this.render()
     }
 
-    this.validation(this.state)
-    this.render()
-
-   this.addEvent = () => {
-     this.$target.addEventListener("click", (event)=>{
-         const eTarget = event.target;
-
+    
+   this.clickEvent = () => {
+     this.$target.addEventListener("click", (e)=>{
+         const eTarget = e.target;
+         const id = eTarget.id
+         console.log(eTarget)
          if (eTarget.tagName === "LI" || eTarget.tagName === "S"){
-             this.state[eTarget.id].isCompleted = !this.state[eTarget.id].isCompleted
+            this.state[id].isCompleted = !this.state[id].isCompleted
          } else if (eTarget.tagName === "BUTTON"){
-           this.state.splice(eTarget.id, 1)
+            this.state.splice(id, 1)
          }
-
-         this.render();
+        changeState(this.state)
      })
    }
-   this.addEvent()
+   
+   this.clickEvent()
+   this.validation(this.state)
+    this.render()
+
   }
 

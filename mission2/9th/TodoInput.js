@@ -4,22 +4,19 @@ import {
     checkTarget,
     checkTypes,
 } from './validation.js'
+const ENTER = 13
 
-export default function TodoInput($input, app){
+export default function TodoInput({$app, addTodo}){
+    const $input = document.querySelector('#todo-input')
+
+    this.$app = $app
     this.$input = $input
-    this.addTodo = function(){
-        const newTodo = {
-            text: $input.value,
-            isCompleted: false
-        }
-        app.addTodo(newTodo)
-        this.$input.value = ''
-    }
-    this.$input.addEventListener('keydown', (e) => {
-        if(e.keyCode === 13){
-            if(this.$input.value){
-                this.addTodo()
-            }
+    this.addTodo = addTodo
+
+    $input.addEventListener('keydown', (e) => {
+        if(e.keyCode === ENTER && $input.value.length > 0){
+                this.addTodo($input.value)
+                this.$input.value = ''
         }
     })
 }
