@@ -12,12 +12,12 @@ export default class App {
     this.$app = $app
     this.todoData = this.initTodoData()
     this.validData(this.todoData)
+    this.initCustomEvent()
 
     this.components = [
       new TodoInput({
         $app: this.$app,
         onAddTodo: this.insertTodo.bind(this),
-        onDeleteAllTodo: this.deleteAllTodo.bind(this),
       }),
       new TodoCount({
         $app: this.$app,
@@ -120,7 +120,7 @@ export default class App {
     this.setState(nextTodoData)
   }
 
-  deleteAllTodo() {
-    this.setState([])
+  initCustomEvent() {
+    window.addEventListener('removeAll', () => this.setState([]))
   }
 }

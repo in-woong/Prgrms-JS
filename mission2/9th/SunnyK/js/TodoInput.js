@@ -6,7 +6,7 @@ const TODO_INPUT_CLASS_NAMES = {
   deleteAllTodoBtn: 'todo-delete-all-btn',
 }
 
-export default function TodoInput({ $app, onAddTodo, onDeleteAllTodo }) {
+export default function TodoInput({ $app, onAddTodo }) {
   useNewKeyword(new.target)
 
   const $target = document.createElement('div')
@@ -14,7 +14,6 @@ export default function TodoInput({ $app, onAddTodo, onDeleteAllTodo }) {
   this.$target = $target
   $app.appendChild($target)
 
-  this.onDeleteAllTodo = onDeleteAllTodo
   this.onAddTodo = ($todoTextInput) => {
     if ($todoTextInput.value === '') alert('할 일을 입력하세요!')
     else {
@@ -39,16 +38,11 @@ export default function TodoInput({ $app, onAddTodo, onDeleteAllTodo }) {
   }
 
   this.bindDeleteAllEvent = () => {
-    const removeAllEvent = new Event('removeAll')
-    const $deleteAllBtn = document.querySelector(
-      `.${TODO_INPUT_CLASS_NAMES.deleteAllTodoBtn}`
-    )
-
-    $deleteAllBtn.addEventListener('removeAll', this.onDeleteAllTodo)
-
-    $deleteAllBtn.addEventListener('click', (e) => {
-      e.target.dispatchEvent(removeAllEvent)
-    })
+    document
+      .querySelector(`.${TODO_INPUT_CLASS_NAMES.deleteAllTodoBtn}`)
+      .addEventListener('click', () => {
+        window.dispatchEvent(new Event('removeAll'))
+      })
   }
 
   this.render = () => {
