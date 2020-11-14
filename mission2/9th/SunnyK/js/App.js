@@ -1,16 +1,20 @@
 import TodoList from './TodoList.js'
 import TodoInput from './TodoInput.js'
 import TodoCount from './TodoCount.js'
+import { getItem, setItem } from './localStorage.js'
 import { useNewKeyword, isArrayState, checkTypes } from './validation.js'
 
-const LOCAL_STORAGE_TODO_DATA_NAME = 'todoData'
+const LOCAL_STORAGE_TODO_DATA_KEY = 'todos'
 
 export default class App {
   constructor({ $app }) {
     useNewKeyword(new.target)
 
     this.$app = $app
-    this.todoData = this.initTodoData()
+    this.todoData = getItem({
+      key: LOCAL_STORAGE_TODO_DATA_KEY,
+      defaultValue: [],
+    })
     this.validData(this.todoData)
     this.initCustomEvent()
 
@@ -32,62 +36,29 @@ export default class App {
     ]
   }
 
-  initTodoData() {
-    try {
-      const todoDataInLocalStorage = localStorage.getItem(
-        LOCAL_STORAGE_TODO_DATA_NAME
-      )
-
-      if (todoDataInLocalStorage) {
-        try {
-          const todoData = JSON.parse(todoDataInLocalStorage)
-          this.validData(todoData)
-
-          return todoData
-        } catch (error2) {
-          alert('할 일 데이터의 형식이 올바르지 않습니다.')
-          console.error(error2)
-        }
-      }
-    } catch (error1) {
-      alert('할 일 데이터를 가져오는 중에 오류가 발생했습니다!')
-      console.error(error1)
-    }
-
-    return []
-  }
-
   setState(nextTodoData) {
-    try {
-      try {
-        this.validData(nextTodoData)
-        this.todoData = nextTodoData
-      } catch (error2) {
-        alert('할 일 데이터의 형식이 올바르지 않습니다.')
-        console.error(error2)
-      }
+    this.validData(nextTodoData)
+    this.todoData = nextTodoData
 
-      localStorage.setItem(
-        LOCAL_STORAGE_TODO_DATA_NAME,
-        JSON.stringify(this.todoData)
-      )
+    setItem({ key: LOCAL_STORAGE_TODO_DATA_KEY, item: this.todoData })
 
-      this.components.forEach(
-        (component) => component.setState && component.setState(this.todoData)
-      )
-    } catch (error1) {
-      alert('할 일 데이터를 업데이트하는 중에 오류가 발생했습니다!')
-      console.error(error1)
-    }
+    this.components.forEach(
+      (component) => component.setState && component.setState(this.todoData)
+    )
   }
 
   validData(todoData) {
-    isArrayState(todoData)
-    checkTypes(
-      todoData,
-      ({ text, isCompleted }) =>
-        typeof text === 'string' && typeof isCompleted === 'boolean'
-    )
+    try {
+      isArrayState(todoData)
+      checkTypes(
+        todoData,
+        ({ text, isCompleted }) =>
+          typeof text === 'string' && typeof isCompleted === 'boolean'
+      )
+    } catch (e) {
+      alert('할 일 데이터의 형식이 올바르지 않습니다.')
+      console.error(e)
+    }
   }
 
   insertTodo(newTodoText) {
