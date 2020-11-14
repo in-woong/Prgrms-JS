@@ -2,7 +2,7 @@ import SearchKeyword from './SearchKeyword.js'
 import SearchResult from './SearchResult.js'
 import SearchHistory from './SearchHistory.js'
 import { JJALBOT_HISTORY_STORAGE_KEY } from '../constant/constant.js'
-import { jsonParse, jsonStringify} from '../util/util.js'
+import { setItemLocalStorage, getItemLocalStorage} from '../util/util.js'
 
 function App({$app}) {
     this.$app = $app;
@@ -26,15 +26,11 @@ function App({$app}) {
     };
 
     this.initLocalStorage = () => {
-        try {
-            const localStorageItem = localStorage.getItem(JJALBOT_HISTORY_STORAGE_KEY);
-            if(localStorageItem !== null) {
-                this.searchHistoryData = new Set(jsonParse(localStorageItem));
-            } else {
-                this.searchHistoryData = new Set();
-            }
-        } catch(error) {
-            throw new Error(`localStorage 초기화시 에러가 발생하였습니다. ${error}`);
+        const localStorageItem = getItemLocalStorage(JJALBOT_HISTORY_STORAGE_KEY);
+        if(localStorageItem !== null) {
+            this.searchHistoryData = new Set(localStorageItem);
+        } else {
+            this.searchHistoryData = new Set();
         }
     };
 
@@ -43,15 +39,10 @@ function App({$app}) {
     };
 
     const onAddSearchHistory = (inputData) => {
-        try {
-            this.searchHistoryData.add(inputData);
-            localStorage.setItem(JJALBOT_HISTORY_STORAGE_KEY, jsonStringify([...this.searchHistoryData]));
-
-            const localStorageItem = localStorage.getItem(JJALBOT_HISTORY_STORAGE_KEY);
-            this.searchHistory.setState(jsonParse(localStorageItem));
-        } catch(error) {
-            throw new Error(`localStorage에 항목추가시 에러가 발생하였습니다. ${error}`);
-        }
+        this.searchHistoryData.add(inputData);
+        setItemLocalStorage(JJALBOT_HISTORY_STORAGE_KEY, [...this.searchHistoryData]);
+        const localStorageItem = getItemLocalStorage(JJALBOT_HISTORY_STORAGE_KEY);
+        this.searchHistory.setState(localStorageItem);
     };
 
     const onFetchJjalbot = (historyData) => {
