@@ -36,3 +36,30 @@ export const jsonStringify = (jsonData) => {
         throw new Error('JSON stringify시 오류가 발생했습니다.');
     }
 }
+
+/**
+ * 
+ * @param {localStorageKey, localStorageData} 
+ * 로컬스토리지에서 아이템을 저장한다.
+ */
+export const setItemLocalStorage = (localStorageKey, localStorageData) => {
+    try {
+        localStorage.setItem(localStorageKey, JSON.stringify(localStorageData));
+    } catch(error) {
+        throw new Error(`localStorage에 항목추가시 에러가 발생하였습니다. ${error}`);
+    }
+}
+
+/**
+ * 
+ * @param {localStorageKey} 
+ * 로컬스토리지에서 아이템을 가져온다.
+ */
+export const getItemLocalStorage = (localStorageKey) => {
+    try {
+        return JSON.parse(localStorage.getItem(localStorageKey));
+    } catch(error) {
+        throw new Error(`localStorage 항목조회시 에러가 발생하였습니다. ${error}`);
+    }
+    
+}

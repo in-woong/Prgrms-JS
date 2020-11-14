@@ -1,6 +1,7 @@
 import { useArrayState, checkTarget, checkTypes } from '../validator/validation.js'
-import { convertStringToBoolean, jsonStringify } from '../util/util.js'
+import { convertStringToBoolean, setItemLocalStorage } from '../util/util.js'
 import { TODO_STORAGE_KEY } from '../data/constant.js'
+
 function TodoList(data, countTodoItem, targetId) {
     this.data = data;
     this.targetId = targetId;
@@ -63,14 +64,8 @@ function TodoList(data, countTodoItem, targetId) {
             items.splice(index,1);
           }
 
-          try{
-            localStorage.setItem(TODO_STORAGE_KEY, jsonStringify(items));
-            this.setState(items);
-          }catch(error){
-            throw new Error(`localStorage 저장시 에러가 발생하였습니다. ${error}`);
-          }
-
-          
+          setItemLocalStorage(TODO_STORAGE_KEY, items);
+          this.setState(items);
         });
     };
     

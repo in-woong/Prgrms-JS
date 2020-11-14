@@ -3,7 +3,7 @@ import TodoInput from './TodoInput.js'
 import TodoCount from './TodoCount.js'
 import TodoRemoveAll from './TodoRemoveAll.js'
 import { TODO_STORAGE_KEY, REMOVE_ALL_EVENT } from '../data/constant.js'
-import { jsonParse, jsonStringify } from '../util/util.js'
+import { setItemLocalStorage, getItemLocalStorage } from '../util/util.js'
 
 /**
  * 관심사의 분리
@@ -27,8 +27,8 @@ function App() {
     const addTodoItem = (newTodoItem) => {
         try{
             this.data.push(newTodoItem);
-            localStorage.setItem(TODO_STORAGE_KEY, jsonStringify(this.data));
-            this.todoList.setState(jsonParse(localStorage.getItem(TODO_STORAGE_KEY)));
+            setItemLocalStorage(TODO_STORAGE_KEY, this.data);
+            this.todoList.setState(getItemLocalStorage(TODO_STORAGE_KEY));
         }catch(error){
             throw new Error(`항목추가시 에러가 발생하였습니다. ${error}`);
         }
@@ -46,16 +46,11 @@ function App() {
     };
     
     this.initLocalStorage = () => {
-        try{
-            const localStorageItem = localStorage.getItem(TODO_STORAGE_KEY);
-            if(localStorageItem !== null) {
-                const todoData = jsonParse(localStorageItem);
-                this.data = todoData;
-            } else {
-                this.data = [];
-            }
-        }catch(error) {
-            throw new Error(`localStorage 초기화시 에러가 발생하였습니다. ${error}`);
+        const localStorageItem = getItemLocalStorage(TODO_STORAGE_KEY);
+        if(localStorageItem !== null) {
+            this.data = localStorageItem;
+        } else {
+            this.data = [];
         }
     };
 
