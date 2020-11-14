@@ -1,6 +1,11 @@
-export const onFetch = async ({url, inputValue}) => {
+/**
+ * 
+ * @param {url, inputData} param0
+ * fetch로 api 호출
+ */
+export const onFetch = async ({url, inputData}) => {
     try {
-        const response = await fetch(inputValue ? `${url}=${inputValue}` : `${url}`);
+        const response = await fetch(inputData ? `${url}=${inputData}` : `${url}`);
         const searchResultData = await response.json();
         return searchResultData;
     } catch (error) {
@@ -10,14 +15,40 @@ export const onFetch = async ({url, inputValue}) => {
 
 /**
  * 
- * @param {inputValue, fnc, debounceTime} param
- * 
+ * @param {inputData, fnc, debounceTime} param
+ * 디바운스 기능
  */
-export const onDebounce = function({inputValue, fetchFunction, delay}) {
+export const onDebounce = function({inputData, fetchFunction, delay}) {
     if (this.timer) {
         clearTimeout(this.timer);
     }
     this.timer = setTimeout(() => {
-        fetchFunction(inputValue);
+        fetchFunction(inputData);
     }, delay);
+}
+
+/**
+ * 
+ * @param {parseData} string 
+ * JSON parse를 실행한다.
+ */
+export const jsonParse = (parseData) => {
+    try {
+        return JSON.parse(parseData);
+    } catch (error) {
+        throw new Error('JSON parse시 오류가 발생했습니다.');
+    }
+}
+
+/**
+ * 
+ * @param {jsonData} json 
+ * JSON stringify를 실행한다.
+ */
+export const jsonStringify = (jsonData) => {
+    try{
+        return JSON.stringify(jsonData);
+    }catch(error) {
+        throw new Error('JSON stringify시 오류가 발생했습니다.');
+    }
 }
