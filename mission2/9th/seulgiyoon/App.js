@@ -1,14 +1,21 @@
-import TodoList from './TodoList.js'
-import TodoInput from './TodoInput.js'
-import TodoCount from './TodoCount.js'
+import TodoList from './components/TodoList.js'
+import TodoInput from './components/TodoInput.js'
+import TodoCount from './components/TodoCount.js'
+import {
+  getDataFromLocalStorage,
+  storeToLocalStorage,
+} from './util/localStorage.js'
+
+const TODO_DATA_KEY = 'todoData'
 
 export default class App {
-  constructor(el) {
-    this.el = document.getElementById(el)
-    this.data = JSON.parse(localStorage.getItem('data')) || []
+  constructor(targetEl) {
+    this.el = document.getElementById(targetEl)
+    this.data = getDataFromLocalStorage(TODO_DATA_KEY) || []
     this.input = new TodoInput('todo-form')
     this.list = new TodoList('todo-list', this.data)
     this.counter = new TodoCount('todo-counter', this.data)
+    this.removeButton = document.getElementById('todo-reset')
     this.init()
   }
 
@@ -21,23 +28,23 @@ export default class App {
     this.addListClickEvent()
   }
 
-  reRender(data) {
-    this.data = data
-    this.list.setState(data)
-    this.counter.setState(data)
-    localStorage.setItem('data', JSON.stringify(data))
+  setState(dataArray) {
+    this.data = dataArray
+    this.list.setState(dataArray)
+    this.counter.setState(dataArray)
+    storeToLocalStorage('todoData', JSON.stringify(dataArray))
   }
 
   addNewItem(value) {
     const newData = [{ text: value, isCompleted: false }, ...this.data]
-    this.reRender(newData)
+    this.setState(newData)
   }
 
   removeItem(tartgetText) {
     const newData = this.data.filter(
       (item) => item.text.replaceAll(' ', '') !== tartgetText
     )
-    this.reRender(newData)
+    this.setState(newData)
   }
 
   completeItem(targetText) {
@@ -46,14 +53,15 @@ export default class App {
         ? { ...item, isCompleted: !item.isCompleted }
         : item
     )
-    this.reRender(newData)
+    this.setState(newData)
   }
 
-  addCustomResetEvent(event) {
-    this.el.addEventListener(event, () => {
-      const newData = []
-      this.reRender(newData)
+  addCustomEvent(fireEventEl, eventName, event) {
+    fireEventEl.addEventListener('click', () => {
+      this.el.dispatchEvent(new CustomEvent(eventName))
     })
+
+    this.el.addEventListener(eventName, event)
   }
 
   addCustomEvent(event) {

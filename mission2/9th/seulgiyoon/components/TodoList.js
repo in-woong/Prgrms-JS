@@ -1,3 +1,10 @@
+import {
+  isArray,
+  isPlainObject,
+  hasKey,
+  hasRightType,
+} from '../util/validation.js'
+
 export default class TodoList {
   constructor(targetEl, data) {
     this.checkDataValid(data)
@@ -7,14 +14,11 @@ export default class TodoList {
   }
 
   checkDataValid(data) {
-    if (!Array.isArray(data)) throw Error('데이터가 배열이 아닙니다.')
-
+    isArray(data)
     data.forEach((item) => {
-      if (Object.prototype.toString.call(item) !== '[object Object]')
-        throw Error('데이터 요소가 객체가 아닙니다.')
-      if (!item.hasOwnProperty('text')) throw Error('text값이 없습니다.')
-      if (!item.hasOwnProperty('isCompleted'))
-        throw Error('isCompleted값이 없습니다.')
+      isPlainObject(item)
+      hasKey(item)
+      hasRightType(item)
     })
   }
 
