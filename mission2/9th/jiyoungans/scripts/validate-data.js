@@ -1,37 +1,29 @@
-import TodoList from "../components/TodoList.js";
-
 const ERR_CODE = new Map([
-  ["NVL", "todo 값이 null입니다."],
-  ["UND", "todo 값이 undefined입니다."],
-  ["NO_ARR", "todo 값이 array 형태가 아닙니다."],
-  ["NO_NEW", "TodoList가 new 키워드로 선언되지 않았습니다."],
-  ["EVL", "todo 값이 빈 값입니다."]
+  ["INVALID", "올바르지 않은 값입니다."],
+  ["NO_ARR", "array 형태가 아닙니다."],
+  ["NO_NEW", "new 키워드로 선언되지 않았습니다."]
 ]);
 
-function validateDataList(param, definer = null) {
-  if (definer && !(definer instanceof TodoList)) {
+export const checkNewKeyword = (ctx) => {
+  if (ctx === window) {
     throw new Error(ERR_CODE.get("NO_NEW"));
   }
-  if (param == null) {
-    throw new Error(ERR_CODE.get("NVL"));
-  }
-  if (typeof param === "undefined") {
-    throw new Error(ERR_CODE.get("UND"));
-  }
-  if (!(param instanceof Array)) {
+};
+
+export const checkIsArray = (data) => {
+  if (!Array.isArray(data)) {
     throw new Error(ERR_CODE.get("NO_ARR"));
   }
+};
 
-  return true;
-}
-
-function validateData(param) {
-  if (param == null) {
-    throw new Error(ERR_CODE.get("NVL"));
+export const checkValue = (data) => {
+  if (!data) {
+    throw new Error(ERR_CODE.get("INVALID"));
   }
-  if (param === "") {
-    throw new Error(ERR_CODE.get("EVL"));
-  }
-}
+};
 
-export { validateDataList, validateData };
+export const checkValueType = (data, checkCallBack) => {
+  if (!data.every(checkCallBack)) {
+    throw new Error(ERR_CODE.get("INVALID"));
+  }
+};

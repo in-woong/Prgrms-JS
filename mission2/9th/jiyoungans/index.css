@@ -23,6 +23,12 @@
 .line-height-20 {
     line-height: 20px;
 }
+
 .count-area {
     padding-left: 40%;
+}
+
+.error-area {
+    padding-left: 40%;
+    color: #f03e3e;
 }

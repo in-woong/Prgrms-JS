@@ -1,13 +1,20 @@
-import { validateDataList } from "../scripts/validate-data.js";
+import {
+  checkNewKeyword, checkValue, checkValueType, checkIsArray
+} from "../scripts/validate-data.js";
 
 export default function TodoList(data, $listElement, removeFunc, completeFunc) {
-  validateDataList(data, this);
-
   this.data = data;
 
+  this.validation = () => {
+    checkNewKeyword(this.data);
+    checkValue(this.data);
+    checkIsArray(this.data);
+    checkValueType(this.data, (({ text, isCompleted }) => typeof text === "string" && typeof isCompleted === "boolean"));
+  };
   this.render = () => {
+    this.validation();
     let renderContents = "";
-    if (this.data.length < 1) {
+    if (this.data.length === 0) {
       renderContents = "<div class='pd-bottom-10'>할 일 목록이 없습니다.</div>";
     } else {
       renderContents = this.data.map((item, idx) => `<button id="remove-btn" data-idx="${idx}">X</button>
@@ -17,20 +24,21 @@ export default function TodoList(data, $listElement, removeFunc, completeFunc) {
         <br />`).join("");
     }
     $listElement.innerHTML = renderContents;
-    this.addEvents();
   };
   this.addEvents = () => {
-    document.querySelectorAll("#remove-btn").forEach((element) => {
-      element.addEventListener("click", () => {
-        removeFunc(element.dataset.idx);
-      });
-    });
-    document.querySelectorAll("#todo").forEach((element) => {
-      element.addEventListener("click", () => {
-        completeFunc(element.dataset.idx);
-      });
+    const todoListComp = document.querySelector("#todo-list");
+    todoListComp.addEventListener("click", (e) => {
+      const $target = e.target;
+      if ($target.nodeName === "P") {
+        completeFunc($target.dataset.idx);
+      } else if ($target.nodeName === "S") {
+        completeFunc($target.parentNode.dataset.idx);
+      } else if ($target.nodeName === "BUTTON") {
+        removeFunc($target.dataset.idx);
+      }
     });
   };
 
   this.render();
+  this.addEvents();
 }
