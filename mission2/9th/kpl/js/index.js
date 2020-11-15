@@ -1,3 +1,5 @@
 import App from './component/App.js'
 
-new App();
+const $app = document.querySelector('#app');
+
+new App({$app});

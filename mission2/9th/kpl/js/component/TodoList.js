@@ -1,25 +1,29 @@
-import { useArrayState, checkTarget, checkTypes } from '../validator/validation.js'
-import { convertStringToBoolean, setItemLocalStorage } from '../util/util.js'
+import { useArrayState, checkTypes } from '../validator/validation.js'
+import { convertStringToBoolean } from '../util/util.js'
 import { TODO_STORAGE_KEY } from '../data/constant.js'
 
-function TodoList(data, countTodoItem, targetId) {
-    this.data = data;
-    this.targetId = targetId;
-    this.validate = (data) => {
+function TodoList({$app, todoData, setTodoList, countTodoItem}) {
+    const $target = document.createElement('div');
+    $target.id = "todo-list";
+    $app.appendChild($target);
+
+    this.$target = $target;
+    this.todoData = todoData;
+    this.validate = (todoData) => {
         if (new.target !== TodoList) {
           throw new Error('new 키워드로 함수의 인스턴스를 생성해야 합니다.')
         }
-        useArrayState(data);
-        checkTarget(this.targetId);
+        useArrayState(todoData);
         checkTypes(
-            data,
+          todoData,
             ({ text, isCompleted }) =>
               typeof text === 'string' && typeof isCompleted === 'boolean'
           );
     };
+
     this.render = () => {
       const todoListStringHtml = '<ul id="todoUl">' +
-        this.data
+        this.todoData
           .map((todo, index) => {
             const delBtnHtml = `<button class="deleteBtn" type="button" data-index=${index}> 삭제 </button>`;
             const liHtml = `<li class="todoLi" data-completed=${todo.isCompleted} data-index=${index}>`;
@@ -30,12 +34,13 @@ function TodoList(data, countTodoItem, targetId) {
           .join('') +
         '</ul>';
   
-      document.querySelector(`#${targetId}`).innerHTML = todoListStringHtml;
+      $target.innerHTML = todoListStringHtml;
     };
+
     this.setState = (nextData) => {
       this.validate(nextData);
-      this.data = nextData;
-      countTodoItem(this.data);
+      this.todoData = nextData;
+      countTodoItem(this.todoData);
       this.render();
       this.setEvent();
     };
@@ -46,30 +51,28 @@ function TodoList(data, countTodoItem, targetId) {
 
         todoUl.addEventListener('click', (event) => {
           const target = event.target;
-          const todoLi = target.closest('li'); // closest : selector와 일치하는 가장 근접한 상위요소 반환
+          const todoLi = target.closest('li');
           const todoDelBtn = target.closest('button');
           const index = todoLi.dataset.index;
           const isCompleted = convertStringToBoolean(todoLi.dataset.completed);
-          const items = this.data;
-          
-          if(todoLi && items[index]) {
-            if(isCompleted) {
-                items[index] = {text : items[index].text , isCompleted : false};
-            } else {
-                items[index] = {text : items[index].text , isCompleted : true};
-            }
-          }
+          const items = this.todoData;
 
           if(todoDelBtn) {
             items.splice(index,1);
+          } else {
+            if(isCompleted) {
+              items[index] = {text : items[index].text , isCompleted : false};
+            } else {
+              items[index] = {text : items[index].text , isCompleted : true};
+            }
           }
 
-          setItemLocalStorage(TODO_STORAGE_KEY, items);
+          setTodoList(items);
           this.setState(items);
         });
     };
     
-    this.setState(data);
+    this.setState(todoData);
   }
   
   export default TodoList

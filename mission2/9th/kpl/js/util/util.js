@@ -57,7 +57,11 @@ export const setItemLocalStorage = (localStorageKey, localStorageData) => {
  */
 export const getItemLocalStorage = (localStorageKey) => {
     try {
-        return JSON.parse(localStorage.getItem(localStorageKey));
+        if(!localStorage.getItem(localStorageKey)) {
+            return [];
+        } else {
+            return JSON.parse(localStorage.getItem(localStorageKey));
+        }
     } catch(error) {
         throw new Error(`localStorage 항목조회시 에러가 발생하였습니다. ${error}`);
     }
