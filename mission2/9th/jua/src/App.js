@@ -4,12 +4,12 @@ import TodoCount from './components/TodoCount.js';
 import TodoRemoveBtn from './components/TodoRemoveBtn.js';
 
 export default function App() {
-  let data = [];
+  this.data = [];
 
   try {
-    data = JSON.parse(localStorage.getItem('todo-list')) || [];
+    this.data = JSON.parse(localStorage.getItem('todo-list')) || [];
   } catch (error) {
-    data = [];
+    alert(error);
   }
 
   const $todoList = document.querySelector('#todo-list');
@@ -20,48 +20,54 @@ export default function App() {
 
   this.countTodo = (data) => {
     const totalCount = data.length;
-    const completedCount = data.filter(({ isCompleted }) => isCompleted === true).length;
+    const completedCount = data.filter(({ isCompleted }) => isCompleted).length;
     this.todoCount.setState(totalCount, completedCount);
   };
 
-  this.setState = (data) => {
-    localStorage.setItem('todo-list', JSON.stringify(data));
-    this.countTodo(data);
-    this.todoList.setState(data);
+  this.setState = (newData) => {
+    localStorage.setItem('todo-list', JSON.stringify(newData));
+    this.data = newData;
+    this.countTodo(newData);
+    this.todoList.setState(newData);
   };
 
   this.addTodo = (text) => {
-    data.push({ text, isCompleted: false });
-    this.setState(data);
+    const newData = [...this.data, { text, isCompleted: false }];
+    this.setState(newData);
   };
 
   this.deleteTodo = (index) => {
-    data.splice(index, 1);
-    this.setState(data);
+    const newData = [...this.data.slice(0, index), ...this.data.slice(index + 1)];
+    this.setState(newData);
   };
 
   this.completeTodo = (index) => {
-    data[index].isCompleted = !data[index].isCompleted;
-    this.setState(data);
+    const newData = [
+      ...this.data.slice(0, index),
+      {
+        text: this.data[index].text,
+        isCompleted: !this.data[index].isCompleted,
+      },
+      ...this.data.slice(index + 1)];
+    this.setState(newData);
   };
 
   $removeAllBtn.addEventListener('removeAll', () => {
-    data = [];
-    this.setState(data);
+    this.setState([]);
   });
 
   this.init = () => {
     this.todoList = new TodoList({
-      data,
+      data: this.data,
       $todoList,
       deleteTodo: this.deleteTodo,
       completeTodo: this.completeTodo,
     });
-    this.todoCount = new TodoCount($todoCount, data);
-    (() => new TodoInput($todoInput, $todoForm, this.addTodo))();
-    (() => new TodoRemoveBtn($removeAllBtn))();
+    this.todoCount = new TodoCount($todoCount, this.data);
+    new TodoInput($todoInput, $todoForm, this.addTodo);
+    new TodoRemoveBtn($removeAllBtn);
   };
 
   this.init();
-  this.setState(data);
+  this.setState(this.data);
 }

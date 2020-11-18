@@ -30,10 +30,10 @@ export default function TodoList({ data, $todoList, deleteTodo, completeTodo }) 
     $todoList.addEventListener('click', (e) => {
       const { id } = e.target.parentNode;
       if (e.target.tagName === 'BUTTON') {
-        deleteTodo(id);
+        deleteTodo(Number(id));
       }
       if (e.target.tagName === 'SPAN' || e.target.tagName === 'S') {
-        completeTodo(id);
+        completeTodo(Number(id));
       }
     });
   };
