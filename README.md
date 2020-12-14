@@ -1,5 +1,10 @@
 **프론트엔드 개발을 위한 자바스크립트 온라인 스터디**
-- [학습 참고 공간](https://school.programmers.co.kr/courses/9998)
+- [학습 참고 공간 1~9기](https://school.programmers.co.kr/courses/9998)
+- [학습 참고 공간 10기](https://school.programmers.co.kr/courses/11203)
+
+
+### 10기
+- 2021-01-20(수) ~ 02-24(수) 총 4주
 
 ### 9기 
 - 2020-10-28(수) ~ 11-25(수) 총 4주
