@@ -19,12 +19,36 @@
 	// 이곳에서 코딩을 시작하세요!
 
     // 1. TodoList 컴포넌트 작성
-    function TodoList(data) {
-        // 1) 파라메터로 받은 data을 this.data로 할당
-        this.data = data;
+    class TodoList {
+        constructor(data) {
+            // 0) 유효성 검사
+            this.validationCheck(data)
 
+            // 1) 파라메터로 받은 data을 this.data로 할당
+            this.data = data
+        }
+
+        // 유효성 검사
+        validationCheck = (data) => {
+            // 데이터가 비어있는지 검사 
+            if(data === null || data === undefined) throw new Error("data is empty")
+
+            // 데이터가 Array 타입인지 검사
+            if(!Array.isArray(data)) throw new Error("data is not Array")
+
+            // 데이터에 text가 있는지 검사
+            let hasText = true
+            for(let item of data) {
+                if(!Object.keys(item).includes('text')) {
+                    hasText = false
+                    break;
+                }
+            }
+            if(!hasText) throw new Error("data has no Text")
+        }
+        
         // 2) render 함수 구현
-        this.render = () => {
+        render = () => {
             // htmlString 빈 문자열로 선언
             let htmlString = ''
 
