@@ -25,7 +25,7 @@ const isCorrectData = todos => {
 
 // new 키워드 체크
 export const checkUseNewKeyword = context => {
-  if (!context) {
+  if (!context || context === window) {
     throw new Error('인스턴스 생성시 new 키워드를 사용해주세요.');
   }
 }
