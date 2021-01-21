@@ -27,35 +27,41 @@
     // 이곳에서 코딩을 시작하세요!
     function TodoList(data) {
         this.data = data;
-        this.render = function(data) {
-            if ( Array.isArray(data) !== true ) throw new Error('배열이 아닙니다.');
+        console.log('1. this.data는', this.data);
+        
+        this.setState = function(data) {
+          this.data = data;
+          console.log('2. this.data는', this.data);
+          this.render();
+        }
+
+        this.render = function() {
+            console.log('3. this.data는', this.data);
+            if ( Array.isArray(this.data) !== true || this.data === 'undefined' ) throw new Error('배열이 아닙니다.');
             var todoList = document.querySelector('#todo-list');
             
             // for
-            for ( var i = 0; i < data.length; i++ ) {
-              todoList.innerHTML += data[i].text + '<br>';
-            }            
+            for ( var i = 0; i < this.data.length; i++ ) {
+              var html = '<div>' + this.data[i].text + '</div>';
+              todoList.innerHTML += html;
+            }          
           
             //for in
-            for( var prop in data ) {
-              todoList.innerHTML += data[prop].text + '<br>';
+            for( var prop in this.data ) {
+              var html = '<div>' + this.data[prop].text + '</div>';
+              todoList.innerHTML += html;
             }            
             
             //map method
-            data.map((item) => {
-              console.log(item.text);
-              todoList.innerHTML += item.text + '<br>';
+            this.data.map((item) => {
+              let html = `<div>${item.text}</div>`;
+              todoList.innerHTML += html;
             });
-        }
-        
-        this.setState = function(anotherData) {
-          this.anotherData = anotherData;
-          console.log(anotherData, data);
-          return anotherData !== data ? this.render(anotherData) : this.render(data);          
-        }
+        }        
     }
 
     var todoList = new TodoList(data);
+    // todoList.render();
     todoList.setState(data2);
 
   </script>
