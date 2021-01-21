@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list">
+      <h1 id="title">To do List</h1>
+    </div>
+    <script>
+      const data = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false,
+        },
+      ]
+      function TodoList(data) {
+        this.render = function() {
+          for (let index in data) {
+            let todo = `<p id="text${index}">${data[index].text}`
+            document.getElementById('todo-list').innerHTML += todo
+          } 
+        }
+      }
+      var todoList = new TodoList(data)
+      todoList.render()
+
+    </script>
+  </body>
+</html>
