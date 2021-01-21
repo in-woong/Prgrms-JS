@@ -1,0 +1,148 @@
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+}
+
+aside {
+  float: left;
+  width: 20%;
+  padding: 20px;
+  border-right: 2px solid #555;
+  box-sizing: border-box;
+}
+
+aside::after {
+  clear: both;
+}
+
+aside * {
+  width: 100%;
+}
+
+.aside-title {
+  text-align: center;
+}
+
+.UserList button:hover {
+  background-color: #eee;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+ul > li {
+  list-style-type: none;
+}
+
+aside li {
+  margin-bottom: 10px;
+}
+
+aside ul > li:last-child {
+  margin-bottom: 0;
+}
+
+button {
+  background-color: transparent;
+  border: 1px solid #999;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.sr-only {
+  position: fixed;
+  top: -100px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.TodoInput {
+  height: 50px;
+  padding: 30px 8%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.TodoInput > * {
+  height: 100%;
+}
+
+.TodoInput > input[type='text'] {
+  flex-grow: 8;
+  width: 50%;
+  padding: 0 10px;
+  margin-right: 10px;
+  border: none;
+  border-bottom: 3px solid black;
+  font-size: 1.8em;
+}
+
+.TodoInput > input[type='text']:focus {
+  outline: none;
+}
+
+.TodoInput > button {
+  flex-grow: 1;
+}
+
+.add-todo-btn {
+  width: 50px;
+  margin-right: 30px;
+  font-size: 2em;
+  background-color: black;
+  color: white;
+}
+
+.Trello {
+  width: 80%;
+  height: 80%;
+  padding: 0 40px;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.trello-title {
+  width: 100%;
+}
+
+.TodoList {
+  flex-grow: 1;
+  margin: 0 30px;
+}
+
+.TodoList ul {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.TodoList li {
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  border: 1px solid #aaa;
+  display: flex;
+  align-items: center;
+}
+
+.TodoList label {
+  flex-grow: 1;
+}
+
+.TodoList input[type='checkbox']:checked + span {
+  text-decoration: line-through;
+}
+
+.error-ui-message-box {
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  font-weight: bold;
+  color: red;
+  background-color: #222;
+}
