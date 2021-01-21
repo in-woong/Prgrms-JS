@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <title>Mission 4</title>
+  </head>
+
+  <body>
+    <main>
+      <h1>할 일을 기록하자</h1>
+      <div id="app">
+        <form id="todo-form">
+          <label for="todo-input">할 일</label>
+          <input type="text" id="todo-input" autofocus />
+          <button>추가하기</button>
+        </form>
+        <button id="todo-reset">모두 삭제</button>
+        <div id="list-wrapper">
+          <aside id="user-list">
+            <h2>유저 목록</h2>
+            <ul></ul>
+          </aside>
+          <div>
+            <div id="todo-list"></div>
+            <div id="todo-counter"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script type="module" src="./index.js"></script>
+  </body>
+</html>
