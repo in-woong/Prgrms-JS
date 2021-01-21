@@ -1,0 +1,99 @@
+
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+    <style>
+      s {display:block}
+      .box-todo {padding-top:30px}
+      .box-todo + .box-todo {margin-top:30px;border-top:1px solid #ddd}
+    </style>
+  </head>
+  <body>
+    <div class="box-todo" id="todo-list"></div>
+    <div class="box-todo" id="todo-list2"></div>
+    <div class="box-todo" id="todo-list3"></div>
+    <script>
+    // 이곳에서 코딩을 시작하세요!
+    const data = [
+      {
+        text: 'JS 공부하기',
+        isCompleted: true
+      },
+      {
+        text: 'JS 복습하기',
+        isCompleted: false
+      },
+    ]
+    const data2 = [
+      {
+        text: '1주차 필수 과제하기',
+        isCompleted: true
+      },
+      {
+        text: '1주차 보너스 과제하기',
+        isCompleted: true
+      },
+    ]
+    const data3 = [
+      {
+        text: 'PR 요청하기',
+        isCompleted: false
+      },
+      {
+        text: '다른 스터디원 Review 작성해보기',
+        isCompleted: false
+      },
+    ]
+
+    const ERROR_MESSAGE = {
+      IS_NULL_OR_UNDEFINED : 'data null 혹은 undefined입니다.',
+      IS_NOT_ARRAY : 'data 형식은 배열만 허용됩니다.'
+    }
+
+    class TodoList {
+      constructor(data, el) {
+        this.el = el;
+        this.data = data;
+
+        this.validator();
+        this.render();
+      }
+
+      validator() {
+        try {
+          if(this.data === undefined || this.data === null) {
+            throw new Error(ERROR_MESSAGE.IS_NULL_OR_UNDEFINED)
+          }
+          if(!Array.isArray(this.data)) {
+            throw new Error(ERROR_MESSAGE.IS_NOT_ARRAY)
+          }
+        } 
+        catch(e){
+          console.error(e);
+        }
+      }
+
+      render() {
+        let text = '';
+        this.data.map((item) => {
+          item.isCompleted == true ? text += `<s>${item.text}</s>` : text += `<div>${item.text}</div>`;
+        })
+        document.querySelector(this.el).innerHTML += text;
+      }
+
+      setState(nextData) {
+        this.data = nextData;
+        this.validator();
+        this.render();
+      }
+    }
+    const todoList = new TodoList(data, '#todo-list');
+    const todoList2 = new TodoList(data2, '#todo-list2');
+    const todoList3 = new TodoList(data3, '#todo-list3');
+
+    todoList2.setState(data3);
+    </script>
+  </body>
+  </html>
+  
