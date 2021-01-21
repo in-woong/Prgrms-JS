@@ -1,8 +1,12 @@
-const TodoList = (function (){
-  let data;
+import { checkUseNewKeyword, checkDataValidation } from './validationUtil.js';
 
-  function TodoList(arg) {
-    data = arg || [];
+function TodoList(initialData) {
+  checkUseNewKeyword(this);
+
+  this.data = initialData;
+
+  TodoList.prototype.checkValidation = function (todos) {
+    checkDataValidation(todos)
   }
 
   TodoList.prototype.render = function() {
@@ -10,13 +14,14 @@ const TodoList = (function (){
 
     todoListElement.innerHTML =
       `<ul>
-        ${data?.map(todo => {
+        ${this.data?.map(todo => {
           return `<li>${todo.text}</li>`;
         }).join('')}
       </ul>`;
   }
 
-  return TodoList;
-}());
+  this.checkValidation(this.data);
+  this.render();
+};
 
-
+export default TodoList;
