@@ -1,0 +1,26 @@
+import { checkNewKeyword, checkTarget } from '../validation.js'
+
+export default function TodoInput($todoInput, $todoForm, addTodo) {
+  const validation = () => {
+    checkNewKeyword(new.target);
+    checkTarget($todoInput);
+    checkTarget($todoForm);
+  };
+
+  validation();
+  this.$todoInput = $todoInput;
+  this.$todoForm = $todoForm;
+
+  this.addTodo = (e) => {
+    const { value } = this.$todoInput;
+    if (value) {
+      addTodo(value);
+    }
+    this.$todoInput.value = '';
+    // submit 이후에도 막힘없이 추가할 수 있도록
+    e.preventDefault();
+    this.$todoInput.focus();
+  };
+
+  this.$todoForm.addEventListener('submit', this.addTodo);
+}

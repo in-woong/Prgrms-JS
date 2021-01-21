@@ -1,0 +1,30 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+  <script src="./src/index.js" type="module"></script>
+  <link rel="stylesheet" href="./index.css">
+</head>
+
+<body>
+  <section>
+    <h2> Users </h2>
+    <ul class="user-list"></ul>
+  </section>
+  <main>
+    <h2 class="todo-list-title"> Todo List </h2>
+    <div class="todo-count"></div>
+    <form class="todo-form">
+      <input class="todo-input" type="text"/>
+      <button type="submit"> + </button>
+    </form>
+    <button class="remove-all-btn"> 모두 삭제하기 </button>
+    <div class="todo-list">
+      <h3 class="loading"></h3>
+      <div id="in-progress-todo-list"></div>
+      <div id="completed-todo-list"></div>
+    </div>
+  </main>
+</body>
+</html>
