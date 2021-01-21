@@ -12,12 +12,16 @@ function TodoList(targetElement, initialData) {
 
   TodoList.prototype.render = function(target) {
     const todoListElement = document.querySelector(`#${target}`);
+    const todosHTML = this.data?.map(todo => {
+      if (!todo.isCompleted) {
+        return `<li><s>${todo.text}</s></li>`;
+      }
+      return `<li>${todo.text}</li>`;
+    }).join('');
 
     todoListElement.innerHTML =
       `<ul>
-        ${this.data?.map(todo => {
-          return `<li>${todo.text}</li>`;
-        }).join('')}
+        ${todosHTML}
       </ul>`;
   }
 
