@@ -16,7 +16,8 @@
         text: 'JS 복습하기'
       }
     ]
-	// 이곳에서 코딩을 시작하세요!
+  // 이곳에서 코딩을 시작하세요!
+  // 필수 구현사항
     function TodoList(data) {
       this.data = data;
       this.render = function() {
@@ -29,6 +30,21 @@
     }
     var todoList = new TodoList(data);
     todoList.render();
+
+  // 보너스 구현사항
+    function validation(data) {
+      if (data === null || data === undefined) throw new Error("null 혹은 undefined입니다.");
+      if (!Array.isArray(data)) throw new Error("array가 아닙니다.");
+      let checkText = true;
+      for (let item of data) {
+        if (!Object.keys(item).includes('text')) {
+          checkText = false;
+          break;
+        }
+      }
+      if (!checkText) throw new Error("text가 없습니다.");
+    }
+    validation(data);
 
   </script>
 </body>
