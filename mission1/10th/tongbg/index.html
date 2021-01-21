@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list"></div>
+    <script>
+      const data = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false,
+        },
+      ]
+      // 이곳에서 코딩을 시작하세요!
+      
+      // function 생성자
+      function TodoList(data){
+        // 파라미터값을 초기화해서 할당
+        this.data = data;
+      }
+
+      // 여러개의 인스턴스를 생성시 __proto__ 로
+      // render 메소드를 연결 받을 수 있게 prototype 오브젝트에 할당
+      TodoList.prototype.render = function(){
+        let htmlText = "";
+
+        // 초기화했던 data 배열을 하나씩 가져와서
+        for(let item of this.data){
+          // 내부 문자열을 하나씩 가져와서 하나의 변수에 누적
+          htmlText += `<div>${item.text}</div>`
+        }
+
+        // 완성된 HTML DOM 객체에 넣어준다.
+        // 하드코딩된 #todo-list 는 인스턴스마다 다르게 할당될 수 있게 추후 변경
+        document.querySelector('#todo-list').innerHTML = htmlText;
+      }
+
+      const todoList = new TodoList(data);
+      todoList.render();
+    </script>
+  </body>
+</html>
