@@ -1,16 +1,17 @@
 import { checkUseNewKeyword, checkDataValidation } from './validationUtil.js';
 
-function TodoList(initialData) {
+function TodoList(targetElement, initialData) {
   checkUseNewKeyword(this);
-
+  
+  this.targetElement = targetElement;
   this.data = initialData;
 
   TodoList.prototype.checkValidation = function (todos) {
     checkDataValidation(todos)
   }
 
-  TodoList.prototype.render = function() {
-    const todoListElement = document.querySelector('#todo-list');
+  TodoList.prototype.render = function(target) {
+    const todoListElement = document.querySelector(`#${target}`);
 
     todoListElement.innerHTML =
       `<ul>
@@ -21,7 +22,7 @@ function TodoList(initialData) {
   }
 
   this.checkValidation(this.data);
-  this.render();
+  this.render(this.targetElement);
 };
 
 export default TodoList;
