@@ -16,35 +16,47 @@
         text: 'JS 복습하기'
       }
     ]
-
-    // var data = 42;
+    var data2 = [
+      {
+        text: 'CSS 공부하기'
+      },
+      {
+        text: 'CSS 복습하기'
+      }
+    ]    
     // 이곳에서 코딩을 시작하세요!
     function TodoList(data) {
         this.data = data;
-        this.render = function() {
-
-            if ( Array.isArray(data) !== true ) throw new Error('배열이 아닙니다.');               
-
+        this.render = function(data) {
+            if ( Array.isArray(data) !== true ) throw new Error('배열이 아닙니다.');
             var todoList = document.querySelector('#todo-list');
             
-            // 1way
+            // for
+            for ( var i = 0; i < data.length; i++ ) {
+              todoList.innerHTML += data[i].text + '<br>';
+            }            
+          
+            //for in
             for( var prop in data ) {
-                todoList.innerHTML += data[prop].text + '<br>';
-            }
-
-            // 2way
+              todoList.innerHTML += data[prop].text + '<br>';
+            }            
+            
+            //map method
             data.map((item) => {
-                console.log(item.text);
-                todoList.innerHTML += item.text + '<br>';
+              console.log(item.text);
+              todoList.innerHTML += item.text + '<br>';
             });
-
-            
-            
+        }
+        
+        this.setState = function(anotherData) {
+          this.anotherData = anotherData;
+          console.log(anotherData, data);
+          return anotherData !== data ? this.render(anotherData) : this.render(data);          
         }
     }
 
     var todoList = new TodoList(data);
-    todoList.render();
+    todoList.setState(data2);
 
   </script>
 </body>
