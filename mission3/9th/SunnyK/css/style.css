@@ -1,0 +1,92 @@
+html,
+body {
+  margin: 0;
+}
+
+li {
+  list-style: none;
+}
+
+button:focus,
+input:focus {
+  outline: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+.SearchInput,
+.SearchHistory,
+.SearchResult {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.SearchInput > input[type='text'] {
+  width: 70%;
+  max-width: 1000px;
+  height: 50px;
+  padding: 5px 15px;
+  border: 3px solid black;
+  font-size: 1.5em;
+  line-height: 1.5em;
+}
+
+.SearchHistory {
+  width: 70%;
+  max-width: 1000px;
+  margin: 0 auto;
+  flex-direction: column;
+}
+
+.history-list {
+  width: 100%;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.history-list > li {
+  padding: 3px 12px;
+  margin: 5px;
+  border: 0.5px solid #888;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.history-list > li:hover {
+  border-color: black;
+  background-color: black;
+  color: white;
+}
+
+.clear-history-btn {
+  width: 100px;
+  margin: 0 auto;
+  padding: 5px 0;
+  border: none;
+  background-color: transparent;
+  color: #888;
+}
+
+.clear-history-btn:hover {
+  color: black;
+}
+
+.search-result-list {
+  margin: 0 30px;
+  padding: 0;
+}
+
+.search-result-list > li {
+  width: 25%;
+  display: inline-block;
+}
+
+.meme-img {
+  margin: 15px;
+  width: calc(100% - 30px);
+  height: auto;
+}
