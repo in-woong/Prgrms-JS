@@ -7,6 +7,8 @@
 
 <body>
   <div id="todo-list"></div>
+  <div id="todo-list2"></div>
+  <div id="todo-list3"></div>
   <script>
     var data = [
       {
@@ -24,45 +26,47 @@
         text: 'CSS 복습하기'
       }
     ]    
+    var data3 = [
+      {
+        text: 'TS 공부하기'
+      },
+      {
+        text: 'TS 복습하기'
+      }
+    ]      
     // 이곳에서 코딩을 시작하세요!
-    function TodoList(data) {
+    function TodoList(data, el) {
         this.data = data;
-        console.log('1. this.data는', this.data);
+        this.el = el;
         
         this.setState = function(data) {
           this.data = data;
-          console.log('2. this.data는', this.data);
           this.render();
         }
 
         this.render = function() {
-            console.log('3. this.data는', this.data);
-            if ( Array.isArray(this.data) !== true || this.data === 'undefined' ) throw new Error('배열이 아닙니다.');
-            var todoList = document.querySelector('#todo-list');
+            if ( Array.isArray(this.data) !== true || this.data === undefined ) throw new Error('에러');
+            var todoList = document.querySelector(this.el);
             
-            // for
             for ( var i = 0; i < this.data.length; i++ ) {
               var html = '<div>' + this.data[i].text + '</div>';
               todoList.innerHTML += html;
-            }          
-          
-            //for in
-            for( var prop in this.data ) {
-              var html = '<div>' + this.data[prop].text + '</div>';
-              todoList.innerHTML += html;
-            }            
-            
-            //map method
-            this.data.map((item) => {
-              let html = `<div>${item.text}</div>`;
-              todoList.innerHTML += html;
-            });
+            }
+
+            // this.data.map(function(item) {
+            //   var html = '<div>' + item.text + '</div>';
+            //   todoList.innerHTML += html;
+            // });
+
         }        
     }
 
-    var todoList = new TodoList(data);
-    // todoList.render();
-    todoList.setState(data2);
+    var todoList = new TodoList(data, '#todo-list');
+    var todoList2 = new TodoList(data2, '#todo-list2');
+    var todoList3 = new TodoList(data3, '#todo-list3');
+    todoList.setState(data);
+    todoList2.setState(data2);
+    todoList3.setState(data3);
 
   </script>
 </body>
