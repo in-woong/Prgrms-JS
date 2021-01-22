@@ -1,4 +1,4 @@
-import {RawData, derekDoneRawData, derekToDoRawData} from "./data/todoRawDatas.js";
+import {rawData, derekDoneRawData, derekToDoRawData} from "./data/todoRawDatas.js";
 import {message} from "./constantValue/message.js";
 import {controlToDoList, conrtrolDerekToDoList} from "./class/classHandler.js";
 

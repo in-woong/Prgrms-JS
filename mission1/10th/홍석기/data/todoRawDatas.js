@@ -1,4 +1,4 @@
-const RawData = [
+const rawData = [
     {
       text: 'JS 공부하기',
       isCompleted: true,
@@ -35,4 +35,4 @@ const derekToDoRawData = [
   }
 ];
 
-export {RawData, derekDoneRawData, derekToDoRawData};
+export {rawData, derekDoneRawData, derekToDoRawData};
