@@ -1,27 +1,12 @@
-import {RawData} from "./data/todoRawDatas.js";
+import {RawData, derekDoneRawData, derekToDoRawData} from "./data/todoRawDatas.js";
 import {message} from "./constantValue/message.js";
-
-class controlToDoList {
-    constructor(data) {
-        this.toDoData = data;
-        this.init();
-    }
-
-    init() {
-        const todoLists = document.querySelector("#todo-list");
-        todoLists.innerHTML = ``;
-    }
-
-    dataValidation() {
-        return Array.isArray(this.toDoData) && (typeof(this.toDoData) !== undefined) && (typeof(this.toDoData) !== null) ? true : false;
-    }
-
-    render() {
-        const todoLists = document.querySelector("#todo-list");
-        this.toDoData.forEach((rawData, index) => rawData.isCompleted ? todoLists.innerHTML += `<s>${index + 1}. ${rawData.text}</s></br>` : 
-        todoLists.innerHTML += `${index + 1}. ${rawData.text}</br>`);     
-    }
-}
+import {controlToDoList, conrtrolDerekToDoList} from "./class/classHandler.js";
 
 const toDoObj = new controlToDoList(RawData);
-toDoObj.dataValidation() ? toDoObj.render() : alert(message.RAW_DATA_TYPE_INAPPROPRIATE);
+toDoObj.dataValidation() ? toDoObj.render() : (function() {throw new Error(message.RAW_DATA_TYPE_INAPPROPRIATE)})
+
+const derekDoneObj = new conrtrolDerekToDoList(derekDoneRawData);
+derekDoneObj.dataValidation() ? derekDoneObj.renderDerekTodoList() : (function() {throw new Error(message.RAW_DATA_TYPE_INAPPROPRIATE)})
+
+const derekToDoObj = new conrtrolDerekToDoList(derekToDoRawData);
+derekToDoObj.dataValidation() ? derekToDoObj.renderDerekDoneList() :  (function() {throw new Error(message.RAW_DATA_TYPE_INAPPROPRIATE)})
