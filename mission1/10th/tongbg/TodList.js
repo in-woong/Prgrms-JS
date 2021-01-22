@@ -1,18 +1,29 @@
-import validateData from "./validateData.js"
+import validateData from './validateData.js'
 
-function TodoList(data){
-  // new 키워드
-  // 함수 또는 생성자가 new 연산자로 호출된 여부 확인
-  // Class 정보에 접근 가능
-  if(validateData(new.target, data)){
-    this.data = data;
+function TodoList(data, id) {
+  // new 호출된 여부 확인
+  if (validateData(new.target, data)) {
+    this.data = data
+    this.parentDOM = document.getElementById(id)
   }
+
+  function render() {
+    this.parentDOM.innerHTML = this.data
+      .map((item) => {
+        return `<div>${item.text}</div>`
+      })
+      .join('')
+  }
+
+  render.call(this)
 }
 
-TodoList.prototype.render = function(){
-  document.querySelector('#todo-list').innerHTML = this.data.map((item)=>{
-    return `<div>${item.text}</div>`;
-  }).join('');
-}
+// TodoList.prototype.render = function () {
+//   parentDOM.innerHTML = this.data
+//     .map((item) => {
+//       return `<div>${item.text}</div>`
+//     })
+//     .join('')
+// }
 
-export default TodoList;
+export default TodoList
