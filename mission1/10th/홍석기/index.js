@@ -8,7 +8,8 @@ class controlToDoList {
     }
 
     init() {
-        // initialize local Storage ... later.
+        const todoLists = document.querySelector("#todo-list");
+        todoLists.innerHTML = ``;
     }
 
     dataValidation() {
@@ -17,7 +18,8 @@ class controlToDoList {
 
     render() {
         const todoLists = document.querySelector("#todo-list");
-        this.toDoData.forEach((rawData, index) => todoLists.innerHTML += `${index + 1}. ${rawData.text}</br>`);     
+        this.toDoData.forEach((rawData, index) => rawData.isCompleted ? todoLists.innerHTML += `<s>${index + 1}. ${rawData.text}</s></br>` : 
+        todoLists.innerHTML += `${index + 1}. ${rawData.text}</br>`);     
     }
 }
 
