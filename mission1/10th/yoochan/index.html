@@ -18,6 +18,12 @@
     ]
   // 이곳에서 코딩을 시작하세요!
   function TodoList(data) {
+    if(!new.target) {
+      throw new Error("no use new keword");
+    }
+    
+    ErrorTest(data);
+
     this.render = function() {
       let html = '';
       let todo_list = document.querySelector('#todo-list');
@@ -25,6 +31,23 @@
         html += `<div>${value.text}</div>`
       }
       todo_list.innerHTML = html;
+    }
+  }
+
+  function ErrorTest(data) {
+    if(data === null || data === undefined) {
+      throw new Error("Data is empty");
+    }
+    else if(!Array.isArray(data)) {
+      throw new Error("Data is not array");
+    }
+    else {
+      for(let value of data) {
+        if(value.text === (null||undefined) || typeof value.text !== "string"){
+          throw new Error("The content of the data is strange");
+          break;
+        }
+      }
     }
   }
 
