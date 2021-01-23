@@ -35,9 +35,9 @@ const jobs = [
 ];
 
 try {
-  const todoList = new TodoList('todo-list', todos);
-  const todoHobbies = new TodoList('todo-hobbies', hobbies);
-  const todoJobs = new TodoList('todo-jobs', jobs);
+  const todoList = new TodoList('#todo-list', todos);
+  const todoHobbies = new TodoList('#todo-hobbies', hobbies);
+  const todoJobs = new TodoList('#todo-jobs', jobs);
 
   const sampleSetStateFunc = function () {
     todoList.setState([
