@@ -1,25 +1,21 @@
 import { checkUseNewKeyword, checkDataValidation } from './validationUtil.js';
 
 function TodoList(targetElement, initialData) {
-  checkUseNewKeyword(this);
-  
-  this.target = targetElement;
-  this.data = initialData;
+  if (checkUseNewKeyword(new.target)) {
+    this.target = document.querySelector(`#${targetElement}`);
+    this.data = initialData;
+  }
 
   TodoList.prototype.checkValidation = function (todos) {
     checkDataValidation(todos)
   }
 
   TodoList.prototype.render = function() {
-    const todoListElement = document.querySelector(`#${this.target}`);
-    const todosHTML = this.data?.map(todo => {
-      if (todo.isCompleted) {
-        return `<li><s>${todo.text}</s></li>`;
-      }
-      return `<li>${todo.text}</li>`;
-    }).join('');
+    const todosHTML = this.data.map(todo => (
+      todo.isCompleted ? `<li><s>${todo.text}</s></li>` : `<li>${todo.text}</li>`
+    )).join('');
 
-    todoListElement.innerHTML =
+    this.target.innerHTML =
       `<ul>
         ${todosHTML}
       </ul>`;
