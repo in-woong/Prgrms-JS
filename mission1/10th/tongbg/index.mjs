@@ -33,6 +33,21 @@ const shoppingData = [
   },
 ]
 
-new TodoList(todoData, 'todo-list')
+const todoList = new TodoList(todoData, 'todo-list')
 new TodoList(taskData, 'task-list')
 new TodoList(shoppingData, 'shopping-list')
+
+// 변경할 데이터
+const nextData = [
+  {
+    text: 'TypeScript 공부하기',
+    isCompleted: true,
+  },
+  {
+    text: 'TypeScript 복습하기',
+    isCompleted: false,
+  },
+]
+
+// 데이터변경 하면서 render
+todoList.setState(nextData)
