@@ -35,7 +35,7 @@ export const isTruthyData = (data, cutomErrorMessage = ERROR_IS_FALSY) => {
 
 // new 키워드 체크
 export const checkUseNewKeyword = context => {
-  if (!context || context === window) {
+  if (!context) {
     throw new Error(ERROR_IS_NEW_KEYWORD);
   }
   return true;
