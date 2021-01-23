@@ -34,30 +34,34 @@ const jobs = [
   },
 ];
 
+try {
+  const todoList = new TodoList('todo-list', todos);
+  const todoHobbies = new TodoList('todo-hobbies', hobbies);
+  const todoJobs = new TodoList('todo-jobs', jobs);
 
-const todoList = new TodoList('todo-list', todos);
-const todoHobbies = new TodoList('todo-hobbies', hobbies);
-const todoJobs = new TodoList('todo-jobs', jobs);
+  const sampleSetStateFunc = function () {
+    todoList.setState([
+      ...todos,
+      {
+        text: 'TS 공부하기',
+        isCompleted: false,
+      },
+    ])
+    todoHobbies.setState([
+      {
+        text: '이력서 작성',
+        isCompleted: true,
+      },
+    ])
+    todoJobs.setState(jobs.map(job => {
+      return { ...job, isCompleted: true };
+    }))
+  };
 
-const sampleSetStateFunc = function() {
-  todoList.setState([
-    ...todos,
-    {
-      text: 'TS 공부하기',
-      isCompleted: false,
-    },
-  ])
-  todoHobbies.setState([
-    {
-      text: '이력서 작성',
-      isCompleted: true,
-    },
-  ])
-  todoJobs.setState(jobs.map(job => {
-    return { ...job, isCompleted: true };
-  }))
-};
+  const setStateButton = document.querySelector('#btn-set-state');
 
-const setStateButton = document.querySelector('#btn-set-state');
+  setStateButton.addEventListener('click', sampleSetStateFunc);
 
-setStateButton.addEventListener('click', sampleSetStateFunc);
+} catch (error) {
+  console.error('ERROR!!!!!', error);
+}
