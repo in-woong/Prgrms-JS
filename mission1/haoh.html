@@ -1,0 +1,47 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list"></div>
+  <script>
+    const data = [
+      {
+        text: 'JS 공부하기',
+        isCompleted: true,
+      },
+      {
+        text: 'JS 복습하기',
+        isCompleted: false,
+      },
+    ]
+
+    function TodoList({ text = '', isCompleted = '' }) {
+      // 파라메터로 받은 값을 this에 할당
+      this.text = text;
+      this.isCompleted = isCompleted;
+
+      // TodoList 함수에 render 함수를 만들고 그것을 this.render 에 할당
+      this.render = function () {
+        document.querySelector('#todo-list').innerHTML += `<div> - ${this.text} ${this.isCompleted && '✅'}</div>`
+      }
+    }
+
+    let todoList = [];
+
+    data.forEach(el => {
+      const todoElm = new TodoList(el);
+      todoList = [...todoList, todoElm];
+    });
+
+    data.forEach((val, idx) => {
+      todoList[idx].render();
+    });
+
+  </script>
+</body>
+
+</html>
