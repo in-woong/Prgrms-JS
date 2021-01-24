@@ -18,10 +18,29 @@
         },
       ]
 
-      function TodoList(data) {
+      function errorCheck(data) {
+        if (!data) {
+          throw new Error('data is null or undefined');
+        } else if (!Array.isArray(data)){
+          throw new Error('data is not an Array');
+        } else {
+          data.forEach(value => {
+            if(!value.text) {
+              throw new Error('data has not a Text');
+            }
+          })
+        }
+      }
+
+      var TodoList = function(data) {
+        if (!(this instanceof TodoList)) {
+          throw new Error('use the new keword to create a TodoList');
+        } else {
+          errorCheck(data);
+        }
         this.data = data;
         this.render = function() {
-          var renderString = data.map((value) => value.text).join(' ');
+          var renderString = data.map(value => value.text).join(' ');
           document.getElementById('todo-list').innerHTML = renderString;
         }
       }
