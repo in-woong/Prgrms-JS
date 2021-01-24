@@ -8,25 +8,58 @@
 <body>
   <div id="todo-list"></div>
   <script>
-    var data = [
+    const data = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false,
+        },
+      ]
+
+    //에러 발생하게하기
+    const test1 = null;
+    const test2 = "notArray";
+    const test3 = [
       {
-        text: 'JS 공부하기'
+        text:123,
       },
       {
-        text: 'JS 복습하기'
-      }
-    ]
+        text:456,
+      },
+    ];  
+
     function TodoList(data){ 
-    var that =this;
-    this.data=data;
-    this.render=function(){
-     document.getElementById("todo-list").innerHTML=that.data.map(val=> val.text).join("");
-    }
+      this.data = data;
+      //todo-list id를 가진 dom을 검색하는 코드
+      const findId = document.getElementById("todo-list");
+      this.render = () => {
+        findId.innerHTML = this.data.map(val=> val.text).join("");
+      };
+
+      this.verify=()=>{
+        if(this.data===null || this.data===undefined){
+          throw new Error("error message");
+        }else if(!this.data.isArray){
+          throw new Error("error message");
+        }else if(typeOf(this.data.map(val=> val.text))!==String){
+          throw new Error("error message");
+        }
+    };
+
   }
   var todoList = new TodoList(data);
- 
+  //var errorTest1 = new TodoList(test1);
+  //var errorTest2 = new TodoList(test2);
+  //var errorTest3 = new TodoList(test3);
+
   todoList.render();
-  
+  //errorTest1.verify(); 
+  //errorTest2.verify();
+  //errorTest3.verify();
   </script>
 </body>
 </html>
+
