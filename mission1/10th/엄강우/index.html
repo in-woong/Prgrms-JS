@@ -23,7 +23,14 @@
         this.render = function() {
           const todoList = document.getElementById('todo-list')
           var todos = ''
-          data.forEach(todo => todos +=`<p id="text">${todo.text}`)
+          data.forEach(todo => {
+            if (todo.isCompleted === true) {
+              todos += `<s id="text">${todo.text}`
+            } else {
+              todos +=`<p id="text">${todo.text}`
+            }
+          }
+          )
           todoList.innerHTML += todos
         }
         this.render()
