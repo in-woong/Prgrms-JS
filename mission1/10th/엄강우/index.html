@@ -21,15 +21,14 @@
       ]
       function TodoList(data) {
         this.render = function() {
-          for (let index in data) {
-            let todo = `<p id="text${index}">${data[index].text}`
-            document.getElementById('todo-list').innerHTML += todo
-          } 
+          const todoList = document.getElementById('todo-list')
+          var todos = ''
+          data.forEach(todo => todos +=`<p id="text">${todo.text}`)
+          todoList.innerHTML += todos
         }
+        this.render()
       }
       var todoList = new TodoList(data)
-      todoList.render()
-
     </script>
   </body>
 </html>
