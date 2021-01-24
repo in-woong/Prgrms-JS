@@ -20,11 +20,14 @@
       ]
     
       function TodoList(data, element) {
-        console.log(new.target);
-
+        // new keyword가 없을 경우
         if (!new.target) {
-          throw Error ('This must be called with new');
-          console.log('This instantiated with new');
+          throw Error ('must be called with new');
+        }
+
+        // 배열이 아닐 경우
+        if(!Array.isArray(data)) {
+          throw Error ('Argument have to be array');
         }
 
         this.data = data;
@@ -36,9 +39,7 @@
       }
 
       try {
-        //test 생성자함수 new 키워드 없을 경우
-        const todoList = TodoList(data, document.querySelector('#todo-list'));
-        // const todoList = new TodoList(data, document.querySelector('#todo-list'));
+        const todoList = new TodoList(data2, document.querySelector('#todo-list'));
         todoList.render();
       } catch(e) {
         console.error(e)
