@@ -9,64 +9,122 @@
   <div id="todo-list"></div>
   <div id="todo-list2"></div>
   <div id="todo-list3"></div>
+
+  <div id="todo-list4"></div>
+  <div id="todo-list5"></div>
+  <div id="todo-list6"></div>
   <script>
-    var data = [
-      {
-        text: 'JS 공부하기'
-      },
-      {
-        text: 'JS 복습하기'
+    // Old Way (IE cover)
+    (function() {
+      var data = [
+        {
+          text: 'JS 공부하기'
+        },
+        {
+          text: 'JS 복습하기'
+        }
+      ]
+      var data2 = [
+        {
+          text: 'CSS 공부하기'
+        },
+        {
+          text: 'CSS 복습하기'
+        }
+      ]    
+      var data3 = [
+        {
+          text: 'TS 공부하기'
+        },
+        {
+          text: 'TS 복습하기'
+        }
+      ]      
+      // 이곳에서 코딩을 시작하세요!
+      function TodoList(data, el) {
+          this.data = data;
+          this.el = el;
+          
+          this.setState = function(data) {
+            this.data = data;
+            this.render();
+          }
+
+          this.render = function() {
+              if ( Array.isArray(this.data) !== true || this.data === undefined ) throw new Error('에러');
+              var todoList = document.querySelector(this.el);
+              
+              for ( var i = 0; i < this.data.length; i++ ) {
+                var html = '<div>' + this.data[i].text + '</div>';
+                todoList.innerHTML += html;
+              }
+
+              // this.data.map(function(item) {
+              //   var html = '<div>' + item.text + '</div>';
+              //   todoList.innerHTML += html;
+              // });
+
+          }        
       }
-    ]
-    var data2 = [
-      {
-        text: 'CSS 공부하기'
-      },
-      {
-        text: 'CSS 복습하기'
-      }
-    ]    
-    var data3 = [
-      {
-        text: 'TS 공부하기'
-      },
-      {
-        text: 'TS 복습하기'
-      }
-    ]      
-    // 이곳에서 코딩을 시작하세요!
-    function TodoList(data, el) {
-        this.data = data;
-        this.el = el;
-        
-        this.setState = function(data) {
+
+      var todoList = new TodoList(data, '#todo-list');
+      todoList.setState(data);
+    })();
+
+    // ES6+
+    {
+      const data = [
+        {
+          text: 'JS 공부하기'
+        },
+        {
+          text: 'JS 복습하기'
+        }
+      ]
+      const data2 = [
+        {
+          text: 'CSS 공부하기'
+        },
+        {
+          text: 'CSS 복습하기'
+        }
+      ]    
+      const data3 = [
+        {
+          text: 'TS 공부하기'
+        },
+        {
+          text: 'TS 복습하기'
+        }
+      ]      
+      // 이곳에서 코딩을 시작하세요!
+      
+      class TodoList {
+        constructor(data, el) {
+          this.data = data;
+          this.el = el;
+        }
+
+        validator() {
+          if ( this.data === undefined || this.data === null || !Array.isArray(this.data) ) throw new Error('data가 올바르지 않습니다.');  
+        }
+
+        render() {   
+          this.data.map(item => {
+            const html = `<div>${item.text}</div>`;
+            document.querySelector(this.el).insertAdjacentHTML('afterbegin', html); // https://developer.mozilla.org/ko/docs/Web/API/Element/insertAdjacentHTML
+          });
+        }
+
+        setState(data) {
           this.data = data;
           this.render();
         }
+      }
 
-        this.render = function() {
-            if ( Array.isArray(this.data) !== true || this.data === undefined ) throw new Error('에러');
-            var todoList = document.querySelector(this.el);
-            
-            for ( var i = 0; i < this.data.length; i++ ) {
-              var html = '<div>' + this.data[i].text + '</div>';
-              todoList.innerHTML += html;
-            }
-
-            // this.data.map(function(item) {
-            //   var html = '<div>' + item.text + '</div>';
-            //   todoList.innerHTML += html;
-            // });
-
-        }        
+      const todoList = new TodoList(data, '#todo-list4');
+      todoList.setState(data);      
     }
-
-    var todoList = new TodoList(data, '#todo-list');
-    var todoList2 = new TodoList(data2, '#todo-list2');
-    var todoList3 = new TodoList(data3, '#todo-list3');
-    todoList.setState(data);
-    todoList2.setState(data2);
-    todoList3.setState(data3);
 
   </script>
 </body>
