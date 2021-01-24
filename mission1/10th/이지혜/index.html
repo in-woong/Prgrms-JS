@@ -17,23 +17,61 @@
           isCompleted: false
         },
         {
-          text: '삼굡살 구워먹기',
+          lalabel: '삼굡살 구워먹기',
           isCompleted: false
         }
-      ]
+      ];
       // 이곳에서 코딩을 시작하세요!
 
-      function TodoList(data){
-        this.data = data;
-        this.filterNonTodolist = function(){
-          return this.data.filter(list => 
-            list.isCompleted === false
-          );
+      /**
+       * data검증 리터럴 객체
+       * */
+      let validation = {
+        check: (data) => {
+          validation.typeValidate(data);
+          validation.formatValidate(data);
+        },
+        typeValidate: (data) => {
+          //data의 타입 체크 (null,undefined,array)
+          if (typeof data === 'undefined') {
+            throw new TypeError('data is undefined');
+          }
+          if (data === null) {
+            throw new TypeError('data is null');
+          }
+          if (!Array.isArray(data)) {
+            throw new TypeError('data type is not array');
+          }
+        },
+        formatValidate: (data) => {
+          //데이터 내용 체크 (형식,key값)
+          data.some((list, index) => {
+            //타입체크
+            if (list.constructor !== Object) {
+              throw new TypeError(index + ' index data type is not Object');
+            }
+            //키 포함 여부체크
+            if (!(list.hasOwnProperty('text') && list.hasOwnProperty('isCompleted'))) {
+              throw new ReferenceError(index + " index data doesn't have the required key value.");
+            }
+          });
         }
-        this.render = function(){
-          let htmls = "";
-          this.filterData = this.filterNonTodolist().map(list => list.text);
-          for(let list of this.filterData){
+      };
+
+      /**
+       * todolist function
+       * */
+      function TodoList(data) {
+        this.data = data;
+        this.filterNonTodolist = function () {
+          return this.data.filter((list) => list.isCompleted === false);
+        };
+        this.render = function () {
+          validation.check(this.data);
+
+          let htmls = '';
+          this.filterData = this.filterNonTodolist().map((list) => list.text);
+          for (let list of this.filterData) {
             htmls += `<div>${list}</div>`;
           }
           document.getElementById('todo-list').innerHTML = htmls;
@@ -41,7 +79,11 @@
       }
 
       let todolist = new TodoList(data);
-      todolist.render();
+      try {
+        todolist.render();
+      } catch (e) {
+        console.error(e);
+      }
     </script>
   </body>
 </html>
