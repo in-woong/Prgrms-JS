@@ -31,6 +31,7 @@ export function isNew(target) {
 /**
  * 대상 data 가 falsy 한 값인지 검사하는 함수
  * @param {object} data 유효성을 검사할 대상 데이터
+ * @returns {object} 대상 오브젝트를 다시 리턴
  */
 function isFalsy(data) {
   if (!data) throw new Error(ERROR_MSG.INCORRECT_DATA)
@@ -38,7 +39,11 @@ function isFalsy(data) {
 }
 
 /**
+<<<<<<< HEAD
  * 대상 DOM 객체가 존재하는지 검사하는 함수
+=======
+ * 대상 오브젝트가 falsy 한 값인지 검사하는 함수
+>>>>>>> eccd5bbf... [Mission1]통붕이 - 추가 수정 사항
  * @param {object} data 유효성을 검사할 대상 데이터
  * @returns {object} data 대상 오브젝트를 다시 리턴
  */
