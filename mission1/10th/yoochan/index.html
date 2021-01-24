@@ -7,8 +7,10 @@
 
 <body>
   <div id="todo-list"></div>
+  <div id="exercise-list"></div>
+  <div id="play-list"></div>
   <script>
-    var data = [
+    var todoList = [
       {
         text: 'JS 공부하기'
       },
@@ -16,21 +18,37 @@
         text: 'JS 복습하기'
       }
     ]
+    var exerciseList = [
+      {
+        text: '일찍 일어나기'
+      },
+      {
+        text: '운동하기'
+      }
+    ]
+    var playList = [
+      {
+        text: '영화 보기'
+      },
+      {
+        text: '롤하기'
+      }
+    ]
   // 이곳에서 코딩을 시작하세요!
-  function TodoList(data) {
+  function TodoList(dataList, targetId) {
     if(!new.target) {
       throw new Error("no use new keword");
     }
     
-    ErrorTest(data);
+    ErrorTest(dataList);
 
     this.render = function() {
       let html = '';
-      let todo_list = document.querySelector('#todo-list');
-      for(let value of data) {
+      let doList = document.querySelector(targetId);
+      for(let value of dataList) {
         html += `<div>${value.text}</div>`
       }
-      todo_list.innerHTML = html;
+      doList.innerHTML = html;
     }
   }
 
@@ -51,8 +69,12 @@
     }
   }
 
-  var todoList = new TodoList(data);
+  var todoList = new TodoList(todoList, '#todo-list');
+  var exerciseList = new TodoList(exerciseList, '#exercise-list');
+  var playList = new TodoList(playList, '#play-list');
   todoList.render();
+  exerciseList.render();
+  playList.render();
   </script>
 </body>
 </html>
