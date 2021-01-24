@@ -6,6 +6,7 @@
 
   <body>
     <div id="todo-list"></div>
+
     <script>
       const data = [
         {
@@ -17,7 +18,19 @@
           isCompleted: false,
         },
       ]
-      // 이곳에서 코딩을 시작하세요!
+    
+      function TodoList(data, element) {
+        this.data = data;
+        this.element = element;
+
+        this.render = function() {
+          element.innerHTML = `<ul>${data.map((item, index) => `<li>${item.text}</li>`).join('')}</ul>`;
+        }
+      }
+
+      const todoList = new TodoList(data, document.querySelector('#todo-list'));
+      todoList.render();
+
     </script>
   </body>
 </html>
