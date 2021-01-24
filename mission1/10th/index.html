@@ -18,6 +18,18 @@
         },
       ]
       // 이곳에서 코딩을 시작하세요!
+      function TodoList(data){
+      this.data=data;
+      this.render=function(){
+        // var html = '<div>'+data[0].text+</div>;
+        // var html =`<div>${this.data}</div>`
+        document.querySelector('#todo-list').innerHTML=`<div>${this.data}</div>`;
+
+      }
+    }
+    var todoList = new TodoList(data[0].text);
+    var todoList = new TodoList(data[1].text);
+    todoList.render()
     </script>
   </body>
 </html>
