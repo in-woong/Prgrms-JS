@@ -12,26 +12,32 @@
   <script>
     var todoList = [
       {
-        text: 'JS 공부하기'
+        text: 'JS 공부하기',
+        isCompleted: true
       },
       {
-        text: 'JS 복습하기'
+        text: 'JS 복습하기',
+        isCompleted: false
       }
     ]
     var exerciseList = [
       {
-        text: '일찍 일어나기'
+        text: '일찍 일어나기',
+        isCompleted: true
       },
       {
-        text: '운동하기'
+        text: '운동하기',
+        isCompleted: true
       }
     ]
     var playList = [
       {
-        text: '영화 보기'
+        text: '영화 보기',
+        isCompleted: false
       },
       {
-        text: '롤하기'
+        text: '롤하기',
+        isCompleted: false
       }
     ]
   // 이곳에서 코딩을 시작하세요!
@@ -46,7 +52,7 @@
       let html = '';
       let doList = document.querySelector(targetId);
       for(let value of dataList) {
-        html += `<div>${value.text}</div>`
+        html += value.isCompleted ? `<div><s>${value.text}</s></div>` : `<div>${value.text}</div>`;
       }
       doList.innerHTML = html;
     }
