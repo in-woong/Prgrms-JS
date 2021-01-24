@@ -1,79 +1,87 @@
-<html>
+<!DOCTYPE html>
+<html lang="ko-KR">
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
 
-<head>
-  <title>Mission 1</title>
-  <meta charset="utf-8" />
-</head>
+  <body>
+    <div id="todo-list"></div>
+    <div id="todo-list2"></div>
+    <div id="todo-list3"></div>
+    <script>
+      // Old Way (IE cover)
+      var data = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false,
+        },
+      ]
+      var data2 = [
+        {
+          text: 'CSS 공부하기',
+          isCompleted: false,
+        },
+        {
+          text: 'CSS 복습하기',
+          isCompleted: true,
+        },
+      ]
+      var data3 = [
+        {
+          text: 'TS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'TS 복습하기',
+          isCompleted: true,
+        },
+      ]
+      // 이곳에서 코딩을 시작하세요!
+      function TodoList(data, selector) {
+        this.data = data
+        this.selector = selector
 
-<body>
-  <div id="todo-list"></div>
-  <div id="todo-list2"></div>
-  <div id="todo-list3"></div>
-  <script>
-    // Old Way (IE cover)
-    var data = [
-      {
-        text: 'JS 공부하기',
-        isCompleted: true
-      },
-      {
-        text: 'JS 복습하기',
-        isCompleted: false
-      }
-    ]
-    var data2 = [
-      {
-        text: 'CSS 공부하기',
-        isCompleted: false
-      },
-      {
-        text: 'CSS 복습하기',
-        isCompleted: true
-      }
-    ]    
-    var data3 = [
-      {
-        text: 'TS 공부하기',
-        isCompleted: true
-      },
-      {
-        text: 'TS 복습하기',
-        isCompleted: true
-      }
-    ]      
-    // 이곳에서 코딩을 시작하세요!
-    function TodoList(data, el) {
-      console.log(this instanceof TodoList);
-      // console.log(new.target); IE에서는 지원하지 않음.
-        if (!this instanceof TodoList) {
-          throw new Error('new 키워드를 사용해주세요!');
+        // Validate
+        if (!(this instanceof TodoList)) {
+          throw new Error('new 키워드를 사용해주세요!')
+        }
+        if (
+          !Array.isArray(this.data) ||
+          this.data === undefined ||
+          this.data === null
+        ) {
+          throw new Error('배열이 아니거나 값이 없습니다.')
         }
 
-        this.data = data;
-        this.el = el;
-        
-        this.setState = function(data) {
-          this.data = data;
-          this.render();
+        this.setState = function (data) {
+          this.data = data
+          this.render()
         }
 
-        this.render = function() {
-            if ( Array.isArray(this.data) !== true || this.data === undefined || this.data === null ) throw new Error('에러');
-            var todoList = document.querySelector(this.el);
+        this.render = function () {
+          var todoList = document.querySelector(this.selector)
 
-            this.data.map(function(item) {
-              var html = item.isCompleted === true ? '<div>' + item.text + '</div>' : '<div><s>' + item.text + '</s></div>';
-              todoList.insertAdjacentHTML('beforeend', html);
-            });
-        }        
-    }
+          this.data.map(function (item) {
+            var html =
+              item.isCompleted === true
+                ? '<div>' + item.text + '</div>'
+                : '<div><s>' + item.text + '</s></div>'
+            todoList.insertAdjacentHTML('beforeend', html)
+          })
+        }
+      }
 
-    var todoList = new TodoList(data, '#todo-list');
-    var todoList2 = new TodoList(data2, '#todo-list2');
-    var todoList3 = new TodoList(data3, '#todo-list3');
-    todoList.setState(data);
-    todoList2.setState(data2);
-    todoList3.setState(data3);
-  </script>
-</body>
+      var todoList = new TodoList(data, '#todo-list')
+      var todoList2 = new TodoList(data2, '#todo-list2')
+      var todoList3 = new TodoList(data3, '#todo-list3')
+      todoList.setState(data)
+      todoList2.setState(data2)
+      todoList3.setState(data3)
+    </script>
+  </body>
 </html>
