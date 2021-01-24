@@ -3,31 +3,95 @@
 <head>
   <title>Mission 1</title>
   <meta charset="utf-8" />
+  <style>
+    s {
+      display: block;
+    }
+  </style>
 </head>
 
 <body>
+  <h2>TODO</h2>
   <div id="todo-list"></div>
+
+  <h2>Bucket-list</h2>
+  <div id="bucket-list"></div>
+
+  <h2>Todo-Later</h2>
+  <div id="todo-later"></div>
+
   <script>
     var data = [
       {
-        text: 'JS 공부하기'
+        text: 'JS 공부하기',
+        isCompleted: true
       },
       {
-        text: 'JS 복습하기'
+        text: 'JS 복습하기',
+        isCompleted: false
+      }
+    ]
+
+    let bucketListData = [
+      {
+        text: '운동 배우기',
+        isCompleted: true
+      },
+      {
+        text: '영어 공부하기',
+        isCompleted: false
+      }
+    ]
+
+    let todoLaterData = [
+      {
+        text: '산책하기',
+        isCompleted: false
+      },
+      {
+        text: '청소하기',
+        isCompleted: false
       }
     ]
 	
-    function TodoList(data) {
+    function TodoList(id, data) {
       this.data = data
+      this.id = id
+
       this.render = function() {
-        data.forEach(list => {
-          return document.querySelector('#todo-list').innerHTML += `<div>${list.text}</div>`
+        // check validation
+        if(!this.data || !this.data?.length) {
+          throw new Error('data type error')
+        }
+
+        this.data.forEach(list => {
+          return document.querySelector(id).innerHTML += `${list.isCompleted ? `<s>${list.text}</s>` : `<div>${list.text}</div>`}`
         })
+      }
+
+      this.setState = function(nextData) {
+        this.data = nextData
+        this.render()
       }
     }
 
-    const todoList = new TodoList(data)
-    todoList.render()
+    const todoList = new TodoList('#todo-list', data)
+    const bucketList = new TodoList('#bucket-list', bucketListData)
+    const todoLaterList = new TodoList('#todo-later', todoLaterData)
+    const newData = [
+      {
+        text: '스터디 과제하기',
+        isCompleted: false
+      },
+      {
+        text: '엄마한테 전화하기',
+        isCompleted: true
+      }
+    ]
+
+    todoList.setState(newData)
+    bucketList.render()
+    todoLaterList.render()
   </script>
 </body>
 </html>
