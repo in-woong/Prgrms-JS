@@ -31,10 +31,20 @@
       },
     ];  
 
+    const findId = document.getElementById("todo-list");
+    function TodoListTwo(data){
+      this.data = data;
+    }
+    TodoListTwo.prototype.render = function(){
+      findId.innerHTML = this.data.map(val=> val.text).join("");
+    };
+    
+
     function TodoList(data){ 
       this.data = data;
       //todo-list id를 가진 dom을 검색하는 코드
       const findId = document.getElementById("todo-list");
+      
       this.render = () => {
         findId.innerHTML = this.data.map(val=> val.text).join("");
       };
@@ -47,18 +57,22 @@
         }else if(typeOf(this.data.map(val=> val.text))!==String){
           throw new Error("error message");
         }
+
     };
-
   }
-  var todoList = new TodoList(data);
-  //var errorTest1 = new TodoList(test1);
-  //var errorTest2 = new TodoList(test2);
-  //var errorTest3 = new TodoList(test3);
-
+  
+  let toDo = new TodoListTwo(data);
+  toDo.render();
+  let todoList = new TodoList(data);
   todoList.render();
-  //errorTest1.verify(); 
-  //errorTest2.verify();
-  //errorTest3.verify();
+
+  let errorTest1 = new TodoList(test1);
+  let errorTest2 = new TodoList(test2);
+  let errorTest3 = new TodoList(test3);
+
+  errorTest1.verify(); 
+  errorTest2.verify();
+  errorTest3.verify();
   </script>
 </body>
 </html>
