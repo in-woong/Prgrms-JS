@@ -10,19 +10,12 @@
   <script>
     var data = [
       {
-        text: 'JS 공부하기'
+        text: 'JS 공부하기',
+        isCompleted: true
       },
       {
-        text: 'JS 복습하기'
-      }
-    ]
-
-    var nextData = [
-      {
-        text: '밥 먹기',
-      },
-      {
-        text: '잠자기',
+        text: 'JS 복습하기',
+        isCompleted: false
       }
     ]
 
@@ -31,7 +24,8 @@
 
     this.render = function(){
       this.data.forEach((obj) => {
-        document.querySelector("#todo-list").innerHTML += `<div>${obj.text}</div>`
+        var s = obj.isCompleted ? `<div><s>${obj.text}</s></div>` : `<div>${obj.text}</div>`;
+        document.querySelector("#todo-list").innerHTML += s;
       });
     }
 
@@ -43,6 +37,19 @@
 
   var todoList = new TodoList(data);
   todoList.render();
+
+
+  var nextData = [
+    {
+      text: '밥 먹기',
+      isCompleted: false
+    },
+    {
+      text: '잠자기',
+      isCompleted: true
+    }
+  ]
+
   todoList.setState(nextData);
   </script>
 </body>
