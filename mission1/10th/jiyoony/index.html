@@ -17,17 +17,16 @@
         },
       ]
       // 이곳에서 코딩을 시작하세요!
-
       function TodoList(data){
       this.data=data;
       this.render=function(){
-        // var html = '<div>'+data[0].text+</div>;
-        document.querySelector('#todo-list').innerHTML=`<div>${this.data}</div>`;
-
-      }
-      }
-
-
+        this.data.map((v)=>{
+          var htmlString =`<div>${v.text}</div>`;
+          // var html = '<div>'+data[0].text+</div>;
+          document.querySelector('#todo-list').innerHTML+=htmlString;
+      });
+    }
+    }
       var todoList = new TodoList(data);
       todoList.render()
 
