@@ -43,29 +43,32 @@
         },
       ]
 
-      function TodoList(element, data) {
+      function TodoList($targetEl, todoData) {
         
-        this.element = element;
-        this.data = data;
+        this.targetEl = document.querySelector(targetEl);
+        this.todoData = todoData;
 
         if (!new.target) {
           throw Error ('Must be called with new');
         }
 
-        if(!Array.isArray(data)) {
+        if(!Array.isArray(todoData)) {
           throw Error ('Data have to be array');
         }
 
         
         this.render = function() {
-          element.innerHTML = `<ul>${data.map((item, index) => `<li>${item.text}</li>`).join('')}</ul>`;
+          this.targetEl.innerHTML = 
+          `<ul>
+            ${todoData.map((item, index) => `<li>${item.text}</li>`).join('')}
+          </ul>`;
         }
       }
 
       try {
-        const todoList1 = new TodoList(document.querySelector('#todo-list1'), data1);
-        const todoList2 = new TodoList(document.querySelector('#todo-list2'), data2);
-        const todoList3 = new TodoList(document.querySelector('#todo-list3'), data3);
+        const todoList1 = new TodoList('#todo-list1', data1);
+        const todoList2 = new TodoList('#todo-list2', data2);
+        const todoList3 = new TodoList('#todo-list3', data3);
 
         todoList2.render();
         todoList1.render();
