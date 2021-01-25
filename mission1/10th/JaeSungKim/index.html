@@ -1,0 +1,73 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list"></div>
+    <script>
+      const data = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false,
+        },
+      ]
+      const tempData = [
+        {
+          text: 'temp_1',
+          isCompleted: false,
+        },
+        {
+          text: 'temp_2',
+          isCompleted: true,
+        },
+      ]
+
+      function TodoList(todoListId, todoData) {
+        if (!(this instanceof TodoList)) {
+          return new TodoList(todoListId, todoData)
+        }
+
+        this.setState = function (todoData) {
+          if (!todoData) {
+            throw new Error('Data is null or undefined')
+          }
+          if (!Array.isArray(todoData)) {
+            throw new Error('Data is not an Array')
+          }
+          if (todoData.some((item) => typeof item.text !== 'string')) {
+            throw new Error('Data is not a String')
+          }
+
+          const dataHTMLString = todoData.map((item) => (item.isCompleted ? `<div><s>${item.text}</s></div>` : `<div>${item.text}</div>`)).join('')
+          document.querySelector(`#${todoListId}`).innerHTML = dataHTMLString
+        }
+        this.setState(todoData)
+      }
+
+      const todoList = new TodoList('todo-list', data)
+
+      const nextData = [
+        {
+          text: 'qwer',
+          isCompleted: true,
+        },
+        {
+          text: 'asdf',
+          isCompleted: false,
+        },
+        {
+          text: 'zxcv',
+          isCompleted: true,
+        },
+      ]
+
+      todoList.setState(nextData)
+    </script>
+  </body>
+</html>
