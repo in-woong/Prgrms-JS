@@ -19,30 +19,26 @@
   // 이곳에서 코딩을 시작하세요!
   // 필수 구현사항
     function TodoList(data) {
+      var todos = document.querySelector('#todo-list');
       this.data = data;
       this.render = function() {
-        for (let i = 0; i < data.length; i++) {
-          var html = `<div>${data[i].text}</div>`;
-          var todos = document.querySelector('#todo-list');
-          todos.innerHTML = todos.innerHTML+html;
-        }
+        todos.innerHTML = this.data.map((item) => {
+          return `<div>${item.text}</div>`; 
+        }).join('');
       }
+      this.render();
     }
     var todoList = new TodoList(data);
-    todoList.render();
 
   // 보너스 구현사항
     function validation(data) {
+      this.data = data;
       if (data === null || data === undefined) throw new Error("null 혹은 undefined입니다.");
       if (!Array.isArray(data)) throw new Error("array가 아닙니다.");
-      let checkText = true;
-      for (let item of data) {
-        if (!Object.keys(item).includes('text')) {
-          checkText = false;
-          break;
-        }
+      const isThereText = (data) => {
+        if (!data.text) throw new Error("text가 없습니다.");
       }
-      if (!checkText) throw new Error("text가 없습니다.");
+      data.some(isThereText);
     }
     validation(data);
 
