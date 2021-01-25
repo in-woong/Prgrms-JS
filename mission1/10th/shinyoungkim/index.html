@@ -43,6 +43,17 @@
         },
       ]
 
+      const data4 = [
+        {
+          text: 'set Data',
+          isCompleted: true,
+        },
+        {
+          text: 'set Data2',
+          isCompleted: false,
+        },
+      ]
+
       function TodoList($targetEl, todoData) {
         
         this.$targetEl = document.querySelector($targetEl);
@@ -52,20 +63,31 @@
           throw Error ('Must be called with new');
         }
         
-        if(!Array.isArray(todoData)) {
+        if (!Array.isArray(todoData)) {
           throw Error ('Data have to be array');
         }
 
-        if(!todoData) {
+        if (!todoData) {
           throw Error ('Please Check your data');
         }
 
+
         this.render = function() {
-          this.$targetEl.innerHTML = 
-          `<ul>
-            ${todoData.map((item, index) => `<li>${item.text}</li>`).join('')}
-          </ul>`;
+          const stringHTML = this.todoData
+          .map(({isCompleted, text}) => 
+            isCompleted ? `<li><s>${text}</s></li>` : `<li>${text}</li>`
+          )
+          .join('');
+
+          this.$targetEl.innerHTML = stringHTML;
         }
+
+        this.setState = function(nextData) {
+          this.todoData = nextData;
+          this.render();
+        }
+
+        this.render();
       }
 
       try {
@@ -73,11 +95,19 @@
         const todoList2 = new TodoList('#todo-list2', data2);
         const todoList3 = new TodoList('#todo-list3', data3);
 
-        todoList2.render();
-        todoList1.render();
-        todoList3.render();
+        // todoList1.setState(data4);
+        
+        // setTimeout(() => {todoList1.setState(data4)}, 2000);
 
-      } catch(e) {
+        todoList2.setState([
+          ...todoList1.todoData,
+          {
+            text: 'set Test',
+            isCompleted: true
+          },
+        ]);
+
+      } catch (e) {
         console.error(e)
       }
 
