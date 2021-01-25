@@ -40,8 +40,8 @@
           if (!Array.isArray(todoData)) {
             throw new Error('Data is not an Array')
           }
-          if (todoData.some((item) => typeof item.text !== 'string')) {
-            throw new Error('Data is not a String')
+          if (todoData.some((item) => typeof item.text !== 'string') || todoData.some((item) => typeof item.isCompleted !== 'boolean')) {
+            throw new Error('Data format is not supported')
           }
 
           const dataHTMLString = todoData.map((item) => (item.isCompleted ? `<div><s>${item.text}</s></div>` : `<div>${item.text}</div>`)).join('')
