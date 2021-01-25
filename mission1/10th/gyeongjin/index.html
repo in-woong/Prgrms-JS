@@ -1,31 +1,32 @@
 <html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+    <!-- review1: script render -->
+    <script async src="./js/main.js" type="module"></script>
+    <style>
+      body {
+        padding: 30px;
+      }
 
-<head>
-  <title>Mission 1</title>
-  <meta charset="utf-8" />
-  <script src="./js/main.js" type="module"></script>
-  <style>
-    body {
-      padding: 30px;
-    }
+      [class$='-list'] {
+        margin-bottom: 30px;
+        padding: 10px;
+        border: 2px solid #000;
+      }
 
-    [class$="-list"] {
-      margin-bottom: 30px;
-      padding: 10px;
-      border: 2px solid #000;
-    }
+      [class$='-list'] .title {
+        display: block;
+        margin-bottom: 15px;
+        border-bottom: 2px solid #000;
+        font-size: 20px;
+      }
+    </style>
+  </head>
 
-    [class$="-list"] .title {
-      display: block;
-      margin-bottom: 15px;
-      border-bottom: 2px solid #000;
-      font-size: 20px;
-    }
-  </style>
-</head>
-
-<body>
-  <h1>Mission1</h1>
-  <div id="app"></div>
-</body>
+  <body>
+    <h1>Mission1</h1>
+    <div id="app"></div>
+  </body>
 </html>
+<!-- review2 : EOL  -->
