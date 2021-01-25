@@ -52,9 +52,9 @@
     }
 
     class TodoList {
-      constructor(todoData, todoList) {
-        this.el = document.querySelector(todoList);
-        this.data = todoData;
+      constructor(todos, targetElement) {
+        this.targetElement = document.querySelector(targetElement);
+        this.todos = todos;
 
         this.validate();
         this.render();
