@@ -52,15 +52,15 @@
     }
 
     class TodoList {
-      constructor(data, el) {
-        this.el = el;
-        this.data = data;
+      constructor(todoData, todoList) {
+        this.el = document.querySelector(todoList);
+        this.data = todoData;
 
-        this.validator();
+        this.validate();
         this.render();
       }
 
-      validator() {
+      validate() {
         try {
           if(this.data === undefined || this.data === null) {
             throw new Error(ERROR_MESSAGE.IS_NULL_OR_UNDEFINED)
@@ -75,16 +75,15 @@
       }
 
       render() {
-        let text = '';
-        this.data.map((item) => {
-          item.isCompleted == true ? text += `<s>${item.text}</s>` : text += `<div>${item.text}</div>`;
-        })
-        document.querySelector(this.el).innerHTML += text;
+        const textData = this.data.map(item => {
+          return item.isCompleted == true ? `<s>${item.text}</s>` : `<div>${item.text}</div>`;
+        }).join('\n');
+        this.el.innerHTML += textData;
       }
 
       setState(nextData) {
         this.data = nextData;
-        this.validator();
+        this.validate();
         this.render();
       }
     }
