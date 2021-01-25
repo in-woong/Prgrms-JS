@@ -5,10 +5,12 @@
   </head>
 
   <body>
-    <div id="todo-list"></div>
+    <div id="todo-list1"></div>
+    <div id="todo-list2"></div>
+    <div id="todo-list3"></div>
 
     <script>
-      const data = [
+      const data1 = [
         {
           text: 'JS 공부하기',
           isCompleted: true,
@@ -18,29 +20,57 @@
           isCompleted: false,
         },
       ]
-    
-      function TodoList(data, element) {
-        // new keyword가 없을 경우
-        if (!new.target) {
-          throw Error ('must be called with new');
-        }
+      
+      const data2 = [
+        {
+          text: 'HTML 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'HTML 복습하기',
+          isCompleted: false,
+        },
+      ]
 
-        // 배열이 아닐 경우
-        if(!Array.isArray(data)) {
-          throw Error ('Argument have to be array');
-        }
+      const data3 = [
+        {
+          text: 'CSS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'CSS 복습하기',
+          isCompleted: false,
+        },
+      ]
 
-        this.data = data;
+      function TodoList(element, data) {
+        
         this.element = element;
+        this.data = data;
 
+        if (!new.target) {
+          throw Error ('Must be called with new');
+        }
+
+        if(!Array.isArray(data)) {
+          throw Error ('Data have to be array');
+        }
+
+        
         this.render = function() {
           element.innerHTML = `<ul>${data.map((item, index) => `<li>${item.text}</li>`).join('')}</ul>`;
         }
       }
 
       try {
-        const todoList = new TodoList(data2, document.querySelector('#todo-list'));
-        todoList.render();
+        const todoList1 = new TodoList(document.querySelector('#todo-list1'), data1);
+        const todoList2 = new TodoList(document.querySelector('#todo-list2'), data2);
+        const todoList3 = new TodoList(document.querySelector('#todo-list3'), data3);
+
+        todoList2.render();
+        todoList1.render();
+        todoList3.render();
+
       } catch(e) {
         console.error(e)
       }
