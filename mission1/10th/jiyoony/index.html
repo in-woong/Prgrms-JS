@@ -22,14 +22,13 @@
       this.data=data;
       this.render=function(){
         // var html = '<div>'+data[0].text+</div>;
-
         document.querySelector('#todo-list').innerHTML=`<div>${this.data}</div>`;
 
       }
       }
 
 
-      var todoList = new TodoList(data[0].text);
+      var todoList = new TodoList(data);
       todoList.render()
 
 
