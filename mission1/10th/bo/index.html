@@ -7,30 +7,61 @@
 
 <body>
   <div id="todo-list"></div>
+  <div id="movie-list"></div>
+  <div id="book-list"></div>
   <script>
-    var data = [
+    var todoData = [
       {
-        text: 'JS 공부하기'
+        text: 'JS 공부하기',
+        isCompleted: true
       },
       {
-        text: 'JS 복습하기'
+        text: 'JS 복습하기',
+        isCompleted: false
       }
-    ]
-  // 이곳에서 코딩을 시작하세요!
-  // 필수 구현사항
-    function TodoList(data) {
-      var todos = document.querySelector('#todo-list');
+    ];
+    var movieData = [
+      {
+        text: '기묘한 이야기',
+        isCompleted: false
+      },
+      {
+        text: '퀸스 갬빗',
+        isCompleted: false
+      }
+    ];
+    var bookData = [
+      {
+        text: '폭풍의 언덕',
+        isCompleted: false
+      },
+      {
+        text: '동물농장',
+        isCompleted: false
+      }
+    ];
+    // 이곳에서 코딩을 시작하세요!
+    function List(targetElem, data) {
+      var divElem = document.querySelector(`#${targetElem}`);
       this.data = data;
+      // new 키워드 없을 때 에러 메시지 발생
+      if (!new.target) throw new Error("이 함수는 new와 함께 호출되어야 합니다.");
+      // isCompleted 추가한 render 함수
       this.render = function() {
-        todos.innerHTML = this.data.map((item) => {
-          return `<div>${item.text}</div>`; 
+        divElem.innerHTML = this.data.map((item) => {
+          if (item.isCompleted) {
+            return `<div><s>${item.text}</s></div>`;
+          } else {
+            return `<div>${item.text}</div>`;
+          }
         }).join('');
       }
       this.render();
     }
-    var todoList = new TodoList(data);
-
-  // 보너스 구현사항
+    var todoList = new List('todo-list', todoData);
+    var movieList = new List('movie-list', movieData);
+    var bookList = new List('book-list', bookData);
+    // 유효성 검사
     function validation(data) {
       this.data = data;
       if (data === null || data === undefined) throw new Error("null 혹은 undefined입니다.");
@@ -40,7 +71,7 @@
       }
       data.some(isThereText);
     }
-    validation(data);
+    validation(todoData);   
 
   </script>
 </body>
