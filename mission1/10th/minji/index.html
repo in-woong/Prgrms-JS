@@ -1,0 +1,89 @@
+<html>
+
+<head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+</head>
+
+<body style="background-color: black; color: white; font-family:sans-serif;">
+    <div>
+        <h2>
+            TODO LIST
+        </h2>
+        <div id="todo-list"></div>
+        <button id="translate" style="margin-top: 2em; background-color: violet; border-color: violet;">
+            Translate to Korean
+        </button>
+        <div id="todo-day"></div>
+        <div id="todo-week"></div>
+    </div>
+
+    <script>
+
+        var data = [
+            {
+                text: 'Buy cake'
+            },
+            {
+                text: 'Make Todo list'
+            }
+            ,
+            {
+                text: 'Make Macarons'
+            }
+            ,
+            {
+                text: 'Home workout'
+            }
+        ]
+        
+        function TodoList(data) {
+            this.data = data
+            this.setState = function(data){
+                this.data = data;
+                this.render();
+            }
+            
+            this.render = function(){
+                let list = ""
+                this.data.map((datum) => {
+                    // ================== appendChild version =================
+                    // var node = document.createElement("LI");
+                    // var textnode = document.createTextNode(datum.text);
+                    // node.appendChild(textnode);
+                    // document.getElementById('todo-list').appendChild(node);
+
+                    list += "<li>" + datum.text + "</li>"
+                    document.getElementById('todo-list').innerHTML = list;
+                });
+            }
+        }
+        
+        var todoList = new TodoList(data)
+        todoList.render();
+        
+        var koreanVersion = [
+            {
+                text: '케이크 구입'
+            },
+            {
+                text: '할일 리스트 만들기'
+            }
+            ,
+            {
+                text: '마카롱 만들기'
+            }
+            ,
+            {
+                text: '홈트하기'
+            }
+        ]
+
+        
+        document.getElementById('translate').onclick = function(){
+            todoList.setState(koreanVersion);
+        };        
+        </script>
+</body>
+
+</html>
