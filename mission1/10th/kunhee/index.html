@@ -1,0 +1,160 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list1"></div>
+    <div id="todo-list2"></div>
+    <div id="todo-list3"></div>
+    <div id="todo-test"></div>
+    <style>
+
+    </style>
+    <script>
+      const data1 = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false,
+        },
+      ]
+
+      const data2 = [
+        {
+          text: 'JS 공부하기2',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기2',
+          isCompleted: false,
+        },
+      ]
+
+      const data3 = [
+        {
+          text: 'JS 공부하기3',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기3',
+          isCompleted: false,
+        },
+      ]
+      // 이곳에서 코딩을 시작하세요!
+
+
+      function TodoList($ref,data){
+        if(this === window){
+          throw new Error("error message, Please attach the 'new' to do constructor") 
+        }
+        if(!$ref||!document.querySelector($ref)){
+          throw new Error("error message, Iillegal Dom Selector") 
+        }
+        if(!(data instanceof Array)){
+          throw new Error("error message, Iillegal Parameters") 
+        }
+        if(data.filter((obj,i)=>{return obj.text!=undefined}).length != data.length){
+          throw new Error("error message, It is Not suitable data") 
+        }
+        //for constructor
+        var state = data.slice();//deep copy
+        this.render = function(){
+          let html = "";
+          state.forEach(({text,isCompleted})=>{
+            if(isCompleted){
+              html += `<div><s>${text}</s></div>`
+            }else{
+              html += `<div>${text}</div>`
+            }
+            
+          })
+          document.querySelector($ref).innerHTML = html;
+        }
+        this.setState = (newData) =>{
+          state = undefined;
+          state = newData.slice();//deep
+          this.render();
+        }
+        //for Test
+        this.getState = ()=> {
+          return state.slice();
+        }
+      }
+
+      (function(){
+      //실행 render component
+      const todoList1 = new TodoList("#todo-list1",data1);
+      //document.querySelector('#todo-list1').innerHTML = todoList1.render();
+      todoList1.render();
+
+      const todoList2 = new TodoList("#todo-list2",data2);
+      //document.querySelector('#todo-list2').innerHTML = todoList2.render();
+      todoList2.render();
+
+      const todoList3 = new TodoList("#todo-list3",data3);
+      //document.querySelector('#todo-list3').innerHTML = todoList3.render();
+      todoList3.render();
+      })();
+
+
+      (function(){
+      //for TDD
+      try{
+        TodoList("#todo-test",[])
+      }catch(e){
+        console.log("Exception Test:",e);
+      }
+      try{
+        new TodoList(null,[])
+      }catch(e){
+        console.log("Exception Test:",e);
+      }
+
+      try{
+        new TodoList("#todo-test")
+      }catch(e){
+        console.log("Exception Test:",e);
+      }
+      
+      try{
+        new TodoList("#todo-test",[{text:"123"},{yee:"yee"}])
+      }catch(e){
+        console.log("Exception Test:",e);
+      }
+      
+      //contructor
+      const TesttodoList = new TodoList("#todo-test",[]);//0
+      console.log("Data Type Test:", (TesttodoList.getState() instanceof Array));
+      console.log("constructor Test:",TesttodoList.getState().length == 0 );
+      TesttodoList.setState([
+        ...TesttodoList.getState(),
+        {
+          text: 'new 밥먹기',
+          isCompleted: true,
+        },
+        {
+          text: 'new 게임하기',
+          isCompleted: false,
+        },
+      ]);
+      console.log("setState Test1:",TesttodoList.getState().length == 2 );
+      TesttodoList.setState([
+        ...TesttodoList.getState(),
+        {
+          text: 'new 줄넘기하기',
+          isCompleted: true,
+        },
+      ]);
+      console.log("setState Test2:",TesttodoList.getState().length == 3 );
+
+      })()
+
+    </script>
+  </body>
+</html>
+
