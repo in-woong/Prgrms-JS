@@ -6,8 +6,10 @@
 
   <body>
     <div id="todo-list"></div>
+    <div id="wish-list"></div>
+    <div id="shopping-list"></div>
     <script>
-      const data = [
+      const todoData = [
         {
           text: 'JS 공부하기',
           isCompleted: true,
@@ -17,8 +19,38 @@
           isCompleted: false,
         },
       ]
+      const wishData = [
+        {
+          text: '옷',
+          isCompleted: true,
+        },
+        {
+          text: '신발',
+          isCompleted: false,
+        },
+      ]
+      const shoppingData = [
+        {
+          text: '감자',
+          isCompleted: true,
+        },
+        {
+          text: '고구마',
+          isCompleted: false,
+        },
+      ]
+      const todoNextData = [
+        {
+          text: 'JS 공부하기2',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기2',
+          isCompleted: false,
+        },
+      ]
 
-      function errorCheck(data) {
+      function errorCheck(data, id) {
         if (!data) {
           throw new Error('data is null or undefined');
         } else if (!Array.isArray(data)){
@@ -30,23 +62,42 @@
             }
           })
         }
+
+        if (!id) {
+          throw new Error('Cannot find id');
+        }
       }
 
-      var TodoList = function(data) {
+      var TodoList = function(data, id) {
+        var domId = document.getElementById(id);
+
         if (!(this instanceof TodoList)) {
           throw new Error('use the new keword to create a TodoList');
         } else {
-          errorCheck(data);
+          errorCheck(data, domId);
         }
+        
         this.data = data;
+        this.domId = domId;
         this.render = function() {
-          var renderString = data.map(value => value.text).join(' ');
-          document.getElementById('todo-list').innerHTML = renderString;
+          var renderString = this.data.map(value => value.isCompleted === true ? value.text : `<s>${value.text}</s>`).join(' ');
+          this.domId.innerHTML = renderString;
+        }
+        this.setState = function(nextData) {
+          errorCheck(nextData, this.domId);
+          this.data = nextData;
+          this.render();
         }
       }
 
-      var todoList = new TodoList(data);
+      var todoList = new TodoList(todoData, 'todo-list');
+      var wishList = new TodoList(wishData, 'wish-list');
+      var shoppingList = new TodoList(shoppingData, 'shopping-list');
+
       todoList.render();
+      todoList.setState(todoNextData);
+      wishList.render();
+      shoppingList.render();
     </script>
   </body>
 </html>
