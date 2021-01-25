@@ -5,6 +5,7 @@
   </head>
   <body>
     <div id="todo-list"></div>
+    <div id="todo-list2"></div>
     <script>
       const data = [
         {
@@ -50,6 +51,7 @@
       }
 
       const todoList = new TodoList('todo-list', data)
+      const todoList2 = new TodoList('todo-list2', data)
 
       const nextData = [
         {
@@ -66,7 +68,7 @@
         },
       ]
 
-      todoList.setState(nextData)
+      todoList2.setState(nextData)
     </script>
   </body>
 </html>
