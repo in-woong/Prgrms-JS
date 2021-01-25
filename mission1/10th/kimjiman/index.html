@@ -7,8 +7,8 @@
 
   <body>
     <div id="todo-list"></div>
-    <div id="todo-list2"></div>
-    <div id="todo-list3"></div>
+    <div id="todo-day"></div>
+    <div id="todo-week"></div>
     <script>
       // Old Way (IE cover)
       var data = [
@@ -42,43 +42,37 @@
         },
       ]
       // 이곳에서 코딩을 시작하세요!
-      function TodoList(data, selector) {
-        this.data = data
-        this.selector = selector
+      function TodoList(todos, selector) {
+        this.todos = todos;
+        this.selector = selector;
 
         // Validate
+        // !new.target은 IE 지원 X
         if (!(this instanceof TodoList)) {
           throw new Error('new 키워드를 사용해주세요!')
         }
-        if (
-          !Array.isArray(this.data) ||
-          this.data === undefined ||
-          this.data === null
-        ) {
+        if (!Array.isArray(this.todos) || this.todos === undefined || this.todos === null) {
           throw new Error('배열이 아니거나 값이 없습니다.')
         }
 
-        this.setState = function (data) {
-          this.data = data
-          this.render()
+        this.setState = function (todos) {
+          this.todos = todos;
+          this.render();
         }
 
-        var todoList = document.querySelector(this.selector)
+        var todoList = document.querySelector(this.selector);
 
         this.render = function () {
-          var html = this.data
-            .map(function (item) {
-              return item.isCompleted === true
-                ? '<div><s>' + item.text + '</s></div>'
-                : '<div>' + item.text + '</div>'
-            })
-            .join('\n')
-          todoList.insertAdjacentHTML('beforeend', html)
+          var html = this.todos.map(function (item) {
+              return item.isCompleted === true ? '<div><s>' + item.text + '</s></div>' : '<div>' + item.text + '</div>'
+            }).join('\n');
+          todoList.insertAdjacentHTML('beforeend', html);
+          // https://developer.mozilla.org/ko/docs/Web/API/Element/insertAdjacentHTML
         }
       }
 
-      var todoList = new TodoList(data, '#todo-list')
-      todoList.setState(data2)
+      var todoList = new TodoList(data, '#todo-day');
+      todoList.setState(data);
     </script>
   </body>
 </html>
