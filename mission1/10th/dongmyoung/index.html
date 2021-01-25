@@ -19,17 +19,42 @@
                 text: 'JS 복습하기'
             }
         ];
+        var data2 = [
+            {
+                text: '빨래하기'
+            },
+            {
+                text: '청소하기'
+            }
+        ];
+        var data3 = [
+            {
+                text: '분리수거 하기'
+            },
+            {
+                text: '운동 하기'
+            }
+        ];
 
-        function Todolist(data) {
-            const Todo = document.getElementById('todo-list');
+        function Todolist(data, el) {
+            const Todo = document.getElementById(el);
             this.render = () => {
+                Validator(data);
+                if(Array.isArray(data) !== true || data === null || data === undefined)throw new Error('에러');
                 data.map(TodoItem => {
                     Todo.innerHTML += `<div>${TodoItem.text}</div>`;
                 });
             }
             this.render();
         }
-        const todoList = new Todolist(data);
+        
+        function Validator(data){
+            if(data === null || data === undefined || Array.isArray(data) !== true)throw new Error("에러!");
+        }
+        
+        const todoList = new Todolist(data, 'todo-list');
+        const todoDay = new Todolist(data2, 'todo-day');
+        const todoWeek = new Todolist(data3, 'todo-week');
     </script>
 </body>
 
