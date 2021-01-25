@@ -45,20 +45,23 @@
 
       function TodoList($targetEl, todoData) {
         
-        this.targetEl = document.querySelector(targetEl);
+        this.$targetEl = document.querySelector($targetEl);
         this.todoData = todoData;
 
         if (!new.target) {
           throw Error ('Must be called with new');
         }
-
+        
         if(!Array.isArray(todoData)) {
           throw Error ('Data have to be array');
         }
 
-        
+        if(!todoData) {
+          throw Error ('Please Check your data');
+        }
+
         this.render = function() {
-          this.targetEl.innerHTML = 
+          this.$targetEl.innerHTML = 
           `<ul>
             ${todoData.map((item, index) => `<li>${item.text}</li>`).join('')}
           </ul>`;
