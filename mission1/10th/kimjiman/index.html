@@ -6,9 +6,9 @@
   </head>
 
   <body>
-    <div id="todo-list"></div>
-    <div id="todo-day"></div>
-    <div id="todo-week"></div>
+    <ul id="todo-list"></ul>
+    <ul id="todo-day"></ul>
+    <ul id="todo-week"></ul>
     <script>
       // Old Way (IE cover)
       var data = [
@@ -45,33 +45,33 @@
       function TodoList(todos, selector) {
         this.todos = todos;
         this.selector = selector;
+      }
 
-        // Validate
-        // !new.target은 IE 지원 X
+      // @Validate
+      // !new.target은 IE 지원 X
+      TodoList.prototype.isValidate = function() {
         if (!(this instanceof TodoList)) {
           throw new Error('new 키워드를 사용해주세요!')
         }
         if (!Array.isArray(this.todos) || this.todos === undefined || this.todos === null) {
           throw new Error('배열이 아니거나 값이 없습니다.')
         }
-
-        this.setState = function (todos) {
-          this.todos = todos;
-          this.render();
-        }
-
-        var todoList = document.querySelector(this.selector);
-
-        this.render = function () {
-          var html = this.todos.map(function (item) {
-              return item.isCompleted === true ? '<div><s>' + item.text + '</s></div>' : '<div>' + item.text + '</div>'
-            }).join('\n');
-          todoList.insertAdjacentHTML('beforeend', html);
-          // https://developer.mozilla.org/ko/docs/Web/API/Element/insertAdjacentHTML
-        }
+      }
+      
+      TodoList.prototype.render = function () {        
+        var html = this.todos.map(function (item) {
+            return item.isCompleted === true ? '<li><s>' + item.text + '</s></li>' : '<li>' + item.text + '</li>'
+          }).join('\n');
+          document.querySelector(this.selector).insertAdjacentHTML('beforeend', html);
       }
 
-      var todoList = new TodoList(data, '#todo-day');
+      TodoList.prototype.setState = function (todos) {
+        this.todos = todos;
+        this.isValidate();
+        this.render();
+      }
+
+      var todoList = new TodoList(data2, '#todo-list');
       todoList.setState(data);
     </script>
   </body>
