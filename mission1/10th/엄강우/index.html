@@ -5,8 +5,9 @@
   </head>
 
   <body>
-    <div id="todo-list">
-    </div>
+    <div id="todo-list"></div>
+    <div id="month-todo-list"></div>
+    <div id="year-todo-list"></div>
     <script>
       const data = [
         {
@@ -18,27 +19,38 @@
           isCompleted: false,
         },
       ]
-      function TodoList(data) {        
-        this.setState = function(newData) {
-          const todoList = document.getElementById('todo-list')
+      const myMonthData = [
+        {
+          text: '알고리즘 꾸준히 풀기',
+          isCompleted: false,
+        },
+        {
+          text: 'JS 공부하기',
+          isCompleted: false,
+        },
+      ]
+      const myYearData = [
+        {
+          text: '취업하기',
+          isCompleted: false,
+        }
+      ]
+      function TodoList(target, data) {        
+        this.setState = function(target, newData) {
+          const todoList = document.getElementById(target)
           todoList.innerHTML = ''
           var todos = '<h1 id="title">To Do List</h1>'
-          newData.forEach(todo => {
-            if (todo.isCompleted === true) {
-              todos += `<s id="text">${todo.text}</s>`
-            } else {
-              todos +=`<p id="text">${todo.text}</p>`
-            }
-          }
-          )
-          todoList.innerHTML += todos
+          newData.forEach(todo => todo.isCompleted === true  ? todos += `<s id="text">${todo.text}</s>` : todos +=`<p id="text">${todo.text}</p>`)
+          todoList.innerHTML += todos;
         }
         this.render = function() {
-          this.setState(data)
+          this.setState(target, data)
         }
         this.render()
       }
-      var todoList = new TodoList(data)
+      var todoList = new TodoList('todo-list', data)
+      var monthTodoList = new TodoList('month-todo-list', myMonthData)
+      var yearTodoList = new TodoList('year-todo-list', myYearData)
     </script>
   </body>
 </html>
