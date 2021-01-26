@@ -8,7 +8,7 @@ class TodoList{
     //data의 유효성 검사
     validator(){
         try{
-            if(this.data === undefined || this.data === null){
+            if(!this.data){
                 throw new Error(ERROR_MESSAGE.IS_UNDEFINED_OR_NULL)
             }
             if(!Array.isArray(this.data)){
