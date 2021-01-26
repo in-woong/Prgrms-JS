@@ -9,7 +9,7 @@ const study = [
     },
   ];
 
-  const health =[
+  const health = [
       {
           text : '운동하기',
           isCompleted : false,

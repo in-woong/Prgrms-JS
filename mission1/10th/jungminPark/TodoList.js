@@ -23,12 +23,12 @@ class TodoList{
     }
 
     render(){
-        const todoListElement = document.querySelector('#${this.elementID}');
+        const todoListElement = document.querySelector("#${this.elementID}");
         const todoString = this.data.map(item => {
             item.isCompleted ? `<div><s>${item.text}</s></div>` : `<div>${item.text}</div>`}).join('\n');
         todoListElement.innerHTML = todoString;
-    }
+    };
 }
 
-const todoStudy = new TodoList("#study-list", study);
-const todoHealth = new TodoList("#health-list", health);
+const todoStudy = new TodoList("study-list", study);
+const todoHealth = new TodoList("health-list", health);
