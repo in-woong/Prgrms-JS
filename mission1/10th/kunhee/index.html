@@ -89,12 +89,12 @@
         this.setState = (newData) =>{
           this.checkDataValidation(newData);
           //this.state = null;
-          this.state = newData.map((TodoObject)=>JSON.parse(JSON.stringify(TodoObject)));//deep copy
+          this.state = newData.map((TodoObject)=>JSON.parse(JSON.stringify(TodoObject)));
           this.render();
         }
         //for Test
         this.getState = ()=> {
-          return this.state.slice();
+          return this.state.map((TodoObject)=>JSON.parse(JSON.stringify(TodoObject)));
         }
       }
 
