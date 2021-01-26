@@ -40,7 +40,7 @@
           if (!Array.isArray(todoData)) {
             throw new Error('Data is not an Array')
           }
-          if (todoData.some((item) => item === null || item === undefined)) {
+          if (todoData.some((item) => !item)) {
             throw new Error('Data is not available')
           }
           if (todoData.some((item) => typeof item.text !== 'string') || todoData.some((item) => typeof item.isCompleted !== 'boolean')) {
