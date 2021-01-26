@@ -67,9 +67,9 @@
         const todoElement = document.querySelector(this.id)
 
         const dataList = this.data.map(list => {
-          return `${list.isCompleted ? `<s>${list.text}</s>` : `<div>${list.text}</div>`}`
+          return `${list.text ? `${list.isCompleted ? `<s>${list.text}</s>` : `<div>${list.text}</div>`}` : ``}`
         })
-        console.log(dataList)
+
         todoElement.innerHTML = dataList.join('')
       }
 
