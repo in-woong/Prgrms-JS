@@ -1,5 +1,6 @@
 class TodoList{
-    constructor(data){
+    constructor(elementID,data){
+        this.elementID = elementID;
         this.data = data;
         this.validator();
         this.render();
@@ -22,10 +23,12 @@ class TodoList{
     }
 
     render(){
-        let text = '';
-        this.data.map((item) => {
-            item.isCompleted == true ? text += `<div><s>${item.text}</s></div>` : text += `<div>${item.text}</div>`
-        })
-        document.querySelector('#todo-list').innerHTML += text;
+        const todoListElement = document.querySelector('#${this.elementID}');
+        const todoString = this.data.map(item => {
+            item.isCompleted ? `<div><s>${item.text}</s></div>` : `<div>${item.text}</div>`}).join('\n');
+        todoListElement.innerHTML = todoString;
     }
 }
+
+const todoStudy = new TodoList("#study-list", study);
+const todoHealth = new TodoList("#health-list", health);

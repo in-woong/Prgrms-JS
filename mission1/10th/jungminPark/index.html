@@ -6,30 +6,10 @@
 </head>
 <body>
   <h1>TODO LIST</h1>
-  <div id="todo-list"></div>
-  <script src="./TodoList.js"><</script>
-  <script>
-    const data = [
-      {
-        text: 'JS 공부하기',
-        isCompleted : true,
-      },
-      {
-        text: 'JS 복습하기',
-        isCompleted : true,
-      },
-      {
-        text : '운동하기',
-        isCompleted : false,
-      }
-    ]
-
-    const ERROR_MESSAGE ={
-      IS_UNDEFINED_OR_NULL : 'data가 undefined 또는 null인 상태입니다.',
-      IS_NOT_ARRAY : 'data 형식이 array여야 합니다.'
-    }
-
-    const todoList = new TodoList(data);
-  </script>
+  <div id="study-list">Study List</div>
+  <div id="health-list">Health List</div>
+  
+  <script src="./index.js"></script>
+  <script src="./TodoList.js"></script>
 </body>
 </html>
