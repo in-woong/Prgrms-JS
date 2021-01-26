@@ -49,23 +49,33 @@
 
 
       function TodoList($ref,data){
-        if(this === window){
+        if(!new.target){
           throw new Error("error message, Please attach the 'new' to do constructor") 
         }
-        if(!$ref||!document.querySelector($ref)){
+        if(!$ref){
           throw new Error("error message, Iillegal Dom Selector") 
         }
-        if(!(data instanceof Array)){
+
+        this.checkDataValidation = function(){
+        //if(!(data instanceof Array)){
+          if(!Array.isArray(data)){
           throw new Error("error message, Iillegal Parameters") 
+          }
+
+          const isIncludesInvalidData = data.filter((TodoObject)=>{return typeof TodoObject.text === 'string'}).length != data.length;
+          if(isIncludesInvalidData){
+            throw new Error("error message, It is Not suitable data") 
+          }
         }
-        if(data.filter((obj,i)=>{return obj.text!=undefined}).length != data.length){
-          throw new Error("error message, It is Not suitable data") 
-        }
+
+        this.checkDataValidation(data);
+
         //for constructor
-        var state = data.slice();//deep copy
+        this.state = data.map((TodoObject)=>JSON.parse(JSON.stringify(TodoObject)));//deep copy
+
         this.render = function(){
           let html = "";
-          state.forEach(({text,isCompleted})=>{
+          this.state.forEach(({text,isCompleted})=>{
             if(isCompleted){
               html += `<div><s>${text}</s></div>`
             }else{
@@ -73,66 +83,73 @@
             }
             
           })
-          document.querySelector($ref).innerHTML = html;
+          $ref.innerHTML = html;
         }
+
         this.setState = (newData) =>{
-          state = undefined;
-          state = newData.slice();//deep
+          this.checkDataValidation(newData);
+          //this.state = null;
+          this.state = newData.map((TodoObject)=>JSON.parse(JSON.stringify(TodoObject)));//deep copy
           this.render();
         }
         //for Test
         this.getState = ()=> {
-          return state.slice();
+          return this.state.slice();
         }
       }
 
-      (function(){
+ 
       //실행 render component
-      const todoList1 = new TodoList("#todo-list1",data1);
+      const todoList1 = new TodoList(document.querySelector("#todo-list1"),data1);
       //document.querySelector('#todo-list1').innerHTML = todoList1.render();
       todoList1.render();
 
-      const todoList2 = new TodoList("#todo-list2",data2);
+      const todoList2 = new TodoList(document.querySelector("#todo-list2"),data2);
       //document.querySelector('#todo-list2').innerHTML = todoList2.render();
       todoList2.render();
 
-      const todoList3 = new TodoList("#todo-list3",data3);
+      const todoList3 = new TodoList(document.querySelector("#todo-list3"),data3);
       //document.querySelector('#todo-list3').innerHTML = todoList3.render();
       todoList3.render();
-      })();
+ 
 
 
       (function(){
+        const $testDom = document.querySelector("#todo-test");
       //for TDD
       try{
-        TodoList("#todo-test",[])
+        TodoList($testDom,[])
       }catch(e){
-        console.log("Exception Test:",e);
+        console.log("new를 붙이지 않음:",e);
       }
       try{
         new TodoList(null,[])
       }catch(e){
-        console.log("Exception Test:",e);
+        console.log("올바른 DOM이 입력되지않음:",e);
       }
 
       try{
-        new TodoList("#todo-test")
+        new TodoList($testDom)
       }catch(e){
-        console.log("Exception Test:",e);
+        console.log("파라미터가 제대로 들어오지 않았음:",e);
       }
       
       try{
-        new TodoList("#todo-test",[{text:"123"},{yee:"yee"}])
+        new TodoList($testDom,[{text:"123"},{yee:"yee"}])
       }catch(e){
-        console.log("Exception Test:",e);
+        console.log("TodoObject에서 text값이 빠진 녀석이 존재함:",e);
       }
       
-      //contructor
-      const TesttodoList = new TodoList("#todo-test",[]);//0
-      console.log("Data Type Test:", (TesttodoList.getState() instanceof Array));
-      console.log("constructor Test:",TesttodoList.getState().length == 0 );
-      TesttodoList.setState([
-        ...TesttodoList.getState(),
+      //contructorr검사
+      const testData = [
+      //빈상태로
+      ]
+      const testtodoList = new TodoList($testDom,testData);//0
+      console.log("Data Type Test:", Array.isArray(testtodoList.getState()));//제대로 state가 생성이 되었는지
+      console.log("constructor Test:",testtodoList.getState().length == 0 );
+
+      //setState검사
+      const newTestData = [
         {
           text: 'new 밥먹기',
           isCompleted: true,
@@ -141,17 +158,17 @@
           text: 'new 게임하기',
           isCompleted: false,
         },
-      ]);
-      console.log("setState Test1:",TesttodoList.getState().length == 2 );
-      TesttodoList.setState([
-        ...TesttodoList.getState(),
-        {
+      ]
+      testtodoList.setState(newTestData);
+      console.log("setState검사 Test1:",testtodoList.getState().length == 2 );
+
+      //Data 1개 추가하여 검사
+      newTestData.push({
           text: 'new 줄넘기하기',
           isCompleted: true,
-        },
-      ]);
-      console.log("setState Test2:",TesttodoList.getState().length == 3 );
-
+      })
+      testtodoList.setState(newTestData);
+      console.log("Data 1개 추가하여 검사 Test2:",testtodoList.getState().length == 3 );
       })()
 
     </script>
