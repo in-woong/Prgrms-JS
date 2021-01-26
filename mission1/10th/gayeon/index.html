@@ -21,7 +21,7 @@
   <div id="todo-later"></div>
 
   <script>
-    var data = [
+    const data = [
       {
         text: 'JS 공부하기',
         isCompleted: true
@@ -32,7 +32,7 @@
       }
     ]
 
-    let bucketListData = [
+    const bucketListData = [
       {
         text: '운동 배우기',
         isCompleted: true
@@ -43,7 +43,7 @@
       }
     ]
 
-    let todoLaterData = [
+    const todoLaterData = [
       {
         text: '산책하기',
         isCompleted: false
@@ -60,24 +60,31 @@
 
       this.render = function() {
         // check validation
-        if(!this.data || !this.data?.length) {
+        if(!Array.isArray(data)) {
           throw new Error('data type error')
         }
 
-        this.data.forEach(list => {
-          return document.querySelector(id).innerHTML += `${list.isCompleted ? `<s>${list.text}</s>` : `<div>${list.text}</div>`}`
+        const todoElement = document.querySelector(this.id)
+
+        const dataList = this.data.map(list => {
+          return `${list.isCompleted ? `<s>${list.text}</s>` : `<div>${list.text}</div>`}`
         })
+        console.log(dataList)
+        todoElement.innerHTML = dataList.join('')
       }
 
       this.setState = function(nextData) {
         this.data = nextData
         this.render()
       }
+
+      this.render()
     }
 
     const todoList = new TodoList('#todo-list', data)
     const bucketList = new TodoList('#bucket-list', bucketListData)
     const todoLaterList = new TodoList('#todo-later', todoLaterData)
+
     const newData = [
       {
         text: '스터디 과제하기',
@@ -88,10 +95,7 @@
         isCompleted: true
       }
     ]
-
     todoList.setState(newData)
-    bucketList.render()
-    todoLaterList.render()
   </script>
 </body>
 </html>
