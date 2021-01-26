@@ -17,19 +17,17 @@
       }
     ];
 
-	function TodoList(data) {
-        this.data = data;
-        this.render = function() {
-            this.textTemp = '';
-            for (let item of this.data) {
-                this.textTemp += item.text + '<br>';
-            }
-            document.querySelector('#todo-list').innerHTML = this.textTemp;
-        }
+    function TodoList(data) {
+      this.data = data;
+      this.render = function() {
+        todoItemText = this.data.map(item => `<li>${item.text}</li>`).join('');
+        todoItemText = '<ul>' + todoItemText + '</ul>'
+        document.querySelector('#todo-list').innerHTML = todoItemText;
+      }
+      this.render();
     }
 
     var todoList = new TodoList(data);
-    todoList.render();
   </script>
 </body>
 </html>
