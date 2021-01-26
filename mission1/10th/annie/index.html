@@ -1,0 +1,101 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+<div id="todo-list"></div>
+<div id="todo-day"></div>
+<div id="todo-week"></div>
+<script>
+  const data = [
+    {
+      text: 'JS 공부하기',
+      isCompleted: true,
+    },
+    {
+      text: 'JS 복습하기',
+      isCompleted: false,
+    },
+  ]
+  const dayData = [
+    {
+      text: 'js 공부하기',
+      isCompleted: true,
+    },
+    {
+      text: '쪼꼬 동물병원 데려가기',
+      isCompleted: false,
+    },
+  ]
+  const weekData = [
+    {
+      text: 'js 복습하기',
+      isCompleted: false,
+    },
+    {
+      text: '알고리즘 공부하기',
+      isCompleted: false,
+    },
+  ]
+  const newData = [{
+    text: '건강하기',
+    isCompleted: false,
+  }]
+
+  function TodoList(data, id) {
+    this.data = data
+    this.id = id
+
+    // new 키워드를 안 붙이고 함수 실행시 에러 발생
+    if (!(new.target)) {
+      throw new Error('TodoList instantiated with new')
+    }
+
+    this.isValidData = function(data) {
+      //data가 null 혹은 undefined인 경우
+      if (data === null || data === undefined) {
+        throw new Error('data is null or undefined')
+        // data가 array가 아닌 형태로 넘어올 경우
+      } else if (!Array.isArray(data)) {
+        throw new Error('data is not a array')
+        //data가 array이지만 array의 내용이 이상할 경우
+      } else if (Array.isArray(data)) {
+        data.map((value) => {
+          if (typeof value.text !== 'string') {
+            throw new Error('The contents of the data are invalid')
+          }
+        })
+      }
+    }
+
+    this.setState = function(nextData) {
+      this.isValidData(nextData)
+      this.data = nextData
+      this.render()
+    }
+
+    this.isValidData(data)
+
+    this.render = function() {
+      const htmlString = this.data.map((data) =>
+        data.isCompleted ? `<s><li>${data.text}</li></s>` : `<li>${data.text}</li>`,
+      ).join('')
+
+      document.querySelector(`#${id}`).innerHTML = `<div>${id}</div> <ul>${htmlString}</ul>`
+
+    }
+  }
+
+  const todoList = new TodoList(data, 'todo-list')
+  todoList.render()
+  const dayTodoList = new TodoList(dayData, 'todo-day')
+  dayTodoList.render()
+  const weekTodoList = new TodoList(weekData, 'todo-week')
+  weekTodoList.setState(newData)
+</script>
+</body>
+
+</html>
