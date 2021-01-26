@@ -46,41 +46,40 @@
       throw new Error("no use new keword");
     }
     
-    ErrorTest(dataList);
+    errorTest(dataList);
 
     this.render = function() {
-      let html = '';
-      let doList = document.querySelector(targetId);
-      for(let value of dataList) {
-        html += value.isCompleted ? `<div><s>${value.text}</s></div>` : `<div>${value.text}</div>`;
-      }
-      doList.innerHTML = html;
+      let innerText = '';
+      const todoList = document.querySelector(targetId);
+      dataList.forEach((value) => {
+        innerText += value.isCompleted ? `<div><s>${value.text}</s></div>` : `<div>${value.text}</div>`;
+      })
+      todoList.innerHTML = innerText;
     }
+    this.render();
   }
 
-  function ErrorTest(data) {
+  function errorTest(data) {
     if(data === null || data === undefined) {
       throw new Error("Data is empty");
     }
-    else if(!Array.isArray(data)) {
+    if(!Array.isArray(data)) {
       throw new Error("Data is not array");
     }
-    else {
-      for(let value of data) {
-        if(value.text === (null||undefined) || typeof value.text !== "string"){
+    
+      data.forEach((value) => {
+        if (typeof value.text !== 'string'){
           throw new Error("The content of the data is strange");
-          break;
         }
-      }
-    }
+        if(value == null || value == undefined) {
+          throw new Error("data value is empty");
+        }
+      })
   }
 
   var todoList = new TodoList(todoList, '#todo-list');
   var exerciseList = new TodoList(exerciseList, '#exercise-list');
   var playList = new TodoList(playList, '#play-list');
-  todoList.render();
-  exerciseList.render();
-  playList.render();
   </script>
 </body>
 </html>
