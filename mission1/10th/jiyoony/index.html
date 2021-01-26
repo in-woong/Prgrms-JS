@@ -5,8 +5,9 @@
   </head>
 
   <body>
-    <div id="todo-list">
-    </div>
+    <div id="todo-list"></div>
+    <div id="todo-forfuture"></div>
+    <div id="todo-formylife"></div>
     <script>
       var data = [
         {
@@ -15,16 +16,23 @@
         {
           text: 'JS 복습하기'
         },
+        {
+          text: '자소서 작성하기'
+        },
+        {
+          text: '행복하기'
+        },
       ]
       // 이곳에서 코딩을 시작하세요!
       function TodoList(data){
       this.data=data;
       this.render=function(){
-        this.data.map((v)=>{
-          var htmlString =`<div>${v.text}</div>`;
+        this.data.map((list)=>{
+          document.querySelector('#todo-list').innerHTML+=`<ul><li>${list.text}</li></ul>`;
+          // document.querySelector('#todo-forfuture').innerHTML+=
           // var html = '<div>'+data[0].text+</div>;
-          document.querySelector('#todo-list').innerHTML+=htmlString;
       });
+      // document.querySelector('#todo-list').innerHTML+=`<li>${list}</li>`;
     }
     }
       var todoList = new TodoList(data);
