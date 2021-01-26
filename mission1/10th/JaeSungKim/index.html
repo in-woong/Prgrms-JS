@@ -40,18 +40,27 @@
           if (!Array.isArray(todoData)) {
             throw new Error('Data is not an Array')
           }
+          if (todoData.some((item) => item === null || item === undefined)) {
+            throw new Error('Data is not available')
+          }
           if (todoData.some((item) => typeof item.text !== 'string') || todoData.some((item) => typeof item.isCompleted !== 'boolean')) {
             throw new Error('Data format is not supported')
           }
 
-          const dataHTMLString = todoData.map((item) => (item.isCompleted ? `<div><s>${item.text}</s></div>` : `<div>${item.text}</div>`)).join('')
-          document.querySelector(`#${todoListId}`).innerHTML = dataHTMLString
+          this.todoData = todoData
+          this.render()
         }
+
+        this.render = function () {
+          const dataHTMLString = this.todoData.map((item) => (item.isCompleted ? `<div><s>${item.text}</s></div>` : `<div>${item.text}</div>`)).join('')
+          document.querySelector(`${todoListId}`).innerHTML = dataHTMLString
+        }
+
         this.setState(todoData)
       }
 
-      const todoList = new TodoList('todo-list', data)
-      const todoList2 = new TodoList('todo-list2', data)
+      const todoList = new TodoList('#todo-list', data)
+      const todoList2 = new TodoList('#todo-list2', data)
 
       const nextData = [
         {
