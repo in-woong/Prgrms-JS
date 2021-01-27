@@ -39,7 +39,7 @@
         function Todolist(tododata, eleID) {
             
             this.render = () => {
-                Validation(tododata);
+                validation(tododata);
                 const $todo = document.getElementById(eleID);
                 const $list = tododata.map(TodoItem => {
                     const $string = `<div>${TodoItem.text}</div>`;
@@ -50,7 +50,7 @@
             this.render();
         }
         
-        function Validation(data){
+        function validation(data){
             if(data === null || data === undefined || Array.isArray(data) !== true)throw new Error("에러!");
         }
         
