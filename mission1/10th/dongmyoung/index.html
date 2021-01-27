@@ -36,14 +36,17 @@
             }
         ];
 
-        function Todolist(data, el) {
-            const Todo = document.getElementById(el);
+        function Todolist(tododata, eleID) {
+            
             this.render = () => {
-                Validator(data);
-                if(Array.isArray(data) !== true || data === null || data === undefined)throw new Error('에러');
-                data.map(TodoItem => {
-                    Todo.innerHTML += `<div>${TodoItem.text}</div>`;
+                Validator(tododata);
+                const $todo = document.getElementById(eleID);
+                const $list = tododata.map(TodoItem => {
+                    const $string = `<div>${TodoItem.text}</div>`;
+                    
+                    return $string
                 });
+                $todo.innerHTML = $list.join('');
             }
             this.render();
         }
@@ -56,6 +59,10 @@
         const todoDay = new Todolist(data2, 'todo-day');
         const todoWeek = new Todolist(data3, 'todo-week');
     </script>
+
+        <!-- tododata.map(TodoItem => {
+            $todo.innerHTML += `<div>${TodoItem.text}</div>`;
+        }); -->
 </body>
 
 </html>
