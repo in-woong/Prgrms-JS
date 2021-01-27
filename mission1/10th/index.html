@@ -55,12 +55,7 @@
 
         this.render = function() {
           
-          var liData = this.data.map(function(_data) {
-            if(_data.isCompleted) {
-              return `<li><s>${_data.text}</s></li>`;
-            }
-            return `<li>${_data.text}</li>`;
-          }).join(''); 
+          var liData = this._make();
 
           var innerHtmlSelector = this.element.innerHTML;
 
@@ -71,10 +66,24 @@
           }
         }
 
-        this.setState = function(data) {
-          this.data = data;
+        this.setState = function(nextData) {
+          this.data = nextData;
           this.element.removeChild(this.element.firstChild);
-          this.render();
+
+          var liData = this._make();
+
+          var newElement =  `<ul>${liData}</ul>`;
+
+          this.element.innerHTML += newElement;
+        }
+
+        this._make = function() {
+          return this.data.map(function(_data) {
+            if(_data.isCompleted) {
+              return `<li><s>${_data.text}</s></li>`;
+            }
+            return `<li>${_data.text}</li>`;
+          }).join(''); 
         }
       }
 
@@ -86,6 +95,7 @@
 
       var todoList3 = new TodoList(data3,'todo-list-3');
       todoList3.render();
+      todoList3.setState(data2);
 
     </script>
   </body>
