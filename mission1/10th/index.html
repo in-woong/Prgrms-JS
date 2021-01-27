@@ -19,6 +19,12 @@
       ];
 
       function TodoList(data) {
+        if(data === null) throw new Error("data is null");
+        if(data === undefined) throw new Error("data is undefined");
+        if(!Array.isArray(data)) throw new Error("data is not Array");
+        if(!(this instanceof TodoList)) throw new Error("Add new keyword");
+      
+
         this.data = data;
         this.element = document.querySelector('#todo-list');
 
@@ -59,6 +65,8 @@
           isCompleted: false,
         },
       ]);
+
+      var todoList3 = TodoList(data);
 
     </script>
   </body>
