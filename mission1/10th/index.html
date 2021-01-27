@@ -28,14 +28,14 @@
         },
         {
           text: '책 읽기',
-          isCompleted: false,
+          isCompleted: true,
         }
       ];
       
       const data3 = [
         {
           text: '밥 먹기',
-          isCompleted: false,
+          isCompleted: true,
         },
         {
           text: '글쓰기',
@@ -56,6 +56,9 @@
         this.render = function() {
           
           var liData = this.data.map(function(_data) {
+            if(_data.isCompleted) {
+              return `<li><s>${_data.text}</s></li>`;
+            }
             return `<li>${_data.text}</li>`;
           }).join(''); 
 
