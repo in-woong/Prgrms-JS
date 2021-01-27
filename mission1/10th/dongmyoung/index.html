@@ -39,7 +39,7 @@
         function Todolist(tododata, eleID) {
             
             this.render = () => {
-                Validator(tododata);
+                Validation(tododata);
                 const $todo = document.getElementById(eleID);
                 const $list = tododata.map(TodoItem => {
                     const $string = `<div>${TodoItem.text}</div>`;
