@@ -43,7 +43,6 @@
                 const $todo = document.getElementById(eleID);
                 const $list = tododata.map(TodoItem => {
                     const $string = `<div>${TodoItem.text}</div>`;
-                    
                     return $string
                 });
                 $todo.innerHTML = $list.join('');
