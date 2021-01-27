@@ -6,6 +6,9 @@
 
   <body>
     <div id="todo-list"></div>
+    <div id="todo-list-2"></div>
+    <div id="todo-list-3"></div>
+
     <script>
       const data = [
         {
@@ -15,18 +18,40 @@
         {
           text: 'JS 복습하기',
           isCompleted: false,
-        },
+        }
       ];
 
-      function TodoList(data) {
-        if(data === null) throw new Error("data is null");
-        if(data === undefined) throw new Error("data is undefined");
+      const data2 = [
+        {
+          text: '운동 하기',
+          isCompleted: false,
+        },
+        {
+          text: '책 읽기',
+          isCompleted: false,
+        }
+      ];
+      
+      const data3 = [
+        {
+          text: '밥 먹기',
+          isCompleted: false,
+        },
+        {
+          text: '글쓰기',
+          isCompleted: false,
+        }
+      ];
+
+      function TodoList(data ,id) {
+        if(!data) throw new Error("data is error");
+        if(!id) throw new Error("id is error");
         if(!Array.isArray(data)) throw new Error("data is not Array");
         if(!(this instanceof TodoList)) throw new Error("Add new keyword");
-      
 
         this.data = data;
-        this.element = document.querySelector('#todo-list');
+        this.id = id;
+        this.element = document.querySelector('#'+ this.id);
 
         this.render = function() {
           
@@ -37,7 +62,7 @@
           var innerHtmlSelector = this.element.innerHTML;
 
           if(innerHtmlSelector) {
-            document.querySelector('#todo-list > ul').innerHTML += `${liData}`;
+            document.querySelector(`#${this.id} > ul`).innerHTML += `${liData}`;
           } else {
             this.element.innerHTML += `<ul>${liData}</ul>`;
           }
@@ -50,23 +75,14 @@
         }
       }
 
-      var todoList = new TodoList(data);
+      var todoList = new TodoList(data,'todo-list');
       todoList.render();
 
-      var todoList2 = new TodoList(data);
+      var todoList2 = new TodoList(data2,'todo-list-2');
       todoList2.render();
-      todoList2.setState([
-        {
-          text: 'JS 공부하기3',
-          isCompleted: true,
-        },
-        {
-          text: 'JS 복습하기4',
-          isCompleted: false,
-        },
-      ]);
 
-      var todoList3 = TodoList(data);
+      var todoList3 = new TodoList(data3,'todo-list-3');
+      todoList3.render();
 
     </script>
   </body>
