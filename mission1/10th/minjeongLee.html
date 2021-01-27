@@ -3,32 +3,92 @@
 <head>
   <title>Mission 1</title>
   <meta charset="utf-8" />
+
+  <style>
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      margin: 0;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    h2 {
+      color: skyblue;
+    }
+  </style>
+
 </head>
 
 <body>
-  <div id="todo-list"></div>
+  <div class="container">
+    <div id="dayTodo"></div>
+    <div id="weekTodo"></div>
+    <div id="yearTodo"></div>
+  </div>
+
   <script>
-    var data = [
+
+    const dayList = [
       {
-        text: 'JS 공부하기'
+        text: '마켓컬리 간식 주문하기',
+        isCompleted: false
       },
       {
-        text: 'JS 복습하기'
+        text: '프로그래머스 강의 듣기',
+        isCompleted: false
+      }
+    ]
+    const weekList = [
+      {
+        text: '필라테스 가기',
+        isCompleted: false
+      },
+      {
+        text: '유산소 운동하기',
+        isCompleted: true
+      }
+    ]
+    const yearList = [
+      {
+        text: '폴 바디프로필 찍기',
+        isCompleted: false
+      },
+      {
+        text: '프론트엔드 취업하기',
+        isCompleted: false
       }
     ]
 
-    function TodoList(data) {
-      this.data = data;
+    function TodoList(data, id) {
+      this.data = data
+      this.id = id
       this.render = function () {
-        var list = document.querySelector('#todo-list');
-        data.forEach((textlist) => {
-          list.innerHTML += `<div>${textlist.text}</div>`;
-        })
+        const htmlString = this.data.map((data) =>
+          data.isCompleted ? `<li><s>${data.text}</s></li>` : `<li>${data.text}</li>`
+        ).join('')
+
+        document.querySelector(`#${id}`).innerHTML =
+          `
+         <h2>${id}</h2>
+         <ul type="square">
+         ${htmlString}
+         </ul>
+         `
       }
+      this.render()
     }
 
-    var todoList = new TodoList(data);
-    todoList.render();
+    const dayTodoList = new TodoList(dayList, 'dayTodo');
+    const weekTodoList = new TodoList(weekList, 'weekTodo');
+    const yearTodoList = new TodoList(yearList, 'yearTodo');
 
   </script>
 </body>
