@@ -7,8 +7,8 @@
   <body>
     <div id="todo-list"></div>
     <div class="study-list"></div>
-    <p></p>
-    <p data-type="pizza"></p>
+    <div class="wrong-list"></div>
+
     <script>
       const data = [
         {
@@ -24,24 +24,69 @@
       const studyData = [
         {
           text: 'next.js',
+          isCompleted: true,
         },
         {
           text: 'k8s',
+          isCompleted: true,
         },
       ]
 
-      // 이곳에서 코딩을 시작하세요!
-      function TodoList(data, $target) {
-        this.render = () => {
-          $target.innerHTML = data.map((todo) => `<div>${todo.text}</div>`).join('')
+      const validateData = (data) => {
+        // null이거나 undefined인 경우 여기에서 걸림
+        if (!data) {
+          throw new Error('data가 정상이 아닙니다.')
         }
 
+        const isValidData = data.every((todo) => typeof todo.text === 'string')
+
+        if (!isValidData) {
+          throw new Error('data의 text가 string이 아닙니다.')
+        }
+      }
+
+      // 이곳에서 코딩을 시작하세요!
+      function TodoList(initialState, $target) {
+        this.state = initialState
+
+        this.validation = (state) => {
+          if (!new.target) {
+            throw new Error('new 키워드는 필수입니다.')
+          }
+
+          validateData(this.state)
+        }
+
+        this.render = () => {
+          $target.innerHTML = this.state.map(({ text, isCompleted }) => (isCompleted ? `<div>${text}</div>` : `<div><s>${text}</s></div>`)).join('')
+        }
+
+        this.setState = (nextState) => {
+          validateData(nextState)
+          this.state = nextState
+          this.render()
+        }
+
+        this.validation()
         this.render()
       }
 
       const todo1 = new TodoList(data, document.querySelector('#todo-list'))
 
       const todo2 = new TodoList(studyData, document.querySelector('.study-list'))
+
+      setTimeout(() => {
+        todo2.setState([
+          {
+            text: 'ReasonML',
+            isCompleted: false,
+          },
+          {
+            text: 'lerna',
+            isCompleted: false,
+          },
+        ])
+      }, 3000)
     </script>
   </body>
 </html>
