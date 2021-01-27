@@ -45,3 +45,7 @@ new 키워드로 함수 인스턴스 만들 때 올바른 인자값이 넘어오
 - [X] 해당 함수를 추가한 뒤, new TodoList(...) 하는 코드 이후에 해당 컴포넌트의 인스턴스에 todoList.setState(새로운 배열) 형태로 데이터만 다시 넣었을 때 컴포넌트가 다시 렌더링 되도록 작성
 - [X]  setState 함수 호출 후 다시 todoList.render()를 호출하는 것이 아니라, setState 함수 내에서 화면을 다시 렌더링하는 것까지 처리해야 합니다.
 
+### [Mission1] code review
+- 변수명에 대한 정확히 무엇을 하는지 정확하게 파악이 가능해야 한다.
+-  element를 string으로 받는 대신 document.querySelector('#todo-list2') 한 결과를 넘겨주면  
+  TodoList는 dom selecting에 대해 생각하지 않아도 되고 id 형태의 string을 넘기야만 하는 제약이 없어지므로 html에도 id 대신 class, data attribute등 여러가지 방법으로 selecting해서 넘길 수 있게 됩니다.

@@ -10,7 +10,6 @@
     <div id="todo-list3"></div>
 
     <script>
-    // 'use strict'; 
 
       const data1 = [
         {
@@ -56,8 +55,8 @@
         },
       ]
       
-      function TodoList($targetEl, todoData) {
-        this.$targetEl = document.querySelector($targetEl);
+      function TodoList(target, todoData) {
+        this.target = target;
         this.todoData = todoData;
 
         if (!new.target) {
@@ -92,7 +91,7 @@
           )
           .join('');
 
-          this.$targetEl.innerHTML = stringHTML;
+          this.target.innerHTML = stringHTML;
         }
 
         this.setState = function(nextData) {
@@ -105,9 +104,9 @@
         this.render();
       }
 
-      const todoList1 =  TodoList('#todo-list1', data1);
-      const todoList2 = new TodoList('#todo-list2', data2);
-      const todoList3 = new TodoList('#todo-list3', data3);
+      const todoList1 = new TodoList(document.querySelector('#todo-list1'), data1);
+      const todoList2 = new TodoList(document.querySelector('#todo-list2'), data2);
+      const todoList3 = new TodoList(document.querySelector('#todo-list3'), data3);
 
       setTimeout(() => {todoList1.setState(data4)}, 1000);
 
