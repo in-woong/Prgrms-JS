@@ -41,11 +41,11 @@
             this.render = () => {
                 validation(tododata);
                 const $todo = document.getElementById(eleID);
-                const $list = tododata.map(TodoItem => {
-                    const $string = `<div>${TodoItem.text}</div>`;
-                    return $string
+                let $string = '';
+                tododata.forEach(TodoItem => {
+                    $string += `<div>${TodoItem.text}</div>`;
                 });
-                $todo.innerHTML = $list.join('');
+                $todo.innerHTML = $string;
             }
             this.render();
         }
