@@ -16,8 +16,50 @@
           text: 'JS 복습하기',
           isCompleted: false,
         },
-      ]
-      // 이곳에서 코딩을 시작하세요!
+      ];
+
+      function TodoList(data) {
+        this.data = data;
+        this.element = document.querySelector('#todo-list');
+
+        this.render = function() {
+          
+          var liData = this.data.map(function(_data) {
+            return `<li>${_data.text}</li>`;
+          }).join(''); 
+
+          var innerHtmlSelector = this.element.innerHTML;
+
+          if(innerHtmlSelector) {
+            document.querySelector('#todo-list > ul').innerHTML += `${liData}`;
+          } else {
+            this.element.innerHTML += `<ul>${liData}</ul>`;
+          }
+        }
+
+        this.setState = function(data) {
+          this.data = data;
+          this.element.removeChild(this.element.firstChild);
+          this.render();
+        }
+      }
+
+      var todoList = new TodoList(data);
+      todoList.render();
+
+      var todoList2 = new TodoList(data);
+      todoList2.render();
+      todoList2.setState([
+        {
+          text: 'JS 공부하기3',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기4',
+          isCompleted: false,
+        },
+      ]);
+
     </script>
   </body>
 </html>
