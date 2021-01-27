@@ -34,6 +34,12 @@
         }
 
         this.setState = function (todoData) {
+          this.validateData(todoData)
+          this.todoData = todoData
+          this.render()
+        }
+
+        this.validateData = function (todoData) {
           if (!todoData) {
             throw new Error('Data is null or undefined')
           }
@@ -43,12 +49,9 @@
           if (todoData.some((item) => !item)) {
             throw new Error('Data is not available')
           }
-          if (todoData.some((item) => typeof item.text !== 'string') || todoData.some((item) => typeof item.isCompleted !== 'boolean')) {
+          if (todoData.some((item) => !item || typeof item.text !== 'string' || typeof item.isCompleted !== 'boolean')) {
             throw new Error('Data format is not supported')
           }
-
-          this.todoData = todoData
-          this.render()
         }
 
         this.render = function () {
