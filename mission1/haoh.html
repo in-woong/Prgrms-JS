@@ -19,25 +19,30 @@
       },
     ]
 
-    function TodoList(data) {
-      if (!data) throw error;
+    function TodoList(todos) {
+      if (!todos) throw 'list is empty';
 
       // 파라메터로 받은 data 값을 this.data에 할당
-      this.data = data;
+      this.todos = todos;
 
       // TodoList 함수에 render 함수를 만들고 그것을 this.render 에 할당
       this.render = function () {
-        this.data.forEach(todoElm => {
+        let htmlTodos = '';
+
+        this.todos.forEach(todoElm => {
           const { text, isCompleted } = todoElm;
 
-          document.querySelector('#todo-list').innerHTML += `<div> - ${text} ${isCompleted && '✅'}</div>`;
+          htmlTodos += `<div> - ${text} ${isCompleted && '✅'}</div>`;
         })
+
+        document.querySelector('#todo-list').innerHTML = htmlTodos;
       }
+
+      this.render();
     }
 
     const todoList = new TodoList(data);
 
-    todoList.render();
   </script>
 </body>
 
