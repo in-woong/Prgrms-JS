@@ -1,0 +1,66 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list"></div>
+    <div id="month-todo-list"></div>
+    <div id="year-todo-list"></div>
+    <script>
+      const data = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false,
+        },
+      ]
+      const myMonthData = [
+        {
+          text: '알고리즘 꾸준히 풀기',
+          isCompleted: false,
+        },
+        {
+          text: 'JS 공부하기',
+          isCompleted: false,
+        },
+      ]
+      const myYearData = [
+        {
+          text: '취업하기',
+        }
+      ]
+      function checkData(data) {
+        if (!data) {
+          throw new Error("your data is null")
+        }
+      }
+      function checkSome(target) {
+        if (!new.target) {
+          throw new Error("you need new keyword")
+        }
+      }
+      function TodoList($target, data) {  
+        try {
+          this.$target = $target
+          console.log(new.target)
+          // checkSome(this)
+          checkData(data)
+          this.render = function() {
+            $target.innerHTML += data.map(({text, isCompleted}) => isCompleted === true  ? `<div><s id="todo">${text}</s></div>` : `<div id="todo">${text}</div>`).join('')
+          }
+          this.render()
+        } catch(error) {
+          alert(error)
+        }
+      }
+      new TodoList(document.querySelector('#todo-list'), data)
+      new TodoList(document.querySelector('#month-todo-list'), myMonthData)
+      new TodoList(document.querySelector('#year-todo-list'), myYearData)
+    </script>
+  </body>
+</html>
