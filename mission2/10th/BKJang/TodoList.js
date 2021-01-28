@@ -11,7 +11,7 @@ function TodoList(targetElementId, initialData, toggleTodo, deleteTodo) {
       const todoText = todo.isCompleted ? `${todo.text} (완료)` : todo.text;
       return `<li data-item-index=${index} class="todo-item">
       ${todoText}
-      <button class="delete-btn">삭제</button>
+      <button data-item-index=${index} class="delete-btn">삭제</button>
       </li>`
     }).join('');
 
