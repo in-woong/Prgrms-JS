@@ -3,7 +3,6 @@ function TodoCount(targetElement, todos) {
   this.data = todos;
 
   this.render = function (data) {
-    console.log(data)
     const countOfCompleted = data.reduce((acc, cur) => {
       if (cur.isCompleted) {
         acc += 1;

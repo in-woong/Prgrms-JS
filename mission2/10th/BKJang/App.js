@@ -1,32 +1,24 @@
 import TodoList from './TodoList.js';
 import TodoCount from './TodoCount.js';
 import TodoInput from './TodoInput.js';
-import { KEY_CODE_ENTER } from './constants.js';
 import { getTargetElement } from './validationUtil.js';
+import { getItem, setItem } from './storgeUtil.js';
 
 function App() {
-  let todoListData = [];
+  let todoListData = getItem('todos');
 
   const todoListElement = getTargetElement('#todo-list');
   const todoCountElement = getTargetElement('#todo-count');
   const todoInputElement = getTargetElement('#todo-input');
   const removeAllTodoBtn = getTargetElement('#remove-all-todo-btn');
 
-  this.addTodo = function(e) {
-    const newTodo = {
-      text: e.target.value,
-      isCompleted: false,
-    }
+  this.addTodo = newTodo => {
+    const newTodos = [...todoListData, newTodo];
 
-    if (e.keyCode === KEY_CODE_ENTER) {
-      todoListData = [...todoListData, newTodo];
-      todoList.setState(todoListData);
-      todoCount.render(todoListData);
-      e.target.value = '';
-    }
+    this.updateTodos(newTodos);
   }
 
-  this.toggleTodo = function(index) {
+  this.toggleTodo = index => {
     const newTodos = todoListData.map((todo, todoIndex) => {
       if (index === todoIndex) {
         return { ...todo, isCompleted: !todo.isCompleted };
@@ -34,36 +26,35 @@ function App() {
       return todo;
     });
 
-    todoListData = newTodos;
-    todoList.setState(newTodos);
-    todoCount.render(newTodos);
+    this.updateTodos(newTodos);
   }
 
-  this.deleteTodo = function(index) {
+  this.deleteTodo = index => {
     const newTodos = todoListData.filter((_todo, todoIndex) => (todoIndex !== index));
-    todoListData = newTodos
-    todoList.setState(newTodos);
-    todoCount.render(newTodos);
+    this.updateTodos(newTodos);
   }
 
   this.removeAllTodos = () => {
-    todoListData = [];
-    todoList.setState([]);
-    todoCount.render([]);
+    this.updateTodos([]);
+  }
+
+  this.updateTodos = (newTodos = []) => {
+    todoListData = newTodos;
+    setItem('todos', newTodos)
+    this.todoList.setState(newTodos);
+    this.todoCount.render(newTodos);
   }
 
   const removeAllEvent = new CustomEvent('removeAll');
-  removeAllTodoBtn.addEventListener('click', (e) => {
+  removeAllTodoBtn.addEventListener('click', function(e) {
     todoListElement.dispatchEvent(removeAllEvent);
   });
 
-  todoListElement.addEventListener('removeAll', () => {
-    this.removeAllTodos();
-  })
+  todoListElement.addEventListener('removeAll', this.removeAllTodos)
 
-  const todoList = new TodoList(todoListElement, todoListData, this.toggleTodo, this.deleteTodo);
-  const todoCount = new TodoCount(todoCountElement, todoListData);
-  const todoInput = new TodoInput(todoInputElement, this.addTodo);
+  this.todoList = new TodoList(todoListElement, todoListData, this.toggleTodo, this.deleteTodo);
+  this.todoCount = new TodoCount(todoCountElement, todoListData);
+  this.todoInput = new TodoInput(todoInputElement, this.addTodo);
 }  
 
 export default App;
