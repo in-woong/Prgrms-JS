@@ -1,8 +1,8 @@
-import { getTargetElement, checkUseNewKeyword, checkDataValidation } from './validationUtil.js';
+import { checkUseNewKeyword, checkDataValidation } from './validationUtil.js';
 
-function TodoList(targetElementId, initialData, toggleTodo, deleteTodo) {
+function TodoList(targetElement, initialData, toggleTodo, deleteTodo) {
   if (checkUseNewKeyword(new.target)) {
-    this.target = getTargetElement(targetElementId);
+    this.target = targetElement;
     this.data = initialData;
   }
 

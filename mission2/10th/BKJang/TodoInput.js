@@ -1,7 +1,5 @@
-import { getTargetElement } from './validationUtil.js';
-
-function TodoInput(targetElementId, addTodo) {
-  this.target = getTargetElement(targetElementId);
+function TodoInput(targetElement, addTodo) {
+  this.target = targetElement;
 
   this.target.addEventListener('keypress', addTodo);
 };

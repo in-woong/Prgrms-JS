@@ -1,7 +1,5 @@
-import { getTargetElement } from './validationUtil.js';
-
-function TodoCount(targetElementId, todos) {
-  this.target = getTargetElement(targetElementId);
+function TodoCount(targetElement, todos) {
+  this.target = targetElement;
   this.data = todos;
 
   this.render = function (data) {
