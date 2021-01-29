@@ -8,21 +8,22 @@ const ERROR_MESSAGE = {
 };
 
 class TodoList {
-  constructor(listTitle, nextData) {
+  constructor(listTitle, listData) {
     // review4 : 렌더링 될떄마다 불필요한 DOM Search가 계속되는 문제해결
     const $app = document.querySelector('#app');
     const $listBox = document.createElement('div');
     this.listBox = $listBox;
     this.listTitle = listTitle;
-    this.nextData = nextData;
+    this.listData = listData;
 
     $app.appendChild($listBox);
     $listBox.classList.add(listTitle);
-    this.setState(listTitle, nextData);
+    this.setState(listData);
   }
 
-  setState = (listTitle, nextData) => {
-    this.validator(listTitle, nextData);
+  setState = (nextData) => {
+    this.listData = nextData;
+    this.validator(this.listTitle, nextData);
     this.render();
   };
 
@@ -56,7 +57,7 @@ class TodoList {
     let listItemString = '';
 
     listTitleString = `<strong class="title">${this.listTitle}</strong>`;
-    this.nextData.forEach((item) => {
+    this.listData.forEach((item) => {
       item.isCompleted
         ? (listItemString += `<div><s>${item.text}</s></div>`)
         : (listItemString += `<div>${item.text}</div>`);
@@ -69,5 +70,22 @@ class TodoList {
 // review6 : 따로 인스턴스화 할 때 setState()를 하지 않도록 변경
 new TodoList('todo-list', dataStudy);
 new TodoList('exercise-list', dataExercise);
-new TodoList('play-list', dataPlay);
+const PlayTodoList = new TodoList('play-list', dataPlay);
+
+setTimeout(() => {
+  PlayTodoList.setState([
+    {
+      text: '넷플릭스에서 숨박꼭질 영화보기',
+      isCompleted: true,
+    },
+    {
+      text: '쇼핑몰 옷 구경하기',
+      isCompleted: true,
+    },
+    {
+      text: '요리중독 돈 많이 벌어놓기',
+      isCompleted: false,
+    },
+  ])
+}, 3000);
 // review2 : EOL
