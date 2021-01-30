@@ -10,24 +10,52 @@
   <script>
     var data = [
       {
-        text: 'JS 공부하기'
+        text: 'JS 공부하기',
+        isCompleted: true
       },
       {
-        text: 'JS 복습하기'
+        text: 'JS 복습하기',
+        isCompleted: false
       }
-    ];
-
+    ]
+    
+    const validateData = (data) => {
+      // check if data is null or undefined
+      if (!data) {
+        throw new Error('data의 형식이 올바르지 않습니다..')
+      }
+      // type check
+      const isValidTextData = data.every((todo) => typeof todo.text === 'string')
+      const isValidCompleteData = data.every((todo) => typeof todo.isCompleted === 'boolean')
+      if (!(isValidTextData && isValidCompleteData)) {
+        throw new Error('data의 타입이 올바르지 않습니다.')
+      }
+    }
+    
     function TodoList(data) {
-      this.data = data;
+      this.data = data
+      this.validation = (data) => {
+        validateData(data)
+
+        // check whether function is called via new
+        if (!new.target) {
+          throw new Error('함수가 new 키워드로 호출되지 않았습니다.')
+        }
+      }
       this.render = function() {
         todoItemText = this.data.map(item => `<li>${item.text}</li>`).join('');
         todoItemText = '<ul>' + todoItemText + '</ul>'
         document.querySelector('#todo-list').innerHTML = todoItemText;
       }
-      this.render();
+      this.validation(this.data)
+      this.render()
     }
+    var todoList = new TodoList(data)
 
-    var todoList = new TodoList(data);
+    // testcase
+    // var todoList = TodoList(data)
+    // var todoList = new TodoList([1,2,3,4])
+    // var todoList = new TodoList(null)
   </script>
 </body>
 </html>
