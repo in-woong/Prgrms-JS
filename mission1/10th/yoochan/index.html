@@ -10,7 +10,7 @@
   <div id="exercise-list"></div>
   <div id="play-list"></div>
   <script>
-    var todoList = [
+    const todoList = [
       {
         text: 'JS 공부하기',
         isCompleted: true
@@ -20,7 +20,7 @@
         isCompleted: false
       }
     ]
-    var exerciseList = [
+    const exerciseList = [
       {
         text: '일찍 일어나기',
         isCompleted: true
@@ -30,7 +30,7 @@
         isCompleted: true
       }
     ]
-    var playList = [
+    const playList = [
       {
         text: '영화 보기',
         isCompleted: false
@@ -40,25 +40,8 @@
         isCompleted: false
       }
     ]
+
   // 이곳에서 코딩을 시작하세요!
-  function TodoList(dataList, targetId) {
-    if(!new.target) {
-      throw new Error("no use new keword");
-    }
-    
-    errorTest(dataList);
-
-    this.render = function() {
-      let innerText = '';
-      const todoList = document.querySelector(targetId);
-      dataList.forEach((value) => {
-        innerText += value.isCompleted ? `<div><s>${value.text}</s></div>` : `<div>${value.text}</div>`;
-      })
-      todoList.innerHTML = innerText;
-    }
-    this.render();
-  }
-
   function errorTest(data) {
     if(data === null || data === undefined) {
       throw new Error("Data is empty");
@@ -77,9 +60,37 @@
       })
   }
 
-  var todoList = new TodoList(todoList, '#todo-list');
-  var exerciseList = new TodoList(exerciseList, '#exercise-list');
-  var playList = new TodoList(playList, '#play-list');
+  function TodoList(dataList, targetId) {
+    this.state = dataList
+
+    this.validation = (state) => {
+      if(!new.target) {
+      throw new Error("no use new keword");
+      }
+
+      errorTest(this.state)
+    }
+    
+    this.render = () => {
+      const todoList = document.querySelector(targetId);
+      todoList.innerHTML = this.state.map(({ text, isCompleted }) => (isCompleted ? `<div>${text}</div>` : `<div><s>${text}</s></div>`)).join('')
+    }
+
+    this.setState = (nextState) => {
+      errorTest(nextState)
+      this.state = nextState
+      this.render()
+    }
+
+    this.validation();
+    this.render();
+    
+  }
+
+  const todo1 = new TodoList(todoList, '#todo-list');
+  const todo2 = new TodoList(exerciseList, '#exercise-list');
+  const todo3 = new TodoList(playList, '#play-list');
+
   </script>
 </body>
 </html>
