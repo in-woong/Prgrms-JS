@@ -7,6 +7,7 @@
 
 <body>
   <div id="todo-list"></div>
+  <div id="study-list"></div>
   <script>
     const data = [
         {
@@ -18,61 +19,54 @@
           isCompleted: false,
         },
       ]
-
-    //에러 발생하게하기
-    const test1 = null;
-    const test2 = "notArray";
-    const test3 = [
+    const studyData = [
       {
-        text:123,
+        text: 'next.js',
+        isCompleted: true,
       },
       {
-        text:456,
-      },
-    ];  
+        text: 'React',
+        isCompleted: true,
+      }
+    ]  
 
-    const findId = document.getElementById("todo-list");
-    function TodoListTwo(data){
-      this.data = data;
+    const vaildateData = (data) =>{
+       if(!data){
+         throw new Error('data가 정상이 아닙니다.')
+       }
+
+       const isVaildData = data.every((todo) => typeof todo.text === 'String')
+
+       if(!isVaildData){
+        throw new Error('data의 데이터 타입은 String이 아닙니다.')
+       }
     }
-    TodoListTwo.prototype.render = function(){
-      findId.innerHTML = this.data.map(val=> val.text).join("");
-    };
-    
 
-    function TodoList(data){ 
-      this.data = data;
-      //todo-list id를 가진 dom을 검색하는 코드
-      const findId = document.getElementById("todo-list");
+
+    function TodoList(state, $tatget){ 
+      this.state = state
       
       this.render = () => {
-        findId.innerHTML = this.data.map(val=> val.text).join("");
-      };
+        $tatget.innerHTML = data.map(val=> val.text).join("");
+        $tatget.innerHTML = this.state.map(({ text, isCompleted }) => (isCompleted ? `<div>${text}</div>` : `<div><s>${text}</s></div>`)).join('')
+      }
 
-      this.verify=()=>{
-        if(this.data===null || this.data===undefined){
-          throw new Error("error message");
-        }else if(!this.data.isArray){
-          throw new Error("error message");
-        }else if(typeOf(this.data.map(val=> val.text))!==String){
-          throw new Error("error message");
+      this.validation = (state) =>{
+        if(!new.target){
+          throw new Error('new 키워드는 필수입니다.')
         }
+        vaildateData(this.state) 
+      }
 
-    };
+      this.validation()
+      this.render()
   }
   
-  let toDo = new TodoListTwo(data);
-  toDo.render();
-  let todoList = new TodoList(data);
-  todoList.render();
+ 
 
-  let errorTest1 = new TodoList(test1);
-  let errorTest2 = new TodoList(test2);
-  let errorTest3 = new TodoList(test3);
+  const todoList = new TodoList(data, document.querySelector('#todo-list'))
+  const todoListTest = new TodoList(studyData, document.querySelector('.study-list'))
 
-  errorTest1.verify(); 
-  errorTest2.verify();
-  errorTest3.verify();
   </script>
 </body>
 </html>
