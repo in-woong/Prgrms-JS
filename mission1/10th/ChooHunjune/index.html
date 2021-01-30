@@ -33,22 +33,27 @@
     }
     
     function TodoList(data) {
-      this.data = data
+      this.state = data
       this.validation = (data) => {
         validateData(data)
-
         // check whether function is called via new
         if (!new.target) {
           throw new Error('함수가 new 키워드로 호출되지 않았습니다.')
         }
       }
+      this.setState = (nextData) => {
+        this.validation(nextData)
+        this.state = nextData
+        this.render()
+      }
       this.render = function() {
-        todoItemText = this.data.map(
+        todoItemText = this.state.map(
           item => item.isCompleted ? `<li><s>${item.text}</s></li>` : `<li>${item.text}</li>`).join('')
         todoItemText = '<ul>' + todoItemText + '</ul>'
         document.querySelector('#todo-list').innerHTML = todoItemText
       }
-      this.validation(this.data)
+
+      this.validation(this.state)
       this.render()
     }
     var todoList = new TodoList(data)
@@ -57,6 +62,19 @@
     // var todoList = TodoList(data)
     // var todoList = new TodoList([1,2,3,4])
     // var todoList = new TodoList(null)
+
+    setTimeout(() => {
+      todoList.setState([
+        {
+          text: 'ReasonML',
+          isCompleted: false,
+        },
+        {
+          text: 'lerna',
+          isCompleted: false,
+        },
+      ])
+    }, 3000)
   </script>
 </body>
 </html>
