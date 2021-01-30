@@ -43,9 +43,10 @@
         }
       }
       this.render = function() {
-        todoItemText = this.data.map(item => `<li>${item.text}</li>`).join('');
+        todoItemText = this.data.map(
+          item => item.isCompleted ? `<li><s>${item.text}</s></li>` : `<li>${item.text}</li>`).join('')
         todoItemText = '<ul>' + todoItemText + '</ul>'
-        document.querySelector('#todo-list').innerHTML = todoItemText;
+        document.querySelector('#todo-list').innerHTML = todoItemText
       }
       this.validation(this.data)
       this.render()
