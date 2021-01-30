@@ -5,12 +5,6 @@ function TodoInput({ inputDOM, parentDOM, inputHandler }) {
     checkDom(parentDOM)
     inputDOM.addEventListener('keyup', inputHandler)
   }
-
-  // this.render = () => {
-  //   parentDOM.appendChild()
-  // }
-
-  // this.render()
 }
 
 export default TodoInput

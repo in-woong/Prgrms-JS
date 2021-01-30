@@ -23,11 +23,6 @@ function TodoApp(todoData, parentDOM, inputDOM, countDOM, removeAllBtnDOM) {
   this.todoInput = new TodoInput(this)
   this.todoCount = new TodoCount(this)
   this.todoRemoveAll = new TodoRemoveAll(this)
-
-  // this.render = () => {
-  //   this.todoList.setState(this.todoData)
-  //   this.todoCount.setState(this.todoData)
-  // }
 }
 
 export default TodoApp
