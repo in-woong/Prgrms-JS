@@ -7,6 +7,8 @@
 
 <body>
   <div id="todo-list"></div>
+  <div id="todo-list-2"></div>
+  <div id="todo-list-3"></div>
   <script>
     var data = [
       {
@@ -16,6 +18,26 @@
       {
         text: 'JS 복습하기',
         isCompleted: false
+      }
+    ]
+    var data2 = [
+      {
+        text: 'C++ 공부하기',
+        isCompleted: false
+      },
+      {
+        text: 'Python 고급 배우기',
+        isCompleted: false
+      }
+    ]
+    var data3 = [
+      {
+        text: '수강신청 하기',
+        isCompleted: false
+      },
+      {
+        text: '시간표 짜기',
+        isCompleted: true
       }
     ]
     
@@ -32,7 +54,7 @@
       }
     }
     
-    function TodoList(data) {
+    function TodoList(data, DOMselector) {
       this.state = data
       this.validation = (data) => {
         validateData(data)
@@ -50,13 +72,15 @@
         todoItemText = this.state.map(
           item => item.isCompleted ? `<li><s>${item.text}</s></li>` : `<li>${item.text}</li>`).join('')
         todoItemText = '<ul>' + todoItemText + '</ul>'
-        document.querySelector('#todo-list').innerHTML = todoItemText
+        document.querySelector(DOMselector).innerHTML = todoItemText
       }
 
       this.validation(this.state)
       this.render()
     }
-    var todoList = new TodoList(data)
+    var todoList = new TodoList(data, '#todo-list')
+    var todoList2 = new TodoList(data2, '#todo-list-2')
+    var todoList3 = new TodoList(data3, '#todo-list-3')
 
     // testcase
     // var todoList = TodoList(data)
