@@ -1,29 +1,50 @@
 import validateData, { isNew, checkDom } from './validateData.js'
+import { setBackUpTodo } from './util.js'
+import { METHOD } from './METHOD_LIST.js'
 
-function renderTodo({ text, isCompleted }, idx) {
-  return `<div class="todo-text" data-idx=${idx}>
-            ${isCompleted ? `<div class="todo-checkbox checked"></div><p class="strket-text">${text}</p>` : `<div class="todo-checkbox"></div><p>${text}</p>`}
+// 전체 랜더링
+const renderTodo = ({ text, isCompleted }) => {
+  return `<div class="todo-text">
+           <div class="todo-checkbox${isCompleted ? ' checked' : ''}"></div><p class=${isCompleted ? 'strket-text ' : ''}>${text}</p>
             <div class="del-btn"></div>
           </div>`
 }
 
-function TodoList({ todoData, parentDOM, listHandler }) {
+function TodoList({ todoData, $listDOM, listHandler }) {
   if (isNew(new.target)) {
     if (todoData.length !== 0) validateData(todoData)
-    checkDom(parentDOM)
-    parentDOM.addEventListener('click', listHandler)
+    checkDom($listDOM)
+    $listDOM.addEventListener('click', listHandler)
   }
 
   this.render = () => {
     validateData(todoData)
-    parentDOM.innerHTML = todoData.map(renderTodo).join('')
+    $listDOM.innerHTML = todoData.map(renderTodo).join('')
   }
 
-  this.setState = (nextData) => {
-    todoData = validateData(nextData)
-    localStorage.setItem('todoData', JSON.stringify(todoData))
+  this.updateTarget = (targetDOM) => {
+    targetDOM.classList.toggle('checked')
+    targetDOM.nextSibling.classList.toggle('strket-text')
+  }
 
-    this.render()
+  this.deleteTarget = (targetDOM) => {
+    $listDOM.removeChild(targetDOM)
+  }
+
+  this.setState = (nextData, targetDOM, method) => {
+    todoData = validateData(nextData)
+    setBackUpTodo(todoData)
+
+    switch (method) {
+      case METHOD.UPDATE:
+        this.updateTarget(targetDOM)
+        break
+      case METHOD.DELETE:
+        this.deleteTarget(targetDOM)
+        break
+      default:
+        this.render()
+    }
   }
 
   this.render()

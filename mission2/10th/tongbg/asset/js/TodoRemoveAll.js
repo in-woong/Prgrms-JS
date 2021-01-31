@@ -1,13 +1,13 @@
 import { isNew } from './validateData.js'
 
-function TodoRemoveAll({ parentDOM, removeAllBtnDOM, removeAllHandler }) {
+function TodoRemoveAll({ $listDOM, $removeAllBtnDOM, removeAllHandler }) {
   if (isNew(new.target)) {
     const event = new CustomEvent('removeAll')
 
-    parentDOM.addEventListener('removeAll', removeAllHandler)
+    $listDOM.addEventListener('removeAll', removeAllHandler)
 
-    removeAllBtnDOM.addEventListener('click', (e) => {
-      parentDOM.dispatchEvent(event)
+    $removeAllBtnDOM.addEventListener('click', (e) => {
+      $listDOM.dispatchEvent(event)
     })
   }
 }

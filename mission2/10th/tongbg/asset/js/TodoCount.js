@@ -1,15 +1,15 @@
 import { isNew } from './validateData.js'
 
-function TodoCount({ todoData, countDOM }) {
-  if (isNew(new.target)) this.todoData = todoData.length
+function TodoCount({ todoData, $countDOM }) {
+  if (isNew(new.target)) this.todoTotalCount = todoData.length
 
-  this.setState = (todoData) => {
-    this.todoData = todoData.length
+  this.setState = (nextData) => {
+    this.todoTotalCount = nextData.length
     this.render()
   }
 
   this.render = () => {
-    countDOM.innerHTML = `<p> TOTOAL : ${this.todoData}</p>`
+    $countDOM.innerHTML = `<p> TOTOAL : ${this.todoTotalCount}</p>`
   }
 
   this.render()

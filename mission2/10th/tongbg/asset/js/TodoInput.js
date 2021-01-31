@@ -1,9 +1,8 @@
 import { isNew, checkDom } from './validateData.js'
 
-function TodoInput({ inputDOM, parentDOM, inputHandler }) {
+function TodoInput({ $inputDOM, inputHandler }) {
   if (isNew(new.target)) {
-    checkDom(parentDOM)
-    inputDOM.addEventListener('keyup', inputHandler)
+    $inputDOM.addEventListener('keyup', inputHandler)
   }
 }
 

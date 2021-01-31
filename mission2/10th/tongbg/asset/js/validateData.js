@@ -3,7 +3,6 @@ import { ERROR_MSG } from './ERROR_MSG.js'
 /**
  * 데이터의 유효성을 검사하는 함수
  * @param {object} data 유효성을 검사할 대상 데이터
- * @returns {object} 대상 오브젝트를 다시 리턴
  */
 function validateData(data) {
   // array가 아닌 형태
@@ -22,7 +21,7 @@ function validateData(data) {
  * new 연산자를 사용 여부를 검사하는 함수
  * @param {new.target} target new.target 을 파라미터로 받는다.
  */
-export function isNew(target) {
+function isNew(target) {
   // 미검증인 경우를 위해 undefined 만 검증
   if (target === undefined) throw new Error(ERROR_MSG.IS_NOT_NEW)
   return true
@@ -43,7 +42,7 @@ function isFalsy(data) {
  * @param {object} data 유효성을 검사할 대상 데이터
  * @returns {object} data 대상 오브젝트를 다시 리턴
  */
-export function checkDom(targetDom) {
+function checkDom(targetDom) {
   if (!targetDom) throw new Error(ERROR_MSG.DOM_NOT_EXIST)
   return targetDom
 }
@@ -70,3 +69,4 @@ function isCorretType(data, name, type) {
 }
 
 export default validateData
+export { checkDom, isNew, isFalsy }
