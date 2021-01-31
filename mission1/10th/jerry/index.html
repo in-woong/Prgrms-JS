@@ -10,14 +10,23 @@
   <script>
 
     function TodoList(todoData, $todoList) {
+      if (!new.target) {
+        throw new Error('new 키워드를 사용해주세요.');
+      }
+
+      if (todoData === null || todoData === undefined
+        || !Array.isArray(todoData) || !todoData[0].text) {
+        throw new Error('올바른 데이터를 전달해주세요');
+      }
+
       let todoItems = '';
       todoItems = todoData.map(data => `<div>${data.text}</div>`);
 
-      render = () => {
+      this.render = () => {
         $todoList.innerHTML = todoItems.join('');
       }
-      
-      render();
+
+      this.render();
     }
 
     var data = [
