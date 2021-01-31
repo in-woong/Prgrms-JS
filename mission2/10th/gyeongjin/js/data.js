@@ -44,4 +44,3 @@ const dataPlay = [
 ];
 
 export { dataStudy, dataExercise, dataPlay };
-// review2 : EOL
