@@ -9,14 +9,15 @@
   <div id="todo-list"></div>
   <script>
 
-    function TodoList(data) {
-      const $todoList = document.querySelector('#todo-list');
+    function TodoList(todoData, $todoList) {
+      let todoItems = '';
+      todoItems = todoData.map(data => `<div>${data.text}</div>`);
 
-      this.render = function () {
-        data.map(item => {
-          $todoList.innerHTML += `<div>${item.text}</div>`;
-        });
+      render = () => {
+        $todoList.innerHTML = todoItems.join('');
       }
+      
+      render();
     }
 
     var data = [
@@ -27,8 +28,9 @@
         text: 'JS 복습하기'
       }
     ]
-    var todoList = new TodoList(data);
-    todoList.render();
+    const $todoList = document.querySelector('#todo-list');
+
+    var todoList = new TodoList(data, $todoList);
 
   </script>
 </body>
