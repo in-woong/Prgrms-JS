@@ -28,14 +28,14 @@
         },
       ]
 
-      function TodoList(todoListId, todoData) {
+      function TodoList($target, initialState) {
         if (!(this instanceof TodoList)) {
           return new TodoList(todoListId, todoData)
         }
 
-        this.setState = function (todoData) {
-          this.validateData(todoData)
-          this.todoData = todoData
+        this.setState = function (nextData) {
+          this.validateData(nextData)
+          this.todoData = nextData
           this.render()
         }
 
@@ -56,14 +56,14 @@
 
         this.render = function () {
           const dataHTMLString = this.todoData.map((item) => (item.isCompleted ? `<div><s>${item.text}</s></div>` : `<div>${item.text}</div>`)).join('')
-          document.querySelector(`${todoListId}`).innerHTML = dataHTMLString
+          $target.innerHTML = dataHTMLString
         }
 
-        this.setState(todoData)
+        this.setState(initialState)
       }
 
-      const todoList = new TodoList('#todo-list', data)
-      const todoList2 = new TodoList('#todo-list2', data)
+      const todoList = new TodoList(document.querySelector(`#todo-list`), data)
+      const todoList2 = new TodoList(document.querySelector('#todo-list2'), data)
 
       const nextData = [
         {
