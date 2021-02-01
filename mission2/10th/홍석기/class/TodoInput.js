@@ -1,6 +1,6 @@
-import {addTodoList, manageTodoList} from "../todoInput/handleTodoList.js"
+import {addTodoList, manageTodoList} from "../todoInput/handleTodoInputs.js"
 
-class TodoInput {
+export default class TodoInput {
     constructor() {
         this.setTodoInputListener();
         this.setTodoListManageListener();
@@ -16,5 +16,3 @@ class TodoInput {
         todoList.addEventListener("click", manageTodoList);
     }
 }
-
-export {TodoInput};
