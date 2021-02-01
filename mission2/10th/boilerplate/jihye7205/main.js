@@ -6,39 +6,23 @@ const data = [
   {
     text: "JS 복습하기",
     isCompleted: false,
-  }
+  },
 ];
 
-const work = [
-  {
-    text: '배포하기',
-    isCompleted: true
-  },
-  {
-    text: '모니터링 하기',
-    isCompleted: false
-  }
-];
-
-const hobby = [
-  {
-    text: '과제 구현하기',
-    isCompleted: true
-  },
-  {
-    text: '스터디원들 코드 보기',
-    isCompleted: false
-  },
-  {
-    text: '정리하기',
-    isCompleted: false
-  }
-];
+const dataSample = {s
+  text: "todo text", // 할 일 이름
+  isCompleted: false, // 완료 여부
+};
 
 const $target = document.querySelector("#todo-list");
-const $target2 = document.querySelector("#todo-list2");
-const $target3 = document.querySelector("#todo-list3");
+const $inputTarget = document.getElementById("inputTodo");
 const todoList = new TodoList($target, data);
-const todoList2 = new TodoList($target2, work);
-const todoList3 = new TodoList($target3, hobby);
 
+$inputTarget.addEventListener("keyup", (event) => {
+  if (event.code === "Enter" && $inputTarget.value.trim().length > 0) {
+    dataSample.text = $inputTarget.value.trim();
+    todoList.data.push(JSON.parse(JSON.stringify(dataSample)));
+    todoList.setState(todoList.data);
+    $inputTarget.value = "";
+  }
+});
