@@ -2,6 +2,11 @@ li.todos {
     margin-bottom: 10px;
 }
 
+li.done {
+    text-decoration: line-through;
+    color: powderblue;
+}
+
 .todo-remove-btn{
     margin-left: 10px;
 }
