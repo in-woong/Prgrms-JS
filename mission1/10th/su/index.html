@@ -43,59 +43,51 @@
         }
       ];
 
-      function TodoList(data ,id) {
-        if(!data) throw new Error("data is error");
-        if(!id) throw new Error("id is error");
-        if(!Array.isArray(data)) throw new Error("data is not Array");
-        if(!(this instanceof TodoList)) throw new Error("Add new keyword");
+      function TodoList(data ,selector) {
 
         this.data = data;
-        this.id = id;
-        this.element = document.querySelector('#'+ this.id);
+        this.selector = selector;
+        this.element = document.querySelector(this.selector);
+
+        this.validation = function() {
+          if(!data) throw new Error("data is error");
+          if(!selector) throw new Error("id is error");
+          if(!Array.isArray(data)) throw new Error("data is not Array");
+          if(!(this instanceof TodoList)) throw new Error("Add new keyword");
+        }
 
         this.render = function() {
-          
-          var liData = this._make();
+          this.validation();
 
-          var innerHtmlSelector = this.element.innerHTML;
-
-          if(innerHtmlSelector) {
-            document.querySelector(`#${this.id} > ul`).innerHTML += `${liData}`;
-          } else {
-            this.element.innerHTML += `<ul>${liData}</ul>`;
-          }
-        }
-
-        this.setState = function(nextData) {
-          this.data = nextData;
-          this.element.removeChild(this.element.firstChild);
-
-          var liData = this._make();
-
-          var newElement =  `<ul>${liData}</ul>`;
-
-          this.element.innerHTML += newElement;
-        }
-
-        this._make = function() {
-          return this.data.map(function(_data) {
+          const liData = this.data.map(function(_data) {
             if(_data.isCompleted) {
               return `<li><s>${_data.text}</s></li>`;
             }
             return `<li>${_data.text}</li>`;
           }).join(''); 
+     
+          this.element.innerHTML = `<ul>${liData}</ul>`;
+          
         }
+
+        this.setState = function(nextData) {
+          this.data = nextData;
+          this.render();
+        }
+      
+        this.render();
       }
 
-      var todoList = new TodoList(data,'todo-list');
-      todoList.render();
+      var todoList = new TodoList(data,'#todo-list');
 
-      var todoList2 = new TodoList(data2,'todo-list-2');
-      todoList2.render();
+      var todoList2 = new TodoList(data2,'#todo-list-2');
 
-      var todoList3 = new TodoList(data3,'todo-list-3');
-      todoList3.render();
-      todoList3.setState(data2);
+      var todoList3 = new TodoList(data3,'#todo-list-3');
+
+      setTimeout(()=> {
+        todoList3.setState(data2);
+
+      },3000)
 
     </script>
   </body>
