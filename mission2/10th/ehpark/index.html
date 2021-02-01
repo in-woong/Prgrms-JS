@@ -1,0 +1,106 @@
+
+<html>
+	<head>
+	  <title>Mission 2</title>
+	  <meta charset="utf-8" />
+	</head>
+  <style>
+    s{
+			display: block
+		}
+		ul{
+			list-style: none
+		}
+		.subject-todo{
+			display: inline-block;
+			margin-bottom: 10px;
+			font-weight: normal;
+			font-size: 20px;
+			line-height: 1.65
+		}
+		.app-todo{
+			margin: 50px auto;
+			width: 500px
+		}
+		.app-todo + .app-todo{
+			padding-top: 50px;
+			border-top: 1px solid #ddd
+		}
+		.input-todo{
+			width: 400px;
+			height: 46px;
+			border: 1px solid #d6d6d6;
+			font-size: 15px;
+			color: #101010;
+			background-color: transparent;
+			vertical-align: top;
+			outline: 0
+		}
+		.input-todo:focus{
+			border-color: #5ba1ea
+		}
+		.btn-todo-add{
+			display: inline-block;
+			width: 80px;
+			height: 46px;
+			margin-left:20px;
+			border:0 none;
+			font-size: 18px;
+			line-height: 40px;
+			color: #fff;
+			background: #4d87ef;
+			vertical-align: top;
+			text-align: center
+		}
+		.list-todo{
+			margin: 50px 20px;
+			padding: 0;
+		}
+		.item-todo{
+			font-size: 16px;
+			line-height: 1.65
+		}
+		.item-todo+.item-todo{
+			margin-top: 5px
+		}
+		.checkbox-todo{
+			margin: 5px 5px 0 0;
+			vertical-align: top
+		}
+		.checkbox-todo:checked+span{
+			font-style: italic;
+			text-decoration: line-through;
+			color: #888
+		}
+		.box-todo-count .unit-count{
+			display: block
+		}
+		.box-todo-count .unit-count+.unit-count{
+			margin-top: 10px
+		}
+		.box-remove-all{
+			margin-top: 20px
+		}
+		.btn-remove-all{
+			display: inline-block;
+			width: 100px;
+			height: 30px;
+			border:1px solid #4d87ef;
+			font-size: 13px;
+			line-height: 28px;
+			color: #4d87ef;
+			background: #fff;
+			vertical-align: top;
+			text-align: center
+		}
+  </style>
+	<body>
+		
+		<div id="App" class="app-todo"></div>
+		<div id="App2" class="app-todo"></div>
+
+		<script type="module" src="index.js"></script>
+	</body>
+
+</html>
+	  
