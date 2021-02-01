@@ -1,13 +1,13 @@
 import {message} from "../constantValue/message.js";
 import {constants} from "../constantValue/constants.js";
 
-class TodoList {
+export default class TodoList {
     constructor($todoId, toDoListTitle) {
-        this.dataSet();
+        this.setLocalStorageData();
         this.render();
     }
 
-    dataSet() {
+    setLocalStorageData() {
         const localStorageTodoElement = localStorage.getItem(constants.LOCALSTORAGE_TO_DO_KEY);
         if(localStorageTodoElement) {
             const localStorageTodoElementArray = JSON.parse(localStorageTodoElement);
@@ -31,5 +31,3 @@ class TodoList {
         }
     }
 }
-
-export {TodoList};
