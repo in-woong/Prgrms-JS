@@ -1,6 +1,7 @@
 import validateData, { isNew, checkDom, raiseEexcetion } from './validateData.js'
 import { setBackUpTodo } from './util.js'
 import { METHOD } from './METHOD_LIST.js'
+import { ERROR_MSG } from './ERROR_MSG.js'
 
 // 전체 랜더링
 const renderTodo = ({ text, isCompleted }) => {
@@ -56,7 +57,7 @@ function TodoList({ todoData, $listDOM, listHandler }) {
         this.render()
         break
       default:
-        raiseEexcetion()
+        raiseEexcetion(ERROR_MSG.RIASE_EXCEPTION)
     }
   }
 

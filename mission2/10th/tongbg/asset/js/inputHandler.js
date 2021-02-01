@@ -11,9 +11,6 @@ function inputHandler(e) {
 
     this.todoData = [...this.todoData, ...temp]
 
-    // APPEND 로 변경 필요...?
-    // todoList.setState(this.todoData, todoList, METHOD.APPEND)
-
     todoList.setState(this.todoData, todoList, METHOD.CREATE)
     todoCount.setState(this.todoData)
 

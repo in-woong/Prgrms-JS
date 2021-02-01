@@ -71,9 +71,8 @@ function isCorretType(data, name, type) {
 /**
  * 예상하지 못한 에러 발생
  */
-function raiseEexcetion() {
-  throw new Error(ERROR_MSG.IS_NOT_NEW)
-  return false
+function raiseEexcetion(msg) {
+  throw new Error(msg)
 }
 
 export default validateData
