@@ -1,7 +1,7 @@
 export default function TodoInput($target, todoInputBoxSelector, handlerAddTodo) {
 	this.$target = $target
 	this.$todoInputBox = this.$target.querySelector(todoInputBoxSelector)
-  this.handlerAddTodo = handlerAddTodo
+	this.handlerAddTodo = handlerAddTodo
 
 	this.render = () => {
 		this.todoInput = document.createElement('input')

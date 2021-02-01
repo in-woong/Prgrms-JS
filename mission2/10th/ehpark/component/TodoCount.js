@@ -1,7 +1,7 @@
 export default function TodoCount($target, data, todoCountSelector) {
 	this.$target = $target
 	this.data = data
-  this.$todoCount = $target.querySelector(todoCountSelector)
+	this.$todoCount = $target.querySelector(todoCountSelector)
 
 	this.getTotalCount = () => {
 		return this.data.length
