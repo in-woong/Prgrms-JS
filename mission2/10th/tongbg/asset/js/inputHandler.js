@@ -1,4 +1,4 @@
-import { setBackUpTodo } from './util.js'
+import { METHOD } from './METHOD_LIST.js'
 
 function inputHandler(e) {
   const { $inputDOM, todoList, todoCount } = this
@@ -11,7 +11,10 @@ function inputHandler(e) {
 
     this.todoData = [...this.todoData, ...temp]
 
-    todoList.setState(this.todoData)
+    // APPEND 로 변경 필요...?
+    // todoList.setState(this.todoData, todoList, METHOD.APPEND)
+
+    todoList.setState(this.todoData, todoList, METHOD.CREATE)
     todoCount.setState(this.todoData)
 
     $inputDOM.value = null

@@ -1,4 +1,4 @@
-import validateData, { isNew, checkDom } from './validateData.js'
+import validateData, { isNew, checkDom, raiseEexcetion } from './validateData.js'
 import { setBackUpTodo } from './util.js'
 import { METHOD } from './METHOD_LIST.js'
 
@@ -31,6 +31,10 @@ function TodoList({ todoData, $listDOM, listHandler }) {
     $listDOM.removeChild(targetDOM)
   }
 
+  // this.appendChild = (targetDOM) => {
+  //   $listDOM.appendChild()
+  // }
+
   this.setState = (nextData, targetDOM, method) => {
     todoData = validateData(nextData)
     setBackUpTodo(todoData)
@@ -42,8 +46,17 @@ function TodoList({ todoData, $listDOM, listHandler }) {
       case METHOD.DELETE:
         this.deleteTarget(targetDOM)
         break
-      default:
+
+      // case METHOD.APPEND:
+      //   this.appendChild()
+      //   break
+
+      case METHOD.CREATE:
+      case METHOD.RESET:
         this.render()
+        break
+      default:
+        raiseEexcetion()
     }
   }
 
