@@ -21,7 +21,7 @@
   <div id="todo-later"></div>
 
   <script>
-    const data = [
+    var data = [
       {
         text: 'JS 공부하기',
         isCompleted: true
@@ -54,23 +54,24 @@
       }
     ]
 	
-    function TodoList(id, data) {
-      this.data = data
-      this.id = id
+    function TodoList(targetId, todos) {
+      this.data = todos
+      this.id = targetId
+      const todoElement = document.querySelector(this.id)
 
-      this.render = function() {
-        // check validation
-        if(!Array.isArray(data)) {
+      // check validation
+      if(!Array.isArray(this.data)) {
           throw new Error('data type error')
         }
 
-        const todoElement = document.querySelector(this.id)
+      if(!this.id || !this.id.startsWith('#')) {
+        throw new Error('Id type error')
+      }
 
-        const dataList = this.data.map(list => {
+      this.render = function() {
+        todoElement.innerHTML = this.data.map(list => {
           return `${list.text ? `${list.isCompleted ? `<s>${list.text}</s>` : `<div>${list.text}</div>`}` : ``}`
-        })
-
-        todoElement.innerHTML = dataList.join('')
+        }).join('')
       }
 
       this.setState = function(nextData) {
