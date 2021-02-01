@@ -3,14 +3,6 @@ import { setBackUpTodo } from './util.js'
 import { METHOD } from './METHOD_LIST.js'
 import { ERROR_MSG } from './ERROR_MSG.js'
 
-// 전체 랜더링
-const renderTodo = ({ text, isCompleted }) => {
-  return `<div class="todo-text">
-           <div class="todo-checkbox${isCompleted ? ' checked' : ''}"></div><p class=${isCompleted ? 'strket-text ' : ''}>${text}</p>
-            <div class="del-btn"></div>
-          </div>`
-}
-
 function TodoList({ todoData, $listDOM, listHandler }) {
   if (isNew(new.target)) {
     if (todoData.length !== 0) validateData(todoData)
@@ -20,41 +12,49 @@ function TodoList({ todoData, $listDOM, listHandler }) {
 
   this.render = () => {
     validateData(todoData)
-    $listDOM.innerHTML = todoData.map(renderTodo).join('')
+    todoData.forEach(this.appendTodoList)
   }
 
-  this.updateTarget = (targetDOM) => {
-    targetDOM.classList.toggle('checked')
-    targetDOM.nextSibling.classList.toggle('strket-text')
+  this.updateTarget = ($targetDOM) => {
+    $targetDOM.classList.toggle('checked')
+    $targetDOM.nextSibling.classList.toggle('strket-text')
   }
 
-  this.deleteTarget = (targetDOM) => {
-    $listDOM.removeChild(targetDOM)
+  this.deleteTarget = ($targetDOM) => {
+    $listDOM.removeChild($targetDOM)
   }
 
-  // this.appendChild = (targetDOM) => {
-  //   $listDOM.appendChild()
-  // }
+  this.appendTodoList = ({ text, isCompleted }) => {
+    let newDiv = document.createElement('div')
 
-  this.setState = (nextData, targetDOM, method) => {
+    newDiv.className = 'todo-text'
+    newDiv.innerHTML = `<div class="todo-checkbox${isCompleted ? ' checked' : ''}"></div><p ${isCompleted ? 'class=strket-text' : ''}>${text}</p><div class="del-btn"></div>`
+    $listDOM.appendChild(newDiv)
+  }
+
+  this.reset = () => {
+    $listDOM.innerHTML = ''
+  }
+
+  this.setState = (nextData, $targetDOM, method, appendData) => {
     todoData = validateData(nextData)
     setBackUpTodo(todoData)
 
     switch (method) {
       case METHOD.UPDATE:
-        this.updateTarget(targetDOM)
+        this.updateTarget($targetDOM)
         break
       case METHOD.DELETE:
-        this.deleteTarget(targetDOM)
+        this.deleteTarget($targetDOM)
         break
-
-      // case METHOD.APPEND:
-      //   this.appendChild()
-      //   break
-
+      case METHOD.APPEND:
+        appendData.forEach(this.appendTodoList)
+        break
       case METHOD.CREATE:
-      case METHOD.RESET:
         this.render()
+        break
+      case METHOD.RESET:
+        this.reset()
         break
       default:
         raiseEexcetion(ERROR_MSG.RIASE_EXCEPTION)

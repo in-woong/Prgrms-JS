@@ -5,13 +5,13 @@ function inputHandler(e) {
   const textArr = $inputDOM.value.split(/;/).filter((text) => text.trim() !== '')
 
   if (e.key === 'Enter') {
-    const temp = textArr.map((text) => {
+    const appendData = textArr.map((text) => {
       return { text, isCompleted: false }
     })
 
-    this.todoData = [...this.todoData, ...temp]
+    this.todoData = [...this.todoData, ...appendData]
 
-    todoList.setState(this.todoData, todoList, METHOD.CREATE)
+    todoList.setState(this.todoData, todoList, METHOD.APPEND, appendData)
     todoCount.setState(this.todoData)
 
     $inputDOM.value = null
