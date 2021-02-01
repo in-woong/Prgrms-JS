@@ -10,12 +10,11 @@ function inputHandler(e) {
     })
 
     this.todoData = [...this.todoData, ...temp]
-    setBackUpTodo(this.todoData)
-
-    $inputDOM.value = null
 
     todoList.setState(this.todoData)
     todoCount.setState(this.todoData)
+
+    $inputDOM.value = null
   }
 }
 

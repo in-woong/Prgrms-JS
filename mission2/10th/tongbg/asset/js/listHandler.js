@@ -7,9 +7,6 @@ function listHandler(e) {
   switch (e.target.className) {
     case 'todo-checkbox':
     case 'todo-checkbox checked':
-      // let { text, isCompleted } = this.todoData[targetIdx]
-      // this.todoData.splice(targetIdx, 1, { text, isCompleted: !isCompleted })
-
       this.todoData = this.todoData.map(({ text, isCompleted }, idx) => {
         return idx === targetIdx ? { text, isCompleted: !isCompleted } : { text, isCompleted }
       })

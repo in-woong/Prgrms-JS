@@ -9,8 +9,8 @@ h1 {
   font-size: 4em;
 }
 
-/* SECTION */
-section {
+/* INNER */
+.inner {
   max-width: 420px;
   margin: 0 auto;
 }

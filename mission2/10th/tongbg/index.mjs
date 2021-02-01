@@ -1,5 +1,3 @@
-import TodoApp from './asset/js/TodoApp.js'
+import App from './asset/js/App.js'
 
-// const todoData = JSON.parse(localStorage.getItem('todoData'))
-
-new TodoApp()
+new App()

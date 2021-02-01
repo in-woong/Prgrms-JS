@@ -1,5 +1,3 @@
-import { setBackUpTodo } from './util.js'
-
 function removeAllHandler(e) {
   const { todoList, todoCount, $inputDOM } = this
 

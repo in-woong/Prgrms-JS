@@ -9,7 +9,7 @@ import TodoInput from './TodoInput.js'
 import TodoCount from './TodoCount.js'
 import TodoRemoveAll from './TodoRemoveAll.js'
 
-function TodoApp() {
+function App() {
   this.todoData = getBackUpTodo()
 
   this.$listDOM = getDOM('#todo-list')
@@ -27,4 +27,4 @@ function TodoApp() {
   this.todoRemoveAll = new TodoRemoveAll(this)
 }
 
-export default TodoApp
+export default App

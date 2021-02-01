@@ -1,4 +1,4 @@
-import { isNew, checkDom } from './validateData.js'
+import { isNew } from './validateData.js'
 
 function TodoInput({ $inputDOM, inputHandler }) {
   if (isNew(new.target)) {
