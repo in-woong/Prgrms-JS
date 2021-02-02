@@ -22,8 +22,9 @@ function TodoList(initialState, $target) {
   }
 
   this.render = () => {
-      $target.innerHTML = this.state.map(({ text, isCompleted }) => (isCompleted ? `<div>${text}</div>` : `<div><s>${text}</s></div>`)).join('')
+      $target.innerHTML = this.state.filter(state => state.visible === true).map(state => state.isCompleted ? `<div style="display: flex;"><div onclick="isCompletedChange(${state.id})"><s>(완료) ${state.text}</s></div><button onclick="Delete(${state.id})">삭제</button></div>` :  `<div style="display: flex;"><div onclick="isCompletedChange(${state.id})">${state.text}</div><button onclick="Delete(${state.id})">삭제</button></div>`).join('')
   }
+  
 
   this.setState = (nextState) => {
     validateData(nextState)
@@ -35,10 +36,17 @@ function TodoList(initialState, $target) {
   this.render()
 }
 
-const todo1 = new TodoList(studyData1, document.querySelector('#todo-list'))
+function Delete(stateId) {
+  studyData[stateId-1].visible = false
+  new TodoList(studyData, document.querySelector('#study-list'))
+}
 
-const todo2 = new TodoList(studyData2, document.querySelector('#study-list'))
 
-//
-
-//
+function isCompletedChange(stateId) {
+  if(studyData[stateId-1].isCompleted){
+    studyData[stateId-1].isCompleted = false
+  }else{
+    studyData[stateId-1].isCompleted = true
+  }
+  new TodoList(studyData, document.querySelector('#study-list'))
+}
