@@ -1,7 +1,7 @@
-export default function TodoInput($target, todoInputBoxSelector, handlerAddTodo) {
+export default function TodoInput($target, todoInputBoxSelector, handleAddTodo) {
   this.$target = $target
   this.$todoInputBox = this.$target.querySelector(todoInputBoxSelector)
-  this.handlerAddTodo = handlerAddTodo
+  this.handleAddTodo = handleAddTodo
 
   this.render = () => {
     this.todoInput = document.createElement('input')
@@ -17,7 +17,7 @@ export default function TodoInput($target, todoInputBoxSelector, handlerAddTodo)
   
   this.eventAddTodo = () => {
     this.btnTodoAdd.addEventListener('click', () => {
-        this.handlerAddTodo(this.todoInput.value)
+        this.handleAddTodo(this.todoInput.value)
         this.todoInput.value =''
         this.todoInput.focus()
     })
@@ -26,3 +26,4 @@ export default function TodoInput($target, todoInputBoxSelector, handlerAddTodo)
   this.render()
   this.eventAddTodo()
 }
+ 

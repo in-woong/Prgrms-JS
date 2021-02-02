@@ -16,7 +16,7 @@ export default function TodoApp($target, title, TODOS_LS) {
     return JSON.parse(localStorage.getItem(this.TODOS_LS))
   }
 
-  this.handlerAddTodo = (inputData) => {
+  this.handleAddTodo = (inputData) => {
     if(inputData){
       this.todos.push({
         id: Date.now(),
@@ -29,7 +29,7 @@ export default function TodoApp($target, title, TODOS_LS) {
     this.saveTodo(this.todos)
   }
 
-  this.handlerToggleCompleted = (liItemId) => {
+  this.handleToggleCompleted = (liItemId) => {
     const newData = this.todos.map(item => {
       const newObj = { ...item }
       if(newObj.id === liItemId) {
@@ -41,7 +41,7 @@ export default function TodoApp($target, title, TODOS_LS) {
     this.saveTodo(this.todos)
   }
 
-  this.handlerRemoveAll = () => {
+  this.handleRemoveAll = () => {
     this.setState([])
     localStorage.removeItem(this.TODOS_LS)
   }
@@ -57,13 +57,13 @@ export default function TodoApp($target, title, TODOS_LS) {
                               <div class=${todoCountSelector}></div>
                               <div class="box-remove-all"><button class=${btnRemoveAllSelector}>Remove All</button></div>`
 
-    this.todoInput = new TodoInput($target, `.${todoInputBoxSelector}`, this.handlerAddTodo)
-    this.todoList = new TodoList($target, this.todos, `.${todoListSelector}`,  this.handlerToggleCompleted)
+    this.todoInput = new TodoInput($target, `.${todoInputBoxSelector}`, this.handleAddTodo)
+    this.todoList = new TodoList($target, this.todos, `.${todoListSelector}`,  this.handleToggleCompleted)
     this.todoCount = new TodoCount($target, this.todos, `.${todoCountSelector}`)
     
     const $btnRemoveAll = this.$target.querySelector(`.${btnRemoveAllSelector}`)
     $btnRemoveAll.addEventListener('click', () => {
-      this.handlerRemoveAll()
+      this.handleRemoveAll()
     })
   }
 
@@ -75,3 +75,4 @@ export default function TodoApp($target, title, TODOS_LS) {
 
   this.render()
 }
+ 
