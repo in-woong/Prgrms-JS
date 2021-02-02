@@ -1,7 +1,4 @@
-export function validate() {
-    if(!new.target) {
-      throw new Error("You need new keyword")
-    }
+export function dataValidate(data) {
     if(!data) {
       throw new Error("Your data is wrong")
     }
@@ -9,3 +6,9 @@ export function validate() {
       throw new Error("Your data has wrong property")
     }
   }
+
+export function checkNewKeyword() {
+  if(!new.target) {
+    throw new Error("You need new keyword")
+  }
+}

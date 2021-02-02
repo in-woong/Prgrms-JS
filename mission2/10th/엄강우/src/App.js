@@ -23,15 +23,18 @@ function App($target, initialState) {
     if(!data) {
       throw new Error("Your data is wrong")
     }
-    data.forEach(todo => {if (typeof todo.text === 'string' || typeof todo.isCompleted === 'boolean') {
-      throw new Error("Your data has wrong property")
-    }})
+    data.forEach((todo) => {
+      if (!(typeof todo.text === 'string' || typeof todo.isCompleted === 'boolean')) {
+        throw new Error("Your data has wrong property")
+      }
+    })
   }
+
   this.addTodo = ($target, todoText) => {
+    console.log($target)
     const newData = this.state
     newData.push({ text : todoText, isCompleted : false})
     this.setState(newData)
-    $target.focus()
   }
 
   this.deleteTodo = (todoIndex) => {
@@ -66,7 +69,7 @@ function App($target, initialState) {
 
     document.querySelector('#todo-input').addEventListener('keydown', (keyboardEvent) => {
       if(keyboardEvent.key === 'Enter') {
-        this.addTodo(keyboardEvent.target, keyboardEvent.target.value)
+        this.addTodo(document.querySelector(`#${keyboardEvent.target.id}`), keyboardEvent.target.value)
       }
     })
 
