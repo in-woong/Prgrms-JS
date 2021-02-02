@@ -1,46 +1,16 @@
-const studyData1 = [
+const studyData = [
   {
-    text : 'JS 공부하기',
-    isCompleted : true,
-  },
-  {
-    text : 'JS 복습하기',
-    isCompleted : false,
-  },
-]
-
-const studyData2 = [
-  {
+    id : 1,
     text : 'React.js',
-    isCompleted : false,
+    isCompleted : true,
+    visible: true,
   },
   {
+    id : 2,
     text : 'Node.js',
     isCompleted : false,
-  }
+    visible : true,
+  },
 ]
 
-setTimeout(() => {
-  todo2.setState([
-    {
-      text: 'PHP',
-      isCompleted: true,
-    },
-    {
-      text: 'Mysql',
-      isCompleted: false,
-    },
-  ])
-
-  todo1.setState([
-    {
-      text: 'TS 공부하기',
-      isCompleted : true,
-    },
-    {
-      text: 'TS 복습하기',
-      isCompleted : false,
-    }
-  ])
-}, 3000)
-
+const todo = new TodoList(studyData, document.querySelector('#study-list'))
