@@ -20,7 +20,5 @@ const study = [
       },
   ];
 
-  const ERROR_MESSAGE ={
-    IS_UNDEFINED_OR_NULL : 'data가 undefined 또는 null인 상태입니다.',
-    IS_NOT_ARRAY : 'data 형식이 array여야 합니다.'
-  };
+const todoStudy = new TodoList(study, document.querySelector('#study-list'));
+const todoHealth = new TodoList(health, document.querySelector('#health-list'));

@@ -1,34 +1,38 @@
-class TodoList{
-    constructor(elementID,data){
-        this.elementID = elementID;
-        this.data = data;
-        this.validator();
-        this.render();
+const validateData = (data) => {
+    //null or undefined
+    if(!data) {
+        throw new Error('data가 null이거나 undefined입니다.')
     }
 
-    //data의 유효성 검사
-    validator(){
-        try{
-            if(!this.data){
-                throw new Error(ERROR_MESSAGE.IS_UNDEFINED_OR_NULL)
-            }
-            if(!Array.isArray(this.data)){
-                throw new Error(ERROR_MESSAGE.IS_NOT_ARRAY)
-            }
-        }
-        //그 외의 에러
-        catch(error){
-            console.log(error);
-        }
+    const isValidData = data.every((item) => typeof item.text === 'string')
+    
+    if(!isValidData) {
+        throw new Error('data는 문자여야 합니다.')
     }
-
-    render(){
-        const todoListElement = document.querySelector("#${this.elementID}");
-        const todoString = this.data.map(item => {
-            item.isCompleted ? `<div><s>${item.text}</s></div>` : `<div>${item.text}</div>`}).join('\n');
-        todoListElement.innerHTML = todoString;
-    };
 }
 
-const todoStudy = new TodoList("study-list", study);
-const todoHealth = new TodoList("health-list", health);
+function TodoList(initialState, $target){
+    this.validation = () => {
+        this.state = initialState
+
+        if(!new.target) {
+            throw new Error('new 키워드가 누락되었습니다.')
+        }
+
+        validateData(this.state)
+    }
+    this.render = () => {
+        todoItem = this.state.map(item => item.isCompleted ? `<li><s>${item.text}</s></li>` : `<li>${item.text}</li>`).join('\n')
+        todoItem = '<ul>' + todoItem + '</ul>'
+        $target.innerHTML = todoItem
+    } 
+
+    this.setState = (nextState) => {
+         this.validation(nextState)
+         this.state = nextState
+         this.render()
+    }
+     
+    this.validation()
+    this.render()
+}
