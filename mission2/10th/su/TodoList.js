@@ -15,11 +15,11 @@ function TodoList(data, selector) {
   this.render = function() {
     this.validation();
 
-    const liData = this.data.map(function(_data) {
+    const liData = this.data.map(function(_data,index) {
       if(_data.isCompleted) {
-        return `<li><s>${_data.text}</s> <button>삭제</button></li>`;
+        return `<li><s>${_data.text}</s><button data-id=${index}>삭제</button></li>`;
       }
-      return `<li>${_data.text} <button>삭제</button></li>`;
+      return `<li>${_data.text} <button data-id=${index}>삭제</button></li>`;
     }).join(''); 
 
     this.element.innerHTML = `<ul>${liData}</ul>`;
@@ -36,6 +36,14 @@ function TodoList(data, selector) {
   }
 
   this.render();
+
+  this.element.addEventListener('click', (event) => {
+      const dataId = event.target.getAttribute('data-id');
+      if(dataId!= null) {
+        const newData = this.data.filter((item,index) => index != dataId);
+        this.setState(newData);
+      } 
+  });
 }
 
 export default TodoList;
