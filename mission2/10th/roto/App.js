@@ -37,5 +37,7 @@ function App($app, initialState) {
     this.state = nextState
     this.todoList.setState(this.state)
     this.todoCount.setState(this.state)
+
+    localStorage.setItem('roto-todo', JSON.stringify(this.state))
   }
 }
