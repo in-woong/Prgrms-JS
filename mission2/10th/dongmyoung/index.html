@@ -6,14 +6,39 @@
 </head>
 
 <body>
-  <input type="text" style="margin-bottom: 10px;" placeholder="할 일을 입력 후, Enter를 누르세요.">
-  <div id="study-list"></div>
-  <script src="./TodoList.js"></script>
-  <script src="./main.js"></script>
   <style>
-
+    #container {
+      width: 1200px;
+      margin: 0 auto;
+    }
+    #container input {
+      width: 350px;
+      height: 40px;
+      text-align: center;
+      border-radius: 6px;
+      border-color: #aaaaff;
+      outline: none;
+    }
+    button {
+      border: none;
+      border-radius: 6px;
+      background: #aaaaff;
+      outline: none;
+      color: #fff;
+      cursor: pointer;
+      font-weight: bold;
+      width: 50px;
+      height: 30px;
+    }
   </style>
 
+  <div id="container">
+    <input type="text" id="addTodo" style="margin-bottom: 10px;" placeholder="할 일을 입력 후, Enter 또는 추가 버튼을 누르세요.">
+    <button id="add_Btn">추가</button>
+    <div id="study-list"></div>
+  </div>
+  <script src="./TodoList.js"></script>
+  <script src="./main.js"></script>
 </body>
 
 </html>
