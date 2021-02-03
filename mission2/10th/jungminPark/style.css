@@ -1,0 +1,21 @@
+h1{
+    text-align: center;
+    color: cornflowerblue;
+}
+
+ul{
+    text-align: center;
+}
+
+.editbox{
+    width: 800px;
+}
+
+#addButton{
+    text-align : center;
+    background-color : aliceblue;
+}
+#addButton:hover{
+    background-color: beige;
+    color : black;
+}
