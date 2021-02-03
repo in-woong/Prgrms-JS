@@ -19,14 +19,10 @@ export class TodoInput {
     $app.append($addForm, $deletAllBtn)
     $addForm.append($addItemInput, $addItemBtn)
 
-    this.render()
-  }
-
-  render = () => {
+    // review8 : addEventListener 위치 constructor로 변경
     this.$addForm.addEventListener('submit', (e) => {
       e.preventDefault()
-      let inputValue = this.$addItemInput.value
-      this.addTodoItem(inputValue)
+      this.addTodoItem(this.$addItemInput.value)
       this.$addItemInput.value = ''
     })
 

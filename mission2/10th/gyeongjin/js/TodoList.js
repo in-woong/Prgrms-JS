@@ -2,38 +2,42 @@ import { ERROR_MESSAGE } from './error.js'
 
 class TodoList {
   constructor({ $app, initialState, toggleTodoItem, removeTodoItem }) {
+    this.validatorData(initialState)
+    this.validatorApp($app)
     const $listBox = document.createElement('ul')
-    this.$app = $app
     this.$listBox = $listBox
     this.state = initialState
     this.toggleTodoItem = toggleTodoItem
     this.removeTodoItem = removeTodoItem
-    this.setState(this.state)
+    // review5 : 불필요한 setState(this.state) 제거
+    this.render()
 
     $app.append($listBox)
     this.handleTodoItem()
   }
 
   setState = (nextData) => {
+    // review6 : 검증 위치 고려 (app의 검증 위치 변경 및 initialState 검증 추가 )
+    this.validatorData(nextData)
     this.state = nextData
-    this.validator(this.$app, nextData)
     this.render()
   }
 
-  validator = (app, listData) => {
-    if (
-      listData === null ||
-      listData === undefined ||
-      app === null ||
-      app === undefined
-    ) {
+  validatorApp = (app) => {
+    if (app === null || app === undefined) {
+      throw new Error(ERROR_MESSAGE.INVALID)
+    }
+  }
+
+  validatorData = (listData) => {
+    if (listData === null || listData === undefined) {
       throw new Error(ERROR_MESSAGE.INVALID)
     }
     if (!Array.isArray(listData)) {
       throw new Error(ERROR_MESSAGE.IS_NOT_ARRAY)
     }
     listData.every((item) => {
-      if (this.state.length > 1 && item.text.length < 1) {
+      if (listData.length > 0 && item.text.length < 1) {
         throw new Error(ERROR_MESSAGE.EMPTY_TEXT)
       }
     })
@@ -51,9 +55,11 @@ class TodoList {
   }
 
   render = () => {
+    // review7 : if (this.state.length > 0) 제거, 이미 validator에서 array 검증
     if (this.state.length === 0) {
-      this.$listBox.innerHTML = '<li class="empty-message">해야할 일을 입력해주세요⭐️</li>'
-    } else if (this.state.length > 0) {
+      this.$listBox.innerHTML =
+        '<li class="empty-message">해야할 일을 입력해주세요⭐️</li>'
+    } else {
       this.$listBox.innerHTML = this.state
         .map(({ isCompleted, text }, index) =>
           isCompleted
