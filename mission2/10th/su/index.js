@@ -1,15 +1,24 @@
 import TodoList from './TodoList.js';
+import TodoInput from './TodoInput.js';
 
 
 const data = [
     {
-      text: 'JS 공부하기',
+      text: '운동',
       isCompleted: true,
     },
     {
-      text: 'JS 복습하기22',
+      text: '넷플릭스',
       isCompleted: false,
     }
   ];
   
-new TodoList(data, '#todo-list');
+const todoList = new TodoList(data, '#todo-list');
+
+const todoInput = new TodoInput('#todo-input');
+todoInput.addEvent((item) => {
+  if(item) {
+    console.log(item,"item")
+    todoList.add(item);
+  }
+});
