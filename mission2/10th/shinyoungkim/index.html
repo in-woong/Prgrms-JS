@@ -1,123 +1,15 @@
 <html>
   <head>
-    <title>Mission 1</title>
+    <title>Mission 2</title>
     <meta charset="utf-8" />
   </head>
 
   <body>
-    <div id="todo-list1"></div>
-    <div id="todo-list2"></div>
-    <div id="todo-list3"></div>
-
-    <script>
-
-      const data1 = [
-        {
-          text: 'JS 공부하기',
-          isCompleted: true,
-        },
-        {
-          text: 'JS 복습하기',
-          isCompleted: false,
-        },
-      ]
-
-      const data2 = [
-        {
-          text: 'HTML 공부하기',
-          isCompleted: true,
-        },
-        {
-          text: 'HTML 복습하기',
-          isCompleted: false,
-        },
-      ]
-
-      const data3 = [
-        {
-          text: 'CSS 공부하기',
-          isCompleted: true
-        },
-        {
-          text: 'CSS 복습하기',
-          isCompleted: true
-        },
-      ]
-
-      const data4 = [
-        {
-          text: 'set Data',
-          isCompleted: true,
-        },
-        {
-          text: 'set Data2',
-          isCompleted: false,
-        },
-      ]
-
-      function TodoList(target, todoData) {
-        this.target = target;
-        this.todoData = todoData;
-
-        if (!new.target) {
-            throw Error ('Must be called with new');
-          }
-
-        this.checkDataValid = function(todoData) {
-
-          if (todoData === undefined || todoData === null ) {
-            throw new Error ('Check your data is empty');
-          }
-
-          if (!Array.isArray(todoData)){
-            throw new Error ('Data is not array');
-          }
-
-          todoData.forEach( data => {
-            if (!data.hasOwnProperty('text') || !data.hasOwnProperty('isCompleted')) {
-              throw new Error ('Check data property');
-            }
-
-            if ( !(typeof data.text === 'string') && !(typeof data.isCompleted === 'boolean')) {
-              throw new Error ('Check type error')
-            }
-          });
-        }
-
-        this.render = function() {
-          const stringHTML = this.todoData
-          .map(({isCompleted, text}) => 
-            isCompleted ? `<li><s>${text}</s></li>` : `<li>${text}</li>`
-          )
-          .join('');
-
-          this.target.innerHTML = stringHTML;
-        }
-
-        this.setState = function(nextData) {
-          this.checkDataValid(nextData);
-          this.todoData = nextData;
-          this.render();
-        }
-
-        this.checkDataValid(todoData);
-        this.render();
-      }
-
-      const todoList1 = new TodoList(document.querySelector('#todo-list1'), data1);
-      const todoList2 = new TodoList(document.querySelector('#todo-list2'), data2);
-      const todoList3 = new TodoList(document.querySelector('#todo-list3'), data3);
-
-      setTimeout(() => {todoList1.setState(data4)}, 1000);
-
-      todoList2.setState([
-        ...todoList2.todoData,
-        {
-          text: 'set Data',
-          isCompleted: true
-        },
-      ]);
-
-    </script>
-</body>
+    <div id="app"></div>
+    <div class="input-wrap">
+      <input type="text" class="input">
+      <button type="button" class="input__button" placeholder="">Add</button>
+    </div>
+    <script type="module" src="./src/index.js"></script>
+  </body>
 </html>
