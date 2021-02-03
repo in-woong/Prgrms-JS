@@ -14,11 +14,17 @@ export const checkArrayType = (state) =>  {
 }
 
 /**
+ * target 상태 체크
+*/
+export const checkTarget = ($target) => {
+  if(!$target) throw Error ('Check your data')
+}
+
+/**
  * 입력받은 state의 값이 checkCallback 조건에 맞게 통과하는지 확인
  * @param {Array} state
  * @param {Function} checkCallback
  */
-
 export const checkTypes = (state, checkCallback) => {
   if (!state.every(checkCallback)) {
     throw new Error('Check your state')
