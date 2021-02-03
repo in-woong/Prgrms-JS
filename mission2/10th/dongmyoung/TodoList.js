@@ -37,7 +37,7 @@ function TodoList(initialState, $target) {
 }
 
 function AddTodoBtn($addTarget, $id) {
-    document.getElementById('add_Btn').addEventListener('click', (evt) => {
+    document.getElementById('add_Btn').addEventListener('click', () => {
       inputValue = $addTarget.value
       if(inputValue.length === 0) {
         alert('할 일을 입력하고 버튼을 눌러주세요.')
