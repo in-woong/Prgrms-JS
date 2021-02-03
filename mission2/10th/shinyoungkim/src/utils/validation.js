@@ -4,6 +4,7 @@
 export const checkNewKeyword = (newTarget) =>  {
   if (!newTarget) throw Error ('Must be called with new')
 }
+
 /**
  * 입력받은 state가 배열인가 확인
  * @param {Array} state
@@ -19,13 +20,6 @@ export const checkArrayType = (state) =>  {
  */
 
 export const checkTypes = (state, checkCallback) => {
-  // if (!data.hasOwnProperty('text') || !data.hasOwnProperty('isCompleted')) {
-  //   throw new Error ('Check data property');
-  // }
-
-  // if ( !(typeof data.text === 'string') && !(typeof data.isCompleted === 'boolean')) {
-  //   throw new Error ('Check type error')
-  // }
   if (!state.every(checkCallback)) {
     throw new Error('Check your state')
   }
