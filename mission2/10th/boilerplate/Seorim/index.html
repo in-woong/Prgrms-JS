@@ -23,10 +23,12 @@
   </style>
 
   <body>
-    <input type="text" id="create-todo" placeholder="할 일을 입력 후, Enter 키를 누르세요!" onchange="CreateTodo()"/>
-    <div id="todo-list"></div> 
-    <script src="./action.js"></script>  
-    <script src="./main.js"></script>
+    <div id="app">
+      <input type="text" id="create-todo" placeholder="할 일을 입력 후, Enter 키를 누르세요!"/>
+      <div id="todo-list"></div>
+    </div>
+     
+    <script type="module" src="./index.js"></script>
     
   </body>
 </html>
