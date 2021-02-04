@@ -3,16 +3,11 @@ function TodoCount(targetElement, todos) {
   this.data = todos;
 
   this.render = function (data) {
-    const countOfCompleted = data.reduce((acc, cur) => {
-      if (cur.isCompleted) {
-        acc += 1;
-      }
-      return acc
-    }, 0);
-    
+    const completedList = data.filter(item => item.isCompleted);
+
     this.target.innerHTML = (
       `<span>
-      Total: ${data.length} 완료: ${countOfCompleted}
+      Total: ${data.length} 완료: ${completedList.length}
       </span>`
     );
   }
