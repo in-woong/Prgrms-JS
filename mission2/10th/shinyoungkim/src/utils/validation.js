@@ -33,10 +33,20 @@ export const checkTypes = (state) => {
 
 /**
  * 입력받은 state의 값에 text, isCompleted property value에 확인
- * @param {object} state
+ * @param {object} 
  */
 export const checkProperty = (state) => {
   if(!state.hasOwnProperty('text') || !state.hasOwnProperty('isCompleted')) {
     throw new Error('Check your data property')
+  }
+}
+
+/**
+ * 입력받은 text 값이 빈값이 있는지 여부
+ * @param {string} 
+ */
+export const checkInputValue = (text) => {
+  if(text === '') {
+    throw new Error('Please enter your todo-item')
   }
 }
