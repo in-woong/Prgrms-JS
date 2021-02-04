@@ -47,6 +47,7 @@ export const checkProperty = (state) => {
  */
 export const checkInputValue = (text) => {
   if(text === '') {
+    alert('Please enter your todo-item')
     throw new Error('Please enter your todo-item')
   }
 }
