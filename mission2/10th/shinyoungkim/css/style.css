@@ -1,0 +1,9 @@
+@charset "utf-8";
+
+ol, ul, li {
+  list-style: none;
+}
+
+.todo-list {
+  border: 1px solid black;
+}
