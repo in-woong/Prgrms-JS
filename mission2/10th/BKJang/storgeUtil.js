@@ -14,6 +14,8 @@ export const getItem = (
   key,
   isEncoded = true,
 ) => {
+  if (!window.localStorage) return;
+
   const plainData = window.localStorage.getItem(key);
 
   if (!plainData) return [];
@@ -28,11 +30,11 @@ export const setItem = (
   value,
   isEncoded = true,
 ) => {
+  if (!window.localStorage) return;
+
   const stringifiedData = isEncoded
     ? encode(JSON.stringify(value))
     : JSON.stringify(value);
-
-  if (!window.localStorage) return;
 
   window.localStorage.setItem(key, stringifiedData);
 };
