@@ -23,7 +23,13 @@ this.setState(nextState)
 ```
 
 - 참고자료
+
   - [array remove element immutable](https://ultimatecourses.com/blog/remove-specific-item-from-array-javascript)
+
+  ## Review2-2
+
+  - 더 나은 방향 : `index` 만으로도 비교 가능
+  - 해결 : `index`만 남기고 불필요한 부분 제거
 
 ## Review3
 
@@ -45,6 +51,14 @@ if (item.text === toggleTarget.text) {
 })
 this.setState(nextState)
 ```
+
+## Review3-2
+
+- 문제: todo 마다 특정한 id를 부여해서 찾는 것이 더 안전. 지금의 로직으로는 서로 다른 todo가 같은 text를 갖는다면 둘다 토글
+- 해결방법
+  - `todoItem`에 아이디를 부여
+- 해결
+  - `uuid`를 `Math.random().toString(36).substr(2, 16)` 로 생성하여 유일한 아이디 부여
 
 ## Review4
 
@@ -83,3 +97,34 @@ this.setState(nextState)
 - 문제 : TodoInput.js / 실제로 렌더링이 되는 부분이 아니고 event listener를 등록해주기 때문에 contstructor에 둬도 될 것
 - 해결
   - 위치변경
+
+## Review9
+
+- 문제 : TodoInput.js / 이 코드가 여기에 있으면 클릭이 될때마다 새로 생김.
+
+```
+  this.$deletAllBtn.addEventListener(
+    'click',
+    () => {
+      const event = new Event('removeAll')
+```
+
+- 해결방법 : 바깥에서 한번만 실행
+- 해결 : 위치변경
+
+## Review10
+
+- 문제 : TodoList.js / 두 프로퍼티에 대한 타입 검사도 추가되면 더 안전할 것
+- 해결방법 : 타입 검사 추가
+- 해결
+
+```
+} else if (typeof item.text !== 'string') {
+    throw new Error(ERROR_MESSAGE.IS_NOT_STRING)
+  }
+```
+
+## Review11
+
+- 문제 : TodoList.js / 변수 선언이 잘못됨
+- 해결방법 : `let` -> `const`

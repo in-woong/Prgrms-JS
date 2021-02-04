@@ -36,20 +36,24 @@ class TodoList {
     if (!Array.isArray(listData)) {
       throw new Error(ERROR_MESSAGE.IS_NOT_ARRAY)
     }
+    // review10 : 두 property 타입 검사 추가
     listData.every((item) => {
       if (listData.length > 0 && item.text.length < 1) {
         throw new Error(ERROR_MESSAGE.EMPTY_TEXT)
+      } else if (typeof item.text !== 'string') {
+        throw new Error(ERROR_MESSAGE.IS_NOT_STRING)
       }
     })
   }
 
   handleTodoItem = () => {
+    // review11 :  let -> const
     this.$listBox.addEventListener('click', (e) => {
-      let itemId = e.target.id
+      const itemId = e.target.id
       if (e.target.className === 'todo-item') {
         this.toggleTodoItem(itemId)
       } else if (e.target.className === 'delete-btn') {
-        this.removeTodoItem(itemId)
+        this.removeTodoItem()
       }
     })
   }

@@ -4,8 +4,9 @@ export class TodoInput {
     const $addItemInput = document.createElement('input')
     const $addItemBtn = document.createElement('button')
     const $deletAllBtn = document.createElement('button')
+    // review9 : const event = new Event('removeAll') 위치변경 클릭할때마다 새로 생기는것 방지
+    const event = new Event('removeAll')
 
-    this.$app = $app
     this.addTodoItem = addTodoItem
     this.deleteAllItem = deleteAllItem
     this.$addForm = $addForm
@@ -29,7 +30,6 @@ export class TodoInput {
     this.$deletAllBtn.addEventListener(
       'click',
       () => {
-        const event = new Event('removeAll')
         this.deleteAllItem()
         this.$deletAllBtn.dispatchEvent(event)
       },

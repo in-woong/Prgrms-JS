@@ -14,19 +14,15 @@ export class App {
       new TodoInput({
         $app,
         addTodoItem: (todoItem) => {
+          const uuid = Math.random().toString(36).substr(2, 16)
           const nextState = [
             ...this.state,
-            { text: todoItem, isCompleted: false },
+            { id: uuid, text: todoItem, isCompleted: false },
           ]
           this.setState(nextState)
         },
         deleteAllItem: () => {
           // review1 : immutable -> mutable
-          // 수정전
-          // this.state.splice(0, this.state.length)
-          // this.setState(this.state)
-
-          // 수정후
           this.setState([])
         },
       }),
@@ -35,35 +31,30 @@ export class App {
         initialState: this.state,
         toggleTodoItem: (itemIndex) => {
           // review3 : mutable -> immutable
-          // let targetListItem = this.state[itemIndex]
-          // targetListItem.isCompleted = !targetListItem.isCompleted
-          // this.setState(this.state)
-
-          // 수정후
+          // review3-2 : item별 id부여 로직 text -> id 변경
           const toggleTarget = this.state[itemIndex]
           const nextState = this.state.map((item) => {
-            if (item.text === toggleTarget.text) {
+            if (item.id === toggleTarget.id) {
               return {
+                id: toggleTarget.id,
                 text: toggleTarget.text,
                 isCompleted: !toggleTarget.isCompleted,
               }
             } else {
-              return { text: item.text, isCompleted: item.isCompleted }
+              return {
+                id: item.id,
+                text: item.text,
+                isCompleted: item.isCompleted,
+              }
             }
           })
           this.setState(nextState)
         },
-        removeTodoItem: (itemIndex) => {
+        removeTodoItem: () => {
           // review2 : mutable -> immutable
-          // 수정전
-          // this.state.splice(itemIndex, 1)
-          // this.setState(this.state)
+          // review2-2 : index 값만으로 비교
+          const nextState = this.state.filter((target, index) => index)
 
-          //수정후
-          const removeTarget = this.state[itemIndex]
-          const nextState = this.state.filter(
-            (target) => target !== removeTarget,
-          )
           this.setState(nextState)
         },
       }),
