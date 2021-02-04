@@ -1,6 +1,6 @@
 import { checkInputValue } from '../utils/validation.js'
 
-export default function TodoInput({ $app, onAddTodoItem }) {
+export default function TodoInput({ $app, onChange }) {
   const $inputWrap = document.createElement('div')
   $inputWrap.className = 'input-wrap'
 
@@ -17,32 +17,29 @@ export default function TodoInput({ $app, onAddTodoItem }) {
   $inputWrap.appendChild($inputButton)
   $app.appendChild($inputWrap)
 
-  function handleEventInput () {
-    const text = $input.value
+  this.createTodoItem = () => {
+    const text = $input.value.trim()
 
-    if(text === '') {
-      $input.focus()
+    if(!text) {
       checkInputValue(text)
-      
+      $input.focus()
       return
     }
 
-    onAddTodoItem(text)
+    onChange(text)
 
     $input.value = ''
     $input.focus()
-    
   }
 
   $input.addEventListener('keypress', event => {
-
     if( event.key === 'Enter') {  
-      handleEventInput()
+      this.createTodoItem()
     }
   })
 
   $inputButton.addEventListener('click', () => {
-    handleEventInput()
+    this.createTodoItem()
   })
 
   this.render = () => {}
