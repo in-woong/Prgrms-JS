@@ -7,7 +7,7 @@ import {
  } from '../utils/validation.js'
 
 
-export default function TodoList({$app, initialState}) {
+export default function TodoList({ $app, initialState, onRemove, onToggle }) {
 
   this.state = initialState
 
@@ -32,23 +32,41 @@ export default function TodoList({$app, initialState}) {
     const stringHTML =
       this.state.length > 0 ? 
         this.state.map(( {text, isCompleted }, index) => 
-          `<li data-id="${index}">
-            <div>
-              ${ isCompleted ? `<s>${text}</s>` : text } 
-              <button type="button" class="button">DELETE</button>
-            </div>
+          `<li class="item" data-index="${index}">
+            ${ isCompleted ? `<input type="checkbox" checked>`: `<input type="checkbox">`}
+            ${ isCompleted ? `<p class="text completed">${text}</p>` : `<p class="text">${text}</p>` } 
+            <button type="button" class="button button--delete" data-id="${index}">X</button>
           </li>`
         ).join('')
       : ''
     this.$target.innerHTML = stringHTML
   }
 
-  this.setState = (nextData) => {
-    this.checkValidate(nextData)
-    this.state = nextData
+  this.handleClick = () => {
+    this.$target.addEventListener('click', event => {
+      const currentItem = event.target
+
+      if (currentItem.nodeName === 'BUTTON') {
+        const deleteIndex = parseInt(currentItem.getAttribute('data-id'))
+        onRemove(deleteIndex)
+  
+      } else if (currentItem.parentNode.nodeName === 'LI') {
+        const toggleIndex = parseInt(currentItem.parentNode.getAttribute('data-index'))
+        onToggle(toggleIndex)
+  
+      } else {
+        return
+      }
+    })
+  } 
+
+  this.setState = (nextState) => {
+    this.checkValidate(nextState)
+    this.state = nextState
     this.render()
   }
 
+  this.handleClick()
   this.checkValidate(this.state)
   this.render()
 }
