@@ -1,10 +1,13 @@
-function TodoList(data){
+const $eleList = document.querySelector("#todo-list")
+
+function TodoList({ $app, data, onClickItem, onRemoveItem, onRemoveAll}){
   this.data = data
-  this.eleList = document.querySelector("#todo-list")
-  this.removeItem = this.removeItem
+  this.onClickItem = onClickItem
+  this.onRemoveItem = onRemoveItem
+  this.onRemoveAll = onRemoveAll
   
   this.render = () =>{
-    this.eleList.innerHTML = this.data
+    $eleList.innerHTML = this.data
       .filter(todo => todo.visible === true)
       .map(todo => {
         const content = todo.isCompleted? `<div><s id="${todo.id}" class="isCompleted" style="color:gray">(완료) ${todo.text}</s></div>` 
@@ -14,31 +17,26 @@ function TodoList(data){
       }).join('')
   }
 
-  this.setState = (nextData) => {
-    this.data = nextData
-    this.render()
-  }
-
-  this.eleList.addEventListener('click',(e)=>{
+  $app.addEventListener('click',(e)=>{
     if(e.target.className === 'remove'){
-      console.log("삭제중")
-      this.data[e.target.id-1].visible = false
+      this.onRemoveItem(e.target.id)
     }
 
     if(e.target.className === 'isCompleted'){
-      if(this.data[e.target.id-1].isCompleted === false){
-        this.data[e.target.id-1].isCompleted = true
-      }else{
-        this.data[e.target.id-1].isCompleted = false
-      }
-      
+      this.onClickItem(e.target.id) 
+    }
+
+    if(e.target.closest('button').id === 'remove-all'){
+      this.onRemoveAll()
     }
 
     this.setState(this.data)
   })
 
- 
-  
+  this.setState = (nextData) => {
+    this.data = nextData
+    this.render()
+  }
   
   this.render()
 }

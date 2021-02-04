@@ -1,15 +1,13 @@
-import TodoList from './TodoList.js'
-
 const $todoInput = document.querySelector('#create-todo');
+const ENTER_KEY_CODE = 'Enter'
 
 function AddTodo({ onPressEnter }){
     this.onPressEnter = onPressEnter
-    this.eleInput = $todoInput.value
 
-    $todoInput.addEventListener('keypress', (e)  => { 
-      const {value} = e.target
-      // key.key 의 값이 Enter 일 경우 코드 실행  
-      if( e.key == 'Enter' ){     
+    $todoInput.addEventListener('keypress', (e)  => {  
+      const {value} = e.target 
+
+      if( e.key === ENTER_KEY_CODE ){    
         if( value.length === 0 ){
           alert("할 일을 입력해주세요~")
         }else{
