@@ -17,6 +17,7 @@ function TodoInput(targetElement, addTodo) {
       }
       addTodo(newTodo);
       e.target.value = '';
+      e.target.focus();
     }
   });
 };
