@@ -29,15 +29,17 @@ export default function TodoList({$app, initialState}) {
   }
 
   this.render = () => {
-    const stringHTML = this.state.map(( {text, isCompleted }, index) => 
-      `<li data-id="${index}">
-         <div>
-          ${ isCompleted ? `<s>${text}</s>` : text } 
-          <button type="button" class="button">DELETE</button>
-         </div>
-      </li>`
-    ).join('')
-
+    const stringHTML =
+      this.state.length > 0 ? 
+        this.state.map(( {text, isCompleted }, index) => 
+          `<li data-id="${index}">
+            <div>
+              ${ isCompleted ? `<s>${text}</s>` : text } 
+              <button type="button" class="button">DELETE</button>
+            </div>
+          </li>`
+        ).join('')
+      :
     this.$target.innerHTML = stringHTML
   }
 
