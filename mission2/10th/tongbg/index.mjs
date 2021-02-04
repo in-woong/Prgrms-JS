@@ -1,3 +1,3 @@
 import App from './asset/js/App.js'
 
-new App()
+new App(document.querySelector('#App'))
