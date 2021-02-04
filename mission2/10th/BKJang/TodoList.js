@@ -29,7 +29,7 @@ function TodoList(targetElement, initialData, toggleTodo, deleteTodo) {
 
   this.target.addEventListener('click', function(e) {
     const itemIndex = e.target.getAttribute('data-item-index');
-    const parsedItemIndex = typeof itemIndex !== undefined && parseInt(itemIndex);
+    const parsedItemIndex = typeof itemIndex !== undefined && parseInt(itemIndex, 10);
     const nodeName = e.target.nodeName;
 
     if (nodeName === 'LI') {
