@@ -39,7 +39,7 @@ export default function TodoList({$app, initialState}) {
             </div>
           </li>`
         ).join('')
-      :
+      : ''
     this.$target.innerHTML = stringHTML
   }
 
