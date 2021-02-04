@@ -30,18 +30,13 @@ function TodoList(data, selector) {
     this.render();
   }
 
-  this.add = function(item) {
-    const newData = [...this.data,{text:item,isCompleted:false}];
-    this.setState(newData);
-  }
-
   this.render();
 
   this.element.addEventListener('click', (event) => {
       const dataId = event.target.getAttribute('data-id');
       if(dataId!= null) {
-        const newData = this.data.filter((item,index) => index != dataId);
-        this.setState(newData);
+        this.data.splice(dataId,1);
+        this.render();
       } 
   });
 }
