@@ -14,7 +14,7 @@ export default function TodoList({ $app, initialState, onRemove, onToggle }) {
   const $target = document.createElement('ul')
   $target.className = 'todo-list'
   $app.appendChild($target)
-  
+
   this.$target = $target
 
   this.checkValidate = (state) => {
@@ -33,8 +33,7 @@ export default function TodoList({ $app, initialState, onRemove, onToggle }) {
       this.state.length > 0 ? 
         this.state.map(( {text, isCompleted }, index) => 
           `<li class="item" data-index="${index}">
-            ${ isCompleted ? `<input type="checkbox" checked>`: `<input type="checkbox">`}
-            ${ isCompleted ? `<p class="text completed">${text}</p>` : `<p class="text">${text}</p>` } 
+            ${ isCompleted ? `<input type="checkbox" checked><p class="text completed">${text}</p>` : `<input type="checkbox"><p class="text">${text}</p>` } 
             <button type="button" class="button button--delete" data-id="${index}">X</button>
           </li>`
         ).join('')
@@ -59,6 +58,7 @@ export default function TodoList({ $app, initialState, onRemove, onToggle }) {
       }
     })
   } 
+
 
   this.setState = (nextState) => {
     this.checkValidate(nextState)
