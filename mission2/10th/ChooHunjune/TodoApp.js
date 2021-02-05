@@ -6,16 +6,16 @@ import TodoCount from './Components/TodoCount.js'
 export default function TodoApp($app) {
   this.state = []
 
-  this.todoCount = new TodoCount({
-    $app,
-    initialState: this.state
-  })
-
   this.setState = (nextState) => {
     this.state = nextState
     this.todoList.setState(this.state)
     this.todoCount.setState(this.state)
   }
+
+  this.todoCount = new TodoCount({
+    $app,
+    initialState: this.state
+  })
 
   this.todoInput = new TodoInput({
     $app,
@@ -28,6 +28,11 @@ export default function TodoApp($app) {
         },
       ]
       this.setState(nextState)
+    },
+  })
+  window.addEventListener('removeAll', () => {
+    if (confirm('모두 삭제하시겠습니까?')) {
+      this.setState([])
     }
   })
 
@@ -43,4 +48,5 @@ export default function TodoApp($app) {
       this.setState(nextState)
     }
   })
+  
 }
