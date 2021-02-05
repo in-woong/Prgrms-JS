@@ -12,20 +12,17 @@ export default function App($app, initialState) {
     this.state = newData
     this.render()
   }
-  this.$app.addEventListener('keydown', (event) => {
+ 
+  const handleInput = (event) => {
     if (event.keyCode === ENTER_KEY_CODE) {
-      fetch (`https://jjalbot.com/api/jjals?text=${event.target.closest('input').value}`) 
+      fetch (`https://jjalbot.com/api/jjals?text=${event.target.value}`) 
         .then(x => x.json())
-        .then(data => {
-          let newData = []
-          data.forEach(image => newData.push(image))
-          this.setState(newData)
-        })  
-    }
-  })
+        .then(data => this.setState(data)) 
+    } 
+  }
 
   this.render = () => {
-    const searchInput = new SearchInput(document.querySelector("#search-keyword"));
+    const searchInput = new SearchInput(document.querySelector("#search-keyword"), handleInput);
     const searchResult = new SearchResult(document.querySelector("#search-result"), this.state);
     searchInput.render()
     searchResult.render()
