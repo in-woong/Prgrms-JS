@@ -20,14 +20,14 @@ export default function TodoInput({ $app, onChange }) {
   this.createTodoItem = () => {
     const text = $input.value.trim()
 
-    if(!text) {
+    if (!text) {
       checkInputValue(text)
       $input.focus()
       return
     }
 
     onChange(text)
-
+    
     $input.value = ''
     $input.focus()
   }
