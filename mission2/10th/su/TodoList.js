@@ -1,46 +1,37 @@
-
 function TodoList(data, selector) {
-
-  this.data = data;
-  this.selector = selector;
-  this.element = document.querySelector(this.selector);
-
-  this.validation = function() {
-    if(!data) throw new Error("data is error");
-    if(!selector) throw new Error("id is error");
-    if(!Array.isArray(data)) throw new Error("data is not Array");
-    if(!(this instanceof TodoList)) throw new Error("Add new keyword");
+  this.init = function () {
+    this.validation()
+    this.data = data
+    this.element = document.querySelector(selector)
   }
 
-  this.render = function() {
-    this.validation();
-
-    const liData = this.data.map(function(_data,index) {
-      if(_data.isCompleted) {
-        return `<li><s>${_data.text}</s><button data-id=${index}>삭제</button></li>`;
-      }
-      return `<li>${_data.text} <button data-id=${index}>삭제</button></li>`;
-    }).join(''); 
-
-    this.element.innerHTML = `<ul>${liData}</ul>`;
+  this.validation = function () {
+    if (!data) throw new Error('data is error')
+    if (!selector) throw new Error('id is error')
+    if (!Array.isArray(data)) throw new Error('data is not Array')
+    if (!(this instanceof TodoList)) throw new Error('Add new keyword')
   }
 
-  this.setState = function(nextData) {
-    this.data = nextData;
-    this.render();
+  this.render = function () {
+    const liData = this.data
+      .map(function (_data, index) {
+        if (_data.isCompleted) {
+          return `<li><s>${_data.text}</s><button data-id=${index}>삭제</button></li>`
+        }
+        return `<li>${_data.text} <button data-id=${index}>삭제</button></li>`
+      })
+      .join('')
+
+    this.element.innerHTML = `<ul>${liData}</ul>`
   }
 
-  this.render();
+  this.setState = function (nextData) {
+    this.data = nextData
+    this.render()
+  }
 
-  this.element.addEventListener('click', (event) => {
-      const dataId = event.target.getAttribute('data-id');
-      if(dataId!= null) {
-        this.data.splice(dataId,1);
-        this.render();
-      } 
-  });
+  this.init()
+  this.render()
 }
 
-export default TodoList;
-
-  
+export default TodoList
