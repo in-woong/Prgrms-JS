@@ -4,12 +4,21 @@ import TodoCount from './Components/TodoCount.js'
 
 
 export default function TodoApp($app) {
-  this.state = []
+  try {
+    this.state = JSON.parse(localStorage.getItem('todolist-data'))
+    if (this.state === null) {
+      this.state = []
+    }
+  } catch (error) {
+    console.error(error)
+  }
 
   this.setState = (nextState) => {
     this.state = nextState
     this.todoList.setState(this.state)
     this.todoCount.setState(this.state)
+
+    localStorage.setItem('todolist-data', JSON.stringify(this.state))
   }
 
   this.todoCount = new TodoCount({
