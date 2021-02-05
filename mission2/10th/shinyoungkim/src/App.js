@@ -1,15 +1,24 @@
 import TodoList from './components/TodoList.js'
 import TodoInput from './components/TodoInput.js'
 import TodoCount from './components/TodoCount.js'
+import TodoRemove from './components/TodoRemove.js'
 
-export default function App( $app, initialState ) { 
+import { getItem , setItem } from './utils/localStorage.js'
 
-  this.state = initialState
+const TODO_STORAGE_KEY = 'todolocalStorege'
+
+export default function App({$app}) { 
   
   this.init = () => {
-    this.todoCount = new TodoCount({ $app, initialState })
+
+    this.state = getItem(TODO_STORAGE_KEY) || [] 
+
+    this.todoCount = new TodoCount({ $app, initialState: this.state  })
     this.todoInput = new TodoInput({ $app, onChange })
-    this.todoList = new TodoList({ $app, initialState, onRemove, onToggle })
+    this.todoRemove = new TodoRemove({ $app, onRemove })
+    this.todoList = new TodoList({ $app, initialState: this.state , onRemove, onToggle })
+
+    this.removeAllButton()
   }
 
   const onChange = (text) => {
@@ -39,9 +48,19 @@ export default function App( $app, initialState ) {
     this.setState(nextState)
   }
 
+  this.removeAllButton = () => {
+    const removeAllBtn = this.todoRemove.$target
 
-  this.setState = (nextData) => {
-    this.state = nextData
+    removeAllBtn.addEventListener('remove-all', event => {
+      localStorage.clear()
+      this.state = []
+      this.todoList.setState(this.state)
+    })
+  } 
+
+  this.setState = (nextState) => {
+    this.state = nextState
+    setItem(TODO_STORAGE_KEY, nextState)
     this.todoList.setState(this.state)
     this.todoCount.setState(this.state)
   }
