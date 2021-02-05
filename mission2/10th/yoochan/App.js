@@ -28,10 +28,9 @@ function App($app, initialState) {
       },
       ondelClick: (index) => {
         const nextState = [...this.state]
-        delete nextState[index]
+        nextState.splice(index,1)
 
         this.setState(nextState)
-        console.log(this.state)
       },
     })
   
