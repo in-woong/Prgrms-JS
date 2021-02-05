@@ -13,7 +13,7 @@ export default function App({$app}) {
 
     this.state = getItem(TODO_STORAGE_KEY) || [] 
 
-    this.todoCount = new TodoCount({ $app, initialState: this.state  })
+    this.todoCount = new TodoCount({ $app, initialState: this.state })
     this.todoInput = new TodoInput({ $app, onChange })
     this.todoRemove = new TodoRemove({ $app, onRemove })
     this.todoList = new TodoList({ $app, initialState: this.state , onRemove, onToggle })
@@ -56,7 +56,7 @@ export default function App({$app}) {
       this.state = []
       this.todoList.setState(this.state)
     })
-  } 
+  }
 
   this.setState = (nextState) => {
     this.state = nextState
