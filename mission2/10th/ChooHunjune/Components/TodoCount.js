@@ -1,9 +1,5 @@
-export default function TodoCount({ $app, initialState }) {
+export default function TodoCount({ $todoCount, initialState }) {
   this.state = initialState
-
-  const $todoCount = document.createElement('div')
-  $todoCount.className = 'TodoCount'
-  $app.appendChild($todoCount)
 
   this.$todoCount = $todoCount
 

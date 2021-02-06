@@ -1,16 +1,3 @@
-let data = [
-  {
-    text: 'JS 공부하기',
-    isCompleted: true
-  },
-  {
-    text: 'JS 복습하기',
-    isCompleted: false
-  }
-]
-
-
-  
 const validateData = (data) => {
   // check if data is null or undefined
   if (!data) {
@@ -24,16 +11,10 @@ const validateData = (data) => {
   }
 }
 
-export default function TodoList({ $app, initialState, onClick }) {
+export default function TodoList({ $todoListItemComp, initialState, onClick }) {
   this.state = initialState
   this.onClick = onClick
-
-  // generate todolist component
-  const $todoListItemComp = document.createElement('ul')
-  $todoListItemComp.className = 'TodoList'
-  $todoListItemComp.style = 'list-style: none'
   this.$todoListItemComp = $todoListItemComp
-  $app.appendChild($todoListItemComp)
 
   this.validation = (data) => {
     validateData(data)

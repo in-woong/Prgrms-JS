@@ -21,13 +21,40 @@ export default function TodoApp($app) {
     localStorage.setItem('todolist-data', JSON.stringify(this.state))
   }
 
+  // generate todoCount component
+  const $todoCount = document.createElement('div')
+  $todoCount.className = 'TodoCount'
+  $app.appendChild($todoCount)
+
   this.todoCount = new TodoCount({
-    $app,
+    $todoCount,
     initialState: this.state
   })
 
+  
+  // generate todoInput component
+  const $todoInput = document.createElement('input')
+  $app.appendChild($todoInput)
+  const $todoListClearBtn = document.createElement('button')
+  $todoListClearBtn.appendChild(document.createTextNode('전체삭제'))
+  $app.appendChild($todoListClearBtn)
+  const $todoInputAddBtn = document.createElement('button')
+  $todoInputAddBtn.appendChild(document.createTextNode('추가'))
+  $app.appendChild($todoInputAddBtn)
+
+  $todoListClearBtn.addEventListener('click', () => {
+    $app.dispatchEvent(new Event('removeAll'))
+  })
+  $app.addEventListener('removeAll', () => {
+    if (confirm('모두 삭제하시겠습니까?')) {
+      this.setState([])
+    }
+  })
+
+  const $todoInputComponents = {$todoInput, $todoListClearBtn, $todoInputAddBtn}
+
   this.todoInput = new TodoInput({
-    $app,
+    $todoInputComponents,
     onTodoInput: (text) => {
       const nextState = [
         ... this.state,
@@ -39,14 +66,17 @@ export default function TodoApp($app) {
       this.setState(nextState)
     },
   })
-  window.addEventListener('removeAll', () => {
-    if (confirm('모두 삭제하시겠습니까?')) {
-      this.setState([])
-    }
-  })
+  
+
+  // generate todoList component
+  const $todoListItemComp = document.createElement('ul')
+  $todoListItemComp.className = 'TodoList'
+  $todoListItemComp.style = 'list-style: none'
+  this.$todoListItemComp = $todoListItemComp
+  $app.appendChild($todoListItemComp)
 
   this.todoList = new TodoList({
-    $app,
+    $todoListItemComp,
     initialState: this.state,
     onClick: (index) => {
       const nextState = [... this.state]
@@ -57,5 +87,4 @@ export default function TodoApp($app) {
       this.setState(nextState)
     }
   })
-  
 }
