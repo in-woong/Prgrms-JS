@@ -1,7 +1,7 @@
 export default function SearchInput($searchInput, handleInput) {
   this.$searchInput = $searchInput
   
-  this.$searchInput.addEventListener('keydown', (event) => handleInput(event))
+  this.$searchInput.addEventListener('input', (event) => handleInput(event))
 
   this.render = () => {
     this.$searchInput.value = ""
