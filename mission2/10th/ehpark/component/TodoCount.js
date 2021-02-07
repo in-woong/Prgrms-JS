@@ -1,20 +1,14 @@
-export default function TodoCount($target, data, todoCountSelector) {
+export default function TodoCount({ $target, data, todoCount }) {
   this.$target = $target
   this.data = data
-  this.$todoCount = $target.querySelector(todoCountSelector)
+  this.$todoCount = $target.querySelector(todoCount)
 
   this.getTotalCount = () => {
     return this.data.length
   }
 
   this.getCompletedCount = () => {
-    let completedInit = 0
-    this.data.forEach(item => {
-      if(item.isCompleted) {
-        completedInit += 1
-      }
-    })
-    return completedInit
+    return this.data.filter(data => data.isCompleted).length
   }
 
   this.render = () => {

@@ -10,11 +10,11 @@ const validateData = (data) => {
   }
 }
 
-export default function TodoList($target, data, todoListSelector, handleToggleCompleted) {
+export default function TodoList({ $target, data, todoList, onToggleCompleted }) {
   this.$target = $target
   this.data = data
-  this.$todoList = $target.querySelector(todoListSelector)
-  this.handleToggleCompleted = handleToggleCompleted
+  this.$todoList = $target.querySelector(todoList)
+  this.onToggleCompleted = onToggleCompleted
 
   this.validation = (state) => {
     if(!new.target) {
@@ -39,13 +39,13 @@ export default function TodoList($target, data, todoListSelector, handleToggleCo
   }
   
   this.eventToggleCompleted = () => {
-		this.$todoList.addEventListener('click', e => {
+    this.$todoList.addEventListener('click', e => {
       if(e.target.className === "checkbox-todo") {
-				const liItemId = parseInt(e.target.parentNode.id)
-        this.handleToggleCompleted(liItemId)
-			}
-		})
-	}
+        const liItemId = parseInt(e.target.parentNode.id)
+        this.onToggleCompleted(liItemId)
+      }
+    })
+  }
 
   this.validation()
   this.render()

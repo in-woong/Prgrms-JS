@@ -1,19 +1,19 @@
 import TodoList from './TodoList.js'
 import TodoInput from './TodoInput.js'
 import TodoCount from './TodoCount.js'
+import { storage } from './utils.js'
 
-export default function TodoApp($target, title, TODOS_LS) {
+export default function TodoApp({ $target, title, TODOS_KEY }) {
   this.$target = $target
   this.title = title
-  this.TODOS_LS = TODOS_LS
-  this.todos = (localStorage.getItem(this.TODOS_LS)) ? JSON.parse(localStorage.getItem(this.TODOS_LS)) : []
-  
-  this.saveTodo = (todos) => {
-    localStorage.setItem(TODOS_LS, JSON.stringify(todos))
-  }
+  this.TODOS_KEY = TODOS_KEY
+  this.todos = (localStorage.getItem(this.TODOS_KEY)) ? storage.get(this.TODOS_KEY) : []
 
-  this.getTodo = () => {
-    return JSON.parse(localStorage.getItem(this.TODOS_LS))
+  this.todosClassName = {
+    todoInputBox : 'box-todo-input',
+    todoList : 'list-todo',
+    todoCount : 'box-todo-count',
+    btnRemoveAll : 'btn-remove-all'
   }
 
   this.handleAddTodo = (inputData) => {
@@ -26,7 +26,7 @@ export default function TodoApp($target, title, TODOS_LS) {
     }
     this.todoList.render()
     this.todoCount.render()
-    this.saveTodo(this.todos)
+    storage.set(this.TODOS_KEY, this.todos)
   }
 
   this.handleToggleCompleted = (liItemId) => {
@@ -38,32 +38,39 @@ export default function TodoApp($target, title, TODOS_LS) {
       return newObj
     })
     this.setState(newData)
-    this.saveTodo(this.todos)
+    storage.set(this.TODOS_KEY, this.todos)
   }
 
   this.handleRemoveAll = () => {
     this.setState([])
-    localStorage.removeItem(this.TODOS_LS)
+    localStorage.removeItem(this.TODOS_KEY)
   }
-  
-  this.render = () => {
-    const todoInputBoxSelector = 'box-todo-input'
-    const todoListSelector = 'list-todo'
-    const todoCountSelector = 'box-todo-count'
-    const btnRemoveAllSelector = 'btn-remove-all'
-    this.$target.innerHTML = `<strong class="subject-todo">${this.title}</strong>
-                              <div class=${todoInputBoxSelector}></div>
-                              <ul class=${todoListSelector}></ul>
-                              <div class=${todoCountSelector}></div>
-                              <div class="box-remove-all"><button class=${btnRemoveAllSelector}>Remove All</button></div>`
 
-    this.todoInput = new TodoInput($target, `.${todoInputBoxSelector}`, this.handleAddTodo)
-    this.todoList = new TodoList($target, this.todos, `.${todoListSelector}`,  this.handleToggleCompleted)
-    this.todoCount = new TodoCount($target, this.todos, `.${todoCountSelector}`)
-    
-    const $btnRemoveAll = this.$target.querySelector(`.${btnRemoveAllSelector}`)
-    $btnRemoveAll.addEventListener('click', () => {
-      this.handleRemoveAll()
+  this.render = () => {
+    const { todoInputBox, todoList, todoCount, btnRemoveAll } = this.todosClassName
+    this.$target.innerHTML = `<strong class="subject-todo">${this.title}</strong>
+                              <div class=${todoInputBox}></div>
+                              <ul class=${todoList}></ul>
+                              <div class=${todoCount}></div>
+                              <div class="box-remove-all"><button class=${btnRemoveAll}>Remove All</button></div>`
+
+    this.todoInput = new TodoInput({ 
+      $target, 
+      todoInputBox: `.${todoInputBox}`,
+      btnRemoveAll: `.${btnRemoveAll}`,
+      onAddTodo: this.handleAddTodo.bind(this),
+      onRemoveAll: this.handleRemoveAll.bind(this),
+    })
+    this.todoList = new TodoList({
+      $target,
+      data: this.todos, 
+      todoList: `.${todoList}`, 
+      onToggleCompleted: this.handleToggleCompleted.bind(this)
+    })
+    this.todoCount = new TodoCount({
+      $target,
+      data: this.todos,
+      todoCount: `.${todoCount}`
     })
   }
 
