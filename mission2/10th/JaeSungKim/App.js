@@ -7,15 +7,20 @@ function App() {
     return new App()
   }
 
+  let todoData = []
   if (!localStorage.getItem('todoData')) {
     window.localStorage.setItem('todoData', JSON.stringify([]))
   }
-  let todoData = JSON.parse(window.localStorage.getItem('todoData'))
+  try {
+    todoData = JSON.parse(window.localStorage.getItem('todoData'))
+  } catch (e) {
+    alert(e)
+  }
 
   this.addItem = (newItem) => {
     todoData = [...todoData, newItem]
     window.localStorage.setItem('todoData', JSON.stringify(todoData))
-    this.updateItems(todoData)
+    this.setState(todoData)
   }
 
   this.toggleItem = (toggleId) => {
@@ -26,18 +31,18 @@ function App() {
       return item
     })
     window.localStorage.setItem('todoData', JSON.stringify(todoData))
-    this.updateItems(todoData)
+    this.setState(todoData)
   }
 
   this.removeAllItems = () => {
     todoData = []
     window.localStorage.clear()
-    this.updateItems(todoData)
+    this.setState(todoData)
   }
 
-  this.updateItems = (newData) => {
+  this.setState = (newData) => {
     this.todoList.setState(newData)
-    this.todoCount.refreshCount(newData)
+    this.todoCount.setState(newData)
   }
 
   this.todoList = new TodoList(document.querySelector('#todo-list'), todoData, this.toggleItem)

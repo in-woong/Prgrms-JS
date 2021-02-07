@@ -7,7 +7,6 @@ function TodoList($target, initialState, toggleItem) {
     this.validateData(nextData)
     this.todoData = nextData
     this.render()
-    this.setEventListeners()
   }
 
   this.validateData = (todoData) => {
@@ -30,22 +29,15 @@ function TodoList($target, initialState, toggleItem) {
     $target.innerHTML = dataHTMLString
   }
 
-  this.setEventListeners = () => {
-    const buttons = document.querySelector('#todo-list')
-    buttons.addEventListener('click', (event) => {
-      onButtonClick(event, toggleItem)
-      event.stopImmediatePropagation()
-    })
-  }
-
   this.setState(initialState)
-}
 
-const onButtonClick = (event, toggleItem) => {
-  const clickedItemIndex = parseInt(event.target.getAttribute('index'))
-  if (event.target && event.target.nodeName === 'BUTTON') {
-    toggleItem(clickedItemIndex)
-  }
+  $target.addEventListener('click', (event) => {
+    const clickedItemIndex = parseInt(event.target.getAttribute('index'))
+    if (event.target && event.target.nodeName === 'BUTTON') {
+      toggleItem(clickedItemIndex)
+    }
+    event.stopPropagation()
+  })
 }
 
 export default TodoList

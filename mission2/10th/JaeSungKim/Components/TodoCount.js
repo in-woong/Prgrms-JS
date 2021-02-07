@@ -8,12 +8,12 @@ function TodoCount($target, myTodoList) {
     $target.innerHTML = countHTMLString
   }
 
-  this.refreshCount = (data) => {
+  this.setState = (data) => {
     this.completeCount = data.filter((v) => v.isCompleted).length
     this.render()
   }
 
-  this.refreshCount(myTodoList)
+  this.setState(myTodoList)
 }
 
 export default TodoCount
