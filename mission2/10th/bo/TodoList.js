@@ -4,7 +4,6 @@ function TodoList({ targetEl, initialState, onClick }) {
 
   const listEl = document.createElement("li");
   targetEl.appendChild(listEl);
-
   this.listEl = listEl;
 
   this.render = function () {

@@ -20,24 +20,37 @@ h1 {
   font-size: 40px;
   font-weight:bold;
 }
+#event {
+  display: flex;
+  justify-content: space-between;
+}
 input {
   margin-bottom: 20px;
   height: 40px;
+  width: 80%;
   font-size: 18px;
-  width: 100%;
+}
+button {
+  height: 40px;
+  width: 15%;
+  font-size: 18px;
 }
 ul, li {
   margin:0;
   padding:0;
 }
 ul {
-  border: 1px solid green;
 	list-style:none;
 }
 li {
   background-color: white;
   font-size: 20px;
+  padding-left: 2px;
 }
 li + li {
   margin-top: 5px;
+}
+.todo-count {
+  color: white;
+  text-align: right;
 }

@@ -4,6 +4,9 @@ function TodoInput({ onTodoInput }) {
   addList.addEventListener("keydown", (e) => {
     if (e.keyCode === 13) {
       const text = e.target.value;
+      if (text === "") {
+        alert("텍스트를 입력하세요");
+      }
       onTodoInput(text);
       e.target.value = "";
     }
