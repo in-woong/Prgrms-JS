@@ -1,24 +1,21 @@
+function TodoCount({ $app, data }) {
+    this.state = data
 
+    const $target = document.createElement('div')
+    $target.className = 'TodoCount'
+    $app.appendChild($target)
 
-function TodoCount({$app, data}){
- this.data = data
- 
- const $target = document.createElement('div')
-  $target.className = 'TodoCount'
-  $app.appendChild($target)
+    this.render = () => {
+        const done = this.state.filter((todo) => todo.isCompleted).length
+        $target.innerHTML = `총 할일: ${this.state.length} / 완료된 일: ${done}`
+    }
 
- this.render = () => {
-   const total = this.data.filter((todo) => todo.visible).length
-   const done = this.data.filter((todo) => todo.isCompleted).length
-   document.querySelector('.TodoCount').innerHTML = `총 할일: ${total} / 완료된 일: ${done}`
- }
+    this.setState = (nextData) => {
+        this.state = nextData
+        this.render()
+    }
 
- this.setState = (nextData) => {
-    this.data = nextData
     this.render()
-  }
-
- this.render()
 
 }
 
