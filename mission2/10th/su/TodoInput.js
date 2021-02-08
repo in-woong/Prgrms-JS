@@ -1,3 +1,4 @@
+const ENTERKEY = 13;
 
 function TodoInput(selector) {
 
@@ -6,7 +7,6 @@ function TodoInput(selector) {
 
   this.addEvent = function(callback) {
     this.target.addEventListener('keyup', (event) => {
-      const ENTERKEY = 13;
       if(event.keyCode === ENTERKEY) {
         if(typeof callback == 'function') {
           callback(event.target.value);

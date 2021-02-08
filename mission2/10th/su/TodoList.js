@@ -12,17 +12,17 @@ function TodoList(data, selector) {
     if (!(this instanceof TodoList)) throw new Error('Add new keyword')
   }
 
-  this.render = function () {
-    const liData = this.data
-      .map(function (_data, index) {
-        if (_data.isCompleted) {
-          return `<li><s>${_data.text}</s><button data-id=${index}>삭제</button></li>`
-        }
-        return `<li>${_data.text} <button data-id=${index}>삭제</button></li>`
-      })
-      .join('')
+  this.render = function() {
+    this.validation();
 
-    this.element.innerHTML = `<ul>${liData}</ul>`
+    const lisElemString = this.data.map(function(_data,index) {
+      if(_data.isCompleted) {
+        return `<li><s>${_data.text}</s><button data-id=${index}>삭제</button></li>`;
+      }
+      return `<li>${_data.text} <button data-id=${index}>삭제</button></li>`;
+    }).join(''); 
+
+    this.element.innerHTML = `<ul>${lisElemString}</ul>`;
   }
 
   this.setState = function (nextData) {

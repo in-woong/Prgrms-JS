@@ -3,19 +3,35 @@ function TodoStorage(key) {
   this.storage = window.localStorage
 
   this.get = function () {
-    return JSON.parse(this.storage.getItem(this.key))
+    try {
+      return JSON.parse(this.storage.getItem(this.key));
+    } catch(e) {
+      console.log(e);
+    }
   }
 
   this.set = function (item) {
-    this.storage.setItem(this.key, JSON.stringify(item))
+    try {
+      this.storage.setItem(this.key, JSON.stringify(item))
+    } catch(e) {
+      console.log(e);
+    }
   }
 
   this.remove = function () {
-    this.storage.removeItem(this.key)
+    try {
+      this.storage.removeItem(this.key)
+    } catch {
+      console.log(e);
+    }
   }
 
   this.clear = function () {
-    this.storage.clear()
+    try {
+      this.storage.clear()
+    } catch {
+      console.log(e);
+    }
   }
 }
 
