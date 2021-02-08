@@ -1,12 +1,17 @@
 
-export const ResAPI = {
-    jjals:'https://jjalbot.com/api/jjals?text='
+const ResAPI = {
+    jjals:'https://jjalbot.com/api/jjals'
 };
 
 
-export const GET = (_searchKeyword)=> {
-    return fetch(`${ResAPI.jjals + _searchKeyword}`)
+function GET (_searchKeyword) {
+    const restApi  = `${ResAPI.jjals +(_searchKeyword? '?text=' + _searchKeyword:'')}`;
+    return fetch(restApi)
     .then(x => x.json())
+    .catch(error => console.log(error))
 };
+
+export default GET;
+
 
 
