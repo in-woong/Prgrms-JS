@@ -39,6 +39,8 @@ function App(targetEl, initialState) {
     this.state = nextState;
     this.todoList.setState(this.state);
     this.todoCount.setState(this.state);
+
+    setData("todo", this.state);
   };
 
   this.removeTodos = () => {

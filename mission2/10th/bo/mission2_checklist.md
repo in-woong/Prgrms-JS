@@ -17,8 +17,8 @@ Mission1의 TodoList에 추가 및 삭제 기능을 추가로 구현해본다.
 - [x] input 컴포넌트화
 - [x] TodoCount 컴포넌트
 - [x] Event delegate
-- [ ] 커스텀 이벤트
-- [ ] localStorage
+- [x] 커스텀 이벤트
+- [x] localStorage
 
 ### 1/27 ~ 2/7 작업내용
 
@@ -42,22 +42,19 @@ Mission1의 TodoList에 추가 및 삭제 기능을 추가로 구현해본다.
 - [x] App에서 removeAll이라는 이벤트를 받도록 함.
 - [x] 해당 이벤트를 수신하면 현재 TodoList에 있는 모든 데이터를 삭제함.
 
+### 2/9 작업내용
+
 #91 localStorage
 
-- [ ] todo 데이터를 하드코딩 해놓은 부분을 삭제한다.
-- [ ] localStorage를 활용해 todo data가 변경될 때마다 localStorage에 저장하게 한다.
-- [ ] 프로그램 초기 기동 시 todo는 localStorage에 저장해둔 todo가 있다면 그걸 사용하고, 없으면 빈 배열로 만든다.
-- [ ] 새로고침 시 입력해둔 todo가 유지되도록 localStorage를 활용한다.
+- [x] todo 데이터를 하드코딩 해놓은 부분을 삭제한다.
+- [x] localStorage를 활용해 todo data가 변경될 때마다 localStorage에 저장하게 한다.
+- [x] 프로그램 초기 기동 시 todo는 localStorage에 저장해둔 todo가 있다면 그걸 사용하고, 없으면 빈 배열로 만든다.
+- [x] 새로고침 시 입력해둔 todo가 유지되도록 localStorage를 활용한다.
 
-참고사이트
-localStorage 관련문서는 https://developer.mozilla.org/ko/docs/Web/API/Window/localStorage 를 참고합니다.
+- 참고한 코드
+  #437 윤슬기님의 코드.
 
-#### 어려웠던 점
+#### 어려웠던 점 => 해결방법
 
-- 모듈
-
-##### 참고 링크
-
-이벤트 버블링
-https://joshua1988.github.io/web-development/javascript/event-propagation-delegation/
-https://poiemaweb.com/js-event 요기 8번에 설명되어 있습니다.
+- 모듈 => 모듈을 안하는 거로 결정...
+- input에 ""가 입력되어도 todoCount의 개수가 계속 늘어나는 오류가 발생함. => 조건을 걸어주지 않아서 생긴 문제, 조건을 설정하여 해결함.

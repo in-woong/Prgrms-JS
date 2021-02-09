@@ -25,7 +25,6 @@ function TodoList({ targetEl, initialState, onClick }) {
   this.render();
   this.listEl.addEventListener("click", (e) => {
     const index = parseInt(e.target.closest("li").dataset.index);
-    console.log(index);
     this.onClick(index);
   });
 }

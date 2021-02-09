@@ -6,9 +6,10 @@ function TodoInput({ onTodoInput }) {
       const text = e.target.value;
       if (text === "") {
         alert("텍스트를 입력하세요");
+      } else {
+        onTodoInput(text);
+        e.target.value = "";
       }
-      onTodoInput(text);
-      e.target.value = "";
     }
   });
 
