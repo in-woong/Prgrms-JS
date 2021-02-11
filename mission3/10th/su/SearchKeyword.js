@@ -1,32 +1,25 @@
 class SearchKeyword {
-    constructor(selector,onSearchHandler) {
+  constructor(selector, onSearchHandler) {
+    let timer = null
+    this.target = document.querySelector(selector)
+    this.target.focus()
 
-        let timer = null;
-        this.target = document.querySelector(selector);
-        this.target.focus();
+    this.target.addEventListener('input', (e) => {
+      if (timer) {
+        clearTimeout(timer)
+      }
+      timer = setTimeout(function () {
+        onSearchHandler(e.target.value)
+        e.target.value = ''
+      }, 1000)
+    })
+  }
 
-        this.target.addEventListener('input',(e)=> {
-            if (timer) {
-                clearTimeout(timer);
-            }
-            timer = setTimeout(function() {
-                onSearchHandler(e.target.value);
-                e.target.value = '';              
-            }, 200);
-        })
-    }
+  validation = () => {}
 
-    validation = () => {
+  setState = () => {}
 
-    }
+  render = () => {}
+}
 
-    setState = () => {
-
-    }
-
-    render = () => {
-
-    }
-};
-
-export default SearchKeyword;
+export default SearchKeyword
