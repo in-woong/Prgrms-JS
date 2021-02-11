@@ -10,19 +10,17 @@
   <div id="todo-list2"></div>
   <div id="todo-list3"></div>
   <script>
-
-    const data1 = [
+    const data = [
       {
         text: 'JS 공부하기',
-        isCompleted: true
+        isCompleted: true,
       },
       {
         text: 'JS 복습하기',
         isCompleted: false
       }
     ]
-    const data2 = [
-      {
+    const studyData = [{
         text: '알고리즘 공부하기',
         isCompleted: true
       },
@@ -31,8 +29,7 @@
         isCompleted: false
       }
     ]
-    const data3 = [
-      {
+    const workData = [{
         text: '운동하기',
         isCompleted: false
       },
@@ -42,28 +39,60 @@
       }
     ]
 
-    // 필수 구현사항
-    function TodoList(data, selector){
+    // const testData = [{
+    //     text: 33,
+    //     isCompleted: false
+    //   },
+    //   {
+    //     text: 2,
+    //     isCompleted: true
+    //   }
+    // ]
+    
+    function validateData(data) {
+
+      //undefined, null 인 경우
+      if (!data){
+        throw new Error('data가 null 이거나, undefined 입니다.');
+      }
+
+      // text가 string이 아닌 경우.
+      if(typeof data.text !== "string" ){
+        throw new Error('data text가 string이 아닙니다.');
+      }
+    }
+
+    // #49 필수 구현사항
+    function TodoList(data, $selector) {
+
       this.data = data;
-      this.selector = selector;
-      
-      this.render = function() {
-        
-        let todoHtml = '';
-        this.data.forEach(function(item){
-          todoHtml += '<div>' + (item.isCompleted ? '<s>' : '') + item.text +  (item.isCompleted ? '</s>' : '') + '</div>';
-        })
-        
-        document.querySelector(`#${selector}`).innerHTML = todoHtml;
+
+      // #50 new가 아닌 키워드.
+      if(!(this instanceof TodoList)) {
+        throw new Error("new 키워드가 누락되었습니다.");
       }
       
+      // #50 배열이 아닌 형태
+      if(!Array.isArray(this.data)) {
+        throw new Error("배열 형태가 아닙니다.");
+      }
+
+      validateData(this.data);
+
+
+      this.render = () => {
+        $selector.innerHTML = this.data.map(({
+          text,
+          isCompleted
+        }) => (isCompleted ? `<div>${text}</div>` : `<div><s>${text}</s></div>`)).join('')
+      }
+
       this.render();
     }
 
-    const todoList = new TodoList(data1,'todo-list');
-    const todoList2 = new TodoList(data1,'todo-list2');
-    const todoList3 = new TodoList(data3,'todo-list3');
-
+    const todo1 = new TodoList(data, document.querySelector('#todo-list'));
+    // const test = new TodoList(testData, document.querySelector('#todo-list2'));
   </script>
 </body>
+
 </html>
