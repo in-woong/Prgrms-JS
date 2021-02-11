@@ -85,12 +85,14 @@
           $selector.innerHTML = this.data.map(({
             text,
             isCompleted
-          }) => (isCompleted ? `<div>${text}</div>` : `<div><s>${text}</s></div>`)).join('')
+          }) => (isCompleted ? `<div>${text}</div>` : `<div><s>${text}</s></div>`)).join('');
         }
 
-        this.setState = nextData =>{
-            this.data = nextData;
-            this.render();
+        // #67 setState
+        this.setState = (nextData) =>{
+          validateData(nextData);
+          this.data = nextData;
+          this.render();
         };
 
         this.render();
@@ -100,6 +102,12 @@
       const todo2 = new TodoList(studyData, document.querySelector('#todo-list2'));
       const todo3 = new TodoList(workData, document.querySelector('#todo-list3'));
 
+
+      // #67 setState
+      todo1.setState([
+          { text: '내용 바껴랍!', isCompleted: true },
+          { text: '바뀌었나?', isCompleted: false },
+        ]);
       // const test = new TodoList(testData, document.querySelector('#todo-list2'));
     </script>
   </body>
