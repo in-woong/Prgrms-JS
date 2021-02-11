@@ -80,7 +80,7 @@
 
         validateData(this.data);
 
-
+        
         this.render = () => {
           $selector.innerHTML = this.data.map(({
             text,
@@ -92,6 +92,9 @@
       }
 
       const todo1 = new TodoList(data, document.querySelector('#todo-list'));
+      const todo2 = new TodoList(studyData, document.querySelector('#todo-list2'));
+      const todo3 = new TodoList(workData, document.querySelector('#todo-list3'));
+
       // const test = new TodoList(testData, document.querySelector('#todo-list2'));
     </script>
   </body>
