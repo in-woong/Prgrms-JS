@@ -85,7 +85,7 @@
           $selector.innerHTML = this.data.map(({
             text,
             isCompleted
-          }) => (isCompleted ? `<div>${text}</div>` : `<div><s>${text}</s></div>`)).join('');
+          }) => (isCompleted ? `<li>${text}</li>` : `<li><s>${text}</s></li>`)).join('');
         }
 
         // #67 setState
