@@ -1,98 +1,98 @@
 <html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
 
-<head>
-  <title>Mission 1</title>
-  <meta charset="utf-8" />
-</head>
+  <body>
+    <div id="todo-list"></div>
+    <div id="todo-list2"></div>
+    <div id="todo-list3"></div>
+    <script>
+      const data = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false
+        }
+      ]
+      const studyData = [{
+          text: '알고리즘 공부하기',
+          isCompleted: true
+        },
+        {
+          text: '자바스크립트 문법공부',
+          isCompleted: false
+        }
+      ]
+      const workData = [{
+          text: '운동하기',
+          isCompleted: false
+        },
+        {
+          text: '책 읽기',
+          isCompleted: true
+        }
+      ]
 
-<body>
-  <div id="todo-list"></div>
-  <div id="todo-list2"></div>
-  <div id="todo-list3"></div>
-  <script>
-    const data = [
-      {
-        text: 'JS 공부하기',
-        isCompleted: true,
-      },
-      {
-        text: 'JS 복습하기',
-        isCompleted: false
-      }
-    ]
-    const studyData = [{
-        text: '알고리즘 공부하기',
-        isCompleted: true
-      },
-      {
-        text: '자바스크립트 문법공부',
-        isCompleted: false
-      }
-    ]
-    const workData = [{
-        text: '운동하기',
-        isCompleted: false
-      },
-      {
-        text: '책 읽기',
-        isCompleted: true
-      }
-    ]
-
-    // const testData = [{
-    //     text: 33,
-    //     isCompleted: false
-    //   },
-    //   {
-    //     text: 2,
-    //     isCompleted: true
-    //   }
-    // ]
-    
-    function validateData(data) {
-
-      //undefined, null 인 경우
-      if (!data){
-        throw new Error('data가 null 이거나, undefined 입니다.');
-      }
-
-      // text가 string이 아닌 경우.
-      if(typeof data.text !== "string" ){
-        throw new Error('data text가 string이 아닙니다.');
-      }
-    }
-
-    // #49 필수 구현사항
-    function TodoList(data, $selector) {
-
-      this.data = data;
-
-      // #50 new가 아닌 키워드.
-      if(!(this instanceof TodoList)) {
-        throw new Error("new 키워드가 누락되었습니다.");
-      }
+      // const testData = [{
+      //     text: 33,
+      //     isCompleted: false
+      //   },
+      //   {
+      //     text: 2,
+      //     isCompleted: true
+      //   }
+      // ]
       
-      // #50 배열이 아닌 형태
-      if(!Array.isArray(this.data)) {
-        throw new Error("배열 형태가 아닙니다.");
+      function validateData(data) {
+
+        //undefined, null 인 경우
+        if (!data){
+          throw new Error('data가 null 이거나, undefined 입니다.');
+        }
+
+        // text가 string이 아닌 경우.
+        const isValidData = data.every((todo) => typeof todo.text === 'string')
+
+        if (!isValidData) {
+          throw new Error('data의 text가 string이 아닙니다.')
+        }
       }
 
-      validateData(this.data);
+      // #49 필수 구현사항
+      function TodoList(data, $selector) {
+
+        this.data = data;
+
+        // #50 new가 아닌 키워드.
+        if(!(this instanceof TodoList)) {
+          throw new Error("new 키워드가 누락되었습니다.");
+        }
+        
+        // #50 배열이 아닌 형태
+        if(!Array.isArray(this.data)) {
+          throw new Error("배열 형태가 아닙니다.");
+        }
+
+        validateData(this.data);
 
 
-      this.render = () => {
-        $selector.innerHTML = this.data.map(({
-          text,
-          isCompleted
-        }) => (isCompleted ? `<div>${text}</div>` : `<div><s>${text}</s></div>`)).join('')
+        this.render = () => {
+          $selector.innerHTML = this.data.map(({
+            text,
+            isCompleted
+          }) => (isCompleted ? `<div>${text}</div>` : `<div><s>${text}</s></div>`)).join('')
+        }
+
+        this.render();
       }
 
-      this.render();
-    }
-
-    const todo1 = new TodoList(data, document.querySelector('#todo-list'));
-    // const test = new TodoList(testData, document.querySelector('#todo-list2'));
-  </script>
-</body>
-
+      const todo1 = new TodoList(data, document.querySelector('#todo-list'));
+      // const test = new TodoList(testData, document.querySelector('#todo-list2'));
+    </script>
+  </body>
 </html>
