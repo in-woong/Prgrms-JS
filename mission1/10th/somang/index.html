@@ -80,13 +80,18 @@
 
         validateData(this.data);
 
-        
+        // #57, #66 다중 컴포넌트, isCompleted 처리
         this.render = () => {
           $selector.innerHTML = this.data.map(({
             text,
             isCompleted
           }) => (isCompleted ? `<div>${text}</div>` : `<div><s>${text}</s></div>`)).join('')
         }
+
+        this.setState = nextData =>{
+            this.data = nextData;
+            this.render();
+        };
 
         this.render();
       }
