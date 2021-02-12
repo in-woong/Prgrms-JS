@@ -4,20 +4,26 @@ import TodoCount from './components/TodoCount.js'
 
 function App(targetElement, state) {
   this.state = state
+  // todoInput
   const formElement = document.querySelector('#form-container')
   const inputElement = document.querySelector('#todo-input')
 
+  // count
   const countElement = document.createElement('div')
   targetElement.appendChild(countElement)
-  this.countData = new TodoCount(this.state, (todoCount, completedCount) => {
-    countElement.innerHTML = `<div>${completedCount}/${todoCount}</div>`
-  })
 
+  this.countData = new TodoCount(countElement, this.state)
+
+  // todoList
   const todoElement = document.createElement('ul')
   todoElement.classList.add('todo-list')
   targetElement.appendChild(todoElement)
 
-  this.todoList = new TodoList(todoElement, this.state)
+  this.todoList = new TodoList(todoElement, this.state, data => {
+    this.state = data
+    this.countData = new TodoCount(countElement, this.state)
+    this.todoList.setState(this.state)
+  })
 
   this.todoInput = new TodoInput(formElement, inputElement, text => {
     const newData = {}
@@ -26,9 +32,7 @@ function App(targetElement, state) {
 
     this.state = [...this.state, newData]
     this.todoList.setState(this.state)
-    this.countData = new TodoCount(this.state, (todoCount, completedCount) => {
-      countElement.innerHTML = `<div>${completedCount}/${todoCount}</div>`
-    })
+    this.countData = new TodoCount(countElement, this.state)
   })
 }
 

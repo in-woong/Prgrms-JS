@@ -1,4 +1,4 @@
-export default function TodoList(targetElement, todoData) {
+export default function TodoList(targetElement, todoData, onChange) {
   this.data = todoData
   this.todoElement = targetElement
 
@@ -10,7 +10,6 @@ export default function TodoList(targetElement, todoData) {
   this.render = function () {
     this.todoElement.innerHTML = this.data
       .map(list => {
-        console.log(list)
         return `${list.text ? `${list.isCompleted ? `<li><s>${list.text}</s></li>` : `<li><div>${list.text}</div></li>`}` : ``}`
       })
       .join('')
@@ -26,7 +25,7 @@ export default function TodoList(targetElement, todoData) {
         } else {
           currentData.isCompleted = true
         }
-        this.setState(this.data)
+        onChange(this.data)
       })
     })
   }
