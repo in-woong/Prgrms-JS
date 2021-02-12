@@ -23,9 +23,14 @@ function TodoList($target, initialState, toggleItem) {
       throw new Error('Data format is not supported')
     }
   }
-
+  // prettier-ignore
   this.render = () => {
-    const dataHTMLString = this.todoData.map((item, index) => '<div id="item">' + (item.isCompleted ? `<s>${item.text}</s>` : item.text) + `<button id="itemBtn" index="${index}">완료</button>` + '</div>').join('')
+    const dataHTMLString = this.todoData.map((item, index) => `
+      <div id="item">
+        ${item.isCompleted ? `<s>${item.text}</s>` : item.text}
+        <button button id = "itemBtn" index = "${index}">완료</button>
+      </div>
+    `).join('')
     $target.innerHTML = dataHTMLString
   }
 

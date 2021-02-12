@@ -45,11 +45,12 @@ function App() {
     this.todoCount.setState(newData)
   }
 
-  this.todoList = new TodoList(document.querySelector('#todo-list'), todoData, this.toggleItem)
+  const $todoList = document.querySelector('#todo-list')
+
+  this.todoList = new TodoList($todoList, todoData, this.toggleItem)
   this.todoInput = new TodoInput(document.querySelector('#todo-form'), this.addItem)
   this.todoCount = new TodoCount(document.querySelector('#todo-count'), todoData)
 
-  const $todoList = document.querySelector('#todo-list')
   const $removeAllBtn = document.querySelector('#todo-remove-all')
 
   const removeAllEvent = new Event('remove-all-items')

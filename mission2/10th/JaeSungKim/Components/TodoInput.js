@@ -5,10 +5,10 @@ function TodoInput($form, addItem) {
 
   this.render = () => {
     $form.innerHTML = `
-    <form>
-      <input id="todo-input" type="text" placeholder="앞으로 할 작업" />
-      <input id="todo-submit" type="submit" value="기록"/>
-    </form>
+      <form>
+        <input id="todo-input" type="text" placeholder="앞으로 할 작업" />
+        <input id="todo-submit" type="submit" value="기록"/>
+      </form>
     `
   }
 
