@@ -22,7 +22,7 @@ function App(targetElement, state) {
   this.todoList = new TodoList(todoElement, this.state, data => {
     this.state = data
     this.countData = new TodoCount(countElement, this.state)
-    this.todoList.setState(this.state)
+    //this.todoList.setState(this.state)
   })
 
   this.todoInput = new TodoInput(formElement, inputElement, text => {

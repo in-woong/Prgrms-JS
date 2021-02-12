@@ -9,24 +9,16 @@ export default function TodoList(targetElement, todoData, onChange) {
 
   this.render = function () {
     this.todoElement.innerHTML = this.data
-      .map(list => {
-        return `${list.text ? `${list.isCompleted ? `<li><s>${list.text}</s></li>` : `<li><div>${list.text}</div></li>`}` : ``}`
+      .map((list, idx) => {
+        return `${list.text ? `${list.isCompleted ? `<li id=${idx} class="completed">${list.text}</li>` : `<li id=${idx}>${list.text}</li>`}` : ``}`
       })
       .join('')
 
-    const listElements = document.querySelectorAll('li')
-
-    // list completed event
-    listElements.forEach((list, idx) => {
-      list.addEventListener('click', e => {
-        const currentData = this.data[idx]
-        if (currentData.isCompleted) {
-          currentData.isCompleted = false
-        } else {
-          currentData.isCompleted = true
-        }
-        onChange(this.data)
-      })
+    // remove todolist
+    this.todoElement.addEventListener('click', e => {
+      e.target.classList.toggle('completed')
+      const idx = e.target.id
+      this.data[idx].isCompleted = this.data[idx].isCompleted ? false : true
     })
   }
 
