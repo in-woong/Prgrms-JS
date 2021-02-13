@@ -1,3 +1,7 @@
+import { App } from "./App.js"
+
+new App();
+
 ;(function() {
   document
     .querySelector('#search-keyword')
