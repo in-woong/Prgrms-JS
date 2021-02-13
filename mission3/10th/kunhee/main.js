@@ -1,20 +1,42 @@
 import SearchInput from './component/SearchInput.js';
 import SearchHistory from './component/SearchHistory.js';
 import SearchApi from './repository/SearchApi.js';
+/*npx http-server -c -1*/
 
 function Main(){
   this.state = {
     stateInput:{},
     stateHistory:[]
   }//initialState
-  const $app = document.querySelector("#app")
 
+  const $app = document.querySelector("#app")
+  const $sec01 = $app.querySelector(".sec01")
+  const $sec02 = $app.querySelector(".sec02")
+
+   //render Input
   this.searchInput = new SearchInput({
-    $app,
+    $sec01,
+    initialState: this.state.stateInpute,
     onKeyup:(e) => {
       if (this.timer) {
         clearTimeout(this.timer);
       }
+
+      //peding 상태
+      const pendingState = 
+      Object.assign(
+        this.state,
+        Object.assign({},
+        {
+          stateInput:{
+            key:null,
+            result:"Loading..."
+          }
+        }),
+      )
+      this.setState(pendingState)
+
+      //비동기 시작
       this.timer = setTimeout(async () => {
         const keyword = e.target.value;
         await SearchApi(keyword)
@@ -37,32 +59,32 @@ function Main(){
                 stateInput:newSearchObject
               }),
               Object.assign({},
-                {
-                  stateHistory:[...this.state.stateHistory,newSearchObject]
-                })
+              {
+                stateHistory:[...this.state.stateHistory,newSearchObject]
+              })
             )
             this.setState(nextState)
          })
-         //document.querySelector('#search-result').innerHTML = "...Loading"
      }, 200);
     }
   })
 
+    //render History
   this.searchHistory = new SearchHistory({
-    $app,
-    initialState: this.state.stateHistory,
-    onClick: (index) => {
-      const nextState = 
-      Object.assign(
-        this.state,
-        Object.assign({},
-        {
-          stateInput:this.state.stateHistory[index]
-        })
-      )
-      this.setState(nextState)
-    },
-  });
+      $sec02,
+      initialState: this.state.stateHistory,
+      onClick: (index) => {
+        const nextState = 
+        Object.assign(
+          this.state,
+          Object.assign({},
+          {
+            stateInput:this.state.stateHistory[index]
+          })
+        )
+        this.setState(nextState)
+      },
+    });
 
   this.setState = (nextState) => {
     this.state = nextState

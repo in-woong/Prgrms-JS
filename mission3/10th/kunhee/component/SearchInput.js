@@ -1,12 +1,14 @@
-export default function SearchInput({$app,onKeyup}) {
-    this.state = {};
-    $app.innerHTML = `<input id="search-keyword" /><div id="search-result"></div>`
+export default function SearchInput({$sec01,initialState,onKeyup}) {
+    this.state = initialState;
+    $sec01.innerHTML = `<input id="search-keyword" /><div id="search-result"></div>`
     this.timer = null;
-    $app
+
+    $sec01
     .querySelector('#search-keyword')
     .addEventListener('keyup',(e)=>{
       onKeyup(e);
     })
+
     this.setState = function (nextState) {
       this.state = nextState
       this.render()
