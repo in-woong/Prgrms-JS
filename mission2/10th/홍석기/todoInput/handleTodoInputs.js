@@ -21,11 +21,11 @@ const addTodoList = (event) => {
 const addTodoListLocalStorage = (todo) => {
     const localStorageTodoElement = localStorage.getItem(constants.LOCALSTORAGE_TO_DO_KEY);
 
-    if(localStorageTodoElement) {
+    try{
         const localStorageTodoElementArray = JSON.parse(localStorageTodoElement);
         localStorageTodoElementArray.push(new dataFormat(todo, false));
         localStorage.setItem(constants.LOCALSTORAGE_TO_DO_KEY, JSON.stringify(localStorageTodoElementArray))
-    } else {
+    } catch {
         const localStorageNewArray = [];
         localStorageNewArray.push(new dataFormat(todo, false));
         localStorage.setItem(constants.LOCALSTORAGE_TO_DO_KEY, JSON.stringify(localStorageNewArray));

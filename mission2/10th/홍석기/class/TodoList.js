@@ -9,9 +9,11 @@ export default class TodoList {
 
     setLocalStorageData() {
         const localStorageTodoElement = localStorage.getItem(constants.LOCALSTORAGE_TO_DO_KEY);
-        if(localStorageTodoElement) {
+        try{
             const localStorageTodoElementArray = JSON.parse(localStorageTodoElement);
             this.todoData = localStorageTodoElementArray;
+        } catch(e) {
+            console.log("Initial State. There is no local Storage data.")
         }
     }
 
