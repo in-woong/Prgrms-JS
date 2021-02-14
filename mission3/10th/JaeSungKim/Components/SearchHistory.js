@@ -7,10 +7,10 @@ function SearchHistory({ $app, initialState, onHistoryClick, onHistoryClear }) {
   $historyTab.setAttribute('id', 'history-tab')
   $app.appendChild($historyTab)
 
-  const $deleteHistory = document.createElement('button')
-  $deleteHistory.setAttribute('id', 'history-clear-btn')
-  $deleteHistory.innerHTML = '히스토리 삭제'
-  $historyTab.appendChild($deleteHistory)
+  const $clearHistory = document.createElement('button')
+  $clearHistory.setAttribute('id', 'history-clear-btn')
+  $clearHistory.innerHTML = '히스토리 삭제'
+  $historyTab.appendChild($clearHistory)
 
   const $searchHistory = document.createElement('ul')
   $searchHistory.setAttribute('id', 'history-list')
@@ -37,7 +37,7 @@ function SearchHistory({ $app, initialState, onHistoryClick, onHistoryClear }) {
     onHistoryClick(clickedPrevInput)
   })
 
-  $deleteHistory.addEventListener('click', (e) => {
+  $clearHistory.addEventListener('click', (e) => {
     if (confirm('히스토리를 삭제 하시겠습니까?')) {
       onHistoryClear()
     }
