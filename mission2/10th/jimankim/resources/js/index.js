@@ -1,5 +1,4 @@
-
 import App from './app.js'
 
-const inintialState = JSON.parse( localStorage.getItem('todo') || '[]' ); 
-new App(document.querySelector('#app'), inintialState);
+const initialState = JSON.parse( localStorage.getItem('todo') || [] ); 
+new App(document.querySelector('#app'), initialState);

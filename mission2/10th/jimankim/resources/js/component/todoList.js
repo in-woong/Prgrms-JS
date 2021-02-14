@@ -24,29 +24,4 @@ export default function TodoList({ $app, initialState, onClick }) {
     this.onClick(index)
   })
 }
-
-// function TodoList({ $app, initialState, onClick }) {
-//     this.state = initialState
-//     this.onClick = onClick
-
-//     const $target = document.createElement('ul')
-//     $target.tagName = 'TodoList'
-//     $app.appendChild($target)
-
-//     this.$target = $target
-
-//     this.render = function() {
-
-//     }
-
-//     this.setState = function() {
-
-//     }
-
-//     this.render()
-
-//     this.$target.addEventListener('click', (e) => {
-
-//     })
-// }
   
