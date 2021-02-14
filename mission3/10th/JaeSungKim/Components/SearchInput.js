@@ -6,19 +6,23 @@ function SearchInput({ $app, onSearchInput }) {
   const $searchInput = document.createElement('input')
   $app.appendChild($searchInput)
 
-  let timer
   $searchInput.addEventListener('input', (e) => {
-    if (timer) {
-      clearTimeout(timer)
-    }
-    timer = setTimeout(() => {
-      const input = e.target.value
+    const input = e.target.value
+    debounce(() => {
       onSearchInput(input)
-    }, 800)
+    }, 600)
   })
 
   this.setState = (newInput) => {
     $searchInput.value = newInput
+  }
+
+  let timer
+  const debounce = (func, wait) => {
+    if (timer) {
+      clearTimeout(timer)
+    }
+    timer = setTimeout(func, wait)
   }
 }
 
