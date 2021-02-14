@@ -23,7 +23,7 @@ function App($app, initialState) {
     onHistoryClick: (prevInput) => {
       onSearch(prevInput)
     },
-    onHistoryDelete: () => {
+    onHistoryClear: () => {
       currentInput = ''
       this.state = {
         result: {},

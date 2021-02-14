@@ -1,6 +1,6 @@
-function SearchHistory({ $app, initialState, onHistoryClick, onHistoryDelete }) {
+function SearchHistory({ $app, initialState, onHistoryClick, onHistoryClear }) {
   if (!(this instanceof SearchHistory)) {
-    return new SearchHistory({ $app, initialState, onHistoryClick })
+    return new SearchHistory({ $app, initialState, onHistoryClick, onHistoryClear })
   }
 
   const $historyTab = document.createElement('div')
@@ -8,7 +8,7 @@ function SearchHistory({ $app, initialState, onHistoryClick, onHistoryDelete }) 
   $app.appendChild($historyTab)
 
   const $deleteHistory = document.createElement('button')
-  $deleteHistory.setAttribute('id', 'history-delete-btn')
+  $deleteHistory.setAttribute('id', 'history-clear-btn')
   $deleteHistory.innerHTML = '히스토리 삭제'
   $historyTab.appendChild($deleteHistory)
 
@@ -39,7 +39,7 @@ function SearchHistory({ $app, initialState, onHistoryClick, onHistoryDelete }) 
 
   $deleteHistory.addEventListener('click', (e) => {
     if (confirm('히스토리를 삭제 하시겠습니까?')) {
-      onHistoryDelete()
+      onHistoryClear()
     }
   })
 }
