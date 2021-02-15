@@ -6,17 +6,17 @@
 </head>
 
 <body style="background-color: black; color: white; font-family:sans-serif;">
-    <div>
-        <h2>
+    <section>
+        <h1>
             TODO LIST
-        </h2>
+        </h1>
         <div id="todo-list"></div>
-        <button id="translate" style="margin-top: 2em; background-color: violet; border-color: violet;">
+        <!-- <button style="margin-top: 2em; background-color: violet; border-color: violet;">
             Translate to Korean
-        </button>
+        </button> -->
         <div id="todo-day"></div>
         <div id="todo-week"></div>
-    </div>
+    </section>
 
     <script>
 
@@ -45,22 +45,14 @@
             }
             
             this.render = function(){
-                let list = ""
-                this.data.map((datum) => {
-                    // ================== appendChild version =================
-                    // var node = document.createElement("LI");
-                    // var textnode = document.createTextNode(datum.text);
-                    // node.appendChild(textnode);
-                    // document.getElementById('todo-list').appendChild(node);
-
-                    list += "<li>" + datum.text + "</li>"
-                    document.getElementById('todo-list').innerHTML = list;
-                });
+                document.querySelector('#todo-list').innerHTML = '<ul>' + this.data.map((todo) => {return `<li>${todo.text}</li>`}).join('') + '</ul>';
             }
+
+            this.render() // new 하면서 바로 렌더 실행 가능
         }
         
         var todoList = new TodoList(data)
-        todoList.render();
+        // todoList.render(); // function 내에서 render 호출 시 재호출 불필요
         
         var koreanVersion = [
             {
@@ -79,10 +71,10 @@
             }
         ]
 
-        
-        document.getElementById('translate').onclick = function(){
+        document.querySelector("button").onclick = function(){
             todoList.setState(koreanVersion);
         };        
+        
         </script>
 </body>
 
