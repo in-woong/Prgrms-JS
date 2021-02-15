@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <title>Mission 3 - 움짤검색기</title>
+    <meta charset="utf-8" />
+    <style>
+      form {
+        padding: 20px 0;
+        text-align: center;
+        background: #000;
+      }
+      .search-result {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-column-gap: 10px;
+        grid-row-gap: 10px;
+      }
+      .search-input {
+        width: 80%;
+        padding: 10px;
+      }
+      .img-container {
+        display: flex;
+        align-items: center;
+      }
+      .img-container img {
+        width: 100%;
+        height: auto;
+      }
+      .history-item {
+        cursor: pointer;
+      }
+      .content-box {
+        display: grid;
+        grid-template-columns: 1fr 240px;
+        padding: 0 30px;
+      }
+      .content-box ul {
+        position: fixed;
+        top: 100px;
+        right: 150px;
+      }
+      .content-box ul li:nth-of-type(n + 2) {
+        margin-top: 5px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="app"></div>
+    <script src="./js/main.js" type="module"></script>
+  </body>
+</html>
