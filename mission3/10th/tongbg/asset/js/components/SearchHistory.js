@@ -1,31 +1,26 @@
+import { isNew } from '../common/validateData.js'
+
 function SearchHistory({ targetDOM, initData, onHistory }) {
-  this.$targetDOM = targetDOM
-  this.searchHistory = initData
+  if (isNew(new.target)) {
+    this.$targetDOM = targetDOM
+    this.searchHistory = initData
 
-  this.$serchHistorytDOM = document.createElement('ul')
-  this.$serchHistorytDOM.id = 'search-history'
+    // 히스토리 목록 ul DOM 객체
+    this.$serchHistorytDOM = document.createElement('ul')
+    this.$serchHistorytDOM.id = 'search-history'
+    this.$serchHistorytDOM.addEventListener('mousedown', onHistory)
 
-  this.$targetDOM.appendChild(this.$serchHistorytDOM)
-
-  this.$serchHistorytDOM.addEventListener('mousedown', onHistory)
+    this.$targetDOM.appendChild(this.$serchHistorytDOM)
+  }
 
   this.setState = (newState) => {
-    // 5개까지만 가장 이전의 것 삭제
-    const keys = Object.keys(this.searchHistory)
-
-    if (this.searchHistory[newState] !== undefined) {
-      delete this.searchHistory[newState]
-    } else if (keys.length >= 5) {
-      delete this.searchHistory[keys[0]]
-    }
-
-    this.searchHistory[newState] = newState
-
+    this.searchHistory = newState
     this.render()
   }
 
+  // 가장 최근것부터 위에서 아래로 나열
   this.render = () => {
-    this.$serchHistorytDOM.innerHTML = Object.keys(this.searchHistory)
+    this.$serchHistorytDOM.innerHTML = [...this.searchHistory]
       .reverse()
       .map((historyData) => `<li>${historyData}</li>`)
       .join('')
