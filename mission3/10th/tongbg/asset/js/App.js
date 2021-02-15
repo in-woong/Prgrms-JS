@@ -15,15 +15,14 @@ function App($appDOM) {
 
   this.$appDOM.appendChild(this.$innerDOM)
 
-  const getImage = async (url) => {
+  const getImage = async (url, searchStr) => {
     const response = await fetch(url)
 
     if (response.ok) {
       try {
         const jsonData = await response.json()
-        // const searchString =
-        console.log(document.querySelector('#search-input').value)
         this.setState(jsonData)
+        this.searchInput.setState(searchStr)
       } catch {
         this.setState([])
       }
@@ -39,15 +38,33 @@ function App($appDOM) {
       return
     }
 
-    const url = `https://jjalbot.com/api/jjals?text=${e.target.value}`
+    const searchStr = e.target.value
+    const url = `https://jjalbot.com/api/jjals?text=${searchStr}`
 
+    // Enter 입력시 바로 검색
+    if (e.key === 'Enter') {
+      clearTimeout(this.timer)
+      getImage(url, searchStr)
+      return
+    }
+
+    // 디바운스 처리
     if (this.timer) {
       clearTimeout(this.timer)
     }
 
+    // 디바운스 처리 - 1초 후 검색 세팅
     this.timer = setTimeout(() => {
-      getImage(url)
+      getImage(url, searchStr)
     }, 1000)
+  }
+
+  // history 클릭시 검색
+  const onHistory = (e) => {
+    const searchStr = e.target.innerText
+    document.querySelector('#search-input').value = searchStr
+
+    getImage(`https://jjalbot.com/api/jjals?text=${searchStr}`, searchStr)
   }
 
   this.setState = (newState) => {
@@ -55,7 +72,7 @@ function App($appDOM) {
     this.searchResult.setState(this.searchData)
   }
 
-  this.searchInput = new SearchInput({ targetDOM: this.$innerDOM, onSearchInput })
+  this.searchInput = new SearchInput({ targetDOM: this.$innerDOM, onSearchInput, onHistory })
   this.searchResult = new SearchResult({ targetDOM: this.$innerDOM, initData: this.searchData })
 }
 
