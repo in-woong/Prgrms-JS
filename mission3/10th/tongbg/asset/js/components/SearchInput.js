@@ -1,8 +1,10 @@
-function SearchInput({ $appDOM, onSearchInput }) {
-  this.$searchInput = document.createElement('input')
-  this.$searchInput.id = 'search-result'
+function SearchInput({ targetDOM, onSearchInput }) {
+  this.$targetDOM = targetDOM
 
-  $appDOM.appendChild(this.$searchInput)
+  this.$searchInput = document.createElement('input')
+  this.$searchInput.id = 'search-input'
+
+  this.$targetDOM.appendChild(this.$searchInput)
   this.$searchInput.addEventListener('keyup', onSearchInput)
 
   this.setState = () => {}

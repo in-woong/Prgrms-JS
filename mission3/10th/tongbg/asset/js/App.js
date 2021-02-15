@@ -8,7 +8,12 @@ function App($appDOM) {
   this.timer = ''
 
   this.$appDOM = $appDOM
-  $appDOM.innerHTML = `<div>움짤 검색기</div>`
+
+  this.$innerDOM = document.createElement('div')
+  this.$innerDOM.className = 'inner'
+  this.$innerDOM.innerHTML = `<h1>움짤 검색기</h1>`
+
+  this.$appDOM.appendChild(this.$innerDOM)
 
   const getImage = async (url) => {
     const response = await fetch(url)
@@ -16,6 +21,8 @@ function App($appDOM) {
     if (response.ok) {
       try {
         const jsonData = await response.json()
+        // const searchString =
+        console.log(document.querySelector('#search-input').value)
         this.setState(jsonData)
       } catch {
         this.setState([])
@@ -34,8 +41,6 @@ function App($appDOM) {
 
     const url = `https://jjalbot.com/api/jjals?text=${e.target.value}`
 
-    console.log(this.timer)
-
     if (this.timer) {
       clearTimeout(this.timer)
     }
@@ -50,8 +55,8 @@ function App($appDOM) {
     this.searchResult.setState(this.searchData)
   }
 
-  this.searchInput = new SearchInput({ $appDOM, onSearchInput })
-  this.searchResult = new SearchResult({ $appDOM, initData: this.searchData })
+  this.searchInput = new SearchInput({ targetDOM: this.$innerDOM, onSearchInput })
+  this.searchResult = new SearchResult({ targetDOM: this.$innerDOM, initData: this.searchData })
 }
 
 export default App

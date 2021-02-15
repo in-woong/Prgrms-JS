@@ -1,0 +1,69 @@
+/* COMMON */
+
+body {
+  background-color: #2f3437;
+}
+
+h1 {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 4em;
+  margin: 1em 0;
+  text-align: center;
+}
+
+.inner {
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+/* App */
+
+/* SEARCH COMPONETS */
+#search-input {
+  width: 100%;
+  padding: 0.5em;
+  font-size: 1.7em;
+  border: none;
+  border-bottom: 1px solid #555;
+
+  position: sticky;
+  top: 10px;
+}
+
+#search-result {
+  width: 100%;
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: 10px;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  place-items: center;
+}
+
+#search-result > img {
+  max-width: 200px;
+  height: 200px;
+  margin: 10px;
+}
+
+/* MEDIA */
+@media screen and (max-width: 500px) {
+  h1 {
+    font-size: 3em;
+  }
+
+  #search-result {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .inner {
+    max-width: 620px;
+  }
+
+  #search-result > img {
+    max-width: 250px;
+    height: 250px;
+  }
+}
