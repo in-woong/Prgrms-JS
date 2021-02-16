@@ -1,7 +1,6 @@
 import { $ } from '../util/index.js'
 
 function SearchResult(data, target) {
-    console.log("resultJS")
     this.init = () => {
         this.$element = $(target)
         this.data = data || []

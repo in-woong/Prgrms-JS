@@ -89,11 +89,12 @@ const dummyData = [
         "https://storage.googleapis.com/jjalbot-jjals/2018/12/_I2hnE8FGS/zzal.gif"
     }
   ]
+  
 
 function App(target) { //'#app'
     this.init = () => {
         this.$element = $(target)
-        this.data = dummyData
+        this.data = null
         this.SearchInput = new SearchInput({
             target: "#search-keyword",
             onChange: this.onChange
