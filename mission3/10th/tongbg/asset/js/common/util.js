@@ -1,3 +1,5 @@
+// import { ERROR_MSG } from './common/ERROR_MSG.js'
+
 const getBackUpTodo = (key, defaultValue) => {
   try {
     const storedValue = window.localStorage.getItem(key)
@@ -24,4 +26,21 @@ const focusDOM = (query) => {
   document.querySelector(query).focus()
 }
 
-export { getBackUpTodo, setBackUpTodo, getDOM, focusDOM }
+// API 호출 및 검색어 히스토리 저장
+const getImage = async (searchStr) => {
+  const url = `https://jjalbot.com/api/jjals?text=${searchStr}`
+  const response = await fetch(url)
+
+  if (response.ok) {
+    try {
+      return await response.json()
+    } catch (e) {
+      // throw new Error(ERROR_MSG.JSON_PARSE_ERROR)
+      return []
+    }
+  } else {
+    throw new Error(ERROR_MSG.NETWORK_NOT_OK)
+  }
+}
+
+export { getBackUpTodo, setBackUpTodo, getDOM, focusDOM, getImage }

@@ -21,7 +21,7 @@ function SearchResult({ targetDOM, initData }) {
     if (this.searchResultData.length === 0) {
       this.$serchResultDOM.innerHTML = `<p>해당하는 검색결과가 없습니다.</p>`
     } else {
-      const htmlString = `${this.searchResultData.map((d) => (d.imageUrl ? `<img src="${d.imageUrl}">` : ``)).join('')}`
+      const htmlString = `${this.searchResultData.map((data) => (data.imageUrl ? `<img src="${data.imageUrl}">` : ``)).join('')}`
       this.$serchResultDOM.innerHTML = htmlString
     }
   }

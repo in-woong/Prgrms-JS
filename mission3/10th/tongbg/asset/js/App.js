@@ -1,17 +1,17 @@
-import { ERROR_MSG } from './common/ERROR_MSG.js'
 import { isNew } from './common/validateData.js'
-import { getBackUpTodo, setBackUpTodo } from './common/util.js'
+import { getBackUpTodo, setBackUpTodo, getImage } from './common/util.js'
 
 import SearchInput from './components/SearchInput.js'
 import SearchResult from './components/SearchResult.js'
 
 const STORED_KEY = 'searchHistory'
+const MAX_KEYWORD_COUNT = 5
 
 function App($appDOM) {
   if (isNew(new.target)) {
     this.searchResultData = []
     this.searchHistory = getBackUpTodo(STORED_KEY, new Set())
-    this.timer = ''
+    this.timerId = ''
 
     this.$appDOM = $appDOM
 
@@ -22,60 +22,46 @@ function App($appDOM) {
     this.$appDOM.appendChild(this.$innerDOM)
   }
 
-  // API 호출 및 검색어 히스토리 저장
-  const getImage = async (searchStr) => {
-    const url = `https://jjalbot.com/api/jjals?text=${searchStr}`
-    const response = await fetch(url)
-
-    if (response.ok) {
-      try {
-        const jsonData = await response.json()
-        this.setState(jsonData, searchStr)
-      } catch (e) {
-        console.log(e.message)
-        this.setState([])
-      }
-    } else {
-      throw new Error(ERROR_MSG.NETWORK_NOT_OK)
-    }
-  }
-
   // input debounce
   const onKeyupInput = (e) => {
-    // input 검색어가 없는 경우
-    if (!e.target.value) {
-      clearTimeout(this.timer)
-      this.setState([])
-      return
-    }
-
     const searchStr = e.target.value.trim()
 
-    // Enter 입력시 바로 검색
+    // Enter 입력시 바로 검색, 검색어가 없는 경우는 동작하지 않음
     if (e.key === 'Enter') {
-      clearTimeout(this.timer)
-      document.querySelector('#search-input').value = searchStr
-      searchStr && getImage(searchStr)
+      clearTimeout(this.timerId)
+      e.target.value = searchStr
+
+      searchStr &&
+        getImage(searchStr).then((jsonData) => {
+          this.setState(jsonData, searchStr)
+        })
+
       return
     }
 
     // 디바운스 처리
-    if (this.timer) {
-      clearTimeout(this.timer)
+    if (this.timerId) {
+      clearTimeout(this.timerId)
     }
 
     // 1초 후 검색 세팅
-    this.timer = setTimeout(() => {
-      searchStr && getImage(searchStr)
+    this.timerId = setTimeout(() => {
+      searchStr &&
+        getImage(searchStr).then((jsonData) => {
+          this.setState(jsonData, searchStr)
+        })
     }, 1000)
   }
 
   // history 클릭시 검색
   const onClickHistory = (e) => {
-    const searchStr = e.target.innerText.trim()
+    const searchStr = e.target.innerText
     document.querySelector('#search-input').value = searchStr
 
-    searchStr && getImage(searchStr)
+    searchStr &&
+      getImage(searchStr).then((jsonData) => {
+        this.setState(jsonData, searchStr)
+      })
   }
 
   this.setState = (newState, searchStr) => {
@@ -86,7 +72,7 @@ function App($appDOM) {
     if (searchStr !== undefined) {
       if (this.searchHistory.has(searchStr)) {
         this.searchHistory.delete(searchStr)
-      } else if (this.searchHistory.size >= 5) {
+      } else if (this.searchHistory.size >= MAX_KEYWORD_COUNT) {
         this.searchHistory.delete([...this.searchHistory][0])
       }
       this.searchHistory.add(searchStr)

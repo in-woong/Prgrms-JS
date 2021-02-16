@@ -41,7 +41,7 @@ h1 {
   margin: 0;
   padding: 0;
   list-style: none;
-  border-radius: 0 0 10px 10px;
+  border-radius: 0 0 5px 5px;
 }
 
 #search-history.on {
@@ -50,6 +50,14 @@ h1 {
 
 #search-history li {
   padding: 10px;
+}
+
+#search-history li:hover {
+  background-color: salmon;
+}
+
+#search-history li:last-child {
+  border-radius: 0 0 5px 5px;
 }
 
 #search-result {
