@@ -15,12 +15,17 @@ export default function App($target) {
     searhInput: new SearchInput({
       $target: $form,
       onSearch: async (keyword) => {
-        const nextHistories = [...this.state.searchHistories].concat([keyword])
         const searchResults = await fetchJjal(keyword)
-        console.log(nextHistories)
+        const nextHistories = () => {
+          if (![...this.state.searchHistories].includes(keyword)) {
+            return [...this.state.searchHistories].concat([keyword])
+          } else {
+            return [...this.state.searchHistories]
+          }
+        }
         this.setState({
           searchResults,
-          searchHistories: nextHistories,
+          searchHistories: nextHistories(),
         })
       },
     }),
@@ -34,6 +39,10 @@ export default function App($target) {
         const searchResults = await fetchJjal(clickedItem)
         const searchHistories = [...this.state.searchHistories]
         this.setState({ searchResults, searchHistories })
+      },
+      removeHistoryItem: (itemIndex) => {
+        const nextHistories = [...this.state.searchHistories].filter((target) => target !== this.state.searchHistories[itemIndex])
+        this.setState({ searchHistories: nextHistories })
       },
     }),
   }

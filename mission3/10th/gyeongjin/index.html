@@ -27,6 +27,15 @@
         height: auto;
       }
       .history-item {
+        display: flex;
+        cursor: pointer;
+      }
+      .history-item button {
+        margin-right: 20px;
+        margin-left: auto;
+        border: none;
+        border-radius: 50%;
+        color: #999;
         cursor: pointer;
       }
       .content-box {
@@ -37,7 +46,8 @@
       .content-box ul {
         position: fixed;
         top: 100px;
-        right: 150px;
+        right: 0;
+        width: 250px;
       }
       .content-box ul li:nth-of-type(n + 2) {
         margin-top: 5px;
