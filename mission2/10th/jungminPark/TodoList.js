@@ -11,7 +11,7 @@ const validateData = (data) => {
     }
 }
 
-function TodoList(initialState, $target){
+function TodoList({ $app, initialState, onClick }){
     this.validation = () => {
         this.state = initialState
 
@@ -21,35 +21,47 @@ function TodoList(initialState, $target){
 
         validateData(this.state)
     }
-    this.render = () => {
-        todoItem = this.state.map(item => item.isCompleted ? `<li><s>${item.text}</s></li>` : `<li>${item.text}</li>`).join('\n')
-        todoItem = '<ul>' + todoItem + '</ul>'
-        $target.innerHTML = todoItem
+
+    this.validation()
+    this.onClick = onClick
+
+    const $target = document.createElement('ul')
+    $target.className = 'TodoList'
+    $app.appendChild($target)
+
+    this.$target = $target
+
+    
+
+    this.render = function() {
+        this.$target.innerHTML = this.state
+        .map(
+          ({ text, isCompleted }, index) =>
+            `<li data-index="${index}" class="list">${
+              isCompleted ? `<s>${text}</s>` : text
+            }</li>`
+        ).join('')
+    
+    
+        const $lis = this.$target.querySelectorAll('li')
+
+        $lis.forEach(($li) => {
+            $li.addEventListener('click', (e) => {
+                const index = parseInt(e.target.closest('li').dataset.index)
+                this.onClick(index)
+
+            })
+        })
     } 
 
-    this.setState = (nextState) => {
+    this.setState = function(nextState) {
          this.validation(nextState)
          this.state = nextState
          this.render()
     }
 
-    this.validation()
     this.render()
-}
 
-const $addTarget = document.querySelector("#todo-add")
-function submit() {
-    if($addTarget.value === 0){
-            alert(NO_MESSAGE)
-    }
-    else{
-        addNewItem($addTarget.value)
-    }
-}
-
-function addNewItem(value){
-    this.todo = [{text : value, isCompleted : false}, ...this.todo]
-    this.render()
 }
 
 const ERROR_MESSAGE = {

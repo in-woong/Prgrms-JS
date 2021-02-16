@@ -17,4 +17,4 @@ const todo = [
   },
   ]
 
-const todoList = new TodoList(todo, document.querySelector('#todo-list'))
+new App(document.querySelector("#app"), todo)
