@@ -41,17 +41,6 @@ function TodoList({ $app, initialState, onClick }){
               isCompleted ? `<s>${text}</s>` : text
             }</li>`
         ).join('')
-    
-    
-        const $lis = this.$target.querySelectorAll('li')
-
-        $lis.forEach(($li) => {
-            $li.addEventListener('click', (e) => {
-                const index = parseInt(e.target.closest('li').dataset.index)
-                this.onClick(index)
-
-            })
-        })
     } 
 
     this.setState = function(nextState) {
@@ -61,6 +50,11 @@ function TodoList({ $app, initialState, onClick }){
     }
 
     this.render()
+
+    this.$target.addEventListener('click', (e) => {
+        const index = parseInt(e.target.closest('li').dataset.index)
+        this.onClick(index)
+    })
 
 }
 

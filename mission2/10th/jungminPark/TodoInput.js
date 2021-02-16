@@ -2,6 +2,7 @@ const ENTER_KEY_CODE = 13
 
 function TodoInput({$app, onTodoInput}){
     const $todoInput = document.createElement('input')
+    $todoInput.placeholder = 'Enter the work!'
 
         $app.appendChild($todoInput)
 
