@@ -1,3 +1,4 @@
+import debounce from '../util/debounce.js'
 import { $ } from '../util/index.js'
 
 function SearchInput({ target, onChange }) {
@@ -8,17 +9,17 @@ function SearchInput({ target, onChange }) {
     }
 
     this.bindEvents = () => {
-        this.$element.addEventListener('keyup', this.onKeyup)
-    }
-
-    this.onKeyup = e => {
-        this.setState(e.target.value)
-        console.log(e.target.value)
-        onChange(this.inputValue)
+        this.$element.addEventListener('keyup', (e) => {
+            debounce(() => {
+                this.setState(e.target.value)
+                onChange(this.inputValue)
+            },1000)
+        })
     }
 
     this.setState = value => {
         this.inputValue = value
+        this.$element.value = value
     }
 
     this.init()
