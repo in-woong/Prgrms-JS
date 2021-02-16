@@ -22,11 +22,11 @@ ul{
     text-align: center;
 }
 
-#addButton{
+button{
     text-align : center;
     background-color : aliceblue;
 }
-#addButton:hover{
+button:hover{
     background-color: beige;
     color : black;
 }
