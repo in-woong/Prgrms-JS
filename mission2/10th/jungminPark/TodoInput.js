@@ -7,16 +7,16 @@ function TodoInput({$app, onTodoInput}){
     const $addButton = document.createElement('button')
     $addButton.textContent = 'ADD'
     
-        $app.appendChild($todoInput)
-        $app.appendChild($addButton)
+    $app.appendChild($todoInput)
+    $app.appendChild($addButton)
 
-        $todoInput.addEventListener('keydown', (e) => {
-            if(e.keyCode === ENTER_KEY_CODE){
-                onTodoInput(e.target.value)
-                e.target.value = ''
+    $todoInput.addEventListener('keydown', (e) => {
+        if(e.keyCode === ENTER_KEY_CODE){
+            onTodoInput(e.target.value)
+            e.target.value = ''
 
-            }
-        })
+        }
+    })
 
-        this.render = () => {}
-    }
+    this.render = () => {}
+}
