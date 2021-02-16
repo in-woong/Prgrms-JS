@@ -9,7 +9,7 @@ const STORED_KEY = 'searchHistory'
 
 function App($appDOM) {
   if (isNew(new.target)) {
-    this.searchData = []
+    this.searchResultData = []
     this.searchHistory = getBackUpTodo(STORED_KEY, new Set())
     this.timer = ''
 
@@ -23,7 +23,8 @@ function App($appDOM) {
   }
 
   // API 호출 및 검색어 히스토리 저장
-  const getImage = async (url, searchStr) => {
+  const getImage = async (searchStr) => {
+    const url = `https://jjalbot.com/api/jjals?text=${searchStr}`
     const response = await fetch(url)
 
     if (response.ok) {
@@ -40,7 +41,7 @@ function App($appDOM) {
   }
 
   // input debounce
-  const onSearchInput = (e) => {
+  const onKeyupInput = (e) => {
     // input 검색어가 없는 경우
     if (!e.target.value) {
       clearTimeout(this.timer)
@@ -48,13 +49,13 @@ function App($appDOM) {
       return
     }
 
-    const searchStr = e.target.value
-    const url = `https://jjalbot.com/api/jjals?text=${searchStr}`
+    const searchStr = e.target.value.trim()
 
     // Enter 입력시 바로 검색
     if (e.key === 'Enter') {
       clearTimeout(this.timer)
-      getImage(url, searchStr)
+      document.querySelector('#search-input').value = searchStr
+      searchStr && getImage(searchStr)
       return
     }
 
@@ -65,21 +66,21 @@ function App($appDOM) {
 
     // 1초 후 검색 세팅
     this.timer = setTimeout(() => {
-      getImage(url, searchStr)
+      searchStr && getImage(searchStr)
     }, 1000)
   }
 
   // history 클릭시 검색
-  const onHistory = (e) => {
-    const searchStr = e.target.innerText
+  const onClickHistory = (e) => {
+    const searchStr = e.target.innerText.trim()
     document.querySelector('#search-input').value = searchStr
 
-    getImage(`https://jjalbot.com/api/jjals?text=${searchStr}`, searchStr)
+    searchStr && getImage(searchStr)
   }
 
   this.setState = (newState, searchStr) => {
-    this.searchData = newState
-    this.searchResult.setState(this.searchData)
+    this.searchResultData = newState
+    this.searchResult.setState(this.searchResultData)
 
     // searchHistory 5개까지만, 가장 이전의 것 삭제
     if (searchStr !== undefined) {
@@ -97,8 +98,8 @@ function App($appDOM) {
 
   this.render = () => {}
 
-  this.searchInput = new SearchInput({ targetDOM: this.$innerDOM, initData: this.searchHistory, onSearchInput, onHistory })
-  this.searchResult = new SearchResult({ targetDOM: this.$innerDOM, initData: this.searchData })
+  this.searchInput = new SearchInput({ targetDOM: this.$innerDOM, initData: this.searchHistory, onKeyupInput, onClickHistory })
+  this.searchResult = new SearchResult({ targetDOM: this.$innerDOM, initData: this.searchResultData })
 }
 
 export default App

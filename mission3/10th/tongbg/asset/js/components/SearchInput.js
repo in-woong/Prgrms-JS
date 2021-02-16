@@ -1,7 +1,7 @@
 import { isNew } from '../common/validateData.js'
 import SearchHistory from './SearchHistory.js'
 
-function SearchInput({ targetDOM, initData, onSearchInput, onHistory }) {
+function SearchInput({ targetDOM, initData, onKeyupInput, onClickHistory }) {
   if (isNew(new.target)) {
     this.$targetDOM = targetDOM
 
@@ -25,7 +25,7 @@ function SearchInput({ targetDOM, initData, onSearchInput, onHistory }) {
     })
 
     // 입력시 debounce API 호출
-    this.$searchInput.addEventListener('keyup', onSearchInput)
+    this.$searchInput.addEventListener('keyup', onKeyupInput)
   }
 
   this.setState = (newState) => {
@@ -35,7 +35,7 @@ function SearchInput({ targetDOM, initData, onSearchInput, onHistory }) {
   this.render = () => {}
 
   // 히스토리 컴포넌트 생성
-  this.searchHistory = new SearchHistory({ targetDOM: this.$searchWarp, initData, onHistory })
+  this.searchHistory = new SearchHistory({ targetDOM: this.$searchWarp, initData, onClickHistory })
 }
 
 export default SearchInput

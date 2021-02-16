@@ -1,6 +1,6 @@
 import { isNew } from '../common/validateData.js'
 
-function SearchHistory({ targetDOM, initData, onHistory }) {
+function SearchHistory({ targetDOM, initData, onClickHistory }) {
   if (isNew(new.target)) {
     this.$targetDOM = targetDOM
     this.searchHistory = initData
@@ -8,7 +8,7 @@ function SearchHistory({ targetDOM, initData, onHistory }) {
     // 히스토리 목록 ul DOM 객체
     this.$serchHistorytDOM = document.createElement('ul')
     this.$serchHistorytDOM.id = 'search-history'
-    this.$serchHistorytDOM.addEventListener('mousedown', onHistory)
+    this.$serchHistorytDOM.addEventListener('mousedown', onClickHistory)
 
     this.$targetDOM.appendChild(this.$serchHistorytDOM)
   }
