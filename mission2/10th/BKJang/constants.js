@@ -5,5 +5,7 @@ export const ERROR_IS_ARRAY = 'TodoList가 배열이 아닙니다.';
 export const ERROR_IS_CORRECT = '잘못된 데이터입니다.';
 export const ERROR_IS_NEW_KEYWORD = '인스턴스 생성시 new 키워드를 사용해주세요.';
 export const ERROR_PLEASE_ENTER_TODO = '할 일을 입력하세요.';
+export const ERROR_GET_ITEM_IN_LOCALSTORAGE = 'local storage에서 데이터를 가져오는동안 에러가 발생했습니다.';
+export const ERROR_SET_ITEM_IN_LOCALSTORAGE = 'local storage에 데이터를 세팅하는동안 에러가 발생했습니다.';
 
 export const KEY_CODE_ENTER = 13;

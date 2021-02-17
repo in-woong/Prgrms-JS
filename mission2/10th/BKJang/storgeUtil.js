@@ -1,3 +1,5 @@
+import { ERROR_GET_ITEM_IN_LOCALSTORAGE, ERROR_SET_ITEM_IN_LOCALSTORAGE } from './constants.js';
+
 const encode = value => {
   if (!window.btoa || !window.encodeURIComponent) return '';
 
@@ -14,15 +16,17 @@ export const getItem = (
   key,
   isEncoded = true,
 ) => {
-  if (!window.localStorage) return;
+  try {
+    const plainData = window.localStorage.getItem(key);
 
-  const plainData = window.localStorage.getItem(key);
+    if (!plainData) return [];
 
-  if (!plainData) return [];
+    const decodedData = isEncoded ? decode(plainData) : plainData;
 
-  const decodedData = isEncoded ? decode(plainData) : plainData;
-
-  return JSON.parse(decodedData);
+    return JSON.parse(decodedData);
+  } catch (error) {
+    console.error(ERROR_GET_ITEM_IN_LOCALSTORAGE, error);
+  }
 };
 
 export const setItem = (
@@ -30,11 +34,13 @@ export const setItem = (
   value,
   isEncoded = true,
 ) => {
-  if (!window.localStorage) return;
+  try {
+    const stringifiedData = isEncoded
+      ? encode(JSON.stringify(value))
+      : JSON.stringify(value);
 
-  const stringifiedData = isEncoded
-    ? encode(JSON.stringify(value))
-    : JSON.stringify(value);
-
-  window.localStorage.setItem(key, stringifiedData);
+    window.localStorage.setItem(key, stringifiedData);
+  } catch (error) {
+    console.error(ERROR_SET_ITEM_IN_LOCALSTORAGE, error);
+  }
 };
