@@ -1,5 +1,3 @@
-// import { ERROR_MSG } from './common/ERROR_MSG.js'
-
 const getBackUpTodo = (key, defaultValue) => {
   try {
     const storedValue = window.localStorage.getItem(key)
@@ -18,25 +16,20 @@ const setBackUpTodo = (key, value) => {
   }
 }
 
-// API 호출 및 검색어 히스토리 저장
-const getImage = async (searchStr) => {
-  const url = `https://jjalbot.com/api/jjals?text=${searchStr}`
-  const response = await fetch(url)
-
-  if (response.ok) {
-    try {
-      return await response.json()
-    } catch (e) {
-      // throw new Error(ERROR_MSG.JSON_PARSE_ERROR)
-      return []
-    }
-  } else {
-    throw new Error(ERROR_MSG.NETWORK_NOT_OK)
-  }
-}
-
 const isExceptionKey = (key) => {
   return ['CapsLock', 'Shift', 'Control', 'Meta', 'Alt', 'Home', 'End', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'HangulMode', 'Escape'].indexOf(key) === -1 ? false : true
 }
 
-export { getBackUpTodo, setBackUpTodo, getImage, isExceptionKey }
+//디바운스 처리
+function debounce(targetFunction, debounceTime) {
+  if (this.timerId) {
+    clearTimeout(this.timerId)
+  }
+
+  // 1초 후 검색 세팅
+  this.timerId = setTimeout(() => {
+    targetFunction(document.querySelector('#search-input').value.trim())
+  }, debounceTime)
+}
+
+export { getBackUpTodo, setBackUpTodo, isExceptionKey, debounce }

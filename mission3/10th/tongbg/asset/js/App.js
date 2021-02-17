@@ -1,5 +1,5 @@
 import { isNew } from './common/validateData.js'
-import { getBackUpTodo, setBackUpTodo, getImage, isExceptionKey } from './common/util.js'
+import { getBackUpTodo, setBackUpTodo, isExceptionKey, debounce } from './common/util.js'
 
 import SearchInput from './components/SearchInput.js'
 import SearchResult from './components/SearchResult.js'
@@ -25,47 +25,43 @@ function App($appDOM) {
 
   const fetchAPI = (searchStr) => {
     document.querySelector('#search-input').value = searchStr
-    clearTimeout(this.timerId)
+    searchStr && getImage(searchStr)
+  }
 
-    searchStr &&
-      getImage(searchStr).then((jsonData) => {
+  // API 호출 및 검색어 히스토리 저장
+  const getImage = async (searchStr) => {
+    const url = `https://jjalbot.com/api/jjals?text=${searchStr}`
+    const response = await fetch(url)
+
+    if (response.ok) {
+      try {
+        const jsonData = await response.json()
         this.setState(jsonData, searchStr)
-      })
-  }
-
-  const debounce = (fetchAPI, debounceTime, initStr) => {
-    // 디바운스 처리
-    let searchStr = initStr
-
-    if (this.timerId) {
-      clearTimeout(this.timerId)
+      } catch {
+        throw new Error(ERROR_MSG.JSON_PARSE_ERROR)
+      }
+    } else {
+      throw new Error(ERROR_MSG.NETWORK_NOT_OK)
     }
-
-    // 1초 후 검색 세팅
-    this.timerId = setTimeout(() => {
-      fetchAPI(searchStr)
-    }, debounceTime)
   }
 
-  // input debounce
+  // input 키보드 입력
   const onKeyupInput = (e) => {
     if (isExceptionKey(e.key)) return
 
-    const searchStr = e.target.value.trim()
-
     // Enter 입력시 바로 검색, 검색어가 없는 경우는 동작하지 않음
     if (e.key === 'Enter') {
-      fetchAPI(searchStr)
-      return
+      return fetchAPI(document.querySelector('#search-input').value.trim())
     }
 
-    debounce(fetchAPI, DEBOUNCE_TIME, searchStr)
+    debounce.call(this, fetchAPI, DEBOUNCE_TIME)
   }
 
   // history 클릭시 검색
   const onClickHistory = (e) => {
     const searchStr = e.target.innerText
-    fetchAPI(searchStr)
+    document.querySelector('#search-input').value = searchStr
+    getImage(searchStr)
   }
 
   this.setState = (newState, searchStr) => {
@@ -73,17 +69,15 @@ function App($appDOM) {
     this.searchResult.setState(this.searchResultData)
 
     // searchHistory 5개까지만, 가장 이전의 것 삭제
-    if (searchStr !== undefined) {
-      if (this.searchHistory.has(searchStr)) {
-        this.searchHistory.delete(searchStr)
-      } else if (this.searchHistory.size >= MAX_KEYWORD_COUNT) {
-        this.searchHistory.delete([...this.searchHistory][0])
-      }
-      this.searchHistory.add(searchStr)
-
-      this.searchInput.setState(this.searchHistory)
-      setBackUpTodo(STORED_KEY, [...this.searchHistory])
+    if (this.searchHistory.has(searchStr)) {
+      this.searchHistory.delete(searchStr)
+    } else if (this.searchHistory.size >= MAX_KEYWORD_COUNT) {
+      this.searchHistory.delete([...this.searchHistory][0])
     }
+    this.searchHistory.add(searchStr)
+
+    this.searchInput.setState(this.searchHistory)
+    setBackUpTodo(STORED_KEY, [...this.searchHistory])
   }
 
   this.render = () => {}
