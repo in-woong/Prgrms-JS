@@ -42,7 +42,8 @@ export default function App($target) {
       },
       removeHistoryItem: (itemIndex) => {
         const nextHistories = [...this.state.searchHistories].filter((target) => target !== this.state.searchHistories[itemIndex])
-        this.setState({ searchHistories: nextHistories })
+        const searchResults = [...this.state.searchResults]
+        this.setState({ searchHistories: nextHistories, searchResults })
       },
     }),
   }

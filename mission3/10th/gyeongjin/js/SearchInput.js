@@ -11,7 +11,7 @@ export default function SearchInput({ $target, onSearch }) {
   this.target = $searchInput
 
   this.initEvent = () => {
-    $target.addEventListener('keyup', (e) => {
+    $target.addEventListener('submit', (e) => {
       e.preventDefault()
       debounce(async () => {
         if (this.target.value.length > 0) {
