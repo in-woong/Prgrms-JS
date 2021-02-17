@@ -6,5 +6,6 @@ export const ERROR_IS_ARRAY = '움짤리스트가 배열이 아닙니다.';
 export const ERROR_IS_CORRECT = '잘못된 데이터입니다.';
 export const ERROR_PLEASE_ENTER_TODO = '할 일을 입력하세요.';
 
-export const KEY_CODE_ENTER = 13;
+export const DEBOUNCE_DELAY_TIME = 200;
+
 export const GET_JJALS_API_URI = 'https://jjalbot.com/api/jjals';
