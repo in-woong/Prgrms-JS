@@ -1,6 +1,6 @@
-//import debounce from '../debounce.js'
+import debounce from '../debounce.js'
 let timer = null;
-const debounce = (func, wait) => {
+const debounce2 = (func, wait) => {
   if (timer) {
     clearTimeout(timer)
   }
