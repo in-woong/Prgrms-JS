@@ -7,11 +7,20 @@
 
     <body>
         <div id="app">
-            <input id="search-keyword" />
-            <ul id="search-result"></ul>
-            <ul id="search-history"></ul>
+            <div class="header">
+                <input id="search-keyword"/>
+            </div>
+            <div class="container">
+                <div class="result">
+                    <ul id="search-result"></ul>
+                </div>
+                <div class ="history">
+                    <ul id="search-history"></ul>
+                </div>
+            </div>
         </div>
         <script type="module" src="./main.js"></script>
+        <link rel="stylesheet" href="style.css">
     </body>
 
 </html>
