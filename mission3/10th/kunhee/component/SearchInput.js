@@ -1,4 +1,5 @@
-export default function SearchInput({$sec01,initialState,onKeyup}) {
+import debounce from '../debounce.js'
+export default function SearchInput({$sec01,initialState,onSearch}) {
     this.state = initialState;
     $sec01.innerHTML = `<input id="search-keyword" /><div id="search-result"></div>`
     this.timer = null;
@@ -6,7 +7,8 @@ export default function SearchInput({$sec01,initialState,onKeyup}) {
     $sec01
     .querySelector('#search-keyword')
     .addEventListener('keyup',(e)=>{
-      onKeyup(e);
+      const keyword = e.target.value;
+      debounce(onSearch(keyword),1000);
     })
 
     this.setState = function (nextState) {

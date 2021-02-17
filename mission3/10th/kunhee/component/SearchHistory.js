@@ -1,4 +1,4 @@
-export default function SearchHistory({$sec02, initialState, onClick }){
+export default function SearchHistory({$sec02, initialState, onClickItem }){
     this.state = initialState
     this.$target = document.createElement('ul')
     this.$target.className = 'TodoList'
@@ -7,7 +7,7 @@ export default function SearchHistory({$sec02, initialState, onClick }){
     this.$target.addEventListener('click', (e) => {
       const index = parseInt(e.target.closest('li').dataset.index)
       console.log(index)
-      onClick(index)
+      onClickItem(index)
     })
 
     this.setState = function (nextState) {
