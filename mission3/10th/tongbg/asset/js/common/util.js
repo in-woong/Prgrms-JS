@@ -43,4 +43,8 @@ const getImage = async (searchStr) => {
   }
 }
 
-export { getBackUpTodo, setBackUpTodo, getDOM, focusDOM, getImage }
+const isExceptKey = (key) => {
+  return ['CapsLock', 'Shift', 'Control', 'Meta', 'Alt', 'Home', 'End', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'HangulMode', 'Escape'].indexOf(key) === -1 ? false : true
+}
+
+export { getBackUpTodo, setBackUpTodo, getDOM, focusDOM, getImage, isExceptKey }

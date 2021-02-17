@@ -1,5 +1,5 @@
 import { isNew } from './common/validateData.js'
-import { getBackUpTodo, setBackUpTodo, getImage } from './common/util.js'
+import { getBackUpTodo, setBackUpTodo, getImage, isExceptKey } from './common/util.js'
 
 import SearchInput from './components/SearchInput.js'
 import SearchResult from './components/SearchResult.js'
@@ -24,6 +24,8 @@ function App($appDOM) {
 
   // input debounce
   const onKeyupInput = (e) => {
+    if (isExceptKey(e.key)) return
+
     const searchStr = e.target.value.trim()
 
     // Enter 입력시 바로 검색, 검색어가 없는 경우는 동작하지 않음
