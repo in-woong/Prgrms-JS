@@ -19,12 +19,27 @@ function Main(){
     $sec01,
     initialState: this.state.stateInpute,
     onSearch: async (keyword) =>{
-      await SearchApi(keyword).then(data => {
-        const newSearchObject = {
+        //Loading 상태
+        const pendingState = 
+            Object.assign(
+              this.state,
+              Object.assign({},
+              {
+                stateInput:{
+                  key:null,
+                  result:"Loading..."
+                }
+              }),
+      )
+      this.setState(pendingState)
+
+      //api 시작
+      let data = await SearchApi(keyword)
+      const newSearchObject = {
           key:keyword,
           result:data
-        }
-        const nextState = 
+      }
+       const nextState = 
         Object.assign(
           this.state,
           Object.assign({},
@@ -36,8 +51,9 @@ function Main(){
             stateHistory:[...this.state.stateHistory,newSearchObject]
           })
         )
-        this.setState(nextState)
-     })
+     this.setState(nextState)
+     console.log("data",data);
+     //api완료
     }  
   })
 

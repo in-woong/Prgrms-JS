@@ -6,7 +6,6 @@ export default function SearchHistory({$sec02, initialState, onClickItem }){
   
     this.$target.addEventListener('click', (e) => {
       const index = parseInt(e.target.closest('li').dataset.index)
-      console.log(index)
       onClickItem(index)
     })
 
