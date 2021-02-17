@@ -15,6 +15,10 @@ function SearchInput(targetElement, getJjalsList) {
       getJjalsList(e.target.value);
     }, DEBOUNCE_DELAY_TIME);
   });
+
+  this.changeSearchInput = (text = '') => {
+    this.target.value = text;
+  };
 };
 
 export default SearchInput;
