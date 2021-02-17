@@ -7,7 +7,7 @@ function SearchInput(targetElement, getJjalsList) {
     this.timer = null;
   }
 
-  this.target.addEventListener('input', function(e) {
+  this.target.addEventListener('keyup', function(e) {
     if (this.timer) {
       clearTimeout(this.timer);
     }
