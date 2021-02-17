@@ -16,4 +16,6 @@ export default function SearchResult({ $app, initialState }) {
     const htmlString = `${this.state.map((d) => `<img src="${d.imageUrl}">`).join('')}`
     this.$target.innerHTML = htmlString
   }
+
+  this.render()
 }
