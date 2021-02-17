@@ -1,5 +1,5 @@
 import { isNew } from './common/validateData.js'
-import { getBackUpTodo, setBackUpTodo, isExceptionKey, debounce } from './common/util.js'
+import { getBackUpSearchHistory, setBackUpSearchHistory, isExceptionKey, debounce } from './common/util.js'
 
 import SearchInput from './components/SearchInput.js'
 import SearchResult from './components/SearchResult.js'
@@ -11,8 +11,8 @@ const DEBOUNCE_TIME = 1000
 function App($appDOM) {
   if (isNew(new.target)) {
     this.searchResultData = []
-    this.searchHistory = getBackUpTodo(STORED_KEY, new Set())
-    this.timerId = ''
+    this.searchHistory = getBackUpSearchHistory(STORED_KEY, new Set())
+    this.timerId = null
 
     this.$appDOM = $appDOM
 
@@ -51,6 +51,7 @@ function App($appDOM) {
 
     // Enter 입력시 바로 검색, 검색어가 없는 경우는 동작하지 않음
     if (e.key === 'Enter') {
+      clearTimeout(this.timerId)
       return fetchAPI(document.querySelector('#search-input').value.trim())
     }
 
@@ -77,7 +78,7 @@ function App($appDOM) {
     this.searchHistory.add(searchStr)
 
     this.searchInput.setState(this.searchHistory)
-    setBackUpTodo(STORED_KEY, [...this.searchHistory])
+    setBackUpSearchHistory(STORED_KEY, [...this.searchHistory])
   }
 
   this.render = () => {}

@@ -1,4 +1,4 @@
-const getBackUpTodo = (key, defaultValue) => {
+const getBackUpSearchHistory = (key, defaultValue) => {
   try {
     const storedValue = window.localStorage.getItem(key)
 
@@ -8,7 +8,7 @@ const getBackUpTodo = (key, defaultValue) => {
   }
 }
 
-const setBackUpTodo = (key, value) => {
+const setBackUpSearchHistory = (key, value) => {
   try {
     window.localStorage.setItem(key, JSON.stringify(value))
   } catch (e) {
@@ -32,4 +32,4 @@ function debounce(targetFunction, debounceTime) {
   }, debounceTime)
 }
 
-export { getBackUpTodo, setBackUpTodo, isExceptionKey, debounce }
+export { getBackUpSearchHistory, setBackUpSearchHistory, isExceptionKey, debounce }
