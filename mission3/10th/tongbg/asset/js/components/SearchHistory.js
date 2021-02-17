@@ -13,8 +13,8 @@ function SearchHistory({ targetDOM, initData, onClickHistory }) {
     this.$targetDOM.appendChild(this.$serchHistorytDOM)
   }
 
-  this.setState = (newState) => {
-    this.searchHistory = newState
+  this.setState = (nextState) => {
+    this.searchHistory = nextState
     this.render()
   }
 

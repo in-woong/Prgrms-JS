@@ -28,11 +28,9 @@ function SearchInput({ targetDOM, initData, onKeyupInput, onClickHistory }) {
     this.$searchInput.addEventListener('keyup', onKeyupInput)
   }
 
-  this.setState = (newState) => {
-    this.searchHistory.setState(newState)
+  this.setState = (nextState) => {
+    this.searchHistory.setState(nextState)
   }
-
-  this.render = () => {}
 
   // 히스토리 컴포넌트 생성
   this.searchHistory = new SearchHistory({ targetDOM: this.$searchWarp, initData, onClickHistory })

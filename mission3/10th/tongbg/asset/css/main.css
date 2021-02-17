@@ -64,13 +64,15 @@ h1 {
   width: 100%;
   color: rgba(255, 255, 255, 0.9);
   margin-top: 10px;
+  list-style: none;
 
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   place-items: center;
+  padding: 0;
 }
 
-#search-result > img {
+#search-result img {
   max-width: 200px;
   height: 200px;
   margin: 10px;
