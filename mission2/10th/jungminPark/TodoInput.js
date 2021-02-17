@@ -16,6 +16,9 @@ function TodoInput({$app, onTodoInput}){
           onTodoInput(item)
           this.$todoInput.value = ''
         }
+        else{
+            alert('할 일을 입력해주세요!')
+        }
     }
     
     $addButton.addEventListener('click', (e) => {
