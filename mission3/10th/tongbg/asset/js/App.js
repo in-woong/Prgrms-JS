@@ -1,5 +1,5 @@
 import { isNew } from './common/validateData.js'
-import { getBackUpTodo, setBackUpTodo, getImage, isExceptKey } from './common/util.js'
+import { getBackUpTodo, setBackUpTodo, getImage, isExceptionKey } from './common/util.js'
 
 import SearchInput from './components/SearchInput.js'
 import SearchResult from './components/SearchResult.js'
@@ -24,7 +24,7 @@ function App($appDOM) {
 
   // input debounce
   const onKeyupInput = (e) => {
-    if (isExceptKey(e.key)) return
+    if (isExceptionKey(e.key)) return
 
     const searchStr = e.target.value.trim()
 
