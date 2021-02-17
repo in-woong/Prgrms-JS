@@ -27,9 +27,7 @@ function debounce(targetFunction, debounceTime) {
   }
 
   // 1초 후 검색 세팅
-  this.timerId = setTimeout(() => {
-    targetFunction(document.querySelector('#search-input').value.trim())
-  }, debounceTime)
+  this.timerId = setTimeout(targetFunction, debounceTime)
 }
 
 export { getBackUpSearchHistory, setBackUpSearchHistory, isExceptionKey, debounce }

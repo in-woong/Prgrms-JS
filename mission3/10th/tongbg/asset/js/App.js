@@ -24,6 +24,7 @@ function App($appDOM) {
   }
 
   const fetchAPI = (searchStr) => {
+    searchStr = searchStr ? searchStr : document.querySelector('#search-input').value.trim()
     document.querySelector('#search-input').value = searchStr
     searchStr && getImage(searchStr)
   }
@@ -52,7 +53,7 @@ function App($appDOM) {
     // Enter 입력시 바로 검색, 검색어가 없는 경우는 동작하지 않음
     if (e.key === 'Enter') {
       clearTimeout(this.timerId)
-      return fetchAPI(document.querySelector('#search-input').value.trim())
+      return fetchAPI()
     }
 
     debounce.call(this, fetchAPI, DEBOUNCE_TIME)
