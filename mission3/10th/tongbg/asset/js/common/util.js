@@ -18,14 +18,6 @@ const setBackUpTodo = (key, value) => {
   }
 }
 
-const getDOM = (query) => {
-  return document.querySelector(query)
-}
-
-const focusDOM = (query) => {
-  document.querySelector(query).focus()
-}
-
 // API 호출 및 검색어 히스토리 저장
 const getImage = async (searchStr) => {
   const url = `https://jjalbot.com/api/jjals?text=${searchStr}`
@@ -47,4 +39,4 @@ const isExceptionKey = (key) => {
   return ['CapsLock', 'Shift', 'Control', 'Meta', 'Alt', 'Home', 'End', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'HangulMode', 'Escape'].indexOf(key) === -1 ? false : true
 }
 
-export { getBackUpTodo, setBackUpTodo, getDOM, focusDOM, getImage, isExceptionKey }
+export { getBackUpTodo, setBackUpTodo, getImage, isExceptionKey }
