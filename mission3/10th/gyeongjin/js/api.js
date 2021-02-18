@@ -1,6 +1,8 @@
+const END_POINT = 'https://jjalbot.com/api'
+
 export const fetchJjal = async (keyword) => {
   try {
-    const response = fetch(`https://jjalbot.com/api/jjals?text=${keyword}`).then((res) => {
+    const response = fetch(`${END_POINT}/jjals?text=${keyword}`).then((res) => {
       if (res.ok) {
         return res.json()
       }

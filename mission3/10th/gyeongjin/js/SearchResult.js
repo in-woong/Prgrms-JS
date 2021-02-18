@@ -14,7 +14,8 @@ export default function SearchResult({ $target, initialData }) {
   }
 
   this.render = () => {
-    if (this.state) {
+    // review4 - this.state 가 빈배열일 경우 체크
+    if (this.state && Array.isArray(this.state) && this.state.length !== 0) {
       const searchedItem = this.state.map((item) => `<div class="img-container"><img src="${item.imageUrl}" /></div>`).join('')
       this.target.innerHTML = searchedItem
     } else {
