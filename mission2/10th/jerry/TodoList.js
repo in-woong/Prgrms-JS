@@ -19,8 +19,6 @@ function TodoList($target, data) {
       .join('')
   }
 
-
-
   this.setState = function(nextData) {
     this.data = nextData
     this.render()
