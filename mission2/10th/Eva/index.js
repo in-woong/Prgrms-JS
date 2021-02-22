@@ -9,39 +9,6 @@ const todoData = [
     },
   ]
 
-  const wishData = [
-    {
-      text: '옷',
-      isCompleted: true,
-    },
-    {
-      text: '신발',
-      isCompleted: false,
-    },
-  ]
-
-  const shoppingData = [
-    {
-      text: '감자',
-      isCompleted: true,
-    },
-    {
-      text: '고구마',
-      isCompleted: false,
-    },
-  ]
-
-  const todoCompletedData = [
-    {
-      text: 'JS 공부하기',
-      isCompleted: true,
-    },
-    {
-      text: 'JS 복습하기',
-      isCompleted: true,
-    },
-  ]
-
   const errorCheck = (data, element) => {
     if (!data) {
       throw new Error('data is null or undefined')
@@ -63,10 +30,19 @@ const todoData = [
   }
   
   const todoList = new TodoList(todoData, document.querySelector('#todo-list'))
-  const wishList = new TodoList(wishData, document.querySelector('#wish-list'))
-  const shoppingList = new TodoList(shoppingData, document.querySelector('#shopping-list'))
 
-  setTimeout(() => {
-    todoList.setState(todoCompletedData)
-  }, 3000)
+  document.querySelector('#todoInput').addEventListener('keydown', (e) => {
+    if(e.code == 'Enter') {
+      todoData.push(
+        {
+          text: document.querySelector('#todoInput').value,
+          isCompleted: false,
+        }
+      )
+      todoList.render()
+      document.querySelector('#todoInput').value = ''
+    }
+  })
+
+
   
