@@ -1,18 +1,38 @@
+import { fetchJjal } from './api.js';
+import SearchInput from './searchInput.js';
 import SearchResult from './searchResult.js';
 
 export default function App($app) {
-  document
-  .querySelector('#search-keyword')
-  .addEventListener('keyup', function(e) {
-    fetch(`https://jjalbot.com/api/jjals?text=${e.target.value}`)
-      .then(x => x.json())
-      .then(data => {
-        searchResult.setState(data)
-      })
+
+  const searchInput = new SearchInput({
+    $app,
+    onSearch: (keyword) => {
+      fetchJjal(keyword)
+        .then((data) => {
+          searchResult.setState(data)
+        })
+    }
   })
 
   const searchResult = new SearchResult({
     $app,
-    ininitalState: [],
+    initialState: []
   })
+
+  
+
+
+  // const searchInput = new SearchInput({
+  //   $app,
+  //   onSearch: (keyword) => {
+  //     fetchJjal(keyword).then((data) => {
+  //       searchResult.setState(data)
+  //     })
+  //   },
+  // }) 
+
+  // const searchResult = new SearchResult({
+  //   $app,
+  //   ininitalState: [], 
+  // })
 }
