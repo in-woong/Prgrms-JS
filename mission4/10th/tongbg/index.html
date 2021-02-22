@@ -2,19 +2,20 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Mission 4</title>
+
+    <link rel="stylesheet" href="asset/css/main.css" />
+    <script type="module" src="index.js"></script>
+
+    <title>Todo LIST</title>
   </head>
   <body>
-    <div id="app">
-      <input type="text" id="todo-input" />
-      <button type="button" id="add-todo-button">
-        Add
-      </button>
-      <div id="todo-list"></div>
-    </div>
-    <script src="./TodoList.js"></script>
-    <script src="./main.js"></script>
+    <section>
+      <div class="inner">
+        <div id="app"></div>
+      </div>
+    </section>
+    <div class="loading-gif"></div>
   </body>
 </html>
