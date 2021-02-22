@@ -18,21 +18,4 @@ export default function App($app) {
     $app,
     initialState: []
   })
-
-  
-
-
-  // const searchInput = new SearchInput({
-  //   $app,
-  //   onSearch: (keyword) => {
-  //     fetchJjal(keyword).then((data) => {
-  //       searchResult.setState(data)
-  //     })
-  //   },
-  // }) 
-
-  // const searchResult = new SearchResult({
-  //   $app,
-  //   ininitalState: [], 
-  // })
 }
