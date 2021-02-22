@@ -16,6 +16,6 @@ export function App($searchInput, $searchResult) {
 
     this.setState = (data) => {
         this.state = data;
-        this.SearchResult.setStae(this.state);
+        this.SearchResult.setState(this.state);
     }
 }

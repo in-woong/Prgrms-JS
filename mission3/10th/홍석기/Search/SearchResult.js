@@ -6,7 +6,7 @@ export function SearchResult({$searchResult, renderData}) {
         $searchResult.innerHTML = htmlString;
     }
 
-    this.setStae = (data) => {
+    this.setState = (data) => {
         this.state = data;
         this.render();
     }
