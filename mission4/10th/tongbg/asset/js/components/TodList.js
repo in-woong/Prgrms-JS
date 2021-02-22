@@ -1,9 +1,8 @@
-import validateData, { isNew } from '../common/validateData.js'
+import { isNew } from '../common/validateData.js'
 
-function TodoList({ $App, initData, onClickTodoList }) {
+function TodoList({ $App, initDodoList, onClickTodoList }) {
   if (isNew(new.target)) {
-    // if (initData.length !== 0) validateData(initData)
-    this.todoData = initData
+    this.todoData = initDodoList
 
     this.$todoListDOM = document.createElement('div')
     this.$todoListDOM.id = 'todo-list'
@@ -13,7 +12,7 @@ function TodoList({ $App, initData, onClickTodoList }) {
   }
 
   this.setState = (nextData) => {
-    this.todoData = nextData // validateData(nextData)
+    this.todoData = nextData
     this.render()
   }
 

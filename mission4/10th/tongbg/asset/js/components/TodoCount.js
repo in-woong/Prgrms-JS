@@ -1,8 +1,8 @@
 import { isNew } from '../common/validateData.js'
 
-function TodoCount({ $App, initData }) {
+function TodoCount({ $App, initDodoList }) {
   if (isNew(new.target)) {
-    this.todoList = initData
+    this.todoList = initDodoList
 
     this.$todoCountDOM = document.createElement('div')
     this.$todoCountDOM.id = 'todo-count'

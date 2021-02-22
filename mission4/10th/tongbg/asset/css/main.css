@@ -4,9 +4,31 @@ body {
   color: #f0f8ff;
 }
 
-h1 {
+header {
+  position: relative;
+}
+
+header h1 {
   text-align: center;
   font-size: 4em;
+}
+
+header div {
+  display: flex;
+  position: absolute;
+  top: -25px;
+  left: 0;
+}
+
+header h2 {
+  color: sandybrown;
+  margin: 0;
+}
+
+header span {
+  color: sandybrown;
+  font-weight: bold;
+  font-size: 1.5em;
 }
 
 .loading-gif {
@@ -85,6 +107,8 @@ h1 {
   border: #a9a9a9 solid 2px;
   border-radius: 50%;
   box-sizing: border-box;
+
+  cursor: pointer;
 }
 
 .todo-checkbox:hover {
@@ -119,6 +143,8 @@ h1 {
   background-repeat: no-repeat;
   margin: 10px;
   opacity: 0.4;
+
+  cursor: pointer;
 }
 
 .strket-text {
@@ -126,16 +152,18 @@ h1 {
 }
 
 /* SCROLL-BAR */
+#user-list::-webkit-scrollbar,
 #todo-list::-webkit-scrollbar {
   width: 10px;
 }
-
+#user-list::-webkit-scrollbar-thumb,
 #todo-list::-webkit-scrollbar-thumb {
   background-color: #2f3542;
   border-radius: 10px;
   background-clip: padding-box;
   border: 2px solid transparent;
 }
+#user-list::-webkit-scrollbar-track,
 #todo-list::-webkit-scrollbar-track {
   background-color: grey;
   border-radius: 10px;
@@ -145,4 +173,34 @@ h1 {
 #todo-count p {
   text-align: right;
   font-size: 1.5rem;
+}
+
+/* USERLIST */
+#user-list {
+  margin-top: 50px;
+}
+
+#user-list > ul {
+  list-style: none;
+  padding: 0;
+  text-align: center;
+}
+
+#user-list li {
+  display: inline-block;
+
+  border-radius: 5px;
+  margin: 5px;
+  padding: 5px;
+  background-color: rgb(88, 86, 86);
+
+  cursor: pointer;
+}
+
+#user-list li:hover {
+  background-color: rgba(176, 183, 184, 0.8);
+}
+
+#user-list li.on {
+  background-color: rgba(250, 128, 114, 0.8);
 }

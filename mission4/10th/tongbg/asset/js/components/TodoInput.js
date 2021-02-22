@@ -11,9 +11,6 @@ function TodoInput({ $interfaceDOM, onKeyUpTodoList }) {
 
     $todoInputDOM.addEventListener('keyup', onKeyUpTodoList)
   }
-
-  this.setState = () => {}
-  this.render = () => {}
 }
 
 export default TodoInput

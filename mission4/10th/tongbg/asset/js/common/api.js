@@ -33,4 +33,12 @@ const toggleTodo = async (username, id) => {
   })
 }
 
-export { getTodoList, setTodoList, deleteAll, deleteTodo, toggleTodo }
+const getUserList = async () => {
+  const res = await fetch(`https://todo-api.roto.codes/users`, {
+    method: 'GET',
+  })
+
+  return await res.json()
+}
+
+export { getTodoList, setTodoList, deleteAll, deleteTodo, toggleTodo, getUserList }
