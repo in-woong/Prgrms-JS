@@ -15,11 +15,10 @@ class SearchResult {
     }
 
     render = () => {
-        const htmlString = `${
-            this.state
+        const htmlString = this.state
                 .map(d => `<img src="${d.imageUrl}">`)
                 .join('')
-            }`
+            
         this.target.innerHTML = htmlString;
     }
 }

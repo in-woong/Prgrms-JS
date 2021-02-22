@@ -1,27 +1,34 @@
 import SearchKeyword from './SearchKeyword.js'
 import SearchResult from './SearchResult.js'
 import SearchHistory from './SearchHistory.js'
+import loadJjals from './Api.js'
 
-import GET from './Api.js'
+const SEARCH_HISTORY_STROAGE_NAME = 'SearchHistory'
 
 class App {
   constructor() {
-    this.state = { keyword: '', result: [] }
+    this.state = { keyword: '', result: [], history : [] }
+
+    try {
+      this.state.history = JSON.parse(window.localStorage.getItem(SEARCH_HISTORY_STROAGE_NAME)) || []
+    } catch (error) {
+      this.state.history = []
+      console.log(error)
+    }
+
     this.searchKeyword = new SearchKeyword('#search-keyword', this.searchHandler)
     this.searchResult = new SearchResult('#search-result', this.state.result)
-    this.searchHistory = new SearchHistory('#search-history', (keyword) => {
+    this.searchHistory = new SearchHistory('#search-history',this.state.history, (keyword) => {
       if (keyword) {
         this.searchHandler(keyword)
       }
     })
-
-    this.render()
   }
 
   searchHandler = async (keyword) => {
+    if(!keyword) return; 
     try {
-      console.log(keyword, 'keyword')
-      const result = await GET(keyword)
+      const result = await loadJjals(keyword)
       this.setState({ keyword, result })
     } catch (e) {
       console.log(e)
@@ -29,13 +36,24 @@ class App {
   }
 
   setState = ({ keyword, result }) => {
-    this.state = { keyword, result }
-    this.render()
+    this.state = {...this.state, keyword, result}
+    this.searchResult.setState(this.state.result)
+
+    if (this.state.history.includes(keyword)) return
+    this.state.history = this.state.history.concat(keyword);
+
+    try {
+      window.localStorage.setItem(SEARCH_HISTORY_STROAGE_NAME, JSON.stringify(keyword))
+    } catch (error) {
+      console.log(error)
+    }
+
+    this.searchHistory.setState(this.state.history)
+    this.state.keyword = ''
   }
 
   render = () => {
-    this.searchResult.setState(this.state.result)
-    this.state.keyword = ''
+
   }
 }
 

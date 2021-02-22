@@ -1,15 +1,9 @@
-const SEARCH_HISTORY_STROAGE_NAME = 'SearchHistory'
 
 class SearchHistory {
-  constructor(selector, onSearchHandler) {
+  constructor(selector, state , onSearchHandler) {
     this.target = document.querySelector(selector)
-    try {
-      this.state = JSON.parse(window.localStorage.getItem(SEARCH_HISTORY_STROAGE_NAME)) || []
-    } catch (error) {
-      this.state = []
-      console.log(error)
-    }
-
+    this.state = state;
+   
     this.onSearchHandler = onSearchHandler
 
     this.render()
@@ -19,15 +13,8 @@ class SearchHistory {
   validation = () => {}
 
   setState = (newState) => {
-    if (!newState) return
-    if (this.state.includes(newState)) return
-    const addedStated = [...this.state, newState]
-    this.state = addedStated
-    try {
-      window.localStorage.setItem(SEARCH_HISTORY_STROAGE_NAME, JSON.stringify(addedStated))
-    } catch (error) {
-      console.log(error)
-    }
+    if (!newState) return;
+    this.state = newState;
     this.render()
   }
 
