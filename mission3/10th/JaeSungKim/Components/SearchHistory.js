@@ -1,11 +1,12 @@
-function SearchHistory({ $app, initialState, onHistoryClick, onHistoryClear }) {
+function SearchHistory({ targetId, initialState, onHistoryClick, onHistoryClear }) {
   if (!(this instanceof SearchHistory)) {
-    return new SearchHistory({ $app, initialState, onHistoryClick, onHistoryClear })
+    return new SearchHistory({ targetId, initialState, onHistoryClick, onHistoryClear })
   }
 
+  const $target = document.querySelector(targetId)
   const $historyTab = document.createElement('div')
   $historyTab.setAttribute('id', 'history-tab')
-  $app.appendChild($historyTab)
+  $target.appendChild($historyTab)
 
   const $clearHistory = document.createElement('button')
   $clearHistory.setAttribute('id', 'history-clear-btn')
@@ -16,17 +17,17 @@ function SearchHistory({ $app, initialState, onHistoryClick, onHistoryClear }) {
   $searchHistory.setAttribute('id', 'history-list')
   $historyTab.appendChild($searchHistory)
 
-  this.state = initialState
+  this.histories = initialState
 
   this.render = () => {
     // prettier-ignore
-    $searchHistory.innerHTML = this.state.map((item) => `
-      <li>${item}</li>
+    $searchHistory.innerHTML = this.histories.map((item) => `
+      <li>${item}<li/>
     `).join('')
   }
 
-  this.setState = (newData) => {
-    this.state = newData
+  this.setState = (newHistories) => {
+    this.histories = newHistories
     this.render()
   }
 

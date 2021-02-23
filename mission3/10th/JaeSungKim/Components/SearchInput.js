@@ -1,10 +1,13 @@
-function SearchInput({ $app, onSearchInput }) {
+import { debounce } from '../utils.js'
+
+function SearchInput({ targetId, onSearchInput }) {
   if (!(this instanceof SearchInput)) {
-    return new SearchInput({ $app, onSearchInput })
+    return new SearchInput({ targetId, onSearchInput })
   }
 
+  const $target = document.querySelector(targetId)
   const $searchInput = document.createElement('input')
-  $app.appendChild($searchInput)
+  $target.appendChild($searchInput)
 
   $searchInput.addEventListener('input', (e) => {
     const input = e.target.value
@@ -15,14 +18,6 @@ function SearchInput({ $app, onSearchInput }) {
 
   this.setState = (newInput) => {
     $searchInput.value = newInput
-  }
-
-  let timer
-  const debounce = (func, wait) => {
-    if (timer) {
-      clearTimeout(timer)
-    }
-    timer = setTimeout(func, wait)
   }
 }
 

@@ -4,8 +4,8 @@ let initialData = []
 
 if (!localStorage.getItem('appData')) {
   const newAppData = JSON.stringify({
-    result: {},
-    history: [],
+    results: {},
+    histories: [],
   })
   window.localStorage.setItem('appData', newAppData)
 }
@@ -17,7 +17,7 @@ try {
 }
 
 try {
-  new App(document.querySelector('#app'), initialData)
+  new App(initialData)
 } catch (error) {
   throw error
 }
