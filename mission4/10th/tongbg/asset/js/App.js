@@ -6,41 +6,55 @@ import TodoInput from './components/TodoInput.js'
 import TodoCount from './components/TodoCount.js'
 import TodoRest from './components/TodoRest.js'
 import TodoUserList from './components/TodoUserList.js'
+import LoadingUI from './components/LoadingUI.js'
+import popupUI from './components/popupUI.js'
 
 function App($App) {
   return (async () => {
     this.state = {}
-    this.state.currentUser = 'tongbg'
-    this.state.todoList = await getTodoList(this.state.currentUser)
-    this.state.userList = await getUserList()
+    this.state.currentUser = ''
+    this.state.todoList = []
 
-    $App.innerHTML = `<header><div><h2>${this.state.currentUser}</h2><span>'s</span></div><h1>Todo LIST</h1></header>`
+    const initUserList = await getUserList()
+    initUserList.isOK ? (this.state.userList = initUserList.userList) : (this.state.userList = [])
 
-    const $interfaceDOM = document.createElement('div')
-    $interfaceDOM.className = 'todo-interface'
-    $App.appendChild($interfaceDOM)
+    this.state.isProgressing = false
+
+    this.state.isPopupVisible = true
+    this.state.popupTitle = 'Todo 시작하기'
+    this.state.popupMsg = '등록된 유저를 선택하세요!'
+
+    $App.innerHTML = `<header><div><h2>${this.state.currentUser}</h2><span></span></div><h1>Todo LIST</h1></header>`
+
+    this.$interfaceDOM = document.createElement('div')
+    this.$interfaceDOM.className = 'todo-interface'
+    $App.appendChild(this.$interfaceDOM)
+
+    const loadTodoList = async () => {
+      this.setState({ ...this.state, isProgressing: true })
+
+      const { isOK, todoList, popupTitle, popupMsg } = await getTodoList(this.state.currentUser)
+      isOK ? this.setState({ ...this.state, todoList, isProgressing: false }) : this.setState({ ...this.state, isPopupVisible: true, popupTitle, popupMsg })
+
+      focusDOM('#todo-input')
+    }
 
     // input 키보드 입력 처리
     const onKeyUpTodoList = debounce(async (e) => {
       if (e.key === 'Enter') {
         const textArr = e.target.value.split(/;/).filter((text) => text.trim() !== '')
-        const loadingGif = document.querySelector('.loading-gif')
 
         if (textArr.length > 0) {
-          loadingGif.classList.add('on')
+          let rtrnValue
 
           for (const todoText of textArr) {
-            await setTodoList(this.state.currentUser, todoText)
+            rtrnValue = await setTodoList(this.state.currentUser, todoText)
           }
 
-          loadingGif.classList.remove('on')
-
-          // 데이터 추가 후 서버에서 목록 다시 불러서 다시 그리기
-          const updatedData = await getTodoList(this.state.currentUser)
-          this.setState({ ...this.state, todoList: updatedData })
+          const { isOK, popupTitle, popupMsg } = rtrnValue
+          isOK ? loadTodoList() : this.setState({ ...this.state, isPopupVisible: true, popupTitle, popupMsg })
 
           e.target.value = ''
-          focusDOM('#todo-input')
         }
       }
     }, 1000)
@@ -51,13 +65,8 @@ function App($App) {
       const $todoListDOM = document.querySelector('#todo-list')
 
       $todoListDOM.addEventListener('removeAll', async () => {
-        await deleteAll(this.state.currentUser)
-
-        // 데이터 추가 후 서버에서 목록 다시 불러서 다시 그리기
-        const updatedData = await getTodoList(this.state.currentUser)
-        this.setState({ ...this.state, todoList: updatedData })
-
-        focusDOM('#todo-input')
+        const { isOK, popupTitle, popupMsg } = await deleteAll(this.state.currentUser)
+        isOK ? loadTodoList() : this.setState({ ...this.state, isPopupVisible: true, popupTitle, popupMsg })
       })
 
       $todoListDOM.dispatchEvent(event)
@@ -66,28 +75,21 @@ function App($App) {
     // todoList 클릭시
     const onClickTodoList = debounce(async (e) => {
       const targetTodoId = e.target.parentNode.dataset.id
-      let updatedData = []
 
       switch (e.target.className) {
         case 'todo-checkbox':
         case 'todo-checkbox checked':
-          await toggleTodo(this.state.currentUser, targetTodoId)
-
-          // 데이터 추가 후 서버에서 목록 다시 불러서 다시 그리기
-          updatedData = await getTodoList(this.state.currentUser)
-          this.setState({ ...this.state, todoList: updatedData })
-
-          focusDOM('#todo-input')
+          {
+            const { isOK, popupTitle, popupMsg } = await toggleTodo(this.state.currentUser, targetTodoId)
+            isOK ? loadTodoList() : this.setState({ ...this.state, isPopupVisible: true, popupTitle, popupMsg })
+          }
           break
 
         case 'del-btn':
-          await deleteTodo(this.state.currentUser, targetTodoId)
-
-          // 데이터 추가 후 서버에서 목록 다시 불러서 다시 그리기
-          updatedData = await getTodoList(this.state.currentUser)
-          this.setState({ ...this.state, todoList: updatedData })
-
-          focusDOM('#todo-input')
+          {
+            const { isOK, popupTitle, popupMsg } = await deleteTodo(this.state.currentUser, targetTodoId)
+            isOK ? loadTodoList() : this.setState({ ...this.state, isPopupVisible: true, popupTitle, popupMsg })
+          }
           break
       }
     }, 1000)
@@ -95,13 +97,19 @@ function App($App) {
     // 유저 클릭시
     const onClickUser = debounce(async (e) => {
       if (e.target.tagName === 'LI') {
-        const targetUserName = e.target.innerText
-        const updatedData = await getTodoList(targetUserName)
-        this.setState({ ...this.state, currentUser: targetUserName, todoList: updatedData })
+        this.setState({ ...this.state, isProgressing: true })
 
-        document.querySelector('header h2').innerText = targetUserName
+        const targetUserName = e.target.innerText
+        const { isOK, todoList, popupTitle, popupMsg } = await getTodoList(targetUserName)
+
+        isOK ? this.setState({ ...this.state, currentUser: targetUserName, todoList, isProgressing: false }) : this.setState({ ...this.state, isPopupVisible: true, popupTitle, popupMsg })
       }
     }, 1000)
+
+    // 팝업 닫기 클릭시
+    const onClickPopupCls = () => {
+      this.setState({ ...this.state, isPopupVisible: false, isProgressing: false })
+    }
 
     this.setState = (nextState) => {
       this.state = nextState
@@ -109,15 +117,35 @@ function App($App) {
       this.todoList.setState(this.state.todoList)
       this.todoCount.setState(this.state.todoList)
       this.todoUserList.setState({ userList: this.state.userList, currentUser: this.state.currentUser })
+
+      this.loadingUI.setState(this.state.isProgressing)
+      this.popupUI.setState({ isPopupVisible: this.state.isPopupVisible, popupTitle: this.state.popupTitle, popupMsg: this.state.popupMsg })
+
+      this.render()
     }
 
-    this.todoInput = new TodoInput({ $interfaceDOM, onKeyUpTodoList })
-    this.todoRest = new TodoRest({ $interfaceDOM, onClickReset })
+    this.render = () => {
+      const currentUser = this.state.currentUser
 
-    this.todoList = new TodoList({ $App, initDodoList: this.state.todoList, onClickTodoList })
-    this.todoCount = new TodoCount({ $App, initDodoList: this.state.todoList })
+      document.querySelector('header h2').innerText = currentUser ? currentUser : ''
+      document.querySelector('header span').innerText = currentUser ? `'S` : ''
+
+      currentUser ? this.$interfaceDOM.classList.remove('hidden') : this.$interfaceDOM.classList.add('hidden')
+      window.scrollTo(0, 0)
+    }
+
+    this.todoInput = new TodoInput({ $interfaceDOM: this.$interfaceDOM, onKeyUpTodoList })
+    this.todoRest = new TodoRest({ $interfaceDOM: this.$interfaceDOM, onClickReset })
+
+    this.todoList = new TodoList({ $App, initTodoList: this.state.todoList, onClickTodoList })
+    this.todoCount = new TodoCount({ $App, initTodoList: this.state.todoList })
 
     this.todoUserList = new TodoUserList({ $App, onClickUser, initUserList: this.state.userList, initUserName: this.state.currentUser })
+
+    this.loadingUI = new LoadingUI({ $App, initProgressing: this.state.isProgressing })
+    this.popupUI = new popupUI({ $App, initPopupVisible: this.state.isPopupVisible, initPopupTitle: this.state.popupTitle, initPopupMsg: this.state.popupMsg, onClickPopupCls })
+
+    this.render()
   })()
 }
 

@@ -1,4 +1,4 @@
-import validateData, { isNew } from '../common/validateData.js'
+import { isNew } from '../common/validateData.js'
 
 function TodoUserList({ $App, onClickUser, initUserList, initUserName }) {
   if (isNew(new.target)) {
@@ -18,8 +18,8 @@ function TodoUserList({ $App, onClickUser, initUserList, initUserName }) {
     this.$ul.addEventListener('click', onClickUser)
   }
 
-  this.setState = (nextData) => {
-    this.state = nextData
+  this.setState = (nextState) => {
+    this.state = nextState
     this.render()
   }
 

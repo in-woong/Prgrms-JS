@@ -1,23 +1,22 @@
 import { isNew } from '../common/validateData.js'
 
-function TodoCount({ $App, initDodoList }) {
+function TodoCount({ $App, initTodoList }) {
   if (isNew(new.target)) {
-    this.todoList = initDodoList
+    this.todoList = initTodoList
 
     this.$todoCountDOM = document.createElement('div')
     this.$todoCountDOM.id = 'todo-count'
-    this.$todoCountDOM.innerHTML = `<p> TOTOAL : ${this.todoList.length}</p>`
 
     $App.appendChild(this.$todoCountDOM)
   }
 
-  this.setState = (nextData) => {
-    this.todoList = nextData
+  this.setState = (nextState) => {
+    this.todoList = nextState
     this.render()
   }
 
   this.render = () => {
-    this.$todoCountDOM.innerHTML = `<p> TOTOAL : ${this.todoList.length}</p>`
+    this.$todoCountDOM.innerHTML = this.todoList.length > 0 ? `<p> TOTOAL : ${this.todoList.length}</p>` : ''
   }
 
   this.render()

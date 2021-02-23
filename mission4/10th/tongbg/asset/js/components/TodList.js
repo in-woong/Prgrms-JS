@@ -1,8 +1,8 @@
 import { isNew } from '../common/validateData.js'
 
-function TodoList({ $App, initDodoList, onClickTodoList }) {
+function TodoList({ $App, initTodoList, onClickTodoList }) {
   if (isNew(new.target)) {
-    this.todoData = initDodoList
+    this.todoList = initTodoList
 
     this.$todoListDOM = document.createElement('div')
     this.$todoListDOM.id = 'todo-list'
@@ -11,13 +11,14 @@ function TodoList({ $App, initDodoList, onClickTodoList }) {
     this.$todoListDOM.addEventListener('click', onClickTodoList)
   }
 
-  this.setState = (nextData) => {
-    this.todoData = nextData
+  this.setState = (nextState) => {
+    this.todoList = nextState
     this.render()
   }
 
   this.render = () => {
-    this.$todoListDOM.innerHTML = this.todoData.map(({ content, isCompleted, _id }) => `<div class='todo-text' data-id=${_id}><div class="todo-checkbox${isCompleted ? ' checked' : ''}"></div><p ${isCompleted ? 'class=strket-text' : ''}>${content}</p><div class="del-btn"></div></div>`).join('')
+    this.$todoListDOM.innerHTML =
+      this.todoList.length > 0 ? this.todoList.map(({ content, isCompleted, _id }) => `<div class='todo-text' data-id=${_id}><div class="todo-checkbox${isCompleted ? ' checked' : ''}"></div><p ${isCompleted ? 'class=strket-text' : ''}>${content}</p><div class="del-btn"></div></div>`).join('') : ''
   }
 
   this.render()

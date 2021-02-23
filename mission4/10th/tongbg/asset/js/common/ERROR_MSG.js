@@ -9,4 +9,5 @@ export const ERROR_MSG = {
   DOM_NOT_EXIST: '해당하는 DOM 객체가 존재하지 않음 에러',
   RIASE_EXCEPTION: '예상하지 못한 에러 발생',
   JSON_PARSE_ERROR: 'JSON 파싱 에러 발생',
+  NETWORK_NOT_OK: 'Network response was not ok',
 }
