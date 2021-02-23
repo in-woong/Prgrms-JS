@@ -16,7 +16,7 @@ function SearchInput({ targetId, onSearchInput }) {
     }, 600)
   })
 
-  this.setState = (newInput) => {
+  this.setInput = (newInput) => {
     $searchInput.value = newInput
   }
 }

@@ -53,9 +53,9 @@ function App(initialState) {
     this.state = newState
     window.localStorage.setItem('appData', JSON.stringify(this.state))
 
-    this.searchInput.setState(currentInput)
-    this.searchResult.setState(currentInput ? this.state.results[currentInput] : [])
-    this.searchHistory.setState(this.state.histories)
+    this.searchInput.setInput(currentInput)
+    this.searchResult.setResults(currentInput ? this.state.results[currentInput] : [])
+    this.searchHistory.setHistories(this.state.histories)
   }
 }
 

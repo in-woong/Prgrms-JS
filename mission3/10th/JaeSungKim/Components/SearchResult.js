@@ -21,8 +21,8 @@ function SearchResult({ targetId, initialState }) {
     $searchResult.innerHTML = htmlString
   }
 
-  this.setState = (newData) => {
-    this.results = newData
+  this.setResults = (newResults) => {
+    this.results = newResults
     this.render()
   }
 }

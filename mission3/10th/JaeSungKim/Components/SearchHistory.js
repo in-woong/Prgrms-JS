@@ -26,7 +26,7 @@ function SearchHistory({ targetId, initialState, onHistoryClick, onHistoryClear 
     `).join('')
   }
 
-  this.setState = (newHistories) => {
+  this.setHistories = (newHistories) => {
     this.histories = newHistories
     this.render()
   }
