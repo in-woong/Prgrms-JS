@@ -43,7 +43,7 @@ class App {
     this.state.history = this.state.history.concat(keyword);
 
     try {
-      window.localStorage.setItem(SEARCH_HISTORY_STROAGE_NAME, JSON.stringify(keyword))
+      window.localStorage.setItem(SEARCH_HISTORY_STROAGE_NAME, JSON.stringify(this.state.history))
     } catch (error) {
       console.log(error)
     }
