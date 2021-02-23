@@ -7,7 +7,7 @@ import TodoCount from './components/TodoCount.js'
 import TodoRest from './components/TodoRest.js'
 import TodoUserList from './components/TodoUserList.js'
 import LoadingUI from './components/LoadingUI.js'
-import popupUI from './components/popupUI.js'
+import PopupUI from './components/PopupUI.js'
 
 function App($App) {
   return (async () => {
@@ -143,7 +143,7 @@ function App($App) {
     this.todoUserList = new TodoUserList({ $App, onClickUser, initUserList: this.state.userList, initUserName: this.state.currentUser })
 
     this.loadingUI = new LoadingUI({ $App, initProgressing: this.state.isProgressing })
-    this.popupUI = new popupUI({ $App, initPopupVisible: this.state.isPopupVisible, initPopupTitle: this.state.popupTitle, initPopupMsg: this.state.popupMsg, onClickPopupCls })
+    this.popupUI = new PopupUI({ $App, initPopupVisible: this.state.isPopupVisible, initPopupTitle: this.state.popupTitle, initPopupMsg: this.state.popupMsg, onClickPopupCls })
 
     this.render()
   })()

@@ -37,4 +37,4 @@ function popupUI({ $App, initPopupVisible, initPopupTitle, initPopupMsg, onClick
   this.render()
 }
 
-export default popupUI
+export default PopupUI
