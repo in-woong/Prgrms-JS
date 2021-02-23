@@ -4,8 +4,10 @@ export default function TodoList(params) {
     this.onClick = params.onClick
     this.removeAll = params.removeAll
     this.data = params.data
+    this.name = params.name
 
-    this.setState = (newData) => {
+    this.setState = (newData, name) => {
+        this.name = name
         this.data = newData
         this.render()
     }
@@ -13,14 +15,14 @@ export default function TodoList(params) {
     this.$target.addEventListener('click', (e) => {
         if (e.target.className === 'remove-button') {
             const id = e.target.closest('li').dataset.id
-            this.onRemove(id)
+            this.onRemove(this.name, id)
         }
         else if (e.target.className === "remove-all") {
-            this.removeAll()
+            this.removeAll(this.name)
         }
         else {
             const id = e.target.closest('li').dataset.id
-            this.onClick(id)
+            this.onClick(this.name, id)
         }
         
     })
