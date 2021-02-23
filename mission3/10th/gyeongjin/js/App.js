@@ -16,20 +16,25 @@ export default function App($target) {
       $target: $form,
       onSearch: async (keyword) => {
         const searchResults = await fetchJjal(keyword)
-        const nextHistories = () => {
+        const getNextHistories = () => {
           // review1
           // 1. array의 includes가 기존 배열에 영향을 주지 않으므로 spread를 사용하지 않아도 됨
           // 2. array의 concat 자체가 새로운 배열을 만들기 때문에 spread로 배열을 복사하지 않아도 됨
           // 3. keyword가 이미 존재한다면 배열을 spread로 복사하지 않아도 됨
+
+          // review1-2 
+          // 1. 이중 배열을 사용할 필요 없음 
+          // this.state.searchHistories.concat([keyword]) -> this.state.searchHistories.concat(keyword)
+          // 2. 함수명 변경 nextHistories -> getNextHistories
           if (!this.state.searchHistories.includes(keyword)) {
-            return this.state.searchHistories.concat([keyword])
+            return this.state.searchHistories.concat(keyword)
           } else {
             return this.state.searchHistories
           }
         }
         this.setState({
           searchResults,
-          searchHistories: nextHistories(),
+          searchHistories: getNextHistories(),
         })
       },
     }),

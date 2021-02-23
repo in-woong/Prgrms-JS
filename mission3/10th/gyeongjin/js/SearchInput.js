@@ -22,7 +22,7 @@ export default function SearchInput({ $target, onSearch }) {
           this.target.value = ''
           this.target.focus()
         }
-      }, 800)
+      }, 2000)
     })
   }
 

@@ -21,8 +21,18 @@ export default function SearchHistory({ $target, initialState, onClick, removeHi
     this.render()
   }
 
+  // review6 개행처리
   this.render = () => {
-    const historyList = this.state.map((item, index) => `<li class="history-item"><span class="history-item-text">${item}</span><button id="${index}" class="remove-btn">x</button></li>`).join('')
+    const historyList = this.state
+      .map(
+        (item, index) => `
+          <li class="history-item">
+            <span class="history-item-text">${item}</span>
+            <button id="${index}" class="remove-btn">x</button>
+          </li>
+          `
+      )
+      .join('')
     this.$historyList.innerHTML = historyList
   }
 }
