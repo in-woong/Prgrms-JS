@@ -1,6 +1,6 @@
 import { isNew } from '../common/validateData.js'
 
-function popupUI({ $App, initPopupVisible, initPopupTitle, initPopupMsg, onClickPopupCls }) {
+function PopupUI({ $App, initPopupVisible, initPopupTitle, initPopupMsg, onClickPopupCls }) {
   if (isNew(new.target)) {
     this.state = {
       isPopupVisible: initPopupVisible,
