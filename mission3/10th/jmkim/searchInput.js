@@ -1,3 +1,5 @@
+let timer
+
 export default function SearchInput({ $app, onSearch }) {
   const $target = document.createElement('input')
   $target.id = 'search-keyword'
@@ -8,6 +10,13 @@ export default function SearchInput({ $app, onSearch }) {
   // 이벤트 바인딩 하기
   $target.addEventListener('keyup', function (e) {
     const keyword = e.target.value
-    onSearch(keyword)
+
+    if (timer) {
+      clearTimeout(timer)
+    }
+
+    timer = setTimeout(() => {
+      onSearch(keyword)
+    }, 500)
   })
 }
