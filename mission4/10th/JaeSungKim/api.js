@@ -5,8 +5,12 @@ async function fetchData(username, delay) {
   if (delay) {
     url += `?delay=${delay}`
   }
-  const res = await fetch(url)
-  return await res.json()
+  try {
+    const res = await fetch(url)
+    return await res.json()
+  } catch (e) {
+    console.error(e)
+  }
 }
 
 async function fetchUser(delay) {
@@ -14,8 +18,12 @@ async function fetchUser(delay) {
   if (delay) {
     url += `?delay=${delay}`
   }
-  const res = await fetch(url)
-  return await res.json()
+  try {
+    const res = await fetch(url)
+    return await res.json()
+  } catch (e) {
+    console.error(e)
+  }
 }
 
 async function toggleTodo(username, id, delay) {
@@ -23,9 +31,13 @@ async function toggleTodo(username, id, delay) {
   if (delay) {
     url += `?delay=${delay}`
   }
-  await fetch(url, {
-    method: 'PUT',
-  })
+  try {
+    await fetch(url, {
+      method: 'PUT',
+    })
+  } catch (e) {
+    console.error(e)
+  }
 }
 
 async function deleteTodo(username, id, delay) {
@@ -33,9 +45,13 @@ async function deleteTodo(username, id, delay) {
   if (delay) {
     url += `?delay=${delay}`
   }
-  await fetch(url, {
-    method: 'DELETE',
-  })
+  try {
+    await fetch(url, {
+      method: 'DELETE',
+    })
+  } catch (e) {
+    console.error(e)
+  }
 }
 
 async function addTodo(username, data, delay) {
@@ -43,15 +59,19 @@ async function addTodo(username, data, delay) {
   if (delay) {
     url += `?delay=${delay}`
   }
-  await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      content: data,
-    }),
-  })
+  try {
+    await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        content: data,
+      }),
+    })
+  } catch (e) {
+    console.error(e)
+  }
 }
 
 export { fetchData, fetchUser, toggleTodo, deleteTodo, addTodo }
