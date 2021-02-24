@@ -3,14 +3,12 @@ import SearchInput from "./SearchInput.js"
 import SearchResult from "./SearchResult"
 
 export default function App($app) {
-    
+
     const searchInput = new SearchInput({
         $app,
-        onSearch : (keyword) => {
-            fetchJjal(keyword).then((data) => {
-                console.log(data)
-                searchResult.setState(data)
-            })
+        onSearch : async (keyword) => {
+            const data = await fetchJjal(keyword)
+            searchResult.setState(data)
         },
     })
 
