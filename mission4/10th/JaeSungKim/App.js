@@ -99,6 +99,7 @@ function App(initialUser, todoData, userData) {
     userList.setState(this.currentUser, this.todoUsers)
   }
 
+  // 로딩되는 객체를 부분적으로 Loading 표시하도록 고민...
   const toggleLoading = () => {
     let $mask = document.querySelector('#loading-mask')
     $mask.className = $mask.className == 'show' ? 'hide' : 'show'

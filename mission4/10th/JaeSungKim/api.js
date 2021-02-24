@@ -7,7 +7,10 @@ async function fetchData(username, delay) {
   }
   try {
     const res = await fetch(url)
-    return await res.json()
+    if (res.ok) {
+      return res.json()
+    }
+    throw new Error('API 요청 오류')
   } catch (e) {
     console.error(e)
   }
@@ -20,7 +23,10 @@ async function fetchUser(delay) {
   }
   try {
     const res = await fetch(url)
-    return await res.json()
+    if (res.ok) {
+      return res.json()
+    }
+    throw new Error('API 요청 오류')
   } catch (e) {
     console.error(e)
   }
@@ -34,6 +40,11 @@ async function toggleTodo(username, id, delay) {
   try {
     await fetch(url, {
       method: 'PUT',
+    }).then((res) => {
+      if (res.ok) {
+        return res.json()
+      }
+      throw new Error('API 요청 오류')
     })
   } catch (e) {
     console.error(e)
@@ -48,6 +59,11 @@ async function deleteTodo(username, id, delay) {
   try {
     await fetch(url, {
       method: 'DELETE',
+    }).then((res) => {
+      if (res.ok) {
+        return res.json()
+      }
+      throw new Error('API 요청 오류')
     })
   } catch (e) {
     console.error(e)
@@ -68,6 +84,11 @@ async function addTodo(username, data, delay) {
       body: JSON.stringify({
         content: data,
       }),
+    }).then((res) => {
+      if (res.ok) {
+        return res.json()
+      }
+      throw new Error('API 요청 오류')
     })
   } catch (e) {
     console.error(e)
