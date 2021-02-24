@@ -12,77 +12,105 @@ function App() {
   const removeAllTodoBtn = getTargetElement('#remove-all-todo-btn');
   const userListElement = getTargetElement('#user-list');
 
-  this.todoListData = [];
-  this.userListData = [];
-  this.currentUser = null;
+  this.state = {
+    todoListData: [],
+    userListData: [],
+    currentUser: null,
+    loading: false,
+  }
+  
+  this.setState = nextState => {
+    this.state = {
+      ...this.state,
+      ...nextState,
+    }
+
+    if (this.state.todoListData) {
+      this.todoList.setState(this.state.todoListData);
+    }
+    if (this.state.userListData) {
+      this.userList.setState(this.state.userListData);
+    }
+    if (this.state.todoListData) {
+      this.todoCount.render(this.state.todoListData);
+
+    }
+  }
 
   this.setUserListData = async () => {
     const initialUsers = await getUsers() || [];
+    let currentUser = null;
     const mappedUsers = initialUsers.map((user, index) => {
       if (index === 0) {
-        this.currentUser = user;
+        currentUser = user;
       }
       return {
         isSelected: index === 0,
         name: user,
       }
     });
-    this.userList.setState(mappedUsers);
-    this.userListData = mappedUsers;
-    this.setTodoListData();
+    this.setState({
+      userListData: mappedUsers,
+      currentUser,
+    })
   }
 
   this.setSpecificUser = userName => {
-    const mappedUsers = this.userListData.map(user => ({
+    const mappedUsers = this.state.userListData.map(user => ({
       isSelected: user.name === userName,
       name: user.name,
     }));
-    this.userList.setState(mappedUsers);
-    this.userListData = mappedUsers;
-    this.currentUser = userName;
+    this.setState({
+      userListData: mappedUsers,
+      currentUser: userName,
+    })
     this.setTodoListData();
   }
 
   this.setTodoListData = async () => {
-    const initialTodos = await getTodos(this.currentUser);
-    this.todoListData = initialTodos;
-    this.updateTodos(initialTodos);
+    if (this.state.currentUser) {
+      const initialTodos = await getTodos(this.state.currentUser);
+      this.setState({
+        todoListData: initialTodos || [],
+      })
+    }
   }
 
   this.addTodo = async newTodo => {
-    const response = await addTodo(this.currentUser, newTodo);
-    this.todoListData = [...this.todoListData, response];
-    this.updateTodos(this.todoListData);
+    const response = await addTodo(this.state.currentUser, newTodo);
+    const newTodos = [...this.state.todoListData, response];
+    this.setState({
+      todoListData: newTodos,
+    })
   }
 
   this.toggleTodo = async todoId => {
-    await toggleTodo(this.currentUser, todoId);
-    const newTodos = this.todoListData.map(todo => {
+    await toggleTodo(this.state.currentUser, todoId);
+    const newTodos = this.state.todoListData.map(todo => {
       if (todoId === todo._id) {
         return { ...todo, isCompleted: !todo.isCompleted };
       }
       return todo;
     });
-    console.log(newTodos)
 
-    this.updateTodos(newTodos);
+    this.setState({
+      todoListData: newTodos,
+    })
   }
 
   this.deleteTodo = async todoId => {
-    await deleteTodo(this.currentUser, todoId);
-    const newTodos = this.todoListData.filter(todo => todo._id !== todoId);
-    this.updateTodos(newTodos);
+    await deleteTodo(this.state.currentUser, todoId);
+    const newTodos = this.state.todoListData.filter(todo => todo._id !== todoId);
+    this.setState({
+      todoListData: newTodos,
+    })
   }
 
   this.removeAllTodos = async () => {
-    await deleteTodos(this.currentUser);
-    this.updateTodos([]);
-  }
-
-  this.updateTodos = (newTodos = []) => {
-    this.todoListData = newTodos;
-    this.todoList.setState(newTodos);
-    this.todoCount.render(newTodos);
+    await deleteTodos(this.state.currentUser);
+    this.setState({
+      todoListData: [],
+    })
   }
 
   const removeAllEvent = new CustomEvent('removeAll');
@@ -92,10 +120,11 @@ function App() {
 
   todoListElement.addEventListener('removeAll', this.removeAllTodos)
 
-  this.todoList = new TodoList(todoListElement, this.todoListData, this.toggleTodo, this.deleteTodo);
-  this.todoCount = new TodoCount(todoCountElement, this.todoListData);
+  this.todoList = new TodoList(todoListElement, this.state.todoListData, this.toggleTodo, this.deleteTodo);
+  this.todoCount = new TodoCount(todoCountElement, this.state.todoListData);
   this.todoInput = new TodoInput(todoInputElement, this.addTodo);
-  this.userList = new UserList(userListElement, this.userListData, this.setSpecificUser);
+  this.userList = new UserList(userListElement, this.state.userListData, this.setSpecificUser);
+
   this.setUserListData();
   this.setTodoListData();
 }  
