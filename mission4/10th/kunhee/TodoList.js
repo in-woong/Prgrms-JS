@@ -4,9 +4,8 @@ export default function TodoList(params) {
   const onRemove = params.onRemove
   let data = params.data || []
 
-  $target.addEventListener('click', function(e) {
+  $target.addEventListener('click', function (e) {
     const id = e.target.closest('li').dataset.id
-
     if (e.target.className === 'remove-button') {
       e.stopPropagation()
       onRemove(id)
@@ -15,16 +14,18 @@ export default function TodoList(params) {
     }
   })
 
-  this.setState = function(nextData,user) {
+  this.setState = function (nextData) {
     data = nextData
     this.render()
   }
-
-  this.render = function() {
-    const htmlString = data.map(function(todo) {
-      const contentHTML = todo.isCompleted
-        ? `<strike>${todo.content}</strike>`
-        : `${todo.content}`
+  this.loading = (username) =>{
+    $target.innerHTML = `${username}목록 로딩중...`
+  }
+  this.render = function () {
+    const htmlString = data.map(function (todo) {
+      const contentHTML = todo.isCompleted ?
+        `<strike>${todo.content}</strike>` :
+        `${todo.content}`
 
       return `<li data-id="${
         todo._id

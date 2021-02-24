@@ -4,18 +4,21 @@ export default function UserList(params) {
   const onRemove = params.onRemove
   let data = params.data || []
 
-  $target.addEventListener('click', function(e) {
+  $target.addEventListener('click', function (e) {
+    e.preventDefault();
     const id = e.target.closest('li').dataset.id
-      onClick(id)
+    onClick(id)
   })
 
-  this.setState = function(nextData) {
+  this.setState = function (nextData) {
     data = nextData
     this.render()
   }
-
-  this.render = function() {
-    const htmlString = data.map(function(name,i) {
+  this.loading = (username) =>{
+    $target.innerHTML = `${username}목록 로딩중...`
+  }
+  this.render = function () {
+    const htmlString = data.map(function (name, i) {
       return `<li data-id="${
         name
       }"><a href="#">${name}</a></li>`
