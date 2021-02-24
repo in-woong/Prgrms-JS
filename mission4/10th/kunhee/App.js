@@ -2,46 +2,61 @@ import TodoList from './TodoList.js'
 import UserList from './UserList.js'
 import ExecuteApi from './api.js'
 import TodoInput from './TodoInput.js';
-
+/*npx http-server -c -1*/
 export default function App() {
-  this.ClickedName = '';
-  this.fetchData = async (name) => {
-      this.ClickedName = name;
-      const res = await ExecuteApi().requestRead(name);
-      return res;
+  this.state = {
+    todos: [],
+    isLoading: false,
+    userList: [],
+    activeUser: 'roto'
   }
-    
-  (async () => {
 
-      //UserList 렌더링
-      const userData = await ExecuteApi().requestUserRead();
-      const data = await this.fetchData("roto");
+  this.fetchData = async () => {
+    const res = await ExecuteApi().requestRead(this.state.activeUser);
+    return res;
+  }
 
-      this.userList.setState(userData);
-      this.todoList.setState(data);
-   })()
-
+  this.setState = (newState) => {
+    this.state = newState;
+    this.todoList.setState(this.state);
+  }
 
   this.userList = new UserList({
     $target: document.querySelector('#user-list'),
+    data: this.state,
     onClick: async (name) => {
-      this.todoList.loading(name); //로딩중
-      const updatedData = await this.fetchData(name); //다시그리기
-      this.todoList.setState(updatedData);
+      this.setState({
+        ...this.state,
+        isLoading: true,
+        activeUser:name,
+      });
+      const data = await this.fetchData();
+      this.setState({
+        ...this.state,
+        todos: data,
+        isLoading: false,
+      });
     },
   });
 
   this.todoList = new TodoList({
     $target: document.querySelector('#todo-list'),
+    data: this.state,
     onClick: async (id) => {
-      await ExecuteApi().requestUpdate(id, this.ClickedName);
-      const updatedData = await this.fetchData(this.ClickedName); //다시그리기F
-      this.todoList.setState(updatedData);
+      await ExecuteApi().requestUpdate(id, this.state.activeUser);
+      const data = await this.fetchData();
+      this.setState({
+        ...this.state,
+        todos: data,
+      });
     },
     onRemove: async (id) => {
-      await ExecuteApi().requestDelete(id, this.ClickedName);
-      const updatedData = await this.fetchData(this.ClickedName); //다시그리기
-      this.todoList.setState(updatedData);
+      await ExecuteApi().requestDelete(id, this.state.activeUser);
+      const data = await this.fetchData();
+      this.setState({
+        ...this.state,
+        todos: data,
+      });
     },
   });
 
@@ -50,11 +65,34 @@ export default function App() {
     onClick: async (todoText) => {
       if (todoText.length > 0) {
         // 데이터 추가하기
-        await ExecuteApi().requestCreate(todoText, this.ClickedName);
-        // 데이터 추가 후 서버에서 목록 다시 불러서 다시 그리기
-        const updatedData = await this.fetchData(this.ClickedName); //다시그리기
-        this.todoList.setState(updatedData);
+        await ExecuteApi().requestCreate(todoText, this.state.activeUser);
+        const data = await this.fetchData();
+        this.setState({
+          ...this.state,
+          todos: data,
+        });
       }
     },
   })
+
+  //init
+  const init = async () => {
+    try {
+      //userlist
+      const userData = await ExecuteApi().requestUserRead();
+      this.userList.setState({
+        userList: userData,
+      }) //userlist 렌더링
+
+      //todolist
+      const data = await this.fetchData();
+      this.setState({
+        ...this.state,
+        todos: data,
+      })
+    } catch (e) {
+
+    }
+  }
+  init()
 }

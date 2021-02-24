@@ -11,3 +11,12 @@
     border: 1px solid rgb(206, 54, 54);
     padding: 2px 5px;
 }
+.todo-list{
+    border: 1px solid rgb(252, 148, 13);
+    left:20%;
+    height: 350px;
+    width: 350px;
+    overflow: visible;
+    display: inline-block;
+    float: left;
+}

@@ -12,6 +12,9 @@ export default function TodoInput(params) {
   if (!new.target) {
     throw new Error("error message, Please attach the 'new' to do constructor")
   }
+  if (!$target) {
+    throw new Error("error message, Iillegal Dom Selector")
+  }
 
   this.setState = (newData) => {
     this.render();
