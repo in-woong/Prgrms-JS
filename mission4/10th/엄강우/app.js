@@ -2,15 +2,15 @@ import TodoList from "./TodoList.js"
 import Users from "./Users.js"
 
 import Api from "./api.js"
-
-
 function App(params) {
 
     this.data = params.initialData
     this.users = params.initialUsers
     this.name = params.initialName
 
-    const api = new Api()
+    const api = new Api({
+        $spinner: document.querySelector("#spinner")
+    })
     const todoList = new TodoList({
         $todoList : document.querySelector("#todo-list"), 
         data : this.data,

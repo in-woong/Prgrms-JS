@@ -1,11 +1,30 @@
-export default function Api() {
+export default function Api(params) {
+    this.$spinner = params.$spinner
+
+    this.showSpinner = () => {
+        this.$spinner.className = "show"
+    }
+
+    this.hideSpinner = () => {
+        this.$spinner.className = ""
+    }
+
     this.fetchData = async (name) => {
-        const res = await fetch(`https://todo-api.roto.codes/${name}`)
-        return await res.json()
+
+        this.showSpinner()
+
+        const data = await fetch(`https://todo-api.roto.codes/${name}?delay=1000`)
+            .then( async (res) => {
+                this.hideSpinner()
+                return await res.json()
+            })
+        return data
     }
 
     this.addData = async (name, todo) => {
-        await fetch(`https://todo-api.roto.codes/${name}`, {
+        this.showSpinner()
+
+        await fetch(`https://todo-api.roto.codes/${name}?delay=1000`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -14,28 +33,51 @@ export default function Api() {
               content: todo
             })
         })
+        .then(() => {
+            this.hideSpinner()
+        })
     }
 
     this.removeTodo = async (name, id) => {
-        await fetch(`https://todo-api.roto.codes/${name}/${id}`, {
+        this.showSpinner()
+        await fetch(`https://todo-api.roto.codes/${name}/${id}?delay=1000`, {
             method: 'DELETE'
-        });
+        })
+        .then(() => {
+            this.hideSpinner()
+        })
     }
 
     this.changeTodoStatus = async (name, id) => {
-        await fetch(`https://todo-api.roto.codes/${name}/${id}/toggle`, {
+        this.showSpinner()
+
+        await fetch(`https://todo-api.roto.codes/${name}/${id}/toggle?delay=1000`, {
             method: 'PUT'
+        })
+        .then(() => {
+            this.hideSpinner()
         })
     }
 
     this.removeAll = async (name) => {
-        await fetch(`https://todo-api.roto.codes/${name}/all`, {
+        this.showSpinner()
+
+        await fetch(`https://todo-api.roto.codes/${name}/all?delay=1000`, {
             method: 'DELETE'
+        })
+        .then(() => {
+            this.hideSpinner()
         })
     }
 
     this.fetchUsers = async () => {
-        const res = await fetch('https://todo-api.roto.codes/users')
-        return await res.json()
+        this.showSpinner()
+
+        const users = await fetch('https://todo-api.roto.codes/users?delay=1000')
+            .then( async (res) => {
+                this.hideSpinner()
+                return await res.json()
+            })
+        return users
     }
 }
