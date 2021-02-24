@@ -5,7 +5,7 @@ const validateData = (data) => {
   }
   // type check
   const isValidData = data.every(
-    (todo) => typeof todo.text === 'string' && typeof todo.isCompleted === 'boolean')
+    (todo) => typeof todo.content === 'string' && typeof todo.isCompleted === 'boolean')
   if (!isValidData) {
     throw new Error('data의 타입이 올바르지 않습니다.')
   }
@@ -24,14 +24,14 @@ export default function TodoList({ $todoListItemComp, initialState, onClick }) {
     }
   }
   this.setState = (nextState) => {
-    this.validation(nextState)
+    this.validation(nextState.todoItems)
     this.state = nextState
     this.render()
   }
   this.render = function() {
-    this.$todoListItemComp.innerHTML = this.state.map(
-      ({ text, isCompleted }, index) => 
-        `<li data-index="${index}">${isCompleted ? `<s>${text}</s>` : `${text}`}</li>`).join('')
+    this.$todoListItemComp.innerHTML = this.state.todoItems.map(
+      ({ content, isCompleted, _id }, index) => 
+        `<li data-index="${index}">${isCompleted ? `<s>${content}</s>` : `${content}`}</li>`).join('')
   }
 
   this.$todoListItemComp.addEventListener('click', (e) => {
@@ -43,6 +43,6 @@ export default function TodoList({ $todoListItemComp, initialState, onClick }) {
   })
 
   // initial rendering
-  this.validation(this.state)
+  this.validation(this.state.todoItems)
   this.render()
 }
