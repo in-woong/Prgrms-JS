@@ -1,16 +1,16 @@
-function TodoCount({ $app, todos }) {
+export default function TodoCount({ $todoList, todos }) {
   this.todos = todos
 
   const $target = document.createElement('div')
   $target.className = 'TodoCount'
-  $app.appendChild($target)
+  $todoList.appendChild($target)
 
   this.$target = $target
 
   this.render = () => {
     const totalCount = this.todos.length
     const completedCount = this.todos.filter((todo) => todo.isCompleted).length
-    this.$target.innerHTML = `해야 할 일 총 갯수: ${totalCount}  완료된 할 일 갯수: ${completedCount}`
+    this.$target.innerHTML = `Total: ${totalCount}  Completed: ${completedCount}`
   }
 
   this.setState = (nextState) => {

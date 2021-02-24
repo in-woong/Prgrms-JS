@@ -24,10 +24,10 @@ const validateTodos = (todos) => {
   }
 }
 
-function TodoList({ $app, todos, onClick }) {
+export default function TodoList({ $todoList, todos, onCompletedTodo, onDeleteTodo }) {
   const $target = document.createElement('ul')
   $target.className = 'TodoList'
-  $app.appendChild($target)
+  $todoList.appendChild($target)
 
   this.todos = todos
   this.$target = $target
@@ -47,18 +47,20 @@ function TodoList({ $app, todos, onClick }) {
   }
 
   this.render = () => {
-    this.$target.innerHTML = this.todos.map(({ text, isCompleted }, index) => `<li data-index="${index}">${isCompleted ? `<s>${text}</s>` : text}</li>`).join('')
-
-    const $lis = this.$target.querySelectorAll('li')
-
-    $lis.forEach(($li) => {
-      $li.addEventListener('click', (e) => {
-        // 클릭한 li의 위치를 찾아라!
-        const index = parseInt(e.target.closest('li').dataset.index, 10)
-        onClick(index)
-      })
-    })
+    this.$target.innerHTML = this.todos.map(({ text, isCompleted }, index) => `<li data-index="${index}">${isCompleted ? `<s>${text}</s>` : text} <button data-index="${index}">del</button></li>`).join('')
   }
+
   this.validation(todos)
   this.render()
+
+  // 이벤트 버블링을 이용하기 ul에 한번만 이벤트 걸기
+  this.$target.addEventListener('click', (e) => {
+    const index = parseInt(e.target.closest('li').dataset.index, 10)
+    if (e.target.tagName === 'BUTTON') {
+      onDeleteTodo(index)
+    }
+    if (e.target.tagName === 'LI' || e.target.tagName === 'S') {
+      onCompletedTodo(index)
+    }
+  })
 }

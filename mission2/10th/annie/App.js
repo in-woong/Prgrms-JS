@@ -1,8 +1,13 @@
-function App($app, initialState) {
+import TodoInput from './TodoInput.js'
+import TodoCount from './TodoCount.js'
+import TodoList from './TodoList.js'
+
+export default function App(initialState) {
   this.state = initialState
 
+  const $todoList = document.querySelector('#todo_list')
+
   this.todoInput = new TodoInput({
-    $app,
     onAddTodo: (text) => {
       const nextState = [
         ...this.state,
@@ -16,9 +21,9 @@ function App($app, initialState) {
     },
   })
   this.todoList = new TodoList({
-    $app,
+    $todoList,
     todos: this.state,
-    onClick: (index) => {
+    onCompletedTodo: (index) => {
       const nextState = [...this.state]
 
       nextState[index] = {
@@ -28,9 +33,15 @@ function App($app, initialState) {
       this.state = nextState
       this.setState(nextState)
     },
+    onDeleteTodo: (index) => {
+      const nextState = [...this.state]
+      nextState.splice(index, 1)
+      this.state = nextState
+      this.setState(nextState)
+    },
   })
   this.todoCount = new TodoCount({
-    $app,
+    $todoList,
     todos: this.state,
   })
 
