@@ -1,4 +1,3 @@
-
 var data = [
   {
     text: 'JS 공부하기',
@@ -10,5 +9,4 @@ var data = [
   },
 ]
 
-const $target = document.querySelector('#todo-list')
-const todoList = new TodoList($target, data)
+new App(document.querySelector('#todo-list'), data)

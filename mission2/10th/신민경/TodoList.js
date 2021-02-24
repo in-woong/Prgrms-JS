@@ -2,10 +2,19 @@ function TodoList($target, data) {
   this.$target = $target
   this.data = data
 
+  delBtn = document.createElement( 'button' )
+  delBtnText = document.createTextNode( 'DELETE' )
+  delBtn.appendChild( delBtnText )
+
   this.render = function() {
     this.$target.innerHTML = this.data
-      .map(todo => `<div>${todo.text}<button id='deleteButton' data-id=${this.data.indexOf(todo)} onclick=deleteList()>DELETE</button></div>`)
+      .map((todo) => `<div data-id=${this.data.indexOf(todo)}>${todo.isCompleted ? `<s>${todo.text}</s> : ${todo.text}</div>`)
       .join('')
+
+    this.$target.querySelector('div').addEventListener('click', (e) => {
+      this.data[e.target.dataset.id].isCompleted = True
+      this.render()
+    })
   }
 
   this.setState = function(nextData) {
@@ -14,23 +23,4 @@ function TodoList($target, data) {
   }
 
   this.render()
-}
-
-const newTodoList = []
-const AddTodo = function(){
-  const newTodo = {
-    text: document.querySelector('#inputTodo').value,
-    isCompleted: false,
-  }
-  newTodoList.push(newTodo)
-
-  return newTodoList
-}
-
-const deleteList = function() {
-  const buttonId = document.querySelector('#deleteButton')
-  document.querySelector('#todo-list').innerHTML += buttonId.dataset.id
-  newTodoList.splice(buttonId.dataset.id, 1)
-  $tgt = document.querySelector('#todo-list')
-  TodoList($tgt, newTodoList)
 }
