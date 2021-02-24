@@ -1,13 +1,4 @@
-const todoData = [
-    {
-      text: 'JS 공부하기',
-      isCompleted: false,
-    },
-    {
-      text: 'JS 복습하기',
-      isCompleted: false,
-    },
-  ]
+const todoData = []
 
   const errorCheck = (data, element) => {
     if (!data) {
@@ -43,6 +34,4 @@ const todoData = [
       document.querySelector('#todoInput').value = ''
     }
   })
-
-
   
