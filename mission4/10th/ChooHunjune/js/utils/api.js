@@ -23,11 +23,11 @@ const request = async (url, params) => {
 }
 
 export const fetchTodoItemAPI = async (user) => {
-  return await request(`${END_POINT}/${user}?delay=5000`)
+  return await request(`${END_POINT}/${user}`)
 }
 
 export const addTodoItemAPI = async (user, todoItemContent) => {
-  await request(`${END_POINT}/${user}?delay=5000`, {
+  await request(`${END_POINT}/${user}`, {
     method: 'POST',
     body: JSON.stringify({
       content: todoItemContent
@@ -36,19 +36,19 @@ export const addTodoItemAPI = async (user, todoItemContent) => {
 }
 
 export const delTodoItemAPI = async (user, todoItemId) => {
-  await request(`${END_POINT}/${user}/${todoItemId}?delay=5000`, {
+  await request(`${END_POINT}/${user}/${todoItemId}`, {
     method: 'DELETE',
   })
 }
 
 export const clearTodoListAPI = async (user) => {
-  await request(`${END_POINT}/${user}/all?delay=5000`, {
+  await request(`${END_POINT}/${user}/all`, {
     method: 'DELETE',
   })
 }
 
 export const toggleTodoItemAPI = async (user, todoItemId) => {
-  await request(`${END_POINT}/${user}/${todoItemId}/toggle?delay=5000`, {
+  await request(`${END_POINT}/${user}/${todoItemId}/toggle`, {
     method: 'PUT',
   })
 }
