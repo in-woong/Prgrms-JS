@@ -32,7 +32,10 @@ function App() {
     this.todoList.setState(this.state.todoListData);
     this.todoListCompleted.setState(this.state.todoListDataIsCompleted);
     this.userList.setState(this.state.userListData);
-    this.todoCount.render(this.state.todoListData);
+    this.todoCount.render([
+      ...this.state.todoListData,
+      ...this.state.todoListDataIsCompleted,
+    ]);
     this.loadingUI.render(this.state.isLoading);
   }
 
