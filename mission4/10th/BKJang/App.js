@@ -2,6 +2,7 @@ import TodoList from './TodoList.js';
 import TodoCount from './TodoCount.js';
 import TodoInput from './TodoInput.js';
 import UserList from './UserList.js';
+import LoadingUI from './LoadingUI.js';
 import { getTargetElement } from './validationUtil.js';
 import { getTodos, addTodo, deleteTodo, deleteTodos, toggleTodo, getUsers } from './api.js';
 
@@ -11,12 +12,13 @@ function App() {
   const todoInputElement = getTargetElement('#todo-input');
   const removeAllTodoBtn = getTargetElement('#remove-all-todo-btn');
   const userListElement = getTargetElement('#user-list');
+  const loadingUIElement = getTargetElement('#loading-ui');
 
   this.state = {
     todoListData: [],
     userListData: [],
     currentUser: null,
-    loading: false,
+    isLoading: false,
   }
   
   this.setState = nextState => {
@@ -25,19 +27,17 @@ function App() {
       ...nextState,
     }
 
-    if (this.state.todoListData) {
-      this.todoList.setState(this.state.todoListData);
-    }
-    if (this.state.userListData) {
-      this.userList.setState(this.state.userListData);
-    }
-    if (this.state.todoListData) {
-      this.todoCount.render(this.state.todoListData);
-
-    }
+    this.todoList.setState(this.state.todoListData);
+    this.userList.setState(this.state.userListData);
+    this.todoCount.render(this.state.todoListData);
+    this.loadingUI.render(this.state.isLoading);
   }
 
   this.setUserListData = async () => {
+    this.setState({
+      isLoading: true,
+    });
+
     const initialUsers = await getUsers() || [];
     let currentUser = null;
     const mappedUsers = initialUsers.map((user, index) => {
@@ -49,10 +49,14 @@ function App() {
         name: user,
       }
     });
+
     this.setState({
       userListData: mappedUsers,
       currentUser,
-    })
+      isLoading: false,
+    });
+
+    await this.setTodoListData();
   }
 
   this.setSpecificUser = userName => {
@@ -69,22 +73,38 @@ function App() {
 
   this.setTodoListData = async () => {
     if (this.state.currentUser) {
+      this.setState({
+        isLoading: true,
+      });
+
       const initialTodos = await getTodos(this.state.currentUser);
+
       this.setState({
         todoListData: initialTodos || [],
+        isLoading: false,
       })
     }
   }
 
   this.addTodo = async newTodo => {
+    this.setState({
+      isLoading: true,
+    });
+
     const response = await addTodo(this.state.currentUser, newTodo);
     const newTodos = [...this.state.todoListData, response];
+
     this.setState({
       todoListData: newTodos,
+      isLoading: false,
     })
   }
 
   this.toggleTodo = async todoId => {
+    this.setState({
+      isLoading: true,
+    });
+
     await toggleTodo(this.state.currentUser, todoId);
     const newTodos = this.state.todoListData.map(todo => {
       if (todoId === todo._id) {
@@ -95,21 +115,34 @@ function App() {
 
     this.setState({
       todoListData: newTodos,
+      isLoading: false,
     })
   }
 
   this.deleteTodo = async todoId => {
+    this.setState({
+      isLoading: true,
+    });
+
     await deleteTodo(this.state.currentUser, todoId);
     const newTodos = this.state.todoListData.filter(todo => todo._id !== todoId);
+
     this.setState({
       todoListData: newTodos,
+      isLoading: false,
     })
   }
 
   this.removeAllTodos = async () => {
+    this.setState({
+      isLoading: true,
+    });
+
     await deleteTodos(this.state.currentUser);
+
     this.setState({
       todoListData: [],
+      isLoading: false,
     })
   }
 
@@ -124,9 +157,9 @@ function App() {
   this.todoCount = new TodoCount(todoCountElement, this.state.todoListData);
   this.todoInput = new TodoInput(todoInputElement, this.addTodo);
   this.userList = new UserList(userListElement, this.state.userListData, this.setSpecificUser);
+  this.loadingUI = new LoadingUI(loadingUIElement, this.state.isLoading);
 
   this.setUserListData();
-  this.setTodoListData();
 }  
 
 export default App;

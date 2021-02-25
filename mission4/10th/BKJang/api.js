@@ -31,7 +31,7 @@ const requestAPI = async (requestURI, method, params = {}) => {
 export const getTodos = userName => {
   try {
     if (!userName) throw new Error(ERROR_GET_TODOS);
-    return requestAPI(`${GET_TODOS_BASE_URL}/${userName}`, 'GET');
+    return requestAPI(`${GET_TODOS_BASE_URL}/${userName}?delay=500`, 'GET');
   } catch (error) {
     console.error('getTodos API ERROR', error);
   }
