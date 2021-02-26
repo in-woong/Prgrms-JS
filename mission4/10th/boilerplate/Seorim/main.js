@@ -1,4 +1,4 @@
-import { getTodoList, updateNewTodo, removeTodo, createNewTodo } from './api.js'
+import { getTodoList, updateNewTodo, removeTodo, createNewTodo, removeAll } from './api.js'
 import TodoList from './TodoList.js'
 
 (async function () {
@@ -13,7 +13,7 @@ import TodoList from './TodoList.js'
 
   async function setState(todoList) {
     const updatedData = await fetchData()
-    todoList.setState(updatedData)  
+    todoList.setState(updatedData)
   }
 
   const todoList = new TodoList({
@@ -33,6 +33,7 @@ import TodoList from './TodoList.js'
       const updatedData = await fetchData();
       todoList.setState(updatedData);
     },
+
   });
 
   document
@@ -48,5 +49,13 @@ import TodoList from './TodoList.js'
         const updatedData = await fetchData();
         todoList.setState(updatedData);
       }
+    });
+
+  document
+    .querySelector("#remove-all-button")
+    .addEventListener('click', async function () {
+      await removeAll(username)
+      const updateData = await fetchData()
+      todoList.setState(updateData)
     });
 })();

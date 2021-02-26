@@ -6,7 +6,7 @@ export default function TodoList(params) {
   
     $target.addEventListener('click', function(e) {
       const id = e.target.closest('li').dataset.id
-  
+
       if (e.target.className === 'remove-button') {
         e.stopPropagation()
         onRemove(id)
