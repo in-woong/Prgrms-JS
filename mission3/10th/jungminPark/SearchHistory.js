@@ -5,6 +5,7 @@ export default function SearchHistory({ $app, initialState, onClick }) {
     $target.className = 'SearchHistory'
     $app.appendChild($target)
 
+    this.$target = $target
     this.onClick = onClick
 
     this.setState = (nextState) => {

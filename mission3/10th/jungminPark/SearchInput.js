@@ -14,6 +14,7 @@ export default function SearchInput({ $app, onSearch }) {
             const keyword = e.target.value
 
             if(keyword.length > 0){
+                e.target.value = ''
                 console.log(keyword)
                 this.onSearch(keyword)
             }

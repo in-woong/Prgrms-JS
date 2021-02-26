@@ -22,7 +22,7 @@ export default function App($app) {
         onSearch : async (keyword) => {
             const data = await fetchJjal(keyword)
             this.setState({
-                histories : [...this.state.history, keyword],
+                histories : [...this.state.histories, keyword],
                 searchData : data
             })
         },
