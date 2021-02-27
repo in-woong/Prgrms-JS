@@ -5,8 +5,7 @@ import TodoList from './TodoList.js'
   const username = 'seorim';
 
   async function fetchData() {
-    const res = await getTodoList(username)
-    return await res.json();
+    return await getTodoList(username)
   }
 
   const data = await fetchData();
@@ -15,6 +14,10 @@ import TodoList from './TodoList.js'
     const updatedData = await fetchData()
     todoList.setState(updatedData)
   }
+  
+  const $content = document.createElement('div')
+  $content.className = 'content'
+  document.querySelector('#app').appendChild($content)
 
   const todoList = new TodoList({
     $target: document.querySelector('#todo-list'),
@@ -23,18 +26,18 @@ import TodoList from './TodoList.js'
       // 데이터 추가하기
       await updateNewTodo(username, id)
       // 데이터 추가 후 서버에서 목록 다시 불러서 다시 그리기
-      const updatedData = await fetchData();
-      todoList.setState(updatedData);
+      const updatedData = await fetchData()
+      todoList.setState(updatedData)
     },
     onRemove: async function (id) {
       //데이터 지우기
       await removeTodo(username, id)
       // 데이터 추가 후 서버에서 목록 다시 불러서 다시 그리기
-      const updatedData = await fetchData();
-      todoList.setState(updatedData);
+      const updatedData = await fetchData()
+      todoList.setState(updatedData)
     },
 
-  });
+  })
 
   document
     .querySelector('#add-todo-button')
@@ -46,10 +49,11 @@ import TodoList from './TodoList.js'
         await createNewTodo(username, todoText)
 
         // 데이터 추가 후 서버에서 목록 다시 불러서 다시 그리기
-        const updatedData = await fetchData();
-        todoList.setState(updatedData);
+        //await fetchData()
+        const updatedData = await fetchData()
+        todoList.setState(updatedData)
       }
-    });
+    })
 
   document
     .querySelector("#remove-all-button")
@@ -57,5 +61,5 @@ import TodoList from './TodoList.js'
       await removeAll(username)
       const updateData = await fetchData()
       todoList.setState(updateData)
-    });
-})();
+    })
+})()
