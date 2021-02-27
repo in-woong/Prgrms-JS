@@ -1,4 +1,9 @@
-export default function SearchResult({ $searchResult, initialState }) {
+export default function SearchResult({ $app, initialState }) {
+
+  const $searchResult = document.createElement('div')
+  $searchResult.className = 'SearchResult'
+  $app.appendChild($searchResult)
+  
   this.state = initialState
   this.$target = $searchResult
 

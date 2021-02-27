@@ -1,11 +1,15 @@
-export default function SearchInput({ $searchInput, onSearch }) {
+export default function SearchInput({ $app, onSearch }) {
+
+  const $searchInput = document.createElement('input')
+  $searchInput.className = 'SearchInput'
+  $app.appendChild($searchInput)
+
   this.$target = $searchInput
-  this.onSearch = onSearch
 
   this.$target.addEventListener(
     'keyup',
     (e) => {
-      const keyword = e.target.value
+      const { value: keyword } = e.target
       onSearch(keyword)
     }
   )
