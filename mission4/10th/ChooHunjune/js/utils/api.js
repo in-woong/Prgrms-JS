@@ -18,7 +18,7 @@ const request = async (url, params) => {
     return result
 
   } catch (e) {
-    console.error(e)
+    alert(e)
   }
 }
 

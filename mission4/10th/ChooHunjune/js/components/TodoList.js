@@ -11,10 +11,16 @@ const validateData = (data) => {
   }
 }
 
-export default function TodoList({ $todoListItemComp, initialState, onClick }) {
+export default function TodoList({ $app, initialState, onClick }) {
+
+  // generate todoList component
+  const $todoListItemComp = document.createElement('ul')
+  $todoListItemComp.className = 'TodoList'
+  $todoListItemComp.style = 'list-style: none'
+  $app.appendChild($todoListItemComp)
+
   this.state = initialState
   this.onClick = onClick
-  this.$todoListItemComp = $todoListItemComp
 
   this.validation = (data) => {
     validateData(data)
@@ -29,12 +35,12 @@ export default function TodoList({ $todoListItemComp, initialState, onClick }) {
     this.render()
   }
   this.render = function() {
-    this.$todoListItemComp.innerHTML = this.state.todoItems.map(
+    $todoListItemComp.innerHTML = this.state.todoItems.map(
       ({ content, isCompleted, _id }, index) => 
         `<li data-index="${index}">${isCompleted ? `<s>${content}</s>` : `${content}`}</li>`).join('')
   }
 
-  this.$todoListItemComp.addEventListener('click', (e) => {
+  $todoListItemComp.addEventListener('click', (e) => {
     const $li = e.target.closest('li')
     if ($li) {
       const index = parseInt($li.dataset.index)

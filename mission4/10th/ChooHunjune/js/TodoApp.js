@@ -26,7 +26,7 @@ export default function TodoApp($app, initialUser) {
     try {
       this.fetchedTodoItems = await fetchTodoItemAPI(this.state.user)
     } catch (e) {
-      console.error(e)
+      alert(e)
     }
     this.setState({
       ... this.state,
@@ -35,57 +35,22 @@ export default function TodoApp($app, initialUser) {
     })
   }
 
-
   this.setState = (nextState) => {
     this.state = nextState
     this.todoList.setState(this.state)
     this.todoCount.setState(this.state)
   }
 
-  // generate todoCount component
-  const $todoCount = document.createElement('div')
-  $todoCount.className = 'TodoCount'
-  $app.appendChild($todoCount)
 
   this.todoCount = new TodoCount({
-    $todoCount,
+    $app,
     initialState: this.state
   })
 
-  
-  // generate todoInput component
-  const $todoInput = document.createElement('input')
-  $app.appendChild($todoInput)
-  const $todoListClearBtn = document.createElement('button')
-  $todoListClearBtn.appendChild(document.createTextNode('전체삭제'))
-  $app.appendChild($todoListClearBtn)
-  const $todoInputAddBtn = document.createElement('button')
-  $todoInputAddBtn.appendChild(document.createTextNode('추가'))
-  $app.appendChild($todoInputAddBtn)
-
-  $todoListClearBtn.addEventListener('click', () => {
-    $app.dispatchEvent(new Event('removeAll'))
-  })
-  $app.addEventListener('removeAll', () => {
-    if (confirm('모두 삭제하시겠습니까?')) {
-      const emptyState = {
-        ... this.state,
-        todoItems: [],
-      }
-      try {
-        (async () => {await clearTodoListAPI(this.state.user)})()
-      } catch (e) {
-        console.error(e)
-      }
-      this.setState(emptyState)
-    }
-  })
-
-  const $todoInputComponents = {$todoInput, $todoListClearBtn, $todoInputAddBtn}
 
   this.todoInput = new TodoInput({
-    $todoInputComponents,
-    onTodoInput: (text) => {
+    $app,
+    onTodoInput: async (text) => {
       const nextState = {
         ... this.state,
         todoItems: [
@@ -98,25 +63,33 @@ export default function TodoApp($app, initialUser) {
         ]
       }
       try {
-        (async () => {await addTodoItemAPI(this.state.user, text)})()
+        await addTodoItemAPI(this.state.user, text)
         this.init()
       } catch (e) {
-        console.error(e)
+        alert(e)
       }
       this.setState(nextState)
     },
   })
   
+  $app.addEventListener('removeAll', async () => {
+    if (confirm('모두 삭제하시겠습니까?')) {
+      const emptyState = {
+        ... this.state,
+        todoItems: [],
+      }
+      try {
+        await clearTodoListAPI(this.state.user)
+      } catch (e) {
+        alert(e)
+      }
+      this.setState(emptyState)
+    }
+  })
 
-  // generate todoList component
-  const $todoListItemComp = document.createElement('ul')
-  $todoListItemComp.className = 'TodoList'
-  $todoListItemComp.style = 'list-style: none'
-  this.$todoListItemComp = $todoListItemComp
-  $app.appendChild($todoListItemComp)
 
   this.todoList = new TodoList({
-    $todoListItemComp,
+    $app,
     initialState: this.state,
     onClick: (index) => {
       const nextState = {... this.state}
@@ -128,7 +101,7 @@ export default function TodoApp($app, initialUser) {
       try {
         (async () => {await toggleTodoItemAPI(this.state.user, nextState.todoItems[index]._id)})()
       } catch (e) {
-        console.error(e)
+        alert(e)
       }
       this.setState(nextState)
     }

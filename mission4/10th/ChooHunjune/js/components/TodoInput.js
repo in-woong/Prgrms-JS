@@ -1,26 +1,35 @@
-export default function TodoInput({ $todoInputComponents, onTodoInput }) {
+export default function TodoInput({ $app, onTodoInput }) {
+  // generate todoInput component
+  const $todoInput = document.createElement('input')
+  $app.appendChild($todoInput)
+  const $todoListClearBtn = document.createElement('button')
+  $todoListClearBtn.appendChild(document.createTextNode('전체삭제'))
+  $app.appendChild($todoListClearBtn)
+  const $todoInputAddBtn = document.createElement('button')
+  $todoInputAddBtn.appendChild(document.createTextNode('추가'))
+  $app.appendChild($todoInputAddBtn)
 
-  this.$todoInput = $todoInputComponents.$todoInput
-  this.$todoListClearBtn = $todoInputComponents.$todoListClearBtn
-  this.$todoInputAddBtn = $todoInputComponents.$todoInputAddBtn
+  $todoListClearBtn.addEventListener('click', () => {
+    $app.dispatchEvent(new Event('removeAll'))
+  })
+  
 
   const callOnTodoInput = () => {
-    const text = this.$todoInput.value
-    if (text) {
+    const text = $todoInput.value
+    if (text && text.length > 0) {
       onTodoInput(text)
-      this.$todoInput.value = ''
+      $todoInput.value = ''
     }
   }
 
-  this.$todoInputAddBtn.addEventListener('click', (e) => {
+  $todoInputAddBtn.addEventListener('click', (e) => {
     callOnTodoInput()
   })
-  this.$todoInput.addEventListener('keydown', (e) => {
+  $todoInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
       callOnTodoInput()
     }
   })
-  
   
   this.render = () => {}
 }

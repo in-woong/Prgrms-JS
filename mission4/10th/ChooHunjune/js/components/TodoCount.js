@@ -1,10 +1,15 @@
-export default function TodoCount({ $todoCount, initialState }) {
+export default function TodoCount({ $app, initialState }) {
+
+  // generate todoCount component
+  const $todoCount = document.createElement('div')
+  $todoCount.className = 'TodoCount'
+  $app.appendChild($todoCount)
+  
   this.state = initialState
-  this.$todoCount = $todoCount
 
   this.render = () => {
     const todoDoneCount = this.state.todoItems.filter((todo) => todo.isCompleted).length
-    this.$todoCount.innerHTML = `Done: ${todoDoneCount} / Total: ${this.state.todoItems.length}`
+    $todoCount.innerHTML = `Done: ${todoDoneCount} / Total: ${this.state.todoItems.length}`
   }
   this.setState = (nextState) => {
     this.state = nextState
