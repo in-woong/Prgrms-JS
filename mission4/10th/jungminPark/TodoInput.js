@@ -1,4 +1,4 @@
-function TodoInput({$app, initialState, onAdd }) {
+export default function TodoInput({$app, initialState, onAdd }) {
     const isRendered = false
 
     this.$target = document.createElement('div')
