@@ -1,10 +1,13 @@
-function TodoList(params) {
-    const $target = params.$target
-    const onClick = params.onClick
-    const onRemove = params.onRemove
-    let data = params.data || []
+export default function TodoList({ $app, initialState = {isLoading : false, todos : [] } , onClick, onRemove}) {
+    this.$target = document.createElement('div')
+    this.$target.className = 'TodoList'
+    $app.appendChild(this.$target)
+
+    this.onClick = onClick
+    this.onRemove = onRemove
+    this.state = initialState
   
-    $target.addEventListener('click', function(e) {
+    this.$target.addEventListener('click', function(e) {
       const id = e.target.closest('li').dataset.id
   
       if (e.target.className === 'remove-button') {
@@ -21,19 +24,19 @@ function TodoList(params) {
     }
   
     this.render = function() {
-      const htmlString = data.map(function(todo) {
-        const contentHTML = todo.isCompleted
-          ? `<strike>${todo.content}</strike>`
-          : `${todo.content}`
-  
-        return `<li data-id="${
-          todo._id
-        }">${contentHTML} <button class="remove-button">Remove</button></li>`
+      if(this.state.isLoading){
+        this.$target.innerHTML = '로딩중입니다...'
+      } else {
+        const htmlString = this.state.todos.map(function(todo) {
+          const contentHTML = todo.isCompleted ? `<strike>${todo.content}</strike>`: `${todo.content}`
+    
+          return `<li data-id="${todo._id}">${contentHTML} <button class="remove-button">Remove</button></li>`
+
       })
   
       $target.innerHTML = `<ul>${htmlString.join('')}</ul>`
+      }
     }
   
     this.render()
   }
-  
