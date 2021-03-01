@@ -15,12 +15,15 @@ export default function TodoList({ $target, initialState, onDelete, onToggle, st
   this.$listTitle = $listTitle
   this.onToggle = onToggle
 
+  // review1
+  // 수정전  this.$todoList.classList += ' incompleted'
+  // 수정후  this.$todoList.classList.add(this.status)
   this.listTitleString = () => {
     if (this.status === 'incompleted') {
-      this.$todoList.classList += ' incompleted'
+      this.$todoList.classList.add(this.status)
       return '해야할 일 ➰'
     } else {
-      this.$todoList.classList += ' completed'
+      this.$todoList.classList.add(this.status)
       return '완료된 일 〰️'
     }
   }
@@ -62,21 +65,22 @@ export default function TodoList({ $target, initialState, onDelete, onToggle, st
       .map((todoItem) => {
         const htmlIsCompletedTag = todoItem.isCompleted ? `<s>${todoItem.content}</s>` : `${todoItem.content}`
 
+        // review3 - indent가 한줄 들어옴
         return `
-        <li 
-          data-id="${todoItem._id}" 
-          class="todo-item"
-          draggable="true"
-        >
-          <input 
-            type="checkbox"
-            class="todo-checkbox"
-            id = "${todoItem._id}"
-            ${todoItem.isCompleted ? 'checked' : ''} 
-          />
-          <label for="${todoItem._id}">${htmlIsCompletedTag}</label>
-          <button class="delete-button">x</button>
-        </li>
+          <li 
+            data-id="${todoItem._id}" 
+            class="todo-item"
+            draggable="true"
+          >
+            <input 
+              type="checkbox"
+              class="todo-checkbox"
+              id = "${todoItem._id}"
+              ${todoItem.isCompleted ? 'checked' : ''} 
+            />
+            <label for="${todoItem._id}">${htmlIsCompletedTag}</label>
+            <button class="delete-button">x</button>
+          </li>
         `
       })
       .join('')

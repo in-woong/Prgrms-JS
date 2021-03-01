@@ -102,7 +102,7 @@ form button {
 }
 
 .todo-list {
-  height: 430px;
+  height: calc(100vh - 360px);
   padding: 20px;
   background: #eee;
   overflow-y: scroll;
