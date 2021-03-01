@@ -11,10 +11,10 @@ function TodoInput({$app, onTodoInput}){
     $app.appendChild($addButton)
 
     const callOnTodoInput = () => {
-        const item = this.$todoInput.value
+        const item = $todoInput.value
         if (item) {
           onTodoInput(item)
-          this.$todoInput.value = ''
+          $todoInput.value = ''
         }
         else{
             alert('할 일을 입력해주세요!')
