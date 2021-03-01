@@ -29,8 +29,16 @@ export default function TodoList(params) {
 
     this.render = () => {
         const htmlString = this.data.map((element) => element.isCompleted ? 
-        `<li data-id=${element._id}><span>${element.content}</span><button class="remove-button">지우기</button></li>`
-        : `<li data-id=${element._id}><s>${element.content}</s><button class="remove-button">지우기</button></li>`)
-        this.$target.innerHTML = `<ol>${htmlString.join('')}</ol><button class="remove-all">모두 삭제하기</button>`
+        `<li data-id=${element._id}>
+            <span>${element.content}</span>
+            <button class="remove-button">지우기</button>
+        </li>`
+        : `<li data-id=${element._id}>
+            <s>${element.content}</s>
+            <button class="remove-button">지우기</button>
+        </li>`
+        ).join('')
+        
+        this.$target.innerHTML = `<ol>${htmlString}</ol><button class="remove-all">모두 삭제하기</button>`
     }
 }

@@ -7,7 +7,9 @@ export default function Users(params) {
     })
 
     this.render = (data) => {
-        const stringHTML = data.map((element) => `<li data-name="${element}">${element}</li>`)
-        this.$target.innerHTML = `<ol>${stringHTML.join('')}</ol>`
+        const stringHTML = data.map((element) => 
+            `<li data-name="${element}">${element}</li>`
+        ).join("")
+        this.$target.innerHTML = `<ol>${stringHTML}</ol>`
     }
 }
