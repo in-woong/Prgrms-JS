@@ -4,14 +4,14 @@ function App($app, initialState){
     this.todoInput = new TodoInput({
         $app, 
         onTodoInput : (text) => {
-        const nextState = [
-            ...this.state,
-            {
-                text,
-            },
+            const nextState = [
+                ...this.state,
+                {
+                    text,
+                },
         ]
 
-        this.setState(nextState)
+            this.setState(nextState)
         },
     })
     this.todoList = new TodoList({ 

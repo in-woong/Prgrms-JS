@@ -1,13 +1,13 @@
 const validateData = (data) => {
     //null or undefined
     if(!data) {
-        throw new Error(IS_UNDEFINED_OR_NULL)
+        throw new Error(ERROR_MESSAGE.IS_UNDEFINED_OR_NULL)
     }
 
     const isValidData = data.every((item) => typeof item.text === 'string')
 
     if(!isValidData) {
-        throw new Error(IS_NOT_STRING)
+        throw new Error(ERROR_MESSAGE.IS_NOT_STRING)
     }
 }
 
@@ -16,7 +16,7 @@ function TodoList({ $app, initialState, onClick }){
         this.state = initialState
 
         if(!new.target) {
-            throw new Error(MISSING_NEW_KEYWORD)
+            throw new Error(ERROR_MESSAGE.MISSING_NEW_KEYWORD)
         }
 
         validateData(this.state)
