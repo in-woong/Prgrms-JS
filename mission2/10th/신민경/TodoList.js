@@ -2,6 +2,7 @@ function TodoList($target, data) {
   this.$target = $target
   this.data = data
 
+
   this.render = function() {
     this.$target.innerHTML = this.data
       .map((todo) => `<div data-id=${this.data.indexOf(todo)}>${todo.isCompleted ? `<s>${todo.text}</s> : ${todo.text}</div>`)
