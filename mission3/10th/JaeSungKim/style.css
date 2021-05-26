@@ -1,0 +1,25 @@
+#history-tab {
+  display: flex;
+  align-items: center;
+}
+
+#history-clear-btn {
+  margin: 8px;
+  margin-left: 0px;
+  padding: 8px;
+}
+
+#history-list {
+  display: flex;
+  list-style: none;
+  cursor: pointer;
+  padding: 0px;
+}
+
+li {
+  padding-right: 8px;
+}
+
+li:hover {
+  color: teal;
+}
