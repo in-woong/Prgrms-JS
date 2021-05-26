@@ -1,0 +1,45 @@
+<head>
+  <title>Mission 2</title>
+  <meta charset="utf-8" />
+</head>
+<style>
+  .remove-all {
+    align-items: center;
+    justify-content: center;
+    color: #4976a3;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 8px;
+    border-style: hidden;
+  }
+  .remove {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4976a3;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 8px;
+    border-style: hidden;
+  }
+
+  #create-todo {
+    width: 250px;
+    margin-bottom: 5px;
+  }
+
+  #todo-list {
+    display: grid;
+  }
+</style>
+
+<body>
+  <div id="app">
+    <input type="text" id="create-todo" placeholder="할 일을 입력 후, Enter 키를 누르세요!" />
+    <button class="remove-all">전체 삭제</button>
+    <div id="todo-list"></div>
+  </div>
+ <script type="module" src="./index.js"></script>
+</body>
+
+</html>
