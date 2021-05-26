@@ -1,12 +1,25 @@
 <html>
   <head>
     <title>Mission 1</title>
-    <link rel="stylesheet" href="style.css" />
     <meta charset="utf-8" />
+    <style>
+      .todo {
+        background-color: lightgray;
+        border-radius: 25px;
+        margin: 10px;
+        padding: 5px;
+        width: 300px;
+        text-align: center;
+      }
+      .completed-todo {
+        text-decoration: line-through;
+        text-decoration-color: lightcoral;
+      }
+    </style>
   </head>
 
   <body>
-    <div id="todo-list-day"></div>
+    <div id="todo-list"></div>
     <div id="todo-list-week"></div>
     <div id="todo-list-month"></div>
     <script type="module" src="./main.js"></script>
