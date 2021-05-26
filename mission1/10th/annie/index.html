@@ -1,0 +1,109 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8"/>
+</head>
+
+<body>
+<div id="todo-list"></div>
+<div id="todo-day"></div>
+<div id="todo-week"></div>
+<script>
+  const data = [
+    {
+      text: 'JS 공부하기',
+      isCompleted: true,
+    },
+    {
+      text: 'JS 복습하기',
+      isCompleted: false,
+    },
+  ]
+  const dayData = [
+    {
+      text: 'js 공부하기',
+      isCompleted: true,
+    },
+    {
+      text: '쪼꼬 동물병원 데려가기',
+      isCompleted: false,
+    },
+  ]
+  const weekData = [
+    {
+      text: 'js 복습하기',
+      isCompleted: false,
+    },
+    {
+      text: '알고리즘 공부하기',
+      isCompleted: false,
+    },
+  ]
+  const newData = [{
+    text: '건강하기',
+    isCompleted: false,
+  }]
+
+  function TodoList(todos, $targetId, todoTitle) {
+    this.todos = todos
+
+    // new 키워드를 안 붙이고 함수 실행시 에러 발생
+    if (!(new.target)) {
+      throw new Error('TodoList instantiated with new')
+    }
+
+    this.validateTodos = function (todos) {
+      //data가 null 혹은 undefined인 경우
+      if (todos === null || todos === undefined) {
+        throw new Error('data is null or undefined')
+        // data가 array가 아닌 형태로 넘어올 경우
+      }
+      if (!Array.isArray(todos)) {
+        throw new Error('data is not a array')
+        //data가 array이지만 array의 내용이 이상할 경우
+      }
+      if (Array.isArray(todos)) {
+        todos.map((value) => {
+          if (typeof value.text !== 'string') {
+            throw new Error('The contents of the data are invalid')
+          }
+        })
+      }
+      const invalidData = todos.some(todo =>
+        typeof todo.text !== 'string' || typeof todo.isCompleted !== 'boolean')
+      if (invalidData) {
+        throw new Error('The contents of the data are invalid')
+      }
+    }
+
+    this.setState = function (nextData) {
+      this.validateTodos(nextData)
+      this.todos = nextData
+      this.render()
+
+    }
+
+    this.render = function () {
+      const htmlString = this.todos.map((todo) =>
+        todo.isCompleted ? `<s><li>${todo.text}</li></s>` : `<li>${todo.text}</li>`,
+      ).join('')
+
+      $targetId.innerHTML = `<div><b>${todoTitle}</b></div> <ul>${htmlString}</ul>`
+
+    }
+
+    this.validateTodos(todos)
+    this.render()
+  }
+
+  const todoList = new TodoList(data, document.querySelector('#todo-list'), 'TodoList')
+  const dayTodoList = new TodoList(dayData, document.querySelector('#todo-day'), 'TodoList-Day')
+  const weekTodoList = new TodoList(weekData, document.querySelector('#todo-week'), 'TodoList-Week')
+  setTimeout(() => {
+    weekTodoList.setState(newData)
+  }, 3000)
+</script>
+</body>
+
+</html>

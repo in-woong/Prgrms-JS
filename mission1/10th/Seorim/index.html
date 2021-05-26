@@ -1,0 +1,73 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list"></div>
+  <div id="study-list"></div>
+  <script>
+    const data = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false,
+        },
+      ]
+    const studyData = [
+      {
+        text: 'next.js',
+        isCompleted: true,
+      },
+      {
+        text: 'React',
+        isCompleted: true,
+      }
+    ]  
+
+    const vaildateData = (data) =>{
+       if(!data){
+         throw new Error('data가 정상이 아닙니다.')
+       }
+
+       const isVaildData = data.every((todo) => typeof todo.text === 'String')
+
+       if(!isVaildData){
+        throw new Error('data의 데이터 타입은 String이 아닙니다.')
+       }
+    }
+
+
+    function TodoList(state, $tatget){ 
+      this.state = state
+      
+      this.render = () => {
+        $tatget.innerHTML = data.map(val=> val.text).join("");
+        $tatget.innerHTML = this.state.map(({ text, isCompleted }) => (isCompleted ? `<div>${text}</div>` : `<div><s>${text}</s></div>`)).join('')
+      }
+
+      this.validation = (state) =>{
+        if(!new.target){
+          throw new Error('new 키워드는 필수입니다.')
+        }
+        vaildateData(this.state) 
+      }
+
+      this.validation()
+      this.render()
+  }
+  
+ 
+
+  const todoList = new TodoList(data, document.querySelector('#todo-list'))
+  const todoListTest = new TodoList(studyData, document.querySelector('.study-list'))
+
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,78 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list"></div>
+    <div id="month-todo-list"></div>
+    <div id="year-todo-list"></div>
+    <script>
+      const data = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false,
+        },
+      ]
+      const myMonthData = [
+        {
+          text: '알고리즘 꾸준히 풀기',
+          isCompleted: false,
+        },
+        {
+          text: 'JS 공부하기',
+          isCompleted: false,
+        },
+      ]
+      const myYearData = [
+        {
+          text: '취업하기',
+          isCompleted: false,
+        }
+      ]
+      function checkData(data) {
+        data.forEach(todo =>{ if (!(todo.hasOwnProperty('text') && todo.hasOwnProperty('isCompleted') && typeof todo.text === 'string' && typeof todo.isCompleted === 'boolean') ){
+          throw new Error("data has problem")
+        }})
+      }
+      function checkSome(target, data) {
+        if (!target) {
+          throw new Error("you need new")
+        } else if (!Array.isArray(data)) {
+          throw new Error("this is not array")
+        } else if (data === null) {
+          throw new Error("data is null")
+        } else if (data === undefined) {
+          throw new Error("data is undefined")
+        }
+      }
+      function TodoList(category, data) {  
+        try {
+          checkSome(new.target, data)
+          checkData(data)
+          this.setState = function(category, newData) {
+          const todoList = document.getElementById(category)
+          todoList.innerHTML = ''
+          var todos = '<h1 id="title">To Do List</h1>'
+          newData.forEach(todo => todo.isCompleted === true  ? todos += `<s id="text">${todo.text}</s>` : todos +=`<p id="text">${todo.text}</p>`)
+          todoList.innerHTML += todos;
+          }
+          this.render = function() {
+            this.setState(category, data)
+          }
+          this.render()
+        } catch(error) {
+          alert(error)
+        }
+      }
+      var todoList = new TodoList('todo-list', data)
+      var monthTodoList = new TodoList('month-todo-list', myMonthData)
+      var yearTodoList = new TodoList('year-todo-list', myYearData)
+    </script>
+  </body>
+</html>

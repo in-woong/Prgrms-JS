@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list"></div>
+    <div id="a"></div>
+    <script>
+      var data = [
+        {
+          text: 'JS 공부하기'
+        },
+        {
+          text: 'JS 복습하기'
+        }
+      ];
+      function TodoList(data) {
+        if (!new.target) {
+          throw Error("new를 사용해주세요.");
+        }
+        if (!Array.isArray(data)) {
+          throw Error("data의 type이 array가 아닙니다.")
+        }
+        this.data = data;
+
+        this.setState = function(data) {
+          this.data = data;
+          this.render();
+        }
+
+        this.render = function() {
+          document.querySelector("#todo-list").innerHTML =
+            `<ul>
+              ${this.data.map((todo) => `<li>${todo.text}</li>`).join('')}
+            </ul>`
+        }
+      }
+      const todoList = new TodoList(data);
+      todoList.render();
+    </script>
+  </body>
+</html>

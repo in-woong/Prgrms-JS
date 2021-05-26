@@ -1,0 +1,56 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list"></div>
+  <script>
+    var data = [
+      {
+        text: 'JS 공부하기',
+        isCompleted: true
+      },
+      {
+        text: 'JS 복습하기',
+        isCompleted: false
+      }
+    ]
+
+  function TodoList(data) {
+    this.data = data;
+
+    this.render = function(){
+      this.data.forEach((obj) => {
+        var s = obj.isCompleted ? `<div><s>${obj.text}</s></div>` : `<div>${obj.text}</div>`;
+        document.querySelector("#todo-list").innerHTML += s;
+      });
+    }
+
+    this.setState = function(nextData){
+      this.data = nextData;
+      this.render();
+    }
+  }
+
+  var todoList = new TodoList(data);
+  todoList.render();
+
+
+  var nextData = [
+    {
+      text: '밥 먹기',
+      isCompleted: false
+    },
+    {
+      text: '잠자기',
+      isCompleted: true
+    }
+  ]
+
+  todoList.setState(nextData);
+  </script>
+</body>
+</html>

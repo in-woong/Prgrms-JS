@@ -1,0 +1,63 @@
+<html>
+
+<head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+</head>
+
+<body>
+    <div id="todo-list"></div>
+    <div id="todo-day"></div>
+    <div id="todo-week"></div>
+
+    <script>
+        var data = [
+            {
+                text: 'JS 공부하기'
+            },
+            {
+                text: 'JS 복습하기'
+            }
+        ];
+        var data2 = [
+            {
+                text: '빨래하기'
+            },
+            {
+                text: '청소하기'
+            }
+        ];
+        var data3 = [
+            {
+                text: '분리수거 하기'
+            },
+            {
+                text: '운동 빡시게 하기'
+            }
+        ];
+
+        function Todolist(tododata, eleID) {
+            
+            this.render = () => {
+                validation(tododata);
+                const $todo = document.getElementById(eleID);
+                let $string = '';
+                tododata.forEach(TodoItem => {
+                    $string += `<div>${TodoItem.text}</div>`;
+                });
+                $todo.innerHTML = $string;
+            }
+            this.render();
+        }
+        
+        function validation(data){
+            if(data === null || data === undefined || Array.isArray(data) !== true)throw new Error("에러!");
+        }
+        
+        const todoList = new Todolist(data, 'todo-list');
+        const todoDay = new Todolist(data2, 'todo-day');
+        const todoWeek = new Todolist(data3, 'todo-week');
+    </script>
+</body>
+
+</html>
