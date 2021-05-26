@@ -1,0 +1,35 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list"></div>
+  <script>
+    var data = [
+      {
+        text: 'JS 예습하기'
+      },
+      {
+        text: 'JS 공부하기'
+      },
+      {
+        text: 'JS 복습하기'
+      }
+    ];
+    function TodoList(data){
+      this.data = data;
+      this.render = function(){
+        // 1. document.querySelector 사용하기
+        document.querySelector('#todo-list').innerHTML = this.data.map(d => `<span>${d.text}</span>`).join(', ')
+        // 2. document.getElementById 사용하기
+        // document.getElementById('todo-list').innerHTML = this.data.map(d => `<span>${d.text}</span>`).join(', ')
+      }
+    }
+    const todo1 = new TodoList(data);
+    todo1.render();
+  </script>
+</body>
+</html>
