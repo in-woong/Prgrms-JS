@@ -1,0 +1,96 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list"></div>
+  <div id="exercise-list"></div>
+  <div id="play-list"></div>
+  <script>
+    const todoList = [
+      {
+        text: 'JS 공부하기',
+        isCompleted: true
+      },
+      {
+        text: 'JS 복습하기',
+        isCompleted: false
+      }
+    ]
+    const exerciseList = [
+      {
+        text: '일찍 일어나기',
+        isCompleted: true
+      },
+      {
+        text: '운동하기',
+        isCompleted: true
+      }
+    ]
+    const playList = [
+      {
+        text: '영화 보기',
+        isCompleted: false
+      },
+      {
+        text: '롤하기',
+        isCompleted: false
+      }
+    ]
+
+  // 이곳에서 코딩을 시작하세요!
+  function errorTest(data) {
+    if(data === null || data === undefined) {
+      throw new Error("Data is empty");
+    }
+    if(!Array.isArray(data)) {
+      throw new Error("Data is not array");
+    }
+    
+      data.forEach((value) => {
+        if (typeof value.text !== 'string'){
+          throw new Error("The content of the data is strange");
+        }
+        if(value == null || value == undefined) {
+          throw new Error("data value is empty");
+        }
+      })
+  }
+
+  function TodoList(dataList, targetId) {
+    this.state = dataList
+
+    this.validation = (state) => {
+      if(!new.target) {
+      throw new Error("no use new keword");
+      }
+
+      errorTest(this.state)
+    }
+    
+    this.render = () => {
+      const todoList = document.querySelector(targetId);
+      todoList.innerHTML = this.state.map(({ text, isCompleted }) => (isCompleted ? `<div>${text}</div>` : `<div><s>${text}</s></div>`)).join('')
+    }
+
+    this.setState = (nextState) => {
+      errorTest(nextState)
+      this.state = nextState
+      this.render()
+    }
+
+    this.validation();
+    this.render();
+    
+  }
+
+  const todo1 = new TodoList(todoList, '#todo-list');
+  const todo2 = new TodoList(exerciseList, '#exercise-list');
+  const todo3 = new TodoList(playList, '#play-list');
+
+  </script>
+</body>
+</html>

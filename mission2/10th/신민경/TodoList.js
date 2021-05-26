@@ -2,9 +2,6 @@ function TodoList($target, data) {
   this.$target = $target
   this.data = data
 
-  delBtn = document.createElement( 'button' )
-  delBtnText = document.createTextNode( 'DELETE' )
-  delBtn.appendChild( delBtnText )
 
   this.render = function() {
     this.$target.innerHTML = this.data

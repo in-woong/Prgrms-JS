@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <div id="todo-list" value="todo"></div>
+    <div id="todo-forfuture" value="forfuture"></div>
+    <div id="todo-formylife" value=:formylife></div>
+    <script>
+      const data = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted:false
+        }
+      ]
+
+      const future= [
+        {
+          text: '자소서 작성하기',
+          isCompleted:true
+        },
+        {
+          text: '여행다니기',
+          isCompleted:true
+        }
+      ]
+
+      const myLife=[
+        {
+          text: '행복하기',
+          isCompleted:true
+        },
+        {
+          text: '건강챙기기',
+          isCompleted:true
+        }
+      ]
+
+      // 이곳에서 코딩을 시작하세요!
+      function TodoList(data,$target,titles){
+        this.data=data
+        this.$target=$target
+        this.titles=titles
+        this.render = () =>{
+          this.$target.innerHTML = `<div> ${this.titles} </div>
+           <ul> ${this.data.map((todo)=> `<li> ${todo.text} </li>`).join('')}</ul>`
+          }
+          this.render()
+        }
+      //  <ol> ${this.state.todos.map(todo)=> `<li> ${todo.text}</li>`).join('')}</ol>`
+      //   }
+      // }
+    //   this.render = ()=> {
+    //     $target.innerHTML = data.map((todo)=>
+    //     `<li> ${todo.text} </li>`).join('')
+    //   }
+    //   this.render()
+    // }
+
+      // new TodoList(data,document.querySelector('#todo-list'))
+      // new TodoList(future,document.querySelector('#todo-forfuture'))
+      // new TodoList(myLife,document.querySelector('#todo-formylife'))
+
+      new TodoList=(data,document.querySelector('#todo-list'),'오늘 할 일')
+
+    </script>
+  </body>
+</html>

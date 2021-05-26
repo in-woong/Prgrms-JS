@@ -1,0 +1,193 @@
+/* reset */
+body, div, ul, li {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style: none;
+}
+
+/* layout */
+#app {
+  height: 100vh;
+  overflow-y: hidden;
+}
+
+.container {
+  display: flex;
+  margin: 20px 20px 20px 340px;
+}
+
+.user-list {
+  position: fixed;
+  left: 0;
+  width: 250px;
+}
+
+.contents {
+  width: 100%;
+  margin: 20px;
+  padding-top: 10px;
+}
+
+/* users */
+.user-list {
+  display: block;
+  height: 100vh;
+  padding: 20px;
+  overflow-y: auto;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.user-list .user {
+  margin: 10px 0;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+  color: #999;
+  cursor: pointer;
+}
+
+.user-list .user:hover {
+  border-bottom: 1px solid #000;
+  font-weight: bolder;
+  color: #000;
+}
+
+/* TodoInput */
+.form-container {
+  display: flex;
+}
+
+.form-container > button {
+  margin-left: auto;
+}
+
+form {
+  display: flex;
+  width: 80%;
+}
+
+form input {
+  width: 100%;
+  padding: 10px;
+}
+
+form button {
+  margin-left: auto;
+}
+
+/* todo-list */
+.list-container {
+  margin-top: 50px;
+}
+
+.list-container h1 {
+  margin-bottom: 20px;
+  padding-bottom: 5px;
+  border-bottom: 2px solid #000;
+}
+
+.trello-zone {
+  display: flex;
+}
+
+.trello-zone-each {
+  width: 50%;
+}
+
+.trello-zone-each:nth-child(n + 2) {
+  margin-left: 30px;
+}
+
+.todo-list {
+  height: calc(100vh - 360px);
+  padding: 20px;
+  background: #eee;
+  overflow-y: scroll;
+  border-radius: 3px;
+  box-shadow: 2px 2px 5px 1px rgba(49, 49, 53, 0.2);
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  border-radius: 3px;
+  background: #fff;
+  margin: 10px 0;
+  padding: 15px;
+}
+
+.todo-item input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.todo-item label {
+  width: 100%;
+  padding-right: 5px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.todo-item s {
+  pointer-events: none;
+}
+
+.todo-item .delete-button {
+  margin-left: auto;
+  border: 1px solid #999;
+  border-radius: 2px;
+  background: #fff;
+  cursor: pointer;
+}
+
+/* Loading */
+.loading-container {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+  background: #fff;
+  transition: 0.5s;
+  opacity: .8;
+}
+
+.loading-circle {
+  width: 54px;
+  height: 54px;
+  animation: loading-spin 3s infinite;
+}
+
+.loading-circle circle {
+  stroke: #6A0888;
+  stroke-width: 4;
+  stroke-dasharray: 157;
+  stroke-dashoffset: 0;
+  fill: transparent;
+  animation: loading-circle-ani 1s infinite;
+}
+
+@keyframes loading-circle-ani {
+  0% {
+    stroke-dashoffset: 157;
+  }
+  75% {
+    stroke-dashoffset: -147;
+  }
+  100% {
+    stroke-dashoffset: -157;
+  }
+}
+
+@keyframes loading-spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+/*# sourceMappingURL=main.css.map */

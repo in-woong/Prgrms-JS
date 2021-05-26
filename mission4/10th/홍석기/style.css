@@ -1,0 +1,16 @@
+.content-wrap {
+    position: relative;
+    width: 100%
+}
+
+.user_list {
+    width: 40%;
+    height: 500px;
+    float: left;
+}
+
+.each_user_todo {
+    width: 60%;
+    height: 500px;
+    float: left;
+}

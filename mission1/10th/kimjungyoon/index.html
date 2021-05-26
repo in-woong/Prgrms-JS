@@ -1,0 +1,202 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">  
+</head>
+
+<body>
+
+
+    <div id="wrapper">
+        <h1 id="title">
+            Mission1
+        </h1>
+            
+        <div class="list_wrapper">
+            <p class="list_title">
+                Todo List
+            </p>
+            <div id="todo-list"></div>
+        </div>
+
+        <div class="list_wrapper">
+            <p class="list_title">
+                Bucket List
+            </p>
+            <div id="bucket-list"></div>
+        </div>
+
+        <div class="list_wrapper">
+            <p class="list_title">
+                Black List
+            </p>
+            <div id="black-list"></div>
+        </div>
+                    
+    </div>
+
+  <script>
+    const todoData = [
+      {
+        text: 'JS 공부하기',
+        isCompleted: true
+      },
+      {
+        text: 'JS 복습하기',
+        isCompleted: false
+      }
+    ]
+
+    const bucketData = [
+      {
+        text: '자바스크립트 정점에 서기',
+        isCompleted: false
+      },
+      {
+        text: '돈 많이 벌기',
+        isCompleted: true
+      }
+    ]
+    
+    const blackData = [
+      {
+        text: '살모으고 돈빼기',
+        isCompleted: true
+      },
+      {
+        text: '흡연',
+        isCompleted: false
+      }
+    ]    
+	// 이곳에서 코딩을 시작하세요!
+
+    
+    // 1. TodoList 컴포넌트 작성
+    class TodoList {
+        /*
+            2. setState 함수를 사용해서
+            1) 데이터 유효성 검사
+            2) 멤버 변수 초기화
+            3) render 함수 실행
+        */        
+        setState = (id, data) => {
+            // 1) 유효성 검사
+            this.dataValidationCheck(data)
+
+            this.idValidationCheck(id)
+
+            // 2) 파라미터로 받은 데이터 멤버 변수 할당
+            this.nextData = data
+            this.id = id
+
+            // 3) render 함수 실행
+            this.render()
+        }
+
+        // 3. 유효성 검사
+        dataValidationCheck = (data) => {
+            // 1) data - 비어있는지 검사 
+            if(data === null || data === undefined) throw new Error("data is empty")
+
+            // 2) data - Array 타입인지 검사
+            if(!Array.isArray(data)) throw new Error("data is not Array")
+
+            // 3) data - text가 있는지 검사
+            let hasText = true
+            for(let item of data) {
+                if(!Object.keys(item).includes('text')) {
+                    hasText = false
+                    break;
+                }
+            }
+            if(!hasText) throw new Error("data has no Text")
+        }
+
+        // id 유효성 검사
+        idValidationCheck = (id) => {
+            // 1) id - 비어있는지 검사
+            if(id === null || id === undefined || id === '') throw new Error("id is empty")
+
+            // 2) id - 문자열인지 검사
+            if(typeof(id) !== 'string') throw new Error("id is not String")
+
+            // 3) id로 접근가능한 element가 있는지 검사
+            if(!document.getElementById(id)) throw new Error("id is not valid")           
+        }
+
+        
+        // 4. render 함수
+        render = () => {
+            // 1) 결과를 담을 htmlString을 빈 문자열로 선언
+            let htmlString = ''
+
+            // 2) 반복문을 통해 htmlString 문자열 생성
+            for(let item of this.nextData) {
+                // 3) 객체의 isCompleted가 true 이면 삭선 추가
+                let textString = item.isCompleted ? `<s>${item.text}</s>` : `<p>${item.text}</p>`
+                htmlString += `<div class="list_contents">${textString}</div>`
+            }
+            // 3) innerHTML 속성에 생성한 htmlString 대입
+            document.getElementById(this.id).innerHTML = htmlString
+        }
+
+    }
+
+    // 5. new 키워드를 사용하여 todoList 객체 3개 생성
+    let todoList = new TodoList()
+
+    let bucketList = new TodoList()
+
+    let blackList = new TodoList()
+    
+
+    /*
+        6. todoList 객체의 setState 함수 실행
+        1) 파리미터로 받은 2개의 데이터(id, data) 유효성 검사
+        2) html을 생성하는 render 함수 실행
+    */
+    todoList.setState('todo-list', todoData)
+
+    todoList.setState('bucket-list', bucketData)
+
+    todoList.setState('black-list', blackData)
+
+  </script>
+
+  <style>
+      * {
+          margin: 0;
+          padding: 0;
+      }
+      #wrapper {
+          width: 500px;
+          height: auto;
+          margin-left:auto;
+          margin-right:auto;
+          margin-top: 40px;
+      }
+      #title {
+        font-size: 70px;
+        margin-bottom: 15px;
+      }
+      .list_wrapper {
+          width: inherit;
+          margin-bottom: 60px;
+      }
+      .list_title {
+          font-size: 35px;
+          font-weight: 500;
+          font-family: 'Do Hyeon', sans-serif;          
+          margin-bottom: 14px;
+      }
+      .list_contents {
+          font-size: 18px;
+          margin-bottom: 20px;
+      }
+  </style>
+</body>
+</html>
