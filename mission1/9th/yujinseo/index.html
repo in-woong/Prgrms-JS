@@ -9,66 +9,8 @@
   <div id="todo-list"></div>
   <div id="todo-list-2"></div>
   <div id="todo-list-3"></div>
-  <script>
-    const todos = [
-      {
-        text: 'JS 공부하기',
-        isCompleted: true
-      },
-      {
-        text: 'JS 복습하기',
-        isCompleted: true
-      }
-    ];
 
-    const todos2 = [
-      {
-        text: '운동하기',
-        isCompleted: false
-      },
-      {
-        text: '과제하기',
-        isCompleted: true
-      }
-    ];
-
-    const todos3 = [
-      {
-        text: '유튜브시청',
-        isCompleted: false
-      },
-      {
-        text: '분리수거하기',
-        isCompleted: true
-      }
-    ]
-
-    function TodoList(el, data) {
-      if (data === null || data === undefined || !Array.isArray(data)) return
-      if (!data[0].hasOwnProperty('text')) return
-      if (!(this instanceof arguments.callee)) {
-        throw new Error('new 키워드를 붙여 생성해주세요.');
-      }
-      this.data = data;
-      this.render = () => {
-        let content = `<ul>
-          ${this.data.map((item) =>
-          item.isCompleted ? `<div><s>${item.text}</s></div>` : `<div>${item.text}</div>`).join('')}</ul>`;
-        document.querySelector(`${el}`).innerHTML = content;
-      }
-      this.render();
-
-      this.setState = (nextData) => {
-        this.data = nextData;
-        this.render();
-      }
-    }
-
-    new TodoList('#todo-list', todos);
-    new TodoList('#todo-list-2', todos2);
-    new TodoList('#todo-list-3', todos3);
-
-  </script>
+  <script type="module" src="./index.js"></script>
 </body>
 
 </html>

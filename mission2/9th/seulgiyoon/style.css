@@ -1,0 +1,13 @@
+form {
+  float: left;
+}
+
+p,
+button {
+  cursor: pointer;
+  display: inline-block;
+}
+
+.text_complete {
+  text-decoration: line-through;
+}

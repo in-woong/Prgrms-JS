@@ -1,0 +1,97 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+
+body * {
+  box-sizing: border-box;
+}
+
+ul {
+  padding: 0;
+}
+
+.hidden {
+  display: none;
+}
+
+#user-container {
+  float: left;
+  width: 300px;
+  height: 100vh;
+  overflow-y: scroll;
+}
+
+#user-container ul {
+  margin: 20px 30px;
+}
+
+.user-item {
+  border-radius: 5px;
+  list-style: none;
+  cursor: pointer;
+  padding: 8px 12px;
+}
+
+.user-item:hover {
+  color: white;
+  background-color: slategray;
+}
+
+#todo-container {
+  display: inline-block;
+  width: calc(100vw - 400px);
+  margin: 10px 30px;
+}
+
+#todo-input {
+  width: 77%;
+  height: 40px;
+  padding: 2px 14px;
+}
+
+#btn-clear {
+  margin-left: 2%;
+  width: 20%;
+  height: 40px;
+}
+
+#todo-incompleted-list {
+  margin-bottom: 30px;
+}
+
+.list {
+  min-height: 30px;
+}
+
+.todo-item {
+  list-style: none;
+  padding: 10px 15px;
+  margin: 10px 0px;
+  border: 1px solid lightgray;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.todo-item:hover {
+  color: white;
+  background-color: slategray;
+}
+
+.btn-delete {
+  float: right;
+  margin-left: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.completed {
+  color: gray;
+  text-decoration: line-through;
+}
+
+.todo-count {
+  color: darkgray;
+  font-size: small;
+}

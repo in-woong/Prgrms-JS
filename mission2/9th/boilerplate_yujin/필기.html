@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 1 -->
+    <header>
+        <nav>
+            <ul>
+                <li>home</li>
+                <li>todo</li>
+                <li>post</li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 2 -->
+    <main>
+        <h1>Todo List</h1>
+
+        <form>
+            <label>여기에 todo를 써 넣어보세요</label>
+            <input id="todo-input" type="text"/>
+
+            <fieldset>
+                <legend>생년월일</legend>
+                <select>
+                    <option>년</option>
+                </select>
+                <select>
+                    <option>월</option>
+                </select>
+                <select>
+                    <option>일</option>
+                </select>
+            </fieldset>
+
+            <button type="submit">제출</button>
+        </form>
+
+        <section> <!-- 구역을 나누어 줄 때 사용. section은 h가 꼭 필요. 단 위에 h1있으니 하이어라키 구조에 따라 h2이용-->
+            <h2>TodoList 보여줄게</h2>
+            <ul>
+                <li>JS공부하기</li>
+                <li>과제하기</li>
+            </ul>
+
+            <figure>   <!--이미지를 넣을 때 -->
+                <img src="zzzz.png" alt ="로토 팀장님의 존영" />
+                <figcaption>경애하는 로토 팀장님(이미지에 대한 설명을 써줌)</figcaption>
+            </figure>
+        </section>
+
+        <article> <!-- 구역을 나누어 줄 때 사용.-->
+            <h2>코로나 종식</h2>
+            <section>머리말</section>
+            <section>본문</section>
+            <section>맺음말</section>
+        </article>
+        
+        <!-- 사이드 바 -->
+        <aside></aside>
+    </main>
+
+    <!-- 3 -->
+    <footer></footer>
+
+    <button>화인 버튼</button>  <!-- 이렇게 하면 스크린리더가 : 확인 버튼 버튼 이라고 읽음 -->
+    
+</body>
+</html>
