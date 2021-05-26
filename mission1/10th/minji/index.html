@@ -1,0 +1,81 @@
+<html>
+
+<head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+</head>
+
+<body style="background-color: black; color: white; font-family:sans-serif;">
+    <section>
+        <h1>
+            TODO LIST
+        </h1>
+        <div id="todo-list"></div>
+        <!-- <button style="margin-top: 2em; background-color: violet; border-color: violet;">
+            Translate to Korean
+        </button> -->
+        <div id="todo-day"></div>
+        <div id="todo-week"></div>
+    </section>
+
+    <script>
+
+        var data = [
+            {
+                text: 'Buy cake'
+            },
+            {
+                text: 'Make Todo list'
+            }
+            ,
+            {
+                text: 'Make Macarons'
+            }
+            ,
+            {
+                text: 'Home workout'
+            }
+        ]
+        
+        function TodoList(data) {
+            this.data = data
+            this.setState = function(data){
+                this.data = data;
+                this.render();
+            }
+            
+            this.render = function(){
+                document.querySelector('#todo-list').innerHTML = '<ul>' + this.data.map((todo) => {return `<li>${todo.text}</li>`}).join('') + '</ul>';
+            }
+
+            this.render() // new 하면서 바로 렌더 실행 가능
+        }
+        
+        var todoList = new TodoList(data)
+        // todoList.render(); // function 내에서 render 호출 시 재호출 불필요
+        
+        var koreanVersion = [
+            {
+                text: '케이크 구입'
+            },
+            {
+                text: '할일 리스트 만들기'
+            }
+            ,
+            {
+                text: '마카롱 만들기'
+            }
+            ,
+            {
+                text: '홈트하기'
+            }
+        ]
+
+        document.querySelector("button").onclick = function(){
+            todoList.setState(koreanVersion);
+        };        
+        
+        </script>
+</body>
+
+</html>

@@ -1,0 +1,86 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <div id="todo-list"></div>
+    <div id="todo-list2"></div>
+    <script>
+      const data = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false,
+        },
+      ]
+      const tempData = [
+        {
+          text: 'temp_1',
+          isCompleted: false,
+        },
+        {
+          text: 'temp_2',
+          isCompleted: true,
+        },
+      ]
+
+      function TodoList($target, initialState) {
+        if (!(this instanceof TodoList)) {
+          return new TodoList(todoListId, todoData)
+        }
+
+        this.setState = function (nextData) {
+          this.validateData(nextData)
+          this.todoData = nextData
+          this.render()
+        }
+
+        this.validateData = function (todoData) {
+          if (!todoData) {
+            throw new Error('Data is null or undefined')
+          }
+          if (!Array.isArray(todoData)) {
+            throw new Error('Data is not an Array')
+          }
+          if (todoData.some((item) => !item)) {
+            throw new Error('Data is not available')
+          }
+          if (todoData.some((item) => !item || typeof item.text !== 'string' || typeof item.isCompleted !== 'boolean')) {
+            throw new Error('Data format is not supported')
+          }
+        }
+
+        this.render = function () {
+          const dataHTMLString = this.todoData.map((item) => (item.isCompleted ? `<div><s>${item.text}</s></div>` : `<div>${item.text}</div>`)).join('')
+          $target.innerHTML = dataHTMLString
+        }
+
+        this.setState(initialState)
+      }
+
+      const todoList = new TodoList(document.querySelector(`#todo-list`), data)
+      const todoList2 = new TodoList(document.querySelector('#todo-list2'), data)
+
+      const nextData = [
+        {
+          text: 'qwer',
+          isCompleted: true,
+        },
+        {
+          text: 'asdf',
+          isCompleted: false,
+        },
+        {
+          text: 'zxcv',
+          isCompleted: true,
+        },
+      ]
+
+      todoList2.setState(nextData)
+    </script>
+  </body>
+</html>

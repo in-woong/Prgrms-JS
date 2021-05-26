@@ -6,4 +6,6 @@
   "printWidth": 300,
   "quoteProps": "consistent",
   "endOfLine": "auto"
+  "singleQuote": true,
+  "endOfLine": true,
 }

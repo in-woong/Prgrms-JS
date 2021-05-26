@@ -1,0 +1,45 @@
+:root {
+  --base-space: 5px;
+}
+
+body {
+  width: 300;
+}
+
+#top-bar {
+  display: flex;
+  justify-content: space-between;
+}
+
+#todo-remove-all {
+  cursor: pointer;
+  margin: var(--base-space);
+}
+
+form {
+  margin: var(--base-space);
+}
+
+#todo-submit {
+  cursor: pointer;
+}
+
+#todo-list {
+  margin: var(--base-space);
+}
+
+#item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--base-space);
+}
+
+#todo-count {
+  display: flex;
+  justify-content: flex-end;
+  margin: calc(var(--base-space) * 2);
+}
+
+#itemBtn {
+  cursor: pointer;
+}

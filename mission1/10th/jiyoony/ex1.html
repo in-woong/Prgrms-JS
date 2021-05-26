@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>mission1</title>
+  </head>
+  <body>
+    <div id="todo-list"></div>
+    <script>
+      const data=[
+      {
+        text: 'JS 공부하기',
+        isCompleted: true
+      },
+      {
+        text: 'JS 복습하기',
+        isCompleted:false
+      },
+      {
+        text: '자소서 작성하기',
+        isCompleted:true
+      },
+      {
+        text: '행복하기',
+        isCompleted:true
+      }
+    ]
+
+    //필수 구현사항
+    function TodoList(data,$target){
+      this.render = () =>{
+        $target.innerHTML = data.map((todo)=>`<li> ${todo.text} </li>`).join('')}
+      this.render()
+    }
+    new TodoList(data,document.querySelector('#todo-list'))
+    </script>
+  </body>
+</html>

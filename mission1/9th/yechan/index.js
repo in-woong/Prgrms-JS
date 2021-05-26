@@ -1,7 +1,3 @@
-/**
- * validate data
- * @param {Array} data
- */
 //DATA
 const TODO_DATA = [
     {
@@ -61,20 +57,16 @@ const dataValidCheck = (data) => {
 function TodoList(data,selector) {
     //new 키워드 사용여부 검사.
     if (!new.target) throw new Error(error.NOT_NEW)
-    const createHTMLString = ( {text, isCompleted} ) => `<li>${isCompleted? `<s>${text}</s>`:`${text}`}</li>`
-    console.log(selector)
+    const createHTMLString = ( {text, isCompleted} ) => `<li>${isCompleted ? `<s>${text}</s>` : `${text}`}</li>`
+
     this.setState = (nextData) => {
         dataValidCheck(nextData)
         this.data = nextData;
         this.render()
     }
     this.render = function () {
-
-        console.log(">"+selector)
         const todoHTMLString = this.data.map(createHTMLString).join('');
         // console.log("todoHTMLString : " + todoHTMLString)
-        console.log(document)
-        console.log(document.querySelector(selector))
         document.querySelector(selector).innerHTML = todoHTMLString
     }
 }
