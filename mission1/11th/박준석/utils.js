@@ -5,6 +5,14 @@ export const DATAISNOTARY = "데이터의 형태가 배열이 아닙니다.";
 export const VALISNOTOBJ = "데이터의 값 중 객체가 아닌 값이 있습니다.";
 export const TEXTUNDEFINED = "데이터의 text들 중 적합하지 않은 값이 있습니다.";
 
+const $body = $("body");
+
+const divDOM = (str) => `
+<div id="${str}">
+    <h3> ${str.toUpperCase()}</h3>
+    <ul></ul>
+</div>`;
+
 const isOnlySpace = (str) => {
     for (let c of str){
         if (c != ' ')
@@ -12,6 +20,10 @@ const isOnlySpace = (str) => {
     }
     return (true);
 }  
+
+export const addNewDiv = (id) => {
+    $body.insertAdjacentHTML("beforeend", divDOM(id));
+}
 
 export const isAvilable = (str) => {
     if (str == undefined || isOnlySpace(str) || typeof str !== 'string')

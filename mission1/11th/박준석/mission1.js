@@ -1,7 +1,5 @@
 import { $, TEXTUNDEFINED, DATAISNOTARY, VALISNOTOBJ, ISNOTNEW,
-            isAvilable } from "./utils.js"
-
-const $todoList = $("#todo-list");
+            isAvilable, addNewDiv } from "./utils.js"
 
 const data = [
     {
@@ -15,9 +13,34 @@ const data = [
     }
 ]
 
+const data2 = [
+    {
+      text: '게임하기'
+    },
+    {
+      text: '축구하기'
+    },
+    {
+      text : "독서하기"
+    }
+]
 
+const data3 = [
+    {
+      text: '밥'
+    },
+    {
+      text: '라면'
+    },
+    {
+      text : "치킨"
+    }
+]
 
-function TodoList(data) {
+function TodoList(data, id) {
+    const $List = $(`${id}>ul`);
+    this.state = data;
+
     if (!(this instanceof TodoList))
         throw new Error(ISNOTNEW);
 
@@ -33,16 +56,22 @@ function TodoList(data) {
     }
 
     this.render = () => {
-        data.forEach((val) => {
-            $todoList.insertAdjacentHTML("beforeend", `<li>${val.text}</li>`)
+        this.state.forEach((val) => {
+            $List.insertAdjacentHTML("beforeend", `<li>${val.text}</li>`)
         })
     }
 
     this.check(data);
 }
 
-let test = new TodoList(data);
+addNewDiv("todo-list");
+addNewDiv("play-list");
+addNewDiv("food-list");
 
+let test = new TodoList(data, "#todo-list");
+let test2 = new TodoList(data2, "#play-list");
+let test3 = new TodoList(data3, "#food-list");
 
 test.render();
-
+test2.render();
+test3.render();
