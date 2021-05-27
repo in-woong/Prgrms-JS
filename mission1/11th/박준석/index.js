@@ -51,7 +51,7 @@ addNewDiv("todo-list");
 addNewDiv("play-list");
 addNewDiv("food-list");
 
-let test = new TodoList(data, "#todo-list");
+let test = new TodoList(data);
 let test2 = new TodoList(data2, "#play-list");
 let test3 = new TodoList(data3, "#food-list");
 
