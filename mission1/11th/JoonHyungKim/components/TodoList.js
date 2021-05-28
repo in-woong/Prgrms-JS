@@ -15,10 +15,10 @@ export class TodoList {
     render() {
         this.el.innerHTML = this.data.reduce((acc, cur) => `${acc} ${cur.isCompleted ? `<s><p>${cur.text}</p></s>` : `<p>${cur.text}</p>` }`, '');
     }
-    
-    setState(nextData){
+
+    setState(nextData) {
         this.data = nextData;
-        
+        validateData(nextData);
         this.render();
     }
 
