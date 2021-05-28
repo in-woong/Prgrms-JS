@@ -39,6 +39,7 @@ export function TodoList(data, id = "#todo-list") {
     }
 
     this.check(this.state);
+    this.render();
 }
 
 
