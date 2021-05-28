@@ -11,24 +11,31 @@ const data = [{
 ]
 
 const today_todo = [{
-        text: '출근'
+        text: '출근하기',
+        isCompleted: true
+    },
+
+    {
+        text: '일하기',
+        isCompleted: true
     },
     {
-        text: '일하기'
-    },
-    {
-        text: '퇴근하기'
+        text: '퇴근하기',
+        isCompleted: false
     }
 ]
 
 const tomorrow_todo = [{
-        text: '늦잠자기'
+        text: '늦잠자기',
+        isCompleted: false
     },
     {
-        text: '방청소하기'
+        text: '방청소하기',
+        isCompleted: false
     },
     {
-        text: '출근 안하기'
+        text: '출근 안하기',
+        isCompleted: false
     }
 ]
 
