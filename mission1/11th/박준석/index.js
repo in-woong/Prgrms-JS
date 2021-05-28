@@ -47,6 +47,7 @@ const data3 = [
 ]
 
 
+
 addNewDiv("todo-list");
 addNewDiv("play-list");
 addNewDiv("food-list");
@@ -54,4 +55,5 @@ addNewDiv("food-list");
 const test = new TodoList(data);
 const test2 = new TodoList(data2, "#play-list");
 const test3 = new TodoList(data3, "#food-list");
+
 

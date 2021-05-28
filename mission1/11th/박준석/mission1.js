@@ -35,6 +35,7 @@ export function TodoList(data, id = "#todo-list") {
     this.setState = (newData) => {
         $List.innerHTML = "";
         this.state = newData;
+        this.check(this.state);
         this.render();
     }
 
