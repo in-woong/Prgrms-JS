@@ -39,6 +39,11 @@ const tomorrow_todo = [{
     }
 ]
 
+const new_state = [{
+    text: '아무것도 안하기',
+    isCompleted: true
+}]
+
 const todoList = new TodoList(document.getElementById('todo-list'), data);
 const todayTodoList = new TodoList(document.getElementById('todo-list-2'), today_todo);
 const tomorrowTodoList = new TodoList(document.getElementById('todo-list-3'), tomorrow_todo);
@@ -46,3 +51,7 @@ const tomorrowTodoList = new TodoList(document.getElementById('todo-list-3'), to
 todoList.render();
 todayTodoList.render();
 tomorrowTodoList.render();
+
+todoList.setState(new_state);
+todayTodoList.setState(new_state);
+tomorrowTodoList.setState(new_state);
