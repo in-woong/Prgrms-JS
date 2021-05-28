@@ -7,39 +7,6 @@
 
 <body>
   <!-- <div id="todo-list"></div> -->
-  <script>
-    const data = [
-      {
-        text: 'JS 예습하기',
-        isCompleted: true
-      },
-      {
-        text: 'JS 공부하기',
-        isCompleted: true,
-      },
-      {
-        text: 'JS 복습하기',
-        isCompleted: false,
-      },
-    ]
-    function createElement(selectorName){
-      const element = document.createElement('div');
-      element.id = selectorName;
-      return element;
-    }
-
-    function TodoList(data, selector){
-      this.data = data;
-      this.render = function(selector){
-        const element = createElement(selector);
-        // createElement 함수에서 innerHTML하는 부분은 제외했음. element가 data까지 의존하게 하고싶지 않았기 때문..
-        element.innerHTML = this.data.map(d => `<div>${d.text}</div>`).join('');
-        document.querySelector('body').appendChild(element);
-      }
-      this.render(selector);
-    }
-    // 나중에 사용하기 위해 todo1 변수를 만들어서 저장함
-    const todo1 = new TodoList(data, 'todo-list');
-  </script>
+  <script src="./index.js"></script>
 </body>
 </html>
