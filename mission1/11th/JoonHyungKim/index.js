@@ -52,6 +52,8 @@ todoList.render();
 todayTodoList.render();
 tomorrowTodoList.render();
 
-todoList.setState(new_state);
-todayTodoList.setState(new_state);
-tomorrowTodoList.setState(new_state);
+setTimeout(() => {
+    todoList.setState(new_state);
+    todayTodoList.setState(new_state);
+    tomorrowTodoList.setState(new_state);
+}, 3000);
