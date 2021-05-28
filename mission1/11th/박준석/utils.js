@@ -21,8 +21,8 @@ const isOnlySpace = (str) => {
     return (true);
 }  
 
-export const addNewDiv = (id) => {
-    $body.insertAdjacentHTML("beforeend", divDOM(id));
+export const addNewDiv = (id, dom = "body") => {
+    $(dom).insertAdjacentHTML("beforeend", divDOM(id));
 }
 
 export const isAvilable = (str) => {
