@@ -6,30 +6,35 @@
 </head>
 
 <body>
-  <div id="todo-list"></div>
+  <!-- <div id="todo-list"></div> -->
   <script>
-    var data = [
+    const data = [
       {
         text: 'JS 예습하기'
       },
       {
-        text: 'JS 공부하기'
+        text: 'JS 공부하기',
+        isCompleted: true,
       },
       {
-        text: 'JS 복습하기'
-      }
-    ];
-    function TodoList(data){
-      this.data = data;
-      this.render = function(){
-        // 1. document.querySelector 사용하기
-        document.querySelector('#todo-list').innerHTML = this.data.map(d => `<span>${d.text}</span>`).join(', ')
-        // 2. document.getElementById 사용하기
-        // document.getElementById('todo-list').innerHTML = this.data.map(d => `<span>${d.text}</span>`).join(', ')
-      }
+        text: 'JS 복습하기',
+        isCompleted: false,
+      },
+    ]
+    function createElement(selectorName, data){
+      const element = document.createElement('div');
+      element.id = selectorName;
+      element.innerHTML = data.map(d => `<div>${d.text}</div>`).join('');
+      return element;
     }
-    const todo1 = new TodoList(data);
-    todo1.render();
+    function TodoList(data, selector){
+      this.data = data;
+      this.render = function(selector){
+        document.querySelector('body').appendChild(createElement(selector, this.data));
+      }
+      this.render(selector);
+    }
+    new TodoList(data, 'todo-list');
   </script>
 </body>
 </html>
