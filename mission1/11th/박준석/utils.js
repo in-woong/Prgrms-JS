@@ -31,4 +31,3 @@ export const isAvilable = (str) => {
     else
         return (false);
 }
-
