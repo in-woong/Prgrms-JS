@@ -6,37 +6,8 @@
 
   <body>
     <div id="todo-list"></div>
-    <script>
-      const data = [
-        {
-          text: 'JS 공부하기',
-          isCompleted: true,
-        },
-        {
-          text: 'JS 복습하기',
-          isCompleted: false,
-        },
-      ]
-      
-      // TodoList 컴포넌트
-      class TodoList {
-        constructor($target, data) {
-          this.$target = $target
-          this.data = data
-        }
-
-        render() {
-          const html = `
-            <ul>
-              ${this.data.map(({ text }) => `<li>${text}</li>`).join("")}
-            </ul>
-          `
-          this.$target.innerHTML = html
-        }
-      }
-
-      const todoList = new TodoList(document.getElementById("todo-list"), data)
-      todoList.render()
-    </script>
+    <div id="todo-list-day"></div>
+    <div id="todo-list-month"></div>
+    <script type="module" src="./index.js"></script>
   </body>
 </html>
