@@ -1,4 +1,4 @@
-import { addNewDiv } from "./utils.js"
+import { addNewTodoListDiv } from "./utils.js"
 import { TodoList } from "./mission1.js"
 
 const data = [
@@ -46,10 +46,9 @@ const data3 = [
     }
 ]
 
-addNewDiv("todo-list");
-addNewDiv("play-list");
-addNewDiv("food-list");
-
 const test = new TodoList(data);
 const test2 = new TodoList(data2, "#play-list");
 const test3 = new TodoList(data3, "#food-list");
+
+// if you want, you can add more list div
+// addNewTodoListDiv("food-list");

@@ -1,41 +1,35 @@
-import { $, TEXTUNDEFINED, DATAISNOTARY, VALISNOTOBJ, ISNOTNEW,
-    isAvilable} from "./utils.js"
+import { $, ERROR_MSSAGE, isValueAvailable} from "./utils.js"
 
-export function TodoList(data, id = "#todo-list") {
+export function TodoList(data, id) {
     if (!(this instanceof TodoList))
-        throw new Error(ISNOTNEW);
+        throw new Error(ERROR_MSSAGE.IS_NOT_NEW);
 
     const $List = $(`${id}>ul`);
     this.state = data;
 
     this.check = (data) => {
         if (!Array.isArray(data))
-            throw new Error(DATAISNOTARY)
+            throw new Error(ERROR_MSSAGE.DATA_IS_NOT_ARRAY)
         data.forEach((val) => {
             if (val.constructor !== Object)
-                throw new Error(VALISNOTOBJ)
-            if (isAvilable(val.text))
-                throw new Error(TEXTUNDEFINED)
+                throw new Error(ERROR_MSSAGE.VALUE_IS_NOT_OBJECT)
+            if (isValueAvailable(val.text))
+                throw new Error(ERROR_MSSAGE.TEXT_UNDEFINED)
         })
     }
 
     this.render = () => {
         if ($List.innerHTML !== null)
             $List.innerHTML = "";
-        this.state.forEach((val) => {
-            let str;
-            if (val.isCompleted)
-                str = `<li><s>${val.text}</s></li>`;
-            else
-                str = `<li>${val.text}</li>`;
-            $List.insertAdjacentHTML("beforeend", str);
-        })
+        $List.innerHTML = this.state.map(({ text, isCompleted }) =>
+            `<li>${isCompleted ? `<s>${text}</s>` : text}</li>`
+        )
     }
 
     this.setState = (newData) => {
         $List.innerHTML = "";
+        this.check(newData);
         this.state = newData;
-        this.check(this.state);
         this.render();
     }
 

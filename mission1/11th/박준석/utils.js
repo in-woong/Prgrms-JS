@@ -1,33 +1,23 @@
 export const $ = (ele, dom = document) => dom.querySelector(ele);
 
-export const ISNOTNEW = "new 키워드로 생성된 인스턴스가 아닙니다.";
-export const DATAISNOTARY = "데이터의 형태가 배열이 아닙니다.";
-export const VALISNOTOBJ = "데이터의 값 중 객체가 아닌 값이 있습니다.";
-export const TEXTUNDEFINED = "데이터의 text들 중 적합하지 않은 값이 있습니다.";
+export const ERROR_MSSAGE = {
+    IS_NOT_NEW : "new 키워드로 생성된 인스턴스가 아닙니다.",
+    DATA_IS_NOT_ARRAY = "데이터의 형태가 배열이 아닙니다.",
+    VALUE_IS_NOT_OBJECT = "데이터의 값 중 객체가 아닌 값이 있습니다.",
+    TEXT_UNDEFINED = "데이터의 text들 중 적합하지 않은 값이 있습니다."
+}
 
-const $body = $("body");
-
-const divDOM = (str) => `
-<div id="${str}">
-    <h3> ${str.toUpperCase()}</h3>
+const TodoListDivDOM = (id) => `
+<div id="${id}">
+    <h3> ${id.toUpperCase()}</h3>
     <ul></ul>
 </div>`;
 
-const isOnlySpace = (str) => {
-    for (let c of str){
-        if (c != ' ')
-            return (false)
-    }
-    return (true);
-}  
+const isOnlySpace = (str) => str.trim().length === 0;
 
-export const addNewDiv = (id, dom = "body") => {
-    $(dom).insertAdjacentHTML("beforeend", divDOM(id));
+export const addNewTodoListDiv = (id, dom = "body") => {
+    $(dom).insertAdjacentHTML("beforeend", TodoListDivDOM(id));
 }
 
-export const isAvilable = (str) => {
-    if (str == undefined || isOnlySpace(str) || typeof str !== 'string')
-        return (true);
-    else
-        return (false);
-}
+export const isValueAvailable = (str) => (str == undefined || isOnlySpace(str) || typeof str !== 'string')
+
