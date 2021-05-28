@@ -18,39 +18,95 @@
       {
         text: 'JS 예습하기'
       }
-    ]
+    ];
 	// 이곳에서 코딩을 시작하세요!
+    // div 2개 더 만들기
+    const div2 = document.createElement('div'); 
+    div2.setAttribute('id', 'todo-list2');
+    const div3 = document.createElement('div');
+    div3.setAttribute('id', 'todo-list3');
+    const scpt = document.querySelector('script');
+    document.body.insertBefore(div2, scpt);
+    document.body.insertBefore(div3, scpt);
+    // const div3 = document.body.innerHTML = '<div id="todo-list3"></div>';
+    // targetToLi.appendChild(div2);
+    //document.body.createElement is not a function 그리고 appendChild로 하면 자꾸 script밑으로 가서 insertBefore로 함 이걸 하게 되면 또 script dom객체를 찍어줘야 하는 불편함이 있었음
+    // div2.classList.add('todo-list3');
+
+    // array data 2개 더 만들기
+    var data2 = [];
+    var data3 = [];
+    data2.push({text: '영어공부하기'}, {text: '중국어공부하기'}, {text: '일본어공부하기'});
+    data3.push({text: '윗몸일으키기'}, {text: '팔굽혀펴기'}, {text: '게임하기'});
 
     // TodoList 함수 작성
     function TodoList(data){
-        this.data = data;
-        this.render = function () {
-            for (let i=0; i<data.length; i++){
-            // innerHTML로 하기
-            document.querySelector('#todo-list').innerHTML += `<ul><li>${this.data[i].text}</li></ul>` 
-            
-            /* appendChild로 하기
-            const list = document.createElement(`li`);
-            list.innerText = `${this.data[i].text}`
-            document.querySelector('#todo-list').appendChild(list);
-            */
-            }
+      this.data = data;
+      this.render = function () {
+        // 피드백 받고 고침
+        const targetToLi = document.querySelector('#todo-list');
+        let jstxt = '';
+        for (let i=0; i<data.length; i++){
+        // innerHTML로 하기
+        jstxt += `<ul><li>${this.data[i].text}</li></ul>` 
         }
+        targetToLi.innerHTML = jstxt;  
+      }
+      // new 키워드 함수 인스턴트 만들때 올바른 파라미터 안 남어오면 에러 발생시키기
+      if (data === null || data === undefined || !Array.isArray(data)) {
+        throw new Error ('null or undefined or not Array')
+      }
+      // new 키워드 안 붙였을 경우 에러 발생시키기
+      if (!(todoList instanceof TodoList)) {
+        throw new Error('new로 생성 후 사용 바람');
+      }
+    }
+
+    // 다중 컴포넌트 만들기
+    function TodoList2(data2) {
+      this.data2 = data2;
+      this.render = function(){
+        const targetToLi2 = document.querySelector('#todo-list2');
+        let languagetxt = '';
+        for (let i=0; i<this.data2.length; i++){
+          const list2 = document.createElement('li');
+          list2.innerHTML = `${this.data2[i].text}`;
+          targetToLi2.appendChild(list2);
+        }        
+      }
+      if(data2 === null || data2 === undefined || !Array.isArray(data2)) {
+        throw new Error('null or undefined or not Array');
+      }
+      // constructor로 구현해봤는데 이해 안감
+      if(this.constructor !== TodoList2) {
+        throw new Error('new를 써서 하라고')
+      }
+    }
+
+    function TodoList3(data3) {
+      this.data3 = data3;
+      this.render = function() {
+        document.querySelector('#todo-list3').innerHTML = this.data3.map(function(x) {
+          return `<span>${x.text}</span>`
+        }).join('');
+      }
+      if (data3 === null || data3 === undefined || !Array.isArray(data3)) {
+        throw new Error('null or undefined or not Array');
+      }
+      // new.target으로 구현해봤는데 맞는거임?
+      if (!new.target) {
+        throw 'todoList3 must be called with new';
+      }
     }
 
     // Instance 생성 및 함수 호출
     var todoList = new TodoList(data);
-
-    // new 키워드 함수 인스턴트 만들때 올바른 파라미터 안 남어오면 에러 발생시키기
-    if (data === null || data === undefined || !Array.isArray(data)) {
-        throw new Error ('null or undefined or not Array')
-    }
-    // new 키워드 안 붙였을 경우 에러 발생시키기
-    if (!(todoList instanceof TodoList)) {
-        throw new Error('new로 생성 후 사용 바람');
-    }
+    var todoList2 = new TodoList2(data2);
+    var todoList3 = new TodoList3(data3);
 
     todoList.render();
+    todoList2.render();
+    todoList3.render();
 
   </script>
 </body>
