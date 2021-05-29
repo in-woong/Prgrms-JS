@@ -105,18 +105,43 @@ function TodoList(data, selector) {
       });
     }
     this.data = data;
+    this.selector = selector;
     this.render = function (selector) {
       // const element = createElement(selector);
       // createElement 함수에서 innerHTML하는 부분은 제외했음. element가 data까지 의존하게 하고싶지 않았기 때문..
       document.getElementById(selector).innerHTML = `<ul>${this.data.map((d) => renderLi(d)).join('')}</ul>`;
       // document.querySelector('body').appendChild(element);
     };
+    this.setState = function (nextData) {
+      this.data = nextData;
+      this.render(this.selector);
+    };
     this.render(selector);
   } catch (error) {
     console.error('error----', error);
   }
 }
+
+const tempArr = [
+  {
+    text: '변해라!',
+    isCompleted: true,
+  },
+  {
+    text: '변했니?',
+    isCompleted: false,
+  },
+  {
+    text: '체크해',
+    isCompleted: false,
+  },
+  {
+    text: '디버깅도 해봐',
+    isCompleted: false,
+  },
+];
 // 나중에 사용하기 위해 todo1 변수를 만들어서 저장함
 const todo1 = new TodoList(data, 'todo-list');
 const todosOfGoal = new TodoList(goals, 'todo-goal');
 const todosOfAppointment = new TodoList(appointments, 'todo-appointment');
+todo1.setState(tempArr);
