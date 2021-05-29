@@ -60,6 +60,13 @@ function isValueType(value, type) {
   return typeof value === type;
 }
 
+function renderLi({ text, isCompleted }) {
+  if (!isCompleted) {
+    return `<li>${text}</li>`;
+  }
+  return `<li><s>${text}</s></li>`;
+}
+
 function TodoList(data, selector) {
   try {
     // condition1 : 매개변수가 null이나 undefined로 들어왔을 경우 처리
@@ -101,7 +108,7 @@ function TodoList(data, selector) {
     this.render = function (selector) {
       // const element = createElement(selector);
       // createElement 함수에서 innerHTML하는 부분은 제외했음. element가 data까지 의존하게 하고싶지 않았기 때문..
-      document.getElementById(selector).innerHTML = `<ul>${this.data.map((d) => `<li>${d.text}</li>`).join('')}</ul>`;
+      document.getElementById(selector).innerHTML = `<ul>${this.data.map((d) => renderLi(d)).join('')}</ul>`;
       // document.querySelector('body').appendChild(element);
     };
     this.render(selector);
