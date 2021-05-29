@@ -6,9 +6,11 @@
 </head>
 
 <body>
-  <div id="todo-list"></div>
+  <div id="todo-list1"></div>
+  <div id="todo-list2"></div>
+  <div id="todo-list3"></div>
   <script>
-    var data = [
+    var before = [
       {
         text: 'JS 공부하기'
       },
@@ -16,8 +18,23 @@
         text: 'JS 복습하기'
       },
     ]
+    var now = [
+      {
+        text: 'JS 기본서 완독하기'
+      },
+      {
+        text: 'Markup 공부하기'
+      },
+    ]
+    var after = [
+      {
+        text: '서울 프로젝트 발표 참석'
+      },
+      {
+        text: 'Js core 공부하기'
+      },
+    ]
     
-    const todoListElem = document.querySelector('#todo-list');
 
     // error handler
     function DataValidation(data){
@@ -41,8 +58,10 @@
       return true
     };
 
-    function TodoList(data){
+    function TodoList(data,selector){
       // new 키워드로 생성하지 않은 경우
+      const todoListElem = document.querySelector(selector);
+      
       if(!new.target){
         throw new Error('new 키워드를 통해서 생성해주세요.');
       };
@@ -54,8 +73,12 @@
         }
       }
     };
-    const todoList = new TodoList(data);
-    todoList.render();
+    const beforeList = new TodoList(before,'#todo-list1');
+    const nowList = new TodoList(now,'#todo-list2');
+    const afterList = new TodoList(after,'#todo-list3');
+    beforeList.render();
+    nowList.render();
+    afterList.render();
 
   </script>
 </body>
