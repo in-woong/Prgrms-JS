@@ -12,26 +12,32 @@
   <script>
     var before = [
       {
-        text: 'JS 공부하기'
+        text: 'JS 공부하기',
+        isCompleted: true
       },
       {
-        text: 'JS 복습하기'
+        text: 'JS 복습하기',
+        isCompleted: false
       },
     ]
     var now = [
       {
-        text: 'JS 기본서 완독하기'
+        text: 'JS 기본서 완독하기',
+        isCompleted: true
       },
       {
-        text: 'Markup 공부하기'
+        text: 'Markup 공부하기',
+        isCompleted:false
       },
     ]
     var after = [
       {
-        text: '서울 프로젝트 발표 참석'
+        text: '서울 프로젝트 발표 참석',
+        isCompleted:false
       },
       {
-        text: 'Js core 공부하기'
+        text: 'Js core 공부하기',
+        isCompleted:false
       },
     ]
     
@@ -69,7 +75,7 @@
       if(validState){
         this.data = data;
         this.render = () => {
-          todoListElem.innerHTML = this.data.map(todoItem => `<li>${todoItem.text}</li>`).join('');
+          todoListElem.innerHTML = this.data.map(todoItem => todoItem.isCompleted ? `<li><s>${todoItem.text}</s></li>` :`<li>${todoItem.text}</li>`).join('');
         }
       }
     };
