@@ -18,8 +18,16 @@
     ]
 	// 이곳에서 코딩을 시작하세요!
   function ToDoList(data) {
+    if(data === null || data === undefined) {
+      throw new Error("error message");
+    }
+    if(!Array.isArray(data)) { // array 형태 확인
+      throw new Error("error message");
+    }
+    if(data.some((item) => typeof item !== 'object' || !item.hasOwnProperty('text') )) {
+      throw new Error("error message");
+    }
     this.data = data;
-    
     this.render = function(){
       document.querySelector("#todo-list").innerHTML = this.data.map((item) => `<li>${item.text}</li>`).join('');
     }
