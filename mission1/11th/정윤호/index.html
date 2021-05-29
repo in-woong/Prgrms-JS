@@ -2,22 +2,17 @@
   <head>
     <title>Mission 1</title>
     <meta charset="utf-8" />
+    <link href="./css/styles.css" rel="stylesheet" />
+    <script type="module" src="/index.js" defer></script>
   </head>
 
   <body>
-    <div id="todo-list"></div>
-    <script>
-      const data = [
-        {
-          text: 'JS 공부하기',
-          isCompleted: true,
-        },
-        {
-          text: 'JS 복습하기',
-          isCompleted: false,
-        },
-      ]
-      // 이곳에서 코딩을 시작하세요!
-    </script>
+    <div id="root">
+      <div id="todo-app">
+        <div class='todo-list' id="todo-list1"></div>
+        <div class='todo-list' id="todo-list2"></div>
+        <div class='todo-list' id="todo-list3"></div>
+      </div>
+    </div>
   </body>
 </html>
