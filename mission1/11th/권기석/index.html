@@ -62,6 +62,9 @@
     if(data.some((item) => typeof item !== 'object' || !item.hasOwnProperty('text') || !item.hasOwnProperty('isCompleted'))) {
       throw new Error("error message");
     }
+    if(!new.target) {
+      throw new Error("error message");
+    }
     this.data = data;
     this.render = function() {
       document.querySelector(id).innerHTML = this.data.map((item) => {
