@@ -1,5 +1,3 @@
-const DATA_ITEM_PROPERTIES = [{ name: "text", type: "string"}, { name: "isCompleted", type: "boolean"}]
-
 class TodoList {
   constructor($target, data) {
     this.validate(data)
@@ -33,15 +31,14 @@ class TodoList {
     if(!Array.isArray(data)) throw new Error(`${JSON.stringify(data)} is not an Array`)
 
     data.forEach(item => {
-      // not object
-      if(typeof item !== "object") throw new Error(`data has a non-object item '${item}'`)
+      if(item === null || typeof item !== "object") throw new Error(`data includes item '${item}'`)
 
       // properties
-      DATA_ITEM_PROPERTIES.forEach(({ name, type }) => {
-        if(!item.hasOwnProperty(name)) throw new Error(`Item ${JSON.stringify(item)} should have '${name}' property`)
-
-        if(typeof item[name] !== type) throw new Error(`${JSON.stringify(item[name])} is not ${type}`)
-      })
+      if(!item.hasOwnProperty("text") || !item.hasOwnProperty("isCompleted"))
+        throw new Error(`${JSON.stringify(item)} should have property 'text' and 'isCompleted'`)
+        
+      if(typeof item.text !== "string") throw new Error(`'text' in ${JSON.stringify(item)} is not string`)
+      if(typeof item.isCompleted !== "boolean") throw new Error(`'isCompleted' in ${JSON.stringify(item)} is not boolean`)
     })
   }
 }
