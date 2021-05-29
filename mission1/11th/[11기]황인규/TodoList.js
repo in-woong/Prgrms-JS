@@ -31,16 +31,17 @@ const data = [
     },
   ]
 
-
+  
   //[Mission1] : TodoList 함수 생성
   function TodoList(data){
     
+    this.state = data 
     //[Mission1] 보너스 구현사항 예외 처리 구현
-    if(!data)
+    if(!this.state)
       throw new Error('빈 데이터 입니다.')
-    if(!Array.isArray(data))
+    if(!Array.isArray(this.state))
       throw new Error('Array형태가 아닙니다.')
-    data.forEach(function(e){
+    this.state.forEach(function(e){
       if(typeof e.text !== 'string')
         throw new Error('데이터 타입이 string이 아닙니다.')
     })
@@ -56,7 +57,7 @@ const data = [
   
     this.render = function(){
         try{
-            data.reduce((acc, cur, i) =>{
+            this.state.reduce((acc, cur, i) =>{
                 //[Mission1] 보너스 구현사항 isCompleted 처리
                 if(cur.isCompleted===true){
                     sTag.innerHTML=cur.text
@@ -70,16 +71,27 @@ const data = [
             console.log(e);
         }
     }
+
+    //[Mission1] 보너스 구현사항 setState
+    this.setState = function(nextData){
+        try{
+            this.state = nextData
+            this.render()
+        }catch(e){
+            console.log(e)
+        }
+    }
 }
 
 //[Mission1] 보너스 구현사항 todolist 2개 추가 
 function TodoList2(data2){
 
-  if(!data2)
+  this.state = data2;
+  if(!this.state)
       throw new Error('빈 데이터 입니다.')
-    if(!Array.isArray(data2))
+    if(!Array.isArray(this.state))
       throw new Error('Array형태가 아닙니다.')
-    data2.forEach(function(e){
+      this.state.forEach(function(e){
       if(typeof e.text !== 'string')
         throw new Error('데이터 타입이 string이 아닙니다.')
     })
@@ -93,7 +105,7 @@ function TodoList2(data2){
 
     this.render = function(){
         try{
-            data2.reduce((acc, cur, i) =>{
+            this.state.reduce((acc, cur, i) =>{
                 if(cur.isCompleted===true){
                     sTag.innerHTML=cur.text
                     document.querySelector('#todo-list').appendChild(sTag)
@@ -110,11 +122,13 @@ function TodoList2(data2){
 
 //[Mission1] 보너스 구현사항 todolist 2개 추가 
 function TodoList3(data3){
-  if(!data3)
+   
+  this.state = data3
+  if(!this.state)
       throw new Error('빈 데이터 입니다.')
-    if(!Array.isArray(data3))
+    if(!Array.isArray(this.state))
       throw new Error('Array형태가 아닙니다.')
-    data3.forEach(function(e){
+      this.state.forEach(function(e){
       if(typeof e.text !== 'string')
         throw new Error('데이터 타입이 string이 아닙니다.')
     })
@@ -144,6 +158,7 @@ function TodoList3(data3){
 
 }
 
+
 var todoList = new TodoList(data);
 var todoList2 = new TodoList2(data2);
 var todoList3 = new TodoList3(data3);
@@ -153,3 +168,9 @@ todoList.render();
 todoList2.render();
 todoList3.render();
 
+todoList.setState([
+    {
+    text: 'setState',
+    isCompleted: true,
+    }
+])
