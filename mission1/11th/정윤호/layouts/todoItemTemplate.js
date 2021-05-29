@@ -1,13 +1,7 @@
 'use strict';
 
-export const todoItemTemplate = (todoData) => {
-	const {text, isCompleted} = todoData;
-	const template = {
-		'completed': `<s><p>${text}</p></s>`,
-		'unCompleted': `<p>${text}</p>`,
-	}
-
-	return template[isCompleted ? 'completed' : 'unCompleted'];
+export const todoItemTemplate = ({text, isCompleted}) => {
+	return isCompleted ? `<s><p>${text}</p></s>` : `<p>${text}</p>`;
 };
 
 export default todoItemTemplate;
