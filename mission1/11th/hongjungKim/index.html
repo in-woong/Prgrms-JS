@@ -1,0 +1,54 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list"></div>
+    <script>
+      const data = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false,
+        },
+        {
+          text: '산책하기',
+          isCompleted: false,
+        },
+        {
+          text: '영화보기',
+          isCompleted: false,
+        },
+        {
+          text: '친구 만나기',
+          isCompleted: false,
+        },
+      ]
+
+      function text2html(text){
+        return `<div>${text}</div>`;
+      }
+      
+      function TodoList(data) {
+        this.data = data;
+        const totalHtml = [];
+        
+        this.render = () => {
+          data.forEach((todo) => {
+            totalHtml.push(text2html(todo.text));
+          });
+
+          document.querySelector('#todo-list').innerHTML = totalHtml.join('');
+        }
+      }
+      
+      var todoList = new TodoList(data);
+      todoList.render();
+    </script>
+  </body>
+</html>
