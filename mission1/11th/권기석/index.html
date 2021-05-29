@@ -59,7 +59,7 @@
     if(!Array.isArray(data)) { // array 형태 확인
       throw new Error("error message");
     }
-    if(data.some((item) => typeof item !== 'object' || !item.hasOwnProperty('text') )) {
+    if(data.some((item) => typeof item !== 'object' || !item.hasOwnProperty('text') || !item.hasOwnProperty('isCompleted'))) {
       throw new Error("error message");
     }
     this.data = data;
