@@ -1,7 +1,7 @@
 const data = [
   {
     text: 'JS 예습하기',
-    isCompleted: true
+    isCompleted: true,
   },
   {
     text: 'JS 공부하기',
@@ -11,41 +11,71 @@ const data = [
     text: 'JS 복습하기',
     isCompleted: false,
   },
-]
-function createElement(selectorName){
-  const element = document.createElement('div');
+];
+
+const goals = [
+  {
+    text: '모든 Mission1 해결하기',
+    isCompleted: false,
+  },
+  {
+    text: '주말안에 Mission 해결하기',
+    isCompleted: false,
+  },
+  {
+    text: '마크업 문서 읽고 정리하기',
+    isCompleted: false,
+  },
+];
+
+const appointments = [
+  {
+    text: '6/5 등산',
+    isCompleted: false,
+  },
+  {
+    text: 'clubhouse 모임 참여',
+    isCompleted: false,
+  },
+  {
+    text: '서울 나들이',
+    isCompleted: false,
+  },
+];
+
+function createElement(selectorName) {
+  const element = document.createElement('ul');
   element.id = selectorName;
   return element;
 }
 
-function isKeyExists(obj,key){
-  if( obj[key] == undefined ){
-      return false;
-  }else{
-      return true;
+function isKeyExists(obj, key) {
+  if (obj[key] === undefined) {
+    return false;
   }
+  return true;
 }
 
-function isValueType(value, type){
+function isValueType(value, type) {
   return typeof value === type;
 }
 
-function TodoList(data, selector){
+function TodoList(data, selector) {
   try {
     // condition1 : 매개변수가 null이나 undefined로 들어왔을 경우 처리
-    if(!data && !selector){
+    if (!data && !selector) {
       throw new Error('arguments is wrong format...');
     }
     // condition2 : 매개변수로 넘어온 data가 Array가 아닌 경우 처리
-    if(!Array.isArray(data)){
+    if (!Array.isArray(data)) {
       throw new Error('data arguments is not array');
     }
     // condition3 : 함수를 new 키워드로 사용하지 않고 선언한 경우 처리
-    if(!new.target){
-      throw new Error('you don\'t use new keyword');
+    if (!new.target) {
+      throw new Error("you don't use new keyword");
     }
     // condition4 : 데이터 내용이 이상한 경우
-    if(data){
+    if (data) {
       // 이건 데이터 내용이 어떻게 이상한지 따로 정의를 해야할 것 같다.
       /**
        * 1. 넘어온 데이터의 키가 예상한 키가 아닌 경우,
@@ -57,23 +87,23 @@ function TodoList(data, selector){
        * - 무시
        */
       // 위에서 data가 배열인지 체크를 했기 때문에, 이순간 data는 무조건 Array임을 알 수 있다.
-      data.map(d => {
-        if(!isKeyExists(d, 'text') || !isKeyExists(d, 'isCompleted')){
+      data.map((d) => {
+        if (!isKeyExists(d, 'text') || !isKeyExists(d, 'isCompleted')) {
           throw new Error('data array has wrong key');
         }
-        if(!isValueType(d.text, 'string') || !isValueType(d.isCompleted, 'boolean')){
+        if (!isValueType(d.text, 'string') || !isValueType(d.isCompleted, 'boolean')) {
           throw new Error('data array has wrong value type');
         }
+        return 0;
       });
-
     }
     this.data = data;
-    this.render = function(selector){
-      const element = createElement(selector);
+    this.render = function (selector) {
+      // const element = createElement(selector);
       // createElement 함수에서 innerHTML하는 부분은 제외했음. element가 data까지 의존하게 하고싶지 않았기 때문..
-      element.innerHTML = this.data.map(d => `<div>${d.text}</div>`).join('');
-      document.querySelector('body').appendChild(element);
-    }
+      document.getElementById(selector).innerHTML = `<ul>${this.data.map((d) => `<li>${d.text}</li>`).join('')}</ul>`;
+      // document.querySelector('body').appendChild(element);
+    };
     this.render(selector);
   } catch (error) {
     console.error('error----', error);
@@ -81,3 +111,5 @@ function TodoList(data, selector){
 }
 // 나중에 사용하기 위해 todo1 변수를 만들어서 저장함
 const todo1 = new TodoList(data, 'todo-list');
+const todosOfGoal = new TodoList(goals, 'todo-goal');
+const todosOfAppointment = new TodoList(appointments, 'todo-appointment');
