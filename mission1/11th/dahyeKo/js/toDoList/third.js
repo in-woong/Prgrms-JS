@@ -21,8 +21,9 @@ function TodoList(data) {
                     const $list = document.createElement("ul");
                     $list.setAttribute("class", "items")
                     data.forEach((el) => {
-                    // 만약 배열의 요소가 key값으로 text를 갖는다면,
+                    // 만약 배열의 요소가 key값으로 text와 isCompleted를 갖는다면,
                     if(Object.keys(el).includes("text") && Object.keys(el).includes("isCompleted")){
+                        // 완료한 사항이라면,
                         if (el.isCompleted) {
                             const $item = document.createElement("li")
                             const $strong = document.createElement("s");
@@ -31,7 +32,7 @@ function TodoList(data) {
                             $item.append($strong)
                             $list.appendChild($item)
                         } else {
-                            // 해야할 목록이라면,
+                            // 해야할 사항이라면,
                             const $item = document.createElement("li")
                             const $text = document.createTextNode(el.text);                            
                             $item.appendChild($text);       
