@@ -6,6 +6,9 @@
 
   <body>
     <div id="todo-list"></div>
+    <div id="todo-list2"></div>
+    <div id="todo-list3"></div>
+
     <script>
       const data = [
         {
@@ -18,6 +21,27 @@
         },
       ]
       
+      const data2 = [
+        {
+          text: 'JS 공부하기2',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기2',
+          isCompleted: false,
+        },
+      ]
+
+      const data3 = [
+        {
+          text: 'JS 공부하기3',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기3',
+          isCompleted: false,
+        },
+      ]
       //[Mission1] : TodoList 함수 생성
       function TodoList(data){
         
@@ -31,9 +55,7 @@
             throw new Error('데이터 타입이 string이 아닙니다.')
         })
 
-        console.log(typeof(data[0].text))
-
-        //[Mission1] - 보너스 : new 키워드 안 붙이고 함수 실행 시 에러 발생하게 하기 
+        //[Mission1] 보너스 new 키워드 안 붙이고 함수 실행 시 에러 발생하게 하기 
        if(!new.target){
          throw new Error('new로 객체를 생성해주세요');
        }
@@ -46,12 +68,69 @@
       }catch(e){
         console.error(e);
       }
-
-
     }
-    var todoList = new TodoList(data);
-    todoList.render();
+    //[Mission1] 보너스 구현사항 todolist 2개 추가 
+    function TodoList2(data2){
 
+      if(!data2)
+          throw new Error('빈 데이터 입니다.')
+        if(!Array.isArray(data2))
+          throw new Error('Array형태가 아닙니다.')
+        data2.forEach(function(e){
+          if(typeof e.text !== 'string')
+            throw new Error('데이터 타입이 string이 아닙니다.')
+        })
+
+      if(!new.target){
+         throw new Error('new로 객체를 생성해주세요');
+        }
+        
+      try{
+        this.render = function(){
+        data2.reduce((acc, cur, i) =>{
+          document.querySelector('#todo-list2').innerHTML+=`<div>${cur.text}</div>`
+        },0)
+        }
+      }catch(e){
+        console.error(e);
+      }
+    }
+
+    //[Mission1] 보너스 구현사항 todolist 2개 추가 
+    function TodoList3(data3){
+      if(!data3)
+          throw new Error('빈 데이터 입니다.')
+        if(!Array.isArray(data3))
+          throw new Error('Array형태가 아닙니다.')
+        data3.forEach(function(e){
+          if(typeof e.text !== 'string')
+            throw new Error('데이터 타입이 string이 아닙니다.')
+        })
+
+      if(!new.target){
+         throw new Error('new로 객체를 생성해주세요');
+        }
+        
+      try{
+        this.render = function(){
+        data3.reduce((acc, cur, i) =>{
+          document.querySelector('#todo-list3').innerHTML+=`<div>${cur.text}</div>`
+        },0)
+        }
+      }catch(e){
+        console.error(e);
+      }
+    }
+
+    var todoList = new TodoList(data);
+    var todoList2 = new TodoList2(data2);
+    var todoList3 = new TodoList3(data3);
+
+
+    todoList.render();
+    todoList2.render();
+    todoList3.render();
+    
     </script>
     
     <script src="TodoList.js"></script>  
