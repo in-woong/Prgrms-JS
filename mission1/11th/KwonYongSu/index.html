@@ -40,6 +40,16 @@
         isCompleted:false
       },
     ]
+    var newAfter = [
+      {
+        text: '프로젝트 정리하기',
+        isCompleted:false
+      },
+      {
+        text: '문서 정리하는 법 공부하기',
+        isCompleted:false
+      },
+    ]
     
 
     // error handler
@@ -76,6 +86,13 @@
         this.data = data;
         this.render = () => {
           todoListElem.innerHTML = this.data.map(todoItem => todoItem.isCompleted ? `<li><s>${todoItem.text}</s></li>` :`<li>${todoItem.text}</li>`).join('');
+        };
+        this.setState = (nextData) => {
+          let validState = DataValidation(nextData)
+          if(validState){
+            this.data = nextData;
+            this.render();
+          }
         }
       }
     };
@@ -85,6 +102,7 @@
     beforeList.render();
     nowList.render();
     afterList.render();
+    afterList.setState(newAfter);
 
   </script>
 </body>
