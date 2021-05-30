@@ -1,0 +1,47 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list"></div>
+  <script>
+    var data = [
+      {
+        text: 'JS 공부하기',
+        isCompleted : true,
+      },
+      {
+        text: 'JS 복습하기',
+        isCompleted : false,
+      }
+    ]
+	// 이곳에서 코딩을 시작하세요!
+  function TodoList(data) {
+    // new 연산자 사용 여부 확인하기
+    if (!new.target) {
+      throw new Error('new 연산자를 사용하지 않았습니다');
+    // 빈 배열, undefined, null 체크하기
+    } else if (!data) {
+      throw new Error('올바르지 않은 data 입니다');
+    } else {
+      // 넘겨받은 data를 변수로 저장
+      this.data = data;
+      // render 함수 작성
+      this.render = function() {
+        let element = ''
+        for (let i = 0; i < this.data.length; i++) {
+          element = element + `<li>${this.data[i].text}</li>`;
+        }
+        document.querySelector('#todo-list').innerHTML = `<ul>${element}</ul>`;
+      }
+    }
+  }
+  var todoList = new TodoList(data);
+  // todoList.render 함수 호출
+  todoList.render();
+  </script>
+</body>
+</html>
