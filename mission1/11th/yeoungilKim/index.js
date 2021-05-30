@@ -22,16 +22,21 @@ function TodoList(data) {
         throw new Error("new 키워드를 붙혀주세요")
     } else {
         var todoList = document.querySelector("#todo-list");
+        var todoA = document.querySelector("#todo-a");
+        var todoB = document.querySelector("#todo-b");
+        var array = [todoList, todoA,todoB];
+        
         this.data = data;
         this.render = function() {
-            this.data.forEach((e) => {
+            this.data.forEach((e,index) => {
                 if (typeof(e.text) !== "string" || !Array.isArray(this.data)) {
                     throw new Error("올바른 파라메터를 입력해주세요");
                 } else {
-                    todoList.innerHTML = e.text;
+                    array[index].innerHTML = e.text;
                 }
             })
-            
+
+            //또 다른 방법.
             // var check = this.data;
             // for (let i = 0; i < check.length; i++) {
             //     if (typeof(check[i].text) !== "string" || !Array.isArray(check)) {
@@ -56,7 +61,10 @@ var data = [
     },
     {
         text: 'JS 복습하기'
-    }
+    },
+    {
+        text: "JS 외우기"
+    },
 ]
 
 var todoList = new TodoList(data);
