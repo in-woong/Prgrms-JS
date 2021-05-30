@@ -1,53 +1,51 @@
 <html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
 
-<head>
-  <title>Mission 1</title>
-  <meta charset="utf-8" />
-</head>
+  <body>
+    <div id="todo-list"></div>
+    <script>
+      let data = [
+        {
+          text: 'JS 공부하기',
+        },
+        {
+          text: 'JS 복습하기',
+        },
+      ]
 
-<body>
-  <div id="todo-list"></div>
-  <script>
-    let data = [
-      {
-        text: 'JS 공부하기'
-      },
-      {
-        text: 'JS 복습하기'
-      }
-    ]
-
-    function TodoList(data) {
-      if (this !== window) {
-        // new 키워드를 붙인 경우
-        if (!Array.isArray(data)) {
-          throw new Error('파라메터 형식이 올바르지 않습니다.');
+      function TodoList(data) {
+        if (this !== window) {
+          // new 키워드를 붙인 경우
+          if (!Array.isArray(data)) {
+            throw new Error('파라메터 형식이 올바르지 않습니다.')
+          } else {
+            data.forEach((item) => {
+              if (!item.hasOwnProperty('text'))
+                throw new Error('데이터 형식이 올바르지 않습니다.')
+            })
+          }
         } else {
-          data.forEach((item) => {
-            if (!item.hasOwnProperty('text')) throw new Error('데이터 형식이 올바르지 않습니다.');
-          })
+          // new 키워드를 붙이지 않은 경우
+          throw new Error('인스턴스 생성 방법이 올바르지 않습니다.')
         }
-      } else {
-        // new 키워드를 붙이지 않은 경우
-        throw new Error('인스턴스 생성 방법이 올바르지 않습니다.');
+
+        this.data = data
+        this.$target = document.getElementById('todo-list')
+
+        this.render = function () {
+          this.$target.innerHTML = this.data
+            .map(({ text }) => {
+              return `<div>${text}</div>`
+            })
+            .join('')
+        }
       }
 
-      this.data = data;
-      this.target = document.getElementById('todo-list');
-
-      this.render = function() {
-        this.data.forEach((item) => {
-          const $span = document.createElement('span');
-          $span.innerText = item.text;
-          $span.style.display = 'block';
-
-          this.target.appendChild($span);
-        })
-      }
-    }
-
-    let todoList = new TodoList(data);
-    todoList.render();
-  </script>
-</body>
+      let todoList = new TodoList(data)
+      todoList.render()
+    </script>
+  </body>
 </html>
