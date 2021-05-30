@@ -6,9 +6,11 @@
 </head>
 
 <body>
-  <div id="todo-list"></div>
+  <div id="todo-list1"></div>
+  <div id="todo-list2"></div>
+  <div id="todo-list3"></div>
   <script>
-    var data = [
+    var data1 = [
       {
         text: 'JS 공부하기',
         isCompleted : true,
@@ -18,8 +20,28 @@
         isCompleted : false,
       }
     ]
+    var data2 = [
+      {
+        text: '점심먹기',
+        isCompleted : false,
+      },
+      {
+        text: '저녁먹기',
+        isCompleted : false,
+      }
+    ]
+    var data3 = [
+      {
+        text: '일기쓰기',
+        isCompleted : false,
+      },
+      {
+        text: '영화보기',
+        isCompleted : false,
+      }
+    ]
 	// 이곳에서 코딩을 시작하세요!
-  function TodoList(data) {
+  function TodoList(data, idName) {
     // new 연산자 사용 여부 확인하기
     if (!new.target) {
       throw new Error('new 연산자를 사용하지 않았습니다');
@@ -40,20 +62,24 @@
         }
       })
     } 
-    // 넘겨받은 data를 변수로 저장
+    // 넘겨받은 data, idName을 각각 변수로 저장
     this.data = data;
+    this.idName = idName;
     // render 함수 작성
     this.render = function() {
       let element = ''
       for (let i = 0; i < this.data.length; i++) {
         element = element + `<li>${this.data[i].text}</li>`;
       }
-      document.querySelector('#todo-list').innerHTML = `<ul>${element}</ul>`;
+      document.querySelector(this.idName).innerHTML = `<ul>${element}</ul>`;
     }
   }
-  var todoList = new TodoList(data);
-  // todoList.render 함수 호출
-  todoList.render();
+  var todoList1 = new TodoList(data1, '#todo-list1');
+  var todoList2 = new TodoList(data2, '#todo-list2');
+  var todoList3 = new TodoList(data3, '#todo-list3');
+  todoList1.render();
+  todoList2.render();
+  todoList3.render();
   </script>
 </body>
 </html>
