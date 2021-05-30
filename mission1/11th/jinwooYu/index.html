@@ -17,23 +17,37 @@
       }
     ]
 
-  function TodoList(data) {
-    this.data = data;
-    this.target = document.getElementById('todo-list');
+    function TodoList(data) {
+      if (this !== window) {
+        // new 키워드를 붙인 경우
+        if (!Array.isArray(data)) {
+          throw new Error('파라메터 형식이 올바르지 않습니다.');
+        } else {
+          data.forEach((item) => {
+            if (!item.hasOwnProperty('text')) throw new Error('데이터 형식이 올바르지 않습니다.');
+          })
+        }
+      } else {
+        // new 키워드를 붙이지 않은 경우
+        throw new Error('인스턴스 생성 방법이 올바르지 않습니다.');
+      }
 
-    this.render = function() {
-      this.data.forEach((item) => {
-        const $span = document.createElement('span');
-        $span.innerText = item.text;
-        $span.style.display = 'block';
+      this.data = data;
+      this.target = document.getElementById('todo-list');
 
-        this.target.appendChild($span);
-      })
+      this.render = function() {
+        this.data.forEach((item) => {
+          const $span = document.createElement('span');
+          $span.innerText = item.text;
+          $span.style.display = 'block';
+
+          this.target.appendChild($span);
+        })
+      }
     }
-  }
 
-  let todoList = new TodoList(data);
-  todoList.render();
+    let todoList = new TodoList(data);
+    todoList.render();
   </script>
 </body>
 </html>
