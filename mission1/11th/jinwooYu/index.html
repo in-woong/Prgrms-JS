@@ -35,6 +35,12 @@
         this.data = data
         this.$target = document.getElementById('todo-list')
 
+        this.setState = function (nextData) {
+          this.data = nextData
+
+          this.render()
+        }
+
         this.render = function () {
           this.$target.innerHTML = this.data
             .map(({ text }) => {
