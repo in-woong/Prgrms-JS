@@ -31,10 +31,7 @@ const data = [
     },
   ]
 
-  
-  //[Mission1] : TodoList 함수 생성
-  function TodoList(data){
-    
+  function Validation(data){
     this.state = data 
     //[Mission1] 보너스 구현사항 예외 처리 구현
     if(!this.state)
@@ -42,29 +39,36 @@ const data = [
     if(!Array.isArray(this.state))
       throw new Error('Array형태가 아닙니다.')
     this.state.forEach(function(e){
-      if(typeof e.text !== 'string')
-        throw new Error('데이터 타입이 string이 아닙니다.')
+        console.log(e['text'])
+        if(e['text'] == undefined || e['isCompleted'] == undefined) 
+            throw new Error('데이터 키값이 잘못 정의되었습니다.')
+        if(typeof e.text !== 'string')
+            throw new Error('데이터 타입이 string이 아닙니다.')
+        if(typeof e.isCompleted !== 'boolean')
+            throw new Error('데이터 타입이 boolean이 아닙니다.')
     })
-
+    
+  }
+  
+  //[Mission1] : TodoList 함수 생성
+  function TodoList(data, selector){
+    
+    this.state = data 
+    
+    Validation(this.state)
     //[Mission1] 보너스 new 키워드 안 붙이고 함수 실행 시 에러 발생하게 하기 
-   if(!new.target){
-     throw new Error('new로 객체를 생성해주세요');
-   }
-   
-   const sTag = document.createElement("s");
-   const divTag = document.createElement("div");
-
+    if(!new.target){
+        throw new Error('new로 객체를 생성해주세요');
+    }
   
     this.render = function(){
         try{
             this.state.reduce((acc, cur, i) =>{
                 //[Mission1] 보너스 구현사항 isCompleted 처리
                 if(cur.isCompleted===true){
-                    sTag.innerHTML=cur.text
-                    document.querySelector('#todo-list').appendChild(sTag)
+                    document.querySelector(`#${selector}`).innerHTML+=`<div><s>${cur.text}</s></div>`
                 }else{
-                    divTag.innerHTML=cur.text
-                    document.querySelector('#todo-list').appendChild(divTag)
+                    document.querySelector(`#${selector}`).innerHTML+=`<div>${cur.text}</div>`
                 }
             },"")
         }catch(e){
@@ -76,6 +80,7 @@ const data = [
     this.setState = function(nextData){
         try{
             this.state = nextData
+            document.querySelector('#todo-list').innerHTML="";
             this.render()
         }catch(e){
             console.log(e)
@@ -84,34 +89,22 @@ const data = [
 }
 
 //[Mission1] 보너스 구현사항 todolist 2개 추가 
-function TodoList2(data2){
+function TodoList2(data2, selector){
 
   this.state = data2;
-  if(!this.state)
-      throw new Error('빈 데이터 입니다.')
-    if(!Array.isArray(this.state))
-      throw new Error('Array형태가 아닙니다.')
-      this.state.forEach(function(e){
-      if(typeof e.text !== 'string')
-        throw new Error('데이터 타입이 string이 아닙니다.')
-    })
-
+  Validation(this.state)
   if(!new.target){
      throw new Error('new로 객체를 생성해주세요');
     }
     
-  const sTag = document.createElement("s");
-  const divTag = document.createElement("div");
 
     this.render = function(){
         try{
             this.state.reduce((acc, cur, i) =>{
                 if(cur.isCompleted===true){
-                    sTag.innerHTML=cur.text
-                    document.querySelector('#todo-list').appendChild(sTag)
+                    document.querySelector(`#${selector}`).innerHTML+=`<div><s>${cur.text}</s></div>`
                 }else{
-                    divTag.innerHTML=cur.text
-                    document.querySelector('#todo-list').appendChild(divTag)
+                    document.querySelector(`#${selector}`).innerHTML+=`<div>${cur.text}</div>`
                 }
             },"")
         }catch(e){
@@ -124,31 +117,20 @@ function TodoList2(data2){
 function TodoList3(data3){
    
   this.state = data3
-  if(!this.state)
-      throw new Error('빈 데이터 입니다.')
-    if(!Array.isArray(this.state))
-      throw new Error('Array형태가 아닙니다.')
-      this.state.forEach(function(e){
-      if(typeof e.text !== 'string')
-        throw new Error('데이터 타입이 string이 아닙니다.')
-    })
-
+  //Validation
+  Validation(this.state)
   if(!new.target){
      throw new Error('new로 객체를 생성해주세요');
     }
 
-   const sTag = document.createElement("s");
-   const divTag = document.createElement("div");  
     
    this.render = function(){
         try{
             data3.reduce((acc, cur, i) =>{
                 if(cur.isCompleted===true){
-                    sTag.innerHTML=cur.text
-                    document.querySelector('#todo-list').appendChild(sTag)
+                    document.querySelector(`#${selector}`).innerHTML+=`<div><s>${cur.text}</s></div>`
                 }else{
-                    divTag.innerHTML=cur.text
-                    document.querySelector('#todo-list').appendChild(divTag)
+                    document.querySelector(`#${selector}`).innerHTML+=`<div>${cur.text}</div>`
                 }
             },"")
         }catch(e){
@@ -158,19 +140,19 @@ function TodoList3(data3){
 
 }
 
-
-var todoList = new TodoList(data);
-var todoList2 = new TodoList2(data2);
-var todoList3 = new TodoList3(data3);
+var todoList = new TodoList(data, 'todo-list');
+var todoList2 = new TodoList2(data2, 'toto-list2');
+var todoList3 = new TodoList3(data3, 'toto-list3');
 
 
 todoList.render();
+
 todoList2.render();
 todoList3.render();
-
 todoList.setState([
     {
-    text: 'setState',
-    isCompleted: true,
+        text: 'setState',
+        isCompleted: true,
     }
 ])
+
