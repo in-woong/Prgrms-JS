@@ -40,6 +40,16 @@
         isCompleted : false,
       }
     ]
+    var nextData = [
+      {
+        text: '음악듣기',
+        isCompleted : false,
+      },
+      {
+        text: '스트레칭하기',
+        isCompleted : false,
+      }
+    ]
 	// 이곳에서 코딩을 시작하세요!
   function TodoList(data, idName){
     // new 연산자 사용 여부 확인하기
@@ -73,6 +83,11 @@
       });
       document.querySelector(this.idName).innerHTML = `<ul>${element}</ul>`;
     }
+    // setState 함수 작성
+    this.setState = function(nextData){
+      this.data = nextData;
+      this.render();
+    }
   }
   var todoList1 = new TodoList(data1, '#todo-list1');
   var todoList2 = new TodoList(data2, '#todo-list2');
@@ -80,6 +95,7 @@
   todoList1.render();
   todoList2.render();
   todoList3.render();
+  todoList1.setState(nextData);
   </script>
 </body>
 </html>
