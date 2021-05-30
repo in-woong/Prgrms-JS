@@ -1,4 +1,6 @@
-import { data1, data2, data3, data4 } from "./data.js"
+import {
+    data1, data2, data3, data4,
+} from "./data.js"
 
 function TodoList(data, cssSelector) {
     if (!new.target) {
@@ -27,7 +29,7 @@ function TodoList(data, cssSelector) {
         fragment.appendChild($numOfToDoList)
         const $list = document.createElement("ul")
         $list.setAttribute("class", "items")
-        fragment.appendChild($list) 
+        fragment.appendChild($list)
 
         this.data.forEach((toDo) => {
             if (!toDo.hasOwnProperty("text")) {

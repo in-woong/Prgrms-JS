@@ -42,4 +42,6 @@ const data4 = [
         isCompleted: true,
     }]
 
-export { data1, data2, data3, data4 }
+export {
+    data1, data2, data3, data4,
+}
