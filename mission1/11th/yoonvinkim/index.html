@@ -23,17 +23,17 @@
     var data2 = [
       {
         text: '점심먹기',
-        isCompleted : false,
+        isCompleted : true,
       },
       {
         text: '저녁먹기',
-        isCompleted : false,
+        isCompleted : true,
       }
     ]
     var data3 = [
       {
         text: '일기쓰기',
-        isCompleted : false,
+        isCompleted : true,
       },
       {
         text: '영화보기',
@@ -41,36 +41,36 @@
       }
     ]
 	// 이곳에서 코딩을 시작하세요!
-  function TodoList(data, idName) {
+  function TodoList(data, idName){
     // new 연산자 사용 여부 확인하기
-    if (!new.target) {
+    if (!new.target){
       throw new Error('new 연산자를 사용하지 않았습니다');
     // 빈 배열, undefined, null 체크하기
-    } else if (!data) {
+    } else if (!data){
       throw new Error('올바르지 않은 data 입니다');
     // array 형태 판별하기
-    } else if (!Array.isArray(data)) {
+    } else if (!Array.isArray(data)){
       throw new Error('올바르지 않은 형식의 data 입니다');
     // data 내용 이상여부 확인하기
     } else {
       data.forEach(function(todo){
-        if (!todo.hasOwnProperty('text')) {
+        if (!todo.hasOwnProperty('text')){
           throw new Error('data 내용에 text가 포함되어 있지 않습니다');
         } 
-        if (typeof todo.text !== 'string') {
+        if (typeof todo.text !== 'string'){
           throw new Error('text의 형태가 string이 아닙니다');
         }
-      })
+      });
     } 
     // 넘겨받은 data, idName을 각각 변수로 저장
     this.data = data;
     this.idName = idName;
     // render 함수 작성
-    this.render = function() {
+    this.render = function(){
       let element = ''
-      for (let i = 0; i < this.data.length; i++) {
-        element = element + `<li>${this.data[i].text}</li>`;
-      }
+      this.data.forEach(function(todo){
+        element = todo.isCompleted ? element + `<li><s>${todo.text}</s></li>` : element + `<li>${todo.text}</li>`;
+      });
       document.querySelector(this.idName).innerHTML = `<ul>${element}</ul>`;
     }
   }
