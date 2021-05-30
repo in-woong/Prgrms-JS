@@ -7,6 +7,9 @@ const data = [
       text: 'JS 복습하기',
       isCompleted: false,
     },
+    undefined
+    ,
+    
   ]
   
   const data2 = [
@@ -31,20 +34,20 @@ const data = [
     },
   ]
 
-  function Validation(data){
+  function validationCheck(data){
     this.state = data 
     //[Mission1] 보너스 구현사항 예외 처리 구현
     if(!this.state)
       throw new Error('빈 데이터 입니다.')
     if(!Array.isArray(this.state))
       throw new Error('Array형태가 아닙니다.')
-    this.state.forEach(function(e){
-        console.log(e['text'])
-        if(e['text'] == undefined || e['isCompleted'] == undefined) 
-            throw new Error('데이터 키값이 잘못 정의되었습니다.')
-        if(typeof e.text !== 'string')
+    this.state.forEach(function(element){
+        
+        if(typeof element !== undefined) 
+            throw new Error('데이터 형식이 잘못되었습니다.')
+        if(typeof element.text !== 'string')
             throw new Error('데이터 타입이 string이 아닙니다.')
-        if(typeof e.isCompleted !== 'boolean')
+        if(typeof element.isCompleted !== 'boolean')
             throw new Error('데이터 타입이 boolean이 아닙니다.')
     })
     
@@ -55,7 +58,7 @@ const data = [
     
     this.state = data 
     
-    Validation(this.state)
+    validationCheck(this.state)
     //[Mission1] 보너스 new 키워드 안 붙이고 함수 실행 시 에러 발생하게 하기 
     if(!new.target){
         throw new Error('new로 객체를 생성해주세요');
@@ -92,7 +95,7 @@ const data = [
 function TodoList2(data2, selector){
 
   this.state = data2;
-  Validation(this.state)
+  validationCheck(this.state)
   if(!new.target){
      throw new Error('new로 객체를 생성해주세요');
     }
@@ -118,7 +121,7 @@ function TodoList3(data3){
    
   this.state = data3
   //Validation
-  Validation(this.state)
+  validationCheck(this.state)
   if(!new.target){
      throw new Error('new로 객체를 생성해주세요');
     }
@@ -141,8 +144,6 @@ function TodoList3(data3){
 }
 
 var todoList = new TodoList(data, 'todo-list');
-var todoList2 = new TodoList2(data2, 'toto-list2');
-var todoList3 = new TodoList3(data3, 'toto-list3');
 
 
 todoList.render();
