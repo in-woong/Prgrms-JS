@@ -26,17 +26,29 @@
     // 빈 배열, undefined, null 체크하기
     } else if (!data) {
       throw new Error('올바르지 않은 data 입니다');
+    // array 형태 판별하기
+    } else if (!Array.isArray(data)) {
+      throw new Error('올바르지 않은 형식의 data 입니다');
+    // data 내용 이상여부 확인하기
     } else {
-      // 넘겨받은 data를 변수로 저장
-      this.data = data;
-      // render 함수 작성
-      this.render = function() {
-        let element = ''
-        for (let i = 0; i < this.data.length; i++) {
-          element = element + `<li>${this.data[i].text}</li>`;
+      data.forEach(function(todo){
+        if (!todo.hasOwnProperty('text')) {
+          throw new Error('data 내용에 text가 포함되어 있지 않습니다');
+        } 
+        if (typeof todo.text !== 'string') {
+          throw new Error('text의 형태가 string이 아닙니다');
         }
-        document.querySelector('#todo-list').innerHTML = `<ul>${element}</ul>`;
+      })
+    } 
+    // 넘겨받은 data를 변수로 저장
+    this.data = data;
+    // render 함수 작성
+    this.render = function() {
+      let element = ''
+      for (let i = 0; i < this.data.length; i++) {
+        element = element + `<li>${this.data[i].text}</li>`;
       }
+      document.querySelector('#todo-list').innerHTML = `<ul>${element}</ul>`;
     }
   }
   var todoList = new TodoList(data);
