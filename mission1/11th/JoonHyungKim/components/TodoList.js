@@ -7,7 +7,7 @@ const validateData = (data) => {
         throw new Error('배열 값만 사용할 수 있습니다.');
     }
     
-    if(!data.every(element => element.text && typeof element.text === 'string')){
+    if (!data.every(({text = null, isCompleted = null}) => typeof text === 'string' && typeof isCompleted === 'boolean')) {
         throw new Error('잘못된 데이터입니다.');
     }
 };
