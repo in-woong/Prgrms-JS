@@ -24,8 +24,8 @@ export class TodoList {
     }
 
     setState(nextData) {
-        this.data = nextData;
         validateData(nextData);
+        this.data = nextData;
         this.render();
     }
 
