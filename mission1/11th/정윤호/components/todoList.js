@@ -1,5 +1,3 @@
-'use strict';
-
 import todoItemTemplate from '../layouts/todoItemTemplate.js'
 import checkTodoItemData from '../validators/checkTodoItemData.js'
 

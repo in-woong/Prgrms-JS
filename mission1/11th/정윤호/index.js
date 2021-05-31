@@ -1,5 +1,3 @@
-'use strict';
-
 import {$} from '../utils/dom.js'
 import TodoList from './components/todoList.js'
 

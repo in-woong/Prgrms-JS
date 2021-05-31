@@ -1,5 +1,3 @@
-'use strict';
-
 export const checkTodoItemData = (data) => {
 	if (data === null) {
 		throw new Error('todo item data is null');
