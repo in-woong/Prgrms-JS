@@ -10,7 +10,7 @@
   <div id="todo-list2"></div>
   <div id="todo-list3"></div>
   <script>
-    var before = [
+    const completedTodo = [
       {
         text: 'JS 공부하기',
         isCompleted: true
@@ -20,7 +20,7 @@
         isCompleted: false
       },
     ]
-    var now = [
+    const Todo = [
       {
         text: 'JS 기본서 완독하기',
         isCompleted: true
@@ -30,7 +30,7 @@
         isCompleted:false
       },
     ]
-    var after = [
+    const willTodo = [
       {
         text: '서울 프로젝트 발표 참석',
         isCompleted:false
@@ -40,7 +40,7 @@
         isCompleted:false
       },
     ]
-    var newAfter = [
+    const addWillTodo = [
       {
         text: '프로젝트 정리하기',
         isCompleted:false
@@ -49,6 +49,7 @@
         text: '문서 정리하는 법 공부하기',
         isCompleted:false
       },
+      ['test']
     ]
     
 
@@ -77,7 +78,7 @@
     function TodoList(data,selector){
       // new 키워드로 생성하지 않은 경우
       const todoListElem = document.querySelector(selector);
-      
+
       if(!new.target){
         throw new Error('new 키워드를 통해서 생성해주세요.');
       };
