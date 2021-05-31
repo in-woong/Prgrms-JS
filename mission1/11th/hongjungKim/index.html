@@ -29,26 +29,20 @@
           isCompleted: false,
         },
       ]
-
-      function text2html(text){
-        return `<div>${text}</div>`;
-      }
       
       function TodoList(data) {
         this.data = data;
-        const totalHtml = [];
         
         this.render = () => {
-          data.forEach((todo) => {
-            totalHtml.push(text2html(todo.text));
-          });
+          const totalHtml = data.map((todo) => `<div>${todo.text}</div>`);      
 
           document.querySelector('#todo-list').innerHTML = totalHtml.join('');
         }
       }
       
-      var todoList = new TodoList(data);
+      const todoList = new TodoList(data);
       todoList.render();
     </script>
   </body>
 </html>
+
