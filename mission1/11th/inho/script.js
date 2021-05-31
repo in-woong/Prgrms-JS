@@ -51,8 +51,12 @@ function TodoList(data, dom) {
   this.data = data;
   this.dom = dom;
 
+  const makeElement = (item) => {
+    return `<li>${item.text}</li>`;
+  };
+
   this.render = function () {
-    dom.innerHTML = data.reduce((acc, cur) => (acc += cur.text + ' '), '');
+    dom.innerHTML = `<h2>Todo</h2><ul>${data.reduce((acc, cur) => (acc += makeElement(cur)), '')}</ul>`;
   };
 }
 
