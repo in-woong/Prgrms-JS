@@ -1,23 +1,23 @@
-
+import { todoValidate } from '../lib/Validation.js';
+import ErrorMessage from '../lib/ErrorMessage.js';
+  
   function TodoList (data) {
     if(!new.target){
-          throw new Error('new 를 설정해주세요')
+          throw new Error(ErrorMessage.SET_NEW_ERROR)
     }
-    
-    if(!data){
-      throw new Error('data를 확인해주세요')
-    }
+    todoValidate(data);
 
     this.data = data;
     this.todoDiv = document.querySelector("#todo-list");
 
-    this.render = function() {
-        if(!this.data) return;
+    this.render = function() {        
         this.todoDiv.innerHTML = this.data.map((todo => `<div class="${todo.isCompleted}">${todo.text}</div>`)).join('')
+      
     }
-    
-    this.setState = function(data){
-        this.data = data;
+
+    this.setState = function(nextData){
+        todoValidate(nextData);
+        this.data = nextData;
         this.render();
     }
   }
