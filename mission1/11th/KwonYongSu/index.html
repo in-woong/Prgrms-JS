@@ -54,7 +54,7 @@
     
 
     // error handler
-    function DataValidation(data){
+    function dataValidation(data){
       
       // 데이터가 존재하지 않는 경우
       if(data == null || data == undefined){
@@ -82,14 +82,14 @@
       if(!new.target){
         throw new Error('new 키워드를 통해서 생성해주세요.');
       };
-      let validState = DataValidation(data);
+      let validState = dataValidation(data);
       if(validState){
         this.data = data;
         this.render = () => {
           todoListElem.innerHTML = this.data.map(todoItem => todoItem.isCompleted ? `<li><s>${todoItem.text}</s></li>` :`<li>${todoItem.text}</li>`).join('');
         };
         this.setState = (nextData) => {
-          let validState = DataValidation(nextData)
+          let validState = dataValidation(nextData)
           if(validState){
             this.data = nextData;
             this.render();
