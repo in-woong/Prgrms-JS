@@ -1,29 +1,29 @@
-'use strict';
+import { NULL, UNDEFINED, NOT_ARRAY, HAS_NOT_OBJECT, HAS_NOT_TEXT, HAS_NOT_ISCOMPLETED } from '../utils/messages.js'
 
-export const checkTodoItemData = (data) => {
+const checkTodoItemData = (data) => {
 	if (data === null) {
-		throw new Error('todo item data is null');
+		throw new Error(NULL);
 	}
 
 	if (data === undefined) {
-		throw new Error('todo item data is undefined');
+		throw new Error(UNDEFINED);
 	}
 
 	if (!Array.isArray(data)) {
-		throw new Error('todo item data is not Array');
+		throw new Error(NOT_ARRAY);
 	}
 
 	data.forEach(todoItem => {
 		if (typeof todoItem !== 'object') {
-			throw new Error('todo item is not object');
+			throw new Error(HAS_NOT_OBJECT);
 		}
 
 		if (!todoItem.hasOwnProperty('text')) {
-			throw new Error('todo item has not "text" property');
+			throw new Error(HAS_NOT_TEXT);
 		}
 
 		if (!todoItem.hasOwnProperty('isCompleted')) {
-			throw new Error('todo item has not "isCompleted" property');
+			throw new Error(HAS_NOT_ISCOMPLETED);
 		}
 	});
 }
