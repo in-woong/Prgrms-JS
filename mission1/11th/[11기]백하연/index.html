@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission 1</title>
+</head>
+<body>
+    <div id="todo-list"></div>
+    <script>
+      var data = [
+        {
+          text: 'JS 공부하기'
+        },
+        {
+          text: 'JS 복습하기'
+        }
+      ]
+      
+      function TodoList(data) {
+          this.data = data; // 파라미터로 받은 data를 this.data로 할당
+          this.render = function() {
+            var todo_list = document.getElementById('todo-list');
+
+            var ul = document.createElement('ul');
+            
+            todo_list.appendChild(ul);
+
+            this.data.map(todo => {
+              var li = document.createElement('li');
+              li.innerHTML = `${todo.text}`;
+              ul.appendChild(li);
+            })
+          }
+      }
+
+      var todoList = new TodoList(data);
+
+      todoList.render();
+    </script>
+</body>
+</html>
