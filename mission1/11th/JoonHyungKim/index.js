@@ -10,7 +10,7 @@ const data = [{
     },
 ]
 
-const today_todo = [{
+const todayTodo = [{
         text: '출근하기',
         isCompleted: true
     },
@@ -25,7 +25,7 @@ const today_todo = [{
     }
 ]
 
-const tomorrow_todo = [{
+const tomorrowTodo = [{
         text: '늦잠자기',
         isCompleted: false
     },
@@ -39,21 +39,21 @@ const tomorrow_todo = [{
     }
 ]
 
-const new_state = [{
+const newState = [{
     text: '아무것도 안하기',
     isCompleted: true
 }]
 
 const todoList = new TodoList(document.getElementById('todo-list'), data);
-const todayTodoList = new TodoList(document.getElementById('todo-list-2'), today_todo);
-const tomorrowTodoList = new TodoList(document.getElementById('todo-list-3'), tomorrow_todo);
+const todayTodoList = new TodoList(document.getElementById('todo-list-2'), todayTodo);
+const tomorrowTodoList = new TodoList(document.getElementById('todo-list-3'), tomorrowTodo);
 
 todoList.render();
 todayTodoList.render();
 tomorrowTodoList.render();
 
 setTimeout(() => {
-    todoList.setState(new_state);
-    todayTodoList.setState(new_state);
-    tomorrowTodoList.setState(new_state);
+    todoList.setState(newState);
+    todayTodoList.setState(newState);
+    tomorrowTodoList.setState(newState);
 }, 3000);
