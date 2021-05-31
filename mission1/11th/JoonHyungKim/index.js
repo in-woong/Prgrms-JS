@@ -44,9 +44,9 @@ const newState = [{
     isCompleted: true
 }]
 
-const todoList = new TodoList(document.getElementById('todo-list'), data);
-const todayTodoList = new TodoList(document.getElementById('todo-list-2'), todayTodo);
-const tomorrowTodoList = new TodoList(document.getElementById('todo-list-3'), tomorrowTodo);
+const todoList = new TodoList(document.querySelector('#todo-list'), data);
+const todayTodoList = new TodoList(document.querySelector('#todo-list-2'), todayTodo);
+const tomorrowTodoList = new TodoList(document.querySelector('#todo-list-3'), tomorrowTodo);
 
 todoList.render();
 todayTodoList.render();
