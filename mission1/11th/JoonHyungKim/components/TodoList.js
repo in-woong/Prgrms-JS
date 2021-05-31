@@ -20,7 +20,7 @@ export class TodoList {
     }
 
     render() {
-        this.el.innerHTML = this.data.reduce((acc, cur) => `${acc} ${cur.isCompleted ? `<s><p>${cur.text}</p></s>` : `<p>${cur.text}</p>` }`, '');
+        this.el.innerHTML = this.data.reduce((acc, {text, isCompleted}) => `${acc} ${isCompleted ? `<s><p>${text}</p></s>` : `<p>${text}</p>` }`, '');
     }
 
     setState(nextData) {
