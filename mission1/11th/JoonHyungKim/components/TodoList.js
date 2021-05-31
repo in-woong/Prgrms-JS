@@ -1,5 +1,5 @@
 const validateData = (data) => {
-    if(!data){
+    if (data == null) {
         throw new Error('빈 데이터입니다.');
     }
     
