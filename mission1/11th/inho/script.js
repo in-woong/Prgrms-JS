@@ -5,27 +5,33 @@ const clubTodoDom = document.querySelector('#club-todo-list');
 const data = [
   {
     text: 'JS 공부하기',
+    isCompleted: false,
   },
   {
     text: 'JS 복습하기',
+    isCompleted: false,
   },
 ];
 
 const schoolData = [
   {
     text: '캠퍼스 특허 굴착기 기술트렌드 분석',
+    isCompleted: false,
   },
   {
     text: '진로직업선택 실시간 강의',
+    isCompleted: true,
   },
 ];
 
 const clubData = [
   {
     text: 'Article 수정 구현',
+    isCompleted: false,
   },
   {
     text: 'css 고치기',
+    isCompleted: false,
   },
 ];
 
@@ -43,8 +49,8 @@ function TodoList(data, dom) {
   }
 
   data.forEach((element) => {
-    if (!'text' in element) {
-      throw new Error('data element should have <text> property');
+    if (!('text' in element && 'isCompleted' in element)) {
+      throw new Error('data element should have <text, isCompleted> property');
     }
   });
 
@@ -52,7 +58,11 @@ function TodoList(data, dom) {
   this.dom = dom;
 
   const makeElement = (item) => {
-    return `<li>${item.text}</li>`;
+    const li = `<li>${item.text}</li>`;
+    if (item.isCompleted) {
+      return `<s>${li}</s>`;
+    }
+    return li;
   };
 
   this.render = function () {
