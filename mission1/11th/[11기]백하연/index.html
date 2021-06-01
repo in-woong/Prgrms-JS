@@ -4,60 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="module" src="./index.js"></script>
     <title>Mission 1</title>
 </head>
 <body>
-    <div id="todo-list"></div>
-    <script>
-      const data = [
-        {
-          text: 'JS 공부하기'
-        },
-        {
-          text: 'JS 복습하기'
-        }
-      ]
-    
-      // 생성자 함수 : 인스턴스 생성을 위해 일반 함수 사용
-      const TodoList = function(data) {
-        this.data = data;
-
-        this.isValid = data => {
-          if (!new.target) {
-            throw new Error('new 키워드를 사용해 주세요!');
-          }
-          if (data === null || data === undefined) {
-            throw new Error('올바른 형태의 데이터가 아닙니다.');
-          }
-
-          if (!Array.isArray(data)) {
-            throw new Error('배열 타입의 데이터가 아닙니다.');
-          }
-        }
-
-        this.render = () => {
-          this.isValid(data);
-
-          const $todo_list = document.getElementById('todo-list');
-
-          const $ul = document.createElement('ul');
-          
-          $todo_list.appendChild($ul);
-
-          this.data.map(({ text }) => {
-            const $li = document.createElement('li');
-            
-            $li.innerHTML = `${text}`;
-
-            $ul.appendChild($li);
-          })
-        }
-      }
-
-      // TodoList 인스턴스 생성
-      const todoList = new TodoList(data);
-
-      todoList.render();
-    </script>
+    <div id="todo-list1"></div>
+    <div id="todo-list2"></div>
+    <div id="todo-list3"></div>
 </body>
 </html>
