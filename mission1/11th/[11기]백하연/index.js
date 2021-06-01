@@ -2,31 +2,38 @@
 
 const data = [
   {
-    text: 'JS 공부하기'
+    text: 'JS 공부하기',
+    isCompleted: false
   },
   {
-    text: 'JS 복습하기'
+    text: 'JS 복습하기',
+    isCompleted: false
   }
 ]
 
 const dailyTodoList = [
   {
-    text: '스트레칭하기'
+    text: '스트레칭하기',
+    isCompleted: false
   },
   {
-    text: '인공눈물 넣기'
+    text: '인공눈물 넣기',
+    isCompleted: true
   },
   {
-    text: '유산균 챙겨먹기'
+    text: '유산균 챙겨먹기',
+    isCompleted: true
   }
 ]
 
 const monthlyTodoList = [
   {
-    text: 'React 공부'
+    text: 'React 공부',
+    isCompleted: false
   },
   {
-    text: 'TypeScript 공부'
+    text: 'TypeScript 공부',
+    isCompleted: false
   }
 ]
 
@@ -58,10 +65,10 @@ const TodoList = function(data, element) {
     
     this.element.appendChild($ul);
 
-    this.data.forEach(({ text }) => {
+    this.data.forEach(({ text, isCompleted }) => {
       const $li = document.createElement('li');
       
-      $li.innerHTML = `${text}`;
+      $li.innerHTML = `${isCompleted ? `<s>${text}</s>` : `${text}` }`;
 
       $ul.appendChild($li);
     })
