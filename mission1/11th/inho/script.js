@@ -42,9 +42,8 @@ const clubData = [
   },
   {
     text: 'css 고치기',
-    isCompleted: false,
+    isCompleted: true,
   },
-  [],
 ];
 
 function TodoList(data, dom) {
@@ -69,8 +68,14 @@ function TodoList(data, dom) {
       if (!todo.hasOwnProperty('text')) {
         throw new Error('data should have "text" property');
       }
+      if (typeof todo.text !== 'string') {
+        throw new Error('text should be string');
+      }
       if (!todo.hasOwnProperty('isCompleted')) {
         throw new Error('data should have "isCompleted" property');
+      }
+      if (typeof todo.isCompleted !== 'boolean') {
+        throw new Error('isCompleted should be boolean');
       }
     });
   };
