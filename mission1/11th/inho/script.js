@@ -82,10 +82,9 @@ function TodoList(data, dom) {
     return `<li>${item.text}</li>`;
   };
 
+  validate(data);
   this.data = data;
   this.dom = dom;
-
-  validate(data);
 
   this.setState = (nextData) => {
     if (this.data !== nextData) {
