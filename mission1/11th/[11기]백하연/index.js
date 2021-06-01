@@ -45,6 +45,10 @@ const TodoList = function(data, element) {
   this.data = data;
   this.element = element;
 
+  const $ul = document.createElement('ul');
+  
+  this.element.appendChild($ul);
+
   this.isValid = data => {
     if (!new.target) {
       throw new Error('new 키워드를 사용해 주세요!');
@@ -58,20 +62,21 @@ const TodoList = function(data, element) {
     }
   }
 
+  this.setState = nextData => {
+    this.data = nextData;
+    this.render();
+  }
+
   this.render = () => {
     this.isValid(data);
 
-    const $ul = document.createElement('ul');
-    
-    this.element.appendChild($ul);
-
     this.data.forEach(({ text, isCompleted }) => {
       const $li = document.createElement('li');
-      
-      $li.innerHTML = `${isCompleted ? `<s>${text}</s>` : `${text}` }`;
+
+      $li.innerHTML += `${isCompleted ? `<s>${text}</s>` : `${text}`}`;
 
       $ul.appendChild($li);
-    })
+    });
   }
 }
 
@@ -83,3 +88,12 @@ todoList2.render();
 
 const todoList3 = new TodoList(monthlyTodoList, $todo_list3);
 todoList3.render();
+todoList3.setState([
+  { 
+    text: 'HTML',
+    isCompleted: true,
+  },{ 
+    text: 'CSS',
+    isCompleted: true,
+  }
+]);
