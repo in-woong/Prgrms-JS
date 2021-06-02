@@ -23,7 +23,7 @@
       ]
 
 
-      function TodoList($app, data) {
+      function TodoList($app, initialState) {
         if (this === window) {
           throw new Error('좋은 말 할 때 new 붙여라')
         }
@@ -40,10 +40,15 @@
         this.$target.setAttribute('data-component-type', 'TodoList')
         $app.appendChild(this.$target)
 
-        this.data = data
+        this.state = initialState
+
+        this.setState = (nextState) => {
+          this.state = nextState
+          this.render()
+        }
 
         this.render = () => {
-          const htmlString = data.map(({ text, isCompleted }) =>
+          const htmlString = this.state.map(({ text, isCompleted }) =>
             isCompleted ? `<li><s>${text}</s></li>` : `<li>${text}</li>`
           ).join('')
 
@@ -55,7 +60,25 @@
 
       try {
         const $app = document.querySelector('#app')
-        new TodoList($app, data)
+        const todoList = new TodoList($app, data)
+
+        setTimeout(() => {
+          todoList.setState([
+            ...data,
+            {
+              text: '이것은 중간에 추가된 것이고'
+            }
+          ])
+
+          setTimeout(() => {
+            todoList.setState([
+              ...data,
+              {
+                text: '마지막에 추가됨'
+              }
+            ])
+          }, 3000)
+        }, 3000)
       } catch(e) {
         alert(e.message)
       }
