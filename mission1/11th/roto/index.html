@@ -6,6 +6,9 @@
 
   <body>
     <div id="todo-list"></div>
+    <div id="todo-list1"></div>
+    <div id="todo-list2"></div>
+    <div id="todo-list3"></div>
 
     <script>
       const data = [
@@ -20,6 +23,24 @@
         {
           text: '세션 진행하기',
           isCompleted: false
+        }
+      ]
+
+      const data1 = [
+        {
+          text: '루카스의 빠따 피하기'
+        }
+      ]
+
+      const data2 = [
+        {
+          text: '매운맛 즐기기'
+        }
+      ]
+
+      const data3 = [
+        {
+          text: '자바스크립트 열심히 하기'
         }
       ]
 
@@ -52,6 +73,9 @@
 
       try {
         new TodoList(document.querySelector('#todo-list'), data)
+        new TodoList(document.querySelector('#todo-list1'), data1)
+        new TodoList(document.querySelector('#todo-list2'), data2)
+        new TodoList(document.querySelector('#todo-list3'), data3)
       } catch(e) {
         alert(e.message)
       }
