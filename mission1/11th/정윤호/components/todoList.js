@@ -9,10 +9,7 @@ export default class TodoList {
   }
 
   render() {
-    this.$todoList.innerHTML = ''
-    this.todoData.map((todoItem) => {
-      this.$todoList.innerHTML += todoItemTemplate(todoItem)
-    })
+    this.$todoList.innerHTML = this.todoData.map((todoItem) => todoItemTemplate(todoItem)).join('')
   }
 
   setState(data) {
