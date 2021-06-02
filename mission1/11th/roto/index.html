@@ -10,11 +10,11 @@
       const data = [
         {
           text: 'JS 공부하기',
-          isCompleted: true,
+          isCompleted: false,
         },
         {
           text: 'JS 복습하기',
-          isCompleted: false,
+          isCompleted: true,
         },
         {
           text: '세션 진행하기',
@@ -43,9 +43,9 @@
         this.data = data
 
         this.render = () => {
-          const htmlString = data.map(todo => `
-            <li>${todo.text}</li>
-          `).join('')
+          const htmlString = data.map(({ text, isCompleted }) =>
+            isCompleted ? `<li><s>${text}</s></li>` : `<li>${text}</li>`
+          ).join('')
 
           this.$target.innerHTML = `<ul>${htmlString}</ul>`
         }
@@ -56,8 +56,6 @@
       try {
         const $app = document.querySelector('#app')
         new TodoList($app, data)
-        new TodoList($app, [{ text: 'hey'}])
-        new TodoList($app, [{ text: 'hey!!'}])
       } catch(e) {
         alert(e.message)
       }
