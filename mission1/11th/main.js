@@ -1,14 +1,14 @@
 class TodoList {
     constructor(data, element, title) {
         this.element = element;
-        this.element.innerHTML = `<h4>${title}</h4> <ul></ul>`;
+        this.element.innerHTML = `<b>${title}</b> <ul></ul>`;
         this.ulElement = this.element.getElementsByTagName('ul')[0];
-        this.setData(data);
-        this.render();
+        this.setState(data);
     }
 
-    setState(nextData) {
-        this.setData(nextData);
+    setState(data) {
+        this.dataValidation(data);
+        this.data = data;
         this.render();
     }
     
@@ -16,25 +16,20 @@ class TodoList {
         this.ulElement.innerHTML = this.data.map(list => list.isCompleted ? `<li><s>${list.text}</s></li>` : `<li>${list.text}</li>`).join('');
     }
 
-    setData(data) {
-        if (this.dataValidation(data)) {
-            this.data = data;
-        }
-    }
-
     dataValidation(data) {
-        if (!data) {
+        if (data == null) {
             throw new Error('Input the data!');
-        } else if (!Array.isArray(data)) {
+        } 
+        
+        if (!Array.isArray(data)) {
             throw new Error('Data type is not an Array!');
-        } else {
-            for (const list of data) {
-                if (!(list.hasOwnProperty('text') && list.hasOwnProperty('isCompleted'))) {
-                    throw new Error('This data has some missing properties!');
-                }
+        } 
+
+        for (const list of data) {
+            if (!(list.hasOwnProperty('text') && list.hasOwnProperty('isCompleted'))) {
+                throw new Error('This data has some missing properties!');
             }
         }
-        return true;
     }
 }
 
