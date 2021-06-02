@@ -6,6 +6,7 @@
 
   <body>
     <div id="todo-list"></div>
+
     <script>
       const data = [
         {
@@ -22,11 +23,22 @@
         }
       ]
 
-      const htmlString = data.map(todo => `
-        <li>${todo.text}</li>
-      `).join('')
+      function TodoList($target, data) {
+        this.$target = $target
+        this.data = data
 
-      document.querySelector('#todo-list').innerHTML = `<ul>${htmlString}</ul>`
+        this.render = () => {
+          const htmlString = data.map(todo => `
+            <li>${todo.text}</li>
+          `).join('')
+
+          this.$target.innerHTML = `<ul>${htmlString}</ul>`
+        }
+
+        this.render()
+      }
+
+      new TodoList(document.querySelector('#todo-list'), data)
     </script>
   </body>
 </html>
