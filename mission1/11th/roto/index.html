@@ -24,6 +24,10 @@
       ]
 
       function TodoList($target, data) {
+        if (this === window) {
+          throw new Error('좋은 말 할 때 new 붙여라')
+        }
+
         if (!$target) {
           throw new Error('$target이 없습니다.')
         }
