@@ -5,11 +5,7 @@
   </head>
 
   <body>
-    <div id="todo-list"></div>
-    <div id="todo-list1"></div>
-    <div id="todo-list2"></div>
-    <div id="todo-list3"></div>
-
+    <main id="app"></main>
     <script>
       const data = [
         {
@@ -26,38 +22,24 @@
         }
       ]
 
-      const data1 = [
-        {
-          text: '루카스의 빠따 피하기'
-        }
-      ]
 
-      const data2 = [
-        {
-          text: '매운맛 즐기기'
-        }
-      ]
-
-      const data3 = [
-        {
-          text: '자바스크립트 열심히 하기'
-        }
-      ]
-
-      function TodoList($target, data) {
+      function TodoList($app, data) {
         if (this === window) {
           throw new Error('좋은 말 할 때 new 붙여라')
         }
 
-        if (!$target) {
-          throw new Error('$target이 없습니다.')
+        if (!$app) {
+          throw new Error('$app이 올바르지 않습니다.')
         }
 
         if (!data || !Array.isArray(data)) {
           throw new Error('data가 올바르지 않습니다.')
         }
 
-        this.$target = $target
+        this.$target = document.createElement('div')
+        this.$target.setAttribute('data-component-type', 'TodoList')
+        $app.appendChild(this.$target)
+
         this.data = data
 
         this.render = () => {
@@ -72,10 +54,10 @@
       }
 
       try {
-        new TodoList(document.querySelector('#todo-list'), data)
-        new TodoList(document.querySelector('#todo-list1'), data1)
-        new TodoList(document.querySelector('#todo-list2'), data2)
-        new TodoList(document.querySelector('#todo-list3'), data3)
+        const $app = document.querySelector('#app')
+        new TodoList($app, data)
+        new TodoList($app, [{ text: 'hey'}])
+        new TodoList($app, [{ text: 'hey!!'}])
       } catch(e) {
         alert(e.message)
       }
