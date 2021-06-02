@@ -1,0 +1,38 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list"></div>
+  <script>
+    var data = [
+      {
+        text: 'JS 공부하기'
+      },
+      {
+        text: 'JS 복습하기'
+      },
+      {
+        text: 'JS 코드리뷰'
+      }
+    ]
+    // 선택자로 9번째 줄 div태그를 선택한다. 
+    const todoListElem = document.querySelector('#todo-list');
+    // 할 일 목록을 this.data에 할당
+    function TodoList(data) {
+      this.data = data;
+      this.render = () => {
+        this.data.forEach(item => {
+          todoListElem.innerHTML += `<li>${item.text}<li>`
+        })
+      }
+    }
+    const todoList = new TodoList(data);
+    todoList.render();
+
+  </script>
+</body>
+</html>
