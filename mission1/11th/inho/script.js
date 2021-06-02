@@ -47,11 +47,10 @@ const clubData = [
 ];
 
 function TodoList(data, dom) {
-  const validate = (data) => {
-    if (!new.target) {
-      throw new Error(`"new" keyword is missing`);
-    }
-
+  if (!new.target) {
+    throw new Error(`"new" keyword is missing`);
+  }
+  const validateData = (data) => {
     if (data === null) {
       throw new Error('data is null');
     }
@@ -65,35 +64,38 @@ function TodoList(data, dom) {
     }
 
     data.forEach((todo) => {
-      if (!todo.hasOwnProperty('text')) {
-        throw new Error('data should have "text" property');
+      if (todo.text === undefined) {
+        throw new Error('text is undefined');
       }
+      if (todo.isCompleted === undefined) {
+        throw new Error('isCompleted is undefined');
+      }
+      if (todo.text === null) {
+        throw new Error('text is null');
+      }
+      if (todo.isCompleted === null) {
+        throw new Error('inCompleted is null');
+      }
+
       if (typeof todo.text !== 'string') {
         throw new Error('text should be string');
       }
-      if (!todo.hasOwnProperty('isCompleted')) {
-        throw new Error('data should have "isCompleted" property');
-      }
+
       if (typeof todo.isCompleted !== 'boolean') {
         throw new Error('isCompleted should be boolean');
       }
     });
   };
 
-  const makeLiElement = (item) => {
-    if (item.isCompleted) {
-      return `<li><s>${item.text}</s></li>`;
-    }
-    return `<li>${item.text}</li>`;
-  };
+  const makeLiElementString = (item) => (item.isCompleted ? `<li><s>${item.text}</s></li>` : `<li>${item.text}</li>`);
 
-  validate(data);
+  validateData(data);
   this.data = data;
   this.dom = dom;
 
   this.setState = (nextData) => {
     if (this.data !== nextData) {
-      validate(nextData);
+      validateData(nextData);
       this.data = nextData;
       this.render();
     }
