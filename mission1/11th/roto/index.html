@@ -24,6 +24,14 @@
       ]
 
       function TodoList($target, data) {
+        if (!$target) {
+          throw new Error('$target이 없습니다.')
+        }
+
+        if (!data || !Array.isArray(data)) {
+          throw new Error('data가 올바르지 않습니다.')
+        }
+
         this.$target = $target
         this.data = data
 
@@ -38,7 +46,12 @@
         this.render()
       }
 
-      new TodoList(document.querySelector('#todo-list'), data)
+      try {
+        new TodoList(document.querySelector('#todo-list'), data)
+      } catch(e) {
+        alert(e.message)
+      }
+
     </script>
   </body>
 </html>
