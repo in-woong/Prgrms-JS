@@ -1,3 +1,4 @@
+import { $ } from '../utils/dom.js'
 import TodoList from './todoList.js'
 import TodoInput from './todoInput.js'
 import checkTodoListState from '../validators/checkTodoListState.js'
@@ -7,16 +8,25 @@ export default class TodoApp {
   constructor($app, initialState) {
     this.state = initialState
     checkTodoListState(this.state)
-    this.$app = $app
-    this.$app.innerHTML = todoAppTemplate()
-    this.todoInput = new TodoInput()
-    this.todoList = new TodoList(this.state)
+    $app.innerHTML = todoAppTemplate()
+    this.todoInput = new TodoInput($('.todo-input'))
+    this.todoInput.setAddTodoItem((target) => {
+      const text = target.value
+      this.setState([
+        ...this.state,
+        {
+          text: text,
+          isCompleted: false,
+        },
+      ])
+    })
+    this.todoList = new TodoList($('.todo-list'), this.state)
   }
 
   setState(nextState) {
     this.state = nextState
     checkTodoListState(this.state)
-    this.render()
+    this.todoList.setState(this.state)
   }
 
   render() {

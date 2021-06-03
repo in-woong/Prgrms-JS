@@ -4,7 +4,7 @@ import todoInputTemplate from '../layouts/todoInputTemplate.js'
 export default class TodoInput {
   constructor($target) {
     this.$todoInput = $target
-    this.$todoInput.addEventListener('keyup', this.onKeyUp)
+    this.$todoInput.addEventListener('keyup', this.onKeyUpListener)
     this.$todoInput.addEventListener('click', this.onClick)
   }
 
@@ -26,16 +26,22 @@ export default class TodoInput {
     // 하지만 TodoInput 클래스에서 자식요소를 완전하게 알고있고 컨트롤할수 있는 의미로써 this.$todoInputText로 사용하는게 좋을것같다..
   }
 
-  onKeyUp = ({ key }) => {
+  onKeyUpListener = ({ target, key }) => {
     if (key !== 'Enter' || this.$todoInputText.value.trim() === '') return
+    this.addTodoItem && this.addTodoItem(target)
     this.clear()
+  }
+
+  setAddTodoItem(addTodoItem) {
+    this.addTodoItem = addTodoItem
   }
 
   onClick = ({ target }) => {
     if (!target.matches('.todo-input_submit') && !target.matches('.todo-input_list-clear')) return
     console.log('TodoInput - onClick')
     if (target.matches('.todo-input_submit')) {
-      console.log('submit')
+      this.addTodoItem && this.addTodoItem(target)
+      this.clear()
       return
     }
     if (target.matches('.todo-input_list-clear')) {
