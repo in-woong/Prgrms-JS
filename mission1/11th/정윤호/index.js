@@ -45,9 +45,9 @@ const newData = [
   },
 ]
 
-const todoList1 = new TodoList(data1, $('#todo-list1'))
-const todoList2 = new TodoList(data2, $('#todo-list2'))
-const todoList3 = new TodoList(data3, $('#todo-list3'))
+const todoList1 = new TodoList($('#todo-list1'), data1)
+const todoList2 = new TodoList($('#todo-list2'), data2)
+const todoList3 = new TodoList($('#todo-list3'), data3)
 
 todoList1.render()
 todoList2.render()
