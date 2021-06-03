@@ -4,13 +4,15 @@
     "es6": true,
     "browser": true
   },
-  "extends": "airbnb-base",
+  "extends": [
+    "eslint:recommended",
+    "airbnb-base",
+    "prettier"
+  ],
   "rules": {
-    "semi": [2, "never"],
+    "import/extensions": "off",
     "no-use-before-define": "off",
     "no-underscore-dangle": "off",
-    "no-shadow": "off",
-    "quotes": ["error", "double"],
-    "indent": ["error", 4],
+    "no-shadow": "off"
   }
 }

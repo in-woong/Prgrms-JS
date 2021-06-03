@@ -5,7 +5,5 @@
   "singleQuote": true,
   "printWidth": 300,
   "quoteProps": "consistent",
-  "endOfLine": "auto"
-  "singleQuote": true,
-  "endOfLine": true,
+  "endOfLine": "lf"
 }
