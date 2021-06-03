@@ -5,6 +5,7 @@ class TodoList {
         this.element.innerHTML = `<b>${this.title}</b>`;
         this.setState(data);
         this.createAddInput();
+        this.ulElement.addEventListener('click', this.deleteButtonFunc.bind(this));
     }
 
     setState(data) {
@@ -19,7 +20,12 @@ class TodoList {
             this.ulElement.setAttribute('class', `data-${this.title}`);
             this.element.appendChild(this.ulElement);
         } 
-        this.ulElement.innerHTML = this.data.map(list => list.isCompleted ? `<li><s>${list.text}</s></li>` : `<li>${list.text}</li>`).join('');
+        this.ulElement.innerHTML = this.data.map((list, i) => this.createListHTMLString(list, i)).join('');
+    }
+
+    createListHTMLString({text, isCompleted}, i) {
+        const temp = isCompleted ? `<s>${text}</s>` : text;
+        return `<li data-list-num="${i}">${temp}</li> <button data-button-num="${i}">X</button>`;
     }
 
     titleValidation(title) {
@@ -69,5 +75,13 @@ class TodoList {
         this.setState(this.data);
         this.addInput.value = '';
         this.addInput.focus();
+    }
+
+    deleteButtonFunc(event) {
+        const targetButtonNum = event.target.dataset.buttonNum;
+        if (targetButtonNum) {
+            this.data.splice(targetButtonNum, 1);
+            this.setState(this.data);
+        }
     }
 }
