@@ -4,8 +4,36 @@ import todoInputTemplate from '../layouts/todoInputTemplate.js'
 export default class TodoInput {
   constructor($target) {
     this.$todoInput = $target
-    this.$todoInput.addEventListener('keyup', this.onKeyUpListener)
+    this.$todoInput.addEventListener('keyup', this.onKeyUp)
     this.$todoInput.addEventListener('click', this.onClick)
+  }
+
+  setAddTodoItem(addTodoItem) {
+    this.addTodoItem = addTodoItem
+  }
+
+  setClearTodoList(clearTodoList) {
+    this.clearTodoList = clearTodoList
+  }
+
+  onKeyUp = ({ target, key }) => {
+    if (key !== 'Enter' || this.$todoInputText.value.trim() === '') return
+    this.addTodoItem && this.addTodoItem(target)
+    this.clear()
+  }
+
+  onClick = ({ target }) => {
+    if (!target.matches('.todo-input_submit') && !target.matches('.todo-input_list-clear')) return
+    if (target.matches('.todo-input_submit')) {
+      this.addTodoItem && this.addTodoItem(this.$todoInputText)
+      this.clear()
+      return
+    }
+    if (target.matches('.todo-input_list-clear')) {
+      console.log('list-clear')
+      this.clearTodoList && this.clearTodoList()
+      return
+    }
   }
 
   render() {
@@ -24,35 +52,6 @@ export default class TodoInput {
     // 다른 방안으로 this.$todoInputText 프로퍼티가 필요한 메서드에서 단순하게
     // const $todoInputText = $('.todo-input_text') 방식으로 정의해서 사용해보는것도 방법이 될 수 있을 것같다.
     // 하지만 TodoInput 클래스에서 자식요소를 완전하게 알고있고 컨트롤할수 있는 의미로써 this.$todoInputText로 사용하는게 좋을것같다..
-  }
-
-  onKeyUpListener = ({ target, key }) => {
-    if (key !== 'Enter' || this.$todoInputText.value.trim() === '') return
-    this.addTodoItem && this.addTodoItem(target)
-    this.clear()
-  }
-
-  setAddTodoItem(addTodoItem) {
-    this.addTodoItem = addTodoItem
-  }
-
-  setClearTodoList(clearTodoList) {
-    this.clearTodoList = clearTodoList
-  }
-
-  onClick = ({ target }) => {
-    if (!target.matches('.todo-input_submit') && !target.matches('.todo-input_list-clear')) return
-    console.log('TodoInput - onClick')
-    if (target.matches('.todo-input_submit')) {
-      this.addTodoItem && this.addTodoItem(this.$todoInputText)
-      this.clear()
-      return
-    }
-    if (target.matches('.todo-input_list-clear')) {
-      console.log('list-clear')
-      this.clearTodoList && this.clearTodoList()
-      return
-    }
   }
 
   clear() {
