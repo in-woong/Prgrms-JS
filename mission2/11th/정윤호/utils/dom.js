@@ -1,5 +1,3 @@
-const $ = (selector, element = document) => {
-  return element.querySelector(selector)
-}
+const $ = (selector, element = document) => element.querySelector(selector)
 
 export { $ }
