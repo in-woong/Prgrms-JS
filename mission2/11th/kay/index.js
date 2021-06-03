@@ -56,5 +56,10 @@ const todoList3 = new TodoList(data3, '#todo-list3');
 todoList.render();
 todoList2.render();
 todoList3.render();
+todoList.setState(data4);
 
-setTimeout(() => {todoList.setState(data4)}, 2000);
+const newTxt = document.querySelector('#inpt').value;
+const btn = document.querySelector('#btn');
+btn.addEventListener('click', function() {
+    data4.push(`{text: ${newTxt}}`);
+})
