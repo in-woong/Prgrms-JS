@@ -2,19 +2,19 @@ import todoItemTemplate from '../layouts/todoItemTemplate.js'
 import checkTodoItemData from '../validators/checkTodoItemData.js'
 
 export default class TodoList {
-  constructor(data, element) {
-    this.todoData = data
-    this.$todoList = element
-    checkTodoItemData(this.todoData)
+  constructor($target, initialState) {
+    this.state = initialState
+    this.$target = $target
+    checkTodoItemData(this.state)
   }
 
   render() {
-    this.$todoList.innerHTML = this.todoData.map((todoItem) => todoItemTemplate(todoItem)).join('')
+    this.$target.innerHTML = this.state.map((todoItem) => todoItemTemplate(todoItem)).join('')
   }
 
-  setState(data) {
-    this.todoData = data
-    checkTodoItemData(this.todoData)
+  setState(nextState) {
+    this.state = nextState
+    checkTodoItemData(this.state)
     this.render()
   }
 }
