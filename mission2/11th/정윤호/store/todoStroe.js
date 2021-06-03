@@ -18,8 +18,8 @@ class TodoStore {
   loadState() {
     const loadedTodoItems = localStorage.getItem('todoState')
     const parsedTodoItems = JSON.parse(loadedTodoItems)
-    if (!parsedTodoItems) return // 에러처리하기
-    return parsedTodoItems
+    this.state = parsedTodoItems || []
+    return this.state
   }
 }
 

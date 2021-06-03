@@ -7,7 +7,7 @@ import todoAppTemplate from '../layouts/todoAppTemplate.js'
 
 export default class TodoApp {
   constructor($app) {
-    this.state = todoStore.loadState() || todoStore.getState()
+    this.state = todoStore.loadState()
     checkTodoListState(this.state)
 
     $app.innerHTML = todoAppTemplate()
@@ -15,19 +15,25 @@ export default class TodoApp {
     this.todoInput = new TodoInput($('.todo-input'))
     this.todoInput.setAddTodoItem((target) => {
       const text = target.value
-      this.setState([
-        ...this.state,
-        {
-          text: text,
-          isCompleted: false,
-        },
-      ])
+      const newTodoItem = {
+        id: new Date().getTime(),
+        text: text,
+        isCompleted: false,
+      }
+      this.setState([...this.state, newTodoItem])
     })
     this.todoInput.setClearTodoList(() => {
       this.setState([])
     })
 
     this.todoList = new TodoList($('.todo-list'), this.state)
+    this.todoList.setDeleteTodoItem((id) => {
+      const newState = this.state.filter((todoItem) => todoItem.id !== id)
+      this.setState(newState)
+    })
+    this.todoList.setToggleTodoItem((target) => {
+      target.classList.toggle('completed')
+    })
   }
 
   setState(nextState) {

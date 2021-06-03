@@ -19,14 +19,14 @@ export default class TodoInput {
   onKeyUp = ({ target, key }) => {
     if (key !== 'Enter' || this.$todoInputText.value.trim() === '') return
     this.addTodoItem && this.addTodoItem(target)
-    this.clear()
+    this.clearText()
   }
 
   onClick = ({ target }) => {
     if (!target.matches('.todo-input_submit') && !target.matches('.todo-input_list-clear')) return
     if (target.matches('.todo-input_submit')) {
       this.addTodoItem && this.addTodoItem(this.$todoInputText)
-      this.clear()
+      this.clearText()
       return
     }
     if (target.matches('.todo-input_list-clear')) {
@@ -54,7 +54,7 @@ export default class TodoInput {
     // 하지만 TodoInput 클래스에서 자식요소를 완전하게 알고있고 컨트롤할수 있는 의미로써 this.$todoInputText로 사용하는게 좋을것같다..
   }
 
-  clear() {
+  clearText() {
     this.$todoInputText.value = ''
   }
 }
