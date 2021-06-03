@@ -11,4 +11,23 @@ const data = [
   },
 ]
 
-new TodoList(document.querySelector('#todo-list'), data)
+const todoList = new TodoList(document.querySelector('#todo-list'), data)
+
+document.querySelector('#todo-input').addEventListener("submit", (event) => {
+  event.preventDefault()
+
+  const $input = event.target.querySelector('input.todo-input-text')
+  const text = $input.value
+
+  // text validation 추가 필요
+  if(!text) {
+    alert('할 일을 입력하세요')
+    return
+  }
+
+  todoList.addTodoItem(text)
+
+  // reset
+  $input.value = ''
+  $input.focus()
+})

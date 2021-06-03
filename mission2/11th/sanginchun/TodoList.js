@@ -25,6 +25,10 @@ class TodoList {
     `
   }
 
+  addTodoItem(text) {
+    this.setState([...this.todoItems, { text, isCompleted: false }])
+  }
+
   validateTodoItems(todoItems) {
     if(!Array.isArray(todoItems)) throw new Error(`${JSON.stringify(todoItems)} is not an Array`)
 
