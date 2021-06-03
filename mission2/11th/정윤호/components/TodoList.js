@@ -5,7 +5,7 @@ export default class TodoList {
   constructor($app, initialState) {
     this.state = initialState
     checkTodoListState(this.state)
-    this.$app = $app
+    this.$app = $app // this.$app 으로 사용할지 $app으로 사용할지
     this.$target = document.createElement('div')
     this.$target.setAttribute('class', 'todo-list')
     this.$app.append(this.$target)

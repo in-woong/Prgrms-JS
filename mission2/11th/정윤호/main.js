@@ -1,4 +1,4 @@
-import TodoList from './components/todoList.js'
+import TodoApp from './components/todoApp.js'
 
 const data = [
   {
@@ -11,7 +11,7 @@ const data = [
   },
 ]
 
-const $app = document.querySelector('#todo-app')
-const todoList = new TodoList($app, data)
+const $app = document.querySelector('#app')
+const todoApp = new TodoApp($app, data)
 
-todoList.render()
+todoApp.render()
