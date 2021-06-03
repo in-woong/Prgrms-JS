@@ -16,7 +16,7 @@ const todoList = new TodoList(document.querySelector('#todo-list'), data)
 document.querySelector('#todo-input').addEventListener("submit", (event) => {
   event.preventDefault()
 
-  const $input = event.target.querySelector('input.todo-input-text')
+  const $input = event.target.querySelector('.todo-input-text')
   const text = $input.value
 
   // text validation 추가 필요
