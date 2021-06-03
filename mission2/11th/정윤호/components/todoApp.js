@@ -5,8 +5,8 @@ import checkTodoListState from '../validators/checkTodoListState.js'
 import todoAppTemplate from '../layouts/todoAppTemplate.js'
 
 export default class TodoApp {
-  constructor($app, initialState) {
-    this.state = initialState
+  constructor($app) {
+    this.state = []
     checkTodoListState(this.state)
     $app.innerHTML = todoAppTemplate()
     this.todoInput = new TodoInput($('.todo-input'))

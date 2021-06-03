@@ -12,6 +12,6 @@ const data = [
 ]
 
 const $app = document.querySelector('#app')
-const todoApp = new TodoApp($app, data)
+const todoApp = new TodoApp($app)
 
 todoApp.render()
