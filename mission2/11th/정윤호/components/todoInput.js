@@ -30,7 +30,6 @@ export default class TodoInput {
       return
     }
     if (target.matches('.todo-input_list-clear')) {
-      console.log('list-clear')
       this.clearTodoList && this.clearTodoList()
       return
     }
