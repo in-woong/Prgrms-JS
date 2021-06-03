@@ -1,12 +1,16 @@
 import TodoList from './todoList.js'
+import TodoInput from './todoInput.js'
 import checkTodoListState from '../validators/checkTodoListState.js'
+import todoAppTemplate from '../layouts/todoAppTemplate.js'
 
 export default class TodoApp {
   constructor($app, initialState) {
     this.state = initialState
     checkTodoListState(this.state)
-    this.$app = $app // this.$app 으로 사용할지 $app으로 사용할지
-    this.todoList = new TodoList(this.$app, this.state)
+    this.$app = $app
+    this.$app.innerHTML = todoAppTemplate()
+    this.todoInput = new TodoInput()
+    this.todoList = new TodoList(this.state)
   }
 
   setState(nextState) {
@@ -16,6 +20,7 @@ export default class TodoApp {
   }
 
   render() {
+    this.todoInput.render()
     this.todoList.render()
   }
 }
