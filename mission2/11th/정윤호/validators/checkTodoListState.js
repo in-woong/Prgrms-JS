@@ -1,5 +1,5 @@
-import { ERROR_MESSAGE } from '../constants/messages.js'
-import { STATE_TYPE } from '../constants/type.js'
+import ERROR_MESSAGE from '../constants/messages.js'
+import STATE_TYPE from '../constants/type.js'
 
 const checkTodoListState = (data) => {
   if (data === null) {

@@ -10,4 +10,4 @@ const ERROR_MESSAGE = Object.freeze({
   HAS_NOT_ISCOMPLETED: dataProperyErrorMessage('"isCompleted"'),
 })
 
-export { ERROR_MESSAGE }
+export default ERROR_MESSAGE

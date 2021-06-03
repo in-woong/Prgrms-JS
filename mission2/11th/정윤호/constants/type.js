@@ -4,4 +4,4 @@ const STATE_TYPE = Object.freeze({
   ISCOMPLETED: 'isCompleted',
 })
 
-export { STATE_TYPE }
+export default STATE_TYPE
