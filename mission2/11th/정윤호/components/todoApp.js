@@ -1,6 +1,7 @@
 import { $ } from '../utils/dom.js'
 import TodoInput from './todoInput.js'
 import TodoList from './todoList.js'
+import TodoCount from './todoCount.js'
 import { todoStore } from '../store/todoStroe.js'
 import checkTodoListState from '../validators/checkTodoListState.js'
 import todoAppTemplate from '../layouts/todoAppTemplate.js'
@@ -34,12 +35,15 @@ export default class TodoApp {
     this.todoList.setToggleTodoItem((target) => {
       target.classList.toggle('completed')
     })
+
+    this.todoCount = new TodoCount($('.todo-count'), this.state)
   }
 
   setState(nextState) {
     this.state = nextState
     checkTodoListState(this.state)
     this.todoList.setState(this.state)
+    this.todoCount.setState(this.state)
     todoStore.setState(this.state)
     todoStore.saveState()
   }
@@ -47,5 +51,6 @@ export default class TodoApp {
   render() {
     this.todoInput.render()
     this.todoList.render()
+    this.todoCount.render()
   }
 }
