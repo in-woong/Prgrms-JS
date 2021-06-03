@@ -1,3 +1,4 @@
+import TodoList from './components/todoList.js'
 var data = [
   {
     text: 'JS 공부하기',
@@ -7,5 +8,7 @@ var data = [
   },
 ]
 
-const $target = document.querySelector('#todo-list')
-const todoList = new TodoList($target, data)
+const $app = document.querySelector('#todo-app')
+const todoList = new TodoList($app, data)
+
+todoList.render()

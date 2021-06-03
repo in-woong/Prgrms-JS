@@ -1,17 +1,21 @@
-function TodoList($target, data) {
-  this.$target = $target
-  this.data = data
+import todoItemTemplate from '../layouts/todoItemTemplate.js'
 
-  this.render = function() {
-    this.$target.innerHTML = this.data
-      .map(todo => `<div>${todo.text}</div>`)
-      .join('')
+export default class TodoList {
+  constructor($app, initialState) {
+    this.state = initialState
+    this.$app = $app
+    this.$target = document.createElement('div')
+    this.$target.setAttribute('class', 'todo-list')
+    this.$app.append(this.$target)
   }
 
-  this.setState = function(nextData) {
-    this.data = nextData
+  render() {
+    const htmlString = this.state.map((todoItem) => todoItemTemplate(todoItem)).join('')
+    this.$target.innerHTML = `<ul>${htmlString}</ul>`
+  }
+
+  setState(nextState) {
+    this.state = nextState
     this.render()
   }
-
-  this.render()
 }
