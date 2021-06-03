@@ -1,3 +1,9 @@
 .todoUl .complete_true {
   text-decoration: line-through;
 }
+.todoUl .complete_true:before {
+  display: inline-block;
+  content: '(완료)';
+  padding-right: 8px;
+  color: teal;
+}
