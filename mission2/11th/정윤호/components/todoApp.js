@@ -33,7 +33,11 @@ export default class TodoApp {
       this.setState(newState)
     })
     this.todoList.setToggleTodoItem((target) => {
+      const targetId = Number(target.dataset.id)
+      const targetTodoItem = this.state.find((todoItem) => todoItem.id === targetId)
+      targetTodoItem.isCompleted = !targetTodoItem.isCompleted
       target.classList.toggle('completed')
+      this.setState(this.state)
     })
 
     this.todoCount = new TodoCount($('.todo-count'), this.state)
