@@ -33,9 +33,7 @@ todoListElem.addEventListener('click', e => {
   const parentElem = childElem.parentElement;
   if(parentElem.classList.contains('todo-item') ) {
     // 부모의 클래스가 todo-item을 가지는 경우
-    const indexReg = /todo-(\w+)/;
-    const parentId = parentElem.id;
-    const todoListIndex = parseInt(parentId.replace(indexReg, '$1'));
+    const todoListIndex = parentElem.childNodes.indexOf(childElem);
 
     if(childElem.classList.contains('todo-text')){
       // text만 눌렀을 경우 해당 data의 isCompleted가 false인지를 확인하여 삭선 처리를 해준다.
