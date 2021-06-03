@@ -12,6 +12,7 @@ class TodoList {
         this.dataValidation(data);
         this.data = data;
         this.render();
+        this.todoCount();
     }
     
     render() {
@@ -104,5 +105,17 @@ class TodoList {
             this.data.splice(targetButtonIndex, 1);
             this.setState(this.data);
         }
+    }
+
+    todoCount() {
+        if (!this.element.getElementsByClassName('todo-count')[0]) {
+            this.todoCountElement = document.createElement('div');
+            this.todoCountElement.setAttribute('class', 'todo-count');
+            this.element.appendChild(this.todoCountElement);
+        } 
+        const nowDone = this.data.filter(list => list.isCompleted).length;
+        const listLength = this.data.length;
+        const todoCountHTMLString = `${nowDone}/${listLength}`;
+        this.todoCountElement.innerHTML = todoCountHTMLString;
     }
 }
