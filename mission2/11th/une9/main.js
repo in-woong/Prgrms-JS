@@ -1,9 +1,7 @@
 try {
-    const todoList = new TodoList(data, document.getElementById('todo-list'), 'TODO-LIST');
-    const todoListWeekly = new TodoList(data2, document.getElementById('todo-list-weekly'), 'WEEKLY-TODO-LIST');
-    const todoListMonthly = new TodoList(data3, document.getElementById('todo-list-monthly'), 'MONTHLY-TODO-LIST');
-
-    setTimeout(() => todoList.setState(nextData), 3000);
+    const todoList = new App(data, 'TODO-LIST');
+    const todoListWeekly = new App(data2, 'WEEKLY-TODO-LIST');
+    const todoListMonthly = new App(data2, 'MONTHLY-TODO-LIST');
 } catch(e) {
     console.error(e);
 }

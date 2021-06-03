@@ -1,32 +1,17 @@
-class TodoList {
-    constructor(data, element, title) {
-        this.element = element;
+class App {
+    constructor(data, title) {
+        this.element = document.createElement('div');
         this.titleValidation(title);
-        this.element.innerHTML = `<b>${this.title}</b>`;
-        this.setState(data);
-        this.createAddInput();
-        this.addUlElementEvents();
-    }
+        this.element.setAttribute('id', title);
+        document.body.appendChild(this.element);
 
-    setState(data) {
+        this.element.innerHTML = `<b>${this.title}</b>`;
+
         this.dataValidation(data);
         this.data = data;
-        this.render();
-        this.todoCount();
-    }
-    
-    render() {
-        if (this.element.getElementsByTagName('ul').length === 0) {
-            this.ulElement = document.createElement('ul');
-            this.ulElement.setAttribute('class', `data-${this.title}`);
-            this.element.appendChild(this.ulElement);
-        } 
-        this.ulElement.innerHTML = this.data.map((list, i) => this.createListHTMLString(list, i)).join('');
-    }
 
-    createListHTMLString({text, isCompleted}, i) {
-        const temp = isCompleted ? `<s>${text}</s>` : text;
-        return `<li data-list-index="${i}">${temp}</li> <button data-button-index="${i}">X</button>`;
+        this.todoList = new TodoList(this.data, this.element, this.dataValidation);
+        this.TodoInput = new TodoInput(this.data, this.element, this.todoList);
     }
 
     titleValidation(title) {
@@ -52,30 +37,35 @@ class TodoList {
             }
         }
     }
+}
 
-    createAddInput() {
-        this.addInput = document.createElement('input');
-        this.addButton = document.createElement('button');
-        this.addButton.innerText = '추가';
-
-        this.addInput.addEventListener('keyup', this.inputFunc.bind(this));
-        this.addButton.addEventListener('click', this.addFunc.bind(this));
-
-        this.element.appendChild(this.addInput);
-        this.element.appendChild(this.addButton);
+class TodoList {
+    constructor(data, element, dataValidation) {
+        this.element = element;
+        this.dataValidation = dataValidation;
+        this.setState(data);
+        this.addUlElementEvents();
     }
 
-    inputFunc() {
-        if (window.event.keyCode == 13 && this.addInput.value !== '') {
-            this.addFunc();
-        }
+    setState(data) {
+        this.dataValidation(data);
+        this.data = data;
+        this.render();
+        this.todoCount();
+    }
+    
+    render() {
+        if (this.element.getElementsByTagName('ul').length === 0) {
+            this.ulElement = document.createElement('ul');
+            this.ulElement.setAttribute('class', `data-${this.title}`);
+            this.element.appendChild(this.ulElement);
+        } 
+        this.ulElement.innerHTML = this.data.map((list, i) => this.createListHTMLString(list, i)).join('');
     }
 
-    addFunc() {
-        this.data.push({text: this.addInput.value, isCompleted: false});
-        this.setState(this.data);
-        this.addInput.value = '';
-        this.addInput.focus();
+    createListHTMLString({text, isCompleted}, i) {
+        const temp = isCompleted ? `<s>${text}</s>` : text;
+        return `<li data-list-index="${i}">${temp}</li> <button data-button-index="${i}">X</button>`;
     }
 
     addUlElementEvents() {
@@ -117,5 +107,39 @@ class TodoList {
         const listLength = this.data.length;
         const todoCountHTMLString = `${nowDone}/${listLength}`;
         this.todoCountElement.innerHTML = todoCountHTMLString;
+    }
+}
+
+class TodoInput {
+    constructor(data, element, todoList) {
+        this.data = data;
+        this.element = element;
+        this.todoList = todoList;
+        this.createAddInput();
+    }
+
+    createAddInput() {
+        this.addInput = document.createElement('input');
+        this.addButton = document.createElement('button');
+        this.addButton.innerText = '추가';
+
+        this.addInput.addEventListener('keyup', this.inputFunc.bind(this));
+        this.addButton.addEventListener('click', this.addFunc.bind(this));
+
+        this.element.appendChild(this.addInput);
+        this.element.appendChild(this.addButton);
+    }
+
+    inputFunc() {
+        if (window.event.keyCode == 13 && this.addInput.value !== '') {
+            this.addFunc();
+        }
+    }
+
+    addFunc() {
+        this.data.push({text: this.addInput.value, isCompleted: false});
+        this.todoList.setState(this.data);
+        this.addInput.value = '';
+        this.addInput.focus();
     }
 }
