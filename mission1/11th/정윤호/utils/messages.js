@@ -9,9 +9,3 @@ export const ERROR_MESSAGE = Object.freeze({
   HAS_NOT_TEXT: dataProperyErrorMessage('"text"'),
   HAS_NOT_ISCOMPLETED: dataProperyErrorMessage('"isCompleted"'),
 })
-export const NULL = dataFormErrorMessage('exist (null)')
-export const UNDEFINED = dataFormErrorMessage('exist (undefined)')
-export const NOT_ARRAY = dataFormErrorMessage('Array')
-export const HAS_NOT_OBJECT = dataProperyErrorMessage('Object')
-export const HAS_NOT_TEXT = dataProperyErrorMessage('"text"')
-export const HAS_NOT_ISCOMPLETED = dataProperyErrorMessage('"isCompleted"')
