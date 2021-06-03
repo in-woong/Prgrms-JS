@@ -1,8 +1,10 @@
 import todoItemTemplate from '../layouts/todoItemTemplate.js'
+import checkTodoListState from '../validators/checkTodoListState.js'
 
 export default class TodoList {
   constructor($app, initialState) {
     this.state = initialState
+    checkTodoListState(this.state)
     this.$app = $app
     this.$target = document.createElement('div')
     this.$target.setAttribute('class', 'todo-list')
@@ -16,6 +18,7 @@ export default class TodoList {
 
   setState(nextState) {
     this.state = nextState
+    checkTodoListState(this.state)
     this.render()
   }
 }
