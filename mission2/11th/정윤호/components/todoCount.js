@@ -9,9 +9,8 @@ export default class TodoCount {
   render() {
     const countState = {
       totalCount: this.state.length,
-      completedCount: this.state.filter((todoItem) => todoItem.completed).length,
+      completedCount: this.state.filter((todoItem) => todoItem.isCompleted).length,
     }
-    console.log(countState.completedCount)
 
     this.$todoCount.innerHTML = todoCountTemplate(countState)
   }

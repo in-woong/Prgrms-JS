@@ -1,4 +1,3 @@
-import { $ } from '../utils/dom.js'
 import todoItemTemplate from '../layouts/todoItemTemplate.js'
 
 export default class TodoList {
