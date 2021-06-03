@@ -36,16 +36,21 @@ export default class TodoInput {
     this.addTodoItem = addTodoItem
   }
 
+  setClearTodoList(clearTodoList) {
+    this.clearTodoList = clearTodoList
+  }
+
   onClick = ({ target }) => {
     if (!target.matches('.todo-input_submit') && !target.matches('.todo-input_list-clear')) return
     console.log('TodoInput - onClick')
     if (target.matches('.todo-input_submit')) {
-      this.addTodoItem && this.addTodoItem(target)
+      this.addTodoItem && this.addTodoItem(this.$todoInputText)
       this.clear()
       return
     }
     if (target.matches('.todo-input_list-clear')) {
       console.log('list-clear')
+      this.clearTodoList && this.clearTodoList()
       return
     }
   }

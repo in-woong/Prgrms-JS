@@ -20,6 +20,9 @@ export default class TodoApp {
         },
       ])
     })
+    this.todoInput.setClearTodoList(() => {
+      this.setState([])
+    })
     this.todoList = new TodoList($('.todo-list'), this.state)
   }
 
