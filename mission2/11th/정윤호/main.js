@@ -1,17 +1,6 @@
 import TodoApp from './components/todoApp.js'
+import { $ } from './utils/dom.js'
 
-const data = [
-  {
-    text: 'JS 공부하기',
-    isCompleted: true,
-  },
-  {
-    text: 'JS 복습하기',
-    isCompleted: false,
-  },
-]
-
-const $app = document.querySelector('#app')
-const todoApp = new TodoApp($app)
+const todoApp = new TodoApp($('#app'))
 
 todoApp.render()
