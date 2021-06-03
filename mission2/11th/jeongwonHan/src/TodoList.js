@@ -1,7 +1,7 @@
 import { todoValidate } from '../lib/Validation.js';
 import ErrorMessage from '../lib/ErrorMessage.js';
 
-function TodoList($app, initialState) {
+function TodoList($app, initialState, onCompleteToggle) {
   if (!new.target) {
     throw new Error(ErrorMessage.SET_NEW_ERROR);
   }
@@ -11,19 +11,20 @@ function TodoList($app, initialState) {
   this.$target = document.createElement('div');
   this.$target.setAttribute('data-component-type', 'TodoList');
   $app.appendChild(this.$target);
+  this.onCompleteToggle = onCompleteToggle;
 
   this.state = initialState;
 
   this.setState = function (nextState) {
     this.state = nextState;
-    console.log(this.state);
     this.render();
   };
 
   this.render = function () {
-    this.$target.innerHTML = this.state
-      .map((todo) => `<div class="${todo.isCompleted}">${todo.text}</div>`)
+    const htmlString = this.state
+      .map((todo) => `<li class="complete_${todo.isCompleted}">${todo.text}</li>`)
       .join('');
+    this.$target.innerHTML = `<ul class="todoUl">${htmlString}</ul>`;
   };
 
   this.render();
