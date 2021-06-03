@@ -3,13 +3,13 @@ import TodoInput from './todoInput.js'
 import TodoList from './todoList.js'
 import TodoCount from './todoCount.js'
 import { todoStore } from '../store/todoStroe.js'
-import checkTodoListState from '../validators/checkTodoListState.js'
+import checkTodoState from '../validators/checkTodoState.js'
 import todoAppTemplate from '../layouts/todoAppTemplate.js'
 
 export default class TodoApp {
   constructor($app) {
     this.state = todoStore.loadState()
-    checkTodoListState(this.state)
+    checkTodoState(this.state)
 
     $app.innerHTML = todoAppTemplate()
 
@@ -45,7 +45,7 @@ export default class TodoApp {
 
   setState(nextState) {
     this.state = nextState
-    checkTodoListState(this.state)
+    checkTodoState(this.state)
     this.todoList.setState(this.state)
     this.todoCount.setState(this.state)
     todoStore.setState(this.state)

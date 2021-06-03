@@ -1,7 +1,7 @@
 import ERROR_MESSAGE from '../constants/messages.js'
 import STATE_TYPE from '../constants/type.js'
 
-const checkTodoListState = (data) => {
+const checkTodoState = (data) => {
   if (data === null) {
     throw new Error(ERROR_MESSAGE.NULL)
   }
@@ -29,4 +29,4 @@ const checkTodoListState = (data) => {
   })
 }
 
-export default checkTodoListState
+export default checkTodoState
