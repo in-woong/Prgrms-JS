@@ -5,7 +5,7 @@ class TodoList {
         this.element.innerHTML = `<b>${this.title}</b>`;
         this.setState(data);
         this.createAddInput();
-        this.ulElement.addEventListener('click', this.deleteButtonFunc.bind(this));
+        this.addUlElementEvents();
     }
 
     setState(data) {
@@ -25,7 +25,7 @@ class TodoList {
 
     createListHTMLString({text, isCompleted}, i) {
         const temp = isCompleted ? `<s>${text}</s>` : text;
-        return `<li data-list-num="${i}">${temp}</li> <button data-button-num="${i}">X</button>`;
+        return `<li data-list-index="${i}">${temp}</li> <button data-button-index="${i}">X</button>`;
     }
 
     titleValidation(title) {
@@ -77,10 +77,31 @@ class TodoList {
         this.addInput.focus();
     }
 
+    addUlElementEvents() {
+        this.ulElement.addEventListener('click', this.listDoneFunc.bind(this));
+        this.ulElement.addEventListener('click', this.deleteButtonFunc.bind(this));
+    }
+
+    listDoneFunc(event) {
+        let target = event.target;
+
+        while(!target.dataset.listIndex) {
+            target = target.parentNode;
+
+            if (target.nodeName == 'BODY') return;
+        }
+
+        const targetListIndex = target.dataset.listIndex;
+        if (targetListIndex) {
+            this.data[targetListIndex].isCompleted = this.data[targetListIndex].isCompleted ? false : true;
+            this.setState(this.data);
+        }
+    }
+
     deleteButtonFunc(event) {
-        const targetButtonNum = event.target.dataset.buttonNum;
-        if (targetButtonNum) {
-            this.data.splice(targetButtonNum, 1);
+        const targetButtonIndex = event.target.dataset.buttonIndex;
+        if (targetButtonIndex) {
+            this.data.splice(targetButtonIndex, 1);
             this.setState(this.data);
         }
     }
