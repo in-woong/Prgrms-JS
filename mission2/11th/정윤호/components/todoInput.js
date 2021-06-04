@@ -38,8 +38,6 @@ export default class TodoInput {
   render() {
     this.$todoInput.innerHTML = todoInputTemplate()
     this.$todoInputText = $('.todo-input_text')
-    this.$todoInputSubmit = $('.todo-input_submit')
-    this.$todoInputSubmit = $('.todo-input_list-clear')
   }
 
   clearText() {
