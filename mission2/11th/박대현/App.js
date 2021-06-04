@@ -10,13 +10,15 @@ function App() {
 
   const domParser = new DOMParser();
   const doc = domParser.parseFromString(`
-    <input type="text" value="" class="todo-input" />
-    <button class="todo-add-button">할 일 추가</button>
-    <button class="todo-list-clear-button">전체 삭제</button>
-    <ul class="todo-list"></ul>
-    <div>
+    <div class="todo-control-container">
+      <input type="text" value="" class="todo-input" />
+      <button class="control-button todo-add-button">할 일 추가</button>
+      <button class="control-button todo-list-clear-button">전체 삭제</button>
+    </div>
+    <div class="complete-guide">
       완료된 todo <span class="todo-count">0</span> 개
     </div>
+    <ul class="todo-list"></ul>
   `, 'text/html');
 
   const todoInputElem = doc.querySelector('.todo-input');
@@ -25,7 +27,6 @@ function App() {
   const todoListElem = doc.querySelector('.todo-list');
   const todoCountElem = doc.querySelector('.todo-count');
   const todoListData = getTodoListDataFromLocalStorage();
-  console.log(todoListData);
   const todoCount = new TodoCount(todoCountElem);
   const todoList = new TodoList(todoListData, todoListElem, todoCount); 
   const todoInput = new TodoInput(todoInputElem, todoAddButtonElem, todoListData, todoList, todoCount);

@@ -56,7 +56,8 @@ function TodoList(todoListData, todoListElem, todoCount){
         if(!todoListData[todoListIndex].isCompleted){
           todoListData[todoListIndex].isCompleted = true;
           saveTodoListDataToLocalStorage(todoListData);
-          childElem.innerHTML = `<s>${childElem.innerText}</s>`;
+          // childElem.style.color="yellow";
+          childElem.innerHTML = `<s style="color:#01bc4c">${childElem.innerText}</s>`;
           // 완료처리가 되면 todoCount를 다시 그려줘야한다.
           todoCount.render(todoListData);
         }
@@ -77,7 +78,7 @@ function TodoList(todoListData, todoListElem, todoCount){
     todoListElem.innerHTML = todoListData.reduce((acc, {text, isCompleted}, index) =>  acc + 
       `<li class="todo-item">
         <span class="todo-text">
-          ${isCompleted? `<s>${text}</s>` : text}
+          ${isCompleted? `<s style="color:#01bc4c">${text}</s>` : text}
         </span> 
         <button class="todo-remove-button">삭제</button>
       </li>`, '');
