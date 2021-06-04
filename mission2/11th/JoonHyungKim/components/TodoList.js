@@ -1,3 +1,5 @@
+import { TodoCount } from './TodoCount.js';
+
 const validateData = (data) => {
     if (data == null) {
         throw new Error('빈 데이터입니다.');
@@ -21,13 +23,17 @@ export class TodoList {
         this.$target = document.createElement('div');
         this.$target.classList.add('todo-list');
         $app.appendChild(this.$target);
+        this.counter = new TodoCount(this);
 
         this.addEventDelegator();
         this.render();
+
+        
     }
 
     render() {
         this.$target.innerHTML = `<ul>${this.data.reduce((acc, { text, isCompleted }, index) => `${acc} <li class="todo-item" data-index=${index}>${isCompleted ? `<s>${text}</s>` : text} <button class="todo-remove-btn" data-index=${index}>삭제</button></li>`, '')}</ul>`;
+        this.counter.render();
     }
 
     setState(nextData) {
