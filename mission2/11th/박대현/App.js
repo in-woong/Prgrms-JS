@@ -25,13 +25,16 @@ function App() {
       <input type="text" value="" class="todo-input" />
       <button class="todo-add-button">할 일 추가</button>
       <ul class="todo-list"></ul>
+      <div>
+        완료된 todo <span class="todo-count">0</span> 개
+      </div>
     </div>
   `, 'text/html');
-  const app = doc.getRootNode().body.children[0];
-  document.body.appendChild(app);
-  
-  this.app = app; 
+  this.app = doc.getRootNode().body.children[0]; 
   this.todoInput = new TodoInput(this.app);
+  this.rendering = () =>{
+    document.body.appendChild(this.app);
+  }
   
 }
 export { App };

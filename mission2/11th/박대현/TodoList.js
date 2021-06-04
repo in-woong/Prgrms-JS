@@ -45,13 +45,13 @@ function TodoList(data, todoListElem){
 
   this.render = todoListElem => {
     // 삭제하기 쉽게 id에 번호를 새겨놓음
-    this.todoListElem.innerHTML = this.data.reduce((acc, {text, isCompleted}, index) =>  acc + 
-        `<li class="todo-item">
-          <span class="todo-text">
-            ${isCompleted? `<s>${text}</s>` : text}
-          </span> 
-          <button class="todo-remove-button">삭제</button>
-        </li>`, '');
+    todoListElem.innerHTML = data.reduce((acc, {text, isCompleted}, index) =>  acc + 
+      `<li class="todo-item">
+        <span class="todo-text">
+          ${isCompleted? `<s>${text}</s>` : text}
+        </span> 
+        <button class="todo-remove-button">삭제</button>
+      </li>`, '');
 
   };
 

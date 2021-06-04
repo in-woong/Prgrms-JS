@@ -1,18 +1,25 @@
-import { TodoList } from './TodoList.js ';
+import { TodoList } from './TodoList.js';
+import { TodoCount } from './TodoCount.js';
 
 function TodoInput(root){
   const todoInputElem = root.querySelector('.todo-input');
   const todoAddButtonElem = root.querySelector('.todo-add-button');
   const todoListElem = root.querySelector('.todo-list');
+  const todoCountElem = root.querySelector('.todo-count');
   const todoListData = [];
   const todoList = new TodoList(todoListData, todoListElem); 
+  const todoCount = new TodoCount(todoListData, todoCountElem);
 
   function addTodoItem(){
+    // 빈 텍스트인지 확인하기
+    if(todoInputElem.value.replace(/\s+/gi, "") === '') return;
+
     todoListData.push({
       text: todoInputElem.value,
       isCompleted: false,
     });
     todoList.setState(todoListData);
+    todoCount.render();
     todoInputElem.value='';  
   }
     
@@ -42,11 +49,18 @@ function TodoInput(root){
         if(!todoListData[todoListIndex].isCompleted){
           todoListData[todoListIndex].isCompleted = true;
           childElem.innerHTML = `<s>${childElem.innerText}</s>`;
+          // 완료처리가 되면 todoCount를 다시 그려줘야한다.
+          todoCount.render();
         }
       } else if(childElem.classList.contains('todo-remove-button')){
         // 삭제 버튼을 눌렀을 경우 해당 data를 todoListData에서 삭제한다.
-        todoListData.splice(todoListIndex,1);
+        const deletedTodo = todoListData.splice(todoListIndex,1);
         todoList.setState(todoListData);
+        
+        // 삭제가 될 요소의 isCompleted가 true 였다면 todoCount를 다시 그려줘야한다.
+        if(deletedTodo[0].isCompleted) todoCount.render();
+        
+        
       }
     }
   })
