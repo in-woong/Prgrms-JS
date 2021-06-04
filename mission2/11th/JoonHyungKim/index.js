@@ -1,4 +1,5 @@
 import { TodoList } from './components/TodoList.js';
+import { TodoInput } from './components/TodoInput.js';
 
 const data = [{
     text: '아무것도 안하기',
@@ -12,3 +13,4 @@ const data = [{
 
 const app = document.querySelector('#app');
 const todoList = new TodoList(app, data);
+const todoInput = new TodoInput(app, todoList);
