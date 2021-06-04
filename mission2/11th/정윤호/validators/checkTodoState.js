@@ -19,6 +19,10 @@ const checkTodoState = (data) => {
       throw new Error(ERROR_MESSAGE.HAS_NOT_OBJECT)
     }
 
+    if (!todoItem.hasOwnProperty(STATE_TYPE.ID)) {
+      throw new Error(ERROR_MESSAGE.HAS_NOT_ID)
+    }
+
     if (!todoItem.hasOwnProperty(STATE_TYPE.TEXT)) {
       throw new Error(ERROR_MESSAGE.HAS_NOT_TEXT)
     }

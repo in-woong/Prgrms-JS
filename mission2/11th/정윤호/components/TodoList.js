@@ -2,8 +2,8 @@ import todoItemTemplate from '../layouts/todoItemTemplate.js'
 
 export default class TodoList {
   constructor($target, initialState) {
-    this.$todoList = $target
     this.state = initialState
+    this.$todoList = $target
     this.$todoList.addEventListener('click', this.onClick)
   }
 

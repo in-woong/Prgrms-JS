@@ -6,6 +6,7 @@ const ERROR_MESSAGE = Object.freeze({
   UNDEFINED: dataFormErrorMessage('exist (undefined)'),
   NOT_ARRAY: dataFormErrorMessage('Array'),
   HAS_NOT_OBJECT: dataProperyErrorMessage('Object'),
+  HAS_NOT_ID: dataProperyErrorMessage('Id'),
   HAS_NOT_TEXT: dataProperyErrorMessage('"text"'),
   HAS_NOT_ISCOMPLETED: dataProperyErrorMessage('"isCompleted"'),
 })

@@ -1,9 +1,9 @@
 import todoCountTemplate from '../layouts/todoCountTemplate.js'
 
 export default class TodoCount {
-  constructor($target, state) {
+  constructor($target, initialState) {
+    this.state = initialState
     this.$todoCount = $target
-    this.state = state
   }
 
   render() {
