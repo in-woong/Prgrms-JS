@@ -1,6 +1,7 @@
 import TodoList from './TodoList.js'
 import TodoCount from './TodoCount.js'
 import TodoInput from './TodoInput.js'
+import RemoveAllButton from './RemoveAllButton.js'
 
 class App {
   constructor($app, initialData) {
@@ -24,6 +25,10 @@ class App {
     })
 
     new TodoInput({ $parent: $app, onSubmit: this.addTodoItem.bind(this) })
+
+    new RemoveAllButton({ $parent: $app })
+
+    $app.addEventListener('removeAll', this.deleteAllTodoItems.bind(this))
   }
 
   setState(nextState) {
@@ -49,6 +54,10 @@ class App {
     nextTodoItems.splice(index, 1)
 
     this.setState({ todoItems: nextTodoItems })
+  }
+
+  deleteAllTodoItems() {
+    this.setState({ todoItems: [] })
   }
 
   markCompletedTodoItem(index) {

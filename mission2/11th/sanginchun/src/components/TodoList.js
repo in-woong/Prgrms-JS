@@ -8,13 +8,11 @@ class TodoList {
 
       const todoItemIndex = +e.target.closest('.todo-item').dataset.index
 
-      // delete
       if (e.target.closest('.delete-btn')) {
         onDeleteBtnClick(todoItemIndex)
         return
       }
 
-      // mark 'isCompleted: true'
       if (e.target.closest('.todo-text')) {
         if(this.todoItems[todoItemIndex].isCompleted) return
 
