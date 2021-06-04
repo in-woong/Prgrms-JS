@@ -8,22 +8,38 @@ class TodoInput {
 
       const $input = e.target.querySelector('.todo-input-text')
       const text = $input.value
-
-      // validate text 추가 필요
+      
       if(!text) {
         alert('할 일을 입력하세요.')
         return
       }
 
-      onSubmit(text)
-
       // reset
       $input.value = ''
       $input.focus()
+
+      onSubmit(this.filterInputText(text))
     })
 
     this.render()
     $parent.appendChild(this.$target)
+  }
+
+  filterInputText(text) {
+    return text.split('').map((char) => {
+      switch(char) {
+        case '<':
+          return '&lt;'
+        case '>':
+          return '&gt;'
+        case '"':
+          return '&quot;'
+        case "'":
+          return '&#39;'
+        default:
+          return char
+      }
+    }).join('')
   }
 
   render() {
