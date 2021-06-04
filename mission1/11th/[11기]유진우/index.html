@@ -60,8 +60,13 @@
       this.data = data
       this.$target = document.getElementById(targetId)
 
+      this.setState = function (nextData) {
+        this.data = nextData
+        this.render()
+      }
+
       this.render = function () {
-        this.$target.innerHTML = data.map(({ text, isCompleted }) => {
+        this.$target.innerHTML = this.data.map(({ text, isCompleted }) => {
           return isCompleted ? `<div><s>${text}</s></div>` : `<div>${text}</div>`
         }).join('')
       }
@@ -73,6 +78,8 @@
     todoList.render()
     todayTodoList.render()
     tomorrowTodoList.render()
+
+    todayTodoList.setState(tomorrowTodos)
   </script>
 </body>
 
