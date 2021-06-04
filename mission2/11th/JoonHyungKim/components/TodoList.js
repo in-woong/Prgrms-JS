@@ -46,12 +46,15 @@ export class TodoList {
         this.$target.addEventListener('click', ({ target: { className, dataset: { index } } }) => {
             switch (className) {
                 case 'todo-item':
-                    this.data[index].isCompleted = true;
-                    this.render();
+                    this.setState(this.data.map(({ text, isCompleted }, originIdx) => ({ text, isCompleted: index == originIdx ? true : isCompleted })));
                     break;
                 case 'todo-remove-btn':
-                    this.data.splice(index, 1);
-                    this.render();
+                    this.setState(this.data.reduce((acc, cur, originIdx) => {
+                        if (originIdx != index) {
+                            acc.push(cur);
+                        }
+                        return acc
+                    }, []));
                     break;
             }
         });
