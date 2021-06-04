@@ -4,12 +4,11 @@ import TodoInput from './TodoInput.js'
 import RemoveAllButton from './RemoveAllButton.js'
 
 class App {
-  constructor($app, initialData) {
+  constructor($app) {
     if(!$app) throw new Error('$app이 없습니다')
-    this.validateTodoItems(initialData)
 
     this.state = {
-      todoItems: initialData
+      todoItems: JSON.parse(localStorage.getItem('todoItems')) || [],
     }
 
     this.todoList = new TodoList({
@@ -32,8 +31,12 @@ class App {
   }
 
   setState(nextState) {
-    this.validateTodoItems(nextState.todoItems)
+    if(this.state.todoItems !== nextState.todoItems) {
+      this.validateTodoItems(nextState.todoItems)
 
+      this.setTodoItemsToLocal(nextState.todoItems)
+    }
+    
     this.state = nextState
     this.render()
   }
@@ -41,6 +44,10 @@ class App {
   render() {
     this.todoList.setState(this.state.todoItems)
     this.todoCount.setState(this.state.todoItems)
+  }
+
+  setTodoItemsToLocal(todoItems) {
+    localStorage.setItem('todoItems', JSON.stringify(todoItems))
   }
 
   addTodoItem(text) {
