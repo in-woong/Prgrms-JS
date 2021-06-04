@@ -65,7 +65,7 @@ class TodoList {
 
     createListHTMLString({text, isCompleted}, i) {
         const temp = isCompleted ? `<s>${text}</s>` : text;
-        return `<li data-list-index="${i}">${temp}</li> <button data-button-index="${i}">X</button>`;
+        return `<li data-list-index="${i}">${temp}  <button data-button-index="${i}">X</button></li>`;
     }
 
     addUlElementEvents() {
@@ -137,7 +137,9 @@ class TodoInput {
     }
 
     addFunc() {
-        this.data.push({text: this.addInput.value, isCompleted: false});
+        if (this.addInput.value !== '') {
+            this.data.push({text: this.addInput.value, isCompleted: false});
+        }
         this.todoList.setState(this.data);
         this.addInput.value = '';
         this.addInput.focus();
