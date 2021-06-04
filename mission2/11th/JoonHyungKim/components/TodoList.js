@@ -39,6 +39,7 @@ export class TodoList {
     setState(nextData) {
         validateData(nextData);
         this.data = nextData;
+        localStorage.setItem('todo', JSON.stringify(this.data));
         this.render();
     }
 
