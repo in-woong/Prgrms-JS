@@ -1,14 +1,16 @@
 class TodoList {
-  constructor($target, todoItems) {
+  constructor({ $app, todoItems }) {
     this.validateTodoItems(todoItems)
 
-    this.$target = $target
     this.todoItems = todoItems
+
+    this.$target = document.createElement('ul')
+    this.$target.setAttribute('data-component-type', 'TodoList')
 
     this.$target.addEventListener('click', (e) => {
       if(!e.target.closest('.todo-item')) return
 
-      const todoItemIndex = e.target.closest('.todo-item').dataset.index
+      const todoItemIndex = +e.target.closest('.todo-item').dataset.index
 
       // delete
       if (e.target.closest('.delete-btn')) {
@@ -25,6 +27,7 @@ class TodoList {
     })
 
     this.render()
+    $app.appendChild(this.$target)
   }
 
   setState(nextTodoItems) {
@@ -36,14 +39,12 @@ class TodoList {
 
   render() {
     this.$target.innerHTML = `
-      <ul>
-        ${this.todoItems.map(({ text, isCompleted }, index) => (`
-          <li class='todo-item' data-index='${index}'>
-            <span class='todo-text'>${isCompleted ? `<s>${text}</s>` : text}</span>
-            <button class='delete-btn'>삭제</button>
-          </li>
-        `)).join("")}
-      </ul>
+      ${this.todoItems.map(({ text, isCompleted }, index) => (`
+        <li class='todo-item' data-index='${index}'>
+          <span class='todo-text'>${isCompleted ? `<s>${text}</s>` : text}</span>
+          <button class='delete-btn'>삭제</button>
+        </li>
+      `)).join("")}
     `
   }
 
