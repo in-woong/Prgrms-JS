@@ -18,12 +18,12 @@ export default class TodoList {
   onClick = ({ target }) => {
     if (!target.matches('.delete-item-button') && !target.matches('.todo-item')) return
     if (target.matches('.delete-item-button')) {
-      const targetId = Number(target.closest('li').dataset.id)
-      this.deleteTdoItem && this.deleteTdoItem(targetId)
+      this.deleteTdoItem && this.deleteTdoItem(target)
       return
     }
     if (target.matches('.todo-item')) {
       this.toggleTodoItem && this.toggleTodoItem(target)
+      return
     }
   }
 

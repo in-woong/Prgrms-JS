@@ -7,11 +7,11 @@ import checkTodoState from '../validators/checkTodoState.js'
 import todoAppTemplate from '../layouts/todoAppTemplate.js'
 
 export default class TodoApp {
-  constructor($app) {
+  constructor($target) {
     this.state = todoStore.loadState()
     checkTodoState(this.state)
 
-    $app.innerHTML = todoAppTemplate()
+    $target.innerHTML = todoAppTemplate()
 
     this.todoInput = new TodoInput($('.todo-input'))
     this.todoInput.setAddTodoItem((target) => {
@@ -28,8 +28,9 @@ export default class TodoApp {
     })
 
     this.todoList = new TodoList($('.todo-list'), this.state)
-    this.todoList.setDeleteTodoItem((id) => {
-      const newState = this.state.filter((todoItem) => todoItem.id !== id)
+    this.todoList.setDeleteTodoItem((target) => {
+      const targetId = Number(target.closest('li').dataset.id)
+      const newState = this.state.filter((todoItem) => todoItem.id !== targetId)
       this.setState(newState)
     })
     this.todoList.setToggleTodoItem((target) => {
