@@ -3,23 +3,33 @@ export class TodoInput {
 
         this.$app = $app;
         this.$list = $todoList;
-        this.$target = document.createElement('input');
-        this.$target.setAttribute('type', 'text');
-        this.$target.classList.add('todo-input');
+        this.$target = document.createElement('div');
+
+        this.textInput = document.createElement('input');
+        this.textInput.setAttribute('type', 'text');
+
+        this.removeAllbtn = document.createElement('button');
+        this.removeAllbtn.innerHTML = "모두 삭제";
+
         this.attatchEvent();
 
-        $app.appendChild(this.$target);
+        this.$target.appendChild(this.textInput);
+        this.$target.appendChild(this.removeAllbtn);
+
+        this.$app.appendChild(this.$target);
 
     }
 
     attatchEvent() {
-        this.$target.onkeydown = ({ code, isComposing }) => {
-            if (!isComposing && this.$target.value && code === 'Enter') {
-                this.$list.addToList(this.$target.value);
-                this.$target.value = '';
+        this.textInput.onkeydown = ({ code, isComposing }) => {
+            if (!isComposing && this.textInput.value && code === 'Enter') {
+                this.$list.addToList(this.textInput.value);
+                this.textInput.value = '';
             }
         };
 
+        this.removeAllbtn.onclick = () =>{
+            this.$app.dispatchEvent(new CustomEvent('removeAll'));
+        }
     }
-
 }
