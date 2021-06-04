@@ -1,5 +1,6 @@
 import TodoList from './TodoList.js';
 import TodoInput from './TodoInput.js';
+import TodoCount from './TodoCount.js';
 
 const initialState = [
   {
@@ -13,19 +14,19 @@ const initialState = [
 function App($target) {
   this.$target = $target;
   this.$state = [...initialState];
-  this.$nextId = 3;
+
   this.todoInput = new TodoInput(this.$target, (todoText) => {
     const newData = [
       ...this.$state,
       {
-        id: this.$nextId,
+        id: this.$state.length + 1,
         text: todoText,
         isCompleted: false,
       },
     ];
-    this.nextId += 1;
     this.setState(newData);
   });
+
   this.todoList = new TodoList(this.$target, this.$state, (selectId) => {
     const newData = this.$state.map((todo) =>
       todo.id === selectId
@@ -35,13 +36,15 @@ function App($target) {
           }
         : todo
     );
-    console.log(newData);
     this.setState(newData);
   });
+
+  this.todoCount = new TodoCount(this.$target, this.$state);
 
   this.setState = (nextState) => {
     this.$state = nextState;
     this.todoList.setState(this.$state);
+    this.todoCount.setState(this.$state);
   };
 }
 
