@@ -7,8 +7,8 @@ export default class TodoList {
     this.$todoList.addEventListener('click', this.onClick)
   }
 
-  setDeleteTodoItem(deleteTdoItem) {
-    this.deleteTdoItem = deleteTdoItem
+  setDeleteTodoItem(deleteTodoItem) {
+    this.deleteTodoItem = deleteTodoItem
   }
 
   setToggleTodoItem(toggleTodoItem) {
@@ -18,7 +18,7 @@ export default class TodoList {
   onClick = ({ target }) => {
     if (!target.matches('.delete-item-button') && !target.matches('.todo-item')) return
     if (target.matches('.delete-item-button')) {
-      this.deleteTdoItem && this.deleteTdoItem(target)
+      this.deleteTodoItem && this.deleteTodoItem(target)
       return
     }
     if (target.matches('.todo-item')) {
