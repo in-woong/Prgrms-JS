@@ -1,3 +1,4 @@
+import { saveTodoListDataToLocalStorage } from './localStorage.js';
 function TodoInput(todoInputElem, todoAddButtonElem, todoListData, todoList, todoCount){
 
   function addTodoItem(){
@@ -8,7 +9,7 @@ function TodoInput(todoInputElem, todoAddButtonElem, todoListData, todoList, tod
       text: todoInputElem.value,
       isCompleted: false,
     });
-
+    saveTodoListDataToLocalStorage(todoListData);
     todoList.setState(todoListData);
     todoCount.render(todoListData);
     todoInputElem.value='';  

@@ -1,7 +1,7 @@
 import { TodoInput } from './TodoInput.js';
 import { TodoList } from './TodoList.js';
 import { TodoCount } from './TodoCount.js';
-
+import { saveTodoListDataToLocalStorage, getTodoListDataFromLocalStorage } from './localStorage.js';
 function App() {
   // 생성할 DOM을 더 가독성있게 만들기 위해 template처럼 작성하고 parsing 했다.
   const app = document.createElement('div');
@@ -24,8 +24,8 @@ function App() {
   const todoListClearButtonElem = doc.querySelector('.todo-list-clear-button')
   const todoListElem = doc.querySelector('.todo-list');
   const todoCountElem = doc.querySelector('.todo-count');
-  const todoListData = [];
-  
+  const todoListData = getTodoListDataFromLocalStorage();
+  console.log(todoListData);
   const todoCount = new TodoCount(todoCountElem);
   const todoList = new TodoList(todoListData, todoListElem, todoCount); 
   const todoInput = new TodoInput(todoInputElem, todoAddButtonElem, todoListData, todoList, todoCount);
@@ -37,6 +37,7 @@ function App() {
   })
   app.addEventListener('removeAll', () => {
     todoListData.splice(0);
+    saveTodoListDataToLocalStorage(todoListData);
     todoCount.render(todoListData);
     todoList.render(todoListData);
   })
@@ -53,6 +54,8 @@ function App() {
 
   let fragment = null;
   this.render = () =>{
+    todoCount.render(todoListData);
+    todoList.render(todoListData);
     if(this.fragment) app.removeChild(fragment);
     fragment = buildFragement();
     app.appendChild(fragment);  

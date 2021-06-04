@@ -1,3 +1,4 @@
+import { saveTodoListDataToLocalStorage } from './localStorage.js';
 function TodoList(todoListData, todoListElem, todoCount){
       
   if(!(this instanceof TodoList)){
@@ -54,6 +55,7 @@ function TodoList(todoListData, todoListElem, todoCount){
         // text만 눌렀을 경우 해당 data의 isCompleted가 false인지를 확인하여 삭선 처리를 해준다.
         if(!todoListData[todoListIndex].isCompleted){
           todoListData[todoListIndex].isCompleted = true;
+          saveTodoListDataToLocalStorage(todoListData);
           childElem.innerHTML = `<s>${childElem.innerText}</s>`;
           // 완료처리가 되면 todoCount를 다시 그려줘야한다.
           todoCount.render(todoListData);
@@ -61,6 +63,7 @@ function TodoList(todoListData, todoListElem, todoCount){
       } else if(childElem.classList.contains('todo-remove-button')){
         // 삭제 버튼을 눌렀을 경우 해당 data를 todoListData에서 삭제한다.
         const deletedTodo = todoListData.splice(todoListIndex,1);
+        saveTodoListDataToLocalStorage(todoListData);
         this.setState(todoListData);
         
         // 삭제가 될 요소의 isCompleted가 true 였다면 todoCount를 다시 그려줘야한다.
