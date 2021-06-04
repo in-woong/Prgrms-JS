@@ -21,6 +21,8 @@ export class TodoList {
         this.$target = document.createElement('div');
         this.$target.classList.add('todo-list');
         $app.appendChild(this.$target);
+
+        this.addEventDelegator();
         this.render();
     }
 
@@ -42,6 +44,21 @@ export class TodoList {
         validateData([newItem]);
         this.data.push(newItem);
         this.render();
+    }
+
+    addEventDelegator() {
+        this.$target.addEventListener('click', ({ target: { className, dataset: { index } } }) => {
+            switch (className) {
+                case 'todo-item':
+                    this.data[index].isCompleted = true;
+                    this.render();
+                    break;
+                case 'todo-remove-btn':
+                    this.data.splice(index, 1);
+                    this.render();
+                    break;
+            }
+        });
     }
 
 }
