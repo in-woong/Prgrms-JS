@@ -25,39 +25,7 @@ export class TodoList {
     }
 
     render() {
-        this.$target.innerHTML = '';
-        
-        const docFrag = document.createDocumentFragment();
-        
-        const listUl = document.createElement('ul');
-
-        this.data.forEach( ({ text, isCompleted }, index) => {
-            const listItem = document.createElement('li');
-            const itemRemoveBtn = document.createElement('button');
-            
-            itemRemoveBtn.innerHTML = '삭제';
-
-            itemRemoveBtn.onclick = () => {
-                this.data.splice(index, 1);
-
-                this.render();
-            };
-
-            if(isCompleted === false){
-                listItem.onclick = () => {
-                    this.data[index].isCompleted = true;
-                    this.render();
-                }
-            }
-
-            listItem.innerHTML = isCompleted ? `<s>${text}</s>` : text;
-            listUl.appendChild(listItem);
-            listUl.appendChild(itemRemoveBtn);
-        });
-
-        docFrag.appendChild(listUl);
-
-        this.$target.appendChild(docFrag);
+        this.$target.innerHTML = `<ul>${this.data.reduce((acc, { text, isCompleted }, index) => `${acc} <li data-index = ${index}>${isCompleted ? `<s>${text}</s>` : text} <button>삭제</button></li>`, '')}</ul>`;
     }
 
     setState(nextData) {
