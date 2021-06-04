@@ -23,7 +23,12 @@ export class TodoInput {
     attatchEvent() {
         this.textInput.onkeydown = ({ code, isComposing }) => {
             if (!isComposing && this.textInput.value && code === 'Enter') {
-                this.$list.addToList(this.textInput.value);
+                const newItem = {
+                    text : this.textInput.value,
+                    isCompleted : false
+                };
+
+                this.$list.setState([...this.$list.data, newItem]);
                 this.textInput.value = '';
             }
         };

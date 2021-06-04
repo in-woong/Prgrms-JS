@@ -42,16 +42,6 @@ export class TodoList {
         this.render();
     }
 
-    addToList(newText){
-        const newItem = {
-            text : newText,
-            isCompleted : false
-        }
-        validateData([newItem]);
-        this.data.push(newItem);
-        this.render();
-    }
-
     addEventDelegator() {
         this.$target.addEventListener('click', ({ target: { className, dataset: { index } } }) => {
             switch (className) {
