@@ -25,7 +25,7 @@ export class TodoList {
     }
 
     render() {
-        this.$target.innerHTML = `<ul>${this.data.reduce((acc, { text, isCompleted }, index) => `${acc} <li data-index = ${index}>${isCompleted ? `<s>${text}</s>` : text} <button>삭제</button></li>`, '')}</ul>`;
+        this.$target.innerHTML = `<ul>${this.data.reduce((acc, { text, isCompleted }, index) => `${acc} <li class="todo-item" data-index=${index}>${isCompleted ? `<s>${text}</s>` : text} <button class="todo-remove-btn" data-index=${index}>삭제</button></li>`, '')}</ul>`;
     }
 
     setState(nextData) {
