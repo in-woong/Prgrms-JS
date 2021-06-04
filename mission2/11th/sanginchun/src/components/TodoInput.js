@@ -1,5 +1,5 @@
 class TodoInput {
-  constructor({ $app, onSubmit }) {
+  constructor({ $parent, onSubmit }) {
     this.$target = document.createElement('form')
     this.$target.setAttribute('data-component-type', 'TodoInput')
 
@@ -23,7 +23,7 @@ class TodoInput {
     })
 
     this.render()
-    $app.appendChild(this.$target)
+    $parent.appendChild(this.$target)
   }
 
   render() {
