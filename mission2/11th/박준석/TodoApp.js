@@ -31,5 +31,7 @@ export default class TodoApp{
         this.todoList = new TodoList(data, $id);
         this.todoInput = new TodoInput(this.todoList);
         this.todoCount = new TodoCount(this.todoList);
+
     }
+
 }

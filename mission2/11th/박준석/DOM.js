@@ -15,6 +15,6 @@ export const todoNodeTemplate = (num, isCompleted, text) => {
             <span>${text}</span></li>`
 }
 
-export const todoCountTemplate = (listLen, isDone) => {
-  
+export const todoCountTemplate = (listCnt, doneCnt) => {
+  return `<br/><p>Todo Count : ${listCnt} </p><p>Done Count : ${doneCnt}</p>`
 }
