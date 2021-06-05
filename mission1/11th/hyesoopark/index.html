@@ -23,7 +23,7 @@
             this.todos = todos;
             this.render = function () {
                 document.querySelector('#todo-list').innerHTML = this.todos.map(todo =>
-                    `<div>${todo.text}</div>`)
+                    `<div>${todo.text}</div>`).join('')
 
             }
         }
