@@ -6,13 +6,14 @@ export default class TodoList {
     this.state = initState
     this.target = $("#" + $target + "-list")
     if (this.state != null){
-      this.check(this.state)
+      this.isUsableData(this.state)
       this.render()
     }
     this.target.addEventListener("click", this.removeNode);
+    this.target.addEventListener("click", this.checkNode);
   }
 
-  check = (data) => {
+  isUsableData = (data) => {
     if (!Array.isArray(data)) throw new Error(ERROR_MSSAGE.DATA_IS_NOT_ARRAY)
     data.forEach((val) => {
       if (val.constructor !== Object) throw new Error(ERROR_MSSAGE.VALUE_IS_NOT_OBJECT)
@@ -40,10 +41,18 @@ export default class TodoList {
         const classNum = target.parentNode.className;
         const parent = target.parentNode.parentNode;
         parent.removeChild(target.parentNode);
-        console.log(classNum, this.state)
         this.state.splice(classNum, 1);
-        console.log(classNum, this.state)
       }
     }
   }
+
+  checkNode = ({ target }) => {
+    if (target.tagName == "SPAN"){
+      if (!target.parentNode.style.textDecoration)
+        target.parentNode.style.textDecoration = "line-through";
+      else
+        target.parentNode.style.textDecoration = "";
+    }
+  }
+
 }
