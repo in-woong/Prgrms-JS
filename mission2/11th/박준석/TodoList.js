@@ -29,7 +29,7 @@ export default class TodoList {
 
   setState = (newData) => {
     this.target.innerHTML = ''
-    this.check(newData)
+    this.isUsableData(newData)
     this.state = newData
     this.render()
   }

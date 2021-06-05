@@ -2,6 +2,7 @@ import { $ } from './utils.js'
 import { todoAppTemplate } from './DOM.js'
 import TodoInput from "./TodoInput.js"
 import TodoList from "./TodoList.js"
+import TodoCount from './TodoCount.js'
 
 
 const data = [
@@ -29,5 +30,6 @@ export default class TodoApp{
         
         this.todoList = new TodoList(data, $id);
         this.todoInput = new TodoInput(this.todoList);
+        this.todoCount = new TodoCount(this.todoList);
     }
 }
