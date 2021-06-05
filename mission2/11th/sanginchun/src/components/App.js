@@ -34,10 +34,6 @@ class App {
     this.todoItems = nextTodoItems
     this.setTodoItemsToLocal(this.todoItems)
 
-    this.render()
-  }
-
-  render() {
     this.todoList.setState(this.todoItems)
     this.todoCount.setState(this.todoItems)
   }
