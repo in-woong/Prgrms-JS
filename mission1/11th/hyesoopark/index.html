@@ -19,17 +19,62 @@
             },
         ]
 
-        const TodoList = function (todos) {
-            this.todos = todos;
-            this.render = function () {
-                document.querySelector('#todo-list').innerHTML = this.todos.map(todo =>
-                    `<div>${todo.text}</div>`).join('')
+        const emptyData = undefined;
 
+        const dataAsObject = {};
+
+        const dataWithWrongFieldType = [
+            {
+                text: 'JS 공부하기',
+                isCompleted: 'true',
+            },
+            {
+                text: 'JS 복습하기',
+                isCompleted: "false",
+            },
+        ]
+
+        const TodoList = function (todos) {
+            if (todos === null || todos === undefined) {
+                throw new Error('데이터가 존재하지 않습니다.')
+            };
+
+            if (!Array.isArray(todos)) {
+                throw new Error('데이터가 Array 형태가 아닙니다.')
+            };
+
+            for (const todo of todos) {
+                if (typeof todo.text !== 'string' && typeof todo.isCompleted !== 'boolean') {
+                    throw new Error("text와 isCompleted 필드 타입이 유효하지 않습니다.")
+                };
+
+                if (typeof todo.text !== 'string' && typeof todo.isCompleted === 'boolean') {
+                    throw new Error("text 필드 타입이 String 타입이 아닙니다.")
+                };
+
+                if (typeof todo.text === 'string' && typeof todo.isCompleted !== 'boolean') {
+                    throw new Error("isCompleted 필드 타입이 boolean이 아닙니다.")
+                };
+            };
+
+            try {
+                this.todos = todos;
+                this.render = function () {
+                    document.querySelector('#todo-list').innerHTML = this.todos.map(todo =>
+                        `<div>${todo.text}</div>`).join('')
+                }
+            } catch (error) {
+                console.log(error)
             }
         }
 
         const todoList = new TodoList(data);
         todoList.render();
+
+        // throw errors when passing a wrong parameter to a constructor function
+        const emptyTodoList = new TodoList(emptyData);
+        const todoListAsObject = new TodoList(dataAsObject);
+        const todoListWithWrongParameter = new TodoList(dataWithWrongFieldType);
 
     </script>
 </body>
