@@ -1,7 +1,7 @@
 function TodoDeleteAll($app, state, onRemoveAll) {
   this.$target = document.createElement("button")
   this.$target.setAttribute("data-component-type", "TodoDeleteAll")
-  this.$target.innerText = "Remove All"
+  this.$target.innerText = "모두 삭제"
   $app.appendChild(this.$target)
   this.state = state
   this.onRemoveAll = onRemoveAll

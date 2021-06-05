@@ -1,6 +1,7 @@
 function TodoInput($app, onAddTodo) {
   this.$target = document.createElement("input")
   this.$target.setAttribute("data-component-type", "TodoInput")
+  this.$target.setAttribute("placeholder", "할 일을 입력해 주세요")
   $app.appendChild(this.$target)
 
   this.onAddTodo = onAddTodo

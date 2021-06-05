@@ -1,8 +1,8 @@
-import { todoValidate } from "../utils/Validation.js"
-import ErrorMessage from "../utils/ErrorMessage.js"
+import { todoValidate } from "../../utils/Validation.js"
+import ErrorMessage from "../../utils/ErrorMessage.js"
 import TodoCount from "./TodoCount.js"
 
-function TodoList($app, initialState, onCompleteToggle) {
+function TodoList($app, initialState, onCompleteToggle, onDeleteTodo) {
   if (!new.target) {
     throw new Error(ErrorMessage.SET_NEW_ERROR)
   }
@@ -13,14 +13,16 @@ function TodoList($app, initialState, onCompleteToggle) {
   this.$target.setAttribute("data-component-type", "TodoList")
   $app.appendChild(this.$target)
   this.onCompleteToggle = onCompleteToggle
+  this.onDeleteTodo = onDeleteTodo
 
   this.state = initialState
 
   this.todoCount = new TodoCount($app, this.state)
 
   this.todoClickHandler = (e) => {
-    if (!e.target.nodeName === "LI") return
-    this.onCompleteToggle(Number(e.target.id))
+    const { classList } = e.target
+    if (classList.contains("toggle")) this.onCompleteToggle(Number(e.target.closest("li").id))
+    if (classList.contains("remove")) this.onDeleteTodo(Number(e.target.closest("li").id))
   }
 
   this.setState = function (nextState) {
@@ -32,10 +34,13 @@ function TodoList($app, initialState, onCompleteToggle) {
   this.render = function () {
     const htmlString =
       this.state.length < 1
-        ? `<li>오늘 할 일을 입력하세요!</li>`
+        ? `<li>할 일을 입력하세요!</li>`
         : this.state
             .map(
-              (todo) => `<li id=${todo.id} class="complete_${todo.isCompleted}">${todo.text}</li>`
+              (todo) => `<li id=${todo.id} class="complete_${todo.isCompleted}">
+              <span class="toggle">${todo.text}</span>
+              <span class="remove">X</span>
+              </li>`
             )
             .join("")
 
