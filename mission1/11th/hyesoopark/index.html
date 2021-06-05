@@ -63,15 +63,23 @@
                 return new Error('new 키워드로 생성해주세요.')
             }
 
-            this.todos = todos;
+            this.state = todos;
 
-            validateData(this.todos);
+            validateData(this.state);
 
             try {
                 this.render = function () {
-                    document.querySelector('#todo-list').innerHTML = this.todos.map(todo =>
-                        `<div>${todo.text}</div>`).join('')
+                    document.querySelector('#todo-list').innerHTML =
+                        this.state.filter(todo => todo.text)
+                            .map(todo =>
+                                `<div>${todo.text}</div>`).join('')
+                };
+
+                this.setState = nextState => {
+                    this.state = nextState;
+                    this.render()
                 }
+
             } catch (error) {
                 console.log(error)
             }
@@ -79,6 +87,17 @@
 
         const todoList = new TodoList(data);
         todoList.render();
+
+        todoList.setState([
+            {
+                text: 'buy berries',
+                isCompleted: false,
+            },
+            {
+                wrong: 'prepare clothes',
+                isCompleted: true,
+            }
+        ])
 
         const todoListWithMissingNew = TodoList(data);
         console.log('todoListWithMissingNew', todoListWithMissingNew);
