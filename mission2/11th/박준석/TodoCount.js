@@ -8,8 +8,8 @@ export default class TodoCount {
         this.render();
     }
 
-    listChange(data){
-        this.rerender = data;
+    test(){
+        
     }
 
     render(){

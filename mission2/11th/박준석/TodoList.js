@@ -48,10 +48,16 @@ export default class TodoList {
 
   checkNode = ({ target }) => {
     if (target.tagName == "SPAN"){
-      if (!target.parentNode.style.textDecoration)
+      const classNum = target.parentNode.className;
+      if (!target.parentNode.style.textDecoration){
         target.parentNode.style.textDecoration = "line-through";
-      else
+        this.state[classNum].isCompleted = true;
+      }
+        
+      else{
         target.parentNode.style.textDecoration = "";
+        this.state[classNum].isCompleted = false;
+      }
     }
   }
 
