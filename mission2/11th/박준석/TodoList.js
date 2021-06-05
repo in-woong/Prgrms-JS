@@ -1,11 +1,14 @@
 import { $, ERROR_MSSAGE, isValueAvailable } from './utils.js'
 
 export default class TodoList {
-  constructor(initState, $target){
-    this.state = initState;
-    this.target = $target;
-    this.check(this.state)
-    this.render();
+  constructor(initState, $target) {
+    this.state = initState
+    this.target = "#" + $target + "-list"
+    if (this.state != null){
+      this.check(this.state)
+      this.render()
+    }
+    
   }
 
   check = (data) => {
@@ -16,10 +19,9 @@ export default class TodoList {
     })
   }
 
-  render(){
-    $(this.target).innerHTML = this.state.map(({ text, isCompleted }) => 
-    `<li>${isCompleted ? `<s>${text}</s>` : text}</li>`).join("");
-    $(this.target).innerHTML = `<h2>${this.target.toUpperCase()}</h2>` + $(this.target).innerHTML;
+  render() {
+    $(this.target).innerHTML = this.state.map(({ text, isCompleted }) => `<li>${isCompleted ? `<s>${text}</s>` : text}</li>`).join('')
+    $(this.target).innerHTML = `<h2>${this.target.toUpperCase()}</h2>` + $(this.target).innerHTML
   }
 
   setState = (newData) => {
@@ -28,5 +30,4 @@ export default class TodoList {
     this.state = newData
     this.render()
   }
-
 }
