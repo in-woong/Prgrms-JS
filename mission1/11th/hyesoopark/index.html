@@ -34,7 +34,7 @@
             },
         ]
 
-        const TodoList = function (todos) {
+        const validateData = (todos) => {
             if (todos === null || todos === undefined) {
                 throw new Error('데이터가 존재하지 않습니다.')
             };
@@ -56,9 +56,18 @@
                     throw new Error("isCompleted 필드 타입이 boolean이 아닙니다.")
                 };
             };
+        }
+
+        const TodoList = function (todos) {
+            if (!(this instanceof TodoList)) {
+                return new Error('new 키워드로 생성해주세요.')
+            }
+
+            this.todos = todos;
+
+            validateData(this.todos);
 
             try {
-                this.todos = todos;
                 this.render = function () {
                     document.querySelector('#todo-list').innerHTML = this.todos.map(todo =>
                         `<div>${todo.text}</div>`).join('')
@@ -70,6 +79,9 @@
 
         const todoList = new TodoList(data);
         todoList.render();
+
+        const todoListWithMissingNew = TodoList(data);
+        console.log('todoListWithMissingNew', todoListWithMissingNew);
 
         // throw errors when passing a wrong parameter to a constructor function
         const emptyTodoList = new TodoList(emptyData);
