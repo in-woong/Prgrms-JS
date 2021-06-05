@@ -13,7 +13,9 @@ const initialState = [
 
 function App($target) {
   this.$target = $target;
-  this.$state = [...initialState];
+  const storageTodo = JSON.parse(localStorage.getItem("TODOLIST"));
+  console.log(storageTodo);
+  this.$state = storageTodo ? [...storageTodo] : [...initialState];
 
   this.todoInput = new TodoInput(this.$target, (todoText) => {
     const newData = [
@@ -39,12 +41,10 @@ function App($target) {
     this.setState(newData);
   });
 
-  // this.todoCount = new TodoCount(this.$target, this.$state);
-
   this.setState = (nextState) => {
     this.$state = nextState;
     this.todoList.setState(this.$state);
-    // this.todoCount.setState(this.$state);
+    localStorage.setItem("TODOLIST", JSON.stringify(this.$state));
   };
 }
 
