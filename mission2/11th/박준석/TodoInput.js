@@ -22,6 +22,7 @@ export default class TodoInput {
             isCompleted : false
         }
         currentState = currentState != null ? [...currentState, data] : [data];
+        that.todoInput.value = '';
         that.todoList.setState(currentState);
     }
 }

@@ -9,7 +9,7 @@ export default class TodoList {
       this.check(this.state)
       this.render()
     }
-    this.target.addEventListener("click", this.remove);
+    this.target.addEventListener("click", this.removeNode);
   }
 
   check = (data) => {
@@ -21,7 +21,7 @@ export default class TodoList {
   }
 
   render = () => {
-    let title = this.target.id.substring(1).toUpperCase();
+    let title = this.target.id.toUpperCase();
     this.target.innerHTML = this.state.map(({ text, isCompleted }, index) => todoNodeTemplate(index, isCompleted, text)).join('')
     this.target.innerHTML = `<h2>${title}</h2>` + this.target.innerHTML;
   }
@@ -33,7 +33,17 @@ export default class TodoList {
     this.render()
   }
 
-  remove = (e) => {
-    console.log(e.target);
+  removeNode = ({ target }) => {
+    if (target.tagName == "INPUT"){
+      const text = target.parentNode.textContent.trim();
+      if (confirm(`정말 "${text}" 를 삭제하시겠습니까?`)){
+        const classNum = target.parentNode.className;
+        const parent = target.parentNode.parentNode;
+        parent.removeChild(target.parentNode);
+        console.log(classNum, this.state)
+        this.state.splice(classNum, 1);
+        console.log(classNum, this.state)
+      }
+    }
   }
 }
