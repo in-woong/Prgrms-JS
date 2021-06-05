@@ -1,6 +1,6 @@
 function TodoCount($app, state) {
-  this.$target = document.createElement('div');
-  this.$target.setAttribute('data-component-type', 'TodoCount');
+  this.$target = document.createElement("div");
+  this.$target.setAttribute("data-component-type", "TodoCount");
   $app.appendChild(this.$target);
   this.state = state;
 

@@ -1,14 +1,14 @@
-import TodoList from './TodoList.js';
-import TodoInput from './TodoInput.js';
-import TodoCount from './TodoCount.js';
+import TodoList from "./TodoList.js";
+import TodoInput from "./TodoInput.js";
+import TodoCount from "./TodoCount.js";
 
 const initialState = [
   {
     id: 1,
-    text: 'JS 공부하기',
+    text: "JS 공부하기",
     isCompleted: true,
   },
-  { id: 2, text: 'JS 복습하기', isCompleted: false },
+  { id: 2, text: "JS 복습하기", isCompleted: false },
 ];
 
 function App($target) {
@@ -39,12 +39,12 @@ function App($target) {
     this.setState(newData);
   });
 
-  this.todoCount = new TodoCount(this.$target, this.$state);
+  // this.todoCount = new TodoCount(this.$target, this.$state);
 
   this.setState = (nextState) => {
     this.$state = nextState;
     this.todoList.setState(this.$state);
-    this.todoCount.setState(this.$state);
+    // this.todoCount.setState(this.$state);
   };
 }
 
