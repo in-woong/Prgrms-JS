@@ -1,14 +1,15 @@
 import { $, ERROR_MSSAGE, isValueAvailable } from './utils.js'
+import { todoNodeTemplate } from "./DOM.js"
 
 export default class TodoList {
   constructor(initState, $target) {
     this.state = initState
-    this.target = "#" + $target + "-list"
+    this.target = $("#" + $target + "-list")
     if (this.state != null){
       this.check(this.state)
       this.render()
     }
-    
+    this.target.addEventListener("click", this.remove);
   }
 
   check = (data) => {
@@ -19,15 +20,20 @@ export default class TodoList {
     })
   }
 
-  render() {
-    $(this.target).innerHTML = this.state.map(({ text, isCompleted }) => `<li>${isCompleted ? `<s>${text}</s>` : text}</li>`).join('')
-    $(this.target).innerHTML = `<h2>${this.target.toUpperCase()}</h2>` + $(this.target).innerHTML
+  render = () => {
+    let title = this.target.id.substring(1).toUpperCase();
+    this.target.innerHTML = this.state.map(({ text, isCompleted }, index) => todoNodeTemplate(index, isCompleted, text)).join('')
+    this.target.innerHTML = `<h2>${title}</h2>` + this.target.innerHTML;
   }
 
   setState = (newData) => {
-    $(this.target).innerHTML = ''
+    this.target.innerHTML = ''
     this.check(newData)
     this.state = newData
     this.render()
+  }
+
+  remove = (e) => {
+    console.log(e.target);
   }
 }

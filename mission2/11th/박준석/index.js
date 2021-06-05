@@ -5,7 +5,7 @@ import TodoApp from './TodoApp.js'
 const data = [
   {
     text: 'JS 공부하기',
-    isCompleted: false,
+    isCompleted: true,
   },
   {
     text: 'JS 복습하기',
