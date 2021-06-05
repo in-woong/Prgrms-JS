@@ -1,5 +1,5 @@
-import { addNewTodoListDiv } from './utils.js'
-import { TodoList } from './mission1.js'
+import { $, addNewTodoListDiv } from './utils.js'
+import TodoList from './TodoList.js'
 
 const data = [
   {
@@ -13,7 +13,7 @@ const data = [
   {
     text: '                   JS 과제하기    ',
     isCompleted: true,
-  },
+  }
 ]
 
 const data2 = [
@@ -28,7 +28,7 @@ const data2 = [
   {
     text: '독서하기',
     isCompleted: true,
-  },
+  }
 ]
 
 const data3 = [
@@ -43,12 +43,13 @@ const data3 = [
   {
     text: '치킨',
     isCompleted: false,
-  },
+  }
 ]
 
-const test = new TodoList(data)
+const test = new TodoList(data, '#todo-list');
 const test2 = new TodoList(data2, '#play-list')
 const test3 = new TodoList(data3, '#food-list')
 
-// if you want, you can add more list div
-// addNewTodoListDiv("food-list");
+// setTimeout(() => {
+//   test3.setState(data)
+// }, 3000)
