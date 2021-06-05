@@ -3,7 +3,7 @@
 }
 .todoUl .complete_true:before {
   display: inline-block;
-  content: '(완료)';
+  content: "(완료)";
   padding-right: 8px;
   color: teal;
 }
