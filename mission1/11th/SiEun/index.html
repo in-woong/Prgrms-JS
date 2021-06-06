@@ -53,16 +53,16 @@
 
       function TodoList(data, id) {
         // 보너스 구현사항 #50 수정
+        if (!new.target) {
+          throw new Error('new를 통해 함수를 생성해주세요'); 
+        } 
+
         if (data === undefined || data === null) {
           throw new Error("올바른 데이터 형태를 입력해주세요")
         } 
 
         if (!Array.isArray(data)) {
           throw new Error("Array 형태로 값을 입력해주세요") 
-        } 
-        
-        if (!new.target) {
-          throw new Error('new를 통해 함수를 생성해주세요'); 
         } 
 
         data.forEach(item => {
