@@ -16,7 +16,6 @@ function TodoList(data,$app){
   this.$todoItems = data;
 
   this.render = () => {
-    console.log(this.$todoItems)
     this.$target.innerHTML = this.$todoItems.map((todoItem,index) => `<li class="todo__item" data-value=${index}>${todoItem.isCompleted ? '완료' : '미완료'} ${todoItem.text}</li>`).join('');
   };
 
