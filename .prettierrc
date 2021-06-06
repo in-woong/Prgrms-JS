@@ -2,10 +2,8 @@
   "trailingComma": "es5",
   "tabWidth": 2,
   "semi": false,
-  "singleQuote": true,
   "printWidth": 300,
   "quoteProps": "consistent",
-  "endOfLine": "auto"
-  "singleQuote": true,
-  "endOfLine": true,
+  "endOfLine": "auto",
+  "singleQuote": true
 }
