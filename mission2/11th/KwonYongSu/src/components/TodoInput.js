@@ -10,32 +10,25 @@ function TodoInput($app,addItem){
   inputWrapper.appendChild(todoAddBtn);
   $app.appendChild(inputWrapper);
 
-  this.todoInputHandler = (e) => {
-    if(e.keyCode == 13){
-      const inputElem = e.target;
-      if(inputElem.value.trim() !== ""){
-        addItem(inputElem.value);
-        inputElem.value = '';
-        inputElem.focus();
-      }else {
-        alert("입력된 todo가 없습니다.");
-        return
-      };
-    };
+  const todoInputHandler = (e) => {
+    if(e.keyCode == 13) todoItemHandler();
   };
-  this.todoInputBtnHandler = (e) => {
+
+  const todoInputBtnHandler = (e) => { todoItemHandler() };
+
+  const todoItemHandler=()=>{
     if(todoAddInput.value.trim() !== ""){
       addItem(todoAddInput.value);
       todoAddInput.value = '';
       todoAddInput.focus();
     }else {
-      alert("입력된 todo가 없습니다.");
+      alert("입력된 할 일이 없습니다.");
       return
     }
-  };
+  }
 
-  todoAddInput.addEventListener('keyup',this.todoInputHandler);
-  todoAddBtn.addEventListener('click',this.todoInputBtnHandler);
+  todoAddInput.addEventListener('keyup',todoInputHandler);
+  todoAddBtn.addEventListener('click',todoInputBtnHandler);
 }
 
 export default TodoInput;
