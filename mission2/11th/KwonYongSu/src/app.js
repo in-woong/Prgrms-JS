@@ -1,7 +1,7 @@
 import TodoInput from './components/TodoInput.js'
 import TodoList from './components/TodoList.js'
 import TodoCount from './components/TodoCount.js'
-
+import TodoRemoveAll from './components/RemoveAll.js'
 const Todo = [
   {
     todoId: 0,
@@ -41,13 +41,16 @@ function App($target) {
 
   const changeCompletedTodoCount = (todoItems) => {
     this.$state = todoItems;
-    this.changeCount(todoItems)
-  }
+    this.changeCount(todoItems);
+  };
+
+  const removeAllTodoItems = () => {this.changeState([]);};
 
   this.todoInput = new TodoInput(this.$target,addItem);  
   this.todoList = new TodoList(this.$state ,this.$target,changeCompletedTodoCount);
   this.todoCount = new TodoCount(this.$target,this.$state);
-
+  this.todoRemoveAll = new TodoRemoveAll(this.$target,removeAllTodoItems);
+  
   this.changeState = (nextSate) => {
     this.$state = nextSate;
     this.todoList.setState(nextSate);

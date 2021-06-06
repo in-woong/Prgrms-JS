@@ -6,6 +6,7 @@ function TodoCount($app,todoItems){
   const todoUnCompleted = document.createElement('div'); 
   todoCountWrapper.appendChild(todoCompleted)
   todoCountWrapper.appendChild(todoUnCompleted)
+  $app.appendChild(todoCountWrapper);
  
 
   this.countCompletedTodoItem = (todoItems) => {
@@ -17,7 +18,6 @@ function TodoCount($app,todoItems){
     })
     todoCompleted.innerText ="완료된 목록"+ compeletedTodoCount;
     todoUnCompleted.innerText ="전체 목록" + todoItems.length;
-    $app.appendChild(todoCountWrapper);
   }
   this.countCompletedTodoItem(todoItems);
 }
