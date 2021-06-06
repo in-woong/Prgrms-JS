@@ -1,8 +1,9 @@
 import dataValidation from '../../utils/DataValidation.js';
 
-function TodoList(data,selector){
+function TodoList(data,$app){
   // new 키워드로 생성하지 않은 경우
-  const todoListElem =selector;
+  const todoListElem =document.createElement('div');
+  $app.appendChild(todoListElem);
 
   if(!new.target){
     throw new Error('new 키워드를 통해서 생성해주세요.');
@@ -21,7 +22,7 @@ function TodoList(data,selector){
     this.data = nextData;
     this.render();
   }
-  
+
   this.render();
 };
 
