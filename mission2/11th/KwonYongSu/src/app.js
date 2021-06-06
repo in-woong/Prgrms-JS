@@ -1,12 +1,15 @@
 import TodoInput from './components/TodoInput.js'
 import TodoList from './components/TodoList.js'
+import TodoCount from './components/TodoCount.js'
 
 const Todo = [
   {
+    todoId: 0,
     text: 'todo text',  // 할 일 이름
     isCompleted: false, // 완료 여부
   },
   {
+    todoId: 1,
     text: 'todo text 2',  // 할 일 이름
     isCompleted: false, // 완료 여부
   },
@@ -24,9 +27,11 @@ function App($target) {
   this.$state = Todo;
   
   const addItem = (todoItem) =>{
+    console.log('add items',this.$state)
     const newTodoItems = [
       ...this.$state,
       {
+        todoId: this.$state.length,
         text:todoItem,
         isCompleted:false
       }
@@ -34,15 +39,23 @@ function App($target) {
     this.changeState(newTodoItems);
   };
 
-  this.todoInput = new TodoInput(this.$target,addItem);
-  
-  this.todoList = new TodoList(Todo,this.$target);
+  const changeCompletedTodoCount = (todoItems) => {
+    this.$state = todoItems;
+    this.changeCount(todoItems)
+  }
 
+  this.todoInput = new TodoInput(this.$target,addItem);  
+  this.todoList = new TodoList(this.$state ,this.$target,changeCompletedTodoCount);
+  this.todoCount = new TodoCount(this.$target,this.$state);
 
   this.changeState = (nextSate) => {
-    console.log('동작한다.',nextSate);
     this.$state = nextSate;
     this.todoList.setState(nextSate);
+    this.todoCount.countCompletedTodoItem(nextSate);
+  }
+
+  this.changeCount = (todoItems) => {
+    this.todoCount.countCompletedTodoItem(todoItems);
   }
 };
 

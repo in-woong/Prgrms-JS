@@ -1,6 +1,6 @@
 import dataValidation from '../../utils/DataValidation.js';
 
-function TodoList(data,$app){
+function TodoList(data,$app,changeCompletedTodoCount){
   // new 키워드로 생성하지 않은 경우
   const todoListElem =document.createElement('div');
   
@@ -16,21 +16,28 @@ function TodoList(data,$app){
   this.$todoItems = data;
 
   this.render = () => {
-    this.$target.innerHTML = this.$todoItems.map((todoItem,index) => `<li class="todo__item" data-value=${index}>${todoItem.isCompleted ? '완료' : '미완료'} ${todoItem.text}</li>`).join('');
+    this.$target.innerHTML = this.$todoItems.map(todoItem => `<div class="todoItem-${todoItem.todoId}"><li class="todo__item ${todoItem.isCompleted ? 'completed':'' }" data-value=${todoItem.todoId}>${todoItem.text} </li><span data-value=${todoItem.todoId} class="delete__todo">삭제하기</span></div>`).join('');
   };
 
 
   const todoItemCheckHandler = (e)=> {
     if(e.target.classList.contains('todo__item')){
       const itemId = e.target.dataset.value;
-      this.$todoItems = this.$todoItems.map((todoItem,index) => {
-        if(index == itemId){
+      this.$todoItems = this.$todoItems.map(todoItem => {
+        if(todoItem.todoId == itemId){
           todoItem.isCompleted = !todoItem.isCompleted;
         }
         return todoItem;
       });
-      this.render();
+      e.target.classList.toggle('completed');
     }
+
+    if(e.target.classList.contains('delete__todo')){
+      const itemId = e.target.dataset.value;
+      document.querySelector(`.todoItem-${itemId}`).remove();
+      this.$todoItems = this.$todoItems.filter(todoItem => todoItem.todoId != itemId);
+    }
+    changeCompletedTodoCount(this.$todoItems);
   }
 
   this.$target.addEventListener('click',todoItemCheckHandler);
