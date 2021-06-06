@@ -2,22 +2,23 @@ import { $ } from "./utils.js"
 import { todoCountTemplate } from "./DOM.js"
 
 export default class TodoCount {
-    constructor($todoList){
+    constructor($todoListState){
         this.target = $('#todo-count');
-        this.todoList = $todoList;
+        this.todoListState = $todoListState;
         this.render();
     }
 
-    test(){
-        
-    }
-
     render(){
-        let listCnt = this.todoList.state.length;
+        let listCnt = this.todoListState.length;
         let doneCnt = 0;
-        this.todoList.state.forEach((data) => {
+        this.todoListState.forEach((data) => {
             if(data.isCompleted) doneCnt++;
         })
         this.target.innerHTML = todoCountTemplate(listCnt, doneCnt);
+    }
+
+    setState(nextState){
+        this.todoListState = nextState;
+        this.render();
     }
 }

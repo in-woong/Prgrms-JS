@@ -2,15 +2,17 @@ import { $, ERROR_MSSAGE, isValueAvailable } from './utils.js'
 import { todoNodeTemplate } from "./DOM.js"
 
 export default class TodoList {
-  constructor(initState, $target) {
+  constructor($app, initState, $target, renewList) {
+    this.app = $app;
     this.state = initState
-    this.target = $("#" + $target + "-list")
+    this.target = $target
+    this.renewList = renewList;
     if (this.state != null){
       this.isUsableData(this.state)
       this.render()
     }
-    this.target.addEventListener("click", this.removeNode);
-    this.target.addEventListener("click", this.checkNode);
+    this.app.addEventListener("click", this.removeNode);
+    this.app.addEventListener("click", this.checkNode);
   }
 
   isUsableData = (data) => {
@@ -35,7 +37,7 @@ export default class TodoList {
   }
 
   removeNode = ({ target }) => {
-    if (target.tagName == "INPUT"){
+    if (target.classList.contains("rm-btn")){
       const text = target.parentNode.textContent.trim();
       if (confirm(`정말 "${text}" 를 삭제하시겠습니까?`)){
         const classNum = target.parentNode.className;
@@ -44,6 +46,7 @@ export default class TodoList {
         this.state.splice(classNum, 1);
       }
     }
+    this.renewList(this.state);
   }
 
   checkNode = ({ target }) => {
@@ -53,12 +56,11 @@ export default class TodoList {
         target.parentNode.style.textDecoration = "line-through";
         this.state[classNum].isCompleted = true;
       }
-        
       else{
         target.parentNode.style.textDecoration = "";
         this.state[classNum].isCompleted = false;
       }
     }
+    this.renewList(this.state);
   }
-
 }

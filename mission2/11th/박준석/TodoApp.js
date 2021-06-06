@@ -22,16 +22,28 @@ const data = [
 
 
 export default class TodoApp{
-    constructor($target, $id){
+    constructor($target){
         this.target = $($target);
-        this.id = $id;
 
         this.target.innerHTML = todoAppTemplate();
         
-        this.todoList = new TodoList(data, $id);
-        this.todoInput = new TodoInput(this.todoList);
-        this.todoCount = new TodoCount(this.todoList);
+        this.todoList = new TodoList(this.target, data, $("#todo-list"), this.renewList.bind(this));
+        this.todoInput = new TodoInput(this.target, this.addNewNode.bind(this));
+        this.todoCount = new TodoCount(this.todoList.state);
 
+    }
+
+    addNewNode(nextNode) {
+      this.setState([...this.todoList.state, nextNode])
+    }
+
+    renewList(nextState) {
+      this.setState(nextState);
+    }
+
+    setState(nextState) {
+      this.todoList.setState(nextState);
+      this.todoCount.setState(nextState);
     }
 
 }

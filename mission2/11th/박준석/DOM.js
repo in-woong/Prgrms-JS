@@ -11,7 +11,7 @@ export const todoAppTemplate = ($id) => {
 }
 
 export const todoNodeTemplate = (num, isCompleted, text) => {
-  return `<li class="${num}" ${isCompleted ? `style="text-decoration:line-through"` : `""`}><input type="button" value="❌">
+  return `<li class="${num}" ${isCompleted ? `style="text-decoration:line-through"` : `""`}><input class="rm-btn" type="button" value="❌">
             <span>${text}</span></li>`
 }
 

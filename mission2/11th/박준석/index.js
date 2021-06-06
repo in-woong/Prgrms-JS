@@ -51,7 +51,7 @@ const data = [
 // const test2 = new TodoList(data2, '#play-list')
 // const test3 = new TodoList(data3, '#food-list')
 
-const app = new TodoApp('.app', 'todo');
+const app = new TodoApp('.app');
 
 // setTimeout(() => {
 //   test3.setState(data)
