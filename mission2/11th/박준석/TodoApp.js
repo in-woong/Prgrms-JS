@@ -4,6 +4,7 @@ import TodoInput from "./TodoInput.js"
 import TodoList from "./TodoList.js"
 import TodoCount from "./TodoCount.js"
 import TodoRemoveAll from "./TodoRemoveAll.js"
+import TodoLocalStorage from "./TodoLocalStorage.js"
 
 
 const data = [
@@ -24,14 +25,16 @@ const data = [
 
 export default class TodoApp{
     constructor($target){
+        this.todoLocalStorage = new TodoLocalStorage();
+        this.state = this.todoLocalStorage.loadState();
         this.target = $($target);
-
         this.target.innerHTML = todoAppTemplate();
         
-        this.todoList = new TodoList(this.target, data, $("#todo-list"), this.renewList.bind(this));
+        this.todoList = new TodoList(this.target,  this.state , $("#todo-list"), this.renewList.bind(this));
         this.todoInput = new TodoInput(this.target, this.addNewNode.bind(this));
         this.todoCount = new TodoCount(this.todoList.state);
         this.removeAll = new TodoRemoveAll(this.target, this.removeAllList.bind(this));
+        
     }
 
     addNewNode(nextNode) {
@@ -49,6 +52,7 @@ export default class TodoApp{
     setState(nextState) {
       this.todoList.setState(nextState);
       this.todoCount.setState(nextState);
+      this.todoLocalStorage.setState(nextState);
     }
 
 }

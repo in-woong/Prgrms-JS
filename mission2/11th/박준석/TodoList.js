@@ -46,8 +46,8 @@ export default class TodoList {
         parent.removeChild(target.parentNode);
         this.state.splice(classNum, 1);
       }
+      this.renewList(this.state);
     }
-    this.renewList(this.state);
   }
 
   checkNode = ({ target }) => {
@@ -61,7 +61,7 @@ export default class TodoList {
         target.parentNode.style.textDecoration = "";
         this.state[classNum].isCompleted = false;
       }
+      this.renewList(this.state);
     }
-    this.renewList(this.state);
   }
 }
