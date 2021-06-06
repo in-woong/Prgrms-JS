@@ -73,7 +73,11 @@
         this.render = function() {
           let textList = '';
           this.data.forEach(item => {
-            textList += `<li>${item.text}</li>`;
+            if (item.isCompleted) {
+              textList += `<li>${item.text}</li>`;
+            } else {
+              textList += `<li><s>${item.text}</s></li>`;
+            }
           });
           todoListId.innerHTML = textList;
         }
