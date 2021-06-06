@@ -5,9 +5,11 @@
   </head>
 
   <body>
-    <div id="todo-list"></div>
+    <ul id="todo-list1"></ul>
+    <ul id="todo-list2"></ul>
+    <ul id="todo-list3"></ul>
     <script>
-      const data = [
+      const data1 = [
         {
           text: 'JS 공부하기',
           isCompleted: true,
@@ -17,44 +19,73 @@
           isCompleted: false,
         },
       ]
+
+      const data2 = [
+        {
+          text: 'mission1 피드백 확인',
+          isCompleted: true,
+        },
+        {
+          text: 'mission1 수정',
+          isCompleted: false,
+        },
+      ]
+
+      const data3 = [
+        {
+          text: 'mission2 확인',
+          isCompleted: true,
+        },
+        {
+          text: 'mission2 진행',
+          isCompleted: false,
+        },
+      ]
       // 이곳에서 코딩을 시작하세요!
 
 
-      const todoListData = document.querySelector('#todo-list');
-
-      function TodoList(data) {
-        this.data = data
-
-        // 보너스 구현사항 #50
-        if (!Array.isArray(this.data)) {
-          throw new Error("Array 형태로 값을 입력해주세요") 
-        } else if (this.data === undefined || this.data === null) {
+      function TodoList(data, id) {
+        // 보너스 구현사항 #50 수정
+        if (data === undefined || data === null) {
           throw new Error("올바른 데이터 형태를 입력해주세요")
-        } else if(!new.target) {
-          throw new Error('new를 통해 함수를 생성해주세요'); 
-        } else {
-          checkData()
-        }
+        } 
 
-        this.render = function() {
-          this.data.forEach(item => {
-            todoListData.innerHTML += `<li>${item.text}</li>`
-          });
-        }
-      }
-      
-      function checkData() {
+        if (!Array.isArray(data)) {
+          throw new Error("Array 형태로 값을 입력해주세요") 
+        } 
+        
+        if (!new.target) {
+          throw new Error('new를 통해 함수를 생성해주세요'); 
+        } 
+
         data.forEach(item => {
-          if (!item.text) {
+          if (!item.hasOwnProperty('text')) {
             throw new Error("text를 함께 입력해주세요") 
-          } else if (typeof item.text !== 'string') {
+          } 
+
+          if (typeof item.text !== 'string') {
             throw new Error("text를 string 형태로 입력해주세요") 
           }
         })
+        
+        this.data = data
+        const todoListId = document.querySelector(id);
+        this.render = function() {
+          let textList = '';
+          this.data.forEach(item => {
+            textList += `<li>${item.text}</li>`;
+          });
+          todoListId.innerHTML = textList;
+        }
       }
       
-      const todoList = new TodoList(data);
-      todoList.render();
+      const todoList1 = new TodoList(data1, '#todo-list1');
+      const todoList2 = new TodoList(data2, '#todo-list2');
+      const todoList3 = new TodoList(data3, '#todo-list3');
+
+      todoList1.render();
+      todoList2.render();
+      todoList3.render();
 
     </script>
   </body>
