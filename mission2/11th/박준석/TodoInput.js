@@ -10,23 +10,24 @@ export default class TodoInput {
   }
 
   addInputEvent() {
-    this.app.addEventListener('click', (e) => this.writeTodo(e, this))
+    this.app.addEventListener('submit', (e) => this.writeTodo(e, this))
   }
 
   writeTodo(e, that) {
-    // console.log(e);
-    // console.log(that);
-    if (e.target.classList.contains('input_btn')) {
+    e.preventDefault();
+    if (e.target.classList.contains('todo-list')) {
       const inputText = that.todoInput.value
-      if (isValueAvailable(inputText)) throw new Error(ERROR_MSSAGE.INPUT_TEXT_ERROR)
+      if (isValueAvailable(inputText)){
+        alert(ERROR_MSSAGE.INPUT_TEXT_ERROR);
+        that.todoInput.value = '';
+        throw new Error(ERROR_MSSAGE.INPUT_TEXT_ERROR)
+      } 
       const data = {
         text: inputText,
-        isCompleted: false,
+        isCompleted: false
       }
-      //currentState = currentState != null ? [...currentState, data] : [data];
-      //that.todoList.setState(currentState);
       that.todoInput.value = ''
-      that.renewList(data)
+      that.renewList(data);   
     }
   }
 }

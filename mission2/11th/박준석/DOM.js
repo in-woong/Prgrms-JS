@@ -1,11 +1,14 @@
 export const todoAppTemplate = () => {
   return `
-    <div id="todo-input">
       <p>추가할 일을 입력하세요</p>
-      <input class="input_text" type="text">
-      <input class="input_btn" type="button" value="확인">
-      <input class="removeall-btn" type="button" value="모두 삭제">
-    </div>
+      <div "todo-list_inputdiv">
+        <form class="todo-list" style="display:inline">
+          <input class="input_text" type="text">
+          <button class="input_btn" type="submit">확인</button>
+        </form>
+        <button class="removeall-btn">모두 삭제</button>
+      </div>
+
     <div id="todo-list"></div>
     <div id="todo-count"></div>
     `
