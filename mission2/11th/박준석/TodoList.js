@@ -7,6 +7,7 @@ export default class TodoList {
     this.state = initState
     this.target = $target
     this.renewList = renewList;
+
     if (this.state != null){
       this.isUsableData(this.state)
       this.render()

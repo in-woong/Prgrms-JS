@@ -1,9 +1,10 @@
-export const todoAppTemplate = ($id) => {
+export const todoAppTemplate = () => {
   return `
     <div id="todo-input">
       <p>추가할 일을 입력하세요</p>
       <input class="input_text" type="text">
       <input class="input_btn" type="button" value="확인">
+      <input class="removeall-btn" type="button" value="모두 삭제">
     </div>
     <div id="todo-list"></div>
     <div id="todo-count"></div>
