@@ -14,20 +14,20 @@ export default class TodoInput {
   }
 
   writeTodo(e, that) {
-    e.preventDefault();
+    e.preventDefault()
     if (e.target.classList.contains('todo-list')) {
       const inputText = that.todoInput.value
-      if (isValueAvailable(inputText)){
-        alert(ERROR_MSSAGE.INPUT_TEXT_ERROR);
-        that.todoInput.value = '';
+      if (isValueAvailable(inputText)) {
+        alert(ERROR_MSSAGE.INPUT_TEXT_ERROR)
+        that.todoInput.value = ''
         throw new Error(ERROR_MSSAGE.INPUT_TEXT_ERROR)
-      } 
+      }
       const data = {
         text: inputText,
-        isCompleted: false
+        isCompleted: false,
       }
       that.todoInput.value = ''
-      that.renewList(data);   
+      that.renewList(data)
     }
   }
 }

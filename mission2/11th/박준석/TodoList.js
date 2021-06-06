@@ -1,19 +1,19 @@
 import { $, ERROR_MSSAGE, isValueAvailable } from './utils.js'
-import { todoNodeTemplate } from "./DOM.js"
+import { todoNodeTemplate } from './DOM.js'
 
 export default class TodoList {
   constructor($app, initState, $target, renewList) {
-    this.app = $app;
+    this.app = $app
     this.state = initState
     this.target = $target
-    this.renewList = renewList;
+    this.renewList = renewList
 
-    if (this.state != null){
+    if (this.state != null) {
       this.isUsableData(this.state)
       this.render()
     }
-    this.app.addEventListener("click", this.removeNode);
-    this.app.addEventListener("click", this.checkNode);
+    this.app.addEventListener('click', this.removeNode)
+    this.app.addEventListener('click', this.checkNode)
   }
 
   isUsableData = (data) => {
@@ -25,9 +25,9 @@ export default class TodoList {
   }
 
   render = () => {
-    let title = this.target.id.toUpperCase();
+    let title = this.target.id.toUpperCase()
     this.target.innerHTML = this.state.map(({ text, isCompleted }, index) => todoNodeTemplate(index, isCompleted, text)).join('')
-    this.target.innerHTML = `<h2>${title}</h2>` + this.target.innerHTML;
+    this.target.innerHTML = `<h2>${title}</h2>` + this.target.innerHTML
   }
 
   setState = (newData) => {
@@ -38,30 +38,29 @@ export default class TodoList {
   }
 
   removeNode = ({ target }) => {
-    if (target.classList.contains("rm-btn")){
-      const text = target.parentNode.textContent.trim();
-      if (confirm(`정말 "${text}" 를 삭제하시겠습니까?`)){
-        const classNum = target.parentNode.className;
-        const parent = target.parentNode.parentNode;
-        parent.removeChild(target.parentNode);
-        this.state.splice(classNum, 1);
+    if (target.classList.contains('rm-btn')) {
+      const text = target.parentNode.textContent.trim()
+      if (confirm(`정말 "${text}" 를 삭제하시겠습니까?`)) {
+        const classNum = target.parentNode.className
+        const parent = target.parentNode.parentNode
+        parent.removeChild(target.parentNode)
+        this.state.splice(classNum, 1)
       }
-      this.renewList(this.state);
+      this.renewList(this.state)
     }
   }
 
   checkNode = ({ target }) => {
-    if (target.tagName == "SPAN"){
-      const classNum = target.parentNode.className;
-      if (!target.parentNode.style.textDecoration){
-        target.parentNode.style.textDecoration = "line-through";
-        this.state[classNum].isCompleted = true;
+    if (target.tagName == 'SPAN') {
+      const classNum = target.parentNode.className
+      if (!target.parentNode.style.textDecoration) {
+        target.parentNode.style.textDecoration = 'line-through'
+        this.state[classNum].isCompleted = true
+      } else {
+        target.parentNode.style.textDecoration = ''
+        this.state[classNum].isCompleted = false
       }
-      else{
-        target.parentNode.style.textDecoration = "";
-        this.state[classNum].isCompleted = false;
-      }
-      this.renewList(this.state);
+      this.renewList(this.state)
     }
   }
 }
