@@ -41,6 +41,13 @@
           isCompleted: false,
         },
       ]
+
+      const data4 = [
+        {
+          text: 'setState 추가',
+          isCompleted: true,
+        },
+      ]
       // 이곳에서 코딩을 시작하세요!
 
 
@@ -68,18 +75,20 @@
           }
         })
         
-        this.data = data
+        this.data = data;
+        this.id = id;
         const todoListId = document.querySelector(id);
         this.render = function() {
           let textList = '';
           this.data.forEach(item => {
-            if (item.isCompleted) {
-              textList += `<li>${item.text}</li>`;
-            } else {
-              textList += `<li><s>${item.text}</s></li>`;
-            }
+            item.isCompleted ? textList += `<li><s>${item.text}</s></li>` : textList += `<li>${item.text}</li>`;
           });
           todoListId.innerHTML = textList;
+        }
+
+        this.setState = function(nextData) {
+          this.data = nextData;
+          this.render();
         }
       }
       
@@ -90,6 +99,10 @@
       todoList1.render();
       todoList2.render();
       todoList3.render();
+
+      setTimeout(() => {
+        todoList1.setState(data4)
+      }, 3000)
 
     </script>
   </body>
