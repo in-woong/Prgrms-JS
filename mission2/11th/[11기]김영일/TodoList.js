@@ -10,7 +10,7 @@ function TodoList($app, data) {
   this.state = data;
   this.render = () => {
     const htmlString = this.state.map(({text, isCompleted}) => {
-      return isCompleted ? `<li><s>${text}</s></li>` : `<li>${text}</li>`
+      return isCompleted ? `<li><s>${text}</s></li>` : `<li data-list="${text}">${text}</li>`
     }).join("");
 
     this.$target.innerHTML = `<ul>${htmlString}</ul>`;
@@ -30,6 +30,26 @@ function TodoList($app, data) {
         }])
         todoInput.value = ""; //UX를 위한 인풋값 초기화
       }
+  }
+
+  this.todoDelete = () => {
+    const deletedState = [];
+    this.state.map(({isCompleted},index) => {
+      if(!isCompleted) deletedState.push(this.state[index]);
+    })
+    this.state = deletedState;
+    this.render();
+  }
+
+  this.todoCheck = (event) => {
+    const checkTarget = event.target.dataset.list;
+
+    this.state.forEach((data) => {
+      if(data.text === checkTarget) {
+        data.isCompleted = true;
+      }
+      this.render();
+    })
   }
 }
 
@@ -62,8 +82,9 @@ let data = [
   }
 ];
 
+const todoDelete = document.querySelector("#delete-button");
 const todoInput = document.querySelector("#todo-input");
-const $app = document.querySelector("#app")
+const $app = document.querySelector("#app");
 let todoList = new TodoList($app,data);
 
 todoList.render();
@@ -79,3 +100,5 @@ setTimeout(()=> {
 }, 2000);
 
 todoInput.addEventListener("keypress",todoList.todoInput);
+todoDelete.addEventListener("click", todoList.todoDelete);
+app.addEventListener("click", todoList.todoCheck);
