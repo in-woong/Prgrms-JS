@@ -3,6 +3,7 @@ import dataValidation from '../../utils/DataValidation.js';
 function TodoList(data,$app){
   // new 키워드로 생성하지 않은 경우
   const todoListElem =document.createElement('div');
+  
   $app.appendChild(todoListElem);
 
   if(!new.target){
@@ -10,18 +11,38 @@ function TodoList(data,$app){
   };
 
   dataValidation(data);      
-
-  this.data = data;
+  
+  this.$target = todoListElem;
+  this.$todoItems = data;
 
   this.render = () => {
-    todoListElem.innerHTML = this.data.map(todoItem => todoItem.isCompleted ? `<li><s>${todoItem.text}</s></li>` :`<li>${todoItem.text}</li>`).join('');
+    console.log(this.$todoItems)
+    this.$target.innerHTML = this.$todoItems.map((todoItem,index) => `<li class="todo__item" data-value=${index}>${todoItem.isCompleted} ${todoItem.text}</li>`).join('');
   };
 
+
+  const todoItemCheckHandler = (e)=> {
+    if(e.target.classList.contains('todo__item')){
+      const itemId = e.target.dataset.value;
+      this.$todoItems = this.$todoItems.map((todoItem,index) => {
+        if(index == itemId){
+          todoItem.isCompleted = !todoItem.isCompleted;
+        }
+        return todoItem;
+      });
+      this.render();
+    }
+  }
+
+  this.$target.addEventListener('click',todoItemCheckHandler);
+  
+  
   this.setState = (nextData) => {
     dataValidation(nextData);        
-    this.data = nextData;
+    this.$todoItems = nextData;
     this.render();
   }
+
 
   this.render();
 };

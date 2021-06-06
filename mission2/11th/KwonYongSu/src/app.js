@@ -23,7 +23,7 @@ function App($target) {
   this.$target = $target;
   this.$state = Todo;
   
-  const changeState = (todoItem) =>{
+  const addItem = (todoItem) =>{
     const newTodoItems = [
       ...this.$state,
       {
@@ -31,15 +31,15 @@ function App($target) {
         isCompleted:false
       }
     ];
-    this.setState(newTodoItems);
+    this.changeState(newTodoItems);
   };
 
-  this.todoInput = new TodoInput(this.$target,changeState);
+  this.todoInput = new TodoInput(this.$target,addItem);
   
   this.todoList = new TodoList(Todo,this.$target);
 
 
-  this.setState = (nextSate) => {
+  this.changeState = (nextSate) => {
     console.log('동작한다.',nextSate);
     this.$state = nextSate;
     this.todoList.setState(nextSate);
