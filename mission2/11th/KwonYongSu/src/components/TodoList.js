@@ -21,6 +21,8 @@ function TodoList(data,$app,changeCompletedTodoCount){
 
 
   const todoItemCheckHandler = (e)=> {
+    
+    // event delegation - toggle complete state
     if(e.target.classList.contains('todo__item')){
       const itemId = e.target.dataset.value;
       this.$todoItems = this.$todoItems.map(todoItem => {
@@ -31,7 +33,8 @@ function TodoList(data,$app,changeCompletedTodoCount){
       });
       e.target.classList.toggle('completed');
     }
-
+    
+    // event delegation - delete function
     if(e.target.classList.contains('delete__todo')){
       const itemId = e.target.dataset.value;
       document.querySelector(`.todoItem-${itemId}`).remove();
