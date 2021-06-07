@@ -1,12 +1,10 @@
-const todoForm = document.querySelector('#todo-form');
-const todoInput = document.querySelector('input');
 const todoList = document.querySelector('#todoList');
 
-function TodoList(data, $app){
+function TodoList(data, $app, onToggle){
     
     
     this.state = data 
-    
+    console.log($app)
     if(!$app){
       throw new Error('$app이 올바르지 않습니다.');
     }
@@ -22,8 +20,7 @@ function TodoList(data, $app){
 
     this.$target.setAttribute('data-component-type', 'TodoListEle');
     //this.$target.className = 'TodoList'
-    
-
+   
 
     //[Mission1] 보너스 new 키워드 안 붙이고 함수 실행 시 에러 발생하게 하기 
     if(!new.target){
@@ -43,25 +40,21 @@ function TodoList(data, $app){
 
     
     this.setState = (nextState) =>{
-        console.log('TodoList의 this.state');
        
         this.state = nextState
         console.log(this.state);
         this.render();
     }
+    this.onToggle = onToggle;
 
     this.toggleTodo = (event) => {
-      const span = event.target;
-      const li = span.parentNode;
-      
-      const toggleTodos = this.state.map((todo)=>{
-        
-        //...todo 하면 인자가 2개가 있는데 isCompleted 만 따로 인지하고 반전시켜주나 신기하네 이건 후에 테스트해보자! 
-        return todo.id === parseInt(li.id) ? {...todo, isCompleted : !todo.isCompleted } : todo
-      });
+     const span = event.target;
+     const li = span.parentNode;
+     this.onToggle(li.id);
      span.className = "";
-     span.classList.add(`complete_${!this.state[parseInt(li.id)-1].isCompleted}`);
-     this.setState(toggleTodos);
+     
+     span.classList.add(`complete_${this.state[parseInt(li.id-1)].isCompleted}`);
+     
       
     }
 
@@ -83,7 +76,7 @@ function TodoList(data, $app){
       const li = document.createElement('li');
       const span = document.createElement('span');
       const delBtn = document.createElement('button');
-      li.id=this.state.length;
+      li.id=this.state.length+1;
 
       span.classList.add('todoColor');
       span.innerText = text;
@@ -96,56 +89,8 @@ function TodoList(data, $app){
       todoList.appendChild(li);
 
     }
-    this.handleSubmit = (event) =>{
-      event.preventDefault();
-      const curValue = todoInput.value;
-      //alldata(curValue);
-      
-      const newData = [
-        ...this.state
-        ,{
-        id : this.state.length+1,
-        text : curValue,
-        isCompleted : false
-      }
-    ];
-      this.setState(newData);
-      this.drawTodo(curValue);
-      todoInput.value = '';
-    }
 
-    todoForm.addEventListener('submit', this.handleSubmit);
 }
-
-
-
-// try{
-//   const $app = document.querySelector('#app')
-//   const todoList = new TodoList(data, $app);
-//   //new TodoList([{text : 'hey'}], $app);
-//   //new TodoList(data3, document.querySelector(`#todo-list3`));
-//   setTimeout(()=>{
-//     todoList.setState([
-//       ...data,
-//       {
-//         text:"first"
-//       }
-//     ])
-
-//     setTimeout(()=>{
-//       todoList.setState([
-//         ...data,
-//         {
-//           text:"second"
-//         }
-//       ])
-//     },2000);
-//   },2000);
-
-  
-// }catch(error){
-//   alert(error.message)
-// }
 
 
 

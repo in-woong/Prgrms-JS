@@ -1,4 +1,4 @@
-import main from "./main.js"
+import App from "./App.js"
 let data = [
     {
       text: 'JS 공부하기',
@@ -9,4 +9,4 @@ let data = [
       isCompleted : false
     }
    ]
-new main(data, document.querySelector('#main'));
+new App(data, document.querySelector('#App'));
