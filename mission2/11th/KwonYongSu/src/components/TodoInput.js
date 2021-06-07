@@ -4,7 +4,9 @@ function TodoInput($app,addItem){
   const todoAddInput = document.createElement('input');
   const todoAddBtn = document.createElement('button');
   todoAddBtn.innerText = "작성하기";
+  inputWrapper.classList.add('input__wrapper')
   todoAddInput.classList.add('todo__input');
+  todoAddBtn.classList.add('todo__input__btn');
   todoAddInput.setAttribute('placeholder','할 일을 입려하세요.');
   inputWrapper.appendChild(todoAddInput);
   inputWrapper.appendChild(todoAddBtn);

@@ -15,41 +15,46 @@ function App($target) {
   this.$target = $target;
   this.$state = getLocalStorageData();
   
-  const addItem = (todoItem) =>{
+  this.addItem = (todoItem) =>{
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth()+1;
+    const date = now.getDate();
+    console.log(year,month,date)
     const newTodoItems = [
       ...this.$state,
       {
         todoId: this.$state.length,
         text:todoItem,
-        isCompleted:false
+        isCompleted:false,
+        createdAt:`${year}.${month}.${date}`
       }
     ];
     this.changeState(newTodoItems);
   };
 
-  const changeCompletedTodoCount = (todoItems) => {
+  this.changeCompletedTodoCount = (todoItems) => {
     this.$state = todoItems;
     setLocalStorageData(this.$state);
     this.changeCount(todoItems);
   };
 
-  const removeAllTodoItems = () => {this.changeState([]);};
-
-  this.todoInput = new TodoInput(this.$target,addItem);  
-  this.todoList = new TodoList(this.$state ,this.$target,changeCompletedTodoCount);
-  this.todoCount = new TodoCount(this.$target,this.$state);
-  this.todoRemoveAll = new TodoRemoveAll(this.$target,removeAllTodoItems);
+  this.removeAllTodoItems = () => {this.changeState([]);};
   
   this.changeState = (nextSate) => {
     this.$state = nextSate;
     setLocalStorageData(this.$state);
     this.todoList.setState(nextSate);
     this.todoCount.countCompletedTodoItem(nextSate);
-  }
-
+  };
   this.changeCount = (todoItems) => {
     this.todoCount.countCompletedTodoItem(todoItems);
-  }
+  };
+
+  this.todoInput = new TodoInput(this.$target,this.addItem);  
+  this.todoList = new TodoList(this.$state ,this.$target,this.changeCompletedTodoCount);
+  this.todoCount = new TodoCount(this.$target,this.$state);
+  this.todoRemoveAll = new TodoRemoveAll(this.$target,this.removeAllTodoItems);
 };
 
 export default App;
