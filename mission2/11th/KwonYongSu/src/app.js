@@ -2,19 +2,8 @@ import TodoInput from './components/TodoInput.js'
 import TodoList from './components/TodoList.js'
 import TodoCount from './components/TodoCount.js'
 import TodoRemoveAll from './components/RemoveAll.js'
-const Todo = [
-  {
-    todoId: 0,
-    text: 'todo text',  // 할 일 이름
-    isCompleted: false, // 완료 여부
-  },
-  {
-    todoId: 1,
-    text: 'todo text 2',  // 할 일 이름
-    isCompleted: false, // 완료 여부
-  },
+import { getLocalStorageData,setLocalStorageData } from '../utils/LocalStorage.js'
 
-]
 
 function App($target) {
   
@@ -24,10 +13,9 @@ function App($target) {
   };
 
   this.$target = $target;
-  this.$state = Todo;
+  this.$state = getLocalStorageData();
   
   const addItem = (todoItem) =>{
-    console.log('add items',this.$state)
     const newTodoItems = [
       ...this.$state,
       {
@@ -41,6 +29,7 @@ function App($target) {
 
   const changeCompletedTodoCount = (todoItems) => {
     this.$state = todoItems;
+    setLocalStorageData(this.$state);
     this.changeCount(todoItems);
   };
 
@@ -53,6 +42,7 @@ function App($target) {
   
   this.changeState = (nextSate) => {
     this.$state = nextSate;
+    setLocalStorageData(this.$state);
     this.todoList.setState(nextSate);
     this.todoCount.countCompletedTodoItem(nextSate);
   }
