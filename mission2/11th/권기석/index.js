@@ -8,7 +8,7 @@ const data = [
     isCompleted: false,
   },
 ]
-
 const $target = document.querySelector('#todo-list')
-const todoList = new TodoList($target, data)
-const todoInput = new TodoInput($target)
+const $input = document.querySelector('#todo-input')
+
+const app = new App(data, $target, $input)
