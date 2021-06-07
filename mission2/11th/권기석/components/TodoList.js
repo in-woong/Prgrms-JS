@@ -23,6 +23,7 @@ function TodoList($target, data, updateCounter) {
   this.setState = function (nextData) {
     this.data = nextData
     this.updateCounter(nextData)
+    localStorage.setItem('data', JSON.stringify(nextData))
     this.render()
   }
 

@@ -1,5 +1,5 @@
-function TodoCount($target, initialCount) {
-  this.count = initialCount
+function TodoCount($target, data) {
+  this.count = data.length
   this.$target = $target
   this.$counter = document.createElement('span')
   this.$target.appendChild(this.$counter)

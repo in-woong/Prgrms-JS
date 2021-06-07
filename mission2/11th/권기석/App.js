@@ -1,10 +1,12 @@
-function App(data, $target, $input) {
+function App($target, $input) {
   const $list = document.createElement('ul')
+  localStorageItem = localStorage.getItem('data')
+  const initialData = localStorageItem ? JSON.parse(localStorageItem) : []
   $target.appendChild($list)
 
-  this.todoCounter = new TodoCount($target, data.length)
+  this.todoCounter = new TodoCount($target, initialData)
 
-  this.todoList = new TodoList($list, data, (nextData) => {
+  this.todoList = new TodoList($list, initialData, (nextData) => {
     this.todoCounter.setState(nextData)
   })
 
