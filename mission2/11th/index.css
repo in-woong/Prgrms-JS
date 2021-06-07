@@ -1,0 +1,11 @@
+.todoUl .complete_true::before {
+  display: inline-block;
+  content: "Completed";
+  color: white;
+  background-color: #3a7fff;
+  font-size: 20px;
+  padding: 20px 20px;
+  border-radius: 3px;
+  line-height: 10px;
+  margin-right: 8px;
+}
