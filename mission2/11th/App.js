@@ -25,11 +25,17 @@ function App(data, $target){
         //...todo 하면 인자가 2개가 있는데 isCompleted 만 따로 인지하고 반전시켜주나 신기하네 이건 후에 테스트해보자! 
         return todo.id === parseInt(liId) ? {...todo, isCompleted : !todo.isCompleted } : todo
       });
-      console.log('toggleTodos');
-      console.log(toggleTodos);
+      
       this.setState("",toggleTodos);
 
-    });
+    },
+    (liId)=>{
+      const cleanTodos = this.$state.filter((todo)=>{
+        return todo.id !== parseInt(liId);
+      });
+      this.setState("",cleanTodos);
+    }
+    );
   
     this.setState = (text, nextState) =>{
       this.$state = nextState;

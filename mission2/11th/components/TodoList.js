@@ -1,6 +1,7 @@
+import todoCount from "./TodoCount.js";
 const todoList = document.querySelector('#todoList');
 
-function TodoList(data, $app, onToggle){
+function TodoList(data, $app, onToggle, onDelete){
     
     
     this.state = data 
@@ -15,14 +16,10 @@ function TodoList(data, $app, onToggle){
 
     this.$target = document.createElement('div')
 
-    //코드 가독성
+    //코드 가독성 측면 
     $app.appendChild(this.$target);
-
     this.$target.setAttribute('data-component-type', 'TodoListEle');
-    //this.$target.className = 'TodoList'
-   
-
-    //[Mission1] 보너스 new 키워드 안 붙이고 함수 실행 시 에러 발생하게 하기 
+    
     if(!new.target){
         throw new Error('new로 객체를 생성해주세요');
     }
@@ -38,38 +35,32 @@ function TodoList(data, $app, onToggle){
     }
     this.render()
 
+    this.todoCount = new todoCount(this.state);
     
     this.setState = (nextState) =>{
        
         this.state = nextState
         console.log(this.state);
         this.render();
+        this.todoCount.setState(this.state);
     }
     this.onToggle = onToggle;
-
+    this.onDelete = onDelete;
     this.toggleTodo = (event) => {
      const span = event.target;
      const li = span.parentNode;
      this.onToggle(li.id);
      span.className = "";
-     
-     span.classList.add(`complete_${this.state[parseInt(li.id-1)].isCompleted}`);
-     
-      
+     span.classList.add(`complete_${this.state[parseInt(li.id-1)].isCompleted}`); 
     }
+
+    
 
     this.deleteTodo = (event) =>{
       const btn = event.target;
       const li = btn.parentNode;
       todoList.removeChild(li);
-      console.log('li id')
-      console.log(li.id)
-      const cleanTodos = this.state.filter((todo)=>{
-        return todo.id !== parseInt(li.id);
-      });
-      console.log('cleanTodos');
-      console.log(cleanTodos);
-      this.setState(cleanTodos)
+      this.onDelete(li.id);
     }
 
     this.drawTodo = (text) =>{
