@@ -51,6 +51,9 @@ const validationCheck = (data) => {
   return true;
 }
 
+
+
+
 let data = [
   {
     text: "JS 학습하기1",

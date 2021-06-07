@@ -1,11 +1,12 @@
 function TodoList($app, data) {
   if(!new.target) throw new Error("new 키워드를 추가해주세요");
-  if(!$app) throw new Error("$app이 올바르지 않습니다.");
+  // if(!app) throw new Error("app이 올바르지 않습니다.");
   if(!validationCheck(data)) throw new Error("데이터 형식을 올바르게 넣어주세요");
+  const app = $app;
 
   this.$target = document.createElement("div");
   this.$target.className = "todo-lists";
-  $app.appendChild(this.$target);
+  app.appendChild(this.$target);
   
   this.state = data;
   this.render = () => {
@@ -21,36 +22,27 @@ function TodoList($app, data) {
         this.state = nextState;
         this.render();
   }
-
-  this.todoInput = (event) => {
-      if(event.key === "Enter") {
-        todoList.setState([...this.state, {
-          text: `${event.target.value}`,
-          isCompleted: false,
-        }])
-        todoInput.value = ""; //UX를 위한 인풋값 초기화
-      }
-  }
-
-  this.todoDelete = () => {
+  const todoDelete = document.querySelector("#delete-button");
+  todoDelete.addEventListener("click", () => {
     const deletedState = [];
     this.state.map(({isCompleted},index) => {
       if(!isCompleted) deletedState.push(this.state[index]);
     })
     this.state = deletedState;
     this.render();
-  }
+  });
 
-  this.todoCheck = (event) => {
+  this.$target.addEventListener("click", (event) => {
     const checkTarget = event.target.dataset.list;
-
     this.state.forEach((data) => {
       if(data.text === checkTarget) {
         data.isCompleted = true;
       }
       this.render();
     })
-  }
+  });
+
+  this.render();
 }
 
 const validationCheck = (data) => {
@@ -70,35 +62,3 @@ const validationCheck = (data) => {
   })
   return true;
 }
-
-let data = [
-  {
-    text: "JS 학습하기1",
-    isCompleted: true
-  },
-  {
-    text: "JS 복습하기1",
-    isCompleted: false
-  }
-];
-
-const todoDelete = document.querySelector("#delete-button");
-const todoInput = document.querySelector("#todo-input");
-const $app = document.querySelector("#app");
-let todoList = new TodoList($app,data);
-
-todoList.render();
-
-setTimeout(()=> {
-  todoList.setState([
-    ...todoList.state,
-    {
-        text: 'setState',
-        isCompleted: true,
-    }
-  ])
-}, 2000);
-
-todoInput.addEventListener("keypress",todoList.todoInput);
-todoDelete.addEventListener("click", todoList.todoDelete);
-app.addEventListener("click", todoList.todoCheck);
