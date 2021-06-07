@@ -1,6 +1,7 @@
-function TodoList($target, data) {
+function TodoList($target, data, updateCounter) {
   this.$target = $target
   this.data = data
+  this.updateCounter = updateCounter
 
   this.render = function () {
     this.$target.innerHTML = this.data.map((todo, index) => this.convertToHTML(todo, index)).join('')
@@ -21,6 +22,7 @@ function TodoList($target, data) {
 
   this.setState = function (nextData) {
     this.data = nextData
+    this.updateCounter(nextData)
     this.render()
   }
 
