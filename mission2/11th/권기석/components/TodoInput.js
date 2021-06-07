@@ -5,6 +5,7 @@ function TodoInput($input, onAdd) {
   $input.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
       this.onAdd(e.target.value)
+      e.target.value = ''
     }
   })
 }

@@ -3,9 +3,6 @@ function TodoList($target, data, updateCounter) {
   this.data = data
   this.updateCounter = updateCounter
 
-  this.render = function () {
-    this.$target.innerHTML = this.data.map((todo, index) => this.convertToHTML(todo, index)).join('')
-  }
   this.convertToHTML = function (todo, index) {
     if (todo.isCompleted) {
       return `<li class="todo" data-index=${index}>
@@ -19,7 +16,9 @@ function TodoList($target, data, updateCounter) {
         </li>`
     }
   }
-
+  this.render = function () {
+    this.$target.innerHTML = this.data.map((todo, index) => this.convertToHTML(todo, index)).join('')
+  }
   this.setState = function (nextData) {
     this.data = nextData
     this.updateCounter(nextData)
