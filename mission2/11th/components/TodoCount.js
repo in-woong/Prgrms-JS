@@ -1,6 +1,10 @@
-const todoCount = document.querySelector('#todoCount');
-const todoCompleted = document.querySelector('#todoCompleted');
+
 function TodoCount(data){
+    const todoCount = document.createElement('div');
+    const todoCompleted = document.createElement('div');
+    todoCount.setAttribute("data-component-type", "TodoCount");
+    todoCompleted.setAttribute("data-component-type", "TodoCompleted");
+    
     this.$state=data;
     this.setState=(nextState)=>{
         this.$state=nextState;

@@ -2,10 +2,15 @@ import todoCount from "./TodoCount.js";
 const todoList = document.querySelector('#todoList');
 
 function TodoList(data, $app, onToggle, onDelete){
-    
-    
+   
+   
+   
     this.state = data 
-    console.log($app)
+    this.onToggle = onToggle;
+    this.onDelete = onDelete;
+    this.$target = document.createElement('ul')
+
+
     if(!$app){
       throw new Error('$app이 올바르지 않습니다.');
     }
@@ -14,8 +19,7 @@ function TodoList(data, $app, onToggle, onDelete){
       throw new Error('data가 올바르지 않습니다.');
     }
 
-    this.$target = document.createElement('div')
-
+  
     //코드 가독성 측면 
     $app.appendChild(this.$target);
     this.$target.setAttribute('data-component-type', 'TodoListEle');
@@ -25,10 +29,14 @@ function TodoList(data, $app, onToggle, onDelete){
     }
   
     this.render = () =>{
-          const todoHtmlStr = this.state.map(({text, isCompleted}) =>
-            isCompleted ? `<li><s>${text}</s></li>` : `<li>${text}</li>`
+        console.log(this.state);
+          const todoHtmlStr = this.state.map(({id, text, isCompleted}) =>
+            // isCompleted ? `<li><s>${text}</s></li>` : `<li>${text}</li>`
             //todo=>`<li>${todo.text}</li>`
-            
+            `<li id=${id} class="complete_${isCompleted}">
+              <span class="complete_false">${text}</span>
+              <span class="todoBtn">${'❌'}</span>
+              </li>`
             ).join('')
           
           this.$target.innerHTML=todoHtmlStr
@@ -40,52 +48,21 @@ function TodoList(data, $app, onToggle, onDelete){
     this.setState = (nextState) =>{
        
         this.state = nextState
-        console.log(this.state);
+        
         this.render();
         this.todoCount.setState(this.state);
     }
-    this.onToggle = onToggle;
-    this.onDelete = onDelete;
-
-
-    this.toggleTodo = (li, span) => {
-
-     console.log(li.id);
-     this.onToggle(li.id);
-     
-     span.className = "";
-     span.classList.add(`complete_${this.state[parseInt(li.id-1)].isCompleted}`); 
-    }
+    
 
     
 
-    this.deleteTodo = (li) =>{
-      // const btn = event.target;
-      //const btnParent = btn.parentNode;
-      todoList.removeChild(li);
-      this.onDelete(li.id);
-    }
-
-    this.drawTodo = (text) =>{
-      const li = document.createElement('li');
-      const span = document.createElement('span');
-      const delBtn = document.createElement('button');
-      li.id=this.state.length+1;
-
-      span.classList.add('complete_false');
-      delBtn.classList.add('todoBtn');
-      span.innerText = text;
-      delBtn.innerText= "❌";
-      li.appendChild(span);
-      li.appendChild(delBtn);
-      li.classList.add('todoli');
-      todoList.appendChild(li);  
-    }
-    todoList.addEventListener("click", (e) => {
-      console.log("clicked");
+    this.$target.addEventListener("click", (e)=>{
       const { classList } = e.target
-      if (classList.contains("complete_false") || classList.contains("complete_true")) this.toggleTodo(e.target.closest("li"),e.target.closest("span"));
-      if (classList.contains("todoBtn")) this.deleteTodo(e.target.closest("li"));
+      if (classList.contains("complete_false") || classList.contains("complete_true")) 
+          this.onToggle(e.target.closest("li").id);
+        
+      if (classList.contains("todoBtn")) 
+        this.onDelete(e.target.closest("li").id);
     })
 
    

@@ -1,21 +1,25 @@
 
-const todoInput = document.querySelector('input');
-const todoForm = document.querySelector('#todo-form');
 
-function TodoInput(addData){
-
+function TodoInput($app, addData){
+    const todoInput = document.createElement('input');
+    
+    todoInput.setAttribute("data-component-type","TodoInput");
+    todoInput.setAttribute("placeholder", "enter를 치면 todolist가 작성됩니다.");
+    $app.appendChild(todoInput);
+    
     this.addData=addData
     this.handleSubmit = (event) =>{
         event.preventDefault();
+        if(event.keyCode!==13) return;
         const curValue = todoInput.value;
-        
+        console.log(curValue)
         //alldata(curValue);
         this.addData(curValue);
         //this.drawTodo(curValue);
         todoInput.value = '';
       }
 
-    todoForm.addEventListener('submit', this.handleSubmit);
+    todoInput.addEventListener('keyup', this.handleSubmit);
 }
 
 export default TodoInput;

@@ -1,4 +1,4 @@
-.todoUl .complete_true::before {
+.complete_true::before {
   display: inline-block;
   content: "Completed";
   color: white;
@@ -8,4 +8,8 @@
   border-radius: 3px;
   line-height: 10px;
   margin-right: 8px;
+}
+
+input {
+  width : 19%
 }

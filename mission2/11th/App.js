@@ -1,9 +1,10 @@
 import TodoList from "./components/TodoList.js";
 import TodoInput from "./components/TodoInput.js";
+import TodoDeleteAll from "./components/TodoDeleteAll.js";
 
 function App(data, $target){
   this.$state = data;
-  this.todoInput = new TodoInput((text) =>{
+  this.todoInput = new TodoInput($target, (text) =>{
     const newData = [
       ...this.$state
       ,{
@@ -12,12 +13,14 @@ function App(data, $target){
       isCompleted : false
     }
   ];
-  this.setState(text,newData);
-  
-    //this.drawTodo(curValue);
+  this.setState(newData);
   });
-  console.log('app.js');
-  console.log(this.$state);
+  
+  this.todoDeleteAll = new TodoDeleteAll($target, ()=>{
+    const newData = []
+    this.setState(newData);
+  });
+
   this.todoList = new TodoList(this.$state, $target,
     (liId)=>{
       
@@ -27,21 +30,21 @@ function App(data, $target){
         return todo.id === parseInt(liId) ? {...todo, isCompleted : !todo.isCompleted } : todo
       });
       
-      this.setState("",toggleTodos);
+      this.setState(toggleTodos);
 
     },
     (liId)=>{
       const cleanTodos = this.$state.filter((todo)=>{
         return todo.id !== parseInt(liId);
       });
-      this.setState("",cleanTodos);
+      this.setState(cleanTodos);
     }
     );
   
-    this.setState = (text, nextState) =>{
+    
+    this.setState = (nextState) =>{
       this.$state = nextState;
-      if(text!="")
-        this.todoList.drawTodo(text);
+      
       this.todoList.setState(this.$state);
     }
 }
