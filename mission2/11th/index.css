@@ -1,3 +1,4 @@
+/* complete_true 옆에 버튼 생성 */
 .complete_true::before {
   display: inline-block;
   content: "Completed";
@@ -10,6 +11,7 @@
   margin-right: 8px;
 }
 
+/* placeholder값을 채우기 위해서 input bar 확장 */
 input {
   width : 19%
 }
