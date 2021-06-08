@@ -12,13 +12,17 @@ function TodoInput($app,addItem){
   inputWrapper.appendChild(todoAddBtn);
   $app.appendChild(inputWrapper);
 
+  // enter 이벤트가 발생하였을 경우 동작한다.
   const todoInputHandler = (e) => {
     if(e.keyCode == 13) todoItemHandler();
   };
 
+  // click 이벤트가 발생하였을 경우 동작한다.
   const todoInputBtnHandler = (e) => { todoItemHandler() };
 
+  // enter 및 click 이벤트가 발생한 경우 동일하게 동작해야 할 내부 로직을 분리하였다.
   const todoItemHandler=()=>{
+    // 공백을 제거하고 값이 있는지 판단한다.
     if(todoAddInput.value.trim() !== ""){
       addItem(todoAddInput.value);
       todoAddInput.value = '';

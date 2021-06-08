@@ -1,5 +1,4 @@
 function TodoCount($app,todoItems){
-  console.log('TodoItems',todoItems);
   const todoCountWrapper = document.createElement('div');
   todoCountWrapper.classList.add('todo__count__wrapper');
   const todoCompleted = document.createElement('div'); 
@@ -8,7 +7,7 @@ function TodoCount($app,todoItems){
   todoCountWrapper.appendChild(todoUnCompleted)
   $app.appendChild(todoCountWrapper);
  
-
+  // 주어진 데이터에서 완료된 목록의 수를 연산한다.
   this.countCompletedTodoItem = (todoItems) => {
     let compeletedTodoCount = 0;
     todoItems.map(todoItem => {

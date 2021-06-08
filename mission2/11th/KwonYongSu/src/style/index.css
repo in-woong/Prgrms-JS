@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Do+Hyeon&display=swap');
+
 /* 
 font-family: 'Black Han Sans', sans-serif;
 font-family: 'Do Hyeon', sans-serif;
@@ -111,7 +112,11 @@ body {
   text-decoration: none;
   transition: all .5s;
 }
-
+.todo__item__createdAt {
+  display: block;
+  margin-top:0.5rem;
+  font-size: 0.9rem;
+}
 .delete__todo {
   font-size: 0.9rem;
   color: #888;
