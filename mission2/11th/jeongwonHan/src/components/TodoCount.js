@@ -1,4 +1,4 @@
-function TodoCount($app, state) {
+function TodoCount({ $app, state }) {
   this.$target = document.createElement("div")
   this.$target.setAttribute("data-component-type", "TodoCount")
   $app.appendChild(this.$target)

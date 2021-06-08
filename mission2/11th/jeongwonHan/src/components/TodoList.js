@@ -1,8 +1,7 @@
 import { todoValidate } from "../../utils/Validation.js"
 import ErrorMessage from "../../utils/ErrorMessage.js"
-import TodoCount from "./TodoCount.js"
 
-function TodoList($app, initialState, onCompleteToggle, onDeleteTodo) {
+function TodoList({ $app, initialState, onCompleteToggle, onDeleteTodo }) {
   if (!new.target) {
     throw new Error(ErrorMessage.SET_NEW_ERROR)
   }
@@ -17,18 +16,15 @@ function TodoList($app, initialState, onCompleteToggle, onDeleteTodo) {
 
   this.state = initialState
 
-  this.todoCount = new TodoCount($app, this.state)
-
   this.todoClickHandler = (e) => {
     const { classList } = e.target
-    if (classList.contains("toggle")) this.onCompleteToggle(Number(e.target.closest("li").id))
-    if (classList.contains("remove")) this.onDeleteTodo(Number(e.target.closest("li").id))
+    if (classList.contains("toggle")) this.onCompleteToggle(e.target.closest("li").id)
+    if (classList.contains("remove")) this.onDeleteTodo(e.target.closest("li").id)
   }
 
   this.setState = function (nextState) {
     this.state = nextState
     this.render()
-    this.todoCount.setState(nextState)
   }
 
   this.render = function () {
@@ -48,7 +44,6 @@ function TodoList($app, initialState, onCompleteToggle, onDeleteTodo) {
   }
 
   this.render()
-  this.todoCount.render()
 
   this.$target.addEventListener("click", (e) => {
     this.todoClickHandler(e)

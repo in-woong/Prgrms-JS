@@ -1,33 +1,41 @@
 import TodoList from "./components/TodoList.js"
 import TodoInput from "./components/TodoInput.js"
 import TodoRemoveAll from "./components/TodoRemoveAll.js"
+import TodoCount from "./components/TodoCount.js"
+import { getUuidv4 } from "../utils/Uuidv.js"
 
 function App($target) {
   this.$target = $target
   const storageTodo = JSON.parse(localStorage.getItem("TODOLIST"))
   this.$state = storageTodo ? [...storageTodo] : []
 
-  this.todoInput = new TodoInput(this.$target, (todoText) => {
-    const newData = [
-      ...this.$state,
-      {
-        id: this.$state.length + 1,
-        text: todoText,
-        isCompleted: false,
-      },
-    ]
-    this.setState(newData)
+  this.todoInput = new TodoInput({
+    $app: this.$target,
+    onAddTodo: (todoText) => {
+      const newData = [
+        ...this.$state,
+        {
+          id: getUuidv4(),
+          text: todoText,
+          isCompleted: false,
+        },
+      ]
+      this.setState(newData)
+    },
   })
 
-  this.todoRemoveAll = new TodoRemoveAll(this.$target, this.$state, () => {
-    const newData = []
-    this.setState(newData)
+  this.todoRemoveAll = new TodoRemoveAll({
+    $app: this.$target,
+    state: this.$state,
+    onRemoveAll: () => {
+      const newData = []
+      this.setState(newData)
+    },
   })
-
-  this.todoList = new TodoList(
-    this.$target,
-    this.$state,
-    (selectId) => {
+  this.todoList = new TodoList({
+    $app: this.$target,
+    initialState: this.$state,
+    onCompleteToggle: (selectId) => {
       const newData = this.$state.map((todo) =>
         todo.id === selectId
           ? {
@@ -38,15 +46,18 @@ function App($target) {
       )
       this.setState(newData)
     },
-    (selectId) => {
+    onDeleteTodo: (selectId) => {
       const newData = this.$state.filter((todo) => todo.id !== selectId)
       this.setState(newData)
-    }
-  )
+    },
+  })
+
+  this.TodoCount = new TodoCount({ $app: this.$target, state: this.$state })
 
   this.setState = (nextState) => {
     this.$state = nextState
     this.todoList.setState(this.$state)
+    this.TodoCount.setState(this.$state)
     localStorage.setItem("TODOLIST", JSON.stringify(this.$state))
   }
 }

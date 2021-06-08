@@ -1,4 +1,4 @@
-function TodoInput($app, onAddTodo) {
+function TodoInput({ $app, onAddTodo }) {
   this.$target = document.createElement("input")
   this.$target.setAttribute("data-component-type", "TodoInput")
   this.$target.setAttribute("placeholder", "할 일을 입력해 주세요")
@@ -7,7 +7,7 @@ function TodoInput($app, onAddTodo) {
   this.onAddTodo = onAddTodo
 
   this.todoInsertHandler = (e) => {
-    if (e.keyCode !== 13) return
+    if (e.key !== "Enter") return
 
     if (e.target.value.trim() === "") {
       alert("Todo를 입력하세요")
