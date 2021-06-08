@@ -16,8 +16,8 @@ function TodoCount($app,todoItems){
         compeletedTodoCount++;
       };
     })
-    todoCompleted.innerText ="완료된 목록"+ compeletedTodoCount;
-    todoUnCompleted.innerText ="전체 목록" + todoItems.length;
+    todoCompleted.innerText ="완료된 목록: "+ compeletedTodoCount;
+    todoUnCompleted.innerText ="전체 목록: " + todoItems.length;
   }
   this.countCompletedTodoItem(todoItems);
 }

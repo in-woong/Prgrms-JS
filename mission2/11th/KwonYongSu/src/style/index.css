@@ -41,7 +41,8 @@ body {
 
 #app {
   width: 100vw;
-  height: 95vh;
+  height: 90vh;
+  margin-top: 5vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -52,25 +53,34 @@ body {
   width: 50%;
   height: 3rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   margin-bottom: 1rem;
 }
 
 .todo__input {
-  width: 90%;
+  padding: 1rem;
+  width: 73%;
   height: 100%;
+  border-radius: 0.5rem;
+  font-size: 1.1rem;
+  outline: none;
+  font-family: 'Do Hyeon', sans-serif;
+
 }
 
 .todo__input__btn {
   width: 9%;
+  margin-left: 1%;
   height: 100%;
+  border-radius: 0.5rem;
+  font-size: 1.1rem;
+  font-family: 'Black Han Sans', sans-serif;
 }
 .todo__list__wrapper {
   width: 50%;
-  height: 100%;
-  padding: 1rem 0;
-  border: 1px solid;
+  height: 80%;
+  padding: 2rem 0;
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
@@ -109,6 +119,10 @@ body {
   cursor: pointer;
 }
 
+.delete__todo:hover {
+  color: rosybrown;
+}
+
 .todo__item.completed {
   color: red;
   text-decoration:line-through;
@@ -117,7 +131,32 @@ body {
 .todo__item__wrapper.remove {
   animation: remove .5s forwards;
 }
+.remove__all__items {
+  position: absolute;
+  left: 4rem;
+  font-size: 1.1rem;
+  padding: 1rem;
+  font-family: 'Do Hyeon', sans-serif;
+  cursor: pointer;
+  transition: all 0.5s;
+}
 
+.remove__all__items:hover{
+  color: #fff;
+  border-radius: 0.5rem;
+  background-color: #888;
+}
+
+.todo__count__wrapper {
+  position: absolute;
+  left: 5rem;
+  top: 10rem;
+  font-size: 1.1rem;
+  display: flex;
+  width: 15rem;
+  justify-content: space-between;
+  font-family: 'Do Hyeon', sans-serif;
+}
 @keyframes remove {
   100%{
     opacity: 0;

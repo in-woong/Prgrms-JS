@@ -1,6 +1,7 @@
 function TodoRemoveAll($app,removeAllTodoItems){
   this.$target = document.createElement("div");
   this.$target.innerText = '전체 목록 삭제';
+  this.$target.classList.add('remove__all__items');
   $app.appendChild(this.$target);
 
   this.$target.addEventListener('removeAll',()=>{

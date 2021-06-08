@@ -7,7 +7,7 @@ function TodoInput($app,addItem){
   inputWrapper.classList.add('input__wrapper')
   todoAddInput.classList.add('todo__input');
   todoAddBtn.classList.add('todo__input__btn');
-  todoAddInput.setAttribute('placeholder','할 일을 입려하세요.');
+  todoAddInput.setAttribute('placeholder','할 일을 입력하세요.');
   inputWrapper.appendChild(todoAddInput);
   inputWrapper.appendChild(todoAddBtn);
   $app.appendChild(inputWrapper);
