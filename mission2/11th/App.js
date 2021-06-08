@@ -20,6 +20,7 @@ function App(data, $target){
   console.log(this.$state);
   this.todoList = new TodoList(this.$state, $target,
     (liId)=>{
+      
       const toggleTodos = this.$state.map((todo)=>{
         
         //...todo 하면 인자가 2개가 있는데 isCompleted 만 따로 인지하고 반전시켜주나 신기하네 이건 후에 테스트해보자! 

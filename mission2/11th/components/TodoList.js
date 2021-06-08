@@ -46,19 +46,22 @@ function TodoList(data, $app, onToggle, onDelete){
     }
     this.onToggle = onToggle;
     this.onDelete = onDelete;
-    this.toggleTodo = (event) => {
-     const span = event.target;
-     const li = span.parentNode;
+
+
+    this.toggleTodo = (li, span) => {
+
+     console.log(li.id);
      this.onToggle(li.id);
+     
      span.className = "";
      span.classList.add(`complete_${this.state[parseInt(li.id-1)].isCompleted}`); 
     }
 
     
 
-    this.deleteTodo = (event) =>{
-      const btn = event.target;
-      const li = btn.parentNode;
+    this.deleteTodo = (li) =>{
+      // const btn = event.target;
+      //const btnParent = btn.parentNode;
       todoList.removeChild(li);
       this.onDelete(li.id);
     }
@@ -69,18 +72,23 @@ function TodoList(data, $app, onToggle, onDelete){
       const delBtn = document.createElement('button');
       li.id=this.state.length+1;
 
-      span.classList.add('todoColor');
+      span.classList.add('complete_false');
+      delBtn.classList.add('todoBtn');
       span.innerText = text;
       delBtn.innerText= "❌";
       li.appendChild(span);
       li.appendChild(delBtn);
-      
-      span.addEventListener("click", this.toggleTodo);
-      delBtn.addEventListener("click", this.deleteTodo);
-      todoList.appendChild(li);
-
+      li.classList.add('todoli');
+      todoList.appendChild(li);  
     }
+    todoList.addEventListener("click", (e) => {
+      console.log("clicked");
+      const { classList } = e.target
+      if (classList.contains("complete_false") || classList.contains("complete_true")) this.toggleTodo(e.target.closest("li"),e.target.closest("span"));
+      if (classList.contains("todoBtn")) this.deleteTodo(e.target.closest("li"));
+    })
 
+   
 }
 
 
