@@ -14,7 +14,7 @@ export default class TodoApp {
     this.target.innerHTML = todoAppTemplate()
 
     this.todoList = new TodoList(this.target, this.state, $('#todo-list'), this.renewList.bind(this))
-    this.todoInput = new TodoInput(this.target, this.addNewNode.bind(this))
+    this.todoInput = new TodoInput(this.addNewNode.bind(this))
     this.todoCount = new TodoCount(this.todoList.state)
     this.removeAll = new TodoRemoveAll(this.target, this.removeAllList.bind(this))
   }

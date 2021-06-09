@@ -1,8 +1,8 @@
 import { $, isValueAvailable, ERROR_MSSAGE } from './utils.js'
 
 export default class TodoInput {
-  constructor($app, renewList) {
-    this.app = $app
+  constructor(renewList) {
+    this.form = $('.todo-list');
     this.todoInput = $('.input_text')
     this.inputBtn = $('.input_btn')
     this.renewList = renewList
@@ -10,7 +10,7 @@ export default class TodoInput {
   }
 
   addInputEvent() {
-    this.app.addEventListener('submit', (this.writeTodo))
+    this.form.addEventListener('submit', this.writeTodo.bind(this))
   }
 
   writeTodo(e) {
