@@ -5,9 +5,19 @@ import RemoveAllButton from './RemoveAllButton.js'
 
 class App {
   constructor($app) {
-    if(!$app) throw new Error('$app이 없습니다')
+    if (!$app) throw new Error('$app이 없습니다')
 
-    this.todoItems = JSON.parse(localStorage.getItem('todoItems')) || []
+    try {
+      const todoItems = JSON.parse(window.localStorage.getItem('todoItems')) || []
+
+      this.validateTodoItems(todoItems)
+      this.todoItems = todoItems
+    } catch (e) {
+      console.error(e)
+      console.log('Todo 리스트 초기화')
+
+      this.todoItems = []
+    }
 
     this.todoList = new TodoList({
       $parent: $app,
@@ -30,16 +40,16 @@ class App {
 
   setState(nextTodoItems) {
     this.validateTodoItems(nextTodoItems)
-    
+
     this.todoItems = nextTodoItems
-    this.setTodoItemsToLocal(this.todoItems)
+    try {
+      localStorage.setItem('todoItems', JSON.stringify(this.todoItems))
+    } catch (e) {
+      alert(e.message)
+    }
 
     this.todoList.setState(this.todoItems)
     this.todoCount.setState(this.todoItems)
-  }
-
-  setTodoItemsToLocal(todoItems) {
-    localStorage.setItem('todoItems', JSON.stringify(todoItems))
   }
 
   addTodoItem(text) {
@@ -54,10 +64,9 @@ class App {
   }
 
   deleteAllTodoItems() {
-    if(!this.todoItems.length) return
+    if (!this.todoItems.length) return
 
-    if(window.confirm('Todo 리스트 전체를 삭제할까요?'))
-      this.setState([])
+    if (window.confirm('Todo 리스트 전체를 삭제할까요?')) this.setState([])
   }
 
   markCompletedTodoItem(index) {
@@ -68,17 +77,16 @@ class App {
   }
 
   validateTodoItems(todoItems) {
-    if(!Array.isArray(todoItems)) throw new Error(`${JSON.stringify(todoItems)} is not an Array`)
+    if (!Array.isArray(todoItems)) throw new Error(`${JSON.stringify(todoItems)} is not an Array`)
 
-    todoItems.forEach(item => {
-      if(item === null || typeof item !== "object") throw new Error(`data includes item '${item}'`)
+    todoItems.forEach((item) => {
+      if (item === null || typeof item !== 'object') throw new Error(`data includes item '${item}'`)
 
       // properties
-      if(!item.hasOwnProperty("text") || !item.hasOwnProperty("isCompleted"))
-        throw new Error(`${JSON.stringify(item)} should have property 'text' and 'isCompleted'`)
-        
-      if(typeof item.text !== "string") throw new Error(`'text' in ${JSON.stringify(item)} is not string`)
-      if(typeof item.isCompleted !== "boolean") throw new Error(`'isCompleted' in ${JSON.stringify(item)} is not boolean`)
+      if (!item.hasOwnProperty('text') || !item.hasOwnProperty('isCompleted')) throw new Error(`${JSON.stringify(item)} should have property 'text' and 'isCompleted'`)
+
+      if (typeof item.text !== 'string') throw new Error(`'text' in ${JSON.stringify(item)} is not string`)
+      if (typeof item.isCompleted !== 'boolean') throw new Error(`'isCompleted' in ${JSON.stringify(item)} is not boolean`)
     })
   }
 }
