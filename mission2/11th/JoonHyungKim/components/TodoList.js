@@ -1,63 +1,42 @@
-import { TodoCount } from './TodoCount.js';
-
-const validateData = (data) => {
-    if (data == null) {
-        throw new Error('빈 데이터입니다.');
-    }
-
-    if (!Array.isArray(data)) {
-        throw new Error('배열 값만 사용할 수 있습니다.');
-    }
-
-    if (!data.every(({ text = null, isCompleted = null }) => typeof text === 'string' && typeof isCompleted === 'boolean')) {
-        throw new Error('잘못된 데이터입니다.');
-    }
-};
-
 export class TodoList {
-    constructor($app, data) {
+    constructor({ $app, initState, onToggleItem, onRemoveItem }) {
+        this.state = initState;
+        this.onToggleItem = onToggleItem;
+        this.onRemoveItem = onRemoveItem;
 
-        this.$app = $app;
-        validateData(data);
-        this.data = data;
-        this.$target = document.createElement('div');
+        this.$target = document.createElement('ul');
         this.$target.classList.add('todo-list');
+
         $app.appendChild(this.$target);
-        this.counter = new TodoCount(this);
 
         this.addEventDelegator();
         this.render();
-
-        
     }
 
     render() {
-        this.$target.innerHTML = `<ul>${this.data.reduce((acc, { text, isCompleted }, index) => `${acc} <li class="todo-item" data-index=${index}>${isCompleted ? `<s>${text}</s>` : text} <button class="todo-remove-btn" data-index=${index}>삭제</button></li>`, '')}</ul>`;
-        this.counter.render();
+        this.$target.innerHTML = `${this.state.reduce((acc, { text, isCompleted }, index) => `${acc} <li data-index=${index}>${isCompleted ? `<s>${text}</s>` : text} <button>삭제</button></li>`, '')}`;
     }
 
-    setState(nextData) {
-        validateData(nextData);
-        this.data = nextData;
-        localStorage.setItem('todo', JSON.stringify(this.data));
+    setState(newState) {
+        this.state = newState;
         this.render();
     }
 
     addEventDelegator() {
-        this.$target.addEventListener('click', ({ target: { className, dataset: { index } } }) => {
-            switch (className) {
-                case 'todo-item':
-                    this.setState(this.data.map(({ text, isCompleted }, originIdx) => ({ text, isCompleted: index == originIdx ? true : isCompleted })));
+        this.$target.addEventListener('click', ({ target }) => {
+            const { index } = target.closest('li').dataset;
+            const { nodeName } = target;
+            switch (nodeName) {
+                case "BUTTON":
+                    this.onRemoveItem(index);
                     break;
-                case 'todo-remove-btn':
-                    this.setState(this.data.reduce((acc, cur, originIdx) => {
-                        if (originIdx != index) {
-                            acc.push(cur);
-                        }
-                        return acc
-                    }, []));
+                case "LI":
+                case "S":
+                    this.onToggleItem(index);
                     break;
+
             }
+
         });
     }
 
