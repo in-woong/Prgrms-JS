@@ -27,7 +27,7 @@ export default class TodoList {
   render = () => {
     let title = this.target.id.toUpperCase()
     this.target.innerHTML = this.state.map(({ text, isCompleted }, index) => todoNodeTemplate(index, isCompleted, text)).join('')
-    this.target.innerHTML = `<h2>${title}</h2>` + this.target.innerHTML
+    this.target.innerHTML = `<h1>${title}</h1>` + this.target.innerHTML
   }
 
   setState = (newData) => {

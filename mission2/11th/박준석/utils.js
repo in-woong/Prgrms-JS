@@ -10,4 +10,4 @@ export const ERROR_MSSAGE = {
 
 const isOnlySpace = (str) => str.trim().length === 0
 
-export const isAvailableValue = (str) => str == undefined || isOnlySpace(str) || typeof str !== 'string'
+export const isAvailableValue = (str) => str == undefined || typeof str !== 'string' || isOnlySpace(str)
