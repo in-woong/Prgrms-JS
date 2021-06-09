@@ -9,12 +9,7 @@ export default class TodoCount {
   }
 
   render() {
-    let listCnt = this.todoListState.length
-    let doneCnt = 0
-    this.todoListState.forEach((data) => {
-      if (data.isCompleted) doneCnt++
-    })
-    this.target.innerHTML = todoCountTemplate(listCnt, doneCnt)
+    this.target.innerHTML = todoCountTemplate(this.todoListState.length, this.todoListState.filter((data) => data.isCompleted).length)
   }
 
   setState(nextState) {
