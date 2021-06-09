@@ -39,7 +39,7 @@ export default class TodoList {
 
   removeNode = ({ target }) => {
     if (target.classList.contains('rm-btn')) {
-      const text = target.parentNode.textContent.trim()
+      const text = target.parentNode.querySelector('span, s').textContent.trim()
       if (confirm(`정말 "${text}" 를 삭제하시겠습니까?`)) {
         const classNum = target.parentNode.className
         const parent = target.parentNode.parentNode
