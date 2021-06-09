@@ -1,58 +1,20 @@
-import TodoList from "./components/TodoList.js"
-import TodoInput from "./components/TodoInput.js"
-import TodoRemoveAll from "./components/TodoRemoveAll.js"
-import TodoCount from "./components/TodoCount.js"
-import { getUuidv4 } from "../utils/Uuidv.js"
+import TodoContainer from "./containers/TodoContainer.js"
 
 function App($target) {
   this.$target = $target
   const storageTodo = JSON.parse(localStorage.getItem("TODOLIST"))
   this.$state = storageTodo ? [...storageTodo] : []
 
-  this.todoInput = new TodoInput({
-    $app: this.$target,
-    onAddTodo: (todoText) => {
-      const newData = [
-        ...this.$state,
-        {
-          id: getUuidv4(),
-          text: todoText,
-          isCompleted: false,
-        },
-      ]
-      this.setState(newData)
-    },
-  })
+  this.$todoListDiv1 = document.createElement("div")
+  this.$todoListDiv1.setAttribute("data-component-type", "TodoList1")
 
-  this.todoRemoveAll = new TodoRemoveAll({
-    $app: this.$target,
-    state: this.$state,
-    onRemoveAll: () => {
-      const newData = []
-      this.setState(newData)
-    },
-  })
-  this.todoList = new TodoList({
-    $app: this.$target,
-    initialState: this.$state,
-    onCompleteToggle: (selectId) => {
-      const newData = this.$state.map((todo) =>
-        todo.id === selectId
-          ? {
-              ...todo,
-              isCompleted: !todo.isCompleted,
-            }
-          : todo
-      )
-      this.setState(newData)
-    },
-    onDeleteTodo: (selectId) => {
-      const newData = this.$state.filter((todo) => todo.id !== selectId)
-      this.setState(newData)
-    },
-  })
+  this.$target.appendChild(this.$todoListDiv1)
 
-  this.TodoCount = new TodoCount({ $app: this.$target, state: this.$state })
+  this.todoContainer = new TodoContainer({
+    $target: this.$todoListDiv1,
+    $state: this.$state,
+    setState: this.setState,
+  })
 
   this.setState = (nextState) => {
     this.$state = nextState

@@ -1,8 +1,9 @@
-function TodoDeleteAll({ $app, state, onRemoveAll }) {
-  this.$target = document.createElement("button")
-  this.$target.setAttribute("data-component-type", "TodoDeleteAll")
-  this.$target.innerText = "모두 삭제"
-  $app.appendChild(this.$target)
+function TodoDeleteAll({ $target, state, onRemoveAll }) {
+  this.$target = $target
+  this.$todoDeleteButton = document.createElement("button")
+  this.$todoDeleteButton.setAttribute("data-component-type", "TodoDeleteAll")
+  this.$todoDeleteButton.innerText = "모두 삭제"
+  this.$target.appendChild(this.$todoDeleteButton)
   this.state = state
   this.onRemoveAll = onRemoveAll
   this.removeAllEvent = new Event("removeAll")
@@ -12,9 +13,9 @@ function TodoDeleteAll({ $app, state, onRemoveAll }) {
     if (removeConfirm) this.onRemoveAll()
   }
 
-  this.$target.addEventListener("click", () => {
-    this.$target.dispatchEvent(this.removeAllEvent)
+  this.$todoDeleteButton.addEventListener("click", () => {
+    this.$todoDeleteButton.dispatchEvent(this.removeAllEvent)
   })
-  this.$target.addEventListener("removeAll", () => this.removeButtonHandler())
+  this.$todoDeleteButton.addEventListener("removeAll", () => this.removeButtonHandler())
 }
 export default TodoDeleteAll

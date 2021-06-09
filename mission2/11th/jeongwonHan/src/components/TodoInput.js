@@ -1,8 +1,9 @@
-function TodoInput({ $app, onAddTodo }) {
-  this.$target = document.createElement("input")
-  this.$target.setAttribute("data-component-type", "TodoInput")
-  this.$target.setAttribute("placeholder", "할 일을 입력해 주세요")
-  $app.appendChild(this.$target)
+function TodoInput({ $target, onAddTodo }) {
+  this.$target = $target
+  this.$todoInput = document.createElement("input")
+  this.$todoInput.setAttribute("data-component-type", "TodoInput")
+  this.$todoInput.setAttribute("placeholder", "할 일을 입력해 주세요")
+  this.$target.appendChild(this.$todoInput)
 
   this.onAddTodo = onAddTodo
 
@@ -14,10 +15,10 @@ function TodoInput({ $app, onAddTodo }) {
       return
     }
     this.onAddTodo(e.target.value)
-    this.$target.value = ""
-    this.$target.focus()
+    this.$todoInput.value = ""
+    this.$todoInput.focus()
   }
 
-  this.$target.addEventListener("keyup", this.todoInsertHandler)
+  this.$todoInput.addEventListener("keyup", this.todoInsertHandler)
 }
 export default TodoInput

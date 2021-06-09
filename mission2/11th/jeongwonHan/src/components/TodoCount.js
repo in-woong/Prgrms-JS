@@ -1,7 +1,8 @@
-function TodoCount({ $app, state }) {
-  this.$target = document.createElement("div")
-  this.$target.setAttribute("data-component-type", "TodoCount")
-  $app.appendChild(this.$target)
+function TodoCount({ $target, state }) {
+  this.$target = $target
+  this.$todoCountDiv = document.createElement("div")
+  this.$todoCountDiv.setAttribute("data-component-type", "TodoCount")
+  this.$target.appendChild(this.$todoCountDiv)
   this.state = state
 
   this.setState = function (nextState) {
@@ -10,7 +11,7 @@ function TodoCount({ $app, state }) {
   }
 
   this.render = () => {
-    this.$target.innerHTML = `<span> Todo Count: ${this.state.length}</span>`
+    this.$todoCountDiv.innerHTML = `<span> Todo Count: ${this.state.length}</span>`
   }
 
   this.render()

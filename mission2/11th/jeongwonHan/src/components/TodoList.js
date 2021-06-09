@@ -1,16 +1,18 @@
-import { todoValidate } from "../../utils/Validation.js"
-import ErrorMessage from "../../utils/ErrorMessage.js"
+import { todoValidate } from "../utils/Validation.js"
+import ErrorMessage from "../utils/ErrorMessage.js"
 
-function TodoList({ $app, initialState, onCompleteToggle, onDeleteTodo }) {
+function TodoList({ $target, initialState, onCompleteToggle, onDeleteTodo }) {
   if (!new.target) {
     throw new Error(ErrorMessage.SET_NEW_ERROR)
   }
 
   todoValidate(initialState)
 
-  this.$target = document.createElement("div")
-  this.$target.setAttribute("data-component-type", "TodoList")
-  $app.appendChild(this.$target)
+  this.$target = $target
+  this.$todoListUl = document.createElement("ul")
+  this.$todoListUl.setAttribute("data-component-type", "TodoUl")
+  this.$target.appendChild(this.$todoListUl)
+
   this.onCompleteToggle = onCompleteToggle
   this.onDeleteTodo = onDeleteTodo
 
@@ -39,13 +41,12 @@ function TodoList({ $app, initialState, onCompleteToggle, onDeleteTodo }) {
               </li>`
             )
             .join("")
-
-    this.$target.innerHTML = `<ul class="todoUl">${htmlString}</ul>`
+    this.$todoListUl.innerHTML = htmlString
   }
 
   this.render()
 
-  this.$target.addEventListener("click", (e) => {
+  this.$todoListUl.addEventListener("click", (e) => {
     this.todoClickHandler(e)
   })
 }
