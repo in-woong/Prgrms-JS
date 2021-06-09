@@ -14,17 +14,13 @@ export default class TodoApp {
     this.target.innerHTML = todoAppTemplate()
 
     this.todoList = new TodoList(this.target, this.state, $('#todo-list'), this.setState.bind(this))
-    this.todoInput = new TodoInput(this.addNewNode.bind(this))
+    this.todoInput = new TodoInput((nextNode) => {
+      this.setState([...this.todoList.state, nextNode]);
+    })
     this.todoCount = new TodoCount(this.todoList.state)
-    this.removeAll = new TodoRemoveAll(this.target, this.removeAllList.bind(this))
-  }
-
-  addNewNode(nextNode) {
-    this.setState([...this.todoList.state, nextNode])
-  }
-
-  removeAllList() {
-    this.setState([])
+    this.removeAll = new TodoRemoveAll(this.target, () => {
+      this.setState([])
+    })
   }
 
   setState(nextState) {
