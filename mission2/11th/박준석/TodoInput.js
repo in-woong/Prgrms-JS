@@ -1,8 +1,8 @@
-import { $, isValueAvailable, ERROR_MSSAGE } from './utils.js'
+import { $, isAvailableValue, ERROR_MSSAGE } from './utils.js'
 
 export default class TodoInput {
   constructor(renewList) {
-    this.form = $('.todo-list');
+    this.form = $('.todo-list')
     this.todoInput = $('.input_text')
     this.inputBtn = $('.input_btn')
     this.renewList = renewList
@@ -15,19 +15,16 @@ export default class TodoInput {
 
   writeTodo(e) {
     e.preventDefault()
-    if (e.target.classList.contains('todo-list')) {
-      const inputText = this.todoInput.value
-      if (isValueAvailable(inputText)) {
-        alert(ERROR_MSSAGE.INPUT_TEXT_ERROR)
-        this.todoInput.value = ''
-        throw new Error(ERROR_MSSAGE.INPUT_TEXT_ERROR)
-      }
-      const data = {
-        text: inputText,
-        isCompleted: false,
-      }
+    const inputText = this.todoInput.value
+    if (isAvailableValue(inputText)) {
+      alert(ERROR_MSSAGE.INPUT_TEXT_ERROR)
       this.todoInput.value = ''
-      this.renewList(data)
+      throw new Error(ERROR_MSSAGE.INPUT_TEXT_ERROR)
     }
+    this.todoInput.value = ''
+    this.renewList({
+      text: inputText,
+      isCompleted: false,
+    })
   }
 }

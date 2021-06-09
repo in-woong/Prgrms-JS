@@ -20,4 +20,4 @@ export const addNewTodoListDiv = (id, dom = 'body') => {
   $(dom).insertAdjacentHTML('beforeend', TodoListDivDOM(id))
 }
 
-export const isValueAvailable = (str) => str == undefined || isOnlySpace(str) || typeof str !== 'string'
+export const isAvailableValue = (str) => str == undefined || isOnlySpace(str) || typeof str !== 'string'

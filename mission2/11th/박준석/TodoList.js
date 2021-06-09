@@ -1,4 +1,4 @@
-import { $, ERROR_MSSAGE, isValueAvailable } from './utils.js'
+import { $, ERROR_MSSAGE, isAvailableValue } from './utils.js'
 import { todoNodeTemplate } from './DOM.js'
 
 export default class TodoList {
@@ -20,7 +20,7 @@ export default class TodoList {
     if (!Array.isArray(data)) throw new Error(ERROR_MSSAGE.DATA_IS_NOT_ARRAY)
     data.forEach((val) => {
       if (val.constructor !== Object) throw new Error(ERROR_MSSAGE.VALUE_IS_NOT_OBJECT)
-      if (isValueAvailable(val.text)) throw new Error(ERROR_MSSAGE.TEXT_UNDEFINED)
+      if (isAvailableValue(val.text)) throw new Error(ERROR_MSSAGE.TEXT_UNDEFINED)
     })
   }
 
