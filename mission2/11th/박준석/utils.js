@@ -8,16 +8,6 @@ export const ERROR_MSSAGE = {
   INPUT_TEXT_ERROR: '입력한 텍스트가 적합하지 않은 형태입니다.',
 }
 
-const TodoListDivDOM = (id) => `
-<div id="${id}">
-    <h3> ${id.toUpperCase()}</h3>
-    <ul></ul>
-</div>`
-
 const isOnlySpace = (str) => str.trim().length === 0
-
-export const addNewTodoListDiv = (id, dom = 'body') => {
-  $(dom).insertAdjacentHTML('beforeend', TodoListDivDOM(id))
-}
 
 export const isAvailableValue = (str) => str == undefined || isOnlySpace(str) || typeof str !== 'string'
