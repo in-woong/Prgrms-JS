@@ -34,6 +34,10 @@ function App($appElem) {
         });
     };
 
+    this.$appElem.addEventListener('removeAllTodos', () => {
+        this.setState([]);
+    });
+
     this.setState = (nextTodos) => {
         this.todos = nextTodos;
         this.TodoList.setState(nextTodos);

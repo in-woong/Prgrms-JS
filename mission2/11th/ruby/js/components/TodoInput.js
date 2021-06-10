@@ -9,7 +9,13 @@ function TodoInput($appElem, todos, addTodo) {
     const todoInputEventHandler = () => {
         const $addTodoBtnElem = document.querySelector('.btn_add_todo');
         const $inputTodo = document.querySelector('.input_todo');
+        const $removeAllBtnElem = document.querySelector('.btn_remove_all');
 
+        $removeAllBtnElem.addEventListener('click', () => {
+            const removeAllEvent = new Event('removeAllTodos');
+            $appElem.dispatchEvent(removeAllEvent);
+        });
+        
         $addTodoBtnElem.addEventListener('click', (e) => {
             addTodo(this.todos, $inputTodo.value);
         });
