@@ -1,8 +1,9 @@
 import SearchInput from './SearchInput.js'
 
 export default class App {
-    constructor({ $app }) {
+    constructor({ $app, initialState }) {
         this.$app = $app;
+        this.state = initialState;
 
         this.$children = [];
 
@@ -11,15 +12,27 @@ export default class App {
             onSearchInput: async(text) => {
                 /*global fetch*/
                 const data = await (await fetch(`https://jjalbot.com/api/jjals?text=${text}`)).json();
-                console.log(JSON.stringify(data, null, 2))
-                const htmlString = `${data.map(d => `<img src="${d.imageUrl}">`).join('')}`
+                this.setState(data);
             }
-        }))
+        }));
 
     }
 
     register(component) {
         this.$children.push(component);
+    }
+
+    render() {
+        this.$children.forEach(child => {
+            if (child.setState) {
+                child.setState(this.state);
+            }
+        });
+    }
+
+    setState(newState) {
+        this.state = newState;
+        this.render();
     }
 
 }
