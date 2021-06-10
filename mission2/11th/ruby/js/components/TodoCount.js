@@ -1,5 +1,6 @@
 function TodoCount($appElem, todos) {
     this.todos = todos;
+    this.$appElem = $appElem;
     this.$todoCountElem = document.createElement('div');
 
     this.$todoCountElem.className = 'todos_count';

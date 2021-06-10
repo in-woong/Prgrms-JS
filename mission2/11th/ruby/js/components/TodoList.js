@@ -1,6 +1,6 @@
-function TodoList(appElem, todos, validateTodos) {
+function TodoList($appElem, todos, validateTodos) {
     this.todos = todos;
-    this.appElem = appElem;
+    this.$appElem = $appElem;
     this.$todoListElem = document.createElement('ul');
     
     appElem.appendChild(this.$todoListElem);

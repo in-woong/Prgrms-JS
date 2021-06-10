@@ -1,7 +1,7 @@
 function TodoInput($appElem, todos, addTodo) {
-    this.$appElem = $appElem;
     this.todos = todos;
     this.addTodo = addTodo;
+    this.$appElem = $appElem;
     this.$formElem = document.createElement('form');
 
     this.$appElem.appendChild(this.$formElem);
