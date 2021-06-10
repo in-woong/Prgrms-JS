@@ -12,8 +12,10 @@ export default class App {
             $app,
             onSearchInput: async(text) => {
                 /*global fetch*/
-                const data = await (await fetch(`https://jjalbot.com/api/jjals?text=${text}`)).json();
-                this.setState(data);
+                if (text) {
+                    const data = await (await fetch(`https://jjalbot.com/api/jjals?text=${text}`)).json();
+                    this.setState(data);
+                }
             }
         }));
 
