@@ -1,7 +1,8 @@
-import SearchInput from './SearchInput.js'
+import SearchInput from './SearchInput.js';
+import SearchResult from './SearchResult.js'
 
 export default class App {
-    constructor({ $app, initialState }) {
+    constructor({ $app, initialState = [] }) {
         this.$app = $app;
         this.state = initialState;
 
@@ -14,6 +15,11 @@ export default class App {
                 const data = await (await fetch(`https://jjalbot.com/api/jjals?text=${text}`)).json();
                 this.setState(data);
             }
+        }));
+
+        this.register(new SearchResult({
+            $app,
+            initialState: this.state
         }));
 
     }
