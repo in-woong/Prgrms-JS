@@ -62,11 +62,7 @@ function App($appElem) {
         );
     };
 
-    try {
-        this.render();
-    } catch(e) {
-        new Error(e);
-    };
+    this.render();
 };
 
 export default App;
