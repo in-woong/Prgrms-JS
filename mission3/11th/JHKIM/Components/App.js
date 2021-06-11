@@ -2,9 +2,9 @@ import SearchInput from './SearchInput.js';
 import SearchResult from './SearchResult.js'
 
 export default class App {
-    constructor({ $app, initialState = [] }) {
+    constructor({ $app }) {
         this.$app = $app;
-        this.state = initialState;
+        this.state = { searchResult: [], searchHistory: [] };
 
         this.$children = [];
 
@@ -14,10 +14,10 @@ export default class App {
                 /*global fetch*/
                 if (text) {
                     const data = await (await fetch(`https://jjalbot.com/api/jjals?text=${text}`)).json();
-                    this.setState(data);
+                    this.setState('searchResult', data);
                 }
                 else {
-                    this.setState([]);
+                    this.setState('searchResult', []);
                 }
             }
         }));
@@ -41,8 +41,8 @@ export default class App {
         });
     }
 
-    setState(newState) {
-        this.state = newState;
+    setState(key, newState) {
+        this.state[key] = newState;
         this.render();
     }
 
