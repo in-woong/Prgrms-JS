@@ -1,6 +1,6 @@
 import { isArray, isUndefined, isNull } from '../utils/errorCheck.js'
 
-const SET_DEFAULT_PROPERTIES = ['text', 'isCompleted']
+const SET_DEFAULT_PROPERTIES = ['id', 'text', 'isCompleted']
 
 const validator = (data) => {
   if (isNull(data)) throw new Error('ValueError: data is null')

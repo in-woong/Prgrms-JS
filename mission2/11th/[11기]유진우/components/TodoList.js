@@ -8,10 +8,25 @@ function TodoList($target, initialState) {
 
   this.state = initialState
   this.$target = $target
-  this.$todoList = document.createElement('div')
+  this.$todoList = document.createElement('ul')
   this.$todoList.id = 'todo-list'
+  this.$todoList.addEventListener('click', (e) => {
+    this.onHandleClick(e)
+  })
 
   this.$target.appendChild(this.$todoList)
+
+  this.onHandleClick = (e) => {
+    const $todoItem = e.target.closest('li')
+
+    if (e.target.className === 'todo-text' || e.target.tagName === 'S') {
+      this.toggleTodoIsCompleted($todoItem.dataset.id)
+    }
+
+    if (e.target.className === 'todo-delete-btn') {
+      this.deleteTodo($todoItem.dataset.id)
+    }
+  }
 
   this.addTodo = (todoText) => {
     const todo = { id: generateUniqueID(), text: todoText, isCompleted: false }
@@ -25,7 +40,9 @@ function TodoList($target, initialState) {
   }
 
   this.toggleTodoIsCompleted = (todoID) => {
-    const nextState = this.state.map((todo) => todo.id === todoID && { ...todo, isCompleted: !todo.isCompleted })
+    const nextState = this.state.map((todo) => {
+      return todo.id === todoID ? { ...todo, isCompleted: !todo.isCompleted } : todo
+    })
     this.setState(nextState)
   }
 

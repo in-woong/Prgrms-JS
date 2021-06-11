@@ -1,23 +1,18 @@
-import TodoInput from './components/todoInput.js'
-import TodoList from './components/TodoList.js'
+import App from './App.js'
+import generateUniqueID from './utils/generateUniqueID.js'
 
 let data = [
   {
-    id: 1,
+    id: generateUniqueID(),
     text: 'JS 공부하기',
     isCompleted: true,
   },
   {
-    id: 2,
+    id: generateUniqueID(),
     text: 'JS 복습하기',
     isCompleted: false,
   },
 ]
 
-const $app = document.querySelector('#app')
-
-const todoList = new TodoList($app, data)
-const todoInput = new TodoInput($app, todoList.addTodo)
-
-todoList.render()
-todoInput.render()
+const app = new App(data)
+app.render()
