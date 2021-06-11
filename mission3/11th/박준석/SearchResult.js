@@ -1,15 +1,17 @@
-import { $ } from "./utils.js"
+import { $ } from './utils.js'
 
-export default class SearchResult{
-    constructor(data, target){
-        this.data = data;
-        this.target = target;
-    }
+export default class SearchResult {
+  constructor(data, target) {
+    this.state = data;
+    this.target = target;
+  }
 
-    render(){
-
-    }
-    setState(){
-        
-    }
+  render(receivedData) {
+    this.state = receivedData;
+    const resultDiv = $(this.target);
+    resultDiv.innerHTML = `${this.state.map((d) => `<img src="${d.imageUrl}">`).join('')}`
+  }
+  setState(receivedData) {
+    this.render(receivedData)
+  }
 }
