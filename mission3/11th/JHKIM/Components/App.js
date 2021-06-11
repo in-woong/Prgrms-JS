@@ -16,6 +16,9 @@ export default class App {
                     const data = await (await fetch(`https://jjalbot.com/api/jjals?text=${text}`)).json();
                     this.setState(data);
                 }
+                else {
+                    this.setState([]);
+                }
             }
         }));
 
