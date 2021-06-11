@@ -8,6 +8,8 @@ export default class SearchResult {
 
   render(receivedData) {
     this.state = receivedData;
+    if (!this.state.length)
+      return ;
     const resultDiv = $(this.target);
     resultDiv.innerHTML = `${this.state.map((d) => `<img src="${d.imageUrl}">`).join('')}`
   }

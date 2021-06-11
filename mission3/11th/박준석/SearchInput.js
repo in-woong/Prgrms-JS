@@ -9,13 +9,8 @@ export default class SearchInput {
 
   async setInput(e) {
     if (e.code === 'Enter') {
-      const receivedData = await this.getInputValue(this.input.value)
-      this.showResult(receivedData)
+      this.showResult(this.input.value)
     }
   }
 
-  getInputValue(inputValue) {
-    return fetch(`https://jjalbot.com/api/jjals?text=${inputValue}`)
-      .then((x) => {return x.json()})
-  }
 }
