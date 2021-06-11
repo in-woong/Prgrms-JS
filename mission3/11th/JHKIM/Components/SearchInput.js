@@ -18,8 +18,8 @@ export default class SearchInput {
         this.$target = document.createElement('input');
         this.debouncedOnSearchInput = initDebouncer(onSearchInput, 500);
 
-        this.$target.addEventListener('input', ({ target }) => {
-            this.debouncedOnSearchInput(target.value);
+        this.$target.addEventListener('input', ({ target: { value } }) => {
+            this.debouncedOnSearchInput(value);
         });
 
         $app.appendChild(this.$target);

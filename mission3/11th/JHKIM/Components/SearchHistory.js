@@ -12,7 +12,7 @@ export default class SearchHistory {
     }
 
     render() {
-        this.$target.innerHTML = this.state.reduce((acc, cur)  => `${acc} <article>${cur}</article>`,'')
+        this.$target.innerHTML = this.state.reduce((acc, cur)  => `${acc} <article>${cur}</article>`,'');
     }
 
     setState({ searchHistory }) {
