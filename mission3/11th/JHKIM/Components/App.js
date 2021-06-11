@@ -1,5 +1,6 @@
 import SearchInput from './SearchInput.js';
 import SearchResult from './SearchResult.js'
+import SearchHistory from './SearchHistory.js'
 
 export default class App {
     constructor({ $app }) {
@@ -8,16 +9,20 @@ export default class App {
 
         this.$children = [];
 
+        this.register(new SearchHistory({
+            $app,
+            initialState: this.state,
+            onClickHistory: async(text) => {
+                await this.searchUmzzal(text);
+            },
+        }));
+
         this.register(new SearchInput({
             $app,
             onSearchInput: async(text) => {
-                /*global fetch*/
+                await this.searchUmzzal(text);
                 if (text) {
-                    const data = await (await fetch(`https://jjalbot.com/api/jjals?text=${text}`)).json();
-                    this.setState('searchResult', data);
-                }
-                else {
-                    this.setState('searchResult', []);
+                    this.setState('searchHistory', [...this.state.searchHistory, text]);
                 }
             }
         }));
@@ -46,4 +51,14 @@ export default class App {
         this.render();
     }
 
+    async searchUmzzal(text) {
+        if (text) {
+            /*global fetch*/
+            const data = await (await fetch(`https://jjalbot.com/api/jjals?text=${text}`)).json();
+            this.setState('searchResult', data);
+        }
+        else {
+            this.setState('searchResult', []);
+        }
+    }
 }
