@@ -5,10 +5,10 @@ export default class SearchHistory {
     this.history = history
     this.showHistoryDiv = $('#search-history')
     this.clickHistory = clickHistory
-    $('#app').addEventListener("click", ({target}) =>{
-        if (target.id.includes("history_")){
-            clickHistory(target.innerHTML);
-        }
+    $('#app').addEventListener('click', ({ target }) => {
+      if (target.id.includes('history_')) {
+        clickHistory(target.innerHTML)
+      }
     })
   }
 
