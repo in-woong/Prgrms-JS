@@ -1,7 +1,7 @@
 let timer = null
 export const debounce = (callback, time) => {
   if (timer) {
-    clearTimeout()
+    clearTimeout(timer)
   }
   timer = setTimeout(callback, time)
 }

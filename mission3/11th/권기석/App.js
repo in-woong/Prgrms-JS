@@ -1,4 +1,5 @@
 import getSearchResult from './api.js'
+import SearchHistory from './components/SearchHistory.js'
 import SearchInput from './components/SearchInput.js'
 import SearchResult from './components/SearchResult.js'
 import { validate } from './util.js'
@@ -14,6 +15,18 @@ export default function App({ $target }) {
     onSearch: async (keyword) => {
       try {
         const data = await getSearchResult(keyword)
+        this.setState(data, keyword)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+  })
+
+  const searchHistory = new SearchHistory({
+    $app: this.$app,
+    onClickKeyword: async (keyword) => {
+      try {
+        const data = await getSearchResult(keyword)
         this.setState(data)
       } catch (error) {
         console.error(error)
@@ -26,9 +39,10 @@ export default function App({ $target }) {
     initialState: this.state,
   })
 
-  this.setState = (nextState) => {
+  this.setState = (nextState, keyword) => {
     validate(nextState)
     this.state = nextState
+    keyword && searchHistory.setState(keyword)
     this.render()
   }
 

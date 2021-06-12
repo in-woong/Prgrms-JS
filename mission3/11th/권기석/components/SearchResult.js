@@ -10,7 +10,7 @@ export default function SearchResult({ $app, initialState }) {
   }
 
   this.render = () => {
-    this.$searchResult.innerHTML = this.state.map((item) => `<li><img src="${item.imageUrl}"/></li>`)
+    this.$searchResult.innerHTML = this.state.map((item) => `<li><img src="${item.imageUrl}"/></li>`).join('')
   }
 
   this.render()
