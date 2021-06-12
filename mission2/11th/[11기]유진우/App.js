@@ -3,19 +3,38 @@ import TodoCount from './components/TodoCount.js'
 import TodoList from './components/TodoList.js'
 import validator from './validators/todoValidator.js'
 
-function App(initialState) {
-  this.$app = document.querySelector('#app')
+function App($app, initialState) {
   this.state = initialState
 
-  this.todoList = new TodoList(this.$app, this.state)
-  this.todoCount = new TodoCount(this.$app, this.state)
-  this.todoInput = new TodoInput(this.$app, this.todoList.addTodo)
+  this.todoList = new TodoList({
+    $app,
+    initialState: this.state,
+    deleteTodo: (todoID) => {
+      const nextTodos = this.state.filter((todo) => todo.id !== todoID)
+      this.setState(nextTodos)
+    },
+    toggleTodo: (todoID) => {
+      const nextTodos = this.state.map((todo) => (todo.id === todoID ? { ...todo, isCompleted: !todo.isCompleted } : todo))
+      this.setState(nextTodos)
+    },
+    removeAllTodo: () => {
+      this.setState([])
+    },
+  })
+  this.todoCount = new TodoCount({ $app, initialState: this.state })
+  this.todoInput = new TodoInput({
+    $app,
+    addTodo: (newTodo) => {
+      this.setState([...this.state, newTodo])
+    },
+  })
 
   this.setState = (nextState) => {
     validator(nextState)
     this.state = nextState
     this.todoList.setState(nextState)
     this.todoCount.setState(nextState)
+    this.render()
   }
 
   this.render = () => {

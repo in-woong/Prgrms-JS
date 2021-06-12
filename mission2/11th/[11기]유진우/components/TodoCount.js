@@ -1,22 +1,23 @@
-function TodoCount($target, initialState) {
+function TodoCount({ $app, initialState }) {
   this.state = initialState // data - totalCount, completedCount
-  this.$target = $target
   this.$todoCount = document.createElement('div')
 
-  this.$target.appendChild(this.$todoCount)
-
-  this.totalCount = (todos) => todos.length
-
-  this.totalCompletedCount = (todos) => todos.filter((todo) => todo.isComplated).length
+  $app.appendChild(this.$todoCount)
 
   this.setState = (nextState) => {
     this.state = nextState
+    this.render()
   }
 
   this.render = () => {
+    const counts = {
+      totalCount: this.state.length,
+      completedCount: this.state.filter((todo) => todo.isCompleted).length,
+    }
+
     this.$todoCount.innerHTML = `
-    <span>Total Count: ${this.totalCount(this.state)}</span>
-    <span> Total Completed Count:${this.totalCompletedCount(this.state)}</span>
+      <span> 전체 개수: ${counts.totalCount}</span>
+      <span> 완료 개수:${counts.completedCount}</span>
     `
   }
 }
