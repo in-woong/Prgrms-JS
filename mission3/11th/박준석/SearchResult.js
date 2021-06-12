@@ -2,17 +2,17 @@ import { $ } from './utils.js'
 
 export default class SearchResult {
   constructor(data, target) {
-    this.state = data;
-    this.target = target;
+    this.state = data
+    this.target = target
   }
 
   render(receivedData) {
-    this.state = receivedData;
-    if (!this.state.length)
-      return ;
-    const resultDiv = $(this.target);
-    resultDiv.innerHTML = `${this.state.map((d) => `<img src="${d.imageUrl}">`).join('')}`
+    this.state = receivedData
+    const resultDiv = $(this.target)
+    if (!this.state.length) resultDiv.innerHTML = ''
+    else resultDiv.innerHTML = `${this.state.map((d) => `<img src="${d.imageUrl}">`).join('')}`
   }
+
   setState(receivedData) {
     this.render(receivedData)
   }

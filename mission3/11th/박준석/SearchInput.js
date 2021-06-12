@@ -15,7 +15,6 @@ const createDebounceFunction = (callback, wait) => {
   }
 }
 
-
 export default class SearchInput {
   constructor(showResult) {
     this.input = $('#search-keyword')
