@@ -1,15 +1,15 @@
 const baseUrl = 'https://jjalbot.com/api/jjals?text='
 
-const getSearchResult = (keyword) => {
+const getSearchResult = async (keyword) => {
   const url = `${baseUrl}${keyword}`
-  return fetch(url, {
-    method: 'GET',
-  })
-    .then((res) => res.json())
-    .then((res) => res)
-    .catch((error) => {
-      console.error(error)
+  try {
+    const res = await fetch(url, {
+      method: 'GET',
     })
+    return res.json()
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 export default getSearchResult

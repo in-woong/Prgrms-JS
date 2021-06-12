@@ -3,14 +3,13 @@ import { debounce } from '../util.js'
 export default function SearchInput({ $app, onSearch }) {
   this.$searchInput = document.createElement('input')
   this.$searchInput.id = 'search-keyword'
-  this.onSearch = onSearch
+  this.onSearch = (keyword) => debounce(() => onSearch(keyword), 400)
   $app.appendChild(this.$searchInput)
 
-  this.$searchInput.addEventListener('input', (e) => {
+  this.$searchInput.addEventListener('keyup', (e) => {
+    console.log(e.target.value)
     if (e.target.value) {
-      debounce(() => {
-        this.onSearch(e.target.value)
-      }, 400)
+      this.onSearch(e.target.value)
     }
   })
 }
