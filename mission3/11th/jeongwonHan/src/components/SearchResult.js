@@ -3,7 +3,15 @@ function SearchResult({ $target, state }) {
   this.state = state
 
   this.render = (state) => {
-    const htmlString = `${state.map((gifs) => `<img src="${gifs.imageUrl}">`).join('')}`
+    const htmlString = `${state
+      .map(
+        (gifs) => `
+        <div class="gif-wrapper">
+            <img src="${gifs.imageUrl}">
+        </div>
+    `
+      )
+      .join('')}`
     this.$target.innerHTML = htmlString
   }
 
