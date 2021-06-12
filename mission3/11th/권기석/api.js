@@ -9,7 +9,6 @@ const getSearchResult = (keyword) => {
     .then((res) => res)
     .catch((error) => {
       console.error(error)
-      alert(error)
     })
 }
 
