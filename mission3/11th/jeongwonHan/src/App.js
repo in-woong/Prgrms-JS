@@ -1,4 +1,5 @@
 import SearchInput from './components/SearchInput.js'
+import SearchResult from './components/SearchResult.js'
 import { api } from './api/api.js'
 
 function App($target) {
@@ -12,10 +13,10 @@ function App($target) {
       try {
         const response = await api.fetchGifs(keyword)
         if (!response.ok) {
-          if (response < 1) {
+          if (!response && response.length < 1) {
             alert('error')
           } else {
-            this.setState(response.data)
+            this.setState(response)
           }
         }
       } catch (e) {
@@ -24,9 +25,15 @@ function App($target) {
     },
   })
 
+  const searchResult = new SearchResult({
+    $target: this.$target.querySelector('#search-result'),
+    state: this.state,
+  })
+
   this.setState = (nextState) => {
     this.state = nextState
     console.log(this.state)
+    searchResult.setState(this.state)
   }
 }
 
