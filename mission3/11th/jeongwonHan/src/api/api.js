@@ -11,6 +11,6 @@ const request = async (url) => {
 
 export const api = {
   fetchGifs: (keyword) => {
-    return request(`${API_ENDPOINT}/api/jjals?test=${keyword}`)
+    return request(`${API_ENDPOINT}/api/jjals?text=${keyword}`)
   },
 }
