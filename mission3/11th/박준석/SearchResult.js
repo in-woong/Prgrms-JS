@@ -10,7 +10,7 @@ export default class SearchResult {
     this.state = receivedData
     const resultDiv = $(this.target)
     if (!this.state.length) resultDiv.innerHTML = ''
-    else resultDiv.innerHTML = `${this.state.map((d) => `<img src="${d.imageUrl}">`).join('')}`
+    else resultDiv.innerHTML = `${this.state.map((image) => `<img src="${image.imageUrl}">`).join('')}`
   }
 
   setState(receivedData) {
