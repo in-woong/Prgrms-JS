@@ -1,6 +1,5 @@
 function SearchInput({ $target, state, onSearch }) {
   this.$target = $target
-  console.log($target)
   this.state = state
   this.onSearch = onSearch
 

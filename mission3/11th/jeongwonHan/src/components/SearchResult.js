@@ -17,7 +17,7 @@ function SearchResult({ $target, state }) {
 
   this.setState = (nextState) => {
     this.state = nextState
-    this.render(this.state)
+    this.render(this.state.gifs)
   }
 }
 
