@@ -7,24 +7,22 @@ function TodoInput({ $app, addTodo }) {
 
   this.render = () => {
     this.$inputWrapper.innerHTML = `
-      <input class="todo-input" type="text" />
-      <button class="todo-btn">Enter</button>
+      <form id="todo-form">
+        <input autofocus class="todo-input" type="text" />
+        <button class="todo-btn" type="submit">Enter</button>
+      </form>
       <button class="todo-remove-all">Remove All</button>
     `
 
     const todoInput = document.querySelector('.todo-input')
     todoInput.focus()
-    todoInput.addEventListener('keyup', (e) => {
-      if (e.keyCode === 13 && e.target.value) {
-        addTodo({ id: generateUniqueID(), text: e.target.value.trim(), isCompleted: false })
-        e.target.value = ''
-      }
-    })
 
-    const todoBtn = document.querySelector('.todo-btn')
-    todoBtn.addEventListener('click', () => {
-      if (todoInput.value) {
-        addTodo({ id: generateUniqueID(), text: todoInput.value.trim(), isCompleted: false })
+    const todoForm = document.querySelector('#todo-form')
+    todoForm.addEventListener('submit', (e) => {
+      e.preventDefault()
+      const inputValue = todoInput.value
+      if (inputValue.trim()) {
+        addTodo({ id: generateUniqueID(), text: todoInput.value, isCompleted: false })
         todoInput.value = ''
       }
     })

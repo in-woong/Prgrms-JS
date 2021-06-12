@@ -9,9 +9,6 @@ function TodoList({ $app, initialState, deleteTodo, toggleTodo, removeAllTodo })
   this.$todoList = document.createElement('ul')
   this.$todoList.id = 'todo-list'
 
-  $app.addEventListener('removeAll', () => {
-    removeAllTodo()
-  })
   this.$todoList.addEventListener('click', (e) => {
     const $todoItem = e.target.closest('li')
 
@@ -24,6 +21,9 @@ function TodoList({ $app, initialState, deleteTodo, toggleTodo, removeAllTodo })
     }
   })
 
+  $app.addEventListener('removeAll', () => {
+    removeAllTodo()
+  })
   $app.appendChild(this.$todoList)
 
   this.setState = (nextState) => {

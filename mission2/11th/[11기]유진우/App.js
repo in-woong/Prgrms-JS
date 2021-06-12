@@ -2,9 +2,10 @@ import TodoInput from './components/TodoInput.js'
 import TodoCount from './components/TodoCount.js'
 import TodoList from './components/TodoList.js'
 import validator from './validators/todoValidator.js'
+import { getLocalStorageItem, setLocalStorageItem } from './utils/localStorage.js'
 
 function App($app, initialState) {
-  this.state = initialState
+  this.state = getLocalStorageItem('todoItems') ? getLocalStorageItem('todoItems') : initialState
 
   this.todoList = new TodoList({
     $app,
@@ -31,6 +32,7 @@ function App($app, initialState) {
 
   this.setState = (nextState) => {
     validator(nextState)
+    setLocalStorageItem('todoItems', nextState)
     this.state = nextState
     this.todoList.setState(nextState)
     this.todoCount.setState(nextState)
