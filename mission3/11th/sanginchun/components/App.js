@@ -19,13 +19,13 @@ class App {
     this.searchHistory = new SearchHistory({
       $parent: $app,
       initialState: this.state.searchHistory,
-      onClick: this.onSearchTermInput.bind(this),
+      onSearchTermClick: this.searchGif.bind(this),
     });
 
     this.searchInput = new SearchInput({
       $parent: $app,
       initialState: this.state.currentSearchTerm,
-      onInput: this.onSearchTermInput.bind(this),
+      onSearchTermInput: this.onSearchTermInput.bind(this),
     });
 
     this.searchResult = new SearchResult({
@@ -47,34 +47,39 @@ class App {
   onSearchTermInput(searchTerm) {
     if (this.debounceTimer) clearTimeout(this.debounceTimer);
 
-    this.debounceTimer = setTimeout(async () => {
-      if (!searchTerm) return;
+    this.debounceTimer = setTimeout(
+      () => this.searchGif.call(this, searchTerm),
+      DEBOUNCE_MILISEC
+    );
+  }
 
-      try {
-        const nextSearchHistory = [...this.state.searchHistory];
-        if (!nextSearchHistory.includes(searchTerm))
-          nextSearchHistory.push(searchTerm);
+  async searchGif(searchTerm) {
+    if (!searchTerm) return;
 
-        this.setState({
-          ...this.state,
-          searchHistory: nextSearchHistory,
-          currentSearchTerm: searchTerm,
-          searchResult: {
-            isLoading: true,
-            data: [],
-          },
-        });
+    try {
+      const nextSearchHistory = [...this.state.searchHistory];
+      if (!nextSearchHistory.includes(searchTerm))
+        nextSearchHistory.push(searchTerm);
 
-        const nextSearchResultData = await jjalbotApi.get(searchTerm);
+      this.setState({
+        ...this.state,
+        searchHistory: nextSearchHistory,
+        currentSearchTerm: searchTerm,
+        searchResult: {
+          isLoading: true,
+          data: [],
+        },
+      });
 
-        this.setState({
-          ...this.state,
-          searchResult: { isLoading: false, data: nextSearchResultData },
-        });
-      } catch (e) {
-        console.error(e);
-      }
-    }, DEBOUNCE_MILISEC);
+      const nextSearchResultData = await jjalbotApi.get(searchTerm);
+
+      this.setState({
+        ...this.state,
+        searchResult: { isLoading: false, data: nextSearchResultData },
+      });
+    } catch (e) {
+      console.error(e);
+    }
   }
 }
 

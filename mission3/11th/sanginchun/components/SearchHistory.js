@@ -1,7 +1,7 @@
 class SearchHistory {
-  constructor({ $parent, initialState, onClick }) {
+  constructor({ $parent, initialState, onSearchTermClick }) {
     if (!$parent) throw new Error('타겟 DOM이 없습니다');
-    if (typeof onClick !== 'function')
+    if (typeof onSearchTermClick !== 'function')
       throw new Error('onClick 함수가 올바르지 않습니다');
 
     this.state = initialState;
@@ -12,7 +12,7 @@ class SearchHistory {
     this.$target.addEventListener('click', (e) => {
       if (!e.target.closest('li')) return;
 
-      onClick(e.target.closest('li').innerText);
+      onSearchTermClick(e.target.closest('li').innerText);
     });
 
     this._render();

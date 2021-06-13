@@ -1,7 +1,7 @@
 class SearchInput {
-  constructor({ $parent, initialState, onInput }) {
+  constructor({ $parent, initialState, onSearchTermInput }) {
     if (!$parent) throw new Error('타겟 DOM이 없습니다');
-    if (typeof onInput !== 'function')
+    if (typeof onSearchTermInput !== 'function')
       throw new Error('onInput 함수가 올바르지 않습니다');
 
     this.state = initialState;
@@ -9,7 +9,9 @@ class SearchInput {
     this.$target = document.createElement('div');
     this.$target.setAttribute('data-component-type', 'SearchInput');
 
-    this.$target.addEventListener('input', (e) => onInput(e.target.value));
+    this.$target.addEventListener('input', (e) =>
+      onSearchTermInput(e.target.value)
+    );
 
     this._render();
     $parent.appendChild(this.$target);
