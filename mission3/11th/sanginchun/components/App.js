@@ -13,7 +13,7 @@ class App {
     this.state = {
       searchHistory: [],
       currentSearchTerm: '',
-      searchResult: { isLoading: false, data: [] },
+      searchResult: { isLoading: false, isError: false, data: [] },
     };
 
     this.searchHistory = new SearchHistory({
@@ -72,8 +72,8 @@ class App {
         searchHistory: nextSearchHistory,
         currentSearchTerm: searchTerm,
         searchResult: {
+          ...this.state.searchResult,
           isLoading: true,
-          data: [],
         },
       });
 
@@ -81,10 +81,17 @@ class App {
 
       this.setState({
         ...this.state,
-        searchResult: { isLoading: false, data: nextSearchResultData },
+        searchResult: {
+          isLoading: false,
+          isError: false,
+          data: nextSearchResultData,
+        },
       });
     } catch (e) {
-      console.error(e);
+      this.setState({
+        ...this.state,
+        searchResult: { isLoading: false, isError: true, data: [] },
+      });
     }
   }
 }

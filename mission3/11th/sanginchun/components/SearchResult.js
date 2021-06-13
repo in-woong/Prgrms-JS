@@ -25,6 +25,11 @@ class SearchResult {
       return;
     }
 
+    if (this.state.isError) {
+      this.$target.innerHTML = `<div>오류가 발생했습니다. 다시 검색해주세요</div>`;
+      return;
+    }
+
     if (!this.state.data.length) {
       this.$target.innerHTML = `<div>검색 결과가 없습니다</div>`;
       return;
