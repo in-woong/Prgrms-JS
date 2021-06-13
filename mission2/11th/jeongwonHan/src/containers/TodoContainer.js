@@ -54,6 +54,12 @@ function TodoContainer({ $target, $state, setState }) {
   })
 
   this.TodoCount = new TodoCount({ $target: this.$target, state: this.$state })
+
+  this.setState = (state) => {
+    this.$state = state
+    this.todoList.setState(state)
+    this.TodoCount.setState(state)
+  }
 }
 
 export default TodoContainer
