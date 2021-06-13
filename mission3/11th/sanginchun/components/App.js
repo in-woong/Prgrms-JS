@@ -10,7 +10,10 @@ class App {
   constructor($app) {
     if (!$app) throw new Error('타겟 DOM이 없습니다');
 
-    this.state = { searchHistory: [], searchResult: [] };
+    this.state = {
+      searchHistory: [],
+      searchResult: { isLoading: false, data: [] },
+    };
 
     this.searchHistory = new SearchHistory({
       $parent: $app,
@@ -46,15 +49,23 @@ class App {
 
       try {
         const nextSearchHistory = [...this.state.searchHistory];
-        const nextSearchResult = await jjalbotApi.get(searchTerm);
-
         if (!nextSearchHistory.includes(searchTerm))
           nextSearchHistory.push(searchTerm);
 
         this.setState({
           ...this.state,
           searchHistory: nextSearchHistory,
-          searchResult: nextSearchResult,
+          searchResult: {
+            isLoading: true,
+            data: [],
+          },
+        });
+
+        const nextSearchResultData = await jjalbotApi.get(searchTerm);
+
+        this.setState({
+          ...this.state,
+          searchResult: { isLoading: false, data: nextSearchResultData },
         });
       } catch (e) {
         console.error(e);

@@ -1,7 +1,7 @@
 class SearchResult {
   constructor({ $parent, initialState }) {
     if (!$parent) throw new Error('타겟 DOM이 없습니다');
-    this.validateResult(initialState);
+    this.validateResult(initialState.data);
 
     this.state = initialState;
 
@@ -13,20 +13,25 @@ class SearchResult {
   }
 
   setState(nextState) {
-    this.validateResult(nextState);
+    this.validateResult(nextState.data);
 
     this.state = nextState;
     this._render();
   }
 
   _render() {
-    if (!this.state.length) {
+    if (this.state.isLoading) {
+      this.$target.innerHTML = `<div>검색 중 ...</div>`;
+      return;
+    }
+
+    if (!this.state.data.length) {
       this.$target.innerHTML = `<div>검색 결과가 없습니다</div>`;
       return;
     }
 
     this.$target.innerHTML = `
-      ${this.state
+      ${this.state.data
         .map(({ imageUrl, title }) =>
           imageUrl
             ? `<div class="container">
