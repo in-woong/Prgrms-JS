@@ -12,6 +12,7 @@ class App {
 
     this.state = {
       searchHistory: [],
+      currentSearchTerm: '',
       searchResult: { isLoading: false, data: [] },
     };
 
@@ -23,6 +24,7 @@ class App {
 
     this.searchInput = new SearchInput({
       $parent: $app,
+      initialState: this.state.currentSearchTerm,
       onInput: this.onSearchTermInput.bind(this),
     });
 
@@ -38,6 +40,7 @@ class App {
     this.state = nextState;
 
     this.searchHistory.setState(this.state.searchHistory);
+    this.searchInput.setState(this.state.currentSearchTerm);
     this.searchResult.setState(this.state.searchResult);
   }
 
@@ -55,6 +58,7 @@ class App {
         this.setState({
           ...this.state,
           searchHistory: nextSearchHistory,
+          currentSearchTerm: searchTerm,
           searchResult: {
             isLoading: true,
             data: [],
