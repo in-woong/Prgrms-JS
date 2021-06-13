@@ -1,3 +1,4 @@
+import SearchHistory from './SearchHistory.js';
 import SearchInput from './SearchInput.js';
 import SearchResult from './SearchResult.js';
 
@@ -9,7 +10,13 @@ class App {
   constructor($app) {
     if (!$app) throw new Error('타겟 DOM이 없습니다');
 
-    this.state = { searchResult: [] };
+    this.state = { searchHistory: [], searchResult: [] };
+
+    this.searchHistory = new SearchHistory({
+      $parent: $app,
+      initialState: this.state.searchHistory,
+      onClick: this.onSearchTermInput.bind(this),
+    });
 
     this.searchInput = new SearchInput({
       $parent: $app,
@@ -18,7 +25,7 @@ class App {
 
     this.searchResult = new SearchResult({
       $parent: $app,
-      initialResult: this.state.searchResult,
+      initialState: this.state.searchResult,
     });
 
     this.debounceTimer = null;
@@ -27,6 +34,7 @@ class App {
   setState(nextState) {
     this.state = nextState;
 
+    this.searchHistory.setState(this.state.searchHistory);
     this.searchResult.setState(this.state.searchResult);
   }
 
@@ -37,9 +45,17 @@ class App {
       if (!searchTerm) return;
 
       try {
-        const searchResult = await jjalbotApi.get(searchTerm);
+        const nextSearchHistory = [...this.state.searchHistory];
+        const nextSearchResult = await jjalbotApi.get(searchTerm);
 
-        this.setState({ ...this.state, searchResult });
+        if (!nextSearchHistory.includes(searchTerm))
+          nextSearchHistory.push(searchTerm);
+
+        this.setState({
+          ...this.state,
+          searchHistory: nextSearchHistory,
+          searchResult: nextSearchResult,
+        });
       } catch (e) {
         console.error(e);
       }
