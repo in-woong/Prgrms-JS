@@ -8,10 +8,10 @@
   justify-content: center;
   margin-bottom: 10px;
 }
+
 .search-history {
   width: 80%;
 }
-
 .search-history span {
   display: inline-block;
   justify-self: flex-start;
@@ -38,7 +38,13 @@
   width: 100%;
   display: grid;
   gap: 10px;
-  grid-template-columns: repeat(4, minmax(150px, 1fr));
+  grid-template-columns: repeat(4, minmax(50px, 1fr));
+}
+
+.no-result {
+  grid-column: 1/5;
+  display: flex;
+  justify-content: center;
 }
 
 .gif-wrapper {

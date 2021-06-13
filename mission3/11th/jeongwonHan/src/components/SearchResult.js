@@ -3,15 +3,20 @@ function SearchResult({ $target, state }) {
   this.state = state
 
   this.render = (state) => {
-    const htmlString = `${state
-      .map(
-        (gifs) => `
+    console.log(state)
+    const htmlString = `${
+      state
+        ? `<div class="no-result">검색 결과가 없습니다😥</div>`
+        : state
+            .map(
+              (gifs) => `
         <div class="gif-wrapper">
             <img src="${gifs.imageUrl}">
         </div>
     `
-      )
-      .join('')}`
+            )
+            .join('')
+    }`
     this.$target.innerHTML = htmlString
   }
 
