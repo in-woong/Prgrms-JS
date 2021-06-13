@@ -17,7 +17,11 @@ const api = {
       if (!res.ok) throw new Error();
 
       const data = await res.json();
-      if (data) sessionStorage.setItem(searchTerm, JSON.stringify(data));
+      try {
+        if (data) sessionStorage.setItem(searchTerm, JSON.stringify(data));
+      } catch (err) {
+        console.error(err);
+      }
 
       return data;
     } catch (err) {

@@ -2,7 +2,7 @@ class SearchInput {
   constructor({ $parent, onSearchTermInput }) {
     if (!$parent) throw new Error('타겟 DOM이 없습니다');
     if (typeof onSearchTermInput !== 'function')
-      throw new Error('onInput 함수가 올바르지 않습니다');
+      throw new Error('onSearchTermInput 함수가 없습니다');
 
     this.$target = document.createElement('div');
     this.$target.setAttribute('data-component-type', 'SearchInput');
