@@ -13,6 +13,7 @@
 }
 
 .search-history span {
+  display: inline-block;
   justify-self: flex-start;
   background-color: #d3d3d3;
   padding: 1px 3px;

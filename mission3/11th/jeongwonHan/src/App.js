@@ -3,15 +3,36 @@ import SearchResult from './components/SearchResult.js'
 import SearchHistory from './components/SearchHistory.js'
 import { api } from './api/api.js'
 import { dummyData } from './util/dummyData.js'
+import { getUuidv4 } from './util/Uuid.js'
 
 function App($target) {
   this.$target = $target
   this.state = {
     searchHistory: [],
     gifs: [],
+    error: '',
   }
 
-  const searchHistory = new SearchHistory({ $target: this.$target.querySelector('.search-history'), state: this.state })
+  const searchHistory = new SearchHistory({
+    $target: this.$target.querySelector('.search-history'),
+    state: this.state,
+    onSearchHistory: async (historyText) => {
+      try {
+        const response = await api.fetchGifs(historyText)
+        if (!response && response.length < 1) {
+          alert('error')
+        } else {
+          const newState = {
+            searchHistory: [...this.state.searchHistory, { id: getUuidv4(), text: historyText }],
+            gifs: response,
+          }
+          this.setState(newState)
+        }
+      } catch (e) {
+        console.log(e)
+      }
+    },
+  })
 
   const searchInput = new SearchInput({
     $target: this.$target.querySelector('.search-keyword'),
@@ -23,7 +44,7 @@ function App($target) {
           alert('error')
         } else {
           const newState = {
-            searchHistory: [...this.state.searchHistory, keyword],
+            searchHistory: [...this.state.searchHistory, { id: getUuidv4(), text: keyword }],
             gifs: response,
           }
           this.setState(newState)
@@ -47,7 +68,11 @@ function App($target) {
 
   //테스트용
   const testState = {
-    searchHistory: [...this.state.searchHistory, 'keyword'],
+    searchHistory: [
+      { id: getUuidv4(), text: '고양이' },
+      { id: getUuidv4(), text: 'ㅁㅁ' },
+      { id: getUuidv4(), text: '음식' },
+    ],
     gifs: dummyData,
   }
   this.setState(testState)
