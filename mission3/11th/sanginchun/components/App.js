@@ -11,24 +11,19 @@ class App {
     if (!$app) throw new Error('타겟 DOM이 없습니다');
 
     this.state = {
-      searchHistory: [],
-      currentSearchTerm: '',
+      searchHistory: { currentSearchTerm: '', data: [] },
       searchResult: { isLoading: false, isError: false, data: [] },
     };
 
-    this.searchHistory = new SearchHistory({
-      $parent: $app,
-      initialState: {
-        currentSearchTerm: this.state.currentSearchTerm,
-        data: this.state.searchHistory,
-      },
-      onSearchTermClick: this.searchGif.bind(this),
-    });
-
     this.searchInput = new SearchInput({
       $parent: $app,
-      initialState: this.state.currentSearchTerm,
       onSearchTermInput: this.onSearchTermInput.bind(this),
+    });
+
+    this.searchHistory = new SearchHistory({
+      $parent: $app,
+      initialState: this.state.searchHistory,
+      onSearchTermClick: this.searchGif.bind(this),
     });
 
     this.searchResult = new SearchResult({
@@ -42,11 +37,7 @@ class App {
   setState(nextState) {
     this.state = nextState;
 
-    this.searchHistory.setState({
-      currentSearchTerm: this.state.currentSearchTerm,
-      data: this.state.searchHistory,
-    });
-    this.searchInput.setState(this.state.currentSearchTerm);
+    this.searchHistory.setState(this.state.searchHistory);
     this.searchResult.setState(this.state.searchResult);
   }
 
@@ -63,14 +54,15 @@ class App {
     if (!searchTerm) return;
 
     try {
-      const nextSearchHistory = [...this.state.searchHistory];
-      if (!nextSearchHistory.includes(searchTerm))
-        nextSearchHistory.push(searchTerm);
+      const nextSearchHistoryData = [...this.state.searchHistory.data];
+      if (!nextSearchHistoryData.includes(searchTerm))
+        nextSearchHistoryData.push(searchTerm);
 
       this.setState({
-        ...this.state,
-        searchHistory: nextSearchHistory,
-        currentSearchTerm: searchTerm,
+        searchHistory: {
+          currentSearchTerm: searchTerm,
+          data: nextSearchHistoryData,
+        },
         searchResult: {
           ...this.state.searchResult,
           isLoading: true,

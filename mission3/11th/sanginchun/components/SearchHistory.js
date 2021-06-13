@@ -25,11 +25,6 @@ class SearchHistory {
   }
 
   _render() {
-    if (!this.state.data.length) {
-      this.$target.innerHTML = `<div>검색 기록이 없습니다</div>`;
-      return;
-    }
-
     this.$target.innerHTML = `
       <ul>
         ${this.state.data
