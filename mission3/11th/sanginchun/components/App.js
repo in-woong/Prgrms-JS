@@ -3,6 +3,8 @@ import SearchResult from './SearchResult.js';
 
 import jjalbotApi from '../api/jjalbotApi.js';
 
+const DEBOUNCE_MILISEC = 500;
+
 class App {
   constructor($app) {
     if (!$app) throw new Error('타겟 DOM이 없습니다');
@@ -18,6 +20,8 @@ class App {
       $parent: $app,
       initialResult: this.state.searchResult,
     });
+
+    this.debounceTimer = null;
   }
 
   setState(nextState) {
@@ -26,15 +30,20 @@ class App {
     this.searchResult.setState(this.state.searchResult);
   }
 
-  async onSearchTermInput(searchTerm) {
-    if (!searchTerm) return;
-    try {
-      const searchResult = await jjalbotApi.get(searchTerm);
+  onSearchTermInput(searchTerm) {
+    if (this.debounceTimer) clearTimeout(this.debounceTimer);
 
-      this.setState({ ...this.state, searchResult });
-    } catch (e) {
-      console.error(e);
-    }
+    this.debounceTimer = setTimeout(async () => {
+      if (!searchTerm) return;
+
+      try {
+        const searchResult = await jjalbotApi.get(searchTerm);
+
+        this.setState({ ...this.state, searchResult });
+      } catch (e) {
+        console.error(e);
+      }
+    }, DEBOUNCE_MILISEC);
   }
 }
 
