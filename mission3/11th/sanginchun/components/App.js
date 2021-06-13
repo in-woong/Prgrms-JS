@@ -18,7 +18,10 @@ class App {
 
     this.searchHistory = new SearchHistory({
       $parent: $app,
-      initialState: this.state.searchHistory,
+      initialState: {
+        currentSearchTerm: this.state.currentSearchTerm,
+        data: this.state.searchHistory,
+      },
       onSearchTermClick: this.searchGif.bind(this),
     });
 
@@ -39,7 +42,10 @@ class App {
   setState(nextState) {
     this.state = nextState;
 
-    this.searchHistory.setState(this.state.searchHistory);
+    this.searchHistory.setState({
+      currentSearchTerm: this.state.currentSearchTerm,
+      data: this.state.searchHistory,
+    });
     this.searchInput.setState(this.state.currentSearchTerm);
     this.searchResult.setState(this.state.searchResult);
   }
