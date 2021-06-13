@@ -1,9 +1,10 @@
 class SearchResult {
   constructor({ $parent, initialState }) {
     if (!$parent) throw new Error('타겟 DOM이 없습니다');
-    this.validateResult(initialState.data);
-
-    this.state = initialState;
+    this.state = {
+      ...initialState,
+      data: this.validateSearchResult(initialState.data),
+    };
 
     this.$target = document.createElement('div');
     this.$target.setAttribute('data-component-type', 'SearchResult');
@@ -13,9 +14,10 @@ class SearchResult {
   }
 
   setState(nextState) {
-    this.validateResult(nextState.data);
-
-    this.state = nextState;
+    this.state = {
+      ...nextState,
+      data: this.validateSearchResult(nextState.data),
+    };
     this._render();
   }
 
@@ -37,19 +39,23 @@ class SearchResult {
 
     this.$target.innerHTML = `
       ${this.state.data
-        .map(({ imageUrl, title }) =>
-          imageUrl
-            ? `<div class="container">
+        .map(
+          ({ imageUrl, title }) =>
+            `<div class="container">
               <img src="${imageUrl}" alt="${title}" title="${title}">
             </div>`
-            : ''
         )
         .join('')}
     `;
   }
 
-  validateResult(result) {
-    if (!Array.isArray(result)) throw new Error('Result가 Array가 아닙니다.');
+  validateSearchResult(searchResult) {
+    if (!Array.isArray(searchResult)) {
+      console.error('검색결과가 Array가 아닙니다.');
+      return [];
+    }
+
+    return searchResult.filter(({ imageUrl }) => imageUrl);
   }
 }
 
