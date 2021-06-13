@@ -2,11 +2,16 @@ function SearchInput({ $target, state, onSearch }) {
   this.$target = $target
   this.state = state
   this.onSearch = onSearch
+  this.timer = null
 
   this.keyupHandler = (e) => {
-    if (e.key !== 'Enter') return
     const text = e.target.value
-    onSearch(text)
+    if (this.timer) {
+      clearTimeout(this.timer)
+    }
+    this.timer = setTimeout(() => {
+      this.onSearch(text)
+    }, 200)
   }
 
   this.setState = (nextState) => {

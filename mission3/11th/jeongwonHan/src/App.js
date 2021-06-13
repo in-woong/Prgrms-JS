@@ -10,7 +10,7 @@ function App($target) {
   this.state = {
     searchHistory: [],
     gifs: [],
-    error: '',
+    isError: '',
   }
 
   const searchHistory = new SearchHistory({
@@ -23,7 +23,7 @@ function App($target) {
           alert('error')
         } else {
           const newState = {
-            searchHistory: [...this.state.searchHistory, { id: getUuidv4(), text: historyText }],
+            ...this.state,
             gifs: response,
           }
           this.setState(newState)

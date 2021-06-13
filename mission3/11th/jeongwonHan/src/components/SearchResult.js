@@ -3,9 +3,9 @@ function SearchResult({ $target, state }) {
   this.state = state
 
   this.render = (state) => {
-    console.log(state)
+    /*TODO 초기 상태에 검색결과 없다고 나오는 거 해결 */
     const htmlString = `${
-      state
+      !state
         ? `<div class="no-result">검색 결과가 없습니다😥</div>`
         : state
             .map(
