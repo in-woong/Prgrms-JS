@@ -22,11 +22,12 @@ class SearchResult {
   _render() {
     this.$target.innerHTML = `
       ${this.state
-        .map(
-          ({ imageUrl, title }) =>
-            `<div class="container">
+        .map(({ imageUrl, title }) =>
+          imageUrl
+            ? `<div class="container">
               <img src="${imageUrl}" alt="${title}" title="${title}">
             </div>`
+            : ''
         )
         .join('')}
     `;
