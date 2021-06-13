@@ -53,3 +53,25 @@ div[data-component-type='SearchHistory'] ul li.current {
   background-color: #ccc;
   color: #000;
 }
+
+/* SearchResult */
+div[data-component-type='SearchResult'] {
+  display: grid;
+  grid-template-columns: repeat(2, calc(50% - 0.3rem));
+  grid-auto-rows: 220px;
+  grid-gap: 0.6rem;
+}
+
+div[data-component-type='SearchResult'] .container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* mobile */
+@media screen and (max-width: 450px) {
+  div[data-component-type='SearchResult'] {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 300px;
+  }
+}
