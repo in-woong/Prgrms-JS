@@ -15,7 +15,7 @@ class App {
       searchResult: { isLoading: false, isError: false, data: [] },
     };
 
-    this.searchInput = new SearchInput({
+    new SearchInput({
       $parent: $app,
       onSearchTermInput: this.onSearchTermInput.bind(this),
     });
