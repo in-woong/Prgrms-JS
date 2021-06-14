@@ -42,22 +42,27 @@
     ]
 
     function todoList(id, data) {
-        if (new.target && data) {
-            if (Array.isArray(data)) {
-                this.render = () => {
+        this.currentData = data;
+        if (new.target && this.currentData) {
+            if (Array.isArray(this.currentData)) {
+                this.render = (data) => {
+                    this.currentData = data ? data : this.currentData;
                     let htmlString = '';
-                    for (let i=0; i < data.length; i++) {
-                        if (data[i].text) {
-                            if (data[i].isCompleted) {
-                                htmlString += `<div><s>${data[i].text}</s></div>`;
+                    for (let i=0; i < this.currentData.length; i++) {
+                        if (this.currentData[i].text) {
+                            if (this.currentData[i].isCompleted) {
+                                htmlString += `<div><s>${this.currentData[i].text}</s></div>`;
                             } else {
-                                htmlString += `<div>${data[i].text}</div>`;
+                                htmlString += `<div>${this.currentData[i].text}</div>`;
                             }
                             document.querySelector(id).innerHTML = htmlString;
                         } else {
                             throw new Error('Data is error!');
                         }
                     }
+                }
+                this.setState = (nextData) => {
+                    this.render(nextData);
                 }
             } else {
                 throw new Error('Data type is not Array!');
@@ -75,6 +80,7 @@
     todolist0.render();
     todolist1.render();
     todolist2.render();
+    todolist2.setState(data1);
 </script>
 </body>
 </html>
