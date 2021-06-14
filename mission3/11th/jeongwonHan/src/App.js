@@ -44,7 +44,7 @@ function App($target) {
           alert('error')
         } else {
           const newState = {
-            searchHistory: [...this.state.searchHistory, { id: getUuidv4(), text: keyword }],
+            searchHistory: this.state.searchHistory.indexOf(keyword) > 0 ? [...this.state.searchHistory, { id: getUuidv4(), text: keyword }] : [...this.state.searchHistory],
             gifs: response,
           }
           this.setState(newState)
@@ -66,16 +66,19 @@ function App($target) {
     searchHistory.setState(this.state)
   }
 
-  //테스트용
+  //테스트 코드
+  /*
   const testState = {
     searchHistory: [
       { id: getUuidv4(), text: '고양이' },
-      { id: getUuidv4(), text: 'ㅁㅁ' },
+      { id: getUuidv4(), text: '짤짤' },
       { id: getUuidv4(), text: '음식' },
     ],
     gifs: dummyData,
   }
   this.setState(testState)
+  */
+
   searchResult.setState(this.state)
   searchHistory.setState(this.state)
 }
