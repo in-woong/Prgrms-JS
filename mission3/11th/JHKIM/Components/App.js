@@ -54,8 +54,18 @@ export default class App {
     async searchUmzzal(text) {
         if (text) {
             /*global fetch*/
-            const data = await (await fetch(`https://jjalbot.com/api/jjals?text=${text}`)).json();
-            this.setState('searchResult', data);
+            try {
+                const response = await fetch(`https://jjalbot.com/api/jjals?text=${text}`);
+                
+                if(!response.ok){
+                    throw new Error('네트워크 에러');
+                }
+                
+                this.setState('searchResult', await response.json());
+            }
+            catch (err) {
+                console.error(err);
+            }
         }
         else {
             this.setState('searchResult', []);
