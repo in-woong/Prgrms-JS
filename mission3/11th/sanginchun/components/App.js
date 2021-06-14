@@ -45,7 +45,7 @@ class App {
     if (this.debounceTimer) clearTimeout(this.debounceTimer);
 
     this.debounceTimer = setTimeout(
-      () => this.searchGif.call(this, searchTerm),
+      () => this.searchGif(searchTerm),
       DEBOUNCE_MILISEC
     );
   }
