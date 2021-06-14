@@ -12,26 +12,32 @@
 <script>
     var data = [
         {
-            text: 'JS 공부하기'
+            text: 'JS 공부하기',
+            isCompleted: true,
         },
         {
-            text: 'JS 복습하기'
+            text: 'JS 복습하기',
+            isCompleted: false,
         }
     ]
     var data1 = [
         {
-            text: 'Mission1 완료하기'
+            text: 'Mission1 완료하기',
+            isCompleted: true,
         },
         {
-            text: 'Mission1 복습하기'
+            text: 'Mission1 복습하기',
+            isCompleted: true,
         }
     ]
     var data2 = [
         {
-            text: 'Mission2 완료하기'
+            text: 'Mission2 완료하기',
+            isCompleted: false,
         },
         {
-            text: 'Mission2 복습하기'
+            text: 'Mission2 복습하기',
+            isCompleted: false,
         }
     ]
 
@@ -42,7 +48,11 @@
                     let htmlString = '';
                     for (let i=0; i < data.length; i++) {
                         if (data[i].text) {
-                            htmlString += `<div>${data[i].text}</div>`;
+                            if (data[i].isCompleted) {
+                                htmlString += `<div><s>${data[i].text}</s></div>`;
+                            } else {
+                                htmlString += `<div>${data[i].text}</div>`;
+                            }
                             document.querySelector(id).innerHTML = htmlString;
                         } else {
                             throw new Error('Data is error!');
