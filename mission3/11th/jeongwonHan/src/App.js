@@ -10,7 +10,6 @@ function App($target) {
   this.state = {
     searchHistory: [],
     gifs: [],
-    isError: '',
   }
 
   const searchHistory = new SearchHistory({
@@ -19,7 +18,7 @@ function App($target) {
     onSearchHistory: async (historyText) => {
       try {
         const response = await api.fetchGifs(historyText)
-        if (!response && response.length < 1) {
+        if (!response) {
           alert('error')
         } else {
           const newState = {
@@ -40,7 +39,7 @@ function App($target) {
     onSearch: async (keyword) => {
       try {
         const response = await api.fetchGifs(keyword)
-        if (!response && response.length < 1) {
+        if (!response) {
           alert('error')
         } else {
           const newState = {
