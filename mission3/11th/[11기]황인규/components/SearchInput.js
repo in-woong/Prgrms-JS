@@ -1,20 +1,13 @@
+function SearchInput({$input, onFetchData}){
+    this.$input = $input;
+    this.onFetchData = onFetchData;
 
-function SearchInput({onFetchData}){
-    
-    document
-        .querySelector('#search-keyword')
-        .addEventListener('keyup', function(e) {
-            fetch(`https://jjalbot.com/api/jjals?text=${e.target.value}/`)
-            .then(x => x.json())
-            .then(data => {
-                console.log(JSON.stringify(data, null, 2))
-                const htmlString = `${data
-                .map(d => `<img src="${d.imageUrl}">`)
-                .join('')}`
-                onFetchData(htmlString);
-                
-            })
-        })
+    const onKeyupHandler = (event) => {
+        
+        if(event.key != 'Enter') return;
+        onFetchData(event.target.value);
+    }
+    this.$input.addEventListener('keyup', onKeyupHandler);
 
 }
 export default SearchInput;
