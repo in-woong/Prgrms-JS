@@ -76,15 +76,10 @@ const dummyData = [
   },
 ]
 
-console.log('hello')
-
 const $target = $('main')
-
 const app = new App({
   $target,
   initialState: dummyData,
 })
 
 app.render()
-
-console.log($target)

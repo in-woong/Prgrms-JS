@@ -1,9 +1,20 @@
 class SearchResult {
-  constructor({ $app, initialState }) {}
+  constructor({ $app, initialState }) {
+    this.state = initialState
+    this.$target = document.createElement('div')
+    this.$target.className = 'search-result'
 
-  render = () => {}
+    $app.append(this.$target)
+  }
 
-  setState = () => {}
+  render = () => {
+    this.$target.innerHTML = this.state.map((data) => `<img src=${data.imageUrl}>`).join('')
+  }
+
+  setState = (nextState) => {
+    this.state = nextState
+    this.render()
+  }
 }
 
 export default SearchResult

@@ -1,10 +1,11 @@
 class SearchInput {
-  constructor({ $app }) {
+  constructor({ $app, onGetData }) {
+    this.onGetData = onGetData
     this.$target = document.createElement('div')
     this.$target.className = 'search-input'
     this.$target.addEventListener('keyup', this.onKeyUpInput)
 
-    $app.appendChild(this.$target)
+    $app.append(this.$target)
   }
 
   render = () => {
@@ -14,7 +15,7 @@ class SearchInput {
   }
 
   onKeyUpInput = ({ target }) => {
-    console.log('onKeyUpInput', target)
+    console.log('onKeyUpInput', target, this.onGetData)
   }
 }
 
