@@ -5,7 +5,9 @@ export default class SearchHistory {
         this.onClickHistory = onClickHistory;
 
         this.$target.addEventListener('click', ({ target }) => {
-            this.onClickHistory(target.innerText);
+            if (target.closest('li') !== null) {
+                this.onClickHistory(target.closest('li').innerText);
+            }
         });
 
         $app.appendChild(this.$target);
