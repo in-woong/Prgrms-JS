@@ -1,3 +1,4 @@
+import { API } from '../api/api.js'
 import SearchInput from './SearchInput.js'
 import SearchResult from './SearchResult.js'
 
@@ -10,7 +11,10 @@ class App {
 
     this.searchInput = new SearchInput({
       $app: this.$app,
-      onGetData: () => {},
+      getData: async (text) => {
+        const nextState = await API.getData(text)
+        this.setState(nextState)
+      },
     })
     this.searchResult = new SearchResult({
       $app: this.$app,

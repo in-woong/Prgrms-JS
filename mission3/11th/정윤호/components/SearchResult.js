@@ -3,7 +3,6 @@ class SearchResult {
     this.state = initialState
     this.$target = document.createElement('div')
     this.$target.className = 'search-result'
-
     $app.append(this.$target)
   }
 

@@ -1,10 +1,9 @@
 class SearchInput {
-  constructor({ $app, onGetData }) {
-    this.onGetData = onGetData
+  constructor({ $app, getData }) {
+    this.getData = getData
     this.$target = document.createElement('div')
     this.$target.className = 'search-input'
     this.$target.addEventListener('keyup', this.onKeyUpInput)
-
     $app.append(this.$target)
   }
 
@@ -14,8 +13,9 @@ class SearchInput {
     `
   }
 
-  onKeyUpInput = ({ target }) => {
-    console.log('onKeyUpInput', target, this.onGetData)
+  onKeyUpInput = ({ target, key }) => {
+    if (key !== 'Enter' || target.value.trim() === '') return
+    this.getData(target.value.trim())
   }
 }
 
