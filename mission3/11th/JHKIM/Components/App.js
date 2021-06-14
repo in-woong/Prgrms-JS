@@ -13,16 +13,26 @@ export default class App {
             $app,
             initialState: this.state,
             onClickHistory: async(text) => {
-                await this.searchUmzzal(text);
+                try {
+                    this.setState('searchResult', await this.searchUmzzal(text));
+                }
+                catch (err) {
+                    console.error(err);
+                }
             },
         }));
 
         this.register(new SearchInput({
             $app,
             onSearchInput: async(text) => {
-                await this.searchUmzzal(text);
-                if (text) {
-                    this.setState('searchHistory', [...this.state.searchHistory, text]);
+                try {
+                    this.setState('searchResult', await this.searchUmzzal(text));
+                    if (text) {
+                        this.setState('searchHistory', [...this.state.searchHistory, text]);
+                    }
+                }
+                catch (err) {
+                    console.error(err);
                 }
             }
         }));
@@ -52,23 +62,19 @@ export default class App {
     }
 
     async searchUmzzal(text) {
+        /*global fetch*/
         if (text) {
-            /*global fetch*/
-            try {
-                const response = await fetch(`https://jjalbot.com/api/jjals?text=${text}`);
-                
-                if(!response.ok){
-                    throw new Error('네트워크 에러');
-                }
-                
-                this.setState('searchResult', await response.json());
+            const response = await fetch(`https://jjalbot.com/api/jjals?text=${text}`);
+
+            if (!response.ok) {
+                throw new Error('네트워크 에러');
             }
-            catch (err) {
-                console.error(err);
-            }
+
+            return await response.json();
         }
         else {
-            this.setState('searchResult', []);
+            return [];
         }
+
     }
 }
