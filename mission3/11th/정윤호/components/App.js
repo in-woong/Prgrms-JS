@@ -1,4 +1,5 @@
 import { API } from '../api/api.js'
+import SearchHistory from './SearchHistory.js'
 import SearchInput from './SearchInput.js'
 import SearchResult from './SearchResult.js'
 
@@ -9,6 +10,7 @@ class App {
     this.$app.className = 'app'
     $target.append(this.$app)
 
+    this.searchHistory = new SearchHistory(this.$app)
     this.searchInput = new SearchInput({
       $app: this.$app,
       getData: async (text) => {
