@@ -18,17 +18,31 @@
     ]
 
     function todoList(data) {
-        this.render = () => {
-            let htmlString = '';
-            for (let i=0; i < data.length; i++) {
-                htmlString += `<div>${data[i].text}</div>`;
-                document.querySelector('#todo-list').innerHTML = htmlString;
+        if (new.target && data) {
+            if (Array.isArray(data)) {
+                this.render = () => {
+                    let htmlString = '';
+                    for (let i=0; i < data.length; i++) {
+                        if (data[i].text) {
+                            htmlString += `<div>${data[i].text}</div>`;
+                            document.querySelector('#todo-list').innerHTML = htmlString;
+                        } else {
+                            throw new Error('Data is error!');
+                        }
+                    }
+                }
+            } else {
+                throw new Error('Data type is not Array!');
             }
+        } else if (new.target) {
+            throw new Error('Data is NULL or Undefined!');
+        } else {
+            throw new Error('Need a new operator!');
         }
     }
 
     const todolist1 = new todoList(data);
-    todolist1.render();
+    todolist.render();
 </script>
 </body>
 </html>
