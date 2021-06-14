@@ -1,4 +1,3 @@
-
 function SearchResult(data, $target){
     
     this.state = data;
