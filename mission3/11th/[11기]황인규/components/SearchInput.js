@@ -5,7 +5,14 @@ function SearchInput({$input, onFetchData}){
     const onKeyupHandler = (event) => {
         
         if(event.key != 'Enter') return;
-        onFetchData(event.target.value);
+        
+        if(this.timer){
+            clearTimeout(timer);
+        }
+        this.timer = setTimeout(() => {
+            onFetchData(event.target.value);
+        },200)
+       
     }
     this.$input.addEventListener('keyup', onKeyupHandler);
 
