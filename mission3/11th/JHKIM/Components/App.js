@@ -13,29 +13,12 @@ export default class App {
         this.register(new SearchHistory({
             $app,
             initialState: this.state,
-            onClickHistory: async(text) => {
-                try {
-                    this.setState('searchResult', await searchUmzzal(text));
-                }
-                catch (err) {
-                    console.error(err);
-                }
-            },
+            onClickHistory: async(text) => await this.searchHandler(text)
         }));
 
         this.register(new SearchInput({
             $app,
-            onSearchInput: async(text) => {
-                try {
-                    this.setState('searchResult', await searchUmzzal(text));
-                    if (text) {
-                        this.setState('searchHistory', Array.from(new Set([...this.state.searchHistory, text])));
-                    }
-                }
-                catch (err) {
-                    console.error(err);
-                }
-            }
+            onSearchInput: async(text) => await this.searchHandler(text)
         }));
 
         this.register(new SearchResult({
@@ -60,5 +43,17 @@ export default class App {
     setState(key, newState) {
         this.state[key] = newState;
         this.render();
+    }
+
+    async searchHandler(text) {
+        try {
+            this.setState('searchResult', await searchUmzzal(text));
+            if (text) {
+                this.setState('searchHistory', Array.from(new Set([...this.state.searchHistory, text])));
+            }
+        }
+        catch (err) {
+            console.error(err);
+        }
     }
 }
