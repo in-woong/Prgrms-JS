@@ -38,14 +38,16 @@ class SearchResult {
     }
 
     this.$target.innerHTML = `
-      ${this.state.data
-        .map(
-          ({ imageUrl, title }) =>
-            `<div class="container">
-              <img src="${imageUrl}" alt="${title}" title="${title}">
-            </div>`
-        )
-        .join('')}
+      <ul class="image-list">
+        ${this.state.data
+          .map(
+            ({ imageUrl, title }) =>
+              `<li class="image-container">
+                <img src="${imageUrl}" alt="${title}" title="${title}">
+              </li>`
+          )
+          .join('')}
+      </ul>
     `;
   }
 
@@ -55,7 +57,7 @@ class SearchResult {
       return [];
     }
 
-    return searchResult.filter(({ imageUrl }) => imageUrl);
+    return searchResult.filter(({ imageUrl }) => typeof imageUrl === 'string');
   }
 }
 
