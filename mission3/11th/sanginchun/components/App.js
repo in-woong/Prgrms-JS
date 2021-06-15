@@ -2,7 +2,7 @@ import SearchHistory from './SearchHistory.js';
 import SearchInput from './SearchInput.js';
 import SearchResult from './SearchResult.js';
 
-import jjalbotApi from '../api/jjalbotApi.js';
+import getImage from '../api/jjalbotApi.js';
 
 const DEBOUNCE_MILISEC = 500;
 
@@ -69,7 +69,7 @@ class App {
         },
       });
 
-      const nextSearchResultData = await jjalbotApi.get(searchTerm);
+      const nextSearchResultData = await getImage(searchTerm);
 
       this.setState({
         ...this.state,
