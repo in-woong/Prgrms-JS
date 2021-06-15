@@ -1,5 +1,5 @@
 class SearchResult {
-  constructor({ $app, initialState }) {
+  constructor({ $app, initialState = [] }) {
     this.state = initialState
     this.$target = document.createElement('div')
     this.$target.className = 'search-result'

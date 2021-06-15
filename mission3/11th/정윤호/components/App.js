@@ -10,13 +10,19 @@ class App {
     this.$app.className = 'app'
     $target.append(this.$app)
 
-    this.searchHistory = new SearchHistory(this.$app)
     this.searchInput = new SearchInput({
       $app: this.$app,
       getData: async (text) => {
+        console.log('searchInput - getData')
         const nextState = await API.getData(text)
         this.setState(nextState)
+        if (!this.searchHistory.state.includes(text)) {
+          this.searchHistory.setState([...this.searchHistory.state, text])
+        }
       },
+    })
+    this.searchHistory = new SearchHistory({
+      $app: this.$app,
     })
     this.searchResult = new SearchResult({
       $app: this.$app,
@@ -25,6 +31,7 @@ class App {
   }
 
   render = () => {
+    this.searchHistory.render()
     this.searchInput.render()
     this.searchResult.render()
   }
