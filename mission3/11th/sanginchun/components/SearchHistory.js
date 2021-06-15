@@ -1,18 +1,11 @@
 class SearchHistory {
-  constructor({ initialState, onSearchTermClick }) {
-    if (typeof onSearchTermClick !== 'function')
-      throw new Error('onSearchTermClick 함수가 없습니다');
-
+  constructor({ initialState, onClick }) {
     this.state = initialState;
 
     this.$target = document.createElement('div');
     this.$target.className = 'search-history';
 
-    this.$target.addEventListener('click', (e) => {
-      if (!e.target.closest('li')) return;
-
-      onSearchTermClick(e.target.closest('li').innerText);
-    });
+    this.$target.addEventListener('click', onClick);
 
     this._render();
   }
@@ -24,14 +17,15 @@ class SearchHistory {
 
   _render() {
     this.$target.innerHTML = `
-      <ul>
+      <ul class="search-term-list">
         ${this.state.data
-          .map(
-            (searchTerm) =>
-              `<li class="${
-                this.state.currentSearchTerm === searchTerm ? 'current' : ''
-              }">${searchTerm}</li>`
-          )
+          .map((searchTerm) => {
+            const className = `search-term ${
+              this.state.currentSearchTerm === searchTerm ? 'current' : ''
+            }`.trimEnd();
+
+            return `<li class="${className}">${searchTerm}</li>`;
+          })
           .join('')}
       </ul>
     `;

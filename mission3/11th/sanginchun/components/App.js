@@ -21,12 +21,12 @@ class App {
     };
 
     this.searchInput = new SearchInput({
-      onSearchTermInput: this.onSearchTermInput.bind(this),
+      onInput: this.onSearchTermInput.bind(this),
     });
 
     this.searchHistory = new SearchHistory({
       initialState: this.state.searchHistory,
-      onSearchTermClick: this.searchGif.bind(this),
+      onClick: this.onSearchHistoryClick.bind(this),
     });
 
     this.searchResult = new SearchResult({
@@ -55,13 +55,17 @@ class App {
     this.searchResult.setState(this.state.searchResult);
   }
 
-  onSearchTermInput(searchTerm) {
-    this.debounceSearchGif(searchTerm);
+  onSearchTermInput(e) {
+    const searchTerm = e.target.value;
+    if (searchTerm) this.debounceSearchGif(searchTerm);
+  }
+
+  onSearchHistoryClick(e) {
+    const searchTerm = e.target.closest('li.search-term')?.innerText;
+    if (searchTerm) this.searchGif(searchTerm);
   }
 
   async searchGif(searchTerm) {
-    if (!searchTerm) return;
-
     try {
       this.setState({
         ...this.state,
