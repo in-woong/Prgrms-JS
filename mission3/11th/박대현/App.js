@@ -1,5 +1,7 @@
 import SearchInput from './SearchInput.js';
 import SearchResult from './SearchResult.js';
+import SearchHistory from './SearchHistory.js';
+
 export default function() {
   const $app = document.createElement('div');
   const appendToDom = (...tags) => {
@@ -9,11 +11,12 @@ export default function() {
   }
   this.render = () => {
     const searchInput = new SearchInput();
+    const searchHistory = new SearchHistory([]);
     const searchResult = new SearchResult([]);
-    appendToDom(searchInput, searchResult)
+    appendToDom(searchInput, searchHistory, searchResult);
 
     // Input 이벤트 듣기
-    searchInput.searchOn(searchResult.setState);
+    searchInput.searchOn(searchResult.setState, searchHistory.addHistory);
   }
   this.render();
 }

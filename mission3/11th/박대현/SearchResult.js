@@ -6,15 +6,15 @@ export default function(data){
 
   this.render = () => {
     // console.log(JSON.stringify(this.data, null, 2))
-    $result.innerHTML = `${
-        this.data.reduce(
-          (acc,item) => acc + `<img src="${item.imageUrl}">`
-        , '')
-    }`
+    console.log(this.data);
+    $result.innerHTML = 
+      this.data.reduce(
+        (acc,item) => acc + `<img src="${item.imageUrl}">`
+      , '');
   }
 
   this.setState = newData => {
-    this.data = newData || [];
+    this.data = newData;
     this.render();
   }
 }
