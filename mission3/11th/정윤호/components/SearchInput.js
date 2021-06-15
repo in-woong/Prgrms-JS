@@ -8,9 +8,7 @@ class SearchInput {
   }
 
   render = () => {
-    this.$target.innerHTML = `
-      <input type="text">
-    `
+    this.$target.innerHTML = `<input type="text">`
   }
 
   onKeyUpInput = ({ target, key }) => {
