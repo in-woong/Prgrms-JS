@@ -12,7 +12,12 @@ class App {
 
     this.state = {
       searchHistory: { currentSearchTerm: '', data: [] },
-      searchResult: { isLoading: false, isError: false, data: [] },
+      searchResult: {
+        isLoading: false,
+        isError: false,
+        currentSearchTerm: '',
+        data: [],
+      },
     };
 
     new SearchInput({
@@ -76,6 +81,7 @@ class App {
         searchResult: {
           isLoading: false,
           isError: false,
+          currentSearchTerm: searchTerm,
           data: nextSearchResultData,
         },
       });
@@ -85,7 +91,12 @@ class App {
 
         this.setState({
           ...this.state,
-          searchResult: { isLoading: false, isError: true, data: [] },
+          searchResult: {
+            isLoading: false,
+            isError: true,
+            currentSearchTerm: searchTerm,
+            data: [],
+          },
         });
       } else throw e;
     }

@@ -32,8 +32,8 @@ class SearchResult {
       return;
     }
 
-    if (!this.state.data.length) {
-      this.$target.innerHTML = `<div class="message">검색 결과가 없습니다</div>`;
+    if (!this.state.data.length && this.state.currentSearchTerm) {
+      this.$target.innerHTML = `<div class="message">'${this.state.currentSearchTerm}'에 대한 검색 결과가 없습니다</div>`;
       return;
     }
 
