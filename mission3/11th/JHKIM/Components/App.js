@@ -29,7 +29,7 @@ export default class App {
                 try {
                     this.setState('searchResult', await searchUmzzal(text));
                     if (text) {
-                        this.setState('searchHistory', [...this.state.searchHistory, text]);
+                        this.setState('searchHistory', Array.from(new Set([...this.state.searchHistory, text])));
                     }
                 }
                 catch (err) {
