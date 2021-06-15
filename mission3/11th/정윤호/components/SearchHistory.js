@@ -1,9 +1,11 @@
 class SearchHistory {
-  constructor({ $app, initialState = [] }) {
+  constructor({ $app, initialState = [], getData }) {
     this.state = initialState
+    this.getData = getData
     this.$target = document.createElement('div')
     this.$target.className = 'search-histroy'
     $app.append(this.$target)
+    this.$target.addEventListener('click', this.onClickButton)
   }
 
   render = () => {
@@ -13,6 +15,11 @@ class SearchHistory {
   setState = (nextState) => {
     this.state = nextState
     this.render()
+  }
+
+  onClickButton = ({ target }) => {
+    if (!target.matches('input')) return
+    this.getData(target.value)
   }
 }
 

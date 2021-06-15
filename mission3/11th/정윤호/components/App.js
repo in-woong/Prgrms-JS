@@ -13,7 +13,6 @@ class App {
     this.searchInput = new SearchInput({
       $app: this.$app,
       getData: async (text) => {
-        console.log('searchInput - getData')
         const nextState = await API.getData(text)
         this.setState(nextState)
         if (!this.searchHistory.state.includes(text)) {
@@ -23,6 +22,10 @@ class App {
     })
     this.searchHistory = new SearchHistory({
       $app: this.$app,
+      getData: async (text) => {
+        const nextState = await API.getData(text)
+        this.setState(nextState)
+      },
     })
     this.searchResult = new SearchResult({
       $app: this.$app,
