@@ -1,20 +1,18 @@
 export default function(data){
-  const $result = document.createElement('div');
-
+  const $result = document.createElement('section');
+  $result.className = "result";
   this.element = $result;
   this.data = data;
 
   this.render = () => {
-    // console.log(JSON.stringify(this.data, null, 2))
-    console.log(this.data);
     $result.innerHTML = 
       this.data.reduce(
-        (acc,item) => acc + `<img src="${item.imageUrl}">`
+        (acc,item) => acc + `<figure><img src="${item.imageUrl}" loading="lazy"></figure>`
       , '');
   }
 
   this.setState = newData => {
-    this.data = newData;
+    this.data = [...newData];
     this.render();
   }
 }

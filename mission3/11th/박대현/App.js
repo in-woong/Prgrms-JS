@@ -4,19 +4,21 @@ import SearchHistory from './SearchHistory.js';
 
 export default function() {
   const $app = document.createElement('div');
-  const appendToDom = (...tags) => {
-    // $app에 각 컴포넌트의 태그를 연결하고 body에 연결하기
-    tags.forEach(({element}) => $app.appendChild(element));
+  const attachAppToDom = (...components) => {
+    // $app에 자식 컴포넌트를 붙이고 $app을 body에 붙이기
+    components.forEach(({element}) => $app.appendChild(element));
     document.body.appendChild($app);
   }
   this.render = () => {
-    const searchInput = new SearchInput();
+    // 하위 컴포넌트를 생성하고 Dom에 새롭게 부착시킴
     const searchHistory = new SearchHistory([]);
     const searchResult = new SearchResult([]);
-    appendToDom(searchInput, searchHistory, searchResult);
+    // Input 입력시 Result와 History를 변경하기 위해 상태를 변하게 하는 함수를 넘겨줌
+    const searchInput = new SearchInput(searchResult.setState, searchHistory.addHistory);
+    attachAppToDom(searchInput, searchHistory, searchResult);
 
-    // Input 이벤트 듣기
-    searchInput.searchOn(searchResult.setState, searchHistory.addHistory);
+    // history 클릭시 searchInput의 loadData 호출
+    searchHistory.listenClick(searchInput.loadData);
   }
   this.render();
 }
