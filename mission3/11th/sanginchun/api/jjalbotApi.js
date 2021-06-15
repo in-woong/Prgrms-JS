@@ -1,27 +1,21 @@
+import {
+  getDataFromSessionStorage,
+  setDataToSessionStorage,
+} from '../storage/sessionStorage.js';
+
 const BASE_URL = 'https://jjalbot.com/api/jjals';
 
 const api = {
   get: async function (searchTerm) {
-    try {
-      const cachedResult = JSON.parse(sessionStorage.getItem(searchTerm));
-
-      if (cachedResult) return cachedResult;
-    } catch (err) {
-      console.error(err);
-    }
+    const cachedResult = getDataFromSessionStorage(searchTerm);
+    if (cachedResult) return cachedResult;
 
     try {
-      const URL = `${BASE_URL}?text=${searchTerm}`;
-
-      const res = await fetch(URL);
+      const res = await fetch(`${BASE_URL}?text=${searchTerm}`);
       if (!res.ok) throw new Error();
 
       const data = await res.json();
-      try {
-        if (data) sessionStorage.setItem(searchTerm, JSON.stringify(data));
-      } catch (err) {
-        console.error(err);
-      }
+      if (data) setDataToSessionStorage(searchTerm, data);
 
       return data;
     } catch (err) {
