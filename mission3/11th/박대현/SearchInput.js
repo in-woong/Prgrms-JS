@@ -1,7 +1,8 @@
+import { debounce } from './utils.js';
 export default function(){
   const $input = document.createElement('input');
 
-  const onLoadData = func => async (e) => {
+  const onLoadData = func => debounce(async (e) => {
     if(e.target.value==='') return;
     try {
       const response = await fetch(`https://jjalbot.com/api/jjals?text=${e.target.value}`)
@@ -11,7 +12,7 @@ export default function(){
       console.log(error);
       alert('데이터를 불러오는데 실패하였습니다');
     }
-  };
+  }, 300);
 
   this.element = $input;
   this.searchOn = func => {
