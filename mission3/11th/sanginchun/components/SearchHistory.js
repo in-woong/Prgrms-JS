@@ -7,7 +7,7 @@ class SearchHistory {
     this.state = initialState;
 
     this.$target = document.createElement('div');
-    this.$target.setAttribute('data-component-type', 'SearchHistory');
+    this.$target.className = 'search-history';
 
     this.$target.addEventListener('click', (e) => {
       if (!e.target.closest('li')) return;

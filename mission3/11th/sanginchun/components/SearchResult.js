@@ -7,7 +7,7 @@ class SearchResult {
     };
 
     this.$target = document.createElement('div');
-    this.$target.setAttribute('data-component-type', 'SearchResult');
+    this.$target.className = 'search-result';
 
     this._render();
     $parent.appendChild(this.$target);

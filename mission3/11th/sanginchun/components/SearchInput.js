@@ -5,7 +5,7 @@ class SearchInput {
       throw new Error('onSearchTermInput 함수가 없습니다');
 
     this.$target = document.createElement('div');
-    this.$target.setAttribute('data-component-type', 'SearchInput');
+    this.$target.className = 'search-input';
 
     this.$target.addEventListener('input', (e) =>
       onSearchTermInput(e.target.value)
