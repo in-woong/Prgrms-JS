@@ -52,15 +52,8 @@ class App {
     if (!searchTerm) return;
 
     try {
-      const nextSearchHistoryData = [...this.state.searchHistory.data];
-      if (!nextSearchHistoryData.includes(searchTerm))
-        nextSearchHistoryData.push(searchTerm);
-
       this.setState({
-        searchHistory: {
-          currentSearchTerm: searchTerm,
-          data: nextSearchHistoryData,
-        },
+        ...this.state,
         searchResult: {
           ...this.state.searchResult,
           isLoading: true,
@@ -69,8 +62,17 @@ class App {
 
       const nextSearchResultData = await getImage(searchTerm);
 
+      const shouldUpdateSearchHistory =
+        nextSearchResultData.length &&
+        !this.state.searchHistory.data.includes(searchTerm);
+
       this.setState({
-        ...this.state,
+        searchHistory: {
+          currentSearchTerm: searchTerm,
+          data: shouldUpdateSearchHistory
+            ? [...this.state.searchHistory.data, searchTerm]
+            : this.state.searchHistory.data,
+        },
         searchResult: {
           isLoading: false,
           isError: false,
