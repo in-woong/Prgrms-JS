@@ -1,6 +1,5 @@
 class SearchResult {
-  constructor({ $parent, initialState }) {
-    if (!$parent) throw new Error('타겟 DOM이 없습니다');
+  constructor({ initialState }) {
     this.state = {
       ...initialState,
       data: this.validateSearchResult(initialState.data),
@@ -10,7 +9,6 @@ class SearchResult {
     this.$target.className = 'search-result';
 
     this._render();
-    $parent.appendChild(this.$target);
   }
 
   setState(nextState) {

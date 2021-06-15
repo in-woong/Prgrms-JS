@@ -1,6 +1,5 @@
 class SearchInput {
-  constructor({ $parent, onSearchTermInput }) {
-    if (!$parent) throw new Error('타겟 DOM이 없습니다');
+  constructor({ onSearchTermInput }) {
     if (typeof onSearchTermInput !== 'function')
       throw new Error('onSearchTermInput 함수가 없습니다');
 
@@ -12,7 +11,6 @@ class SearchInput {
     );
 
     this._render();
-    $parent.appendChild(this.$target);
   }
 
   _render() {

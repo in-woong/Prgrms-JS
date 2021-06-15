@@ -1,6 +1,5 @@
 class SearchHistory {
-  constructor({ $parent, initialState, onSearchTermClick }) {
-    if (!$parent) throw new Error('타겟 DOM이 없습니다');
+  constructor({ initialState, onSearchTermClick }) {
     if (typeof onSearchTermClick !== 'function')
       throw new Error('onSearchTermClick 함수가 없습니다');
 
@@ -16,7 +15,6 @@ class SearchHistory {
     });
 
     this._render();
-    $parent.appendChild(this.$target);
   }
 
   setState(nextState) {

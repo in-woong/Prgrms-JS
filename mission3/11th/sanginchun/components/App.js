@@ -20,19 +20,16 @@ class App {
       },
     };
 
-    new SearchInput({
-      $parent: $app,
+    this.searchInput = new SearchInput({
       onSearchTermInput: this.onSearchTermInput.bind(this),
     });
 
     this.searchHistory = new SearchHistory({
-      $parent: $app,
       initialState: this.state.searchHistory,
       onSearchTermClick: this.searchGif.bind(this),
     });
 
     this.searchResult = new SearchResult({
-      $parent: $app,
       initialState: this.state.searchResult,
     });
 
@@ -40,6 +37,15 @@ class App {
       this.searchGif.bind(this),
       500
     );
+
+    const fragment = document.createDocumentFragment();
+    [
+      this.searchInput,
+      this.searchHistory,
+      this.searchResult,
+    ].forEach((childComponent) => fragment.appendChild(childComponent.$target));
+
+    $app.appendChild(fragment);
   }
 
   setState(nextState) {
