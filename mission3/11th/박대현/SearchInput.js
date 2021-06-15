@@ -1,11 +1,16 @@
 export default function(){
   const $input = document.createElement('input');
 
-  const onLoadData = func => e => {
-    if(e.target.value==='')return;
-    fetch(`https://jjalbot.com/api/jjals?text=${e.target.value}`)
-      .then(x => x.json())
-      .then(data => func(data));
+  const onLoadData = func => async (e) => {
+    if(e.target.value==='') return;
+    try {
+      const response = await fetch(`https://jjalbot.com/api/jjals?text=${e.target.value}`)
+      const data = await response.json();
+      func(data);
+    } catch (error) {
+      console.log(error);
+      alert('데이터를 불러오는데 실패하였습니다');
+    }
   };
 
   this.element = $input;

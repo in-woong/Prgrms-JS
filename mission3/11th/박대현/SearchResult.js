@@ -14,7 +14,7 @@ export default function(data){
   }
 
   this.setState = newData => {
-    this.data = newData;
+    this.data = newData || [];
     this.render();
   }
 }
