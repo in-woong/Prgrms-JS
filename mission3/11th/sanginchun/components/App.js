@@ -80,10 +80,14 @@ class App {
         },
       });
     } catch (e) {
-      this.setState({
-        ...this.state,
-        searchResult: { isLoading: false, isError: true, data: [] },
-      });
+      if (e.name === 'Error') {
+        console.error(e.message);
+
+        this.setState({
+          ...this.state,
+          searchResult: { isLoading: false, isError: true, data: [] },
+        });
+      } else throw e;
     }
   }
 }

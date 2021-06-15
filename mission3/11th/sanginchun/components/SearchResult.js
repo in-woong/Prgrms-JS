@@ -23,17 +23,17 @@ class SearchResult {
 
   _render() {
     if (this.state.isLoading) {
-      this.$target.innerHTML = `<div>검색 중 ...</div>`;
+      this.$target.innerHTML = `<div class="message">검색 중 ...</div>`;
       return;
     }
 
     if (this.state.isError) {
-      this.$target.innerHTML = `<div>오류가 발생했습니다. 다시 검색해주세요</div>`;
+      this.$target.innerHTML = `<div class="message">오류가 발생했습니다. 다시 검색해주세요</div>`;
       return;
     }
 
     if (!this.state.data.length) {
-      this.$target.innerHTML = `<div>검색 결과가 없습니다</div>`;
+      this.$target.innerHTML = `<div class="message">검색 결과가 없습니다</div>`;
       return;
     }
 
