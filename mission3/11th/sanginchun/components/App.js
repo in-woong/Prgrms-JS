@@ -4,7 +4,7 @@ import SearchResult from './SearchResult.js';
 
 import getImage from '../api/jjalbotApi.js';
 
-const DEBOUNCE_MILISEC = 500;
+import useDebounceFunction from '../helpers/debounce.js';
 
 class App {
   constructor($app) {
@@ -31,7 +31,10 @@ class App {
       initialState: this.state.searchResult,
     });
 
-    this.debounceTimer = null;
+    this.debounceSearchGif = useDebounceFunction(
+      this.searchGif.bind(this),
+      500
+    );
   }
 
   setState(nextState) {
@@ -42,12 +45,7 @@ class App {
   }
 
   onSearchTermInput(searchTerm) {
-    if (this.debounceTimer) clearTimeout(this.debounceTimer);
-
-    this.debounceTimer = setTimeout(
-      () => this.searchGif(searchTerm),
-      DEBOUNCE_MILISEC
-    );
+    this.debounceSearchGif(searchTerm);
   }
 
   async searchGif(searchTerm) {
