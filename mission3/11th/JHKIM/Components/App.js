@@ -1,6 +1,7 @@
 import SearchInput from './SearchInput.js';
-import SearchResult from './SearchResult.js'
-import SearchHistory from './SearchHistory.js'
+import SearchResult from './SearchResult.js';
+import SearchHistory from './SearchHistory.js';
+import { searchUmzzal } from '../js/Api.js';
 
 export default class App {
     constructor({ $app }) {
@@ -14,7 +15,7 @@ export default class App {
             initialState: this.state,
             onClickHistory: async(text) => {
                 try {
-                    this.setState('searchResult', await this.searchUmzzal(text));
+                    this.setState('searchResult', await searchUmzzal(text));
                 }
                 catch (err) {
                     console.error(err);
@@ -26,7 +27,7 @@ export default class App {
             $app,
             onSearchInput: async(text) => {
                 try {
-                    this.setState('searchResult', await this.searchUmzzal(text));
+                    this.setState('searchResult', await searchUmzzal(text));
                     if (text) {
                         this.setState('searchHistory', [...this.state.searchHistory, text]);
                     }
@@ -59,22 +60,5 @@ export default class App {
     setState(key, newState) {
         this.state[key] = newState;
         this.render();
-    }
-
-    async searchUmzzal(text) {
-        /*global fetch*/
-        if (text) {
-            const response = await fetch(`https://jjalbot.com/api/jjals?text=${text}`);
-
-            if (!response.ok) {
-                throw new Error('네트워크 에러');
-            }
-
-            return await response.json();
-        }
-        else {
-            return [];
-        }
-
     }
 }
