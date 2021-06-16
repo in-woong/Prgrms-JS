@@ -4,6 +4,6 @@ export default function useDebounceFunction(callback, waitTime) {
   return function (...args) {
     if (timeoutId) clearTimeout(timeoutId);
 
-    timeoutId = setTimeout(() => callback(...args), waitTime);
+    timeoutId = setTimeout(callback, waitTime, ...args);
   };
 }
