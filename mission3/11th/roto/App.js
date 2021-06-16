@@ -1,12 +1,9 @@
-import SearchInput from "./SearchInput.js"
-import SearchResult from "./SearchResult.js"
+import SearchInput from './SearchInput.js'
+import SearchResult from './SearchResult.js'
+import { request } from './api.js'
 
-const fetchSearchResult = () => {
-  return fetch(`https://jjalbot.com/api/jjals?text=${e.target.value}`)
-      .then(x => x.json())
-      .then(data => {
-        console.log(JSON.stringify(data, null, 2))
-      })
+const fetchSearchResult = (keyword) => {
+  return request(`/api/jjals?text=${keyword}`)
 }
 
 export default function App({ $app, initialState }) {
@@ -15,7 +12,10 @@ export default function App({ $app, initialState }) {
   this.searchInput = new SearchInput({
     $app,
     onSearch: (keyword) => {
-      console.log(keyword)
+      fetchSearchResult(keyword)
+        .then(searchResults => {
+          this.setState({ searchResults })
+        })
     }
   })
 
@@ -24,8 +24,10 @@ export default function App({ $app, initialState }) {
     initialState: this.state.searchResults
   })
 
-  this.setState = () => {
+  this.setState = (nextState) => {
+    this.state = nextState
 
+    this.searchResult.setState(this.state.searchResults)
   }
 
 }
