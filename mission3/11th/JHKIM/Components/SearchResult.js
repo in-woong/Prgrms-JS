@@ -1,6 +1,6 @@
 export default class SearchResult {
     constructor({ $app, initialState: { searchResult } }) {
-        this.$target = document.createElement('div');
+        this.$target = document.createElement('ul');
 
         this.state = searchResult;
 
@@ -11,7 +11,7 @@ export default class SearchResult {
     }
 
     render() {
-        this.$target.innerHTML = `${this.state.map(({imageUrl}) => imageUrl == null ? '' : `<img src="${imageUrl}">` ).join('')}`;
+        this.$target.innerHTML = `${this.state.map(({imageUrl}) => imageUrl == null ? '' : `<li><img src="${imageUrl}"></li>` ).join('')}`;
     }
 
     setState({ searchResult }) {
