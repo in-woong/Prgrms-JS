@@ -5,7 +5,7 @@ function SearchResult({$app,initialState}){
   $app.appendChild(resultGridWrapper);
   this.$target = resultGridWrapper;
   this.state = initialState;
-  console.log(this.state)
+  console.log(this.state);
   this.render = () =>{
     this.$target.innerHTML =this.state.map((item) => 
       `<div class="grid__item"><div>Title : ${item.title}</div>

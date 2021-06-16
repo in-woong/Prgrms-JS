@@ -1,5 +1,6 @@
 import SearchInput from "./components/SearchInput.js";
 import SearchResult from "./components/SearchResult.js";
+import SearchHistory from "./components/SearchHistory.js";
 import getData from "./api/index.js";
 const dummyData = [
   {
@@ -95,22 +96,39 @@ function App($target) {
 
   this.$target = $target;
   this.state = [];
+  this.tags = ['피자'];
   this.getData = getData('피자')
   .then((response)=>{
     this.setState(response);
   })
   .catch(error => { throw new Error("데이터 로드 실패");});
-  
-  const searchInput = new SearchInput({
+  const searchHistory = new SearchHistory({
     $app:this.$target,
-    addOnType: (text)=>{
-      getData(text)
-      .then((response)=>{
+    initialState:this.tags,
+    onClick: (text)=>{
+      getData(text).then((response)=>{
         this.setState(response);
       }).catch(error => {
         console.log(error);
       })
-  }});
+    }
+  })
+  const searchInput = new SearchInput({
+    $app:this.$target,
+    addOnType: (text,$target)=>{
+      getData(text)
+      .then((response)=>{
+        if(!this.tags.includes(text)){
+          this.tags = [...this.tags,text];
+        };
+        $target.value = '';
+        $target.focus();
+        this.setState(response);
+      }).catch(error => {
+        console.log(error);
+      })
+    }
+  });
 
   const searchResult = new SearchResult({
     $app:this.$target,
@@ -124,6 +142,7 @@ function App($target) {
 
   this.render = () =>{
     searchResult.setState(this.state);
+    searchHistory.setState(this.tags);
   }
 };
 

@@ -4,16 +4,26 @@ function SearchInput ({$app,addOnType}){
   const inputTag = document.createElement('input');
   inputTag.classList.add("search__input");
   this.$target.appendChild(inputTag);
+
   this.setState = ()=>{};
   this.render = () => {};
+ 
   let debounce = null;
-  function clickHandler(e){
-    clearTimeout(debounce);
+ 
+  const typeHandler = () =>{
+    if(debounce){
+      clearTimeout(debounce);
+    };
     debounce = setTimeout(()=>{
-      addOnType(e.target.value);
+      if(inputTag.value.trim() == ''){
+        inputTag.value = '';
+        return
+      }
+      addOnType(inputTag.value.trim(),inputTag);
     },400);
-  }
-  inputTag.addEventListener('keyup',clickHandler);
-}
+  };
+
+  inputTag.addEventListener('keyup',typeHandler);
+};
 
 export default SearchInput;
