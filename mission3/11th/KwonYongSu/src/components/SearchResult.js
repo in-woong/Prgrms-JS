@@ -1,10 +1,10 @@
-function SearchResult($app,dataArray){
+function SearchResult({$app,initialState}){
   
   const resultGridWrapper = document.createElement('div');
   resultGridWrapper.classList.add('result__grid__wrapper');
   $app.appendChild(resultGridWrapper);
   this.$target = resultGridWrapper;
-  this.state = dataArray;
+  this.state = initialState;
   console.log(this.state)
   this.render = () =>{
     this.$target.innerHTML =this.state.map((item) => 

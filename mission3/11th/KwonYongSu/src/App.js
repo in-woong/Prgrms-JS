@@ -101,13 +101,29 @@ function App($target) {
   })
   .catch(error => { throw new Error("데이터 로드 실패");});
   
-  this.searchInput = new SearchInput(this.$target);
-  this.searchResult = new SearchResult(this.$target,this.state);
+  const searchInput = new SearchInput({
+    $app:this.$target,
+    addOnType: (text)=>{
+      getData(text)
+      .then((response)=>{
+        this.setState(response);
+      }).catch(error => {
+        console.log(error);
+      })
+  }});
+
+  const searchResult = new SearchResult({
+    $app:this.$target,
+    initialState:this.state});
 
 
   this.setState = (nextState) => {
-    this.state = nextState
-    this.searchResult.setState(this.state);
+    this.state = nextState;
+    this.render();
+  }
+
+  this.render = () =>{
+    searchResult.setState(this.state);
   }
 };
 
