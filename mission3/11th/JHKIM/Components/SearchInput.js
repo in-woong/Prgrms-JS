@@ -15,7 +15,8 @@ const initDebouncer = (callback, wait) => {
 
 export default class SearchInput {
     constructor({ $app, onSearchInput }) {
-        this.$target = document.createElement('input');
+        this.$target = document.createElement('label');
+        this.$target.innerHTML = `검색어 입력 : <input type="text"></input>`
         this.debouncedOnSearchInput = initDebouncer(onSearchInput, 500);
 
         this.$target.addEventListener('input', ({ target: { value } }) => {
