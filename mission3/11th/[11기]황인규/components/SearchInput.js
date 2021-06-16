@@ -1,9 +1,14 @@
 function SearchInput({$app, onFetchData}){
     this.$app = $app;
-    console.log(this.$app);
+    const searchInputWrapper = document.createElement("div");
+    searchInputWrapper.setAttribute("class", "search-keryword-wapper");
+
     const searchInput = document.createElement("input");
-    searchInput.setAttribute("id","search-keyword");
-    this.$app.appendChild(searchInput);
+    searchInput.setAttribute("type", "search");
+    searchInput.setAttribute("placeholder", "검색어를 입력해주세요.");
+
+    this.$app.appendChild(searchInputWrapper);
+    searchInputWrapper.appendChild(searchInput);
     this.onFetchData = onFetchData;
     this.timer = null 
 

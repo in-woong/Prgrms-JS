@@ -28,7 +28,7 @@ function SearchHistory({$app, $state, onSearchHistory}){
 
 
 
-    searchHistoryWrapper.addEventListener("click", (event) => {
+    searchHistoryWrapper.addEventListener("click", (event)=> {
         const {classList} = event.target
         if(classList.contains("search-history"))
             this.clickSearchHistory(event.target.closest("li"));
