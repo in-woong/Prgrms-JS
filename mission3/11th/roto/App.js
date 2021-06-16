@@ -2,8 +2,8 @@ import SearchInput from './SearchInput.js'
 import SearchResult from './SearchResult.js'
 import { request } from './api.js'
 
-const fetchSearchResult = (keyword) => {
-  return request(`/api/jjals?text=${keyword}`)
+const fetchSearchResult = async (keyword) => {
+  return await request(`/api/jjals?text=${keyword}`)
 }
 
 export default function App({ $app, initialState }) {
@@ -11,11 +11,15 @@ export default function App({ $app, initialState }) {
 
   this.searchInput = new SearchInput({
     $app,
-    onSearch: (keyword) => {
-      fetchSearchResult(keyword)
-        .then(searchResults => {
+    onSearch: async (keyword) => {
+      if (keyword.length > 1) {
+        try {
+          const searchResults = await fetchSearchResult(keyword)
           this.setState({ searchResults })
-        })
+        } catch(e) {
+          alert(e.message)
+        }
+      }
     }
   })
 
