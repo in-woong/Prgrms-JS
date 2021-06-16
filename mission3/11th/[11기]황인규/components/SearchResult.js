@@ -1,13 +1,25 @@
-function SearchResult(data, $target){
+function SearchResult(data, $app){
+    this.$state = data;
+    this.$app = $app;
     
-    this.state = data;
+    const searchResult = document.createElement("ul");
+    searchResult.setAttribute("class", "search-result");
+    this.$app.appendChild(searchResult);
+
     this.setState = (nextState) => {
-        this.state = nextState;
-        this.render();    
+        this.$state = nextState;
+        this.render(this.$state.data);    
     }
 
-    this.render = () => {
-        $target.innerHTML=this.state;
+    this.render = (state) => {
+        const htmlString = `${state.map(data => 
+            `<li class="gif-wrapper">
+                ${data.imageUrl ? `<img src="${data.imageUrl}"/>` : `<p>이미지가 없습니다.</p>`}
+            </li>
+        `).join('')}`
+            
+        
+        searchResult.innerHTML=htmlString;
     }
 }
 export default SearchResult;
