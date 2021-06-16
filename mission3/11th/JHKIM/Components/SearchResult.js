@@ -11,7 +11,7 @@ export default class SearchResult {
     }
 
     render() {
-        this.$target.innerHTML = `${this.state.map(({imageUrl}) => `<img src="${imageUrl}">`).join('')}`;
+        this.$target.innerHTML = `${this.state.map(({imageUrl}) => imageUrl == null ? '' : `<img src="${imageUrl}">` ).join('')}`;
     }
 
     setState({ searchResult }) {
