@@ -8,12 +8,21 @@ const items2 = [
   { text: "lunch", isCompleted: false },
 ];
 
-const todoList = new TodoList(document.querySelector("main"), items);
-const todoList2 = new TodoList(document.querySelector("main"), items2);
+function addTodo(e) {
+  e.preventDefault();
+  const input = document.querySelector("#input_todo");
+  if (input.value === "") {
+    alert("단어를 입력해주세요");
+    return;
+  }
+  todoList.setState([...todoList.state, { text: input.value, isCompleted: false }]);
+  input.value = "";
+}
 
-setTimeout(function () {
-  todoList.setState([
-    { text: "open", isCompleted: true },
-    { text: "close", isCompleted: false },
-  ]);
-}, 3000);
+const form = document.querySelector("#input_form");
+form.addEventListener("submit", addTodo);
+
+const todoList = new TodoList({
+  $app: document.querySelector("main"),
+  initialState: items,
+});
