@@ -1,7 +1,7 @@
 export default class SearchHistory {
-    constructor({ $app, initialState: { searchHistory }, onClickHistory, }) {
+    constructor({ $app, initialState: { searchHistory: {data} }, onClickHistory, }) {
         this.$target = document.createElement('ul');
-        this.state = searchHistory;
+        this.state = data;
         this.onClickHistory = onClickHistory;
 
         this.$target.addEventListener('click', ({ target }) => {
@@ -17,8 +17,8 @@ export default class SearchHistory {
         this.$target.innerHTML = this.state.reduce((acc, cur)  => `${acc} <li>${cur}</li>`,'');
     }
 
-    setState({ searchHistory }) {
-        this.state = searchHistory;
+    setState({ searchHistory : {data} }) {
+        this.state = data;
         this.render();
     }
 }
