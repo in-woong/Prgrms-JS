@@ -17,9 +17,8 @@ export default class SearchApp {
   }
 
   async communicateWithAPI(inputValue) {
-    return await fetch(`https://jjalbot.com/api/jjals?text=${inputValue}`).then((x) => {
-      return x.json()
-    })
+    const receivedData = await fetch(`https://jjalbot.com/api/jjals?text=${inputValue}`);
+    return await receivedData.json();
   }
 
   setState(receivedData, inputValue) {
