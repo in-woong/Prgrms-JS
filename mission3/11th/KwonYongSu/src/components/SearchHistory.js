@@ -1,6 +1,6 @@
 function SearchHistory({$app,initialState,onClick}) {
 
-  const historyWrapper = document.createElement('div');
+  const historyWrapper = document.createElement('ul');
   historyWrapper.classList.add("history__wrapper");
   $app.appendChild(historyWrapper);
 
@@ -12,19 +12,19 @@ function SearchHistory({$app,initialState,onClick}) {
   };
 
   this.render = () => {
-    historyWrapper.innerHTML = this.state.map(item => `<span class="tag__wrapper" data-value="${item}">${item}</span>`).join('');
+    historyWrapper.innerHTML = this.state.map(item => `<li class="tag__wrapper" data-value="${item}">${item}</li>`).join('');
   };
 
-  this.render();
 
   function clickHandler(e){
     if(e.target.classList.contains('tag__wrapper')){
-      console.log(e.target.dataset.value);
       onClick(e.target.dataset.value);
     }
   }
 
   historyWrapper.addEventListener('click',clickHandler);
+
+  this.render();
 }
 
 export default SearchHistory;
