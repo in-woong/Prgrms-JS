@@ -1,4 +1,4 @@
-export class TodoCount {
+export default class TodoCount {
     constructor({ $app, initState }) {
         this.state = initState
 

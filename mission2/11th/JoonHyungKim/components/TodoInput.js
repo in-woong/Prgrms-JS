@@ -1,4 +1,4 @@
-export class TodoInput {
+export default class TodoInput {
     constructor({ $app, onAddTodoItem }) {
         this.onAddTodoItem = onAddTodoItem
 

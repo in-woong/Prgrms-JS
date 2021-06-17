@@ -1,4 +1,4 @@
-export class TodoList {
+export default class TodoList {
     constructor({
         $app, initState, onToggleItem, onRemoveItem,
     }) {

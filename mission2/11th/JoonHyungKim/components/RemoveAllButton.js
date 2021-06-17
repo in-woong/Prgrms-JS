@@ -1,4 +1,4 @@
-export class RemoveAllButton {
+export default class RemoveAllButton {
     constructor({ $app }) {
         this.$target = document.createElement("button")
         this.$target.innerHTML = "모두 삭제"

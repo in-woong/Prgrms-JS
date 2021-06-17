@@ -1,7 +1,7 @@
-import { TodoList } from "./TodoList.js"
-import { TodoInput } from "./TodoInput.js"
-import { TodoCount } from "./TodoCount.js"
-import { RemoveAllButton } from "./RemoveAllButton.js"
+import TodoList from "./TodoList.js"
+import TodoInput from "./TodoInput.js"
+import TodoCount from "./TodoCount.js"
+import RemoveAllButton from "./RemoveAllButton.js"
 
 const validateData = (data) => {
     if (data == null) {
