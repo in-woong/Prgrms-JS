@@ -17,7 +17,7 @@ function SearchInput ({$app,addOnType}){
  
   let debounce = null;
  
-  const typeHandler = () =>{
+  function typeHandler() {
     if(debounce){
       clearTimeout(debounce);
     };
