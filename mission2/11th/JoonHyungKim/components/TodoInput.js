@@ -2,8 +2,14 @@ export default class TodoInput {
     constructor({ $app, onAddTodoItem }) {
         this.onAddTodoItem = onAddTodoItem
 
+        const temporaryFrag = document.createDocumentFragment()
+
         this.$target = document.createElement("input")
-        this.$target.setAttribute("type", "text")
+        this.$label = document.createElement("label")
+
+        this.$target.id = "todo-input"
+        this.$label.htmlFor = "todo-input"
+        this.$label.innerText = "ToDo : "
 
         this.$target.addEventListener("keydown", ({ code, isComposing }) => {
             if (!isComposing && this.$target.value && code === "Enter") {
@@ -13,6 +19,8 @@ export default class TodoInput {
             }
         })
 
-        $app.appendChild(this.$target)
+        temporaryFrag.appendChild(this.$label)
+        temporaryFrag.appendChild(this.$target)
+        $app.appendChild(temporaryFrag)
     }
 }
