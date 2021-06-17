@@ -1,4 +1,4 @@
-export default function useDebounceFunction(callback, waitTime) {
+export const useDebounceFunction = (callback, waitTime) =>{
   
   return function(...args){
   
@@ -9,6 +9,5 @@ export default function useDebounceFunction(callback, waitTime) {
         callback(...args);
       },waitTime);
     }
-    
 }
   

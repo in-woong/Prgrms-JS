@@ -3,6 +3,10 @@ function SearchInput({$app, onFetchData}){
     const searchInputWrapper = document.createElement("div");
     searchInputWrapper.setAttribute("class", "search-keryword-wapper");
 
+    if(!new.target)
+        throw new Error(errorMessage.CHECK_NEW_ERROR());
+
+    
     const searchInput = document.createElement("input");
     searchInput.setAttribute("type", "search");
     searchInput.setAttribute("placeholder", "검색어를 입력해주세요.");
@@ -13,9 +17,12 @@ function SearchInput({$app, onFetchData}){
 
 
     const onKeyupHandler = (event) => {
+
         if(event.key != 'Enter') return;
+        
         onFetchData(event.target.value);
     }
+    
     searchInput.addEventListener('keyup', onKeyupHandler);
 
 }

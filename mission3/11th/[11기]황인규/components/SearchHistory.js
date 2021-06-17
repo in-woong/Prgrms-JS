@@ -4,6 +4,10 @@ function SearchHistory({$app, $state, onSearchHistory}){
     this.onSearchHistory = onSearchHistory;
     this.$state= $state;
     
+    if(!new.target)
+        throw new Error(errorMessage.CHECK_NEW_ERROR());
+
+
     const searchHistoryWrapper = document.createElement("ul");
     searchHistoryWrapper.className="search-history-wrapper";
     this.$app.appendChild(searchHistoryWrapper);

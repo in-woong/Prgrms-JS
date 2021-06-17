@@ -1,7 +1,9 @@
 function SearchResult(data, $app){
     this.$state = data;
     this.$app = $app;
-    
+    if(!new.target)
+        throw new Error(errorMessage.CHECK_NEW_ERROR());
+
     const searchResult = document.createElement("ul");
     searchResult.setAttribute("class", "search-result");
     this.$app.appendChild(searchResult);
