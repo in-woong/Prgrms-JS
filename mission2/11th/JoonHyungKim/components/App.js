@@ -22,41 +22,41 @@ export default class App {
         this.$app = $app
         validateData(initState)
         this.state = initState
-        this.$children = []
-
-        this.register(new TodoInput({
-            $app: this.$app,
-            onAddTodoItem: (text) => {
-                this.setState([...this.state, {
-                    text,
-                    isCompleted: false,
-                }])
-            },
-        }))
-
-        this.register(new TodoList({
-            $app: this.$app,
-            initState,
-            onToggleItem: (index) => {
-                const newState = [...this.state]
-                newState[index].isCompleted = !newState[index].isCompleted
-                this.setState(newState)
-            },
-            onRemoveItem: (index) => {
-                const newState = [...this.state]
-                newState.splice(index, 1)
-                this.setState(newState)
-            },
-        }))
-
-        this.register(new TodoCount({
-            $app: this.$app,
-            initState,
-        }))
-
-        this.register(new RemoveAllButton({
-            $app: this.$app,
-        }))
+        this.$children = [
+            new TodoInput({
+                $app: this.$app,
+                onAddTodoItem: (text) => {
+                    this.setState([
+                        ...this.state,
+                        {
+                            text,
+                            isCompleted: false,
+                        },
+                    ])
+                },
+            }),
+            new TodoList({
+                $app: this.$app,
+                initState,
+                onToggleItem: (index) => {
+                    const newState = [...this.state]
+                    newState[index].isCompleted = !newState[index].isCompleted
+                    this.setState(newState)
+                },
+                onRemoveItem: (index) => {
+                    const newState = [...this.state]
+                    newState.splice(index, 1)
+                    this.setState(newState)
+                },
+            }),
+            new TodoCount({
+                $app: this.$app,
+                initState,
+            }),
+            new RemoveAllButton({
+                $app: this.$app,
+            }),
+        ]
 
         this.$app.addEventListener("removeall", () => {
             this.setState([])
@@ -76,9 +76,5 @@ export default class App {
                 child.setState(this.state)
             }
         })
-    }
-
-    register(component) {
-        this.$children.push(component)
     }
 }
