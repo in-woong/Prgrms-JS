@@ -3,6 +3,7 @@ import SearchResult from "./components/SearchResult.js";
 import SearchHistory from "./components/SearchHistory.js";
 import {UniId} from "./utils/curTime.js";
 import {requestAPI} from "./api/api.js";
+import useDebounceFunction from "./utils/debounce.js";
 
 
 function main($app, initialState){
@@ -25,17 +26,29 @@ function main($app, initialState){
 
   const searchInput = new SearchInput({
     $app : this.$app,
+
+
+    //FIXME : 2번씩 호출되는 현상 
     onFetchData: async(text) => {
-      const response = await requestAPI.fetchJjalGif(text);
-      if(!response)
+      this.onUseDebounceFunction(text);
+    }
+  });
+
+  const fetchAPI = async(text) => {
+    const response = await requestAPI.fetchJjalGif(text);
+        if(!response)
         alert("API 요청이 잘못 되었습니다.");
-      const newData = {
+       
+        const newData = {
         searchHistory : this.$state.searchHistory.includes(text) === true ? [...this.$state.searchHistory] : [...this.$state.searchHistory, {id : UniId(), data : text}],
         data : response,
       }
       this.setState(newData);
-    }
-  });
+  }
+
+  this.onUseDebounceFunction = useDebounceFunction(
+    fetchAPI, 500
+  )
 
   const searchResult = new SearchResult(this.state, this.$app);
 

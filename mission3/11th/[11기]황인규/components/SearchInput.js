@@ -10,18 +10,11 @@ function SearchInput({$app, onFetchData}){
     this.$app.appendChild(searchInputWrapper);
     searchInputWrapper.appendChild(searchInput);
     this.onFetchData = onFetchData;
-    this.timer = null 
 
 
     const onKeyupHandler = (event) => {
         if(event.key != 'Enter') return;
-        if(this.timer){
-            clearTimeout(this.timer);
-        }
-        this.timer = setTimeout(() => {
-            onFetchData(event.target.value);
-        },200)
-       
+        onFetchData(event.target.value);
     }
     searchInput.addEventListener('keyup', onKeyupHandler);
 
