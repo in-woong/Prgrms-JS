@@ -5,12 +5,6 @@ export default class TodoInput {
         this.$target = document.createElement("input")
         this.$target.setAttribute("type", "text")
 
-        this.attatchEvent()
-
-        $app.appendChild(this.$target)
-    }
-
-    attatchEvent() {
         this.$target.onkeydown = ({ code, isComposing }) => {
             if (!isComposing && this.$target.value && code === "Enter") {
                 this.onAddTodoItem(this.$target.value)
@@ -18,5 +12,7 @@ export default class TodoInput {
                 this.$target.value = ""
             }
         }
+
+        $app.appendChild(this.$target)
     }
 }
