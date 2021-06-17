@@ -18,12 +18,11 @@ function SearchInput({$app, onFetchData}){
 
     const onKeyupHandler = (event) => {
 
-        if(event.key != 'Enter') return;
         
         onFetchData(event.target.value);
     }
     
-    searchInput.addEventListener('keyup', onKeyupHandler);
+    searchInput.addEventListener('input', onKeyupHandler);
 
 }
 export default SearchInput;
