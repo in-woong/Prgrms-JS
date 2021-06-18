@@ -79,7 +79,7 @@ class App {
   }
 
   onSearchHistoryClick(e) {
-    const searchTerm = e.target.closest('li.search-term')?.innerText;
+    const searchTerm = e.target.closest('button')?.value;
     if (searchTerm) this.searchGif(searchTerm);
   }
 

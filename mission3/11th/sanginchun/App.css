@@ -15,10 +15,14 @@ ul {
   min-height: 100vh;
 
   margin: 0 auto;
-  padding: 1rem;
+  padding: 0.5rem;
 }
 
 /* SearchInput */
+.search-input {
+  padding: 0.5rem 0;
+}
+
 .search-input input {
   width: 100%;
   height: 2.5rem;
@@ -33,26 +37,35 @@ ul {
   padding: 0.5rem 0;
 }
 
-.search-history .search-term-list {
+.search-term-list {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
 }
 
-.search-history .search-term-list .search-term {
+.search-term-list li {
   margin: 5px;
+}
+
+.search-term-button {
   padding: 4px 8px;
 
   font-size: 0.8rem;
   color: #333;
+  background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 5px;
   cursor: pointer;
 }
 
-.search-history .search-term-list .search-term.current {
+.search-term-button.current {
   background-color: #ccc;
   color: #000;
+}
+
+/* SearchStatus */
+.search-status {
+  padding: 0.5rem 0;
 }
 
 /* SearchResult */

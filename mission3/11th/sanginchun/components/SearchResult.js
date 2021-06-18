@@ -2,7 +2,7 @@ class SearchResult {
   constructor({ initialState }) {
     this.state = initialState;
 
-    this.$target = document.createElement('div');
+    this.$target = document.createElement('section');
     this.$target.className = 'search-result';
 
     this._render();
