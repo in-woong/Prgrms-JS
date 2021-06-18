@@ -16,9 +16,7 @@ function SearchInput({$app, onFetchData}){
     this.onFetchData = onFetchData;
 
 
-    const onKeyupHandler = (event) => {
-
-        
+    const onKeyupHandler = (event) => {    
         onFetchData(event.target.value);
     }
     

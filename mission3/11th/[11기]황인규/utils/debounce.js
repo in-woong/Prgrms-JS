@@ -1,4 +1,4 @@
-export const useDebounceFunction = (callback, waitTime) =>{
+export const useDebounceFunction = (callback, waitTime) => {
   
   return function(...args){
   

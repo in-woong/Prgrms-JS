@@ -9,9 +9,6 @@ import {checkDataValidation} from "./utils/validation.js"
 
 
 
-
-
-
 function main($app, initialState){
   this.$app = $app;
   this.$state = initialState;
@@ -30,8 +27,10 @@ function main($app, initialState){
 
         const newData = {
           searchHistory : [...this.$state.searchHistory],
+          isLoading : true,
           data : response,
         }
+       
         this.setState(newData);
       }
   });
@@ -46,17 +45,28 @@ function main($app, initialState){
   });
 
   const fetchAPI = async(text) => {
-    const response = await requestAPI.fetchJjalGif(text);
+        
+        const previousData = {
+          searchHistory : [...this.$state.searchHistory],
+          isLoading : false,
+          data : [...this.$state.data],
+        }
+
+        this.setState(previousData);
+
+        const response = await requestAPI.fetchJjalGif(text);
         if(!response)
-        alert("API 요청이 잘못 되었습니다.");
+          alert("API 요청이 잘못 되었습니다.");
        
         checkDataValidation(response);
         
         const newData = {
-        searchHistory : this.$state.searchHistory.includes(text) === true ? [...this.$state.searchHistory] : [...this.$state.searchHistory, {id : UniId(), data : text}],
-        data : response,
-      }
-      this.setState(newData);
+          searchHistory : this.$state.searchHistory.indexOf(text) >=0 ? [...this.$state.searchHistory] : [...this.$state.searchHistory, text],
+          isLoading : true,
+          data : response,
+        }
+        
+        this.setState(newData);
   }
 
   this.onUseDebounceFunction = useDebounceFunction(

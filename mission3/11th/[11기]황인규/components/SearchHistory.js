@@ -2,17 +2,19 @@
 function SearchHistory({$app, $state, onSearchHistory}){
     this.$app = $app;
     this.onSearchHistory = onSearchHistory;
-    this.$state= $state;
-    
+    this.$state = $state;
+    this.$searchKeyword = '';
+
     if(!new.target)
         throw new Error(errorMessage.CHECK_NEW_ERROR());
 
+    
+    const searchHistoryWrapper = document.createElement("div");
+    searchHistoryWrapper.className = "search-history-wrapper";
 
-    const searchHistoryWrapper = document.createElement("ul");
-    searchHistoryWrapper.className="search-history-wrapper";
+
     this.$app.appendChild(searchHistoryWrapper);
 
-    
 
     this.setState = (nextState) => {
         this.$state = nextState;
@@ -21,20 +23,27 @@ function SearchHistory({$app, $state, onSearchHistory}){
     }
 
     this.render = (state) => {
-        const htmlString = `${state.searchHistory.map(d => `<li class="search-history"
-                                                    >${d.data}</li>`).join('')}`
-        searchHistoryWrapper.innerHTML = htmlString;
+        searchHistoryWrapper.innerHTML = `
+        <ul class="search-history">
+        ${state.searchHistory.map( (d) => { 
+                
+                const className = `search-history-element ${ this.$searchKeyword === d ? 'current' : '' }`.trimEnd();
+                return `<li class="${className}">${d}</li>`;
+                    
+                }).join('')}
+        </ul>                                        
+        `;
     }
 
     this.clickSearchHistory = (li) => {
+        this.$searchKeyword = li.innerText;
         this.onSearchHistory(li.innerText);
     }
 
-
-
-    searchHistoryWrapper.addEventListener("click", (event)=> {
+    searchHistoryWrapper.addEventListener("click", (event) => {
+        
         const {classList} = event.target
-        if(classList.contains("search-history"))
+        if(classList.contains("search-history-element"))
             this.clickSearchHistory(event.target.closest("li"));
     });
 

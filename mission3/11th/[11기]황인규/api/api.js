@@ -3,21 +3,19 @@ const API_ENDPOINT = 'https://jjalbot.com'
 const jjalbotAPI = async(url) => {
     
     return await fetch(url)
-                     .then((response)=>{
+                     .then((response) => {
                          if(response.ok){
                              return response.json();
                          }else{
                              throw new Error("Something went wrong");
                          }
                      })
-                     .then((responseJson)=>{
-                         //데이터 확인, 데이터가 정확히 왔는지 확인
+                     .then((responseJson) => {
                          return responseJson;
                      })
                      .catch(error => {
                          alert(error); 
-                     });
-   //return await response;               
+                     });   
 }
 
 export const requestAPI = {

@@ -1,7 +1,7 @@
 * {
   margin : 0;
   padding : 0;
-
+  box-sizing: border-box;
 }
 
 html{ 
@@ -27,7 +27,7 @@ html{
     width: 100%;
     display: grid;
     gap: 10px;
-    grid-template-columns: repeat(5, minmax(50px, 1fr));
+    grid-template-columns: repeat(4, calc(50% - 10rem));
   }
 
 .gif-wrapper {
@@ -40,4 +40,32 @@ html{
   width: 100%;
   height: 200px;
   object-fit: fill;
+}
+
+ul {
+  list-style: none;
+}
+
+.search-history-wrapper {
+  padding: 0.5rem 0;
+}
+
+.search-history-wrapper .search-history {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.search-history-wrapper .search-history .search-history-element {
+  margin: 5px;
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.search-history-wrapper .search-history .search-history-element.current {
+  background-color: #ccc;
+  color: #000;
 }

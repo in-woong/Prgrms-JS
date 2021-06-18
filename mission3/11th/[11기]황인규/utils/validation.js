@@ -1,6 +1,6 @@
 import {errorMessage} from "./errorMessage.js";
 
-export const checkDataValidation = (data) =>{
+export const checkDataValidation = (data) => {
     if(!data){
         throw new Error(errorMessage.CHECK_VALIDATE_IS("data", "empty"));
     }
