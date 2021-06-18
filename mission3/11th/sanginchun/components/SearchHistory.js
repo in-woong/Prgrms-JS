@@ -18,7 +18,7 @@ class SearchHistory {
   _render() {
     this.$target.innerHTML = `
       <ul class="search-term-list">
-        ${this.state.data
+        ${this.state.searchHistory
           .map((searchTerm) => {
             const className = `search-term ${
               this.state.currentSearchTerm === searchTerm ? 'current' : ''

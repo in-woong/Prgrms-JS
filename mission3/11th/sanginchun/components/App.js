@@ -1,5 +1,6 @@
-import SearchHistory from './SearchHistory.js';
 import SearchInput from './SearchInput.js';
+import SearchHistory from './SearchHistory.js';
+import SearchStatus from './SearchStatus.js';
 import SearchResult from './SearchResult.js';
 
 import getImage from '../api/jjalbotApi.js';
@@ -11,13 +12,10 @@ class App {
     if (!$app) throw new Error('타겟 DOM이 없습니다');
 
     this.state = {
-      searchHistory: { currentSearchTerm: '', data: [] },
-      searchResult: {
-        isLoading: false,
-        isError: false,
-        currentSearchTerm: '',
-        data: [],
-      },
+      currentSearchTerm: '',
+      searchHistory: [],
+      searchResult: [],
+      searchStatus: { isLoading: false, isError: false },
     };
 
     this.searchInput = new SearchInput({
@@ -25,8 +23,19 @@ class App {
     });
 
     this.searchHistory = new SearchHistory({
-      initialState: this.state.searchHistory,
+      initialState: {
+        currentSearchTerm: this.state.currentSearchTerm,
+        searchHistory: this.state.searchHistory,
+      },
       onClick: this.onSearchHistoryClick.bind(this),
+    });
+
+    this.searchStatus = new SearchStatus({
+      initialState: {
+        currentSearchTerm: this.state.currentSearchTerm,
+        searchResult: this.state.searchResult,
+        searchStatus: this.state.searchStatus,
+      },
     });
 
     this.searchResult = new SearchResult({
@@ -42,6 +51,7 @@ class App {
     [
       this.searchInput,
       this.searchHistory,
+      this.searchStatus,
       this.searchResult,
     ].forEach((childComponent) => fragment.appendChild(childComponent.$target));
 
@@ -51,7 +61,15 @@ class App {
   setState(nextState) {
     this.state = nextState;
 
-    this.searchHistory.setState(this.state.searchHistory);
+    this.searchHistory.setState({
+      currentSearchTerm: this.state.currentSearchTerm,
+      searchHistory: this.state.searchHistory,
+    });
+    this.searchStatus.setState({
+      currentSearchTerm: this.state.currentSearchTerm,
+      searchResult: this.state.searchResult,
+      searchStatus: this.state.searchStatus,
+    });
     this.searchResult.setState(this.state.searchResult);
   }
 
@@ -69,31 +87,27 @@ class App {
     try {
       this.setState({
         ...this.state,
-        searchResult: {
-          ...this.state.searchResult,
+        currentSearchTerm: searchTerm,
+        searchResult: [],
+        searchStatus: {
           isLoading: true,
+          isError: false,
         },
       });
 
-      const nextSearchResultData = await getImage(searchTerm);
+      const nextSearchResult = await getImage(searchTerm);
 
       const shouldUpdateSearchHistory =
-        nextSearchResultData.length &&
-        !this.state.searchHistory.data.includes(searchTerm);
+        nextSearchResult.length &&
+        !this.state.searchHistory.includes(searchTerm);
 
       this.setState({
-        searchHistory: {
-          currentSearchTerm: searchTerm,
-          data: shouldUpdateSearchHistory
-            ? [...this.state.searchHistory.data, searchTerm]
-            : this.state.searchHistory.data,
-        },
-        searchResult: {
-          isLoading: false,
-          isError: false,
-          currentSearchTerm: searchTerm,
-          data: nextSearchResultData,
-        },
+        currentSearchTerm: searchTerm,
+        searchHistory: shouldUpdateSearchHistory
+          ? [...this.state.searchHistory, searchTerm]
+          : this.state.searchHistory,
+        searchStatus: { isLoading: false, isError: false },
+        searchResult: nextSearchResult,
       });
     } catch (e) {
       if (e.name === 'Error') {
@@ -101,11 +115,11 @@ class App {
 
         this.setState({
           ...this.state,
-          searchResult: {
+          currentSearchTerm: searchTerm,
+          searchResult: [],
+          searchStatus: {
             isLoading: false,
             isError: true,
-            currentSearchTerm: searchTerm,
-            data: [],
           },
         });
       } else throw e;

@@ -1,9 +1,6 @@
 class SearchResult {
   constructor({ initialState }) {
-    this.state = {
-      ...initialState,
-      data: this.validateSearchResult(initialState.data),
-    };
+    this.state = initialState;
 
     this.$target = document.createElement('div');
     this.$target.className = 'search-result';
@@ -12,32 +9,14 @@ class SearchResult {
   }
 
   setState(nextState) {
-    this.state = {
-      ...nextState,
-      data: this.validateSearchResult(nextState.data),
-    };
+    this.state = nextState;
     this._render();
   }
 
   _render() {
-    if (this.state.isLoading) {
-      this.$target.innerHTML = `<div class="message">검색 중 ...</div>`;
-      return;
-    }
-
-    if (this.state.isError) {
-      this.$target.innerHTML = `<div class="message">오류가 발생했습니다. 다시 검색해주세요</div>`;
-      return;
-    }
-
-    if (!this.state.data.length && this.state.currentSearchTerm) {
-      this.$target.innerHTML = `<div class="message">'${this.state.currentSearchTerm}'에 대한 검색 결과가 없습니다</div>`;
-      return;
-    }
-
     this.$target.innerHTML = `
       <ul class="image-list">
-        ${this.state.data
+        ${this._filterSearchResult(this.state)
           .map(
             ({ imageUrl, title }) =>
               `<li class="image-container">
@@ -49,13 +28,15 @@ class SearchResult {
     `;
   }
 
-  validateSearchResult(searchResult) {
+  _filterSearchResult(searchResult) {
     if (!Array.isArray(searchResult)) {
       console.error('검색결과가 Array가 아닙니다.');
       return [];
     }
 
-    return searchResult.filter(({ imageUrl }) => typeof imageUrl === 'string');
+    return searchResult.filter(
+      ({ imageUrl }) => typeof imageUrl === 'string' && imageUrl.length
+    );
   }
 }
 
