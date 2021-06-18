@@ -10,7 +10,9 @@ class SearchInput {
 
   _render() {
     this.$target.innerHTML = `
-      <input type="search" placeholder="검색어를 입력하세요">
+      <label>움짤을 검색해보세요
+        <input type="search">
+      </label>
     `;
   }
 }
