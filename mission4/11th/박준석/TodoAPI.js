@@ -1,14 +1,6 @@
-// const receivedDataCheck = (receivedData) => {
-//     if (!receivedData.ok){
-//         throw new Error ("received data is wrong");
-//     } else{
-//         receivedData
-//     }
-// }
-
 export const getTodo = async (username) => {
   const userTodoList = await fetch(`http://todo-api.roto.codes/${username}`)
-  if (receivedData.ok) {
+  if (userTodoList.ok) {
     return await userTodoList.json()
   } else {
     throw new Error('전달받은 데이터에 문제가 있습니다.')
@@ -32,4 +24,14 @@ export const addTodo = async (username, inputValue) => {
   }
 }
 
+export const checkTodo = async (username, todoID) => {
+    await fetch(`http://todo-api.roto.codes/${username}/${todoID}/toggle`, {
+      method: 'PUT',
+    })
+}
 
+export const removeTodo = async (username, todoID) => {
+    await fetch(`http://todo-api.roto.codes/${username}/${todoID}`, {
+      method: 'DELETE',
+    })
+}

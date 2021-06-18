@@ -1,27 +1,22 @@
-function TodoList(params) {
-  const $target = params.$target
-  const onClick = params.onClick
-  const onRemove = params.onRemove
-  let data = params.data || []
+export default class TodoList{
+  constructor(params){
+    this.target = params.$target;
+    this.onClick = params.onClick;
+    this.onRemove = params.onRemove;
+    this.data = params.receivedData || [];
+    console.log(this.data);
 
-  $target.addEventListener('click', function(e) {
-    const id = e.target.closest('li').dataset.id
-
-    if (e.target.className === 'remove-button') {
-      e.stopPropagation()
-      onRemove(id)
-    } else {
-      onClick(id)
-    }
-  })
-
-  this.setState = function(nextData) {
-    data = nextData
-    this.render()
+    this.render();
   }
 
-  this.render = function() {
-    const htmlString = data.map(function(todo) {
+  setState(newData){
+    this.data = newData;
+    console.log(this.data);
+    this.render();
+  }
+
+  render(){
+    const htmlString = this.data.map((todo) => {
       const contentHTML = todo.isCompleted
         ? `<strike>${todo.content}</strike>`
         : `${todo.content}`
@@ -30,9 +25,7 @@ function TodoList(params) {
         todo._id
       }">${contentHTML} <button class="remove-button">Remove</button></li>`
     })
-
-    $target.innerHTML = `<ul>${htmlString.join('')}</ul>`
+    this.target.innerHTML = `<ul>${htmlString.join('')}</ul>`
   }
-
-  this.render()
 }
+
