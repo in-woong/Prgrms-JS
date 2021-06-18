@@ -15,8 +15,8 @@ export default class SearchApp {
       this.setState(receivedData, inputValue)
     })
     this.searchResult = new SearchResult(this.state, '#search-result')
-    this.searchHistory = new SearchHistory([], async (keyword) => {
-      const receivedData = await communicateWithAPI(API_URL, URL_TAIL(keyword))
+    this.searchHistory = new SearchHistory([], async (historyId) => {
+      const receivedData = await communicateWithAPI(API_URL, URL_TAIL(this.history[historyId]))
       this.setState(receivedData)
     })
   }

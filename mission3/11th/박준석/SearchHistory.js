@@ -7,7 +7,8 @@ export default class SearchHistory {
     this.clickHistory = clickHistory
     this.showHistoryDiv.addEventListener('click', ({ target }) => {
       if (target.id.includes('history_')) {
-        clickHistory(target.innerHTML)
+        const historyId = target.id.match(/[0-9]+/)[0];
+        clickHistory(historyId)
       }
     })
   }
