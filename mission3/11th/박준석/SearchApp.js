@@ -3,8 +3,10 @@ import SearchResult from './SearchResult.js'
 import SearchHistory from './SearchHistory.js'
 import { communicateWithAPI } from './utils.js'
 
-const API_URL = 'https://jjalbot.com';
-const URL_TAIL = (inputValue) => {return `/api/jjals?text=${inputValue}`}
+const API_URL = 'https://jjalbot.com'
+const URL_TAIL = (inputValue) => {
+  return `/api/jjals?text=${inputValue}`
+}
 
 export default class SearchApp {
   constructor() {
@@ -23,7 +25,7 @@ export default class SearchApp {
 
   setState(receivedData, inputValue) {
     this.state = receivedData
-    this.history = [...this.history, inputValue];
+    this.history = [...this.history, inputValue]
     this.searchResult.setState(this.state)
     if (inputValue !== undefined) this.searchHistory.setState(this.history)
   }
