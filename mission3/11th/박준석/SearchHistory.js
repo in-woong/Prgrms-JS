@@ -5,7 +5,7 @@ export default class SearchHistory {
     this.history = history
     this.showHistoryDiv = $('#search-history')
     this.clickHistory = clickHistory
-    $('#app').addEventListener('click', ({ target }) => {
+    this.showHistoryDiv.addEventListener('click', ({ target }) => {
       if (target.id.includes('history_')) {
         clickHistory(target.innerHTML)
       }
@@ -15,7 +15,7 @@ export default class SearchHistory {
   render(history) {
     this.showHistoryDiv.innerHTML = history
       .map((keyword, index) => {
-        return `<span id="history_${index}">${keyword}</span>`
+        return `<li id="history_${index}" style="display:inline">${keyword}</li>`
       })
       .join(' ')
   }
