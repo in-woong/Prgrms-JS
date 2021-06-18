@@ -20,8 +20,8 @@ export default class SearchHistory {
       .join(' ')
   }
 
-  setState(newKeyword) {
-    this.history = [...this.history, newKeyword]
+  setState(newHistory) {
+    this.history = newHistory;
     this.render(this.history)
   }
 }

@@ -9,6 +9,7 @@ const URL_TAIL = (inputValue) => {return `/api/jjals?text=${inputValue}`}
 export default class SearchApp {
   constructor() {
     this.state = []
+    this.history = []
     this.searchInput = new SearchInput(async (inputValue) => {
       const receivedData = await communicateWithAPI(API_URL, URL_TAIL(inputValue))
       this.setState(receivedData, inputValue)
@@ -22,7 +23,8 @@ export default class SearchApp {
 
   setState(receivedData, inputValue) {
     this.state = receivedData
+    this.history = [...this.history, inputValue];
     this.searchResult.setState(this.state)
-    if (inputValue !== undefined) this.searchHistory.setState(inputValue)
+    if (inputValue !== undefined) this.searchHistory.setState(this.history)
   }
 }
