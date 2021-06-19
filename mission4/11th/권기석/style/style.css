@@ -1,0 +1,10 @@
+.users {
+  display: flex;
+  list-style: none;
+  width: 100%;
+  overflow-x: auto;
+}
+.user-name {
+  margin-right: 12px;
+  border-left: 1px solid lightgray;
+}

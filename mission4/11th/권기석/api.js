@@ -60,3 +60,14 @@ export const onChangeToggle = async (username, todo_id) => {
     throw new Error(`토글 변경 불가`)
   }
 }
+
+export const onGetUserList = async () => {
+  const res = await fetch(`${base_url}/users`, {
+    method: 'GET',
+  })
+  if (res.ok) {
+    return res.json()
+  } else {
+    throw new Error(`유저 목록을 못받아옴`)
+  }
+}
