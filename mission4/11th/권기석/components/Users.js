@@ -1,4 +1,4 @@
-export default function Users({ $app, userList }) {
+export default function Users({ $app, userList, onClickName }) {
   this.userList = userList
 
   this.$users = document.createElement('ul')
@@ -8,7 +8,7 @@ export default function Users({ $app, userList }) {
   this.$users.addEventListener('click', (e) => {
     const name = e.target.closest('li')?.dataset.name
     if (name) {
-      console.log(name)
+      onClickName(name)
     }
   })
 

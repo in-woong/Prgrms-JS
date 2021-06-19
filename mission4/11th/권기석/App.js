@@ -1,6 +1,7 @@
-import { onGetTodoList, onGetUserList } from './api.js'
+import { onAddTodo, onGetTodoList, onGetUserList } from './api.js'
 import CurrentName from './components/CurrentName.js'
 import SearchNameInput from './components/SearchNameInput.js'
+import TodoInput from './components/TodoInput.js'
 import TodoList from './components/TodoList.js'
 import Users from './components/Users.js'
 
@@ -14,7 +15,7 @@ export default function App({ $main }) {
   this.$app = document.createElement('div')
   $main.appendChild(this.$app)
 
-  const init = async () => {
+  this.init = async () => {
     try {
       const users = await onGetUserList()
       const todos = await onGetTodoList(this.state.name)
@@ -29,21 +30,43 @@ export default function App({ $main }) {
     }
   }
 
-  const currentName = new CurrentName({ $app: this.$app, name: this.state.name })
+  const currentName = new CurrentName({
+    $app: this.$app,
+    name: this.state.name,
+  })
 
   const searchNameInput = new SearchNameInput({
     $app: this.$app,
     onSearch: async (name) => {
       try {
-        const data = await onGetTodoList(name)
-        this.setState({ ...this.state, name, todos: data })
+        const todos = await onGetTodoList(name)
+        this.setState({ ...this.state, name, todos })
       } catch (error) {
         console.error(error)
       }
     },
   })
 
-  const users = new Users({ $app: this.$app, userList: this.state.users })
+  const todoInput = new TodoInput({
+    $app: this.$app,
+    onAddTodo: async (content) => {
+      onAddTodo(this.state.name, content)
+    },
+    init: this.init,
+  })
+
+  const users = new Users({
+    $app: this.$app,
+    userList: this.state.users,
+    onClickName: async (name) => {
+      const todos = await onGetTodoList(name)
+      this.setState({
+        ...this.state,
+        name,
+        todos,
+      })
+    },
+  })
 
   const todoList = new TodoList({ $app: this.$app, initialState: this.state.todos })
 
@@ -54,5 +77,5 @@ export default function App({ $main }) {
     users.setState(this.state.users)
   }
 
-  init()
+  this.init()
 }
