@@ -7,6 +7,6 @@ export default class TodoRemoveAll {
   }
 
   removeAllEventHandler() {
-      this.onRemoveAll();
+    this.onRemoveAll()
   }
 }
