@@ -1,17 +1,27 @@
 export default class TodoList{
   constructor(params){
     this.target = params.$target;
+    this.username = params.username;
     this.onClick = params.onClick;
     this.onRemove = params.onRemove;
     this.data = params.receivedData || [];
-    console.log(this.data);
 
+    this.target.addEventListener('click', ({ target }) => this.todoClickEventHandler(target))
     this.render();
+  }
+
+  todoClickEventHandler(target){
+    
+    const todoID = target.closest('li').dataset.id;
+    if (target.tagName === 'BUTTON' && target.className === 'remove-button'){
+      this.onRemove(this.username, todoID);
+    } else{
+      this.onClick(this.username, todoID);
+    }
   }
 
   setState(newData){
     this.data = newData;
-    console.log(this.data);
     this.render();
   }
 

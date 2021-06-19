@@ -1,0 +1,43 @@
+{
+  "name": "roto",
+  "version": "1.0.0",
+  "description": "**프론트엔드 개발을 위한 자바스크립트 온라인 스터디** - [학습 참고 공간](https://school.programmers.co.kr/courses/9998)",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/polyfill": "^7.6.0",
+    "apollo-link-error": "^1.1.12",
+    "apollo-link-http": "^1.5.16",
+    "apollo-server": "^2.9.6",
+    "babel-preset-es2015": "^6.24.1",
+    "eslint": "^7.2.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-react": "^7.20.6",
+    "eslint-plugin-react-hooks": "^4.0.0",
+    "prettier": "^2.2.1"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "http-server": "^0.12.3",
+    "node": "^15.7.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://eastjunDev:ehdwns3624!@github.com/learn-programmers/prgrms-fejs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/learn-programmers/prgrms-fejs/issues"
+  },
+  "homepage": "https://github.com/learn-programmers/prgrms-fejs#readme",
+  "type": "module"
+}

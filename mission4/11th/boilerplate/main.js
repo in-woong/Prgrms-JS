@@ -1,9 +1,10 @@
+import {TodoList} from "./TodoList.js"
+
 (async function () {
   const username = 'roto';
 
   async function fetchData() {
     const res = await fetch(`https://todo-api.roto.codes/${username}`);
-    //console.log(await res.json());
     return await res.json();
   }
 
@@ -13,6 +14,7 @@
     $target: document.querySelector('#todo-list'),
     data: data,
     onClick: async function (id) {
+      console.log(id);
       await fetch(`https://todo-api.roto.codes/${username}/${id}/toggle`, {
         method: 'PUT',
       });
@@ -55,3 +57,4 @@
       }
     });
 })();
+

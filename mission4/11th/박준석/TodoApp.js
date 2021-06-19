@@ -1,16 +1,18 @@
 import { getTodo, addTodo, checkTodo, removeTodo } from './TodoAPI.js'
 import { $ } from './util.js'
-import TodoList from './TodoList.js';
+import TodoList from './TodoList.js'
 
 export default class TodoApp {
   constructor(username) {
-    this.username = username;
-    this.data = getTodo(this.username);
+    this.username = username
+    this.data = getTodo(this.username)
 
     this.todoList = new TodoList({
       $target: $('#todo-list'),
       data: this.data,
+      username: this.username,
       onClick: async (username, todoID) => {
+
         checkTodo(username, todoID)
         this.setState()
       },
@@ -19,7 +21,7 @@ export default class TodoApp {
         this.setState()
       },
     })
-    this.setState();
+    this.setState()
   }
 
   async setState() {
