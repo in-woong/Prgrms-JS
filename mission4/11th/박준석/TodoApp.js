@@ -12,12 +12,11 @@ export default class TodoApp {
       data: this.data,
       username: this.username,
       onClick: async (username, todoID) => {
-
-        checkTodo(username, todoID)
+        await checkTodo(username, todoID)
         this.setState()
       },
       onRemove: async (username, todoID) => {
-        removeTodo(username, todoID)
+        await removeTodo(username, todoID)
         this.setState()
       },
     })
@@ -25,7 +24,8 @@ export default class TodoApp {
   }
 
   async setState() {
-    const updatedData = await getTodo(this.username)
+    this.todoList.setState([]);
+    const updatedData = await getTodo(this.username, 300)
     this.todoList.setState(updatedData)
   }
 }

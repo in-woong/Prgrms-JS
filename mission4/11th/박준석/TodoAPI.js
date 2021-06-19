@@ -1,5 +1,5 @@
-export const getTodo = async (username) => {
-  const userTodoList = await fetch(`https://todo-api.roto.codes/${username}`)
+export const getTodo = async (username, delay) => {
+  const userTodoList = await fetch(`https://todo-api.roto.codes/${username}?delay=${delay}`)
   if (userTodoList.ok) {
     return await userTodoList.json()
   } else {

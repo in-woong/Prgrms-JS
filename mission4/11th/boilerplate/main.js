@@ -1,5 +1,3 @@
-import {TodoList} from "./TodoList.js"
-
 (async function () {
   const username = 'roto';
 
