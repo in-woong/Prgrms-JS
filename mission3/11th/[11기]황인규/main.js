@@ -59,9 +59,9 @@ function main($app, initialState){
           alert("API 요청이 잘못 되었습니다.");
        
         checkDataValidation(response);
-        
+
         const newData = {
-          searchHistory : this.$state.searchHistory.indexOf(text) >=0 ? [...this.$state.searchHistory] : [...this.$state.searchHistory, text],
+          searchHistory : this.$state.searchHistory.indexOf(text) >=0 || response.length === 0 ? [...this.$state.searchHistory] : [...this.$state.searchHistory, text],
           isLoading : true,
           data : response,
         }
