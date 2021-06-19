@@ -1,5 +1,6 @@
 import { onGetTodoList, onGetUserList } from './api.js'
-import TodoInput from './components/TodoInput.js'
+import CurrentName from './components/CurrentName.js'
+import SearchNameInput from './components/SearchNameInput.js'
 import TodoList from './components/TodoList.js'
 import Users from './components/Users.js'
 
@@ -8,7 +9,7 @@ export default function App({ $main }) {
     isLoading: true,
     users: [],
     todos: [],
-    name: '권기석',
+    name: 'Giseok',
   }
   this.$app = document.createElement('div')
   $main.appendChild(this.$app)
@@ -28,7 +29,9 @@ export default function App({ $main }) {
     }
   }
 
-  const todoInput = new TodoInput({
+  const currentName = new CurrentName({ $app: this.$app, name: this.state.name })
+
+  const searchNameInput = new SearchNameInput({
     $app: this.$app,
     onSearch: async (name) => {
       try {
@@ -46,6 +49,7 @@ export default function App({ $main }) {
 
   this.setState = (nextState) => {
     this.state = nextState
+    currentName.setState(this.state.name)
     todoList.setState(this.state.todos)
     users.setState(this.state.users)
   }

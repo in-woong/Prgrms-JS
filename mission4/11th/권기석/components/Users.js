@@ -5,8 +5,15 @@ export default function Users({ $app, userList }) {
   this.$users.className = 'users'
   $app.appendChild(this.$users)
 
+  this.$users.addEventListener('click', (e) => {
+    const name = e.target.closest('li')?.dataset.name
+    if (name) {
+      console.log(name)
+    }
+  })
+
   this.render = () => {
-    const htmlString = this.userList.map((name) => `<li class="user-name">${name}</li>`).join('')
+    const htmlString = this.userList.map((name) => `<li class="user-name" data-name=${name}>${name}</li>`).join('')
     this.$users.innerHTML = htmlString
   }
 
