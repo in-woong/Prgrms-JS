@@ -5,8 +5,8 @@ import {UniId} from "./utils/curTime.js";
 import {requestAPI} from "./api/api.js";
 import {useDebounceFunction} from "./utils/debounce.js";
 import {errorMessage} from "./utils/errorMessage.js";
-import {checkDataValidation} from "./utils/validation.js"
-
+import {checkDataValidation} from "./utils/validation.js";
+import {setLocalStorage} from "../utils/localStorage.js";
 
 
 function main($app, initialState){
@@ -20,6 +20,7 @@ function main($app, initialState){
       $state : this.$state,
       onSearchHistory : async(text) => {
         const response = await requestAPI.fetchJjalGif(text);
+       
         if(!response)
           alert("API 요청이 잘못 되었습니다.");
         
@@ -55,11 +56,12 @@ function main($app, initialState){
         this.setState(previousData);
 
         const response = await requestAPI.fetchJjalGif(text);
+        setLocalStorage(text, response);
         if(!response)
           alert("API 요청이 잘못 되었습니다.");
-       
-        checkDataValidation(response);
 
+        checkDataValidation(response);
+        
         const newData = {
           searchHistory : this.$state.searchHistory.indexOf(text) >=0 || response.length === 0 ? [...this.$state.searchHistory] : [...this.$state.searchHistory, text],
           isLoading : true,
