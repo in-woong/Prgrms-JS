@@ -7,10 +7,12 @@ import TodoRemoveAll from './TodoRemoveAll.js'
 export default class TodoApp {
   constructor(username) {
     this.username = username
-    this.data = TodoAPI.getTodo(this.username)
+    this.printName = $('#current-user-name');
+    this.data = []
 
     this.todoList = new TodoList({
       target: $('#todo-list'),
+      printTarget: $('#current-user-name'),
       data: this.data,
       onClick: async (todoID) => {
         await TodoAPI.checkTodo(this.username, todoID)
@@ -26,6 +28,7 @@ export default class TodoApp {
       targetButton: $('#add-todo-button'),
       targetInput: $('#todo-input'),
       inputEvent: async (inputValue) => {
+        console.log(this.username, inputValue);
         await TodoAPI.addTodo(this.username, inputValue)
         this.setState()
       },
@@ -43,6 +46,7 @@ export default class TodoApp {
   }
 
   async setState() {
+    this.printName.innerHTML = this.username;
     this.todoList.setState(null)
     const updatedData = await TodoAPI.getTodo(this.username, 300)
     this.todoList.setState(updatedData)

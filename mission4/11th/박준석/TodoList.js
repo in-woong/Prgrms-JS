@@ -32,7 +32,7 @@ export default class TodoList {
       if (this.data.length === 0) this.target.innerHTML = '<br/>저장된 Todo 가 없습니다.'
       else {
         const htmlString = this.data.map((todo) => {
-          const contentHTML = todo.isCompleted ? `<strike>${todo.content}</strike>` : `<span>${todo.content}<span>`
+          const contentHTML = todo.isCompleted ? `<strike class="todo-content">${todo.content}</strike>` : `<span class="todo-content">${todo.content}<span>`
           return `<li data-id="${todo._id}">${contentHTML} <button class="remove-button">Remove</button></li>`
         })
         this.target.innerHTML = `<ul>${htmlString.join('')}</ul>`

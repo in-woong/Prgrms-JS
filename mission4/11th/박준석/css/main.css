@@ -1,4 +1,8 @@
 
+.user-name:hover, .todo-content:hover {
+  color:blue;
+}
+
 .spinner-container {
   position: relative;
   width: 25px;

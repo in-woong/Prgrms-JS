@@ -1,3 +1,3 @@
-import TodoApp from './TodoApp.js'
+import ShowUserList from './ShowUserList.js'
 
-const todoApp = new TodoApp('roto')
+const showUserList = new ShowUserList();

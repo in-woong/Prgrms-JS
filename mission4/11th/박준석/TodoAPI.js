@@ -38,4 +38,12 @@ export const TodoAPI = {
       method: 'DELETE',
     })
   },
+  getUserList: async () => {
+    const userList = await fetch(`https://todo-api.roto.codes/users`)
+    if (userList.ok) {
+      return await userList.json()
+    } else {
+      throw new Error('전달받은 데이터에 문제가 있습니다.')
+    }
+  }
 }
