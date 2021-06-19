@@ -35,3 +35,9 @@ export const removeTodo = async (username, todoID) => {
       method: 'DELETE',
     })
 }
+
+export const removeAllTodo = async (username) => {
+  await fetch(`https://todo-api.roto.codes/${username}/all`, {
+    method: 'DELETE',
+  })
+} 

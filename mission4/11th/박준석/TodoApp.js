@@ -1,7 +1,8 @@
-import { getTodo, addTodo, checkTodo, removeTodo } from './TodoAPI.js'
+import { getTodo, addTodo, checkTodo, removeTodo, removeAllTodo } from './TodoAPI.js'
 import { $ } from './util.js'
 import TodoList from './TodoList.js'
 import TodoInput from './TodoInput.js'
+import TodoRemoveAll from './TodoRemoveAll.js'
 
 export default class TodoApp {
   constructor(username) {
@@ -27,14 +28,22 @@ export default class TodoApp {
       inputEvent: async (inputValue) => {
         await addTodo(this.username, inputValue)
         this.setState();
-      }
+      },
+    })
+
+    this.todoRemoveAll = new TodoRemoveAll({
+      targetButton: $('#removeall-button'),
+      onRemoveAll : async () => {
+        await removeAllTodo(this.username)
+        this.setState()
+      },
     })
 
     this.setState()
   }
 
   async setState() {
-    this.todoList.setState([]);
+    this.todoList.setState(null);
     const updatedData = await getTodo(this.username, 300)
     this.todoList.setState(updatedData)
   }
