@@ -1,10 +1,8 @@
-function TodoList(params) {
-  const $target = params.$target
-  const onClick = params.onClick
-  const onRemove = params.onRemove
-  let data = params.data || []
-
-  $target.addEventListener('click', function (e) {
+export default function TodoList({ $app, initialState }) {
+  this.state = initialState
+  this.$todoList = document.createElement('ul')
+  $app.appendChild(this.$todoList)
+  this.$todoList.addEventListener('click', function (e) {
     const id = e.target.closest('li').dataset.id
 
     if (e.target.className === 'remove-button') {
@@ -16,18 +14,17 @@ function TodoList(params) {
   })
 
   this.setState = function (nextData) {
-    data = nextData
+    this.state = nextData
     this.render()
   }
 
   this.render = function () {
-    const htmlString = data.map(function (todo) {
+    const htmlString = this.state.map(function (todo) {
       const contentHTML = todo.isCompleted ? `<strike>${todo.content}</strike>` : `${todo.content}`
-
       return `<li data-id="${todo._id}">${contentHTML} <button class="remove-button">Remove</button></li>`
     })
 
-    $target.innerHTML = `<ul>${htmlString.join('')}</ul>`
+    this.$todoList.innerHTML = `<ul>${htmlString.join('')}</ul>`
   }
 
   this.render()

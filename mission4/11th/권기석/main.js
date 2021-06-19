@@ -1,8 +1,7 @@
-import { doc } from 'prettier'
 import App from './App.js'
 
-const $target = document.querySelector('main')
+const $main = document.querySelector('main')
 
 new App({
-  $target,
+  $main,
 })
