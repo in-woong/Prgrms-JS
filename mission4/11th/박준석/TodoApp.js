@@ -1,6 +1,7 @@
 import { getTodo, addTodo, checkTodo, removeTodo } from './TodoAPI.js'
 import { $ } from './util.js'
 import TodoList from './TodoList.js'
+import TodoInput from './TodoInput.js'
 
 export default class TodoApp {
   constructor(username) {
@@ -8,18 +9,27 @@ export default class TodoApp {
     this.data = getTodo(this.username)
 
     this.todoList = new TodoList({
-      $target: $('#todo-list'),
+      target: $('#todo-list'),
       data: this.data,
-      username: this.username,
-      onClick: async (username, todoID) => {
-        await checkTodo(username, todoID)
+      onClick: async (todoID) => {
+        await checkTodo(this.username, todoID)
         this.setState()
       },
-      onRemove: async (username, todoID) => {
-        await removeTodo(username, todoID)
+      onRemove: async (todoID) => {
+        await removeTodo(this.username, todoID)
         this.setState()
       },
     })
+
+    this.todoInput = new TodoInput({
+      targetButton: $('#add-todo-button'),
+      targetInput: $('#todo-input'),
+      inputEvent: async (inputValue) => {
+        await addTodo(this.username, inputValue)
+        this.setState();
+      }
+    })
+
     this.setState()
   }
 

@@ -1,7 +1,6 @@
 export default class TodoList {
   constructor(params) {
-    this.target = params.$target
-    this.username = params.username
+    this.target = params.target
     this.onClick = params.onClick
     this.onRemove = params.onRemove
     this.data = params.receivedData || []
@@ -13,9 +12,9 @@ export default class TodoList {
   todoClickEventHandler(target) {
     const todoID = target.closest('li').dataset.id
     if (target.tagName === 'BUTTON' && target.className === 'remove-button') {
-      this.onRemove(this.username, todoID)
+      this.onRemove(todoID)
     } else {
-      this.onClick(this.username, todoID)
+      this.onClick(todoID)
     }
   }
 
