@@ -1,4 +1,4 @@
-export default function TodoList({ $app, initialState }) {
+export default function TodoList({ $app, initialState, onRemove, onClick }) {
   this.state = initialState
   this.$todoList = document.createElement('ul')
   $app.appendChild(this.$todoList)

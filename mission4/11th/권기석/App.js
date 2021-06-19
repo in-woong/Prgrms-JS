@@ -1,4 +1,4 @@
-import { onAddTodo, onDeleteAllTodo, onGetTodoList, onGetUserList } from './api.js'
+import { onAddTodo, onChangeToggle, onDeleteAllTodo, onDeleteTodo, onGetTodoList, onGetUserList } from './api.js'
 import ButtonToDeleteAll from './components/ButtonToDeleteAll.js'
 import CurrentName from './components/CurrentName.js'
 import SearchNameInput from './components/SearchNameInput.js'
@@ -76,7 +76,41 @@ export default function App({ $main }) {
     },
   })
 
-  const todoList = new TodoList({ $app: this.$app, initialState: { todos: this.state.todos, isLoading: this.state.isLoading } })
+  const todoList = new TodoList({
+    $app: this.$app,
+    initialState: { todos: this.state.todos, isLoading: this.state.isLoading },
+    onRemove: async (todo_id) => {
+      try {
+        const res = await onDeleteTodo(this.state.name, todo_id)
+        if (res) {
+          const updateTodos = this.state.todos.filter((todo) => todo._id !== todo_id)
+          this.setState({ ...this.state, todos: updateTodos })
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    onClick: async (todo_id) => {
+      try {
+        const res = await onChangeToggle(this.state.name, todo_id)
+        if (res) {
+          const updateTodos = this.state.todos.map((todo) => {
+            if (todo._id !== todo_id) {
+              return todo
+            } else {
+              return {
+                ...todo,
+                isCompleted: !todo.isCompleted,
+              }
+            }
+          })
+          this.setState({ ...this.state, todos: updateTodos })
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    },
+  })
 
   this.setState = (nextState) => {
     this.state = nextState
