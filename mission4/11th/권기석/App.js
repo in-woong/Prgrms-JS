@@ -1,4 +1,5 @@
-import { onAddTodo, onGetTodoList, onGetUserList } from './api.js'
+import { onAddTodo, onDeleteAllTodo, onGetTodoList, onGetUserList } from './api.js'
+import ButtonToDeleteAll from './components/ButtonToDeleteAll.js'
 import CurrentName from './components/CurrentName.js'
 import SearchNameInput from './components/SearchNameInput.js'
 import TodoInput from './components/TodoInput.js'
@@ -55,6 +56,13 @@ export default function App({ $main }) {
     init: this.init,
   })
 
+  const buttonToDeleteAll = new ButtonToDeleteAll({
+    $app: this.$app,
+    onDeleteAll: async () => {
+      onDeleteAllTodo(this.state.name)
+    },
+    init: this.init,
+  })
   const users = new Users({
     $app: this.$app,
     userList: this.state.users,

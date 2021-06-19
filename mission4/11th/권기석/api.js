@@ -40,7 +40,7 @@ export const onDeleteTodo = async (username, todo_id) => {
 }
 
 export const onDeleteAllTodo = async (username) => {
-  const res = await fetch(`${base_url}/${username}`, {
+  const res = await fetch(`${base_url}/${username}/all`, {
     method: 'DELETE',
   })
   if (res.ok) {
