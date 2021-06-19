@@ -13,7 +13,7 @@
   <div id="app">
     <div id="user-list"> </div>
     <div id="users-todo-list" style="display:none">
-      
+
       <input type="text" id="todo-input" />
       <button type="button" id="add-todo-button">
         Add
@@ -22,9 +22,25 @@
         Remove All
       </button>
       <div id="current-user-name"></div>
-      <div id="todo-list"></div>
+      <div id="todo-list" style="background-color:yellow; float:left">
+      </div>
+      <div id="todo-list-notdone" style="background-color:green; float:left; margin-left:100px">what</div>
+
     </div>
   </div>
+  <script>
+    // function allowDrop(ev) {
+    //   ev.preventDefault();
+    // }
+
+    // function drops(ev) {
+    //   ev.preventDefault();
+    //   var data = ev.dataTransfer.getData("text");
+    //   console.log(data);
+    //   ev.target.appendChild(document.querySelector(`li[data-id="${data}"]`));
+    // }
+// ondrop="drops(event)" ondragover="allowDrop(event)"
+  </script>
   <script src="./main.js" type='module'></script>
 </body>
 

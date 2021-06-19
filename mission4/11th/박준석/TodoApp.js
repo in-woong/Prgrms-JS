@@ -14,7 +14,8 @@ export default class TodoApp {
       this.username = username
 
       this.todoList = new TodoList({
-        target: $('#todo-list'),
+        targetDone: $('#todo-list'),
+        targetNotDone: $('#todo-list-notdone'),
         printTarget: $('#current-user-name'),
         data: this.data,
         onClick: async (todoID) => {
