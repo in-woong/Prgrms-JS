@@ -19,12 +19,18 @@ export default function TodoList({ $app, initialState }) {
   }
 
   this.render = function () {
-    const htmlString = this.state.map(function (todo) {
-      const contentHTML = todo.isCompleted ? `<strike>${todo.content}</strike>` : `${todo.content}`
-      return `<li data-id="${todo._id}">${contentHTML} <button class="remove-button">Remove</button></li>`
-    })
+    if (this.state.isLoading) {
+      this.$todoList.innerHTML = `현재 데이터를 불러오고 있습니다... logging...`
+    } else {
+      const htmlString = this.state.todos
+        .map(function (todo) {
+          const contentHTML = todo.isCompleted ? `<strike>${todo.content}</strike>` : `${todo.content}`
+          return `<li data-id="${todo._id}">${contentHTML} <button class="remove-button">Remove</button></li>`
+        })
+        .join('')
 
-    this.$todoList.innerHTML = `<ul>${htmlString.join('')}</ul>`
+      this.$todoList.innerHTML = htmlString
+    }
   }
 
   this.render()

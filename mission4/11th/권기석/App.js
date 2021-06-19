@@ -76,12 +76,12 @@ export default function App({ $main }) {
     },
   })
 
-  const todoList = new TodoList({ $app: this.$app, initialState: this.state.todos })
+  const todoList = new TodoList({ $app: this.$app, initialState: { todos: this.state.todos, isLoading: this.state.isLoading } })
 
   this.setState = (nextState) => {
     this.state = nextState
     currentName.setState(this.state.name)
-    todoList.setState(this.state.todos)
+    todoList.setState({ todos: this.state.todos, isLoading: this.state.isLoading })
     users.setState(this.state.users)
   }
 
