@@ -6,7 +6,7 @@ function SearchResult(data, $app){
 
     const searchResultWrapper = document.createElement("div");
     searchResultWrapper.setAttribute("class", "search-result-wrapper");
-    this.$app.appendChild(searchResultWrapper);
+    this.element = searchResultWrapper;
 
     this.setState = (nextState) => {
         this.$state = nextState;

@@ -15,77 +15,82 @@ function main($app, initialState){
   if(!new.target)
     throw new Error(errorMessage.CHECK_NEW_ERROR());
 
-  const searchHistory = new SearchHistory({
-      $app : $app,
-      $state : this.$state,
-      onSearchHistory : async(text) => {
-        const response = await requestAPI.fetchJjalGif(text);
-       
-        if(!response)
-          alert("API 요청이 잘못 되었습니다.");
+  const attachAppToDom = (...components) => {
+    components.forEach(({element}) => this.$app.appendChild(element));
+    document.body.appendChild($app);
+  }
+  this.render = () => {
+      const searchHistory = new SearchHistory({
+        $app : $app,
+        $state : this.$state,
+        onSearchHistory : async(text) => {
+          const response = await requestAPI.fetchJjalGif(text);
         
-        checkDataValidation(response);
+          if(!response)
+            alert("API 요청이 잘못 되었습니다.");
+          
+          checkDataValidation(response);
 
-        const newData = {
-          searchHistory : [...this.$state.searchHistory],
-          isLoading : true,
-          data : response,
+          const newData = {
+            searchHistory : [...this.$state.searchHistory],
+            isLoading : true,
+            data : response,
+          }
+        
+          this.setState(newData);
         }
-       
-        this.setState(newData);
+    });
+
+    const searchInput = new SearchInput({
+      $app : this.$app,
+      
+      //FIXME : 2번씩 호출되는 현상 
+      onFetchData: async(text) => {
+        this.onUseDebounceFunction(text);
       }
-  });
+    });
 
-  const searchInput = new SearchInput({
-    $app : this.$app,
-    
-    //FIXME : 2번씩 호출되는 현상 
-    onFetchData: async(text) => {
-      this.onUseDebounceFunction(text);
+    const fetchAPI = async(text) => {
+          
+          const previousData = {
+            searchHistory : [...this.$state.searchHistory],
+            isLoading : false,
+            data : [...this.$state.data],
+          }
+
+          this.setState(previousData);
+
+          const response = await requestAPI.fetchJjalGif(text);
+          setLocalStorage(text, response);
+          if(!response)
+            alert("API 요청이 잘못 되었습니다.");
+
+          checkDataValidation(response);
+          
+          const newData = {
+            searchHistory : this.$state.searchHistory.indexOf(text) >=0 || response.length === 0 ? [...this.$state.searchHistory] : [...this.$state.searchHistory, text],
+            isLoading : true,
+            data : response,
+          }
+          
+          this.setState(newData);
     }
-  });
 
-  const fetchAPI = async(text) => {
-        
-        const previousData = {
-          searchHistory : [...this.$state.searchHistory],
-          isLoading : false,
-          data : [...this.$state.data],
-        }
+    this.onUseDebounceFunction = useDebounceFunction(
+      fetchAPI, 500
+    )
 
-        this.setState(previousData);
+    const searchResult = new SearchResult(this.state, this.$app);
 
-        const response = await requestAPI.fetchJjalGif(text);
-        setLocalStorage(text, response);
-        if(!response)
-          alert("API 요청이 잘못 되었습니다.");
+    attachAppToDom(searchInput, searchHistory, searchResult);
 
-        checkDataValidation(response);
-        
-        const newData = {
-          searchHistory : this.$state.searchHistory.indexOf(text) >=0 || response.length === 0 ? [...this.$state.searchHistory] : [...this.$state.searchHistory, text],
-          isLoading : true,
-          data : response,
-        }
-        
-        this.setState(newData);
+    this.setState = (nextState) => {
+      this.$state = nextState
+      searchResult.setState(this.$state);
+      searchHistory.setState(this.$state);
+    }
   }
-
-  this.onUseDebounceFunction = useDebounceFunction(
-    fetchAPI, 500
-  )
-
-  const searchResult = new SearchResult(this.state, this.$app);
-
-  this.setState = (nextState) => {
-    this.$state = nextState
-    this.render(this.$state)
-  }
-
-  this.render = (state) => {
-    searchResult.setState(state);
-    searchHistory.setState(state);
-  }
+  this.render();
 }
 
 export default main;
