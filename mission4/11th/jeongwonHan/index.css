@@ -30,6 +30,19 @@ button:hover {
 input:focus {
   outline: none;
 }
+
+.userList {
+  padding: 0;
+}
+
+.userList li {
+  display: inline-block;
+  border: 1px solid teal;
+  padding: 2px 6px;
+  font-size: 12px;
+  margin: 2px 4px;
+}
+
 .todoList {
   border: 1px solid teal;
   padding: 10px;

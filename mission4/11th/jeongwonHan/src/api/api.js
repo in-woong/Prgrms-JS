@@ -28,8 +28,11 @@ const request = async (url, option = {}) => {
 }
 
 export const api = {
-  loadTodo: (userName) => {
+  getUserTodoList: (userName) => {
     return request(`${API_ENDPOINT}/${userName}`)
+  },
+  getUserList: () => {
+    return request(`${API_ENDPOINT}/users`)
   },
   addUserTodo: (contents, userName) => {
     return request(`${API_ENDPOINT}/${userName}`, option.post(contents))
