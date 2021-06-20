@@ -3,10 +3,14 @@ class SearchInput {
         this.target = target;
         this.onSearch = onSearch;
 
-        this.target.addEventListener('keyup', (e) => {
-            onSearch(e.target.value);
+        let timer;
+        this.target.addEventListener('input', (e) => {
+            if (timer) {
+                clearTimeout(timer);
+            }
+            timer = setTimeout(() => {
+                onSearch(e.target.value);
+            }, 200);
         });
     }
-
-    
 }
