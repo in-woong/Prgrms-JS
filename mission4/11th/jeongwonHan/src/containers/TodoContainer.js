@@ -47,9 +47,14 @@ function TodoContainer({ $target, state, setState, setNextState }) {
       )
       this.setState(newData)
     },
-    onDeleteTodo: (selectId) => {
-      const newData = this.state.filter((todo) => todo.id !== selectId)
-      this.setState(newData)
+    onDeleteTodo: async(todoId) => {
+      try {
+        await api.deleteUserTodo(state.userName, todoId);
+        const nextState = await this.setNextState(state.userName)
+        this.setState(nextState)
+      } catch (e) {
+        console.log(e)
+      }
     },
   })
 

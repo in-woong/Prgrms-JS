@@ -31,6 +31,9 @@ export const api = {
   getUserTodoList: (userName) => {
     return request(`${API_ENDPOINT}/${userName}`)
   },
+  deleteUserTodo:(userName, todoId) => {
+    return request(`${API_ENDPOINT}/${userName}/${todoId}`, option.delete())
+  },
   getUserList: () => {
     return request(`${API_ENDPOINT}/users`)
   },
