@@ -1,7 +1,7 @@
 try {
-    const todoList = new App(data, 'TODO-LIST');
-    const todoListWeekly = new App(data2, 'WEEKLY-TODO-LIST');
-    const todoListMonthly = new App(data3, 'MONTHLY-TODO-LIST');
+    const todoList = new App('TODO-LIST');
+    const todoListWeekly = new App('WEEKLY-TODO-LIST');
+    const todoListMonthly = new App('MONTHLY-TODO-LIST');
 } catch(e) {
     console.error(e);
 }

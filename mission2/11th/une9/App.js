@@ -1,5 +1,5 @@
 class App {
-    constructor(data, title) {
+    constructor(title) {
         this.element = document.createElement('div');
 
         if (title == null || title == '') {
@@ -11,8 +11,9 @@ class App {
         this.element.innerHTML = `<b>${this.title}</b>`;
         document.body.appendChild(this.element);
 
-        this.dataValidation(data);
-        this.data = data;
+        const loadedData = storage.load(this.title);
+        this.dataValidation(loadedData);
+        this.data = loadedData;
 
         this.todoList = new TodoList({
             data: this.data, 
@@ -42,8 +43,14 @@ class App {
     }
 
     setState(nextData) {
-        this.todoList.setState(nextData);
-        this.todoCount.setState(nextData);
+        storage.save(this.title, nextData);
+        this.data = nextData;
+        this.render(nextData);
+    }
+
+    render(data) {
+        this.todoList.setState(data);
+        this.todoCount.setState(data);
     }
 
     dataValidation(data) {
