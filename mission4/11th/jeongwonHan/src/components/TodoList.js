@@ -1,12 +1,12 @@
 import { todoValidate } from '../utils/Validation.js'
 import ErrorMessage from '../utils/ErrorMessage.js'
 
-function TodoList({ $target, initialState, onCompleteToggle, onDeleteTodo }) {
+function TodoList({ $target, state, onCompleteToggle, onDeleteTodo }) {
   if (!new.target) {
     throw new Error(ErrorMessage.SET_NEW_ERROR)
   }
 
-  todoValidate(initialState)
+  todoValidate(state.todos)
 
   this.$target = $target
   this.$todoListUl = document.createElement('ul')
@@ -17,7 +17,7 @@ function TodoList({ $target, initialState, onCompleteToggle, onDeleteTodo }) {
   this.onCompleteToggle = onCompleteToggle
   this.onDeleteTodo = onDeleteTodo
 
-  this.state = initialState
+  this.state = state
 
   this.todoClickHandler = (e) => {
     const { classList } = e.target
@@ -38,9 +38,9 @@ function TodoList({ $target, initialState, onCompleteToggle, onDeleteTodo }) {
 
   this.render = function () {
     const htmlString =
-      this.state.length < 1
+      this.state.todos.length < 1
         ? `<li>할 일을 입력하세요!</li>`
-        : this.state
+        : this.state.todos
             .map(
               (todo) => `<li id=${todo.id} class="complete_${todo.isCompleted}">
               <span class="toggle">${todo.text}</span>

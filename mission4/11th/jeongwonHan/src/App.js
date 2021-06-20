@@ -1,27 +1,40 @@
 import TodoContainer from './containers/TodoContainer.js'
+import { api } from './api/api.js'
 
 function App($target) {
-  this.$target = $target
-  const storageTodo = JSON.parse(localStorage.getItem('TODOLIST'))
-  this.$state = storageTodo ? [...storageTodo] : []
+  const USER_NAME = 'jeongwonHan'
 
-  this.$todoListDiv1 = document.createElement('div')
-  this.$todoListDiv1.setAttribute('data-component-type', 'TodoList')
-  this.$todoListDiv1.classList.add('todoList')
+  this.init = async () => {
+    this.$target = $target
+    this.state = await this.setNextState(USER_NAME)
 
-  this.$target.appendChild(this.$todoListDiv1)
+    this.$todoListDiv1 = document.createElement('div')
+    this.$todoListDiv1.classList.add('todoList')
+
+    this.$target.appendChild(this.$todoListDiv1)
+
+    this.todoContainer = new TodoContainer({
+      $target: this.$todoListDiv1,
+      state: this.state,
+      setState: this.setState,
+    })
+  }
+
+  this.setNextState = async (userName) => {
+    const todos = await api.loadTodo(userName)
+    const nextState = {
+      ...this.$state,
+      todos,
+    }
+    return nextState
+  }
 
   this.setState = (nextState) => {
     this.$state = nextState
     this.todoContainer.setState(this.$state)
-    localStorage.setItem('TODOLIST', JSON.stringify(this.$state))
   }
 
-  this.todoContainer = new TodoContainer({
-    $target: this.$todoListDiv1,
-    $state: this.$state,
-    setState: this.setState,
-  })
+  this.init()
 }
 
 export default App
