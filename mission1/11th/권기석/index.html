@@ -1,0 +1,93 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list"></div>
+  <div id="todo-list2"></div>
+  <div id="todo-list3"></div>
+
+  <script>
+    var data = [
+      {
+        text: 'JS 공부하기',
+        isCompleted: true,
+      },
+      {
+        text: 'JS 복습하기',
+        isCompleted: false,
+      }
+    ]
+  // 이곳에서 코딩을 시작하세요!
+    var data2 = [
+      {
+        text : "React 공부하기",
+        isCompleted: false,
+      }, 
+      {
+        text : "project 하기",
+        isCompleted: false,
+      }
+    ]
+    var data3 = [
+      {
+        text : "cs지식 기르기",
+        isCompleted: true,
+      },
+      {
+        text : "알고리즘 공부하기",
+        isCompleted: false,
+      }
+    ]
+    var nextData = [
+      {
+        text : "다른 과목 공부하기",
+        isCompleted: false,
+      },
+      {
+        text : "운동 열심히 하기",
+        isCompleted: false,
+      }
+    ]
+  function ToDoList(data, id) {
+    if(data === null || data === undefined) {
+      throw new Error("error message");
+    }
+    if(!Array.isArray(data)) { // array 형태 확인
+      throw new Error("error message");
+    }
+    if(data.some((item) => typeof item !== 'object' || !item.hasOwnProperty('text') || !item.hasOwnProperty('isCompleted'))) {
+      throw new Error("error message");
+    }
+    if(!new.target) {
+      throw new Error("error message");
+    }
+    this.data = data;
+    this.render = function() {
+      document.querySelector(id).innerHTML = this.data.map((item) => {
+        if(item.isCompleted){
+          return `<s><li>${item.text}</li></s>`
+        } 
+        return `<li>${item.text}</li>`
+      }).join('');
+    }
+    
+    this.setState = function(nextData) {
+      this.data = nextData
+      this.render();
+    }
+  }
+  let todoList = new ToDoList(data, "#todo-list");
+  let todoList2 = new ToDoList(data2, "#todo-list2");
+  let todoList3 = new ToDoList(data3, "#todo-list3");
+  todoList.render();
+  todoList2.render();
+  todoList3.render();
+
+  setTimeout(() => {todoList.setState(nextData)}, 2000);
+  </script>
+</body>
+</html>
