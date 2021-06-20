@@ -1,7 +1,11 @@
-export default function TodoList({ $app, initialState, onRemove, onClick }) {
+export default function TodoList({ $trello, initialState, onRemove, onClick }) {
   this.state = initialState
   this.$todoList = document.createElement('ul')
-  $app.appendChild(this.$todoList)
+  this.$todoList.className = 'todoList'
+  // this.onRemove = onRemove 이런 식으로 선언 한뒤, addEventListener에서 this.onRemove()가 제대로 동작이 안되는 이유 찾아보기
+  // this.onClick = onClick
+  $trello.appendChild(this.$todoList)
+
   this.$todoList.addEventListener('click', function (e) {
     const id = e.target.closest('li').dataset.id
 
@@ -13,6 +17,15 @@ export default function TodoList({ $app, initialState, onRemove, onClick }) {
     }
   })
 
+  this.$todoList.addEventListener('dragover', (e) => {
+    e.preventDefault()
+    e.dataTransfer.dropEffect = 'move'
+  })
+
+  this.$todoList.addEventListener('drop', (e) => {
+    e.preventDefault()
+    console.log(e.dataTransfer.getData('id'))
+  })
   this.setState = function (nextData) {
     this.state = nextData
     this.render()
@@ -25,7 +38,7 @@ export default function TodoList({ $app, initialState, onRemove, onClick }) {
       const htmlString = this.state.todos
         .map(function (todo) {
           const contentHTML = todo.isCompleted ? `<strike>${todo.content}</strike>` : `${todo.content}`
-          return `<li data-id="${todo._id}">${contentHTML} <button class="remove-button">Remove</button></li>`
+          return `<li draggable="true" data-id="${todo._id}">${contentHTML} <button class="remove-button">Remove</button></li>`
         })
         .join('')
 

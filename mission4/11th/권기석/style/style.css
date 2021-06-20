@@ -8,3 +8,8 @@
   margin-right: 12px;
   border: 1px solid lightgray;
 }
+
+.trello {
+  display: flex;
+  flex-direction: row;
+}

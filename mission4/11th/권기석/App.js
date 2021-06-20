@@ -3,7 +3,7 @@ import ButtonToDeleteAll from './components/ButtonToDeleteAll.js'
 import CurrentName from './components/CurrentName.js'
 import SearchNameInput from './components/SearchNameInput.js'
 import TodoInput from './components/TodoInput.js'
-import TodoList from './components/TodoList.js'
+import Trello from './components/Trello.js'
 import Users from './components/Users.js'
 
 export default function App({ $main }) {
@@ -40,8 +40,9 @@ export default function App({ $main }) {
     $app: this.$app,
     onSearch: async (name) => {
       try {
+        this.setState({ ...this.state, isLoading: true })
         const todos = await onGetTodoList(name)
-        this.setState({ ...this.state, name, todos })
+        this.setState({ ...this.state, name, todos, isLoading: false })
       } catch (error) {
         console.error(error)
       }
@@ -67,16 +68,18 @@ export default function App({ $main }) {
     $app: this.$app,
     userList: this.state.users,
     onClickName: async (name) => {
+      this.setState({ ...this.state, isLoading: true })
       const todos = await onGetTodoList(name)
       this.setState({
         ...this.state,
         name,
         todos,
+        isLoading: false,
       })
     },
   })
 
-  const todoList = new TodoList({
+  const trello = new Trello({
     $app: this.$app,
     initialState: { todos: this.state.todos, isLoading: this.state.isLoading },
     onRemove: async (todo_id) => {
@@ -115,7 +118,7 @@ export default function App({ $main }) {
   this.setState = (nextState) => {
     this.state = nextState
     currentName.setState(this.state.name)
-    todoList.setState({ todos: this.state.todos, isLoading: this.state.isLoading })
+    trello.setState({ todos: this.state.todos, isLoading: this.state.isLoading })
     users.setState(this.state.users)
   }
 
