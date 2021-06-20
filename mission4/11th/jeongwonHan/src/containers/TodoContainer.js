@@ -2,25 +2,25 @@ import TodoList from '../components/TodoList.js'
 import TodoInput from '../components/TodoInput.js'
 import TodoRemoveAll from '../components/TodoRemoveAll.js'
 import TodoCount from '../components/TodoCount.js'
-import { getUuidv4 } from '../utils/Uuidv.js'
+import { api } from '../api/api.js'
 
-function TodoContainer({ $target, state, setState }) {
+function TodoContainer({ $target, state, setState, setNextState }) {
   this.$target = $target
   this.state = state
   this.setState = setState
+  this.setNextState = setNextState
 
   this.todoInput = new TodoInput({
     $target: this.$target,
-    onAddTodo: (todoText) => {
-      const newData = [
-        ...this.state,
-        {
-          id: getUuidv4(),
-          text: todoText,
-          isCompleted: false,
-        },
-      ]
-      this.setState(newData)
+    onAddTodo: async (todoText) => {
+      const content = { content: todoText }
+      try {
+        await api.addUserTodo(content, state.userName)
+        const nextState = await this.setNextState(state.userName)
+        this.setState(nextState)
+      } catch (e) {
+        console.log(e)
+      }
     },
   })
 
@@ -53,12 +53,11 @@ function TodoContainer({ $target, state, setState }) {
     },
   })
 
-  this.TodoCount = new TodoCount({ $target: this.$target, state: this.state })
+  this.todoCount = new TodoCount({ $target: this.$target, state: this.state })
 
-  this.setState = (state) => {
-    this.state = state
+  this.render = (state) => {
     this.todoList.setState(state)
-    this.TodoCount.setState(state)
+    this.todoCount.setState(state)
   }
 }
 

@@ -1,20 +1,20 @@
 const API_ENDPOINT = 'https://todo-api.roto.codes'
 
 const option = {
-  post: (contents) => ({
+  post: (content) => ({
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(contents),
+    body: JSON.stringify(content),
   }),
 
   delete: () => ({
     method: 'DELETE',
   }),
 
-  put: (contents) => ({
+  put: (content) => ({
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(contents),
+    body: JSON.stringify(content),
   }),
 }
 
@@ -34,7 +34,7 @@ export const api = {
   getUserList: () => {
     return request(`${API_ENDPOINT}/users`)
   },
-  addUserTodo: (contents, userName) => {
-    return request(`${API_ENDPOINT}/${userName}`, option.post(contents))
+  addUserTodo: (content, userName) => {
+    return request(`${API_ENDPOINT}/${userName}`, option.post(content))
   },
 }

@@ -23,24 +23,31 @@ function App($target) {
       $target: this.$todoListDiv1,
       state: this.state,
       setState: this.setState,
+      setNextState: this.setNextState,
     })
   }
 
   this.setNextState = async (userName) => {
-    const todos = await api.getUserTodoList(userName)
-    const userList = await api.getUserList()
-    const nextState = {
-      ...this.$state,
-      userList,
-      todos,
+    try {
+      const todos = await api.getUserTodoList(userName)
+      const userList = await api.getUserList()
+      const nextState = {
+        ...this.$state,
+        userList,
+        todos,
+        userName,
+      }
+      console.log(nextState)
+
+      return nextState
+    } catch (e) {
+      console.log(e)
     }
-    console.log(nextState)
-    return nextState
   }
 
   this.setState = (nextState) => {
     this.state = nextState
-    this.todoContainer.setState(this.state)
+    this.todoContainer.render(this.state)
   }
 
   this.init()

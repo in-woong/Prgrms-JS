@@ -31,19 +31,20 @@ function TodoList({ $target, state, onCompleteToggle, onDeleteTodo }) {
     }
   }
 
-  this.setState = function (nextState) {
+  this.setState = (nextState) => {
     this.state = nextState
+    console.log(this.state)
     this.render()
   }
 
-  this.render = function () {
+  this.render = () => {
     const htmlString =
       this.state.todos.length < 1
         ? `<li>할 일을 입력하세요!</li>`
         : this.state.todos
             .map(
-              (todo) => `<li id=${todo.id} class="complete_${todo.isCompleted}">
-              <span class="toggle">${todo.text}</span>
+              (todo) => `<li id=${todo._id} class="complete_${todo.isCompleted}">
+              <span class="toggle">${todo.content}</span>
               <span class="remove">X</span>
               </li>`
             )

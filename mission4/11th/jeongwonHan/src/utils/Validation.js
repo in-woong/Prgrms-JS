@@ -14,8 +14,8 @@ export const todoValidate = (data) => {
       throw new Error(ErrorMessage.DATA_HAS_NOT_ERROR('Todo', 'object'))
     }
 
-    if (!todo.hasOwnProperty('text')) {
-      throw new Error(ErrorMessage.DATA_HAS_NOT_ERROR('Todo', 'text'))
+    if (!todo.hasOwnProperty('content')) {
+      throw new Error(ErrorMessage.DATA_HAS_NOT_ERROR('Todo', 'content'))
     }
 
     if (!todo.hasOwnProperty('isCompleted')) {
