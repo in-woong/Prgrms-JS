@@ -1,25 +1,21 @@
 class App {
     constructor(data, title) {
         this.element = document.createElement('div');
-        this.titleValidation(title);
-        this.element.setAttribute('id', title);
-        document.body.appendChild(this.element);
 
+        if (title == null || title == '') {
+            throw new Error('Input the title!');
+        }
+        this.title = title;
+        this.element.setAttribute('id', this.title);
+        
         this.element.innerHTML = `<b>${this.title}</b>`;
+        document.body.appendChild(this.element);
 
         this.dataValidation(data);
         this.data = data;
 
         this.todoList = new TodoList(this.data, this.element, this.dataValidation);
         this.TodoInput = new TodoInput(this.data, this.element, this.todoList);
-    }
-
-    titleValidation(title) {
-        if (title == null) {
-            throw new Error('Input the title!');
-        }
-
-        this.title = title;
     }
 
     dataValidation(data) {
@@ -31,8 +27,8 @@ class App {
             throw new Error('Data type is not an Array!');
         } 
 
-        for (const list of data) {
-            if (!(list.hasOwnProperty('text') && list.hasOwnProperty('isCompleted'))) {
+        for (const obj of data) {
+            if (!(obj.hasOwnProperty('text') && obj.hasOwnProperty('isCompleted'))) {
                 throw new Error('This data has some missing properties!');
             }
         }
@@ -69,27 +65,19 @@ class TodoList {
     }
 
     addUlElementEvents() {
-        this.ulElement.addEventListener('click', this.listDoneFunc.bind(this));
-        this.ulElement.addEventListener('click', this.deleteButtonFunc.bind(this));
+        this.ulElement.addEventListener('click', this.toggleIsCompleted.bind(this));
+        this.ulElement.addEventListener('click', this.deleteButton.bind(this));
     }
 
-    listDoneFunc(event) {
-        let target = event.target;
-
-        while(!target.dataset.listIndex) {
-            target = target.parentNode;
-
-            if (target.nodeName == 'BODY') return;
-        }
-
-        const targetListIndex = target.dataset.listIndex;
+    toggleIsCompleted(event) {
+        const targetListIndex = event.target.closest('li').dataset.listIndex;
         if (targetListIndex) {
-            this.data[targetListIndex].isCompleted = this.data[targetListIndex].isCompleted ? false : true;
+            this.data[targetListIndex].isCompleted = !this.data[targetListIndex].isCompleted;
             this.setState(this.data);
         }
     }
 
-    deleteButtonFunc(event) {
+    deleteButton(event) {
         const targetButtonIndex = event.target.dataset.buttonIndex;
         if (targetButtonIndex) {
             this.data.splice(targetButtonIndex, 1);
@@ -123,20 +111,20 @@ class TodoInput {
         this.addButton = document.createElement('button');
         this.addButton.innerText = '추가';
 
-        this.addInput.addEventListener('keyup', this.inputFunc.bind(this));
-        this.addButton.addEventListener('click', this.addFunc.bind(this));
+        this.addInput.addEventListener('keyup', this.addInputFunc.bind(this));
+        this.addButton.addEventListener('click', this.addButtonFunc.bind(this));
 
         this.element.appendChild(this.addInput);
         this.element.appendChild(this.addButton);
     }
 
-    inputFunc() {
-        if (window.event.keyCode == 13 && this.addInput.value !== '') {
-            this.addFunc();
+    addInputFunc(event) {
+        if (event.key === 'Enter' && this.addInput.value !== '') {
+            this.addButtonFunc();
         }
     }
 
-    addFunc() {
+    addButtonFunc() {
         if (this.addInput.value !== '') {
             this.data.push({text: this.addInput.value, isCompleted: false});
         }
