@@ -10,12 +10,10 @@ export function allowDrop(ev) {
   ev.preventDefault();
 }
 
-export function drop(ev) {
-  ev.preventDefault();
-  console.log(ev.target);
-  var data = ev.dataTransfer.getData("text");
-  console.log(data);
-  //console.log(document.querySelector(`li[data-id="${data}"]`))
+export function drop(ev, dropHandler) {
   const parentUl =  ev.target.closest('ul')
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
   parentUl.appendChild(document.querySelector(`li[data-id="${data}"]`));
+  dropHandler(data);
 }

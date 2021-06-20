@@ -8,12 +8,9 @@ export default class TodoList {
     this.targetDone = params.targetDone
     this.targetNotDone = params.targetNotDone
 
-    this.onClick = params.onClick
     this.onRemove = params.onRemove
+    this.onDrop = params.onDrop
     this.data = params.receivedData || []
-
-    // this.target.addEventListener('click', ({ target }) => this.todoClickEventHandler(target))
-    // $('#todo-list-notdone').addEventListener('click', ({ target }) => this.todoClickEventHandler(target))
 
     this.targetDone.addEventListener('dragstart', drag);
     this.targetNotDone.addEventListener('dragstart', drag);
@@ -49,10 +46,10 @@ export default class TodoList {
         })
         this.targetDone.innerHTML = `<ul>${htmlString_done.join('')}</ul>`
         this.targetNotDone.innerHTML = `<ul>${htmlString_notdone.join('')}</ul>`
-
-        this.targetDone.querySelector("ul").addEventListener('drop', drop);
+        
+        this.targetDone.querySelector("ul").addEventListener('drop', (event) => drop(event, this.onDrop));
         this.targetDone.querySelector("ul").addEventListener('dragover', allowDrop);
-        this.targetNotDone.querySelector("ul").addEventListener('drop', drop);
+        this.targetNotDone.querySelector("ul").addEventListener('drop', (event) => drop(event, this.onDrop));
         this.targetNotDone.querySelector("ul").addEventListener('dragover', allowDrop);
 
       }

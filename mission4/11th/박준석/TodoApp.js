@@ -1,5 +1,5 @@
 import { TodoAPI } from './TodoAPI.js'
-import { $ } from './util.js'
+import { $, drop } from './util.js'
 import TodoList from './TodoList.js'
 import TodoInput from './TodoInput.js'
 import TodoRemoveAll from './TodoRemoveAll.js'
@@ -26,6 +26,10 @@ export default class TodoApp {
           await TodoAPI.removeTodo(this.username, todoID)
           this.setState()
         },
+        onDrop: async (todoID) => {
+          await TodoAPI.checkTodo(this.username, todoID)
+          this.setState()
+        }
       })
 
       this.todoInput = new TodoInput({
