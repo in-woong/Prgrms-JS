@@ -12,7 +12,6 @@
     $target: document.querySelector('#todo-list'),
     data: data,
     onClick: async function (id) {
-      console.log(id);
       await fetch(`https://todo-api.roto.codes/${username}/${id}/toggle`, {
         method: 'PUT',
       });
@@ -55,4 +54,3 @@
       }
     });
 })();
-
