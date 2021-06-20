@@ -1,0 +1,91 @@
+.todo-control-container{
+  display:flex;
+  align-items:center;
+  margin-bottom:10px;
+}
+.todo-input{
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin-right:10px;
+  outline-color: #00a1ff;
+}
+.control-button{
+  padding:10px;
+  margin-right:10px;
+  border: 1px solid #ccc;
+  border-radius:5px;
+  font-weight: bold;
+  background-color: #eee;
+  cursor:pointer;
+  transition: all 0.2s;
+}
+.todo-add-button:hover{
+  border: 1px solid #00a1ff;
+  background-color: #00a1ff;
+  color:white;
+}
+.todo-list-clear-button:hover{
+  border: 1px solid #ff0010;
+  background-color: #ff0010;
+  color:white;
+}
+.complete-guide{
+  text-align:center;
+  font-size:24px;
+}
+.count{
+  font-weight:bold;
+  color: #ff0010;
+}
+.todo-list{
+  list-style:none;
+  display:flex;
+  flex-wrap: wrap;
+  justify-items:center;
+  border: 1px solid #ccc;
+  padding: 20px;
+  
+}
+.todo-item{
+  flex-shrink:0;
+  display:flex;
+  align-items:center;
+  width:100%;
+  margin-bottom:5px;
+  color: rgba(0,0,0,0.7);
+}
+.todo-item::before{
+  display:inline-block;
+  content:'';
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background-color: #00a1ff;
+  margin-right:10px;
+}
+.todo-text{
+  margin-right:10px;
+  cursor:pointer;
+  font-size:18px;
+}
+.todo-text:hover{
+  color:#01bc4c;
+}
+.todo-remove-button{
+  padding: 2px 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color:transparent;
+  font-size:10px;
+  cursor:pointer;
+  transition: all 0.2s;
+}
+.todo-remove-button:hover{
+  border: 1px solid #ff0010;
+  background-color:#ff0010;
+  color:white;
+}
+.done {
+  color:#01bc4c;
+  text-decoration: line-through;
+}
