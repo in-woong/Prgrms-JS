@@ -1,5 +1,5 @@
 import { TodoAPI } from './TodoAPI.js'
-import { $, drop } from './util.js'
+import { $ } from './util.js'
 import TodoList from './TodoList.js'
 import TodoInput from './TodoInput.js'
 import TodoRemoveAll from './TodoRemoveAll.js'
@@ -10,46 +10,43 @@ export default class TodoApp {
     this.printName = $('#current-user-name')
     this.data = []
 
-    this.userList = new ShowUserList((username) => {
-      this.username = username
+    this.userList = new ShowUserList({
+      targetUserList: $('#user-list'),
+      targetTodoList: $('#users-todo-list'),
+      showUserTodoList: (username) => {
+        this.username = username
 
-      this.todoList = new TodoList({
-        targetDone: $('#todo-list'),
-        targetNotDone: $('#todo-list-notdone'),
-        printTarget: $('#current-user-name'),
-        data: this.data,
-        onClick: async (todoID) => {
-          await TodoAPI.checkTodo(this.username, todoID)
-          this.setState()
-        },
-        onRemove: async (todoID) => {
-          await TodoAPI.removeTodo(this.username, todoID)
-          this.setState()
-        },
-        onDrop: async (todoID) => {
-          await TodoAPI.checkTodo(this.username, todoID)
-          this.setState()
-        }
-      })
-
-      this.todoInput = new TodoInput({
-        targetButton: $('#add-todo-button'),
-        targetInput: $('#todo-input'),
-        inputEvent: async (inputValue) => {
-          await TodoAPI.addTodo(this.username, inputValue)
-          this.setState()
-        },
-      })
-
-      this.todoRemoveAll = new TodoRemoveAll({
-        targetButton: $('#removeall-button'),
-        onRemoveAll: async () => {
-          await TodoAPI.removeAllTodo(this.username)
-          this.setState()
-        },
-      })
-
-      this.setState()
+        this.todoList = new TodoList({
+          targetDone: $('#todo-list'),
+          targetNotDone: $('#todo-list-notdone'),
+          printTarget: $('#current-user-name'),
+          data: this.data,
+          onRemove: async (todoID) => {
+            await TodoAPI.removeTodo(this.username, todoID)
+            this.setState()
+          },
+          onDrop: async (todoID) => {
+            await TodoAPI.checkTodo(this.username, todoID)
+            this.setState()
+          },
+        })
+        this.todoInput = new TodoInput({
+          targetButton: $('#add-todo-button'),
+          targetInput: $('#todo-input'),
+          inputEvent: async (inputValue) => {
+            await TodoAPI.addTodo(this.username, inputValue)
+            this.setState()
+          },
+        })
+        this.todoRemoveAll = new TodoRemoveAll({
+          targetButton: $('#removeall-button'),
+          onRemoveAll: async () => {
+            await TodoAPI.removeAllTodo(this.username)
+            this.setState()
+          },
+        })
+        this.setState()
+      },
     })
   }
 

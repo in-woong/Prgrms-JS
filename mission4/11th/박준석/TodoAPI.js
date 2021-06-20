@@ -45,5 +45,5 @@ export const TodoAPI = {
     } else {
       throw new Error('전달받은 데이터에 문제가 있습니다.')
     }
-  }
+  },
 }

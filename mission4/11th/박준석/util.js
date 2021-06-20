@@ -11,9 +11,7 @@ export function allowDrop(ev) {
 }
 
 export function drop(ev, dropHandler) {
-  const parentUl =  ev.target.closest('ul')
   ev.preventDefault();
   var data = ev.dataTransfer.getData("text");
-  parentUl.appendChild(document.querySelector(`li[data-id="${data}"]`));
   dropHandler(data);
 }

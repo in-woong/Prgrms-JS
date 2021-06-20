@@ -1,22 +1,22 @@
 import { TodoAPI } from './TodoAPI.js'
-import { $ } from './util.js'
 
 export default class ShowUserList {
-  constructor(showUserTodoList) {
-    this.target = $('#user-list')
+  constructor(params) {
+    this.targetUserList = params.targetUserList
+    this.targetTodoList = params.targetTodoList
     this.userList = []
-    this.showUserTodoList = showUserTodoList
+    this.showUserTodoList = params.showUserTodoList
 
-    this.target.addEventListener('click', ({ target }) => this.userClickEventHandler(target))
+    this.targetUserList.addEventListener('click', ({ target }) => this.userClickEventHandler(target))
     this.setState()
   }
 
   userClickEventHandler(target) {
     const userID = target.closest('li').dataset.username
     if (target.tagName === 'SPAN') {
-      $('#users-todo-list').style.display = 'block'
+      this.targetTodoList.style.display = 'block'
       this.showUserTodoList(userID)
-      this.target.style.display = 'none'
+      this.targetUserList.style.display = 'none'
     }
   }
 
@@ -29,6 +29,6 @@ export default class ShowUserList {
     const userListHtmlString = this.userList.map((username) => {
       return `<li data-username="${username}"><span class="user-name">${username}</span></li>`
     })
-    this.target.innerHTML = `사용자를 선택하세요 <ul>${userListHtmlString.join('')}</ul>`
+    this.targetUserList.innerHTML = `사용자를 선택하세요 <ul>${userListHtmlString.join('')}</ul>`
   }
 }

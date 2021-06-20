@@ -1,6 +1,14 @@
-
 .user-name:hover, .todo-content:hover {
   color:blue;
+}
+
+#todo-list {
+  float:left;
+}
+
+#todo-list-notdone {
+  float:left; 
+  margin-left:100px;
 }
 
 .spinner-container {

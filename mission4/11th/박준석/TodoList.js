@@ -12,8 +12,10 @@ export default class TodoList {
     this.onDrop = params.onDrop
     this.data = params.receivedData || []
 
-    this.targetDone.addEventListener('dragstart', drag);
-    this.targetNotDone.addEventListener('dragstart', drag);
+    this.targetDone.addEventListener('click', ({ target }) => this.todoClickEventHandler(target))
+    this.targetDone.addEventListener('dragstart', drag)
+    this.targetNotDone.addEventListener('click', ({ target }) => this.todoClickEventHandler(target))
+    this.targetNotDone.addEventListener('dragstart', drag)
     this.render()
   }
 
@@ -21,8 +23,6 @@ export default class TodoList {
     const todoID = target.closest('li').dataset.id
     if (target.className === 'remove-button') {
       this.onRemove(todoID)
-    } else if (target.tagName === 'STRIKE' || target.tagName === 'SPAN') {
-      this.onClick(todoID)
     }
   }
 
@@ -32,8 +32,8 @@ export default class TodoList {
     else this.render(DATARECEIVED)
   }
 
-  render(loading) {
-    if (loading === DATARECEIVED) {
+  render(state) {
+    if (state === DATARECEIVED) {
       if (this.data.length === 0) this.target.innerHTML = '<br/>저장된 Todo 가 없습니다.'
       else {
         let htmlString_done = []
@@ -46,12 +46,11 @@ export default class TodoList {
         })
         this.targetDone.innerHTML = `<ul>${htmlString_done.join('')}</ul>`
         this.targetNotDone.innerHTML = `<ul>${htmlString_notdone.join('')}</ul>`
-        
-        this.targetDone.querySelector("ul").addEventListener('drop', (event) => drop(event, this.onDrop));
-        this.targetDone.querySelector("ul").addEventListener('dragover', allowDrop);
-        this.targetNotDone.querySelector("ul").addEventListener('drop', (event) => drop(event, this.onDrop));
-        this.targetNotDone.querySelector("ul").addEventListener('dragover', allowDrop);
 
+        $('ul', this.targetDone).addEventListener('drop', (event) => drop(event, this.onDrop))
+        $('ul', this.targetDone).addEventListener('dragover', allowDrop)
+        $('ul', this.targetNotDone).addEventListener('drop', (event) => drop(event, this.onDrop))
+        $('ul', this.targetNotDone).addEventListener('dragover', allowDrop)
       }
     } else {
       const htmlString = `<div class="relative spinner-container">
