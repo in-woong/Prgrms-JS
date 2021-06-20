@@ -24,8 +24,14 @@ export default function TodoList({ $trello, initialState, onRemove, onClick }) {
 
   this.$todoList.addEventListener('drop', (e) => {
     e.preventDefault()
-    console.log(e.dataTransfer.getData('id'))
+    const targetId = e.dataTransfer.getData('id')
+    const startBoundary = document.getElementById(targetId).parentNode
+    const droppedBoundary = e.target.closest('ul')
+    if (startBoundary !== droppedBoundary) {
+      onClick(targetId)
+    }
   })
+
   this.setState = function (nextData) {
     this.state = nextData
     this.render()
@@ -38,7 +44,7 @@ export default function TodoList({ $trello, initialState, onRemove, onClick }) {
       const htmlString = this.state.todos
         .map(function (todo) {
           const contentHTML = todo.isCompleted ? `<strike>${todo.content}</strike>` : `${todo.content}`
-          return `<li draggable="true" data-id="${todo._id}">${contentHTML} <button class="remove-button">Remove</button></li>`
+          return `<li id=${todo._id} draggable="true" data-id="${todo._id}">${contentHTML} <button class="remove-button">Remove</button></li>`
         })
         .join('')
 
