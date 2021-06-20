@@ -1,6 +1,10 @@
 window.storage = (function() {
     function save(key, data) {
-        window.localStorage.setItem(key, JSON.stringify(data));
+        try {
+            window.localStorage.setItem(key, JSON.stringify(data));
+        } catch (e) {
+            alert('save failed due to storage overload..');
+        }
     }
 
     function load(key) {
