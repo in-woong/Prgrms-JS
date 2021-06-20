@@ -1,7 +1,7 @@
 class SearchInput {
-    constructor({target, onSearch}) {
+    constructor({target, onInputWord}) {
         this.target = target;
-        this.onSearch = onSearch;
+        this.onInputWord = onInputWord;
 
         let timer;
         this.target.addEventListener('input', (e) => {
@@ -9,8 +9,8 @@ class SearchInput {
                 clearTimeout(timer);
             }
             timer = setTimeout(() => {
-                onSearch(e.target.value);
-            }, 200);
+                onInputWord(e.target.value);
+            }, 300);
         });
     }
 }

@@ -1,16 +1,30 @@
 (async function() {
   const searchInput = new SearchInput({
     target: document.querySelector('#search-keyword'),
-    onSearch: async (targetValue) => {
-      this.data = await this.fetchAPI(targetValue);
-      this.setState(this.data);
+    onInputWord: (keyword) => {
+      this.onSearch({
+        keyword: keyword,
+        isHistoryClick: false
+      });
     }
   });
 
   const searchResult = new SearchResult(this.data, document.querySelector('#search-result'));
+  const searchHistory = new SearchHistory({
+    target: document.querySelector('#search-history'),
+    onHistoryClick: (keyword) => {
+      this.onSearch({
+        keyword: keyword,
+        isHistoryClick: true
+      });
+    }
+  });
 
-  this.setState = (data) => {
-    searchResult.setState(data);
+  this.setState = (isHistoryClick) => {
+    searchResult.setState(this.data);
+    if (!isHistoryClick) {
+      searchHistory.setState(this.keyword);
+    }
   }
 
   this.fetchAPI = async (targetValue) => {
@@ -20,6 +34,12 @@
     } catch (error) {
       throw new Error(error);
     }
+  }
+
+  this.onSearch = async ({keyword, isHistoryClick}) => {
+    this.keyword = keyword;
+    this.data = await this.fetchAPI(keyword);
+    this.setState(isHistoryClick);
   }
   
 })();
