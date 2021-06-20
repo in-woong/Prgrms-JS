@@ -24,7 +24,7 @@
   background-color: #00a1ff;
   color:white;
 }
-.todo-list-clear-button:hover{
+.todo-all-clear-button:hover{
   border: 1px solid #ff0010;
   background-color: #ff0010;
   color:white;

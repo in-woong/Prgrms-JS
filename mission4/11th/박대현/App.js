@@ -1,65 +1,103 @@
 import TodoInput from './TodoInput.js';
 import TodoList from './TodoList.js';
 import TodoCount from './TodoCount.js';
-import { saveTodoListDataToLocalStorage, getTodoListDataFromLocalStorage } from './localStorage.js';
+import { getTodoList, addTodo, toggleTodoDone, deleteTodo, deleteAllTodo } from './api.js';
 export default function ($parent) {
-  this.todoListData = getTodoListDataFromLocalStorage();
-  
-  const handleAddTodoItem = text => {
-    // 빈 텍스트인지 확인하기
-    const todoListData = [...this.todoListData, {
-      text,
-      isCompleted: false,
-    }]
-    this.setState(todoListData);
-  }
-  
-  const handleRemoveAll = () => {
-    const todoListData = [];
-    this.setState(todoListData);
-  }
+  // app이 관리하는 데이터
+  let todoList = [];
 
-  const handleToggleDone = targetDataIndex => {
-    const todoListData = this.todoListData.map((todo, index) => {
-      if(index === targetDataIndex){
-        return {
+  // app의 DOM 요소 생성
+  const $app = Object.assign(document.createElement('div'), {className:'app'});
+  
+
+  // todo 추가
+  const handleAddTodoItem = async content => {
+    try {
+      const newTodoList = [...todoList, await addTodo(content)];
+      this.setState(newTodoList);  
+    } catch (error) {
+      console.error(error);
+      alert('todo 추가 실패');
+    }
+  }
+  
+  // todo 완료 여부 토글
+  const handleToggleDone = async targetIndex => {
+    try {
+      await toggleTodoDone(todoList[targetIndex]._id);
+      const newTodoList = todoList.map((todo, index) => {
+        return index === targetIndex? {
           ...todo,
-          isCompleted: !todo.isCompleted, 
-        }
-        
-      }else {
-        return todo;
+          isCompleted: !todo.isCompleted,
+        } : todo; 
+        })
+      this.setState(newTodoList);
+    } catch (error) {
+      console.error(error);
+      alert('todo 완료 toggle 실패');
+    }
+  }
+
+  // todo 삭제
+  const handleDeleteTodoItem = async targetIndex => {
+    try {
+      await deleteTodo(todoList[targetIndex]._id);
+      const newTodoList = todoList.filter((_, index) => index !==targetIndex );
+      this.setState(newTodoList);
+    } catch (error) {
+      console.error(error);
+      alert('todo 삭제 실패');
+    }
+  }
+  
+  // 갱신된 todoList를 바탕으로 재 렌더링
+  const render = () => {
+    childrenComponent.forEach(component => component.render(todoList));
+  }
+
+  // todoList 갱신
+  this.setState = newTodoList => {
+    todoList = [...newTodoList];
+    render();
+  }
+
+  // 서버로부터 todoList 불러오기
+  const loadTodoList = async () => {
+    try {
+      this.setState(await getTodoList());
+    } catch (error) {
+      console.error(error);
+      alert('할 일 목록 불러오기 에러');
+    }
+  }
+  
+  // DOM 구축
+  const childrenComponent = []; 
+  const buildDOM = () => {
+    childrenComponent.push(new TodoInput($app, handleAddTodoItem));
+    childrenComponent.push(new TodoCount($app ));
+    childrenComponent.push(new TodoList($app, handleToggleDone, handleDeleteTodoItem));
+    $parent.appendChild($app);
+  }
+
+  // 이벤트 리스너 부착
+  const attachEventListeners = () => {
+    // todo 전체 삭제
+    $app.addEventListener('removeAll', async () => {
+      try {
+        await deleteAllTodo();
+        this.setState([]);
+      } catch (error) {
+        console.error(error);
+        alert('todoList 전체 삭제 실패')
       }
-    })
-    this.setState(todoListData);
+      
+    });
   }
 
-  const handleDeleteTodoItem = targetDataIndex => {
-    const todoListData = this.todoListData.filter((_, index) => index !==targetDataIndex );
-    this.setState(todoListData);
-  }
-  
-  const app = document.createElement('div');
-  app.className = "app";
-  
-  const todoInput = new TodoInput(app, handleAddTodoItem);
-  const todoCount = new TodoCount(app,this.todoListData);
-  const todoList = new TodoList(app,this.todoListData, handleToggleDone, handleDeleteTodoItem); 
-  const childrenComponent = [todoInput, todoCount, todoList];
-  $parent.appendChild(app);
-  
-  // 전체 삭제 버튼을 누르면 removeAll 이벤트가 발생하고 todoListData는 clear되고, todoList와 todoCount는 새롭게 rendering을 해야만한다.
-  app.addEventListener('removeAll', handleRemoveAll);
-  
-  this.render = () => {
-    childrenComponent.forEach(component => component.setState(this.todoListData));
-  }
+  ///////////////////////////////////////////////////////////
+  loadTodoList();
+  buildDOM();
+  attachEventListeners();
+};
 
-  this.setState = newData => {
-    this.todoListData = newData;
-    saveTodoListDataToLocalStorage(newData);
-    this.render();
-  }
-  this.render();
-}
-export { App };

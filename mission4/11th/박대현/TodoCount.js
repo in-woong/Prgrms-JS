@@ -1,19 +1,19 @@
-export default function ($parent, initialTodoList){
-  const $count = Object.assign(document.createElement('span'), {className: 'todo-count'});
+export default function ($parent){
+  // TodoCount의 DOM 요소 생성
+  const $todoCount = Object.assign(document.createElement('span'), {className: 'todo-count'});
   
-  const buildDOM = () => $parent.appendChild($count);
-
-  const render = todoList => { 
+  // 갱신된 todoList를 바탕으로 재 렌더링
+  this.render = todoList => { 
     const count = todoList.reduce((acc, item) => {
       return acc + (item.isCompleted ? 1 : 0);
     }, 0);
-    $count.innerHTML = `완료 된 todo : <span class="count">${count}</span>`;
+    $todoCount.innerHTML = `완료 된 todo : <span class="count">${count}</span>`;
   }
   
-  this.setState = newTodoList => {
-    render(newTodoList);
-  }
+  // DOM 구축
+  const buildDOM = () => $parent.appendChild($todoCount);
 
+  /////////////////////////////////////////////////////////////////////
   buildDOM();
-  render(initialTodoList);
-}
+};
+
