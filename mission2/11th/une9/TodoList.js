@@ -1,6 +1,11 @@
 class TodoList {
     constructor({data, element, onToggleIsCompleted, onDeleteTodo}) {
         this.element = element;
+
+        this.ulElement = document.createElement('ul');
+        this.ulElement.setAttribute('class', `data-${this.title}`);
+        this.element.appendChild(this.ulElement);
+
         this.setState(data);
         this.onToggleIsCompleted = onToggleIsCompleted;
         this.onDeleteTodo = onDeleteTodo;
@@ -13,11 +18,6 @@ class TodoList {
     }
     
     render() {
-        if (this.element.getElementsByTagName('ul').length === 0) {
-            this.ulElement = document.createElement('ul');
-            this.ulElement.setAttribute('class', `data-${this.title}`);
-            this.element.appendChild(this.ulElement);
-        } 
         this.ulElement.innerHTML = this.data.map((list, i) => this.createListHTMLString(list, i)).join('');
     }
 
