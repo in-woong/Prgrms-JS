@@ -47,7 +47,9 @@ function App($target) {
 
   this.setState = (nextState) => {
     this.state = nextState
-    this.todoContainer.render(this.state)
+    this.userList.setState(this.state)
+    this.todoContainer.todoList.setState(this.state)
+    this.todoContainer.todoCount.setState(this.state)
   }
 
   this.init()

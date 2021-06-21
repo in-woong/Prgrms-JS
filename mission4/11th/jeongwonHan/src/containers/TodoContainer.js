@@ -1,6 +1,6 @@
 import TodoList from '../components/TodoList.js'
 import TodoInput from '../components/TodoInput.js'
-import TodoRemoveAll from '../components/TodoRemoveAll.js'
+import TodoDeleteAll from '../components/TodoDeleteAll.js'
 import TodoCount from '../components/TodoCount.js'
 import { api } from '../api/api.js'
 
@@ -24,12 +24,17 @@ function TodoContainer({ $target, state, setState, setNextState }) {
     },
   })
 
-  this.todoRemoveAll = new TodoRemoveAll({
+  this.todoDeleteAll = new TodoDeleteAll({
     $target: this.$target,
     state: this.state,
-    onRemoveAll: () => {
-      const newData = []
-      this.setState(newData)
+    onDeleteAll: async() => {
+      try {
+        await api.deleteAllUserTodo(this.state.userName);
+        const nextState = await this.setNextState(this.state.userName)
+        this.setState(nextState)
+      } catch (e) {
+        console.log(e)
+      }
     },
   })
 
@@ -57,11 +62,6 @@ function TodoContainer({ $target, state, setState, setNextState }) {
   })
 
   this.todoCount = new TodoCount({ $target: this.$target, state: this.state })
-
-  this.render = (state) => {
-    this.todoList.setState(state)
-    this.todoCount.setState(state)
-  }
 }
 
 export default TodoContainer
