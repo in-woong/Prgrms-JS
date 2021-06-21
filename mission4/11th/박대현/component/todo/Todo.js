@@ -61,7 +61,7 @@ export default function($parent){
         if(username === '') return;
         await toggleTodoDone(username, todoList[targetIndex]._id);
         const newTodoList = todoList.map((todo, index) => {
-          return index === parseInt(targetIndex) ? {
+          return index === targetIndex ? {
             ...todo,
             isCompleted: !todo.isCompleted,
           } : todo; 

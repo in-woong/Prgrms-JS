@@ -35,7 +35,7 @@ export default function ($parent,  { handleToggleDone, handleDeleteTodoItem }, {
     $todoList.addEventListener('click', e => {
       const childElem = e.target;                     // e.target은 삭제 버튼 또는 텍스트를 가리킨다.
       const parentElem = childElem.parentElement;     // parentElem은 무조건 li태그를 가리킨다.
-      const targetIndex = parentElem.dataset.id;
+      const targetIndex = parseInt(parentElem.dataset.id);
       if(childElem.classList.contains('todo-text')){
         handleToggleDone(targetIndex);                // text만 눌렀을 경우 해당 data의 isCompleted를 확인하여 삭선 처리를 해준다.     
       } else if(childElem.classList.contains('todo-remove-button')){
@@ -62,7 +62,7 @@ export default function ($parent,  { handleToggleDone, handleDeleteTodoItem }, {
       e.preventDefault();
       if(e.path.some(trace => trace === $todoList)){
         const {targetIndex,fromLabel} = JSON.parse(e.dataTransfer.getData('text'));
-        if(fromLabel !== label)  handleToggleDone(targetIndex);
+        if(fromLabel !== label)  handleToggleDone(parseInt(targetIndex));
       }
       
     })
