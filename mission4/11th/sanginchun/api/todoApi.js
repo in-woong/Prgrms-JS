@@ -35,12 +35,6 @@ export function deleteTodoItem(todoItemId) {
   })
 }
 
-export function deleteAllTodoItems() {
-  return request(`${BASE_URL}${DEFAULT_USER_NAME}/all`, {
-    method: 'DELETE',
-  })
-}
-
 export function toggleTodoItem(todoItemId) {
   return request(`${BASE_URL}${DEFAULT_USER_NAME}/${todoItemId}/toggle`, {
     method: 'PUT',

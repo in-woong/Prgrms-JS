@@ -1,7 +1,7 @@
 import TodoInput from './TodoInput.js'
 import TodoList from './TodoList.js'
 
-import { getTodoItems, addTodoItem, deleteTodoItem, deleteAllTodoItems, toggleTodoItem } from '../api/todoApi.js'
+import { getTodoItems, addTodoItem, deleteTodoItem, toggleTodoItem } from '../api/todoApi.js'
 
 class App {
   constructor($app) {
@@ -39,13 +39,9 @@ class App {
 
   async setNextTodoItems() {
     const nextTodoItems = await getTodoItems()
-
     if (nextTodoItems === null) {
-      alert('Todo 리스트를 불러오는 데 실패했습니다.')
-      this.setState({
-        ...this.state,
-        isLoading: false,
-      })
+      this.handleError('Todo 리스트를 불러오는 데 실패했습니다.')
+      return
     }
 
     this.setState({
@@ -65,7 +61,7 @@ class App {
 
     const result = await addTodoItem($content.value)
     if (result === null) {
-      alert('할 일 추가에 실패했습니다')
+      this.handleError('할 일 추가에 실패했습니다')
       return
     }
 
@@ -85,25 +81,7 @@ class App {
 
     const result = await deleteTodoItem(todoItemId)
     if (result === null) {
-      alert('삭제에 실패했습니다')
-      return
-    }
-
-    this.setNextTodoItems()
-  }
-
-  async onDeleteAllButtonClick() {
-    this.setState({
-      ...this.state,
-      isLoading: true,
-    })
-
-    const confirmed = window.confirm('현재 사용자의 Todo 리스트를 전부 삭제할까요?')
-    if (!confirmed) return
-
-    const result = await deleteAllTodoItems()
-    if (result === null) {
-      alert('삭제에 실패했습니다')
+      this.handleError('삭제에 실패했습니다')
       return
     }
 
@@ -120,11 +98,20 @@ class App {
 
     const result = await toggleTodoItem(todoItemId)
     if (result === null) {
-      alert('체크에 실패했습니다')
+      this.handleError('처리에 실패했습니다')
       return
     }
 
     this.setNextTodoItems()
+  }
+
+  handleError(errorMessage) {
+    alert(errorMessage)
+
+    this.setState({
+      ...this.state,
+      isLoading: false,
+    })
   }
 }
 
