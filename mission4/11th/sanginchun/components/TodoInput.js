@@ -15,7 +15,7 @@ class TodoInput {
       <form>
         <label for="content">내용 입력 (<, > 사용 불가)</label>
         <input type="text" id="content" name="content" required pattern="[^<>]+" spellcheck="false" autocomplete="off">
-        <button class="submit-button" type="submit">추가하기</button>
+        <button class="submit-button" type="submit">추가</button>
       </form>
     `
   }

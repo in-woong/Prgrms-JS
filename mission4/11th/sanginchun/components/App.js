@@ -1,6 +1,5 @@
 import TodoInput from './TodoInput.js'
 import TodoList from './TodoList.js'
-// import RemoveAllButton from './RemoveAllButton.js'
 
 import { getTodoItems, addTodoItem, deleteTodoItem, deleteAllTodoItems, toggleTodoItem } from '../api/todoApi.js'
 
@@ -17,9 +16,6 @@ class App {
       onTodoItemClick: this.onTodoItemClick.bind(this),
       onDeleteButtonClick: this.onDeleteButtonClick.bind(this),
     })
-
-    // new RemoveAllButton({ $app })
-    // $app.addEventListener('removeAll', this.onDeleteAllButtonClick.bind(this))
 
     this.setNextTodoItems()
   }
