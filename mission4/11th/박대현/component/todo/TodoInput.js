@@ -1,31 +1,44 @@
-export default function ($parent, handleAddTodo){
-  // TodoInput의 DOM 요소들 생성
-  const $todoControlContainer = Object.assign(document.createElement('div'), {className : 'todo-control-container'});
-  const $todoInput = Object.assign(document.createElement('input'), {className:'todo-input', value: '', autofocus: true});
-  const $todoAddButton = Object.assign(document.createElement('button'), {className: 'control-button todo-add-button', innerText : '할 일 추가'});
-  const $todoAllClearButton = Object.assign(document.createElement('button'), {className: 'control-button todo-all-clear-button', innerText : '전체 삭제'});
+export default function ($parent, { handleAddTodoItem }){
+  // todoInput의 DOM 요소
+  const elements = {
+     $todoControlContainer : Object.assign(document.createElement('div'), {className : 'todo-control-container'}),
+     $todoInput : Object.assign(document.createElement('input'), {className:'todo-input', value: ''}),
+     $todoAddButton : Object.assign(document.createElement('button'), {className: 'control-button todo-add-button', innerText : '할 일 추가'}),
+     $todoAllClearButton : Object.assign(document.createElement('button'), {className: 'control-button todo-all-clear-button', innerText : '전체 삭제'}),
+  }
   
-  this.render = () => {};
-  
-  // DOM 구축
-  const buildDOM = () => {
+  // mount
+  const mount = () => {
     // 의도한 template
     // <div class="todo-control-container">
     //   <input class="todo-input" value="todo-input" autofocus />
     //   <button class="control-button todo-add-button">할 일 추가</button>
     //   <button class="control-button todo-all-clear-button">전체 삭제</button>
     // </div>
+    const {
+      $todoControlContainer,
+      $todoInput,
+      $todoAddButton,
+      $todoAllClearButton,
+    } = elements;
+
     $todoControlContainer.appendChild($todoInput);
     $todoControlContainer.appendChild($todoAddButton);
     $todoControlContainer.appendChild($todoAllClearButton);
     $parent.appendChild($todoControlContainer);
   }  
 
-  // 이벤트 리스너 부착
-  const attachEventListeners = () => {
+  // 등록할 이벤트 리스너
+  const eventListeners = () => {
+    const {
+      $todoInput,
+      $todoAddButton,
+      $todoAllClearButton,
+    } = elements;
+
     const onAddTodo = () => {
       if($todoInput.value.trim() === '') return;
-      handleAddTodo($todoInput.value.trim());
+      handleAddTodoItem($todoInput.value.trim());
       $todoInput.value=''; 
     }
 
@@ -45,7 +58,7 @@ export default function ($parent, handleAddTodo){
   }
   
   ///////////////////////////////////////////////////////////
-  buildDOM();
-  attachEventListeners();
+  mount();
+  eventListeners();
 };
 

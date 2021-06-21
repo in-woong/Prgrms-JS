@@ -1,3 +1,16 @@
+* {
+  box-sizing: border-box;
+}
+.app{
+  display: flex;
+}
+
+.todo-wrapper{
+  flex-grow : 1;
+  padding:10px;
+  margin:10px;
+  border: 1px solid #ccc;
+}
 .todo-control-container{
   display:flex;
   align-items:center;
@@ -88,4 +101,82 @@
 .done {
   color:#01bc4c;
   text-decoration: line-through;
+}
+.user-wrapper{
+  width:30%;
+  flex-shrink : 0;
+  border: 1px solid #ccc;
+  margin:10px;
+  padding:10px;
+  height:800px;
+  overflow:auto;
+}
+.user-list{
+  list-style: none;
+  margin:0;
+  padding:0;
+}
+.user-item{
+  border: 1px solid #ccc;
+  padding:10px 5px;
+  
+  cursor:pointer;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.user-item{
+  transform-origin: left;
+  transition: 0.3s;
+  margin-bottom:5px;
+}
+.user-item:hover {
+  font-size: 22px;
+  font-weight:bold;
+}
+.user-input-wrapper{
+  display: flex;
+  margin-bottom:10px;
+ 
+}
+.user-input{
+  flex-grow:1;
+  padding:10px;
+  font-size:18px;
+  border: 1px solid #ccc;
+  margin-right: 10px;
+  outline-color: #00a1ff;
+}
+.search-button{
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-weight: bold;
+  background-color: #eee;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.search-button:hover{
+  border: 1px solid #16d233;
+    background-color: #16d233;
+    color: white;
+}
+.user-name{
+  margin-bottom: 10px;
+  display: flex;
+  align-items: baseline;
+}
+.user-name::before{
+  content:'';
+  display:inline-block;
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background-color:#16d233;
+  margin-right:5px;
+}
+.user-name span {
+  margin-left: 5px;
+  color:#16d233;
+  font-weight:bold;
 }
