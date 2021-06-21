@@ -1,7 +1,7 @@
 import { todoValidate } from '../utils/Validation.js'
 import ErrorMessage from '../utils/ErrorMessage.js'
 
-function TodoList({ $target, state, onCompleteToggle, onDeleteTodo }) {
+function TodoList({ $target, state, onToggleTodo, onDeleteTodo }) {
   if (!new.target) {
     throw new Error(ErrorMessage.SET_NEW_ERROR)
   }
@@ -14,7 +14,7 @@ function TodoList({ $target, state, onCompleteToggle, onDeleteTodo }) {
   this.$todoListUl.classList.add('todoUl')
   this.$target.appendChild(this.$todoListUl)
 
-  this.onCompleteToggle = onCompleteToggle
+  this.onToggleTodo = onToggleTodo
   this.onDeleteTodo = onDeleteTodo
 
   this.state = state
@@ -23,7 +23,7 @@ function TodoList({ $target, state, onCompleteToggle, onDeleteTodo }) {
     const { classList } = e.target
 
     if (classList.contains('toggle')) {
-      this.onCompleteToggle(e.target.closest('li').id)
+      this.onToggleTodo(e.target.closest('li').id)
     }
 
     if (classList.contains('remove')) {
@@ -33,7 +33,6 @@ function TodoList({ $target, state, onCompleteToggle, onDeleteTodo }) {
 
   this.setState = (nextState) => {
     this.state = nextState
-    console.log(this.state)
     this.render()
   }
 

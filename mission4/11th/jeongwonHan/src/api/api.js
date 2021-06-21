@@ -11,10 +11,8 @@ const option = {
     method: 'DELETE',
   }),
 
-  put: (content) => ({
+  put: () => ({
     method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(content),
   }),
 }
 
@@ -33,6 +31,9 @@ export const api = {
   },
   deleteUserTodo:(userName, todoId) => {
     return request(`${API_ENDPOINT}/${userName}/${todoId}`, option.delete())
+  },
+  toggleUserTodo: (userName, todoId) =>{
+    return request(`${API_ENDPOINT}/${userName}/${todoId}/toggle`, option.put())
   },
   getUserList: () => {
     return request(`${API_ENDPOINT}/users`)

@@ -15,8 +15,8 @@ function TodoContainer({ $target, state, setState, setNextState }) {
     onAddTodo: async (todoText) => {
       const content = { content: todoText }
       try {
-        await api.addUserTodo(content, state.userName)
-        const nextState = await this.setNextState(state.userName)
+        await api.addUserTodo(content, this.state.userName)
+        const nextState = await this.setNextState(this.state.userName)
         this.setState(nextState)
       } catch (e) {
         console.log(e)
@@ -36,21 +36,19 @@ function TodoContainer({ $target, state, setState, setNextState }) {
   this.todoList = new TodoList({
     $target: this.$target,
     state: this.state,
-    onCompleteToggle: (selectId) => {
-      const newData = this.state.map((todo) =>
-        todo.id === selectId
-          ? {
-              ...todo,
-              isCompleted: !todo.isCompleted,
-            }
-          : todo
-      )
-      this.setState(newData)
+    onToggleTodo: async(todoId) => {
+      try {
+        await api.toggleUserTodo(this.state.userName, todoId);
+        const nextState = await this.setNextState(this.state.userName)
+        this.setState(nextState)
+      } catch (e) {
+        console.log(e)
+      }
     },
     onDeleteTodo: async(todoId) => {
       try {
-        await api.deleteUserTodo(state.userName, todoId);
-        const nextState = await this.setNextState(state.userName)
+        await api.deleteUserTodo(this.state.userName, todoId);
+        const nextState = await this.setNextState(this.state.userName)
         this.setState(nextState)
       } catch (e) {
         console.log(e)
