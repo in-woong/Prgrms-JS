@@ -10,7 +10,7 @@ export class SearchInput {
             }
             timer = setTimeout(() => {
                 if(e.target.value) {
-                    onInputWord(e.target.value);
+                    this.onInputWord(e.target.value);
                 }
             }, 300);
         });

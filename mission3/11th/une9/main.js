@@ -2,17 +2,42 @@ import { SearchInput } from "./searchInput.js";
 import { SearchHistory } from "./searchHistory.js";
 import { SearchResult } from "./searchResult.js";
 
-(async function() {
-  let data, keyword;
+class App {
+  constructor() {
+    this.data = [];
+    this.keyword = '';
 
-  const setState = (isHistoryClick) => {
-    searchResult.setState(data);
+    this.searchInput = new SearchInput({
+      target: document.querySelector('#search-keyword'),
+      onInputWord: (targetValue) => {
+        this.onSearch({
+          targetValue: targetValue,
+          isHistoryClick: false
+        });
+      }
+    });
+  
+    this.searchResult = new SearchResult(this.data, document.querySelector('#search-result'));
+  
+    this.searchHistory = new SearchHistory({
+      target: document.querySelector('#search-history'),
+      onHistoryClick: (targetValue) => {
+        this.onSearch({
+          targetValue: targetValue,
+          isHistoryClick: true
+        });
+      }
+    });
+  }
+
+  setState(isHistoryClick) {
+    this.searchResult.setState(this.data);
     if (!isHistoryClick) {
-      searchHistory.setState(keyword);
+      this.searchHistory.setState(this.keyword);
     }
   }
 
-  const fetchAPI = async (targetValue) => {
+  async fetchAPI(targetValue) {
     try {
       const response = await fetch(`https://jjalbot.com/api/jjals?text=${targetValue}`);
       if(response.ok) {
@@ -24,31 +49,11 @@ import { SearchResult } from "./searchResult.js";
     }
   }
 
-  const onSearch = async ({targetValue, isHistoryClick}) => {
-    keyword = targetValue;
-    data = await fetchAPI(keyword);
-    setState(isHistoryClick);
+  async onSearch({targetValue, isHistoryClick}) {
+    this.keyword = targetValue;
+    this.data = await this.fetchAPI(this.keyword);
+    this.setState(isHistoryClick);
   }
+}
 
-  const searchInput = new SearchInput({
-    target: document.querySelector('#search-keyword'),
-    onInputWord: (targetValue) => {
-      onSearch({
-        targetValue: targetValue,
-        isHistoryClick: false
-      });
-    }
-  });
-
-  const searchResult = new SearchResult(data, document.querySelector('#search-result'));
-
-  const searchHistory = new SearchHistory({
-    target: document.querySelector('#search-history'),
-    onHistoryClick: (targetValue) => {
-      onSearch({
-        targetValue: targetValue,
-        isHistoryClick: true
-      });
-    }
-  });
-})();
+const app = new App();
