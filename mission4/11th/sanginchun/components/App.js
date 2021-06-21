@@ -1,6 +1,6 @@
 import TodoInput from './TodoInput.js'
 import TodoList from './TodoList.js'
-import RemoveAllButton from './RemoveAllButton.js'
+// import RemoveAllButton from './RemoveAllButton.js'
 
 import { getTodoItems, addTodoItem, deleteTodoItem, deleteAllTodoItems, toggleTodoItem } from '../api/todoApi.js'
 
@@ -11,8 +11,6 @@ class App {
       onSubmit: this.onTodoInputSubmit.bind(this),
     })
 
-    new RemoveAllButton({ $app })
-
     this.todoList = new TodoList({
       $app,
       initialState: [],
@@ -20,7 +18,8 @@ class App {
       onDeleteButtonClick: this.onDeleteButtonClick.bind(this),
     })
 
-    $app.addEventListener('removeAll', this.onDeleteAllButtonClick.bind(this))
+    // new RemoveAllButton({ $app })
+    // $app.addEventListener('removeAll', this.onDeleteAllButtonClick.bind(this))
 
     this.setNextTodoItems()
   }
@@ -44,15 +43,18 @@ class App {
   async onTodoInputSubmit(e) {
     e.preventDefault()
 
-    const content = e.target.querySelector('#content').value
+    const $content = e.target.querySelector('input#content')
 
-    const result = await addTodoItem(content)
+    const result = await addTodoItem($content.value)
     if (result === null) {
       alert('할 일 추가에 실패했습니다')
       return
     }
 
-    this.setNextTodoItems()
+    this.setNextTodoItems().then(() => {
+      $content.value = ''
+      $content.focus()
+    })
   }
 
   async onDeleteButtonClick(e) {

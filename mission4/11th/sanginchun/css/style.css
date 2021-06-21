@@ -3,3 +3,82 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+button {
+  padding: 4px 8px;
+  background-color: white;
+  border: 1px solid #999;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+#app {
+  padding: 1rem 2rem;
+}
+
+#app h1 {
+  padding: 0.5rem 0;
+}
+
+section {
+  padding: 0.5rem 0;
+}
+
+section h2 {
+  padding: 0.5rem 0;
+}
+
+section.todo-input form {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+section.todo-input form label {
+  width: 100%;
+  margin-bottom: 3px;
+}
+
+input#content {
+  flex-grow: 1;
+  height: 1.8rem;
+  font-size: 0.9rem;
+  margin-right: 1rem;
+  padding: 3px 6px;
+  border: 1px solid #666;
+  border-radius: 3px;
+}
+
+section.todo-list ul {
+  list-style: none;
+  width: 100%;
+  max-width: 400px;
+}
+
+li.todo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+}
+
+li.todo-item label {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+input.todo-item-checkbox {
+  cursor: pointer;
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+span.todo-item-content {
+  margin-left: 0.8rem;
+}

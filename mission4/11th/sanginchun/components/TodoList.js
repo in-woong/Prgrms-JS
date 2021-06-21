@@ -2,7 +2,7 @@ class TodoList {
   constructor({ $app, initialState, onTodoItemClick, onDeleteButtonClick }) {
     this.state = initialState
 
-    this.$target = document.createElement('ul')
+    this.$target = document.createElement('section')
     this.$target.className = 'todo-list'
 
     this.$target.addEventListener('click', (e) => {
@@ -28,20 +28,23 @@ class TodoList {
 
   _render() {
     this.$target.innerHTML = `
-      ${this.state
-        .map(
-          ({ _id, content, isCompleted }) =>
-            `
-          <li class="todo-item" data-id="${_id}">
-            <label>
-              <input class="todo-item-checkbox" type="checkbox" ${isCompleted ? 'checked' : ''}>
-              <span class="todo-item-content">${isCompleted ? `<s>${content}</s>` : content}</span>
-            </label>
-            <button class="todo-item-delete-button">삭제</button>
-          </li>
-        `
-        )
-        .join('')}
+      <h2>할 일 목록</h2>
+      <ul>
+        ${this.state
+          .map(
+            ({ _id, content, isCompleted }) =>
+              `
+            <li class="todo-item" data-id="${_id}">
+              <label>
+                <input class="todo-item-checkbox" type="checkbox" ${isCompleted ? 'checked' : ''}>
+                <span class="todo-item-content">${isCompleted ? `<s>${content}</s>` : content}</span>
+              </label>
+              <button class="todo-item-delete-button">삭제</button>
+            </li>
+          `
+          )
+          .join('')}
+      </ul>
     `
   }
 }
