@@ -1,7 +1,7 @@
 import TodoCount from "./TodoCount.js";
 import TodoInput from "./TodoInput.js";
 import TodoList from "./TodoList.js";
-import { loadTodo, deleteTodo, toggleTodo, addTodo } from "./api.js";
+import { requestTodoAPI } from "./api.js";
 
 export default class App {
     constructor(title, username) {
@@ -23,13 +23,13 @@ export default class App {
                 data: this.data, 
                 element: this.element,
                 onToggleIsCompleted: (targetListId) => {
-                    this.AppToggleTodo(this.username, targetListId)
+                    this.$requestTodoAPI('toggle', this.username, targetListId, null)
                     .then(()=> {
                         this.setState();
                     })
                 },
                 onDeleteTodo: (targetButtonId) => {
-                    this.AppDeleteTodo(this.username, targetButtonId)
+                    this.$requestTodoAPI('delete', this.username, targetButtonId, null)
                     .then(()=> {
                         this.setState();
                     })
@@ -41,7 +41,7 @@ export default class App {
                 element: this.element, 
                 onInputTodo: (addInput) => {
                     if (addInput.value !== '') {
-                        this.AppAddTodo(this.username, addInput.value)
+                        this.$requestTodoAPI('add', this.username, null, addInput.value)
                         .then(()=> {
                             this.setState();
                         })
@@ -55,16 +55,13 @@ export default class App {
     }
 
     async setData() {
-        const loadedData = await this.AppLoadTodo(this.username);
-            console.log(loadedData)
+        const loadedData = await this.$requestTodoAPI('load', this.username, null, null);
         this.dataValidation(loadedData);
         this.data = loadedData;
-            console.log(this.data)
     }
 
     async setState() {
         await this.setData();
-        console.log(this.data);
         this.render();
     }
 
@@ -79,7 +76,6 @@ export default class App {
         } 
         
         if (!Array.isArray(data)) {
-            console.log(data)
             throw new Error('Data type is not an Array!');
         } 
 
@@ -90,19 +86,7 @@ export default class App {
         }
     }
 
-    async AppLoadTodo(username) {
-        return await loadTodo(username);
-    }
-
-    async AppDeleteTodo(username, id) {
-        return await deleteTodo(username, id);
-    }
-
-    async AppToggleTodo(username, id) {
-        return await toggleTodo(username, id);
-    }
-
-    async AppAddTodo(username, text) {
-        return await addTodo(username, text);
+    async $requestTodoAPI(work, username, id, text) {
+        return await requestTodoAPI(work, username, id, text);
     }
 }

@@ -1,28 +1,8 @@
 const BASE_URL =  'https://todo-api.roto.codes';
 
-export async function loadTodo(username) {
-    const API_URL = BASE_URL + '/' + username;
-    console.log(API_URL)
-
-    try {
-        const response = await fetch(API_URL);
-        if (response.ok) {
-            return response.json();
-        } else {
-            throw new Error(response.status, 'error');
-        }
-    } catch (error) {
-        throw new Error(error);
-    }
-
-}
-
-export async function addTodo(username, text) {
-    const API_URL = BASE_URL + '/' + username;
-    console.log(API_URL)
-
-    try {
-        const response = await fetch(API_URL, {
+function createRequestObject(work, username, id, text) {
+    if (work === 'add') {
+        return {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -30,40 +10,30 @@ export async function addTodo(username, text) {
             body: JSON.stringify({
                 content: text
             })
-        });
-        if (response.ok) {
-            return response.json();
-        } else {
-            throw new Error(response.status, 'error');
         }
-    } catch (error) {
-        throw new Error(error);
-    }
-
-}
-
-export async function deleteTodo(username, id) {
-    const API_URL = BASE_URL + '/' + username + '/' + id;
-    console.log(API_URL)
-
-    try {
-        const response = await fetch(API_URL, {method: 'DELETE'});
-        if (response.ok) {
-            return response.json();
-        } else {
-            throw new Error(response.status, 'error');
-        }
-    } catch (error) {
-        throw new Error(error);
+    } else if (work === 'delete') {
+        return {method: 'DELETE'};
+    } else if (work === 'toggle') {
+        return {method: 'PUT'};
     }
 }
 
-export async function toggleTodo(username, id) {
-    const API_URL = BASE_URL + '/' + username + '/' + id + '/toggle';
-    console.log(API_URL)
+function createAPIUrl(work, username, id) {
+    if (work === 'load' || work === 'add') {
+        return `${BASE_URL}/${username}`;
+    } else if (work === 'delete') {
+        return `${BASE_URL}/${username}/${id}`;
+    } else if (work === 'toggle') {
+        return `${BASE_URL}/${username}/${id}/toggle`;
+    }
+}
+
+export async function requestTodoAPI(work, username, id, text) {
+    const API_URL = createAPIUrl(work, username, id);
+    const requestObject = createRequestObject(work, username, id, text);
 
     try {
-        const response = await fetch(API_URL, {method: 'PUT'});
+        const response = (work === 'load') ? await fetch(API_URL) : await fetch(API_URL, requestObject);
         if (response.ok) {
             return response.json();
         } else {

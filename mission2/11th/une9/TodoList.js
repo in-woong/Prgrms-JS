@@ -13,9 +13,7 @@ export default class TodoList {
     }
 
     setState(data) {
-        console.log(data)
         this.data = data;
-        console.log(this.data)
         this.render();
     }
     
