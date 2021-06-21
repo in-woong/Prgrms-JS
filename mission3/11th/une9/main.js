@@ -15,7 +15,10 @@ import { SearchResult } from "./searchResult.js";
   const fetchAPI = async (targetValue) => {
     try {
       const response = await fetch(`https://jjalbot.com/api/jjals?text=${targetValue}`);
-      return response.json();
+      if(response.ok) {
+        return response.json();
+      }
+      throw new Error('응답이 올바르지 않습니다.');
     } catch (error) {
       throw new Error(error);
     }
