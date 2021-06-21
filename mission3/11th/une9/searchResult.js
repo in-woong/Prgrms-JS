@@ -1,4 +1,4 @@
-class SearchResult {
+export class SearchResult {
     constructor(data, target) {
         this.data = data;
         this.target = target;

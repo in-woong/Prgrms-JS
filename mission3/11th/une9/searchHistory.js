@@ -1,4 +1,4 @@
-class SearchHistory {
+export class SearchHistory {
     constructor({target, onHistoryClick}) {
         this.target = target;
         this.onHistoryClick = onHistoryClick;

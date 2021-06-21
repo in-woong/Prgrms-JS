@@ -1,4 +1,4 @@
-class SearchInput {
+export class SearchInput {
     constructor({target, onInputWord}) {
         this.target = target;
         this.onInputWord = onInputWord;
@@ -9,7 +9,9 @@ class SearchInput {
                 clearTimeout(timer);
             }
             timer = setTimeout(() => {
-                onInputWord(e.target.value);
+                if(e.target.value) {
+                    onInputWord(e.target.value);
+                }
             }, 300);
         });
     }
