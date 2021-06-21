@@ -1,4 +1,4 @@
-(async function () {
+function main() {
     const username = 'roto';
   
     async function fetchData() {
@@ -7,7 +7,7 @@
     }
   
     const data = await fetchData();
-  
+    
     const todoList = new TodoList({
       $target: document.querySelector('#todo-list'),
       data: data,
@@ -53,4 +53,6 @@
           todoList.setState(updatedData);
         }
       });
-  })();
+  }
+
+export default main;
