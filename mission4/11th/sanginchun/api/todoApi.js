@@ -3,7 +3,7 @@ const DEFAULT_USER_NAME = 'sanginchun'
 
 async function request(URL, options = {}) {
   try {
-    const res = await fetch(URL, options)
+    const res = await fetch(`${URL}?delay=1000`, options)
     if (!res.ok) throw new Error(`${res.status}`)
 
     const data = await res.json()

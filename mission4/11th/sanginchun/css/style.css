@@ -50,10 +50,32 @@ input#content {
   border-radius: 3px;
 }
 
-section.todo-list ul {
+ul.todo-items-list {
   list-style: none;
   width: 100%;
   max-width: 400px;
+}
+
+ul.todo-items-list.loading {
+  position: relative;
+  pointer-events: none;
+}
+
+ul.todo-items-list.loading::after {
+  content: '로딩 중...';
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: rgb(255, 255, 255, 0.85);
 }
 
 li.todo-item {
