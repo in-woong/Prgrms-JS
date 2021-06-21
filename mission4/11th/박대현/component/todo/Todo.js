@@ -97,7 +97,7 @@ export default function($parent){
       } catch (error) {
         console.error(error);
         alert('할 일 목록 불러오기 에러');
-      }
+      } 
     }
   }
 

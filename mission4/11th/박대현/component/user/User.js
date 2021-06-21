@@ -1,7 +1,7 @@
 import { getUserList } from '../../api/user.js';
 import UserInput from './UserInput.js';
 import UserList from './UserList.js';
-export default function($parent, { handleSelectUsername }){
+export default function($parent, { handleSelectUsername }, { spinnerOffRender, spinnerOnRender }){
   
   // user가 관리할 하위 컴포넌트
   const components = []
@@ -63,6 +63,7 @@ export default function($parent, { handleSelectUsername }){
   const loaders = {
     loadTotalUserList : async () => {
       try {
+        spinnerOnRender();
         const userList = await getUserList();
         setState.setOriginalUserList([...userList]);
         setState.setFilteredUserList([...userList]);
@@ -70,6 +71,8 @@ export default function($parent, { handleSelectUsername }){
       } catch (error) {
         console.error(error);
         alert('UserList 로드 실패');
+      } finally {
+        spinnerOffRender();
       }
     }
   }
