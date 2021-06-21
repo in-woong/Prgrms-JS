@@ -1,9 +1,13 @@
 class TodoInput {
-  constructor({ $app, onSubmit }) {
+  constructor({ $app, onSubmit, onDeleteAllButtonClick }) {
     this.$target = document.createElement('form')
     this.$target.className = 'todo-input'
 
     this.$target.addEventListener('submit', onSubmit)
+
+    this.$target.addEventListener('click', (e) => {
+      if (e.target.closest('.delete-all-button')) onDeleteAllButtonClick()
+    })
 
     this._render()
     $app.appendChild(this.$target)
@@ -15,15 +19,9 @@ class TodoInput {
         <label for="content">할 일</label>
         <input type="text" id="content" name="content" required>
       </div>
-      <div class="todo-input-is-completed">
-        <p>완료 여부</p>
-        <input type="radio" id="not-completed" name="isCompleted" value="false" checked>
-        <label for="not-completed">미완료</label>
-        <input type="radio" id="completed" name="isCompleted" value="true">
-        <label for="completed">완료</label>
-      </div>
       <div class="todo-input-button-group">
         <button type="submit">추가하기</button>
+        <button type="button" class="delete-all-button">전체 삭제</button>
       </div>
     `
   }
