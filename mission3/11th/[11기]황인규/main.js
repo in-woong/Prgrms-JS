@@ -60,20 +60,32 @@ function main($app, initialState){
 
           this.setState(previousData);
 
-          const response = await requestAPI.fetchJjalGif(text);
-          setLocalStorage(text, response);
-          if(!response)
-            alert("API 요청이 잘못 되었습니다.");
+          try{
+          
+            const response = await requestAPI.fetchJjalGif(text);
+            setLocalStorage(text, response);
+            if(!response)
+              alert("API 요청이 잘못 되었습니다.");
 
-          checkDataValidation(response);
-          
-          const newData = {
-            searchHistory : this.$state.searchHistory.indexOf(text) >=0 || response.length === 0 ? [...this.$state.searchHistory] : [...this.$state.searchHistory, text],
-            isLoading : true,
-            data : response,
+            checkDataValidation(response);
+            
+            const newData = {
+              searchHistory : this.$state.searchHistory.indexOf(text) >=0 || response.length === 0 ? [...this.$state.searchHistory] : [...this.$state.searchHistory, text],
+              isLoading : true,
+              data : response,
+            }
+            this.setState(newData);
+
+         }catch(error){
+          if (error.name === "Error") {
+            const statusCode = parseInt(e.message);
+      
+            if (statusCode >= 500) throw new Error(errorMessage.CHECK_SERVER_ERROR(statusCode));
+            else if (statusCode >= 400) throw new Error(errorMessage.CHECK_CLIENT_ERROR(statusCode));
+            else throw new Error(errorMessage.CHECK_STATUS_CODE());
           }
-          
-          this.setState(newData);
+          throw new Error(errorMessage.CHECK_FETCH());
+         }
     }
 
     this.onUseDebounceFunction = useDebounceFunction(
