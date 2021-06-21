@@ -7,7 +7,7 @@ export default function($parent){
   // todo가 관리할 하위 컴포넌트
   const components = [];
   
-  // Todo가 관리할 데이터
+  // todo가 관리할 데이터
   const data = {
     todoList : [],
     username : '',
@@ -15,7 +15,8 @@ export default function($parent){
 
   // todo의 DOM 요소
   const elements = { 
-    $todo : Object.assign(document.createElement('section'),{className: 'todo-wrapper'}),
+    $todo : Object.assign(document.createElement('section'),{className : 'todo-wrapper'}),
+    $todoListContainer : Object.assign(document.createElement('main'), {className : 'todo-list-container'}),
   }
 
   // data의 상태를 변경하게 해줄 함수
@@ -34,9 +35,10 @@ export default function($parent){
   // 관리하는 data를 바탕으로 render 해줄 함수
   const renders = {
     todoListRender : () => {
-      const [ _, todoCount, todoList ] = components;
+      const [ _, todoCount, todoList, doneList ] = components;
       todoCount.renders.todoListRender(data.todoList);
       todoList.renders.todoListRender(data.todoList);
+      doneList.renders.todoListRender(data.todoList);
     }
   }
 
@@ -59,7 +61,7 @@ export default function($parent){
         if(username === '') return;
         await toggleTodoDone(username, todoList[targetIndex]._id);
         const newTodoList = todoList.map((todo, index) => {
-          return index === targetIndex? {
+          return index === parseInt(targetIndex) ? {
             ...todo,
             isCompleted: !todo.isCompleted,
           } : todo; 
@@ -103,10 +105,12 @@ export default function($parent){
 
   // mount
   const mount = () => {
-    const { $todo } = elements;
+    const { $todo, $todoListContainer } = elements;
     components.push(new TodoInput($todo, eventHandlers));
     components.push(new TodoCount($todo));
-    components.push(new TodoList($todo, eventHandlers));
+    components.push(new TodoList($todoListContainer, eventHandlers, { label: '할 일 목록', mode: false}));
+    components.push(new TodoList($todoListContainer, eventHandlers, { label: '한 일 목록', mode: true}));
+    $todo.appendChild($todoListContainer);
     $parent.appendChild($todo);
   }
 
