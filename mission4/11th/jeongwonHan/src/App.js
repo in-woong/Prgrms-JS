@@ -1,5 +1,6 @@
 import TodoContainer from './containers/TodoContainer.js'
 import UserList from './components/UserList.js'
+import UserName from './components/UserName.js'
 import { api } from './api/api.js'
 
 function App($target) {
@@ -9,6 +10,11 @@ function App($target) {
     this.$target = $target
     this.state = await this.setNextState(USER_NAME)
 
+    this.UserName = new UserName({
+      $target: this.$target,
+      state: this.state,
+    })
+    
     this.userList = new UserList({
       $target: this.$target,
       state: this.state,
