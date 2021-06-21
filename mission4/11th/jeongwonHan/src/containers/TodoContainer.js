@@ -27,9 +27,9 @@ function TodoContainer({ $target, state, setState, setNextState }) {
   this.todoDeleteAll = new TodoDeleteAll({
     $target: this.$target,
     state: this.state,
-    onDeleteAll: async() => {
+    onDeleteAll: async () => {
       try {
-        await api.deleteAllUserTodo(this.state.userName);
+        await api.deleteAllUserTodo(this.state.userName)
         const nextState = await this.setNextState(this.state.userName)
         this.setState(nextState)
       } catch (e) {
@@ -41,18 +41,18 @@ function TodoContainer({ $target, state, setState, setNextState }) {
   this.todoList = new TodoList({
     $target: this.$target,
     state: this.state,
-    onToggleTodo: async(todoId) => {
+    onToggleTodo: async (todoId) => {
       try {
-        await api.toggleUserTodo(this.state.userName, todoId);
+        await api.toggleUserTodo(this.state.userName, todoId)
         const nextState = await this.setNextState(this.state.userName)
         this.setState(nextState)
       } catch (e) {
         console.log(e)
       }
     },
-    onDeleteTodo: async(todoId) => {
+    onDeleteTodo: async (todoId) => {
       try {
-        await api.deleteUserTodo(this.state.userName, todoId);
+        await api.deleteUserTodo(this.state.userName, todoId)
         const nextState = await this.setNextState(this.state.userName)
         this.setState(nextState)
       } catch (e) {

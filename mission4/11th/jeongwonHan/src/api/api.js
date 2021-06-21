@@ -27,16 +27,19 @@ export const api = {
   getUserTodoList: (userName) => {
     return request(`${API_ENDPOINT}/${userName}`)
   },
+  getUserTodoListLate: (userName) => {
+    return request(`${API_ENDPOINT}/${userName}?delay=5000`)
+  },
   addUserTodo: (content, userName) => {
     return request(`${API_ENDPOINT}/${userName}`, option.post(content))
   },
-  deleteUserTodo:(userName, todoId) => {
+  deleteUserTodo: (userName, todoId) => {
     return request(`${API_ENDPOINT}/${userName}/${todoId}`, option.delete())
   },
-  deleteAllUserTodo:(userName) => {
+  deleteAllUserTodo: (userName) => {
     return request(`${API_ENDPOINT}/${userName}/all`, option.delete())
   },
-  toggleUserTodo: (userName, todoId) =>{
+  toggleUserTodo: (userName, todoId) => {
     return request(`${API_ENDPOINT}/${userName}/${todoId}/toggle`, option.put())
   },
   getUserList: () => {

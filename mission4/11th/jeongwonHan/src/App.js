@@ -1,6 +1,7 @@
 import TodoContainer from './containers/TodoContainer.js'
 import UserList from './components/UserList.js'
 import UserName from './components/UserName.js'
+import Loading from './components/common/Loading.js'
 import { api } from './api/api.js'
 
 function App($target) {
@@ -8,6 +9,10 @@ function App($target) {
 
   this.init = async () => {
     this.$target = $target
+
+    this.loading = new Loading({ $target: this.$target, isLoading: this.isLoading })
+    this.isLoading = false
+
     this.state = await this.setNextState(USER_NAME)
 
     this.userName = new UserName({
@@ -43,6 +48,8 @@ function App($target) {
 
   this.setNextState = async (userName) => {
     try {
+      this.isLoading = true
+      this.loading.setState(this.isLoading)
       const todos = await api.getUserTodoList(userName)
       const userList = await api.getUserList()
       const nextState = {
@@ -53,6 +60,8 @@ function App($target) {
       }
       console.log(nextState)
 
+      this.isLoading = false
+      this.loading.setState(this.isLoading)
       return nextState
     } catch (e) {
       console.log(e)
@@ -65,6 +74,7 @@ function App($target) {
     this.userList.setState(this.state)
     this.todoContainer.todoList.setState(this.state)
     this.todoContainer.todoCount.setState(this.state)
+    this.loading.setState(this.isLoading)
   }
 
   this.init()
