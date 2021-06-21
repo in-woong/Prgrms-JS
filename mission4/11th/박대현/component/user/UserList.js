@@ -27,9 +27,18 @@ export default function ($parent, { handleSelectUsername }){
   // 등록할 이벤트 리스너
   const eventListeners = () => {
     elements.$userList.addEventListener('click', e => {
-      const isNewUser = e.target.classList.contains('new-user');
-      const keyword = e.target.querySelector('span').innerText.trim();
-      handleSelectUsername(keyword, isNewUser);
+      const childElem = e.target;
+      const parentElem = childElem.parentElement;
+      if(childElem.classList.contains('user-item')){
+        const isNewUser = childElem.classList.contains('new-user');
+        const keyword = childElem.querySelector('span').innerText.trim();
+        handleSelectUsername(keyword, isNewUser);
+      }
+      else if(parentElem.classList.contains('user-item')){
+        const isNewUser = parentElem.classList.contains('new-user');
+        const keyword = e.target.innerText.trim();
+        handleSelectUsername(keyword, isNewUser);
+      }
     })
   };
 
