@@ -1,6 +1,6 @@
 const BASE_URL =  'https://todo-api.roto.codes';
 
-function createRequestObject(work, username, id, text) {
+function createRequestObject(work,text) {
     if (work === 'add') {
         return {
             method: 'POST',
@@ -28,13 +28,13 @@ function createAPIUrl(work, username, id) {
     }
 }
 
-export async function requestTodoAPI(work, username, id, text) {
-    const API_URL = createAPIUrl(work, username, id);
-    const requestObject = createRequestObject(work, username, id, text);
+export async function fetchTodoAPI(work, username, id, text) {
+    const API_URL = `${createAPIUrl(work, username, id)}?delay=2000`;
+    const requestObject = createRequestObject(work, text);
 
     try {
         const response = (work === 'load') ? await fetch(API_URL) : await fetch(API_URL, requestObject);
-        if (response.ok) {
+        if (response.status === 200) {
             return response.json();
         } else {
             throw new Error(response.status, 'error');

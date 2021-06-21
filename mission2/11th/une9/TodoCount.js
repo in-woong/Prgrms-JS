@@ -14,6 +14,6 @@ export default class TodoCount {
         const nowDone = data.filter(list => list.isCompleted).length;
         const listLength = data.length;
         const todoCountHTMLString = `${nowDone}/${listLength}`;
-        this.todoCountElement.innerHTML = todoCountHTMLString;
+        this.element.querySelector('.todo-count').innerHTML = todoCountHTMLString;
     }
 }

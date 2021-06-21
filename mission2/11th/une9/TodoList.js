@@ -3,7 +3,6 @@ export default class TodoList {
         this.element = element;
 
         this.ulElement = document.createElement('ul');
-        this.ulElement.setAttribute('class', `data-${this.title}`);
         this.element.appendChild(this.ulElement);
 
         this.setState(data);
@@ -18,7 +17,7 @@ export default class TodoList {
     }
     
     render() {
-        this.ulElement.innerHTML = this.data.map((list) => this.createListHTMLString(list)).join('');
+        this.element.querySelector('ul').innerHTML = this.data.map((list) => this.createListHTMLString(list)).join('');
     }
 
     createListHTMLString({_id, content, isCompleted}) {
