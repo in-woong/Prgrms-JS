@@ -10,14 +10,22 @@ function App($target) {
     this.$target = $target
     this.state = await this.setNextState(USER_NAME)
 
-    this.UserName = new UserName({
+    this.userName = new UserName({
       $target: this.$target,
       state: this.state,
     })
-    
+
     this.userList = new UserList({
       $target: this.$target,
       state: this.state,
+      onSelectUser: async (userName) => {
+        try {
+          const nextState = await this.setNextState(userName)
+          this.setState(nextState)
+        } catch (e) {
+          console.log(e)
+        }
+      },
     })
 
     this.$todoListDiv1 = document.createElement('div')
@@ -53,6 +61,7 @@ function App($target) {
 
   this.setState = (nextState) => {
     this.state = nextState
+    this.userName.setState(this.state)
     this.userList.setState(this.state)
     this.todoContainer.todoList.setState(this.state)
     this.todoContainer.todoCount.setState(this.state)
