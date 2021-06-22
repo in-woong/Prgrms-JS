@@ -9,7 +9,7 @@ function TodoContainer({ $target, state, setState, setNextState }) {
   this.state = state
   this.setState = setState
   this.setNextState = setNextState
-  
+
   this.todoInput = new TodoInput({
     $target: this.$target,
     onAddTodo: async (todoText) => {

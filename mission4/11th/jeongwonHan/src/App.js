@@ -23,7 +23,20 @@ function App($target) {
 
     this.todoContainer = new TodoContainer({
       $target: this.$target.querySelector('.runningTodoList'),
-      state: this.state,
+      state: {
+        ...this.state,
+        todos: this.state.todos.filter(({ isCompleted }) => !isCompleted)
+      },
+      setState: this.setState,
+      setNextState: this.setNextState,
+    })
+
+    this.todoContainer = new TodoContainer({
+      $target: this.$target.querySelector('.completedTodoList'),
+      state: {
+        ...this.state,
+        todos: this.state.todos.filter(({ isCompleted }) => isCompleted)
+      },
       setState: this.setState,
       setNextState: this.setNextState,
     })
@@ -33,6 +46,7 @@ function App($target) {
     try {
       this.isLoading = true
       this.loading.setState(this.isLoading)
+
       const todos = await api.getUserTodoList(userName)
       const userList = await api.getUserList()
       const nextState = {
@@ -45,6 +59,7 @@ function App($target) {
 
       this.isLoading = false
       this.loading.setState(this.isLoading)
+
       return nextState
     } catch (e) {
       console.log(e)
