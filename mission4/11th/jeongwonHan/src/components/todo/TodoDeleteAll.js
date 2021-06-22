@@ -1,7 +1,6 @@
 function TodoDeleteAll({ $target, state, onDeleteAll }) {
   this.$target = $target
   this.$todoDeleteButton = document.createElement("button")
-  this.$todoDeleteButton.setAttribute("data-component-type", "TodoDeleteAll")
   this.$todoDeleteButton.innerText = "모두 삭제"
   this.$target.appendChild(this.$todoDeleteButton)
   this.state = state
@@ -18,4 +17,5 @@ function TodoDeleteAll({ $target, state, onDeleteAll }) {
   })
   this.$todoDeleteButton.addEventListener("deleteAll", () => this.deleteButtonHandler())
 }
+
 export default TodoDeleteAll

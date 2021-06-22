@@ -1,4 +1,4 @@
-import { todoValidate } from '../../utils/Validator.js'
+import { todoValidator } from '../../utils/Validator.js'
 import ErrorMessage from '../../utils/ErrorMessage.js'
 
 function TodoList({ $target, state, onToggleTodo, onDeleteTodo }) {
@@ -6,7 +6,7 @@ function TodoList({ $target, state, onToggleTodo, onDeleteTodo }) {
     throw new Error(ErrorMessage.SET_NEW_ERROR)
   }
 
-  todoValidate(state.todos)
+  todoValidator(state.todos)
 
   this.$target = $target
   this.$todoListUl = document.createElement('ul')

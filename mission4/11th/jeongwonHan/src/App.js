@@ -17,14 +17,14 @@ function App($target) {
     this.userContainer = new UserContainer({
       $target: this.$target.querySelector('.userListContainer'),
       state: this.state,
-      setState: this.setState,
+      setState : this.setState,
       setNextState: this.setNextState,
     })
 
     this.todoContainer = new TodoContainer({
       $target: this.$target.querySelector('.todoListContainer'),
       state: this.state,
-      setState: this.setState,
+      setState : this.setState,
       setNextState: this.setNextState,
     })
 
@@ -53,17 +53,8 @@ function App($target) {
 
   this.setState = (nextState) => {
     this.state = nextState
-    this.userContainer.userName.setState(this.state)
-    this.userContainer.userList.setState(this.state)
-    this.todoContainer.runningTodoList.setState({
-      ...this.state,
-      todos: this.state.todos.filter(({ isCompleted }) => !isCompleted)
-    })
-    this.todoContainer.completedTodoList.setState({
-      ...this.state,
-      todos: this.state.todos.filter(({ isCompleted }) => isCompleted)
-    })
-    this.todoContainer.todoCount.setState(this.state)
+    this.userContainer.setState(this.state)
+    this.todoContainer.setState(this.state);
     this.loading.setState(this.isLoading)
   }
 

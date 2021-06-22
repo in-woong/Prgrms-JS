@@ -1,4 +1,8 @@
+import { userValidator } from '../../utils/Validator.js'
+
 function UserList({ $target, state, onSelectUser }) {
+  userValidator(state.userList)
+  
   this.$target = $target
   this.state = state
 
@@ -10,7 +14,6 @@ function UserList({ $target, state, onSelectUser }) {
 
   this.onClickHandler = (e) => {
     const selectedList = e.target.closest('li').innerText
-    console.log(selectedList)
     this.onSelectUser(selectedList)
   }
 
@@ -27,4 +30,5 @@ function UserList({ $target, state, onSelectUser }) {
 
   this.render()
 }
+
 export default UserList

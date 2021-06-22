@@ -4,7 +4,6 @@ import UserList from '../components/user/UserList.js';
 function UserContainer ({ $target, state, setState, setNextState }){
   this.$target = $target
   this.state = state
-  this.setState = setState
   this.setNextState = setNextState
 
   this.userName = new UserName({
@@ -18,12 +17,18 @@ function UserContainer ({ $target, state, setState, setNextState }){
     onSelectUser: async (userName) => {
       try {
         const nextState = await this.setNextState(userName)
-        this.setState(nextState)
+        setState(nextState)
       } catch (e) {
         console.log(e)
       }
     },
   })
+
+  this.setState = (nextState) => {
+    this.state = nextState
+    this.userName.setState(this.state)
+    this.userList.setState(this.state)
+  }
 
 }
 
