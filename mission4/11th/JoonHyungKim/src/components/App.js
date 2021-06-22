@@ -26,6 +26,7 @@ const validateData = (data) => {
 export default class App {
     constructor({ $app, user }) {
         this.$app = $app
+        this.$app.innerHTML = `<h1>${user}'s ToDo</h1>`
         this.state = []
         this.api = new TodoApi(user);
         this.$children = [

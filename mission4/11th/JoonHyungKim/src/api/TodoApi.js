@@ -1,6 +1,6 @@
 /*global fetch*/
-const requestToApi = (userName) => {
-  const APIURL = `https://todo-api.roto.codes/${userName}/`;
+const requestToApi = (resource) => {
+  const APIURL = `https://todo-api.roto.codes/${resource}/`;
 
   return async(options, suffix = '') => {
     const fetchResponse = await fetch(APIURL + suffix, options);
@@ -52,5 +52,9 @@ export default class ToDoAPI {
     return await this.request({
       method: 'PUT'
     }, `${_id}/toggle`);
+  }
+  
+  static async getUserList(){
+    return await requestToApi('users')()
   }
 }

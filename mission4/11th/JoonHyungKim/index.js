@@ -1,3 +1,7 @@
-import App from "./src/components/App.js"
+import Users from "./src/components/Users.js"
+import App from "./src/components/App.js";
 
-const app = new App({ $app: document.querySelector("#app"), user : "JHKIM" })
+document.addEventListener('userSelected', ({ detail }) => {
+    new App({ $app: document.querySelector('#app'), user: detail })
+})
+new Users({ $list: document.querySelector('#list') });
