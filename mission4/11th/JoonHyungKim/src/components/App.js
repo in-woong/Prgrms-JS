@@ -67,6 +67,30 @@ export default class App {
                     }
 
                 },
+                completedOnly: false
+            }),
+            new TodoList({
+                $app: this.$app,
+                onToggleItem: async(_id) => {
+                    try {
+                        await this.api.toggleCompleted({ _id })
+                        await this.fetchStateFromApi();
+                    }
+                    catch (err) {
+                        console.error(err);
+                    }
+
+                },
+                onRemoveItem: async(_id) => {
+                    try {
+                        await this.api.deleteToDo({ _id })
+                        await this.fetchStateFromApi();
+                    }
+                    catch (err) {
+                        console.error(err);
+                    }
+                },
+                completedOnly: true
             }),
             new TodoCount({
                 $app: this.$app,
