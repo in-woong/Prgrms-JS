@@ -1,21 +1,16 @@
 class TodoList {
-  constructor({ $app, initialState, isCompletedList, onTodoItemClick, onDeleteButtonClick }) {
+  constructor({ $app, initialState, isCompletedList, onTodoItemClick }) {
     this.state = initialState
     this.isCompletedList = isCompletedList
 
     this.$target = document.createElement('section')
     this.$target.className = 'todo-list'
+    if (this.isCompletedList) this.$target.classList.add('completed')
 
     this.$target.addEventListener('click', (e) => {
-      if (e.target.closest('.todo-item-delete-button')) {
-        onDeleteButtonClick(e)
-        return
-      }
+      if (!e.target.closest('li.todo-item')) return
 
-      if (e.target.closest('.todo-item-checkbox')) {
-        e.preventDefault()
-        onTodoItemClick(e)
-      }
+      onTodoItemClick(e)
     })
 
     this._render()
@@ -37,11 +32,14 @@ class TodoList {
             ({ _id, content, isCompleted }) =>
               `
             <li class="todo-item" data-id="${_id}">
-              <label>
+              <label class="todo-item-toggle">
                 <input class="todo-item-checkbox" type="checkbox" ${isCompleted ? 'checked' : ''}>
                 <span class="todo-item-content">${isCompleted ? `<s>${content}</s>` : content}</span>
               </label>
-              <button class="todo-item-delete-button">삭제</button>
+              <div class="todo-item-button-group">
+                <button class="todo-item-move-button">이동</button>
+                <button class="todo-item-delete-button">삭제</button>
+              </div>
             </li>
           `
           )

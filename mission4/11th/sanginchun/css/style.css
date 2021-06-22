@@ -12,6 +12,15 @@ button {
   cursor: pointer;
 }
 
+section {
+  padding: 0.5rem 0;
+}
+
+section h2 {
+  padding: 0.5rem 0;
+}
+
+/* Util */
 .overlay {
   display: none;
   position: absolute;
@@ -37,6 +46,7 @@ button {
 }
 
 /* Components */
+/* App */
 #app {
   position: relative;
   width: 100%;
@@ -48,14 +58,7 @@ button {
   padding: 0.5rem 0;
 }
 
-section {
-  padding: 0.5rem 0;
-}
-
-section h2 {
-  padding: 0.5rem 0;
-}
-
+/* TodoInput */
 section.todo-input form {
   width: 100%;
   display: flex;
@@ -75,6 +78,19 @@ input#content {
   padding: 3px 6px;
   border: 1px solid #666;
   border-radius: 3px;
+}
+
+/* TodoList */
+section.todo-list {
+  margin-top: 1rem;
+  padding: 0.5rem;
+
+  border: 1px solid #999;
+  border-radius: 5px;
+}
+
+section.todo-list h2 {
+  padding-top: 0;
 }
 
 ul.todo-items-list {

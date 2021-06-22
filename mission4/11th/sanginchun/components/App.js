@@ -37,7 +37,6 @@ class App {
       },
       isCompletedList: false,
       onTodoItemClick: this.onTodoItemClick.bind(this),
-      onDeleteButtonClick: this.onDeleteButtonClick.bind(this),
     })
 
     this.completedTodoList = new TodoList({
@@ -47,12 +46,39 @@ class App {
       },
       isCompletedList: true,
       onTodoItemClick: this.onTodoItemClick.bind(this),
-      onDeleteButtonClick: this.onDeleteButtonClick.bind(this),
     })
 
     this.loader = new Loader({
       $app,
       initialState: this.state.isLoading,
+    })
+
+    /* Drag & Drop */
+    $app.addEventListener('mousedown', (e) => {
+      if (!e.target.closest('button.todo-item-move-button')) return
+
+      this.$draggingItem = e.target.closest('li.todo-item')
+      this.$draggingItem.setAttribute('draggable', 'true')
+    })
+
+    $app.addEventListener('dragend', () => {
+      this.$draggingItem.setAttribute('draggable', 'false')
+      this.$draggingItem = null
+    })
+
+    $app.addEventListener('dragover', (e) => {
+      e.preventDefault()
+
+      if (e.target.closest('section.todo-list')) e.dataTransfer.dropEffect = 'move'
+      else e.dataTransfer.dropEffect = 'none'
+    })
+
+    $app.addEventListener('drop', (e) => {
+      e.preventDefault()
+
+      if (e.target.closest('section.todo-list')) {
+        this.onTodoItemDrop(this.$draggingItem, e.target.closest('section.todo-list'))
+      }
     })
 
     this.initUser()
@@ -144,32 +170,52 @@ class App {
     $content.focus()
   }
 
-  async onDeleteButtonClick(e) {
-    this.setState({
-      ...this.state,
-      isLoading: true,
-    })
-
+  async onTodoItemClick(e) {
     const todoItemId = e.target.closest('li.todo-item').dataset.id
 
-    const result = await deleteTodoItem(todoItemId, this.state.currentUser)
-    if (result === null) {
-      this.handleError('삭제에 실패했습니다')
-      return
+    if (e.target.closest('label.todo-item-toggle')) {
+      this.setState({
+        ...this.state,
+        isLoading: true,
+      })
+
+      const result = await toggleTodoItem(todoItemId, this.state.currentUser)
+      if (result === null) {
+        this.handleError('처리에 실패했습니다')
+        return
+      }
+    }
+
+    if (e.target.closest('button.todo-item-delete-button')) {
+      this.setState({
+        ...this.state,
+        isLoading: true,
+      })
+
+      const result = await deleteTodoItem(todoItemId, this.state.currentUser)
+      if (result === null) {
+        this.handleError('삭제에 실패했습니다')
+        return
+      }
     }
 
     this.setNextTodoItems()
   }
 
-  async onTodoItemClick(e) {
+  async onTodoItemDrop($todoItem, $todoListSection) {
+    if ($todoItem === null) return
+
+    const todoItem = this.state.todoItems.find((todoItem) => todoItem._id === $todoItem.dataset.id)
+    const isCompletedList = $todoListSection.classList.contains('completed')
+
+    if (todoItem.isCompleted === isCompletedList) return
+
     this.setState({
       ...this.state,
       isLoading: true,
     })
 
-    const todoItemId = e.target.closest('li.todo-item').dataset.id
-
-    const result = await toggleTodoItem(todoItemId, this.state.currentUser)
+    const result = await toggleTodoItem(todoItem._id, this.state.currentUser)
     if (result === null) {
       this.handleError('처리에 실패했습니다')
       return
