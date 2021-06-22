@@ -30,11 +30,22 @@ class App {
       onSubmit: this.onTodoInputSubmit.bind(this),
     })
 
-    this.todoList = new TodoList({
+    this.uncompletedTodoList = new TodoList({
       $app,
       initialState: {
-        todoItems: this.state.todoItems,
+        todoItems: this.state.todoItems.filter(({ isCompleted }) => isCompleted === false),
       },
+      isCompletedList: false,
+      onTodoItemClick: this.onTodoItemClick.bind(this),
+      onDeleteButtonClick: this.onDeleteButtonClick.bind(this),
+    })
+
+    this.completedTodoList = new TodoList({
+      $app,
+      initialState: {
+        todoItems: this.state.todoItems.filter(({ isCompleted }) => isCompleted === true),
+      },
+      isCompletedList: true,
       onTodoItemClick: this.onTodoItemClick.bind(this),
       onDeleteButtonClick: this.onDeleteButtonClick.bind(this),
     })
@@ -86,8 +97,12 @@ class App {
       currentUser: this.state.currentUser,
     })
 
-    this.todoList.setState({
-      todoItems: this.state.todoItems,
+    this.uncompletedTodoList.setState({
+      todoItems: this.state.todoItems.filter(({ isCompleted }) => isCompleted === false),
+    })
+
+    this.completedTodoList.setState({
+      todoItems: this.state.todoItems.filter(({ isCompleted }) => isCompleted === true),
     })
 
     this.loader.setState(this.state.isLoading)

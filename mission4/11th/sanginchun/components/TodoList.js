@@ -1,6 +1,7 @@
 class TodoList {
-  constructor({ $app, initialState, onTodoItemClick, onDeleteButtonClick }) {
+  constructor({ $app, initialState, isCompletedList, onTodoItemClick, onDeleteButtonClick }) {
     this.state = initialState
+    this.isCompletedList = isCompletedList
 
     this.$target = document.createElement('section')
     this.$target.className = 'todo-list'
@@ -28,7 +29,8 @@ class TodoList {
 
   _render() {
     this.$target.innerHTML = `
-      <h2>할 일 목록</h2>
+      <h2>${this.isCompletedList ? '완료한 일' : '할 일'}</h2>
+      ${this.state.todoItems.length === 0 ? '<p>없음</p>' : ''}
       <ul class="todo-items-list">
         ${this.state.todoItems
           .map(
