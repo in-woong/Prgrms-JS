@@ -29,7 +29,7 @@ class TodoList {
   _render() {
     this.$target.innerHTML = `
       <h2>할 일 목록</h2>
-      <ul class="${this.state.isLoading ? 'todo-items-list loading' : 'todo-items-list'}">
+      <ul class="todo-items-list">
         ${this.state.todoItems
           .map(
             ({ _id, content, isCompleted }) =>

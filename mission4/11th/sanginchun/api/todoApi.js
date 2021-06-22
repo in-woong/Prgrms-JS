@@ -1,5 +1,4 @@
-const BASE_URL = 'https://todo-api.roto.codes/'
-const DEFAULT_USER_NAME = 'sanginchun'
+const BASE_URL = 'https://todo-api.roto.codes'
 
 async function request(URL, options = {}) {
   try {
@@ -15,12 +14,12 @@ async function request(URL, options = {}) {
   }
 }
 
-export function getTodoItems() {
-  return request(`${BASE_URL}${DEFAULT_USER_NAME}`)
+export function getTodoItems(username) {
+  return request(`${BASE_URL}/${username}`)
 }
 
-export function addTodoItem(content) {
-  return request(`${BASE_URL}${DEFAULT_USER_NAME}`, {
+export function addTodoItem(content, username) {
+  return request(`${BASE_URL}/${username}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -29,14 +28,18 @@ export function addTodoItem(content) {
   })
 }
 
-export function deleteTodoItem(todoItemId) {
-  return request(`${BASE_URL}${DEFAULT_USER_NAME}/${todoItemId}`, {
+export function deleteTodoItem(todoItemId, username) {
+  return request(`${BASE_URL}/${username}/${todoItemId}`, {
     method: 'DELETE',
   })
 }
 
-export function toggleTodoItem(todoItemId) {
-  return request(`${BASE_URL}${DEFAULT_USER_NAME}/${todoItemId}/toggle`, {
+export function toggleTodoItem(todoItemId, username) {
+  return request(`${BASE_URL}/${username}/${todoItemId}/toggle`, {
     method: 'PUT',
   })
+}
+
+export function getUsers() {
+  return request(`${BASE_URL}/users`)
 }

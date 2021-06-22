@@ -12,7 +12,35 @@ button {
   cursor: pointer;
 }
 
+.overlay {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  background-color: rgb(255, 255, 255, 0.85);
+}
+
+.overlay.loading {
+  display: block;
+}
+
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  font-weight: bold;
+}
+
+/* Components */
 #app {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
   padding: 1rem 2rem;
 }
 
@@ -30,7 +58,6 @@ section h2 {
 
 section.todo-input form {
   width: 100%;
-  max-width: 400px;
   display: flex;
   flex-wrap: wrap;
 }
@@ -53,29 +80,8 @@ input#content {
 ul.todo-items-list {
   list-style: none;
   width: 100%;
-  max-width: 400px;
-}
-
-ul.todo-items-list.loading {
-  position: relative;
-  pointer-events: none;
-}
-
-ul.todo-items-list.loading::after {
-  content: '로딩 중...';
-
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  width: 100%;
-  height: 100%;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  background-color: rgb(255, 255, 255, 0.85);
+  height: 300px;
+  overflow: auto;
 }
 
 li.todo-item {
