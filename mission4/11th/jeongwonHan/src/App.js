@@ -1,6 +1,5 @@
 import TodoContainer from './containers/TodoContainer.js'
-import UserList from './components/UserList.js'
-import UserName from './components/UserName.js'
+import UserContainer from './containers/UserContainer.js'
 import Loading from './components/common/Loading.js'
 import { api } from './api/api.js'
 
@@ -9,37 +8,21 @@ function App($target) {
 
   this.init = async () => {
     this.$target = $target
+    this.isLoading = false
 
     this.loading = new Loading({ $target: this.$target, isLoading: this.isLoading })
-    this.isLoading = false
 
     this.state = await this.setNextState(USER_NAME)
 
-    this.userName = new UserName({
-      $target: this.$target,
+    this.userContainer = new UserContainer({
+      $target: this.$target.querySelector('.userListContainer'),
       state: this.state,
+      setState: this.setState,
+      setNextState: this.setNextState,
     })
-
-    this.userList = new UserList({
-      $target: this.$target,
-      state: this.state,
-      onSelectUser: async (userName) => {
-        try {
-          const nextState = await this.setNextState(userName)
-          this.setState(nextState)
-        } catch (e) {
-          console.log(e)
-        }
-      },
-    })
-
-    this.$todoListDiv1 = document.createElement('div')
-    this.$todoListDiv1.classList.add('todoList')
-
-    this.$target.appendChild(this.$todoListDiv1)
 
     this.todoContainer = new TodoContainer({
-      $target: this.$todoListDiv1,
+      $target: this.$target.querySelector('.runningTodoList'),
       state: this.state,
       setState: this.setState,
       setNextState: this.setNextState,
@@ -70,8 +53,8 @@ function App($target) {
 
   this.setState = (nextState) => {
     this.state = nextState
-    this.userName.setState(this.state)
-    this.userList.setState(this.state)
+    this.userContainer.userName.setState(this.state)
+    this.userContainer.userList.setState(this.state)
     this.todoContainer.todoList.setState(this.state)
     this.todoContainer.todoCount.setState(this.state)
     this.loading.setState(this.isLoading)

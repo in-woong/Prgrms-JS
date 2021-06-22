@@ -1,7 +1,6 @@
 function UserName({ $target, state }) {
     this.$target = $target
-    this.$UserName = document.createElement('h1')
-    this.$UserName.setAttribute('data-component-type', 'UserName')
+    this.$UserName = document.createElement('h2')
     this.$UserName.classList.add('userName')
     this.$target.appendChild(this.$UserName)
     this.state = state

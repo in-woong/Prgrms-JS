@@ -1,4 +1,4 @@
-import { todoValidate } from '../utils/Validation.js'
+import { todoValidate } from '../utils/Validator.js'
 import ErrorMessage from '../utils/ErrorMessage.js'
 
 function TodoList({ $target, state, onToggleTodo, onDeleteTodo }) {
@@ -10,7 +10,6 @@ function TodoList({ $target, state, onToggleTodo, onDeleteTodo }) {
 
   this.$target = $target
   this.$todoListUl = document.createElement('ul')
-  this.$todoListUl.setAttribute('data-component-type', 'TodoUl')
   this.$todoListUl.classList.add('todoUl')
   this.$target.appendChild(this.$todoListUl)
 
@@ -43,7 +42,7 @@ function TodoList({ $target, state, onToggleTodo, onDeleteTodo }) {
         : this.state.todos
             .map(
               (todo) => `<li id=${todo._id} class="complete_${todo.isCompleted}">
-              <span class="toggle">${todo.content}</span>
+              <p class="toggle">${todo.content}</p>
               <span class="remove">X</span>
               </li>`
             )

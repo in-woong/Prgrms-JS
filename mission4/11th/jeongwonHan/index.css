@@ -1,6 +1,32 @@
 body {
+  margin:0;
   font-family: 'Noto Sans KR', sans-serif;
 }
+
+main{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+section{
+  width: 60%;
+  text-align: center;
+}
+
+.todoListContainer{
+  display: flex;
+  justify-content: space-between;
+}
+
+.todoListContainer section{
+  background-color: rgb(235, 247, 243);
+  padding: 10px;
+  margin: 10px;
+}
+
 ul {
   list-style: none;
 }
@@ -41,19 +67,26 @@ input:focus {
   padding: 2px 6px;
   font-size: 12px;
   margin: 2px 4px;
+  cursor: pointer;
 }
 
-.todoList {
-  border: 1px solid teal;
-  padding: 10px;
-  width: 300px;
+.userList li:hover{
+  background-color:  rgba(21, 126, 126, 0.432);
+}
+
+.todoUl{
+  padding: 10px 40px;
 }
 
 .todoUl li {
   display: flex;
-  width: 150px;
   justify-content: space-between;
 }
+
+.todoUl li p{
+  margin: 0;
+}
+
 
 .todoUl .complete_true .toggle {
   text-decoration: line-through;
