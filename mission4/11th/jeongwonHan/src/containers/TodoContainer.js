@@ -40,6 +40,7 @@ function TodoContainer({ $target, state, setAllState, setNextState }) {
       }
     },
   })
+
   this.runningTodoList = new TodoList({
     $target: this.$target.querySelector('.runningTodoList'),
     state: {

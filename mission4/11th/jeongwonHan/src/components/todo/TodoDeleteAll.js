@@ -3,11 +3,12 @@ function TodoDeleteAll({ $target, state, onDeleteAll }) {
     throw new Error(ErrorMessage.SET_NEW_ERROR)
   }
   this.$target = $target
+  this.state = state
+  this.onDeleteAll = onDeleteAll
+
   this.$todoDeleteButton = document.createElement('button')
   this.$todoDeleteButton.innerText = '모두 삭제'
   this.$target.appendChild(this.$todoDeleteButton)
-  this.state = state
-  this.onDeleteAll = onDeleteAll
   this.deleteAllEvent = new Event('deleteAll')
 
   this.deleteButtonHandler = () => {

@@ -33,15 +33,17 @@ function TodoList({ $target, state, onToggleTodo, onDeleteTodo }) {
   this.onDrag = (e) => {
     e.dataTransfer.setData('text', e.target.id)
   }
+
   this.allowDrop = (e) => {
     e.preventDefault()
   }
+
   this.drop = (e) => {
     e.preventDefault()
-
     const dropElementId = e.dataTransfer.getData('text')
     const dragStartElementSectionId = document.getElementById(dropElementId).closest('section').id
     const droppedElementSectionId = e.target.closest('section').id
+
     if (dragStartElementSectionId !== droppedElementSectionId) {
       this.onToggleTodo(dropElementId)
     }

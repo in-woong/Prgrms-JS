@@ -26,10 +26,9 @@ export const todoValidator = (data) => {
       throw new Error(ErrorMessage.DATA_HAS_NOT_ERROR('Todo', 'isCompleted'))
     }
   })
-};
+}
 
 export const userValidator = (data) => {
-  
   if (data === null && data === '') {
     throw new Error(ErrorMessage.DATA_IS_ERROR('User', '빈 값'))
   }
@@ -37,6 +36,4 @@ export const userValidator = (data) => {
   if (!Array.isArray(data)) {
     throw new Error(ErrorMessage.DATA_IS_NOT_ERROR('User', 'Array'))
   }
-
 }
-

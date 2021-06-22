@@ -17,6 +17,7 @@ function TodoInput({ $target, onAddTodo }) {
       alert('Todo를 입력하세요')
       return
     }
+
     this.onAddTodo(e.target.value)
     this.$todoInput.value = ''
     this.$todoInput.focus()
@@ -24,4 +25,5 @@ function TodoInput({ $target, onAddTodo }) {
 
   this.$todoInput.addEventListener('keyup', this.todoInsertHandler)
 }
+
 export default TodoInput

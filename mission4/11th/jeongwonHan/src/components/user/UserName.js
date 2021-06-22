@@ -3,10 +3,10 @@ function UserName({ $target, state }) {
     throw new Error(ErrorMessage.SET_NEW_ERROR)
   }
   this.$target = $target
+  this.state = state
   this.$UserName = document.createElement('h2')
   this.$UserName.classList.add('userName')
   this.$target.appendChild(this.$UserName)
-  this.state = state
 
   this.setState = function (nextState) {
     this.state = nextState
