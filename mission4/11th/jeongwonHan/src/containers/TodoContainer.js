@@ -4,9 +4,10 @@ import TodoDeleteAll from '../components/todo/TodoDeleteAll.js'
 import TodoCount from '../components/todo/TodoCount.js'
 import { api } from '../api/api.js'
 
-function TodoContainer({ $target, state, setState, setNextState }) {
+function TodoContainer({ $target, state, setAllState, setNextState }) {
   this.$target = $target
   this.state = state
+  this.setAllState = setAllState
   this.setNextState = setNextState
 
   this.todoInput = new TodoInput({
@@ -15,9 +16,8 @@ function TodoContainer({ $target, state, setState, setNextState }) {
       const content = { content: todoText }
       try {
         await api.addUserTodo(content, this.state.userName)
-        console.log(this.state.userName)
         const nextState = await this.setNextState(this.state.userName)
-        setState(nextState)
+        this.setAllState(nextState)
       } catch (e) {
         console.log(e)
       }
@@ -31,7 +31,7 @@ function TodoContainer({ $target, state, setState, setNextState }) {
       try {
         await api.deleteAllUserTodo(this.state.userName)
         const nextState = await this.setNextState(this.state.userName)
-        setState(nextState)
+        this.setAllState(nextState)
       } catch (e) {
         console.log(e)
       }
@@ -41,13 +41,13 @@ function TodoContainer({ $target, state, setState, setNextState }) {
     $target: this.$target.querySelector('.runningTodoList'),
     state: {
       ...this.state,
-      todos: this.state.todos.filter(({ isCompleted }) => !isCompleted)
+      todos: this.state.todos.filter(({ isCompleted }) => !isCompleted),
     },
     onToggleTodo: async (todoId) => {
       try {
         await api.toggleUserTodo(this.state.userName, todoId)
         const nextState = await this.setNextState(this.state.userName)
-        setState(nextState)
+        this.setAllState(nextState)
       } catch (e) {
         console.log(e)
       }
@@ -56,7 +56,7 @@ function TodoContainer({ $target, state, setState, setNextState }) {
       try {
         await api.deleteUserTodo(this.state.userName, todoId)
         const nextState = await this.setNextState(this.state.userName)
-        setState(nextState)
+        this.setAllState(nextState)
       } catch (e) {
         console.log(e)
       }
@@ -67,13 +67,13 @@ function TodoContainer({ $target, state, setState, setNextState }) {
     $target: this.$target.querySelector('.completedTodoList'),
     state: {
       ...this.state,
-      todos: this.state.todos.filter(({ isCompleted }) => isCompleted)
+      todos: this.state.todos.filter(({ isCompleted }) => isCompleted),
     },
     onToggleTodo: async (todoId) => {
       try {
         await api.toggleUserTodo(this.state.userName, todoId)
         const nextState = await this.setNextState(this.state.userName)
-        setState(nextState)
+        this.setAllState(nextState)
       } catch (e) {
         console.log(e)
       }
@@ -82,7 +82,7 @@ function TodoContainer({ $target, state, setState, setNextState }) {
       try {
         await api.deleteUserTodo(this.state.userName, todoId)
         const nextState = await this.setNextState(this.state.userName)
-        setState(nextState)
+        this.setAllState(nextState)
       } catch (e) {
         console.log(e)
       }
@@ -95,11 +95,11 @@ function TodoContainer({ $target, state, setState, setNextState }) {
     this.state = nextState
     this.runningTodoList.setState({
       ...this.state,
-      todos: this.state.todos.filter(({ isCompleted }) => !isCompleted)
+      todos: this.state.todos.filter(({ isCompleted }) => !isCompleted),
     })
     this.completedTodoList.setState({
       ...this.state,
-      todos: this.state.todos.filter(({ isCompleted }) => isCompleted)
+      todos: this.state.todos.filter(({ isCompleted }) => isCompleted),
     })
     this.todoCount.setState(this.state)
   }

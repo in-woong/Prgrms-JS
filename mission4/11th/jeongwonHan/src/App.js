@@ -17,17 +17,16 @@ function App($target) {
     this.userContainer = new UserContainer({
       $target: this.$target.querySelector('.userListContainer'),
       state: this.state,
-      setState : this.setState,
+      setAllState: this.setAllState,
       setNextState: this.setNextState,
     })
 
     this.todoContainer = new TodoContainer({
       $target: this.$target.querySelector('.todoListContainer'),
       state: this.state,
-      setState : this.setState,
+      setAllState: this.setAllState,
       setNextState: this.setNextState,
     })
-
   }
 
   this.setNextState = async (userName) => {
@@ -51,10 +50,10 @@ function App($target) {
     }
   }
 
-  this.setState = (nextState) => {
+  this.setAllState = (nextState) => {
     this.state = nextState
     this.userContainer.setState(this.state)
-    this.todoContainer.setState(this.state);
+    this.todoContainer.setState(this.state)
     this.loading.setState(this.isLoading)
   }
 
