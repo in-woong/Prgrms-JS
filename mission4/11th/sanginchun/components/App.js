@@ -184,6 +184,9 @@ class App {
         this.handleError('처리에 실패했습니다')
         return
       }
+
+      this.setNextTodoItems()
+      return
     }
 
     if (e.target.closest('button.todo-item-delete-button')) {
@@ -197,9 +200,10 @@ class App {
         this.handleError('삭제에 실패했습니다')
         return
       }
-    }
 
-    this.setNextTodoItems()
+      this.setNextTodoItems()
+      return
+    }
   }
 
   async onTodoItemDrop($todoItem, $todoListSection) {
