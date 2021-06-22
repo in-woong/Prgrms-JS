@@ -12,7 +12,7 @@ class App {
     this.state = {
       todoItems: [],
       users: [],
-      currentUser: DEFAULT_USER,
+      currentUser: null,
       isLoading: true,
     }
 
@@ -44,7 +44,38 @@ class App {
       initialState: this.state.isLoading,
     })
 
-    this.init()
+    this.initUser()
+  }
+
+  async initUser() {
+    const users = await getUsers()
+    if (users === null) {
+      this.handleError('유저 목록을 불러오는 데 실패했습니다')
+      return
+    }
+
+    let currentUser = DEFAULT_USER
+
+    if (!users.includes(currentUser)) {
+      const createUserConfirmed = window.confirm(`유저 '${currentUser}'를 찾지 못했습니다. 새로 생성할까요?`)
+
+      if (createUserConfirmed) {
+        await addTodoItem('Sample', currentUser)
+
+        this.initUser()
+        return
+      } else {
+        currentUser = users[0]
+      }
+    }
+
+    this.setState({
+      ...this.state,
+      users,
+      currentUser,
+    })
+
+    this.setNextTodoItems()
   }
 
   setState(nextState) {
@@ -60,22 +91,6 @@ class App {
     })
 
     this.loader.setState(this.state.isLoading)
-  }
-
-  async init() {
-    const results = await Promise.allSettled([getTodoItems(this.state.currentUser), getUsers()])
-
-    if (results.some((result) => result.status === 'rejected' || result.value === null)) {
-      this.handleError('데이터를 불러오는 데 실패했습니다')
-      return
-    }
-
-    this.setState({
-      ...this.state,
-      todoItems: results[0].value,
-      users: results[1].value,
-      isLoading: false,
-    })
   }
 
   async setNextTodoItems() {
