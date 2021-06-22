@@ -21,7 +21,7 @@ function App($target) {
       setNextState: this.setNextState,
     })
 
-    this.todoContainer = new TodoContainer({
+    this.runningTodoContainer = new TodoContainer({
       $target: this.$target.querySelector('.runningTodoList'),
       state: {
         ...this.state,
@@ -31,7 +31,7 @@ function App($target) {
       setNextState: this.setNextState,
     })
 
-    this.todoContainer = new TodoContainer({
+    this.completedTodoContainer = new TodoContainer({
       $target: this.$target.querySelector('.completedTodoList'),
       state: {
         ...this.state,
@@ -55,8 +55,6 @@ function App($target) {
         todos,
         userName,
       }
-      console.log(nextState)
-
       this.isLoading = false
       this.loading.setState(this.isLoading)
 
@@ -70,8 +68,16 @@ function App($target) {
     this.state = nextState
     this.userContainer.userName.setState(this.state)
     this.userContainer.userList.setState(this.state)
-    this.todoContainer.todoList.setState(this.state)
-    this.todoContainer.todoCount.setState(this.state)
+    this.runningTodoContainer.todoList.setState({
+      ...this.state,
+      todos: this.state.todos.filter(({ isCompleted }) => !isCompleted)
+    })
+    this.runningTodoContainer.todoCount.setState(this.state)
+    this.completedTodoContainer.todoList.setState({
+      ...this.state,
+      todos: this.state.todos.filter(({ isCompleted }) => isCompleted)
+    })
+    this.completedTodoContainer.todoCount.setState(this.state)
     this.loading.setState(this.isLoading)
   }
 

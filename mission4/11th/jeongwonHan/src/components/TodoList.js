@@ -30,6 +30,23 @@ function TodoList({ $target, state, onToggleTodo, onDeleteTodo }) {
     }
   }
 
+  this.onDrag = (e) => {
+    e.dataTransfer.setData('text', e.target.id)
+  }
+  this.allowDrop = (e) => {
+    e.preventDefault();
+  }
+  this.drop = (e) => {
+    e.preventDefault();
+
+    const dropElementId = e.dataTransfer.getData("text");
+    const dragStartElementSectionId = document.getElementById(dropElementId).closest('section').id;
+    const droppedElementSectionId = e.target.closest('section').id;
+    if(dragStartElementSectionId !== droppedElementSectionId){
+      this.onToggleTodo(dropElementId)
+    }
+  }
+
   this.setState = (nextState) => {
     this.state = nextState
     this.render()
@@ -41,7 +58,7 @@ function TodoList({ $target, state, onToggleTodo, onDeleteTodo }) {
         ? `<li>할 일을 입력하세요!</li>`
         : this.state.todos
             .map(
-              (todo) => `<li id=${todo._id} class="complete_${todo.isCompleted}">
+              (todo) => `<li id=${todo._id} class="complete_${todo.isCompleted}" draggable="true">
               <p class="toggle">${todo.content}</p>
               <span class="remove">X</span>
               </li>`
@@ -52,9 +69,10 @@ function TodoList({ $target, state, onToggleTodo, onDeleteTodo }) {
 
   this.render()
 
-  this.$todoListUl.addEventListener('click', (e) => {
-    this.todoClickHandler(e)
-  })
+  this.$todoListUl.addEventListener('click', this.todoClickHandler)
+  this.$todoListUl.addEventListener('dragstart', this.onDrag);
+  this.$todoListUl.addEventListener('dragover', this.allowDrop);
+  this.$todoListUl.addEventListener('drop', this.drop);
 }
 
 export default TodoList
