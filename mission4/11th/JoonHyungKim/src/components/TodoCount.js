@@ -1,5 +1,5 @@
 export default class TodoCount {
-    constructor({ $app}) {
+    constructor({ $app }) {
         this.state = []
 
         this.$target = document.createElement("div")

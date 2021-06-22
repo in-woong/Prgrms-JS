@@ -3,7 +3,7 @@ export default class TodoList {
         $app,
         onToggleItem,
         onRemoveItem,
-        completedOnly
+        completedOnly,
     }) {
         this.state = []
         this.onToggleItem = onToggleItem
@@ -20,7 +20,7 @@ export default class TodoList {
     }
 
     render() {
-        this.$target.innerHTML = `${this.state.filter(({isCompleted}) => isCompleted === this.completedOnly).reduce((acc, { content, isCompleted, _id }) => `${acc} <li data-_id=${_id} draggable="true">${isCompleted ? `<s>${content}</s>` : content} <button>삭제</button></li>`, "")}`
+        this.$target.innerHTML = `${this.state.filter(({ isCompleted }) => isCompleted === this.completedOnly).reduce((acc, { content, isCompleted, _id }) => `${acc} <li data-_id=${_id} draggable="true">${isCompleted ? `<s>${content}</s>` : content} <button>삭제</button></li>`, "")}`
     }
 
     setState(newState) {
@@ -42,20 +42,20 @@ export default class TodoList {
                 break
             }
         })
-        
+
         this.$target.addEventListener("dragstart", (event) => {
             const { _id } = event.target.closest("li").dataset
-            
-            event.dataTransfer.setData("text/plain", _id);
-            event.dataTransfer.dropEffect = "move";
+
+            event.dataTransfer.setData("text/plain", _id)
+            event.dataTransfer.dropEffect = "move"
         })
-        
+
         this.$target.addEventListener("dragover", (event) => {
-            event.preventDefault();
+            event.preventDefault()
         })
-        
+
         this.$target.addEventListener("drop", (event) => {
-            event.preventDefault();
+            event.preventDefault()
             const _id = event.dataTransfer.getData("text")
             this.onToggleItem(_id)
         })
