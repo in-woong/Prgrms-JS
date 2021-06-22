@@ -63,24 +63,18 @@ class App {
   }
 
   async init() {
-    Promise.all([
-      getUsers().then((nextUsers) => {
-        this.setState({
-          ...this.state,
-          users: nextUsers,
-        })
-      }),
-      getTodoItems(this.state.currentUser).then((nextTodoItems) => {
-        this.setState({
-          ...this.state,
-          todoItems: nextTodoItems,
-        })
-      }),
-    ]).then(() => {
-      this.setState({
-        ...this.state,
-        isLoading: false,
-      })
+    const results = await Promise.allSettled([getTodoItems(this.state.currentUser), getUsers()])
+
+    if (results.some((result) => result.status === 'rejected' || result.value === null)) {
+      this.handleError('데이터를 불러오는 데 실패했습니다')
+      return
+    }
+
+    this.setState({
+      ...this.state,
+      todoItems: results[0].value,
+      users: results[1].value,
+      isLoading: false,
     })
   }
 
