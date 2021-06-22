@@ -1,8 +1,8 @@
 export default class TodoList {
     constructor({
-        $app, initState, onToggleItem, onRemoveItem,
+        $app, onToggleItem, onRemoveItem,
     }) {
-        this.state = initState
+        this.state = []
         this.onToggleItem = onToggleItem
         this.onRemoveItem = onRemoveItem
 
@@ -16,7 +16,7 @@ export default class TodoList {
     }
 
     render() {
-        this.$target.innerHTML = `${this.state.reduce((acc, { text, isCompleted }, index) => `${acc} <li data-index=${index}>${isCompleted ? `<s>${text}</s>` : text} <button>삭제</button></li>`, "")}`
+        this.$target.innerHTML = `${this.state.reduce((acc, { content, isCompleted, _id }) => `${acc} <li data-_id=${_id}>${isCompleted ? `<s>${content}</s>` : content} <button>삭제</button></li>`, "")}`
     }
 
     setState(newState) {
@@ -26,15 +26,15 @@ export default class TodoList {
 
     addEventDelegator() {
         this.$target.addEventListener("click", ({ target }) => {
-            const { index } = target.closest("li").dataset
+            const { _id } = target.closest("li").dataset
             const { nodeName } = target
             switch (nodeName) {
             case "BUTTON":
-                this.onRemoveItem(index)
+                this.onRemoveItem(_id)
                 break
             case "LI":
             case "S":
-                this.onToggleItem(index)
+                this.onToggleItem(_id)
                 break
             }
         })

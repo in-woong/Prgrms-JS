@@ -3,6 +3,8 @@ import TodoInput from "./TodoInput.js"
 import TodoCount from "./TodoCount.js"
 import RemoveAllButton from "./RemoveAllButton.js"
 
+import TodoApi from "../api/TodoApi.js"
+
 const validateData = (data) => {
     if (data == null) {
         throw new Error("빈 데이터입니다.")
@@ -12,61 +14,88 @@ const validateData = (data) => {
         throw new Error("배열 값만 사용할 수 있습니다.")
     }
 
-    if (!data.every(({ text = null, isCompleted = null }) => typeof text === "string" && typeof isCompleted === "boolean")) {
+    if (!data.every(item => item.hasOwnProperty('content') && item.hasOwnProperty('isCompleted') && item.hasOwnProperty('_id'))) {
+        throw new Error('잘못된 데이터 입니다.')
+    }
+
+    if (!data.every(({ content, isCompleted, _id }) => typeof content === "string" && typeof isCompleted === "boolean" && typeof _id === "string")) {
         throw new Error("잘못된 데이터입니다.")
     }
 }
 
 export default class App {
-    constructor({ $app, initState }) {
+    constructor({ $app, user }) {
         this.$app = $app
-        validateData(initState)
-        this.state = initState
+        this.state = []
+        this.api = new TodoApi(user);
         this.$children = [
             new TodoInput({
                 $app: this.$app,
-                onAddTodoItem: (text) => {
-                    this.setState([
-                        ...this.state,
-                        {
-                            text,
-                            isCompleted: false,
-                        },
-                    ])
+                onAddTodoItem: async(content) => {
+                    try {
+                        await this.api.addToDo({ content })
+                        await this.fetchStateFromApi();
+                    }
+                    catch (err) {
+                        console.error(err);
+                    }
                 },
             }),
             new TodoList({
                 $app: this.$app,
-                initState,
-                onToggleItem: (index) => {
-                    const newState = [...this.state]
-                    newState[index].isCompleted = !newState[index].isCompleted
-                    this.setState(newState)
+                onToggleItem: async(_id) => {
+                    try {
+                        await this.api.toggleCompleted({ _id })
+                        await this.fetchStateFromApi();
+                    }
+                    catch (err) {
+                        console.error(err);
+                    }
+
                 },
-                onRemoveItem: (index) => {
-                    const newState = [...this.state]
-                    newState.splice(index, 1)
-                    this.setState(newState)
+                onRemoveItem: async(_id) => {
+                    try {
+                        await this.api.deleteToDo({ _id })
+                        await this.fetchStateFromApi();
+                    }
+                    catch (err) {
+                        console.error(err);
+                    }
+
                 },
             }),
             new TodoCount({
                 $app: this.$app,
-                initState,
             }),
             new RemoveAllButton({
                 $app: this.$app,
             }),
         ]
 
-        this.$app.addEventListener("removeall", () => {
-            this.setState([])
+        ;(async() => {
+            try {
+                await this.fetchStateFromApi();
+            }
+            catch (err) {
+                console.error(err);
+            }
+        })()
+
+        this.$app.addEventListener("removeall", async() => {
+            try {
+                await this.api.deleteAllToDo();
+                await this.fetchStateFromApi();
+            }
+            catch (err) {
+                console.error(err);
+            }
         })
     }
 
-    setState(newState) {
+    async fetchStateFromApi() {
+        const newState = await this.api.getToDo()
         validateData(newState)
         this.state = newState
-        localStorage.setItem("todo", JSON.stringify(this.state))
         this.render()
     }
 

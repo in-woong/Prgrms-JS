@@ -1,6 +1,6 @@
 export default class TodoCount {
-    constructor({ $app, initState }) {
-        this.state = initState
+    constructor({ $app}) {
+        this.state = []
 
         this.$target = document.createElement("div")
         this.$target.classList.add("todo-count")
