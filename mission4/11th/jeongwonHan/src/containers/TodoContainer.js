@@ -1,7 +1,7 @@
-import TodoList from '../components/TodoList.js'
-import TodoInput from '../components/TodoInput.js'
-import TodoDeleteAll from '../components/TodoDeleteAll.js'
-import TodoCount from '../components/TodoCount.js'
+import TodoList from '../components/todo/TodoList.js'
+import TodoInput from '../components/todo/TodoInput.js'
+import TodoDeleteAll from '../components/todo/TodoDeleteAll.js'
+import TodoCount from '../components/todo/TodoCount.js'
 import { api } from '../api/api.js'
 
 function TodoContainer({ $target, state, setState, setNextState }) {
@@ -11,7 +11,7 @@ function TodoContainer({ $target, state, setState, setNextState }) {
   this.setNextState = setNextState
 
   this.todoInput = new TodoInput({
-    $target: this.$target,
+    $target: this.$target.querySelector('.todoHeaderContainer'),
     onAddTodo: async (todoText) => {
       const content = { content: todoText }
       try {
@@ -25,7 +25,7 @@ function TodoContainer({ $target, state, setState, setNextState }) {
   })
 
   this.todoDeleteAll = new TodoDeleteAll({
-    $target: this.$target,
+    $target: this.$target.querySelector('.todoHeaderContainer'),
     state: this.state,
     onDeleteAll: async () => {
       try {
@@ -37,10 +37,38 @@ function TodoContainer({ $target, state, setState, setNextState }) {
       }
     },
   })
+  this.runningTodoList = new TodoList({
+    $target: this.$target.querySelector('.runningTodoList'),
+    state: {
+      ...this.state,
+      todos: this.state.todos.filter(({ isCompleted }) => !isCompleted)
+    },
+    onToggleTodo: async (todoId) => {
+      try {
+        await api.toggleUserTodo(this.state.userName, todoId)
+        const nextState = await this.setNextState(this.state.userName)
+        this.setState(nextState)
+      } catch (e) {
+        console.log(e)
+      }
+    },
+    onDeleteTodo: async (todoId) => {
+      try {
+        await api.deleteUserTodo(this.state.userName, todoId)
+        const nextState = await this.setNextState(this.state.userName)
+        this.setState(nextState)
+      } catch (e) {
+        console.log(e)
+      }
+    },
+  })
 
-  this.todoList = new TodoList({
-    $target: this.$target,
-    state: this.state,
+  this.completedTodoList = new TodoList({
+    $target: this.$target.querySelector('.completedTodoList'),
+    state: {
+      ...this.state,
+      todos: this.state.todos.filter(({ isCompleted }) => isCompleted)
+    },
     onToggleTodo: async (todoId) => {
       try {
         await api.toggleUserTodo(this.state.userName, todoId)

@@ -1,5 +1,5 @@
-import { todoValidate } from '../utils/Validator.js'
-import ErrorMessage from '../utils/ErrorMessage.js'
+import { todoValidate } from '../../utils/Validator.js'
+import ErrorMessage from '../../utils/ErrorMessage.js'
 
 function TodoList({ $target, state, onToggleTodo, onDeleteTodo }) {
   if (!new.target) {

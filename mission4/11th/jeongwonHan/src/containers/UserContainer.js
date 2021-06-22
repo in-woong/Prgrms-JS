@@ -1,5 +1,5 @@
-import UserName from '../components/UserName.js';
-import UserList from '../components/UserList.js';
+import UserName from '../components/user/UserName.js';
+import UserList from '../components/user/UserList.js';
 
 function UserContainer ({ $target, state, setState, setNextState }){
   this.$target = $target

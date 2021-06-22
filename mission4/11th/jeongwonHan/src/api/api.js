@@ -27,9 +27,6 @@ export const api = {
   getUserTodoList: (userName) => {
     return request(`${API_ENDPOINT}/${userName}`)
   },
-  getUserTodoListLate: (userName) => {
-    return request(`${API_ENDPOINT}/${userName}?delay=5000`)
-  },
   addUserTodo: (content, userName) => {
     return request(`${API_ENDPOINT}/${userName}`, option.post(content))
   },
