@@ -2,6 +2,9 @@ import UserName from '../components/user/UserName.js'
 import UserList from '../components/user/UserList.js'
 
 function UserContainer({ $target, state, setAllState, setNextState }) {
+  if (!new.target) {
+    throw new Error(ErrorMessage.SET_NEW_ERROR)
+  }
   this.$target = $target
   this.state = state
   this.setNextState = setNextState

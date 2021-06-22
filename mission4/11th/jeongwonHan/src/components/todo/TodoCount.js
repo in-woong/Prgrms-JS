@@ -1,6 +1,9 @@
 function TodoCount({ $target, state }) {
+  if (!new.target) {
+    throw new Error(ErrorMessage.SET_NEW_ERROR)
+  }
   this.$target = $target
-  this.$todoCountDiv = document.createElement("div")
+  this.$todoCountDiv = document.createElement('div')
   this.$target.appendChild(this.$todoCountDiv)
   this.state = state
 

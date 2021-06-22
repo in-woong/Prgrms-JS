@@ -34,15 +34,15 @@ function TodoList({ $target, state, onToggleTodo, onDeleteTodo }) {
     e.dataTransfer.setData('text', e.target.id)
   }
   this.allowDrop = (e) => {
-    e.preventDefault();
+    e.preventDefault()
   }
   this.drop = (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    const dropElementId = e.dataTransfer.getData("text");
-    const dragStartElementSectionId = document.getElementById(dropElementId).closest('section').id;
-    const droppedElementSectionId = e.target.closest('section').id;
-    if(dragStartElementSectionId !== droppedElementSectionId){
+    const dropElementId = e.dataTransfer.getData('text')
+    const dragStartElementSectionId = document.getElementById(dropElementId).closest('section').id
+    const droppedElementSectionId = e.target.closest('section').id
+    if (dragStartElementSectionId !== droppedElementSectionId) {
       this.onToggleTodo(dropElementId)
     }
   }
@@ -70,9 +70,9 @@ function TodoList({ $target, state, onToggleTodo, onDeleteTodo }) {
   this.render()
 
   this.$todoListUl.addEventListener('click', this.todoClickHandler)
-  this.$todoListUl.addEventListener('dragstart', this.onDrag);
-  this.$todoListUl.addEventListener('dragover', this.allowDrop);
-  this.$todoListUl.addEventListener('drop', this.drop);
+  this.$todoListUl.addEventListener('dragstart', this.onDrag)
+  this.$todoListUl.addEventListener('dragover', this.allowDrop)
+  this.$todoListUl.addEventListener('drop', this.drop)
 }
 
 export default TodoList

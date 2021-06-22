@@ -1,4 +1,7 @@
 function Loading({ $target, isLoading }) {
+  if (!new.target) {
+    throw new Error(ErrorMessage.SET_NEW_ERROR)
+  }
   this.$target = $target
   this.isLoading = isLoading
   this.loadingDiv = document.createElement('div')

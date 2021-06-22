@@ -1,8 +1,11 @@
 import { userValidator } from '../../utils/Validator.js'
 
 function UserList({ $target, state, onSelectUser }) {
+  if (!new.target) {
+    throw new Error(ErrorMessage.SET_NEW_ERROR)
+  }
   userValidator(state.userList)
-  
+
   this.$target = $target
   this.state = state
 

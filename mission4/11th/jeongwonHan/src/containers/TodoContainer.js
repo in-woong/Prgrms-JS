@@ -5,6 +5,9 @@ import TodoCount from '../components/todo/TodoCount.js'
 import { api } from '../api/api.js'
 
 function TodoContainer({ $target, state, setAllState, setNextState }) {
+  if (!new.target) {
+    throw new Error(ErrorMessage.SET_NEW_ERROR)
+  }
   this.$target = $target
   this.state = state
   this.setAllState = setAllState

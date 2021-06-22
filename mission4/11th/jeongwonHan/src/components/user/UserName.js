@@ -1,4 +1,7 @@
 function UserName({ $target, state }) {
+  if (!new.target) {
+    throw new Error(ErrorMessage.SET_NEW_ERROR)
+  }
   this.$target = $target
   this.$UserName = document.createElement('h2')
   this.$UserName.classList.add('userName')
