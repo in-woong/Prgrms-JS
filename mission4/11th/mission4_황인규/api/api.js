@@ -5,8 +5,8 @@ const defaultName = "hwnagingyu";
 const defaultValue = "defaultValue";
 
 export const onTodoApi = {
-    onGetTodo : async(username = defaultName) => {
-        const response = await fetch(`${API_ENDPOINT}/${username}`);
+    onGetTodo : async(username = defaultName, delay) => {
+        const response = await fetch(`${API_ENDPOINT}/${username}?delay=${delay}`);
         //const response = await fetch(todoListURL);
 
         if(response.ok)

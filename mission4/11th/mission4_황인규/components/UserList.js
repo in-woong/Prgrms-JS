@@ -4,14 +4,13 @@ function UserList(params){
     const users = params.users;
     const onClick = params.onClick;
     this.usersList = params.data;
-    this.$clickedKeyword = '';
+    
+    this.$clickedKeyword = 'hwangingyu';
     users();
   
     this.clickUserName = (li) => {
-        console.log(li.innerHTML);
+       
         this.$clickedKeyword = li.innerText;
-        
-        
         onClick(this.$clickedKeyword);
     }
 
@@ -23,20 +22,25 @@ function UserList(params){
 
     this.render = () => {
        
-        
-        const htmlString = this.usersList.map((userList) =>{
-            
-            const className = `user-list-element ${ this.$clickedKeyword === userList ? 'current' : '' }`.trimEnd();
-            return `<li class = "${className}" user-name = "${
-              userList
-            }">${userList}</li>`
-        })
+        if(this.usersList.isLoading === false){
+            $target.innerHTML = `<div class="message">로딩중입니다...</div>`
+        }
+        if(this.usersList.isLoading === true){
+            const htmlString = this.usersList.data.map((userList) =>{
+                
+                const className = `user-list-element ${ this.$clickedKeyword === userList ? 'current' : '' }`.trimEnd();
+                return `<li class = "${className}" user-name = "${
+                userList
+                }">${userList}</li>`
+            })
 
-        $target.innerHTML = `<ul class="user-list">${htmlString.join('')}</ul>`
+            $target.innerHTML = `<ul class="user-list">${htmlString.join('')}</ul>`
+        }   
     }
 
     
     this.setState = (nextData) => {
+       
         this.usersList = nextData;
         this.render()
     }

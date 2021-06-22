@@ -2,12 +2,13 @@ function TodoList(params) {
     const $target = params.$target
     const onClick = params.onClick
     const onRemove = params.onRemove
-    let data = params.data || []
+    this.$data = params.data;
 
     $target.addEventListener('click', function(e) {
 
-      const id = e.target.closest('li').dataset.id
-     
+      const id = e.target.closest('li').dataset.id;
+      const username = e.target.closest("li").innerHTML;
+      
       if (e.target.className === 'remove-button') {
         e.stopPropagation()
         onRemove(id)
@@ -17,16 +18,18 @@ function TodoList(params) {
     })
   
     this.setState = (nextData) => {
-      
-      data = nextData
+    
+      this.$data = nextData
       this.render()
     }
   
     this.render = function() {
-      if(data.isLoading === false){
+      if(this.$data.isLoading === false){
         $target.innerHTML = `<div class="message">로딩중입니다...</div>`
-      }else{
-        const htmlString = data.map(function(todo) {
+      }
+
+      if(this.$data.isLoading === true){
+        const htmlString = this.$data.data.map(function(todo) {
           const contentHTML = todo.isCompleted
             ? `<strike>${todo.content}</strike>`
             : `${todo.content}`

@@ -4,7 +4,8 @@ import {$} from "./utils/utils.js";
 (function() {
     
     const app = new main($("app"), {
-        user : [],
+        data : [],
+        username : "",
         isLoading : false,
     });
   })()
