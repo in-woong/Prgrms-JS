@@ -20,7 +20,7 @@ export default class TodoList {
     }
 
     render() {
-        this.$target.innerHTML = `${this.state.filter(({ isCompleted }) => isCompleted === this.completedOnly).reduce((acc, { content, isCompleted, _id }) => `${acc} <li data-_id=${_id} draggable="true">${isCompleted ? `<s>${content}</s>` : content} <button>삭제</button></li>`, "")}`
+        this.$target.innerHTML = `${this.state.filter(({ isCompleted }) => isCompleted === this.completedOnly).reduce((acc, { content, isCompleted, _id }) => `${acc} <li data-item=${JSON.stringify({ isCompleted, _id })} draggable="true">${isCompleted ? `<s>${content}</s>` : content} <button>삭제</button></li>`, "")}`
     }
 
     setState(newState) {
@@ -44,9 +44,9 @@ export default class TodoList {
         })
 
         this.$target.addEventListener("dragstart", (event) => {
-            const { _id } = event.target.closest("li").dataset
+            const { item } = event.target.closest("li").dataset
 
-            event.dataTransfer.setData("text/plain", _id)
+            event.dataTransfer.setData("text/plain", item)
             event.dataTransfer.dropEffect = "move"
         })
 
@@ -56,8 +56,10 @@ export default class TodoList {
 
         this.$target.addEventListener("drop", (event) => {
             event.preventDefault()
-            const _id = event.dataTransfer.getData("text")
-            this.onToggleItem(_id)
+            const { isCompleted, _id } = JSON.parse(event.dataTransfer.getData("text/plain"))
+            if (this.completedOnly !== isCompleted) {
+                this.onToggleItem(_id)
+            }
         })
     }
 }
