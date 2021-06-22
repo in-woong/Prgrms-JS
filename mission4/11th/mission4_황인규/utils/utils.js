@@ -1,5 +1,6 @@
 export const errorMessage = {
     CHECK_TODOS : (username) => `${username}으로 todolist를 불러올 수 없습니다.`,
+    CHECK_USER_LIST : () => `userlist를 불러올 수 없습니다.`,
     CHECK_TOGGLE : (username) => `${username}으로 toggle를 할 수 없습니다.`,
     CHECK_DELETE : (username) => `${username}으로 delete를 할 수 없습니다. `,
     CHECK_DELETE_ALL : (username) => `${username}으로 delete all을 할 수 없습니다.`,

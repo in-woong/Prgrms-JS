@@ -1,5 +1,7 @@
 import TodoList from "./components/TodoList.js";
 import TodoInput from "./components/TodoInput.js";
+import UserList from "./components/UserList.js";
+
 import {onTodoApi} from "./api/api.js"
 import {$} from "./utils/utils.js";
 
@@ -8,7 +10,7 @@ function main($app, initialData) {
     
     this.$state = initialData;
 
-    const username = 'roto';
+    const username = 'hwangingyu';
   
     const onGetTodo = async(username) => {
         try{
@@ -53,7 +55,36 @@ function main($app, initialData) {
     };
 
 
-    
+    const onGetUserList = async() => {
+        try{
+            const response = await onTodoApi.onGetUserList();
+            if(response)
+                return response;
+        }catch(error){
+            console.log(error);
+        }
+    }
+
+    const getUserList = new UserList({
+        $target: $('#user-list'),
+        data : [],
+        users : async function () {
+            const updatedUserData = await onGetUserList();
+            getUserList.setState(updatedUserData);    
+        },
+        onClick: async function(username) {
+            const previousData = {
+                isLoading : false,
+                data : [],
+            };
+            todoList.setState(previousData);
+            const updatedData = await onGetTodo(username);
+            
+            const updatedUserData = await onGetUserList();
+            getUserList.setState(updatedUserData);   
+            todoList.setState(updatedData);
+        }
+    });
     
     const todoList = new TodoList({
       $target: $('#todo-list'),
@@ -92,6 +123,10 @@ function main($app, initialData) {
             todoList.setState(updateData);
         }
     })
+
+    // this.setState = (nextState) => {
+    //     this.$state = nextState;
+    // }
     // document
     //   .querySelector('#add-todo-button')
     //   .addEventListener('click', async function () {

@@ -1,0 +1,55 @@
+* {
+    margin : 0;
+    padding : 0;
+    box-sizing: border-box;
+  }
+input {
+    width : 50%;
+    height : 2.5rem;
+    padding : 10px;
+}
+
+button {
+    width : 7vh;
+    height : 4vh;
+    border-radius: 20px;
+}
+
+#app {
+    /* 중앙정렬 */
+    margin : 0 auto; 
+    max-width: 800px;
+    min-height : 100vh;
+    padding : 2rem;
+    width : 100%;
+  } 
+
+ul {
+    list-style: none;
+}
+
+#user-list {
+    padding: 0.5rem 0;
+}
+
+#user-list .user-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#user-list .user-list .user-list-element{
+    margin: 5px;
+    padding: 4px 8px;
+  
+    font-size: 0.8rem;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+
+#user-list .user-list .user-list-element.current{
+    background-color: #ccc;
+    color: #000;
+}

@@ -67,4 +67,14 @@ export const onTodoApi = {
             throw new Error(errorMessage.CHECK_DELETE_ALL(username));
         }
     },
+
+    onGetUserList : async() => {
+        const userList = await fetch(`${API_ENDPOINT}/users`)
+      
+        if(userList.ok){
+            return await userList.json();
+        }else{
+            throw new Error(errorMessage.CHECK_USER_LIST());
+        }
+    }
 }
