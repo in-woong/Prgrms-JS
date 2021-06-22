@@ -4,7 +4,7 @@ class Loader {
 
     this.$target = document.createElement('div')
     this.$target.className = 'overlay'
-    this.$target.innerHTML = `<span class="loader">로딩 중...<span>`
+    this.$target.innerHTML = `<span class="loader">로딩 중...</span>`
 
     this._render()
     $app.appendChild(this.$target)
