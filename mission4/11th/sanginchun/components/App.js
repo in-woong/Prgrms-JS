@@ -93,11 +93,12 @@ class App {
   }
 
   async onTodoInputSubmit(e) {
+    e.preventDefault()
+
     this.setState({
       ...this.state,
       isLoading: true,
     })
-    e.preventDefault()
 
     const $content = e.target.querySelector('input#content')
 
@@ -107,10 +108,10 @@ class App {
       return
     }
 
-    this.setNextTodoItems().then(() => {
-      $content.value = ''
-      $content.focus()
-    })
+    await this.setNextTodoItems()
+
+    $content.value = ''
+    $content.focus()
   }
 
   async onDeleteButtonClick(e) {
