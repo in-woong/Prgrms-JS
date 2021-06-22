@@ -7,3 +7,7 @@ main {
 #list, #app {
     overflow-y: auto;
 }
+
+.not-loading {
+    display: none
+}

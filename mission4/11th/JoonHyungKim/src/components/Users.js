@@ -1,13 +1,18 @@
 import TodoApi from "../api/TodoApi.js"
 
+import Loading from "./Loading.js"
+
 export default class Users {
     constructor({ $list }) {
         this.$target = document.createElement('ul')
+        this.loading = new Loading({ $target : this.$target })
         $list.appendChild(this.$target)
         this.state = [];
         (async() => {
             try {
+                this.loading.setState(true)
                 this.state = await TodoApi.getUserList();
+                this.loading.setState(false)
                 this.render();
             }
             catch (err) {

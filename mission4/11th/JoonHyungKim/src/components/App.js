@@ -2,6 +2,7 @@ import TodoList from "./TodoList.js"
 import TodoInput from "./TodoInput.js"
 import TodoCount from "./TodoCount.js"
 import RemoveAllButton from "./RemoveAllButton.js"
+import Loading from "./Loading.js"
 
 import TodoApi from "../api/TodoApi.js"
 
@@ -29,6 +30,8 @@ export default class App {
         this.$app.innerHTML = `<h1>${user}'s ToDo</h1>`
         this.state = []
         this.api = new TodoApi(user);
+        this.loading = new Loading({ $target: this.$app })
+        
         this.$children = [
             new TodoInput({
                 $app: this.$app,
@@ -94,7 +97,9 @@ export default class App {
     }
 
     async fetchStateFromApi() {
+        this.loading.setState(true)
         const newState = await this.api.getToDo()
+        this.loading.setState(false)
         validateData(newState)
         this.state = newState
         this.render()
