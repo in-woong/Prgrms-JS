@@ -1,6 +1,9 @@
+
+const URL = "https://todo-api.roto.codes"
+
 export const TodoAPI = {
   getTodo: async (username, delay) => {
-    const userTodoList = await fetch(`https://todo-api.roto.codes/${username}?delay=${delay}`)
+    const userTodoList = await fetch(`${URL}/${username}?delay=${delay}`)
     if (userTodoList.ok) {
       return await userTodoList.json()
     } else {
@@ -12,7 +15,7 @@ export const TodoAPI = {
     if (todoText.length === 0) {
       throw new Error('공백은 입력할 수 없습니다.')
     } else {
-      await fetch(`https://todo-api.roto.codes/${username}`, {
+      await fetch(`${URL}/${username}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -24,22 +27,22 @@ export const TodoAPI = {
     }
   },
   checkTodo: async (username, todoID) => {
-    await fetch(`https://todo-api.roto.codes/${username}/${todoID}/toggle`, {
+    await fetch(`${URL}/${username}/${todoID}/toggle`, {
       method: 'PUT',
     })
   },
   removeTodo: async (username, todoID) => {
-    await fetch(`https://todo-api.roto.codes/${username}/${todoID}`, {
+    await fetch(`${URL}/${username}/${todoID}`, {
       method: 'DELETE',
     })
   },
   removeAllTodo: async (username) => {
-    await fetch(`https://todo-api.roto.codes/${username}/all`, {
+    await fetch(`${URL}/${username}/all`, {
       method: 'DELETE',
     })
   },
   getUserList: async () => {
-    const userList = await fetch(`https://todo-api.roto.codes/users`)
+    const userList = await fetch(`${URL}/users`)
     if (userList.ok) {
       return await userList.json()
     } else {

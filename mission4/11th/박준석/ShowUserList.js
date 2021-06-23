@@ -8,7 +8,7 @@ export default class ShowUserList {
     this.showUserTodoList = params.showUserTodoList
 
     this.targetUserList.addEventListener('click', ({ target }) => this.userClickEventHandler(target))
-    this.setState()
+    this.setState();
   }
 
   userClickEventHandler(target) {
