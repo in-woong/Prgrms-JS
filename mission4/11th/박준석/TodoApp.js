@@ -15,6 +15,7 @@ export default class TodoApp {
       targetTodoList: $('#users-todo-list'),
       showUserTodoList: (username) => {
         this.username = username
+        this.selectedUserName.innerHTML = this.username
 
         this.todoList = new TodoList({
           targetDone: $('#todo-list'),
@@ -51,7 +52,6 @@ export default class TodoApp {
   }
 
   async setState() {
-    this.selectedUserName.innerHTML = this.username
     this.todoList.setState(null)
     const updatedData = await TodoAPI.getTodo(this.username, 300)
     this.todoList.setState(updatedData)

@@ -1,7 +1,7 @@
 import { $, drag, allowDrop, drop } from './util.js'
 
 const LOADING = 1
-const DATARECEIVED = 0
+const RECEIVED = 0
 
 export default class TodoList {
   constructor(params) {
@@ -29,11 +29,11 @@ export default class TodoList {
   setState(newData) {
     this.todolistData = newData
     if (this.todolistData === null) this.render(LOADING)
-    else this.render(DATARECEIVED)
+    else this.render(RECEIVED)
   }
 
   render(state) {
-    if (state === DATARECEIVED) {
+    if (state === RECEIVED) {
       if (this.todolistData.length === 0) this.target.innerHTML = '<br/>저장된 Todo 가 없습니다.'
       else {
         let htmlString_done = []
