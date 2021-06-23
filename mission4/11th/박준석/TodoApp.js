@@ -7,8 +7,8 @@ import ShowUserList from './ShowUserList.js'
 
 export default class TodoApp {
   constructor() {
-    this.printName = $('#current-user-name')
-    this.data = []
+    this.selectedUserName = $('#current-user-name')
+    this.todolistData = []
 
     this.userList = new ShowUserList({
       targetUserList: $('#user-list'),
@@ -20,7 +20,7 @@ export default class TodoApp {
           targetDone: $('#todo-list'),
           targetNotDone: $('#todo-list-notdone'),
           printTarget: $('#current-user-name'),
-          data: this.data,
+          todolistData: this.todolistData,
           onRemove: async (todoID) => {
             await TodoAPI.removeTodo(this.username, todoID)
             this.setState()
@@ -51,7 +51,7 @@ export default class TodoApp {
   }
 
   async setState() {
-    this.printName.innerHTML = this.username
+    this.selectedUserName.innerHTML = this.username
     this.todoList.setState(null)
     const updatedData = await TodoAPI.getTodo(this.username, 300)
     this.todoList.setState(updatedData)

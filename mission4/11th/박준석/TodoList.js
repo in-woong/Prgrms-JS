@@ -10,7 +10,7 @@ export default class TodoList {
 
     this.onRemove = params.onRemove
     this.onDrop = params.onDrop
-    this.data = params.receivedData || []
+    this.todolistData = params.todolistData || []
 
     this.targetDone.addEventListener('click', ({ target }) => this.todoClickEventHandler(target))
     this.targetDone.addEventListener('dragstart', drag)
@@ -27,18 +27,18 @@ export default class TodoList {
   }
 
   setState(newData) {
-    this.data = newData
-    if (this.data === null) this.render(LOADING)
+    this.todolistData = newData
+    if (this.todolistData === null) this.render(LOADING)
     else this.render(DATARECEIVED)
   }
 
   render(state) {
     if (state === DATARECEIVED) {
-      if (this.data.length === 0) this.target.innerHTML = '<br/>저장된 Todo 가 없습니다.'
+      if (this.todolistData.length === 0) this.target.innerHTML = '<br/>저장된 Todo 가 없습니다.'
       else {
         let htmlString_done = []
         let htmlString_notdone = []
-        this.data.forEach((todo) => {
+        this.todolistData.forEach((todo) => {
           const contentHTML = `<li data-id="${todo._id}" draggable='true'>
           <span class="todo-content">${todo.content}</span> <button class="remove-button">Remove</button></li>`
           if (todo.isCompleted === true) htmlString_done.push(contentHTML)
