@@ -10,7 +10,7 @@ function main($app, initialData) {
         
     this.$state = initialData;
     
-    this.username = 'hwangingyu';
+    this.username = "hwangingyu";
   
     const onGetTodo = async(username) => {
         try{
@@ -66,7 +66,7 @@ function main($app, initialData) {
     }
 
     const getUserList = new UserList({
-        $target: $('#user-list-wrapper'),
+        $target: $(".user-list-wrapper"),
         data : [],
         users :  async() => {
             const updatedUserData = await onGetUserList();
@@ -90,14 +90,12 @@ function main($app, initialData) {
             const updatedUserData = await onGetUserList();
             
             const newUserData = {
-                ...this.$state,
                 data : updatedUserData,
                 username : username,
                 isLoading : true,
             }
             
             const newData = {
-                ...this.$state,
                 data : updatedData,
                 username : username,
                 isLoading : true,
@@ -110,41 +108,9 @@ function main($app, initialData) {
         }
     });
     
-    // const todoList = new TodoList({
-    //   $target: $('#todo-list'),
-    //   data: [],
-    //   onClick: async(id) => {
-    //     await onToggleTodo(this.$state.username, id);
-        
-    //     const updatedData = await onGetTodo(this.$state.username);
-    //     const newData = {
-    //         data : [...updatedData],
-    //         username : this.$state.username,
-    //         isLoading : true,
-    //     }
-    //     todoList.setState(newData);
-    //   },
-    //   onRemove: async(id) => {
-      
-    //         await onDeleteTodo(this.$state.username, id);
-
-    //         const updatedData = await onGetTodo(this.$state.username);
-        
-    //         const newData = {
-    //             data : [...updatedData],
-    //             username : this.$state.username,
-    //             isLoading : true,
-    //         }
-
-        
-    //         todoList.setState(newData);
-        
-    //   },
-    // });
-  
     const todoInput = new TodoInput({
-        $targetButton : $('#add-todo-button'),
-        $targetInput : $('#todo-input'),
+        $targetButton : $(".add-todo-button"),
+        $targetInput : $(".todo-input"),
         onInput : async(value) => {
             const previousData = {
                 ...this.$state,
@@ -165,7 +131,7 @@ function main($app, initialData) {
             }
             
             const newData = {
-                ...this.$state,
+
                 data : updateData,
                 username : this.$state.username,
                 isLoading : true,
@@ -177,44 +143,36 @@ function main($app, initialData) {
     })
 
     const todoTrello = new Trello({
-        $target: $('.user-trello'),
         data : [],
         onClick : async(id) => {
             
             await onToggleTodo(this.$state.username ,id);
 
-
-            const response = await onGetTodo(this.$state.username);
-            //FIXEDME :: Toggle 과 Delete가 되고 있지 않는 현상들
             const newData = {
                 ...this.$state,
-                // FIXEDME : todos의 활용 방법에 대한 고민
-                // todos : this.$state.data.map((todo)=>{
-                //     if(todo.id === id){
-                //         return {
-                //             ...todo,
-                //             isCompleted: !todo.isCompleted,
-                //         }
-                //     }else{
-                //         if(todo.id !== id)
-                //                 return todo
-                //     }
-                // }),
-
-                data : response,
+                data : this.$state.data.filter((todo)=>
+                {
+                    if(todo._id === id) todo.isCompleted = !todo.isCompleted    
+                    
+                    return true;
+                }),
                 username : this.$state.username,
                 isLoading : true,
             }
+
             todoTrello.setState(newData);
         },
         onRemove : async(id) => {
             await onDeleteTodo(this.$state.username, id);
-            const updatedData = await onGetTodo(this.$state.username);
             const newData = {
-                ...updatedData,
+                data : this.$state.data.filter((todo)=>{
+                    if(todo._id === id) return false;
+                    return true;
+                }),
                 username : this.$state.username,
                 isLoading : true,
-            }
+            };
+            this.$state = newData;
             todoTrello.setState(newData);
         }
     })

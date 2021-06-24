@@ -15,7 +15,7 @@ button {
     border-radius: 20px;
 }
 
-#app {
+.app {
     /* 중앙정렬 */
     margin : 0 auto; 
     max-width: 800px;
@@ -28,7 +28,7 @@ ul {
     list-style: none;
 }
 
-#user-list-wrapper {
+.user-list-wrapper {
     padding: 0.5rem 0;
 }
 
@@ -46,13 +46,13 @@ ul {
     width : 100vh;
     height : 100vh;
 }
-#user-list-wrapper .user-list {
+.user-list-wrapper .user-list {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
 }
 
-#user-list-wrapper .user-list .user-list-element{
+.user-list-wrapper .user-list .user-list-element{
     margin: 5px;
     padding: 4px 8px;
   
@@ -63,7 +63,7 @@ ul {
 }
 
 
-#user-list .user-list .user-list-element.current{
+.user-list-wrapper .user-list .user-list-element.current{
     background-color: #ccc;
     color: #000;
 }

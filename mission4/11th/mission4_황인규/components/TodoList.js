@@ -5,10 +5,10 @@ function TodoList(params) {
     this.$data = params.data;
 
     
-    $target.addEventListener('click', function(e) {
+    $target.addEventListener("click", function(e) {
 
       //BUG : e.target.closest('li').id 와 e.target.closest('li').dataset.id 차이점
-      const id = e.target.closest('li').id;
+      const id = e.target.closest("li").id;
       
       const username = e.target.closest("li").innerHTML;
       
@@ -21,17 +21,16 @@ function TodoList(params) {
     })
    
     
-    $target.addEventListener('dragover', (event) => {
+    $target.addEventListener("dragover", (event) => {
       event.preventDefault()
-      console.log("dragover");
-      event.dataTransfer.dropEffect = 'move'
+      event.dataTransfer.dropEffect = "copy"
     })
   
-    $target.addEventListener('drop', (event) => {
+    $target.addEventListener("drop", (event) => {
       event.preventDefault()
-      const targetId = event.dataTransfer.getData('id')
+      const targetId = event.dataTransfer.getData("id")
       const startBoundary = document.getElementById(targetId).parentNode
-      const droppedBoundary = event.target.closest('ul')
+      const droppedBoundary = event.target.closest("ul")
       
       if (startBoundary !== droppedBoundary) {
         onClick(targetId)
@@ -48,10 +47,10 @@ function TodoList(params) {
 
     this.render = function() {
       if(this.$data.isLoading === false){
-        if(!this.$data.isCompleted)
+        if(this.$data.isCompleted)
           $target.innerHTML = `<div class="message">완료한 Task 로딩중입니다...</div>`;
    
-        if(this.$data.isCompleted)
+        if(!this.$data.isCompleted)
           $target.innerHTML = `<div class="message">아직 완료하지 못한 Task 로딩중입니다...</div>`;
         
       }
