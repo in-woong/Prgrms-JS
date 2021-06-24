@@ -7,5 +7,10 @@ import {$} from "./utils/utils.js";
         data : [],
         username : "",
         isLoading : false,
+        //FIXEDME :: todos 활용에 대한 고민 
+        // todos : [{
+        //     id : "",
+        //     isCompleted : false,
+        // }],
     });
   })()

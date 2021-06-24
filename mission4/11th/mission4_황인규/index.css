@@ -28,17 +28,31 @@ ul {
     list-style: none;
 }
 
-#user-list {
+#user-list-wrapper {
     padding: 0.5rem 0;
 }
 
-#user-list .user-list {
+.user-trello {
+    display : flex;
+    gap : 10rem;
+}
+
+.user-trello .user-trello-completed{
+    width : 100vh;
+    height : 100vh;
+}
+
+.user-trello .user-trello-uncompleted{
+    width : 100vh;
+    height : 100vh;
+}
+#user-list-wrapper .user-list {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
 }
 
-#user-list .user-list .user-list-element{
+#user-list-wrapper .user-list .user-list-element{
     margin: 5px;
     padding: 4px 8px;
   

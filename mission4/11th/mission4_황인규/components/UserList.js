@@ -29,7 +29,7 @@ function UserList(params){
             const htmlString = this.usersList.data.map((userList) =>{
                 
                 const className = `user-list-element ${ this.$clickedKeyword === userList ? 'current' : '' }`.trimEnd();
-                return `<li class = "${className}" user-name = "${
+                return `<li class ="${className}" user-name = "${
                 userList
                 }">${userList}</li>`
             })
