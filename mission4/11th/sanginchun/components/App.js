@@ -76,8 +76,8 @@ class App {
     $app.addEventListener('drop', (e) => {
       e.preventDefault()
 
-      if (e.target.closest('section.todo-list')) {
-        this.onTodoItemDrop(this.$draggingItem, e.target.closest('section.todo-list'))
+      if (this.$draggingItem !== null && e.target.closest('section.todo-list')) {
+        this.onTodoItemDrop(e.target.closest('section.todo-list'))
       }
     })
 
@@ -206,11 +206,9 @@ class App {
     }
   }
 
-  async onTodoItemDrop($todoItem, $todoListSection) {
-    if ($todoItem === null) return
-
-    const todoItem = this.state.todoItems.find((todoItem) => todoItem._id === $todoItem.dataset.id)
-    const isCompletedList = $todoListSection.classList.contains('completed')
+  async onTodoItemDrop($dropTargetTodoList) {
+    const todoItem = this.state.todoItems.find((todoItem) => todoItem._id === this.$draggingItem.dataset.id)
+    const isCompletedList = $dropTargetTodoList.classList.contains('completed')
 
     if (todoItem.isCompleted === isCompletedList) return
 
