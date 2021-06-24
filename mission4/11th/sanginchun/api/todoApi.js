@@ -1,17 +1,12 @@
 const BASE_URL = 'https://todo-api.roto.codes'
 
 async function request(URL, options = {}) {
-  try {
-    const res = await fetch(`${URL}?delay=100`, options)
-    if (!res.ok) throw new Error(`${res.status} - ${res.statusText}`)
+  const response = await fetch(`${URL}?delay=100`, options)
+  if (!response.ok) throw response
 
-    const data = await res.json()
+  const data = await response.json()
 
-    return data
-  } catch (e) {
-    console.error(e)
-    return null
-  }
+  return data
 }
 
 export function getTodoItems(username) {

@@ -4,6 +4,7 @@ import TodoList from './TodoList.js'
 import Loader from './Loader.js'
 
 import { getTodoItems, addTodoItem, deleteTodoItem, toggleTodoItem, getUsers } from '../api/todoApi.js'
+import logErrorWithAlert from '../others/logErrorWithAlert.js'
 
 const DEFAULT_USER = 'sanginchun'
 
@@ -85,34 +86,39 @@ class App {
   }
 
   async initUser() {
-    const users = await getUsers()
-    if (users === null) {
-      this.handleError('유저 목록을 불러오는 데 실패했습니다')
-      return
-    }
+    try {
+      const users = await getUsers()
 
-    let currentUser = DEFAULT_USER
+      let currentUser = DEFAULT_USER
 
-    if (!users.includes(currentUser)) {
-      const createUserConfirmed = window.confirm(`유저 '${currentUser}'를 찾지 못했습니다. 새로 생성할까요?`)
+      if (!users.includes(currentUser)) {
+        const createUserConfirmed = window.confirm(`유저 '${currentUser}'를 찾지 못했습니다. 새로 생성할까요?`)
 
-      if (createUserConfirmed) {
-        await addTodoItem('Sample', currentUser)
+        if (createUserConfirmed) {
+          await addTodoItem('Sample', currentUser)
 
-        this.initUser()
-        return
-      } else {
-        currentUser = users[0]
+          this.initUser()
+          return
+        } else {
+          currentUser = users[0]
+        }
       }
+
+      this.setState({
+        ...this.state,
+        users,
+        currentUser,
+      })
+
+      this.setNextTodoItems()
+    } catch (error) {
+      logErrorWithAlert(error, '유저 목록을 불러오지 못했습니다.')
+
+      this.setState({
+        ...this.state,
+        isLoading: false,
+      })
     }
-
-    this.setState({
-      ...this.state,
-      users,
-      currentUser,
-    })
-
-    this.setNextTodoItems()
   }
 
   setState(nextState) {
@@ -135,95 +141,109 @@ class App {
   }
 
   async setNextTodoItems() {
-    const nextTodoItems = await getTodoItems(this.state.currentUser)
-    if (nextTodoItems === null) {
-      this.handleError('Todo 리스트를 불러오는 데 실패했습니다.')
-      return
-    }
+    try {
+      this.setState({
+        ...this.state,
+        todoItems: await getTodoItems(this.state.currentUser),
+        isLoading: false,
+      })
+    } catch (error) {
+      logErrorWithAlert(error, 'Todo 리스트를 불러오지 못했습니다.')
 
-    this.setState({
-      ...this.state,
-      todoItems: nextTodoItems,
-      isLoading: false,
-    })
+      this.setState({
+        ...this.state,
+        isLoading: false,
+      })
+    }
   }
 
   async onTodoInputSubmit(e) {
-    e.preventDefault()
+    try {
+      e.preventDefault()
 
-    this.setState({
-      ...this.state,
-      isLoading: true,
-    })
+      this.setState({
+        ...this.state,
+        isLoading: true,
+      })
 
-    const $content = e.target.querySelector('input#content')
+      const $content = e.target.querySelector('input#content')
 
-    const result = await addTodoItem($content.value, this.state.currentUser)
-    if (result === null) {
-      this.handleError('할 일 추가에 실패했습니다')
-      return
+      await addTodoItem($content.value, this.state.currentUser)
+
+      await this.setNextTodoItems()
+
+      $content.value = ''
+      $content.focus()
+    } catch (error) {
+      logErrorWithAlert(error, 'Todo 리스트에 아이템을 추가하지 못했습니다.')
+
+      this.setState({
+        ...this.state,
+        isLoading: false,
+      })
     }
-
-    await this.setNextTodoItems()
-
-    $content.value = ''
-    $content.focus()
   }
 
   async onTodoItemClick(e) {
-    const todoItemId = e.target.closest('li.todo-item').dataset.id
+    try {
+      const todoItemId = e.target.closest('li.todo-item').dataset.id
 
-    if (e.target.closest('label.todo-item-toggle')) {
-      this.setState({
-        ...this.state,
-        isLoading: true,
-      })
+      if (e.target.closest('label.todo-item-toggle')) {
+        this.setState({
+          ...this.state,
+          isLoading: true,
+        })
 
-      const result = await toggleTodoItem(todoItemId, this.state.currentUser)
-      if (result === null) {
-        this.handleError('처리에 실패했습니다')
+        await toggleTodoItem(todoItemId, this.state.currentUser)
+
+        this.setNextTodoItems()
         return
       }
 
-      this.setNextTodoItems()
-      return
-    }
+      if (e.target.closest('button.todo-item-delete-button')) {
+        this.setState({
+          ...this.state,
+          isLoading: true,
+        })
 
-    if (e.target.closest('button.todo-item-delete-button')) {
-      this.setState({
-        ...this.state,
-        isLoading: true,
-      })
+        await deleteTodoItem(todoItemId, this.state.currentUser)
 
-      const result = await deleteTodoItem(todoItemId, this.state.currentUser)
-      if (result === null) {
-        this.handleError('삭제에 실패했습니다')
+        this.setNextTodoItems()
         return
       }
+    } catch (error) {
+      logErrorWithAlert(error, 'Todo 리스트 아이템에 대한 처리를 하지 못했습니다.')
 
-      this.setNextTodoItems()
-      return
+      this.setState({
+        ...this.state,
+        isLoading: false,
+      })
     }
   }
 
   async onTodoItemDrop($dropTargetTodoList) {
-    const todoItem = this.state.todoItems.find((todoItem) => todoItem._id === this.$draggingItem.dataset.id)
-    const isCompletedList = $dropTargetTodoList.classList.contains('completed')
+    try {
+      const todoItem = this.state.todoItems.find((todoItem) => todoItem._id === this.$draggingItem.dataset.id)
+      const isCompletedList = $dropTargetTodoList.classList.contains('completed')
 
-    if (todoItem.isCompleted === isCompletedList) return
+      if (todoItem.isCompleted === isCompletedList) return
 
-    this.setState({
-      ...this.state,
-      isLoading: true,
-    })
+      this.setState({
+        ...this.state,
+        isLoading: true,
+      })
 
-    const result = await toggleTodoItem(todoItem._id, this.state.currentUser)
-    if (result === null) {
-      this.handleError('처리에 실패했습니다')
-      return
+      await toggleTodoItem(todoItem._id, this.state.currentUser)
+
+      this.setNextTodoItems()
+    } catch (error) {
+      logErrorWithAlert(error, 'Todo 아이템을 옮기는 데 실패했습니다.')
+
+      this.setState({
+        ...this.state,
+        isLoading: false,
+      })
     }
-
-    this.setNextTodoItems()
   }
 
   onCurrentUserChange(e) {
@@ -234,15 +254,6 @@ class App {
     })
 
     this.setNextTodoItems()
-  }
-
-  handleError(errorMessage) {
-    alert(errorMessage)
-
-    this.setState({
-      ...this.state,
-      isLoading: false,
-    })
   }
 }
 
