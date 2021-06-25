@@ -1,7 +1,8 @@
 const BASE_URL = 'https://todo-api.roto.codes'
+const DELAY = 0
 
 async function request(URL, options = {}) {
-  const response = await fetch(`${URL}?delay=100`, options)
+  const response = await fetch(`${URL}?delay=${DELAY}`, options)
   if (!response.ok) throw response
 
   const data = await response.json()

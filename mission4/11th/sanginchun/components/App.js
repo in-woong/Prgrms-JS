@@ -110,7 +110,7 @@ class App {
         currentUser,
       })
 
-      this.setNextTodoItems()
+      this.loadTodoItems()
     } catch (error) {
       logErrorWithAlert(error, '유저 목록을 불러오지 못했습니다.')
 
@@ -130,17 +130,17 @@ class App {
     })
 
     this.uncompletedTodoList.setState({
-      todoItems: this.state.todoItems.filter(({ isCompleted }) => isCompleted === false),
+      todoItems: this.state.todoItems.filter(({ isCompleted }) => !isCompleted),
     })
 
     this.completedTodoList.setState({
-      todoItems: this.state.todoItems.filter(({ isCompleted }) => isCompleted === true),
+      todoItems: this.state.todoItems.filter(({ isCompleted }) => isCompleted),
     })
 
     this.loader.setState(this.state.isLoading)
   }
 
-  async setNextTodoItems() {
+  async loadTodoItems() {
     try {
       this.setState({
         ...this.state,
@@ -170,7 +170,7 @@ class App {
 
       await addTodoItem($content.value, this.state.currentUser)
 
-      await this.setNextTodoItems()
+      await this.loadTodoItems()
 
       $content.value = ''
       $content.focus()
@@ -196,7 +196,7 @@ class App {
 
         await toggleTodoItem(todoItemId, this.state.currentUser)
 
-        this.setNextTodoItems()
+        this.loadTodoItems()
         return
       }
 
@@ -208,7 +208,7 @@ class App {
 
         await deleteTodoItem(todoItemId, this.state.currentUser)
 
-        this.setNextTodoItems()
+        this.loadTodoItems()
         return
       }
     } catch (error) {
@@ -235,7 +235,7 @@ class App {
 
       await toggleTodoItem(todoItem._id, this.state.currentUser)
 
-      this.setNextTodoItems()
+      this.loadTodoItems()
     } catch (error) {
       logErrorWithAlert(error, 'Todo 아이템을 옮기는 데 실패했습니다.')
 
@@ -253,7 +253,7 @@ class App {
       currentUser: e.target.value,
     })
 
-    this.setNextTodoItems()
+    this.loadTodoItems()
   }
 }
 

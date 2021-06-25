@@ -6,7 +6,7 @@ const HTTP_STATUS_CODE = {
   SERVER_ERROR: 500,
 }
 
-export default function (thrownObject, customMessage = '요청에 실패했습니다.') {
+export default function logErrorWithAlert(thrownObject, customMessage = '요청에 실패했습니다.') {
   if (thrownObject instanceof Response) {
     let errorMessage = ''
 
