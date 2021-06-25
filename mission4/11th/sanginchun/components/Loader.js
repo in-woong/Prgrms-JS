@@ -6,16 +6,16 @@ class Loader {
     this.$target.className = 'overlay'
     this.$target.innerHTML = `<span class="loader">로딩 중...</span>`
 
-    this._render()
+    this.#render()
     $app.appendChild(this.$target)
   }
 
   setState(nextState) {
     this.state = nextState
-    this._render()
+    this.#render()
   }
 
-  _render() {
+  #render() {
     this.state ? this.$target.classList.add('loading') : this.$target.classList.remove('loading')
   }
 }

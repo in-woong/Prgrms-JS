@@ -13,16 +13,16 @@ class TodoList {
       onTodoItemClick(e)
     })
 
-    this._render()
+    this.#render()
     $app.appendChild(this.$target)
   }
 
   setState(nextState) {
     this.state = nextState
-    this._render()
+    this.#render()
   }
 
-  _render() {
+  #render() {
     this.$target.innerHTML = `
       <h2>${this.isCompletedList ? '완료한 일' : '할 일'}</h2>
       ${this.state.todoItems.length === 0 ? '<p>없음</p>' : ''}

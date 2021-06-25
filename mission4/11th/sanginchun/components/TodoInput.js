@@ -5,11 +5,11 @@ class TodoInput {
 
     this.$target.addEventListener('submit', onSubmit)
 
-    this._render()
+    this.#render()
     $app.appendChild(this.$target)
   }
 
-  _render() {
+  #render() {
     this.$target.innerHTML = `
       <h2>할 일 추가하기</h2>
       <form>

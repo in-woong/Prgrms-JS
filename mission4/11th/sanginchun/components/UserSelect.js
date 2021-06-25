@@ -7,16 +7,16 @@ class UserSelect {
 
     this.$target.addEventListener('change', onChange)
 
-    this._render()
+    this.#render()
     $app.appendChild(this.$target)
   }
 
   setState(nextState) {
     this.state = nextState
-    this._render()
+    this.#render()
   }
 
-  _render() {
+  #render() {
     this.$target.innerHTML = `
       <h2>유저 선택</h2>
       <label>
