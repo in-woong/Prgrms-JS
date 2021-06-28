@@ -1,10 +1,10 @@
-import TodoList from "./TodoList.js"
-import TodoInput from "./TodoInput.js"
-import TodoCount from "./TodoCount.js"
+import ToDoList from "./ToDoList.js"
+import ToDoInput from "./ToDoInput.js"
+import ToDoCount from "./ToDoCount.js"
 import RemoveAllButton from "./RemoveAllButton.js"
 import Loading from "./Loading.js"
 
-import TodoApi from "../api/TodoApi.js"
+import ToDoApi from "../api/ToDoApi.js"
 
 const validateData = (data) => {
     if (data == null) {
@@ -29,11 +29,11 @@ export default class App {
         this.$app = $app
         this.$app.innerHTML = `<h1>${user}'s ToDo</h1>`
         this.state = []
-        this.api = new TodoApi(user)
+        this.api = new ToDoApi(user)
         this.loading = new Loading({ $target: this.$app })
 
         this.$children = [
-            new TodoInput({
+            new ToDoInput({
                 $app: this.$app,
                 onAddTodoItem: async (content) => {
                     try {
@@ -44,7 +44,7 @@ export default class App {
                     }
                 },
             }),
-            new TodoList({
+            new ToDoList({
                 $app: this.$app,
                 onToggleItem: async (_id) => {
                     try {
@@ -64,7 +64,7 @@ export default class App {
                 },
                 completedOnly: false,
             }),
-            new TodoList({
+            new ToDoList({
                 $app: this.$app,
                 onToggleItem: async (_id) => {
                     try {
@@ -84,7 +84,7 @@ export default class App {
                 },
                 completedOnly: true,
             }),
-            new TodoCount({
+            new ToDoCount({
                 $app: this.$app,
             }),
             new RemoveAllButton({

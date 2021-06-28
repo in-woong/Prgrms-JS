@@ -1,4 +1,4 @@
-import TodoApi from "../api/TodoApi.js"
+import ToDoApi from "../api/ToDoApi.js"
 
 import Loading from "./Loading.js"
 
@@ -11,7 +11,7 @@ export default class Users {
         (async () => {
             try {
                 this.loading.setState(true)
-                this.state = await TodoApi.getUserList()
+                this.state = await ToDoApi.getUserList()
                 this.loading.setState(false)
                 this.render()
             } catch (err) {
