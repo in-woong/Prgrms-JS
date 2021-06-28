@@ -30,7 +30,8 @@ export default class TodoList {
 
     addEventDelegator() {
         this.$target.addEventListener("click", ({ target }) => {
-            const { _id } = target.closest("li").dataset
+            const { _id } = JSON.parse(target.closest("li").dataset.item);
+            
             const { nodeName } = target
             switch (nodeName) {
             case "BUTTON":
