@@ -40,7 +40,7 @@ export default class App {
                         await this.api.addToDo({ content })
                         await this.fetchStateFromApi()
                     } catch (err) {
-                        console.error(err)
+                        alert(err)
                     }
                 },
             }),
@@ -51,7 +51,7 @@ export default class App {
                         await this.api.toggleCompleted({ _id })
                         await this.fetchStateFromApi()
                     } catch (err) {
-                        console.error(err)
+                        alert(err)
                     }
                 },
                 onRemoveItem: async (_id) => {
@@ -59,7 +59,7 @@ export default class App {
                         await this.api.deleteToDo({ _id })
                         await this.fetchStateFromApi()
                     } catch (err) {
-                        console.error(err)
+                        alert(err)
                     }
                 },
                 completedOnly: false,
@@ -71,7 +71,7 @@ export default class App {
                         await this.api.toggleCompleted({ _id })
                         await this.fetchStateFromApi()
                     } catch (err) {
-                        console.error(err)
+                        alert(err)
                     }
                 },
                 onRemoveItem: async (_id) => {
@@ -79,7 +79,7 @@ export default class App {
                         await this.api.deleteToDo({ _id })
                         await this.fetchStateFromApi()
                     } catch (err) {
-                        console.error(err)
+                        alert(err)
                     }
                 },
                 completedOnly: true,
