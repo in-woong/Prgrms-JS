@@ -42,8 +42,19 @@ function App($target) {
         if (!response) {
           alert('error')
         } else {
+          const test = this.state.searchHistory.filter(
+            (v) => v.text === keyword
+          )
+          console.log(test)
           const newState = {
-            searchHistory: this.state.searchHistory.indexOf(keyword) > 0 ? [...this.state.searchHistory, { id: getUuidv4(), text: keyword }] : [...this.state.searchHistory],
+            searchHistory:
+              this.state.searchHistory.filter((v) => v.text === keyword)
+                .length > 0
+                ? [...this.state.searchHistory]
+                : [
+                    ...this.state.searchHistory,
+                    { id: getUuidv4(), text: keyword },
+                  ],
             gifs: response,
           }
           this.setState(newState)
@@ -65,7 +76,7 @@ function App($target) {
     searchHistory.setState(this.state)
   }
 
-  //테스트 코드
+  // 테스트 코드
   /*
   const testState = {
     searchHistory: [
@@ -77,7 +88,6 @@ function App($target) {
   }
   this.setState(testState)
   */
-
   searchResult.setState(this.state)
   searchHistory.setState(this.state)
 }
