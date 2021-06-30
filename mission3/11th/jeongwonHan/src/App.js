@@ -9,7 +9,7 @@ function App($target) {
   this.$target = $target
   this.state = {
     searchHistory: [],
-    gifs: [],
+    gifs: null,
   }
 
   const searchHistory = new SearchHistory({
@@ -45,7 +45,6 @@ function App($target) {
           const test = this.state.searchHistory.filter(
             (v) => v.text === keyword
           )
-          console.log(test)
           const newState = {
             searchHistory:
               this.state.searchHistory.filter((v) => v.text === keyword)

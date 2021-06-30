@@ -5,14 +5,21 @@ function SearchResult({ $target, state }) {
   this.state = state
 
   this.render = (state) => {
-    const htmlString = `${
-      !state
-        ? '<div class="no-result">짤을 검색해 보세요🍕</div>'
-        : state.length < 1
-        ? '<div class="no-result">검색 결과가 없습니다😥</div>'
-        : state
-            .map(
-              (gifs) => `
+    if (state == null) {
+      this.$target.innerHTML =
+        '<div class="no-result">짤을 검색해 보세요🍕</div>'
+      return
+    }
+
+    if (Array.isArray(state) && state.length < 1) {
+      this.$target.innerHTML =
+        '<div class="no-result">검색 결과가 없습니다😥</div>'
+      return
+    }
+
+    const htmlString = `${state
+      .map(
+        (gifs) => `
         <div class="gif-wrapper">
               ${
                 gifs.imageUrl
@@ -21,9 +28,8 @@ function SearchResult({ $target, state }) {
               }
         </div>
     `
-            )
-            .join('')
-    }`
+      )
+      .join('')}`
     this.$target.innerHTML = htmlString
 
     const $gifImages = document.querySelectorAll('.gif-wrapper img')
