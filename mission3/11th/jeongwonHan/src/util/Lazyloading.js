@@ -13,4 +13,6 @@ const intersectionObserver = new IntersectionObserver((entries, observer) => {
   })
 }, options)
 
-export default intersectionObserver
+const lazyLoadImage = (img) => intersectionObserver.observe(img)
+
+export default lazyLoadImage
