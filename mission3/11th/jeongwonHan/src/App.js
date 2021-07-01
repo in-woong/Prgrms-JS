@@ -63,7 +63,6 @@ function App($target) {
       }
     },
   })
-
   const searchResult = new SearchResult({
     $target: this.$target.querySelector('.search-result'),
     state: this.state,

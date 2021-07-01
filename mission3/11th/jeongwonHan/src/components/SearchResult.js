@@ -1,4 +1,5 @@
 import lazyLoadImage from '../util/Lazyloading.js'
+import { checkUrlPattern } from '../util/validator.js'
 
 function SearchResult({ $target, state }) {
   this.$target = $target
@@ -20,13 +21,13 @@ function SearchResult({ $target, state }) {
     const htmlString = `${state
       .map(
         (gifs) => `
-        <div class="gif-wrapper">
+        <ul class="gif-wrapper">
               ${
-                gifs.imageUrl
-                  ? `<img data-src="${gifs.imageUrl}">`
-                  : '<p>이미지를 찾을 수가 없어요😥</p>'
+                typeof gifs.imageUrl === 'string' && checkUrlPattern
+                  ? `<li><img data-src="${gifs.imageUrl}"></li>`
+                  : '<li><p>이미지를 찾을 수가 없어요😥</p></li>'
               }
-        </div>
+        </ul>
     `
       )
       .join('')}`
