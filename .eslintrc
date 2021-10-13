@@ -4,9 +4,12 @@
     "es6": true,
     "browser": true
   },
+  "extends": "airbnb-base",
+  "rules": {
+    "import/extensions": "off",
+  },
   "parserOptions": {
     "sourceType": "module"
   },
   "parser": "babel-eslint"
-
 }
