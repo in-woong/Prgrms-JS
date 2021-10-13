@@ -1,0 +1,105 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <ul id="todo-list1"></ul>
+  <ul id="todo-list2"></ul>
+  <ul id="todo-list3"></ul>
+  <script>
+	// 이곳에서 코딩을 시작하세요!
+    const dataBundle = [[{
+          text: 'JS 공부하기',
+          isCompleted : false,
+        },{
+          text: 'JS 복습하기',
+          isCompleted : false,
+        }],[{
+          text: 'CSS 공부하기',
+          isCompleted : true,
+        },{
+          text: 'CSS 복습하기',
+          isCompleted : false,
+        }],[{
+          text: '로그인 코드 리팩토링 하기',
+          isCompleted : true,
+        },{
+          text: '로그인 화면 디자인 변경하기',
+          isCompleted: true,
+        }]];
+
+    const todoLists = [
+      document.querySelector('#todo-list1'), document.querySelector('#todo-list2'), document.querySelector('#todo-list3')
+    ];
+
+    function TodoList(data, todoListElem){
+      
+      if(!(this instanceof TodoList)){
+        // !new.target으로도 검사가 가능하다
+        // new를 통해 생성하지 않고 TodoList를 호출할 경우 this가 window 객체가 된다.
+        throw new Error('new를 통해 생성해주세요');
+      }
+
+      if(data == null) {
+        // data가 null, undefined인 경우
+        throw new Error("데이터가 존재하지 않습니다");
+      }
+      
+      if(!Array.isArray(data)){
+        // data가 배열이 아닌 경우
+        throw new Error("배열을 입력해주세요");
+      } 
+      
+      // data 내부 검사
+      data.forEach(obj => {
+        if(!obj.hasOwnProperty('text')) {
+          // data 내부의 객체가 text를 key로 가지고 있지 않은 경우 
+          throw new Error('text가 객체에 존재하지 않습니다.');
+        }
+
+        if(!obj.hasOwnProperty('isCompleted')) {
+          // data 내부의 객체가 isCompleted를 key로 가지고 있지 않은 경우 
+          throw new Error('isCompleted가 객체에 존재하지 않습니다.');
+        }
+
+        if(typeof obj.text !== 'string') {
+          // text를 key로 가지고 있으나 문자열이 아닌 경우
+          throw new Error('text가 string 형태가 아닙니다.');
+        }
+
+        if(typeof obj.isCompleted !== 'boolean'){
+          // isCompleted를 key로 가지고 있으나 boolean이 아닌 경우
+          throw new Error('isCompleted가 boolean 형태가 아닙니다.');
+        }
+      });
+
+      
+      this.data = data;
+      this.todoListElem = todoListElem;
+
+      this.render = todoListElem => {
+        this.todoListElem.innerHTML = this.data.reduce((acc, {text, isCompleted}) =>  acc + (
+            isCompleted ?`<li><s>${text}</s></li>\n` : `<li>${text}</li>`
+          ), '');
+
+      };
+
+      this.setState = nextData => {
+        this.data = nextData; 
+        this.render(this.todoListElem);
+      };
+    };
+    
+    dataBundle.forEach((data,i)=> {
+      const todoList = new TodoList(data, todoLists[i]);
+      todoList.render();
+      todoList.setState(dataBundle[2 - i]);
+    });
+
+    
+  </script>
+</body>
+</html>
