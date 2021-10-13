@@ -13,5 +13,9 @@
   "parserOptions": {
     "sourceType": "module"
   },
-  "parser": "babel-eslint"
+  "parser": "babel-eslint",
+  "extends": "airbnb-base",
+  "rules": {
+    "import/extensions": "off"
+  }
 }
