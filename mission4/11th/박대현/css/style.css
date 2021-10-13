@@ -1,0 +1,238 @@
+* {
+  box-sizing: border-box;
+}
+.app{
+  display: flex;
+}
+.todo-count{
+  display:block;
+  margin-bottom: 10px;
+}
+.todo-wrapper{
+  flex-grow : 1;
+  padding:10px;
+  margin:10px;
+  border: 1px solid #ccc;
+}
+.todo-control-container{
+  display:flex;
+  align-items:center;
+  margin-bottom:10px;
+}
+.todo-input{
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin-right:10px;
+  outline-color: #00a1ff;
+}
+.control-button{
+  padding:10px;
+  margin-right:10px;
+  border: 1px solid #ccc;
+  border-radius:5px;
+  font-weight: bold;
+  background-color: #eee;
+  cursor:pointer;
+  transition: all 0.2s;
+}
+.todo-add-button:hover{
+  border: 1px solid #00a1ff;
+  background-color: #00a1ff;
+  color:white;
+}
+.todo-all-clear-button:hover{
+  border: 1px solid #ff0010;
+  background-color: #ff0010;
+  color:white;
+}
+.complete-guide{
+  text-align:center;
+  font-size:24px;
+}
+.count{
+  font-weight:bold;
+  color: #ff0010;
+}
+.todo-list{
+  list-style:none;
+  padding: 20px;
+  counter-reset: section;
+  height:600px;
+  overflow:auto;
+  position: relative;
+}
+.status-label{
+  text-align:center;
+  font-weight:bold;
+}
+.todo-list-wrapper{
+  flex: 1 0 0;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+.todo-item{
+  flex-shrink:0;
+  position: relative;
+  margin:5px 0;
+  border: 2px solid #ccc;
+  cursor: move;
+  padding:15px 10px 10px;
+  background-color:white;
+}
+.todo-text{
+  margin-right:10px;
+  cursor:pointer;
+  font-size:18px;
+  width:fit-content;
+}
+.todo-text:hover{
+  color:#01bc4c;
+}
+.todo-remove-button{
+  position: absolute;
+  top: 5px; right: 5px;
+  padding: 2px 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color:transparent;
+  font-size:10px;
+  cursor:pointer;
+  transition: all 0.2s;
+}
+.todo-remove-button:hover{
+  border: 1px solid #ff0010;
+  background-color:#ff0010;
+  color:white;
+}
+.done {
+  color:#01bc4c;
+  text-decoration: line-through;
+}
+.user-wrapper{
+  width:30%;
+  flex-shrink : 0;
+  border: 1px solid #ccc;
+  margin:10px;
+  padding:10px;
+  height:800px;
+  overflow:auto;
+}
+.user-list{
+  list-style: none;
+  margin:0;
+  padding:0;
+}
+.user-item{
+  border: 1px solid #ccc;
+  padding:10px 5px;
+  
+  cursor:pointer;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.user-item{
+  transform-origin: left;
+  transition: 0.3s;
+  margin-bottom:5px;
+}
+.user-item:hover {
+  font-size: 22px;
+  font-weight:bold;
+}
+.user-input-wrapper{
+  display: flex;
+  margin-bottom:10px;
+ 
+}
+.user-input{
+  flex-grow:1;
+  padding:10px;
+  font-size:18px;
+  border: 1px solid #ccc;
+  margin-right: 10px;
+  outline-color: #00a1ff;
+}
+.search-button{
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-weight: bold;
+  background-color: #eee;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.search-button:hover{
+  border: 1px solid #16d233;
+    background-color: #16d233;
+    color: white;
+}
+.user-name{
+  margin-bottom: 10px;
+  display: flex;
+  align-items: baseline;
+}
+.user-name::before{
+  content:'';
+  display:inline-block;
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background-color:#16d233;
+  margin-right:5px;
+}
+.user-name span {
+  margin-left: 5px;
+  color:#16d233;
+  font-weight:bold;
+}
+
+.spinner-wrapper{
+  position:fixed;
+  top: 0;left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0,0,0,0.5);
+  width: 100%;
+  height: 100%;
+}
+.spinner-wrapper.hidden{
+  display:none;
+}
+.spinner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100px;
+}
+
+.spinner .bar{
+  width: 20px;
+  height: 40px;
+  background-color: #3fa;
+}
+.spinner .bar:nth-child(1){
+  animation: stretch 0.5s infinite alternate ease-in-out 0.2s;
+}
+.spinner .bar:nth-child(2){
+  animation: stretch 0.5s infinite alternate 0.4s ease-in-out;
+}
+.spinner .bar:nth-child(3){
+  animation: stretch 0.5s infinite alternate 0.6s ease-in-out;
+}
+
+@keyframes stretch {
+  0%{
+    transform: scaleY(1);
+  }
+  40%{
+    transform: scaleY(1);
+  }
+  100%{
+    transform: scaleY(2.5);
+  }
+}
+.todo-list-container{
+  display: flex;
+}
