@@ -6,4 +6,5 @@
   "quoteProps": "consistent",
   "singleQuote": true,
   "endOfLine": "crlf"
+  "endOfLine": "auto"
 }

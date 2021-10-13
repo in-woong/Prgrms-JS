@@ -1,0 +1,97 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list"></div>
+    <div id="todo-list2"></div>
+    <div id="todo-list3"></div>
+    <script>
+      const data = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false,
+        },
+      ]
+      const data2 = [
+        {
+          text: 'JS 공부하기2',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기2',
+          isCompleted: false,
+        },
+      ]
+      const data3 = [
+        {
+          text: 'JS 공부하기3',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기3',
+          isCompleted: false,
+        },
+      ]
+      //test
+      const data_test = [
+        {
+          text: null,
+          isCompleted: true,
+        },
+        {
+          text: undefined,
+          isCompleted: false,
+        },
+      ]
+      // 이곳에서 코딩을 시작하세요!
+      
+      function TodoList(data) {
+        this.data = data;
+
+        //오류 체크
+        if (data == null || data == undefined) {
+          throw new Error("null, undefined 입니다.");
+        }
+        if (!Array.isArray(data)) {
+          throw new Error("array가 아닙니다");
+        }
+        //    throw new Error("데이터의 내용이 이상합니다");
+
+        if (!new.target) {
+          throw new Error('new 키워드를 사용해주세요!');
+        }
+          this.render = function () {
+            for (var i = 0; i < Object.keys(data).length; i++){
+              if (data[i].isCompleted)
+              document.querySelector('#todo-list').innerHTML += `<div><s>${data[i].text}<s> </div>`;
+              else 
+              document.querySelector('#todo-list').innerHTML += `<div>${data[i].text}</div>`;
+          }
+        }
+        
+       
+      }      
+
+      var todoList = new TodoList(data);
+      var todoList2 = new TodoList(data2);
+      //var todoList3 = TodoList(data3);
+      var todoList3 = new TodoList(data3);
+
+      /*
+         function 생성자는 new 키워드 없이 실행을 할 경우에도 에러가 발생하지 않는다.
+        그래서 this가 전역개체가 되고 반환 값이 없기 때문에 undefined가 저장될 것이다.
+        */
+      todoList.render();
+      todoList2.render();
+      todoList3.render();
+
+    </script>
+  </body>
+</html>

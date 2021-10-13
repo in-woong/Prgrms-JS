@@ -1,0 +1,100 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list1"></div>
+  <div id="todo-list2"></div>
+  <div id="todo-list3"></div>
+  <script>
+    const completedTodo = [
+      {
+        text: 'JS 공부하기',
+        isCompleted: true
+      },
+      {
+        text: 'JS 복습하기',
+        isCompleted: false
+      }
+    ];
+    const Todo = [
+      {
+        text: 'JS 기본서 완독하기',
+        isCompleted: true
+      },
+      {
+        text: 'Markup 공부하기',
+        isCompleted:false
+      }
+    ];
+    const willTodo = [
+      {
+        text: '서울 프로젝트 발표 참석',
+        isCompleted:false
+      },
+      {
+        text: 'Js core 공부하기',
+        isCompleted:false
+      }
+    ];
+    const addWillTodo = [
+      {
+        text: '프로젝트 정리하기',
+        isCompleted:false
+      },
+      {
+        text: '문서 정리하는 법 공부하기',
+        isCompleted:false
+      }
+    ];
+    
+
+    // error handler
+    function dataValidation(data){
+      // 데이터가 존재하지 않는 경우
+      if(data == null || data == undefined){
+        throw new Error('데이터가 존재하지 않습니다.');
+      };
+      // 데이터가 배열의 형태가 아닌 경우
+      if(!Array.isArray(data)){
+        throw new Error('데이터의 형태가 배열이 아닙니다.');
+      };
+      // 객체가 키로 'text'를 가지고 있지 않는 경우 또는 데이터가 객체가 아닌 경우
+      if(data.some(item => !item.hasOwnProperty('text') ||  typeof item != 'object')){
+        throw new Error('데이터가 올바르지 않습니다.');
+      };
+    };
+
+    function TodoList(data,selector){
+      // new 키워드로 생성하지 않은 경우
+      const todoListElem = document.querySelector(selector);
+
+      if(!new.target){
+        throw new Error('new 키워드를 통해서 생성해주세요.');
+      };
+      dataValidation(data);      
+      this.data = data;
+      this.render = () => {
+        todoListElem.innerHTML = this.data.map(todoItem => todoItem.isCompleted ? `<li><s>${todoItem.text}</s></li>` :`<li>${todoItem.text}</li>`).join('');
+      };
+      this.setState = (nextData) => {
+        dataValidation(nextData);        
+        this.data = nextData;
+        this.render();
+      }
+    };
+    
+    const beforeList = new TodoList(completedTodo,'#todo-list1');
+    const nowList = new TodoList(Todo,'#todo-list2');
+    const afterList = new TodoList(willTodo,'#todo-list3');
+    beforeList.render();
+    nowList.render();
+    afterList.render();
+    afterList.setState(addWillTodo);
+
+  </script>
+</body>
+</html>

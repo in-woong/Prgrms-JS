@@ -1,0 +1,110 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list-1"></div>
+  <div id="todo-list-2"></div>
+  <div id="todo-list-3"></div>
+
+  <script>
+    const todos_1 = [
+      {
+        text: 'JS 공부하기',
+        isCompleted: true
+      },
+      {
+        text: 'JS 복습하기',
+        isCompleted: false
+      }
+    ];
+
+    const todos_2 = [
+      {
+        text: '책 읽기',
+        isCompleted: true
+      },
+      {
+        text: '강의 듣기',
+        isCompleted: false
+      }
+    ];
+
+    const todos_3 = [
+      {
+        text: '스터디 과제 제출하기',
+        isCompleted: true
+      },
+      {
+        text: '마크업 과제 제출하기',
+        isCompleted: false
+      }
+    ];
+
+    const newTodos = [
+      {
+        text: '영양제 먹기',
+        isCompleted: true
+      },
+      {
+        text: '자전거 타기',
+        isCompleted: true
+      }
+    ];
+
+    function TodoList(todos, listId) {
+      this.todos = todos;
+
+      this.validateTodos = function() {
+        if(!(this instanceof TodoList)) throw new Error(`Function is not declared with 'new' keyword.`);
+
+        if(this.todos === null || this.todos === undefined) {
+          throw new Error(`Todos is ${this.todos}.`);
+        };
+
+        if(!Array.isArray(this.todos)) {
+          throw new Error(`Todos is not Array.`);
+        };
+
+        this.todos.forEach(item => {
+          if(typeof item.text !== 'string') {
+            throw new Error(`${item.text} is not string.`);
+          } else if(typeof item.isCompleted !== 'boolean') {
+            throw new Error(`${item.isCompleted} is not boolean.`);
+          };
+        });
+      };
+
+      this.render = function() {
+        this.validateTodos();
+
+        const todoListElem = document.getElementById(listId);
+
+        const todoListItem = this.todos.map(item => (
+          item.isCompleted ? `<div><s>${item.text}</s></div>` : `<div>${item.text}</div>`
+        ));
+        
+        todoListElem.innerHTML = todoListItem.join('');
+      };
+
+      this.setState = function(nextTodos) {
+        this.todos = nextTodos;
+        this.validateTodos();
+        this.render();
+      };
+      
+      this.render();
+    };
+
+    const todoList_1 = new TodoList(todos_1, 'todo-list-1');
+    const todoList_2 = new TodoList(todos_2, 'todo-list-2');
+    const todoList_3 = new TodoList(todos_3, 'todo-list-3');
+
+    todoList_1.setState(newTodos);
+  </script>
+</body>
+
+</html>
