@@ -1,0 +1,33 @@
+.history{
+  margin: 0;
+  padding: 0;
+  list-style : none;
+  display: flex;
+}
+.history li{
+  margin: 5px;
+  padding :5px 10px;
+  color: white;
+  font-weight: bold;
+  background-color:goldenrod;
+  border-radius:10px;
+  cursor:pointer;
+}
+.history li:hover {
+  opacity: 0.8;
+}
+.result{
+  display: grid;
+  width:100%;
+  grid-template-columns : repeat(auto-fill,minmax(400px, auto));
+}
+.result figure {
+  width:100%;
+  margin:0;
+}
+.result figure img{
+  width:100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
