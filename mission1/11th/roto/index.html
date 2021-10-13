@@ -1,0 +1,88 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <main id="app"></main>
+    <script>
+      const data = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: false,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: true,
+        },
+        {
+          text: '세션 진행하기',
+          isCompleted: false
+        }
+      ]
+
+
+      function TodoList($app, initialState) {
+        if (this === window) {
+          throw new Error('좋은 말 할 때 new 붙여라')
+        }
+
+        if (!$app) {
+          throw new Error('$app이 올바르지 않습니다.')
+        }
+
+        if (!data || !Array.isArray(data)) {
+          throw new Error('data가 올바르지 않습니다.')
+        }
+
+        this.$target = document.createElement('div')
+        this.$target.setAttribute('data-component-type', 'TodoList')
+        $app.appendChild(this.$target)
+
+        this.state = initialState
+
+        this.setState = (nextState) => {
+          this.state = nextState
+          this.render()
+        }
+
+        this.render = () => {
+          const htmlString = this.state.map(({ text, isCompleted }) =>
+            isCompleted ? `<li><s>${text}</s></li>` : `<li>${text}</li>`
+          ).join('')
+
+          this.$target.innerHTML = `<ul>${htmlString}</ul>`
+        }
+
+        this.render()
+      }
+
+      try {
+        const $app = document.querySelector('#app')
+        const todoList = new TodoList($app, data)
+
+        setTimeout(() => {
+          todoList.setState([
+            ...data,
+            {
+              text: '이것은 중간에 추가된 것이고'
+            }
+          ])
+
+          setTimeout(() => {
+            todoList.setState([
+              ...data,
+              {
+                text: '마지막에 추가됨'
+              }
+            ])
+          }, 3000)
+        }, 3000)
+      } catch(e) {
+        alert(e.message)
+      }
+
+    </script>
+  </body>
+</html>
