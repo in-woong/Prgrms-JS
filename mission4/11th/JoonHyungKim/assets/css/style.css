@@ -1,0 +1,13 @@
+main {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    height: 100%
+}
+
+#list, #app {
+    overflow-y: auto;
+}
+
+.not-loading {
+    display: none
+}
