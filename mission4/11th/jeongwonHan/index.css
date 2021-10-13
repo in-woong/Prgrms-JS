@@ -1,0 +1,149 @@
+body {
+  margin:0;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+main{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+section{
+  width: 60%;
+  text-align: center;
+}
+.todoListContainer .todoHeaderContainer{
+  display: inline-block;
+  margin: 20px;
+}
+
+
+.todoListContainer section.runningTodoList{
+  background-color: rgb(235, 247, 243);
+  padding: 10px;
+  margin: 10px;
+  display: inline-block;
+  width: 40%;
+  vertical-align: top;
+}
+
+
+.todoListContainer section.completedTodoList{
+  background-color: rgb(235, 247, 243);
+  padding: 10px;
+  margin: 10px;
+  display: inline-block;
+  width: 40%;
+  vertical-align: top;
+}
+
+ul {
+  list-style: none;
+}
+
+input {
+  margin-right: 10px;
+  width: 200px;
+  padding: 3px 10px;
+  border-radius: 10px;
+  border: 1px solid gray;
+}
+
+button {
+  padding: 3px 10px;
+  border-radius: 10px;
+  border: 1px solid gray;
+  cursor: pointer;
+  font-size: 10px;
+  color: #000;
+  background-color: rgb(213, 211, 211);
+}
+
+button:hover {
+  background-color: rgb(164, 161, 161);
+}
+
+input:focus {
+  outline: none;
+}
+
+.userList {
+  padding: 0;
+}
+
+.userList li {
+  display: inline-block;
+  border: 1px solid teal;
+  padding: 2px 6px;
+  font-size: 12px;
+  margin: 2px 4px;
+  cursor: pointer;
+}
+
+.userList li:hover{
+  background-color:  rgba(21, 126, 126, 0.432);
+}
+
+.todoUl{
+  padding: 10px 40px;
+}
+
+.todoUl li {
+  display: flex;
+  justify-content: space-between;
+}
+
+.todoUl li p{
+  margin: 0;
+}
+
+
+.todoUl .complete_true .toggle {
+  text-decoration: line-through;
+}
+
+.todoUl .complete_true .toggle:before {
+  display: inline-block;
+  content: '완료';
+  color: white;
+  background-color: teal;
+  font-size: 8px;
+  padding: 1px 3px;
+  border-radius: 3px;
+  line-height: 10px;
+  margin-right: 8px;
+}
+
+.todoUl .remove {
+  display: inline-block;
+  padding-left: 8px;
+  color: #000;
+  background-color: rgb(213, 211, 211);
+  font-size: 4px;
+  padding: 5px 3px;
+  border-radius: 3px;
+  cursor: pointer;
+  line-height: 5px;
+  align-self: center;
+}
+
+.todoUl .remove:hover {
+  background-color: rgb(164, 161, 161);
+}
+
+.loadingWrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(69, 68, 68, 0.564);
+  color: white;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
