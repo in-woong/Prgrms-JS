@@ -1,0 +1,156 @@
+<html>
+
+<head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+</head>
+
+<body>
+    <div>
+        <div id="study-todo-list"></div>
+        <div id="holiday-todo-list"></div>
+        <div id="birthday-todo-list"></div>
+    </div>
+
+    <script>
+        const studyTododata = [
+            {
+                text: 'JS 공부하기',
+                isCompleted: true,
+            },
+            {
+                text: 'JS 복습하기',
+                isCompleted: false,
+            },
+        ]
+
+        const shoppingTodoData = [
+            {
+                text: 'buy berries',
+                isCompleted: false,
+            },
+            {
+                wrongKey: 'prepare clothes',
+                isCompleted: true,
+            }
+        ];
+
+        const holidayTodoData = [
+            {
+                text: 'find the nearest beach',
+                isCompleted: false,
+            },
+            {
+                text: 'prepare food',
+                isCompleted: true,
+            }
+        ];
+
+        const birthdayTodoData = [
+            {
+                text: 'invite friends',
+                isCompleted: false,
+            },
+            {
+                text: 'prepare cake',
+                isCompleted: true,
+            }
+        ];
+
+        const emptyData = undefined;
+
+        const dataAsObject = {};
+
+        const dataWithWrongFieldType = [
+            {
+                text: 1,
+                isCompleted: 'true',
+            },
+            {
+                text: 'JS 복습하기',
+                isCompleted: 'false',
+            },
+        ];
+
+        const validateTodos = (todos) => {
+            if (todos === null || todos === undefined) {
+                throw new Error('데이터가 존재하지 않습니다.')
+            };
+
+            if (!Array.isArray(todos)) {
+                throw new Error('데이터가 Array 형태가 아닙니다.')
+            };
+
+            for (const todo of todos) {
+                if (!todo.hasOwnProperty('text')) {
+                    throw new Error("text property가 존재하지 않습니다.")
+                }
+                if (typeof todo.text !== 'string' && typeof todo.isCompleted !== 'boolean') {
+                    throw new Error("text와 isCompleted 필드 타입이 유효하지 않습니다.")
+                };
+
+                if (typeof todo.text !== 'string' && typeof todo.isCompleted === 'boolean') {
+                    throw new Error("text 필드 타입이 String 타입이 아닙니다.")
+                };
+
+                if (typeof todo.text === 'string' && typeof todo.isCompleted !== 'boolean') {
+                    throw new Error("isCompleted 필드 타입이 boolean이 아닙니다.")
+                };
+            };
+        }
+
+        const createTodoHTMLString = ({ text, isCompleted }) =>
+            isCompleted ? `<s>${text}</s>` : `<div>${text}</div>`
+
+        const TodoList = function (todos, id) {
+            if (!(this instanceof TodoList)) {
+                throw new Error('new 키워드로 생성해주세요.')
+            }
+
+            this.todos = todos;
+            this.element = document.querySelector(`#${id}`);
+
+            validateTodos(this.todos);
+
+            try {
+                this.render = () => {
+                    this.element.innerHTML =
+                        this.todos.map(createTodoHTMLString).join('')
+                };
+
+                this.setState = nextState => {
+                    validateTodos(nextState);
+                    this.todos = nextState;
+                    this.render()
+                }
+
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        const studyTodoList = new TodoList(studyTododata, 'study-todo-list');
+        studyTodoList.render();
+
+        const holidayTodoList = new TodoList(holidayTodoData, 'holiday-todo-list');
+        holidayTodoList.render();
+
+        const birthdayTodoList = new TodoList(birthdayTodoData, 'birthday-todo-list');
+        birthdayTodoList.render();
+
+        /* NOTE: set nextState with setState,
+        throw an error when passing data which has a wrong type field*/
+        birthdayTodoList.setState(shoppingTodoData);
+
+        // NOTE: throw an error when missing new keyword
+        const todoListWithMissingNew = TodoList(studyTododata);
+
+        // NOTE: throw an error when passing a wrong parameter to a constructor function
+        const emptyTodoList = new TodoList(emptyData);
+        const todoListAsObject = new TodoList(dataAsObject);
+        const todoListWithWrongParameter = new TodoList(dataWithWrongFieldType);
+
+    </script>
+</body>
+
+</html>
