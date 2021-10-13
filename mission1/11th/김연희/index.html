@@ -1,0 +1,83 @@
+<html>
+
+<head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+</head>
+
+<body>
+<div id="todo-list"></div>
+<div id="todo-list1"></div>
+<div id="todo-list2"></div>
+<script>
+    const data = [
+        {
+            text: 'JS 공부하기',
+            isCompleted: true,
+        },
+        {
+            text: 'JS 복습하기',
+            isCompleted: false,
+        }
+    ]
+    const data1 = [
+        {
+            text: 'Mission1 완료하기',
+            isCompleted: true,
+        },
+        {
+            text: 'Mission1 복습하기',
+            isCompleted: true,
+        }
+    ]
+    const data2 = [
+        {
+            text: 'Mission2 완료하기',
+            isCompleted: false,
+        },
+        {
+            text: 'Mission2 복습하기',
+            isCompleted: false,
+        }
+    ]
+
+    function todoList(id, data) {
+        this.data = data;
+        this.$target = document.querySelector(id)
+
+        if (!new.target) {
+            throw new Error('Need a new operator!');
+        }
+        if (!Array.isArray(this.data)) {
+            throw new Error('Data type is not Array!');
+        }
+        if (!this.data) {
+            throw new Error('Data is NULL or Undefined!');
+        }
+
+        this.render = () => {
+            const htmlString = this.data.map(({ text, isCompleted }) => isCompleted ? `<li><s>${text}</s></li>` : `<li>${text}</li>`).join('');
+            this.$target.innerHTML = `<ul>${htmlString}</ul>`
+        }
+        this.setState = (nextData) => {
+            this.data = nextData;
+            this.render();
+        }
+    }
+
+    try {
+        const todolist0 = new todoList('#todo-list', data);
+        const todolist1 = new todoList('#todo-list1', data1);
+        const todolist2 = new todoList('#todo-list2', data2);
+
+        todolist0.render();
+        todolist1.render();
+        todolist2.render();
+
+        setTimeout(() => { todolist2.setState(data)}, 3000);
+    } catch (e) {
+        alert(e.message)
+    }
+</script>
+</body>
+</html>
