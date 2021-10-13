@@ -2,7 +2,12 @@
 - [학습 참고 공간 1~9기](https://school.programmers.co.kr/courses/9998)
 - [학습 참고 공간 10기](https://school.programmers.co.kr/courses/11203)
 - [학습 참고 공간 11기](https://school.programmers.co.kr/courses/11708)
+- [학습 참고 공간 12기](https://school.programmers.co.kr/app/courses/12816)
 
+
+
+### 12기
+- 2021-10-13(수) ~ 11-10(수) 총 4주
 
 ### 11기
 - 2021-05-26(수) ~ 06-23(수) 총 4주
