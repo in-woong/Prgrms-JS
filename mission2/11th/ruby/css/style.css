@@ -1,0 +1,45 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+ul {
+    list-style: inside;
+}
+
+input, button {
+    padding: 5px 10px;
+    border-radius: 3px;
+}
+
+input {
+    border: 1px solid gray;
+}
+
+button {
+    margin-left: 5px;
+    border: none;
+    background-color: rgb(211, 211, 211);
+}
+
+h1 {
+    margin-bottom: 10px;
+}
+
+form {
+    margin-bottom: 10px;
+}
+
+#app {
+    margin: 30px;
+    padding: 20px;
+    position: relative;
+    box-shadow: 5px 5px 20px 5px rgba(80, 80, 80, 0.3);
+    border-radius: 10px;
+}
+
+.todos_count {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
