@@ -1,0 +1,109 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <ul id="todo-list1"></ul>
+    <ul id="todo-list2"></ul>
+    <ul id="todo-list3"></ul>
+    <script>
+      const data1 = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false,
+        },
+      ]
+
+      const data2 = [
+        {
+          text: 'mission1 피드백 확인',
+          isCompleted: true,
+        },
+        {
+          text: 'mission1 수정',
+          isCompleted: false,
+        },
+      ]
+
+      const data3 = [
+        {
+          text: 'mission2 확인',
+          isCompleted: true,
+        },
+        {
+          text: 'mission2 진행',
+          isCompleted: false,
+        },
+      ]
+
+      const data4 = [
+        {
+          text: 'setState 추가',
+          isCompleted: true,
+        },
+      ]
+      // 이곳에서 코딩을 시작하세요!
+
+
+      function TodoList(data, id) {
+        // 보너스 구현사항 #50 수정
+        if (!new.target) {
+          throw new Error('new를 통해 함수를 생성해주세요'); 
+        } 
+
+        if (data === undefined || data === null) {
+          throw new Error("올바른 데이터 형태를 입력해주세요")
+        } 
+
+        if (!Array.isArray(data)) {
+          throw new Error("Array 형태로 값을 입력해주세요") 
+        } 
+
+        data.forEach(item => {
+          if (!item.hasOwnProperty('text')) {
+            throw new Error("text를 함께 입력해주세요") 
+          } 
+
+          if (typeof item.text !== 'string') {
+            throw new Error("text를 string 형태로 입력해주세요") 
+          }
+        })
+        
+        this.data = data;
+        this.id = id;
+        const todoListId = document.querySelector(id);
+        this.render = function() {
+          let textList = '';
+          this.data.forEach(item => {
+            item.isCompleted ? textList += `<li><s>${item.text}</s></li>` : textList += `<li>${item.text}</li>`;
+          });
+          todoListId.innerHTML = textList;
+        }
+
+        this.setState = function(nextData) {
+          this.data = nextData;
+          this.render();
+        }
+      }
+      
+      const todoList1 = new TodoList(data1, '#todo-list1');
+      const todoList2 = new TodoList(data2, '#todo-list2');
+      const todoList3 = new TodoList(data3, '#todo-list3');
+
+      todoList1.render();
+      todoList2.render();
+      todoList3.render();
+
+      setTimeout(() => {
+        todoList1.setState(data4)
+      }, 3000)
+
+    </script>
+  </body>
+</html>
