@@ -1,0 +1,43 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list"></div>
+  <script>
+    const data = [{
+        text: 'JS 공부하기',
+        isCompleted: true,
+      },
+      {
+        text: 'JS 복습하기',
+        isCompleted: false,
+      },
+    ]
+
+    function TodoList(data) {
+      this.data = data;
+
+      this.getData = function(){
+        const userInputs = this.data.reduce((acc,cur) => `${acc}<div>${cur.text}</div>`, ' ');
+        return userInputs
+      }
+      
+      this.render = function () { 
+        document.getElementById("todo-list").innerHTML =this.getData();
+      }
+    }
+    
+    
+    const todoList = new TodoList(data);
+    todoList.render();
+
+  </script>
+</body>
+
+</html>
+
+<!-- 오잉 언디파인드가 뜨네 -->
