@@ -5,33 +5,59 @@
   </head>
 
   <body>
-    <ul id="todo-list"></ul>
+    <ul id="todo-list-one"></ul>
+    <ul id="todo-list-two"></ul>
+    <ul id="todo-list-three"></ul>
+
     <script>
-      const todos = [
+      const todos1 = [
         {
-          text: 'JS 공부하기',
+          text: '[todos1] 과제하기',
           isCompleted: true,
         },
         {
-          text: 'JS 복습하기',
+          text: '[todos1] JS 복습하기',
+          isCompleted: false,
+        },
+      ]
+
+      const todos2 = [
+        {
+          text: '[todos2] JS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: '[todos2] JS 복습하기',
+          isCompleted: false,
+        },
+      ]
+
+      const todos3 = [
+        {
+          text: '[todos3] JS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: '[todos3] JS 복습하기',
           isCompleted: false,
         },
       ]
 
       const nextData = [
         {
-          text: '피자먹기',
+          text: '[todos1] 피자먹기',
           isCompleted: true,
         },
         {
-          text: '마라탕먹기',
+          text: '[todos1] 마라탕먹기',
           isCompleted: false,
         },
       ]
 
       class TodoList {
-        constructor(data) {
+        constructor({ selector, data }) {
           this.data = data
+          this.selector = selector
         }
 
         setState(data) {
@@ -53,11 +79,11 @@
         render() {
           console.log('render 함수 안의 this ?', this)
 
-          const { data, checkParameter } = this
+          const { selector, data, checkParameter } = this
 
           checkParameter(data)
 
-          document.querySelector('#todo-list').innerHTML = data
+          document.querySelector(selector).innerHTML = data
             .map(({ text, isCompleted }) => {
               if (!text) {
                 throw new Error('텍스트가 존재하지 않습니다')
@@ -69,9 +95,25 @@
         }
       }
 
-      const todoList = new TodoList(todos)
+      const todoListOne = new TodoList({
+        selector: '#todo-list-one',
+        data: todos1,
+      })
 
-      todoList.render()
+      const todoListTwo = new TodoList({
+        selector: '#todo-list-two',
+        data: todos2,
+      })
+
+      const todoListThree = new TodoList({
+        selector: '#todo-list-three',
+        data: todos3,
+      })
+
+      todoListOne.render()
+      todoListTwo.render()
+      todoListThree.render()
+
       todoList.setState(nextData)
     </script>
   </body>
