@@ -18,9 +18,30 @@
         },
       ]
 
+      const nextData = [
+        {
+          text: '피자먹기',
+          isCompleted: true,
+        },
+        {
+          text: '마라탕먹기',
+          isCompleted: false,
+        },
+      ]
+
       class TodoList {
         constructor(data) {
           this.data = data
+        }
+
+        setState(data) {
+          const { render } = this
+
+          this.data = data
+
+          this.render()
+
+          // render()
         }
 
         checkParameter(data) {
@@ -30,6 +51,8 @@
         }
 
         render() {
+          console.log('render 함수 안의 this ?', this)
+
           const { data, checkParameter } = this
 
           checkParameter(data)
@@ -49,6 +72,7 @@
       const todoList = new TodoList(todos)
 
       todoList.render()
+      todoList.setState(nextData)
     </script>
   </body>
 </html>
