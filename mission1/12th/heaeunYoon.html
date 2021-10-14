@@ -23,9 +23,25 @@
           this.data = data
         }
 
+        checkParameter(data) {
+          if (!data || !Array.isArray(data)) {
+            throw new Error('파라미터가 올바르지 않습니다')
+          }
+        }
+
         render() {
-          document.querySelector('#todo-list').innerHTML = this.data
-            .map(({ text }) => `<li>${text}</li>`)
+          const { data, checkParameter } = this
+
+          checkParameter(data)
+
+          document.querySelector('#todo-list').innerHTML = data
+            .map(({ text }) => {
+              if (!text) {
+                throw new Error('텍스트가 존재하지 않습니다')
+              }
+
+              return `<li>${text}</li>`
+            })
             .join('')
         }
       }
