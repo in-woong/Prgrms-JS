@@ -38,62 +38,55 @@
         return Object.values(data).some(isNotBoolean);
       }
 
-      const isWrongValueFormat = (data) => {
+      const checkValues = (data) => {
         if (isEmptyValue(data)) {
-          return true;
+          throw new Error('주어진 data에 value가 빈 원소가 있습니다.')
         }
         if (isTextNotStringType(data)) {
-          return true;
+          throw new Error('주어진 data에 text 속성의 value가 string이 아닌 원소가 있습니다.')
         }
         if (isCompletedNotBooleanType(data)) {
-          return true
+          throw new Error('주어진 data에 completed 속성의 value가 boolean이 아닌 원소가 있습니다.')
         }
       }
 
-      const isWrongKeyFormat = (data) => {
+      const checkKeys = (data) => {
         const keyFormat = ['text', 'isCompleted'];
         const condition = (value) => JSON.stringify(Object.keys(value)) !== JSON.stringify(keyFormat);
 
-        return Object.values(data).some(condition)
+        if (Object.values(data).some(condition)) {
+          throw new Error('주어진 data엔 {text, isComplete} 형태로 이루어지지 않은 원소가 있습니다.');
+        }
       }
 
-      const isDataFormatError = (data) => {
-        if (isWrongKeyFormat(data)) {
-          return true;
-        }
-        if (isWrongValueFormat(data)) {
-          return true;
-        }
-        return false;
+      const checkDataArrayFormat = (data) => {
+        checkKeys(data)
+        checkValues(data);
       }
 
-      const isValidData = (data) => {
+      const isEmptyArray = (data) => {
+        return data.length === 0;
+      }
+
+      const checkErrorInputData = (data) => {
         if (data === null || data === undefined) {
-          return false;
+          throw new Error('주어진 data가 null 또는 undefined입니다.')
         }
         if (!Array.isArray(data)) {
-          return false;
+          throw new Error('주어진 data가 Array가 아닙니다.')
         }
-        if (isDataFormatError(data)) {
-          return false;
+        if (isEmptyArray(data)) {
+          throw new Error('주어진 data가 빈 array입니다.')
         }
-        return true;
-      }
-
-      const isInstanceFromNew = (instance, targetFunction) => instance instanceof targetFunction;
-
-      const isValid = (targetFunction, instance, data) => {
-        if (!isInstanceFromNew(instance, targetFunction)) {
-          throw new Error('error message');
-        }
-        if (!isValidData(data)) {
-          throw new Error('error message');
-        }
+        checkDataArrayFormat(data);
       }
 
       const TodoList = function(data) {
+        if (this === window) {
+          throw new Error('new 키워드를 이용해 TodoList를 생성하세요');
+        }
         try {
-          isValid(TodoList, this, data);
+          checkErrorInputData(data)
         } catch (e) {
           console.error(e);
         }
