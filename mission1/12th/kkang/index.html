@@ -130,6 +130,18 @@
 
         this.state = data;
 
+        this.setState = (nextData) => {
+          try {
+            setTimeout(() => {
+              checkErrorInputData(nextData);
+              this.state = [...nextData];
+              this.render();
+            }, 3000)
+          } catch (e) {
+            console.error(e);
+          }
+        }
+
         this.render = function () {
           const todoListHTMLString = this.state.map(({ text, isCompleted }) =>
             isCompleted ? `<li><s>${text}</s></li>` : `<li>${text}</li>`
@@ -148,6 +160,7 @@
       todoList1.render();
       todoList2.render();
       todoList3.render();
+      todoList3.setState([{text:'setState', isCompleted:true}])
     </script>
   </body>
 </html>
