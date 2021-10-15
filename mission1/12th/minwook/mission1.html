@@ -21,23 +21,34 @@
     function TodoList(data) {
       this.data = data;
 
-      this.getData = function(){
-        const userInputs = this.data.reduce((acc,cur) => `${acc}<div>${cur.text}</div>`, ' ');
+      function checkDataType() {
+        if (this === window) {
+          throw new Error('생성자 함수를 쓰지 않아서 this가 window입니다!');
+        }
+
+        try {
+          if (typeof data != Array) {
+            throw new Error('data must be a array!!!')
+          }
+        } catch (err) {
+          console.error(err)
+        }
+      }
+
+      this.getData = function () {
+        const userInputs = this.data.reduce((acc, cur) => `${acc}<div>${cur.text}</div>`, ' ');
         return userInputs
       }
-      
-      this.render = function () { 
-        document.getElementById("todo-list").innerHTML =this.getData();
+
+      this.render = function () {
+        document.getElementById("todo-list").innerHTML = this.getData();
       }
     }
-    
-    
+
+
     const todoList = new TodoList(data);
     todoList.render();
-
   </script>
 </body>
 
 </html>
-
-<!-- 오잉 언디파인드가 뜨네 -->
