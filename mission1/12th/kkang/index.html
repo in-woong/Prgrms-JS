@@ -17,7 +17,22 @@
           isCompleted: false,
         },
       ]
-      // 이곳에서 코딩을 시작하세요!
+
+      const $ = (selector, scope = document) => scope.querySelector(selector);
+
+      const TodoList = function(data) {
+        this.state = data;
+
+        this.render = function () {
+          $('#todo-list').innerHTML = this.state.map(({text}) =>
+            `<li>${text}</li>`
+          ).join('');
+        }
+      }
+
+      const todoList = new TodoList(data);
+
+      todoList.render();
     </script>
   </body>
 </html>
