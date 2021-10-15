@@ -20,11 +20,17 @@
 
       const $ = (selector, scope = document) => scope.querySelector(selector);
 
+      const isInstanceFromNew = (instance, targetFunction) => instance instanceof targetFunction;
+
+      const isValid = (targetFunction, instance) => {
+        if (!isInstanceFromNew(instance, targetFunction)) {
+          throw new Error('error message');
+        }
+      }
+
       const TodoList = function(data) {
         try {
-          if (this === window) {
-            throw new Error('error message');
-          }
+          isValid(TodoList, this);
         } catch (e) {
           console.error(e);
         }
