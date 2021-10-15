@@ -20,7 +20,53 @@
 
       const $ = (selector, scope = document) => scope.querySelector(selector);
 
-      const isInstanceFromNew = (instance, targetFunction) => instance instanceof targetFunction;
+      const isEmptyValue = (data) => {
+        const isEmpty = ({text, isCompleted}) => (text === '' || isCompleted === '');
+
+        return Object.values(data).some(isEmpty);
+      }
+
+      const isTextNotStringType = (data) => {
+        const isNotString = ({text}) => (typeof(text) !== 'string') && !(text instanceof String);
+
+        return (Object.values(data).some(isNotString));
+      }
+
+      const isCompletedNotBooleanType = (data) => {
+        const isNotBoolean = ({isCompleted}) => (typeof(isCompleted) !== 'boolean') && !(isCompleted instanceof Boolean);
+
+        return Object.values(data).some(isNotBoolean);
+      }
+
+      const isWrongValueFormat = (data) => {
+        if (isEmptyValue(data)) {
+          return true;
+        }
+        if (isTextNotStringType(data)) {
+          return true;
+        }
+        if (isCompletedNotBooleanType(data)) {
+          return true
+        }
+      }
+
+      const isWrongKeyFormat = (data) => {
+        const keyFormat = ['text', 'isCompleted'];
+        const condition = (value) => JSON.stringify(Object.keys(value)) !== JSON.stringify(keyFormat);
+
+        return Object.values(data).some(condition)
+      }
+
+      const isDataFormatError = (data) => {
+        if (isWrongKeyFormat(data)) {
+          return true;
+        }
+        if (isWrongValueFormat(data)) {
+          return true;
+        }
+        return false;
+      }
+
       const isValidData = (data) => {
         if (data === null || data === undefined) {
           return false;
@@ -28,8 +74,13 @@
         if (!Array.isArray(data)) {
           return false;
         }
+        if (isDataFormatError(data)) {
+          return false;
+        }
         return true;
       }
+
+      const isInstanceFromNew = (instance, targetFunction) => instance instanceof targetFunction;
 
       const isValid = (targetFunction, instance, data) => {
         if (!isInstanceFromNew(instance, targetFunction)) {
