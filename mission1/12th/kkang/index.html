@@ -6,6 +6,9 @@
 
   <body>
     <div id="todo-list"></div>
+    <div id="todo-list1"></div>
+    <div id="todo-list2"></div>
+    <div id="todo-list3"></div>
     <script>
       const data = [
         {
@@ -17,6 +20,40 @@
           isCompleted: false,
         },
       ]
+      
+      const data1 = [
+        {
+          text: '코드 구조 개선하기',
+          isCompleted: false,
+        },
+        {
+          text: '저녁 식사',
+          isCompleted: false,
+        },
+      ]
+
+      const data2 = [
+        {
+          text: '스트레칭 하기',
+          isCompleted: true,
+        },
+        {
+          text: 'React 공부하기',
+          isCompleted: false,
+        },
+      ]
+
+      const data3 = [
+        {
+          text: '물먹기',
+          isCompleted: true,
+        },
+        {
+          text: '산책하기',
+          isCompleted: false,
+        },
+      ]
+
 
       const $ = (selector, scope = document) => scope.querySelector(selector);
 
@@ -81,7 +118,7 @@
         checkDataArrayFormat(data);
       }
 
-      const TodoList = function(data) {
+      const TodoList = function($target, data) {
         if (this === window) {
           throw new Error('new 키워드를 이용해 TodoList를 생성하세요');
         }
@@ -94,15 +131,23 @@
         this.state = data;
 
         this.render = function () {
-          $('#todo-list').innerHTML = this.state.map(({text}) =>
-            `<li>${text}</li>`
+          const todoListHTMLString = this.state.map(
+            ({ text }) => `<li>${text}</li>`
           ).join('');
+
+          $target.innerHTML = `<ul>${todoListHTMLString}</ul>`
         }
       }
 
-      const todoList = new TodoList(data);
+      const todoList = new TodoList($('#todo-list'), data);
+      const todoList1 = new TodoList($('#todo-list1'), data1);
+      const todoList2 = new TodoList($('#todo-list2'), data2);
+      const todoList3 = new TodoList($('#todo-list3'), data3);
 
       todoList.render();
+      todoList1.render();
+      todoList2.render();
+      todoList3.render();
     </script>
   </body>
 </html>
