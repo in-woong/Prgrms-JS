@@ -20,7 +20,7 @@
           isCompleted: false,
         },
       ]
-      
+
       const data1 = [
         {
           text: '코드 구조 개선하기',
@@ -131,8 +131,8 @@
         this.state = data;
 
         this.render = function () {
-          const todoListHTMLString = this.state.map(
-            ({ text }) => `<li>${text}</li>`
+          const todoListHTMLString = this.state.map(({ text, isCompleted }) =>
+            isCompleted ? `<li><s>${text}</s></li>` : `<li>${text}</li>`
           ).join('');
 
           $target.innerHTML = `<ul>${todoListHTMLString}</ul>`
