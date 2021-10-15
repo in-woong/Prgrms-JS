@@ -21,16 +21,28 @@
       const $ = (selector, scope = document) => scope.querySelector(selector);
 
       const isInstanceFromNew = (instance, targetFunction) => instance instanceof targetFunction;
+      const isValidData = (data) => {
+        if (data === null || data === undefined) {
+          return false;
+        }
+        if (!Array.isArray(data)) {
+          return false;
+        }
+        return true;
+      }
 
-      const isValid = (targetFunction, instance) => {
+      const isValid = (targetFunction, instance, data) => {
         if (!isInstanceFromNew(instance, targetFunction)) {
+          throw new Error('error message');
+        }
+        if (!isValidData(data)) {
           throw new Error('error message');
         }
       }
 
       const TodoList = function(data) {
         try {
-          isValid(TodoList, this);
+          isValid(TodoList, this, data);
         } catch (e) {
           console.error(e);
         }
