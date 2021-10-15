@@ -21,6 +21,14 @@
       const $ = (selector, scope = document) => scope.querySelector(selector);
 
       const TodoList = function(data) {
+        try {
+          if (this === window) {
+            throw new Error('error message');
+          }
+        } catch (e) {
+          console.error(e);
+        }
+
         this.state = data;
 
         this.render = function () {
