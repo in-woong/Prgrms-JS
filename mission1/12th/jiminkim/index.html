@@ -16,22 +16,47 @@
           text: 'JS 복습하기',
           isCompleted: false,
         },
+        {
+          text: '미션1 수행하기',
+          isCompleted: false,
+        },
       ]
+
+
       // 이곳에서 코딩을 시작하세요!
-      
+			function isVaildTodo(todo) {
+				if (!todo.hasOwnProperty('text')) return { error: true, message: 'text가 없습니다.' }
+				if (todo.text === '') return { error: true, message: 'text는 필수입력입니다.' }
+				if (!todo.hasOwnProperty('isCompleted')) return { error: true, massege: 'isCompleted가 없습니다.'}
+				if (typeof(todo.isCompleted) !== 'boolean') return { error: true, massege: 'isCompleted는 true, false만 입력가능합니다.'}
+				return { error: false, massage: ''}
+			}
+
       function TodoList({ data }) {
-          this.$target = document.getElementById('todo-list');
-          this.data = data;
+
+				if (data === null || data === undefined) throw new Error('data가 올바르지 않습니다.')
+				if (!Array.isArray(data)) throw new Error('data가 배열이 아닙니다.')
+				if (this === window) throw new Error('new 키워드를 사용하여 객체를 생성해 주세요.')
+
+				// 유효성 체크
+				data.forEach(todo => {
+					const vaild = isVaildTodo(todo);
+					if (vaild.error) throw new Error(vaild.message)
+				});
+
+        this.$target = document.getElementById('todo-list');
+        this.data = data;
           
-          this.render = () => {
-              const template = data.map(todo => `
-                <div>${todo.text}<span>${data.isCompleted ?? `(완료)` }</div>
-              `).join('')
-              this.$target.innerHTML = template
-          }
+        this.render = () => {
+          const template = this.data.map(todo => `
+            <div>${todo.text}<span>${todo.isCompleted ? `(완료)` : `(미완료)` }</div>
+          `).join('')
+          
+					this.$target.innerHTML = template
+        }
       }
 
-      const todoList = new TodoList({data});
+      const todoList = new TodoList({ data });
       todoList.render()
     </script>
 
