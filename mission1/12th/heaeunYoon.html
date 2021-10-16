@@ -12,7 +12,7 @@
     <script>
       const todos1 = [
         {
-          text: '[todos1] 과제하기',
+          text: '[todos1] JS 예습하기',
           isCompleted: true,
         },
         {
@@ -54,6 +54,15 @@
         },
       ]
 
+      function createError({ type }) {
+        const errorMessages = {
+          array: '파라미터가 배열이 아닙니다',
+          text: 'text의 타입이 string이 아닙니다',
+        }
+
+        throw new Error(errorMessages[type])
+      }
+
       class TodoList {
         constructor({ selector, data }) {
           this.data = data
@@ -61,33 +70,31 @@
         }
 
         setState(data) {
-          const { render } = this
-
           this.data = data
 
           this.render()
-
-          // render()
         }
 
         checkParameter(data) {
-          if (!data || !Array.isArray(data)) {
-            throw new Error('파라미터가 올바르지 않습니다')
+          if (!Array.isArray(data)) {
+            createError({ type: 'array' })
+          }
+        }
+
+        checkTextType(text) {
+          if (typeof text !== 'string') {
+            createError({ type: 'text' })
           }
         }
 
         render() {
-          console.log('render 함수 안의 this ?', this)
+          const { selector, data } = this
 
-          const { selector, data, checkParameter } = this
-
-          checkParameter(data)
+          this.checkParameter(data)
 
           document.querySelector(selector).innerHTML = data
             .map(({ text, isCompleted }) => {
-              if (!text) {
-                throw new Error('텍스트가 존재하지 않습니다')
-              }
+              this.checkTextType(text)
 
               return `<li>${isCompleted ? `<s>${text}</s>` : `${text}`}</li>`
             })
@@ -114,7 +121,7 @@
       todoListTwo.render()
       todoListThree.render()
 
-      todoList.setState(nextData)
+      todoListOne.setState(nextData)
     </script>
   </body>
 </html>
