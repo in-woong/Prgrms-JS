@@ -6,6 +6,8 @@
 
   <body>
     <div id="todo-list"></div>
+    <div id="todo-list-in-company"></div>
+    <div id="todo-list-in-home"></div>
     <script>
       const data = [
         {
@@ -17,31 +19,58 @@
           isCompleted: false,
         },
       ]
+      const companyData = [
+        {
+          text: '출근하기',
+          isCompleted: true,
+        },
+        {
+          text: '퇴근하기',
+          isCompleted: false,
+        },
+      ]
+      const homeData = [
+        {
+          text: '지각하지 않기',
+          isCompleted: false,
+        },
+        {
+          text: '일찍 잠들기',
+          isCompleted: false,
+        },
+      ]
       // 이곳에서 코딩을 시작하세요!
       const errorCheck = (list) => {
         if (!list || !Array.isArray(list)) return false;
         return list.every((item) => item.hasOwnProperty('text'))
       }
 
-      function TodoList(list) {
+      function TodoList(list, id) {
         if(!(this instanceof TodoList)){
           throw new Error('일반 함수가 아닙니다.');
           return;
         }
-
         if (!errorCheck(list)) {
           throw new Error('올바른 파라미터가 아닙니다.');
           return;
         }
+
         this.list = list;
-        this.render = () => {
-          const getTodoList = list.map((item) => `<div>${item.text}</div>`).join('');
-          const todoListNode = document.querySelector('#todo-list');
-          todoListNode.innerHTML = getTodoList;
-        }
+        this.id = id;
       }
-      const todoList = new TodoList(data);
+
+      TodoList.prototype.render = function() {
+        const getTodoList = this.list.map((item) => `<div>${item.text}</div>`).join('');
+        const todoListNode = document.querySelector(this.id);
+        todoListNode.innerHTML = getTodoList;
+      }
+
+      const todoList = new TodoList(data, '#todo-list');
+      const todoListInCompany = new TodoList(companyData, '#todo-list-in-company');
+      const todoListInHome = new TodoList(homeData, '#todo-list-in-home');
       todoList.render();
+      todoListInCompany.render();
+      todoListInHome.render();
     </script>
   </body>
 </html>
