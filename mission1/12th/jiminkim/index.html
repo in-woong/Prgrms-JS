@@ -5,9 +5,11 @@
   </head>
 
   <body>
-    <div id="todo-list"></div>
+    <div id="todo-list-study"></div>
+    <div id="todo-list-housework"></div>
+    <div id="todo-list-contact"></div>
     <script>
-      const data = [
+      const data_study = [
         {
           text: 'JS 공부하기',
           isCompleted: true,
@@ -22,29 +24,58 @@
         },
       ]
 
+      const data_housework = [
+        {
+          text: '밥하기',
+          isCompleted: false,
+        },
+        {
+          text: '빨래하기',
+          isCompleted: false,
+        },
+        {
+          text: '캡슐커피 사오기',
+          isCompleted: false,
+        },
+      ];
+
+      const data_contact = [
+        {
+          text: '엄마한테 전화하기',
+          isCompleted: false,
+        },
+        {
+          text: '아빠한테 전화하기',
+          isCompleted: false,
+        },
+        {
+          text: '할머니한테 전화하기',
+          isCompleted: false,
+        },
+      ];
 
       // 이곳에서 코딩을 시작하세요!
-			function isVaildTodo(todo) {
-				if (!todo.hasOwnProperty('text')) return { error: true, message: 'text가 없습니다.' }
-				if (todo.text === '') return { error: true, message: 'text는 필수입력입니다.' }
-				if (!todo.hasOwnProperty('isCompleted')) return { error: true, massege: 'isCompleted가 없습니다.'}
-				if (typeof(todo.isCompleted) !== 'boolean') return { error: true, massege: 'isCompleted는 true, false만 입력가능합니다.'}
-				return { error: false, massage: ''}
-			}
+      function isVaildTodo(todo) {
+        if (!todo.hasOwnProperty('text')) return { error: true, message: 'text가 없습니다.' }
+        if (todo.text === '') return { error: true, message: 'text는 필수입력입니다.' }
+        if (!todo.hasOwnProperty('isCompleted')) return { error: true, message: 'isCompleted가 없습니다.'}
+        if (typeof(todo.isCompleted) !== 'boolean') return { error: true, message: 'isCompleted는 true, false만 입력가능합니다.'}
+        return { error: false, massage: ''}
+      }
 
-      function TodoList({ data }) {
+      function TodoList({ targetId, data }) {
 
-				if (data === null || data === undefined) throw new Error('data가 올바르지 않습니다.')
-				if (!Array.isArray(data)) throw new Error('data가 배열이 아닙니다.')
-				if (this === window) throw new Error('new 키워드를 사용하여 객체를 생성해 주세요.')
+        if (data === null || data === undefined) throw new Error(`TargetId-[${targetId}] Error: data가 올바르지 않습니다.`)
+        if (!Array.isArray(data)) throw new Error(`TargetId-[${targetId}] Error: data가 배열이 아닙니다.`)
+        if (this === window) throw new Error(`TargetId-[${targetId}] Error: new 키워드를 사용하여 객체를 생성해 주세요.`)
 
-				// 유효성 체크
-				data.forEach(todo => {
-					const vaild = isVaildTodo(todo);
-					if (vaild.error) throw new Error(vaild.message)
-				});
+        // 유효성 체크
+        data.forEach((todo, index) => {
+          const vaild = isVaildTodo(todo);
+          if (vaild.error) throw new Error(`TargetId-[${targetId}] Error: index{${index}} ${vaild.message}`);
+        });
 
-        this.$target = document.getElementById('todo-list');
+        this.$target = document.getElementById(targetId);
         this.data = data;
           
         this.render = () => {
@@ -52,12 +83,19 @@
             <div>${todo.text}<span>${todo.isCompleted ? `(완료)` : `(미완료)` }</div>
           `).join('')
           
-					this.$target.innerHTML = template
+          this.$target.innerHTML = template
         }
       }
 
-      const todoList = new TodoList({ data });
-      todoList.render()
+      const todoListStudy = new TodoList({targetId: 'todo-list-study', data: data_study});
+      todoListStudy.render();
+
+      const todoListHousework = new TodoList({targetId: 'todo-list-housework', data: data_housework});
+      todoListHousework.render();
+
+      const todoListContact = new TodoList({targetId: 'todo-list-contact', data: data_contact});
+      todoListContact.render();
+
     </script>
 
   </body>
