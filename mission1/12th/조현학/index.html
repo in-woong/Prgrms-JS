@@ -18,16 +18,30 @@
         },
       ]
       // 이곳에서 코딩을 시작하세요!
+      const errorCheck = (list) => {
+        if (!list || !Array.isArray(list)) return false;
+        return list.every((item) => item.hasOwnProperty('text'))
+      }
+
       function TodoList(list) {
+        if(!(this instanceof TodoList)){
+          throw new Error('일반 함수가 아닙니다.');
+          return;
+        }
+
+        if (!errorCheck(list)) {
+          throw new Error('올바른 파라미터가 아닙니다.');
+          return;
+        }
         this.list = list;
         this.render = () => {
           const getTodoList = list.map((item) => `<div>${item.text}</div>`).join('');
           const todoListNode = document.querySelector('#todo-list');
           todoListNode.innerHTML = getTodoList;
         }
-        render();
       }
       const todoList = new TodoList(data);
+      todoList.render();
     </script>
   </body>
 </html>
