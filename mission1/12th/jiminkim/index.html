@@ -26,8 +26,8 @@
 
       const data_housework = [
         {
-          text: '밥하기',
-          isCompleted: false,
+          text: '점심먹기',
+          isCompleted: true,
         },
         {
           text: '빨래하기',
@@ -42,7 +42,7 @@
       const data_contact = [
         {
           text: '엄마한테 전화하기',
-          isCompleted: false,
+          isCompleted: true,
         },
         {
           text: '아빠한테 전화하기',
@@ -80,10 +80,10 @@
           
         this.render = () => {
           const template = this.data.map(todo => `
-            <div>${todo.text}<span>${todo.isCompleted ? `(완료)` : `(미완료)` }</div>
+            <div${todo.isCompleted ? (` style="text-decoration: line-through"`) : ''}>${todo.text}</div>
           `).join('')
           
-          this.$target.innerHTML = template
+          this.$target.innerHTML = template;
         }
       }
 
