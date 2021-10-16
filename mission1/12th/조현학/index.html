@@ -38,7 +38,7 @@
         },
         {
           text: '일찍 잠들기',
-          isCompleted: false,
+          isComplete: false,
         },
       ]
 
@@ -49,23 +49,24 @@
         },
         {
           text: 'JS 다시 복습하기',
-          isCompleted: false,
+          isComplete: false,
         },
       ]
 
       // 이곳에서 코딩을 시작하세요!
       const errorCheck = (list) => {
         if (!list || !Array.isArray(list)) return false;
-        return list.every((item) => item.hasOwnProperty('text'))
+        const props = ['text', 'isCompleted'];
+        return list.every((item) => props.every(prop => item.hasOwnProperty(prop)));
       }
 
       function TodoList(list, id) {
         if(!(this instanceof TodoList)){
-          throw new Error('일반 함수가 아닙니다.');
+          throw new Error('생성자 함수로 호출하세요.');
           return;
         }
         if (!errorCheck(list)) {
-          throw new Error('올바른 파라미터가 아닙니다.');
+          throw new Error(`${id}는 올바른 파라미터가 아닙니다.`);
           return;
         }
 
@@ -80,6 +81,10 @@
       }
 
       TodoList.prototype.setState = function(nextData) {
+        if (!errorCheck(nextData)) {
+          throw new Error(`${this.id}는 올바른 파라미터가 아닙니다.`);
+          return;
+        }
         this.list = nextData;
         this.render();
       }
