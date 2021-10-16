@@ -2,12 +2,17 @@
   <head>
     <title>Mission 1</title>
     <meta charset="utf-8" />
+    <style>
+      .todoContainer {
+        padding-bottom: 20px;
+      }
+    </style>
   </head>
 
   <body>
-    <div id="todo-list-study"></div>
-    <div id="todo-list-housework"></div>
-    <div id="todo-list-contact"></div>
+    <div id="todo-list-study" class="todoContainer"></div>
+    <div id="todo-list-housework" class="todoContainer"></div>
+    <div id="todo-list-contact" class="todoContainer"></div>
     <script>
       const data_study = [
         {
@@ -60,23 +65,20 @@
         if (todo.text === '') return { error: true, message: 'text는 필수입력입니다.' }
         if (!todo.hasOwnProperty('isCompleted')) return { error: true, message: 'isCompleted가 없습니다.'}
         if (typeof(todo.isCompleted) !== 'boolean') return { error: true, message: 'isCompleted는 true, false만 입력가능합니다.'}
-        return { error: false, massage: ''}
+        return { error: false, massage: '' }
       }
 
-      function TodoList({ targetId, data }) {
-
-        if (data === null || data === undefined) throw new Error(`TargetId-[${targetId}] Error: data가 올바르지 않습니다.`)
-        if (!Array.isArray(data)) throw new Error(`TargetId-[${targetId}] Error: data가 배열이 아닙니다.`)
-        if (this === window) throw new Error(`TargetId-[${targetId}] Error: new 키워드를 사용하여 객체를 생성해 주세요.`)
-
-        // 유효성 체크
-        data.forEach((todo, index) => {
-          const vaild = isVaildTodo(todo);
-          if (vaild.error) throw new Error(`TargetId-[${targetId}] Error: index{${index}} ${vaild.message}`);
-        });
-
+      function TodoList({ targetId, data = [] }) {
+        
         this.$target = document.getElementById(targetId);
         this.data = data;
+
+        this.setState = nextState => {
+          this.validate(nextState);
+          this.data = nextState;
+
+          this.render();
+        }
           
         this.render = () => {
           const template = this.data.map(todo => `
@@ -85,16 +87,28 @@
           
           this.$target.innerHTML = template;
         }
+
+        this.validate = (data) => {
+          if (data === null || data === undefined) throw new Error(`TargetId-[${targetId}] Error: data가 올바르지 않습니다.`)
+          if (!Array.isArray(data)) throw new Error(`TargetId-[${targetId}] Error: data가 배열이 아닙니다.`)
+          if (this === window) throw new Error(`TargetId-[${targetId}] Error: new 키워드를 사용하여 객체를 생성해 주세요.`)
+
+          // 유효성 체크
+          data.forEach((todo, index) => {
+            const vaild = isVaildTodo(todo);
+            if (vaild.error) throw new Error(`TargetId-[${targetId}] Error: index{${index}} ${vaild.message}`);
+          });
+        }
+
+        this.validate(this.data);
+        this.render();
       }
 
       const todoListStudy = new TodoList({targetId: 'todo-list-study', data: data_study});
-      todoListStudy.render();
-
       const todoListHousework = new TodoList({targetId: 'todo-list-housework', data: data_housework});
-      todoListHousework.render();
-
       const todoListContact = new TodoList({targetId: 'todo-list-contact', data: data_contact});
-      todoListContact.render();
+
+      todoListStudy.setState([{text: '새로운 TODO', isCompleted: false}]);
 
     </script>
 
