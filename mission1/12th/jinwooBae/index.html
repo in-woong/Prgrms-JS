@@ -20,12 +20,25 @@
       // 이곳에서 코딩을 시작하세요!
       const TodoList = function(data) {
         
-        if(typeof(data) !== typeof(Array()))
-          console.error("inappreciate parameter used");
-        // 파라미터가 Array 형태로 왔는지 확인
+        const validate = function() {
+          let dataType = typeof(data);
+          if (dataType !== typeof(Array()) || dataType === (null || undefined)) {   
+            throw new Error(`inappreciate parameter used: current parameter type is ${dataType}`);
+          }
+          // 데이터 타입이 배열이 아니거나 null or undefined 일 때 에러 발생
+
+          data.map(d => {
+            if(!(d.hasOwnProperty('text') && d.hasOwnProperty('isCompleted'))) {
+              throw new Error("inappreciate parameter used: some data don't have appreciated property")
+            } 
+          });
+        }
+        // 파라미터 내에 text, isCompleted 프로퍼티들이 존재하는지 검사
+
+        validate(); //  유효성 검사 실행
 
         if(this === window) {
-          console.error("'new' keword was needed to create new instance");
+          throw new Error("'new' keword was needed to create new instance");
         }
         // new 키워드 없이 함수 실행 시 에러 발생
 
