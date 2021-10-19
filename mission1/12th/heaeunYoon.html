@@ -67,6 +67,8 @@
         constructor({ selector, data }) {
           this.data = data
           this.selector = selector
+
+          this.render()
         }
 
         setState(data) {
@@ -116,10 +118,6 @@
         selector: '#todo-list-three',
         data: todos3,
       })
-
-      todoListOne.render()
-      todoListTwo.render()
-      todoListThree.render()
 
       todoListOne.setState(nextData)
     </script>
