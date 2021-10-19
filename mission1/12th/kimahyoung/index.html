@@ -12,21 +12,27 @@
 
     <script>
         var data = [{
-            text: 'JS 공부하기'
+            text: 'JS 공부하기',
+            isCompleted: false
         }, {
-            text: 'JS 복습하기'
+            text: 'JS 복습하기',
+            isCompleted: false
         }]
 
         var program = [{
-            text: 'JS 스터디 과제하기'
+            text: 'JS 스터디 과제하기',
+            isCompleted: true
         }, {
-            text: 'vue로 날씨 앱 만들기'
+            text: 'vue로 날씨 앱 만들기',
+            isCompleted: false
         }]
 
         var exercise = [{
-            text: '산책하기'
+            text: '산책하기',
+            isCompleted: true
         }, {
-            text: '스트레칭하기'
+            text: '스트레칭하기',
+            isCompleted: false
         }]
 
         function TodoList(data, name) {
@@ -43,8 +49,10 @@
             dataCheck()
 
             const todo = this.data.map(({
-                text
-            }) => `<div>${text}</div>`).join('')
+                    text,
+                    isCompleted
+                }) =>
+                isCompleted ? `<div><s>${text}</s></div>` : `<div>${text}</div>`).join('')
 
             this.render = function() {
                 document.querySelector(`#${name}`).innerHTML = todo
