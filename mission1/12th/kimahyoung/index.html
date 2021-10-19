@@ -1,35 +1,45 @@
 <html>
-  <head>
+
+<head>
     <title>Mission 1</title>
     <meta charset="utf-8" />
-  </head>
+</head>
 
-  <body>
+<body>
     <div id="todo-list"></div>
     <script>
-      var data = [
-        {
-          text: 'JS 공부하기'
-        },
-        {
-          text: 'JS 복습하기'
+        var data = [{
+            text: 'JS 공부하기'
+        }, {
+            text: 'JS 복습하기'
+        }]
+
+        function TodoList(data) {
+            this.data = data;
+
+            const dataCheck = () => {
+                if (!data || !Array.isArray(data)) {
+                    throw new Error('배열이 아닙니다')
+                } else if (!(this instanceof TodoList)) {
+                    throw new Error('new 키워드 안 붙이면 에러 발생')
+                }
+            }
+
+            dataCheck()
+
+            const todo = this.data.map(({
+                text
+            }) => `<div>${text}</div>`).join('')
+
+            this.render = function() {
+                document.querySelector('#todo-list').innerHTML = todo
+            }
         }
-      ]
-      
-      function TodoList(data){
-        this.data = data;
 
-        const todo = this.data.map(({text}) => `<div>${text}</div>`)
+        var todoList = new TodoList(data);
 
-        this.render = function(){
-          document.querySelector('#todo-list').innerHTML = todo
-        }
-      }
-
-      var todoList = new TodoList(data);
-
-      todoList.render();
-      
+        todoList.render();
     </script>
-  </body>
+</body>
+
 </html>
