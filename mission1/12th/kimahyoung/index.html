@@ -44,34 +44,43 @@
         }]
 
         function TodoList(data, name) {
-            this.data = data;
-
-            const dataCheck = () => {
-                if (!data || !Array.isArray(data)) {
-                    throw new Error('배열이 아닙니다')
-                } else if (!(this instanceof TodoList)) {
-                    throw new Error('new 키워드 안 붙이면 에러 발생')
-                }
-            }
-
-            dataCheck()
-
-            this.todo = function() {
-                return this.data.map(({
-                        text,
-                        isCompleted
-                    }) =>
-                    isCompleted ? `<div><s>${text}</s></div>` : `<div>${text}</div>`).join('')
-            }
-            this.render = function() {
-                document.querySelector(`#${name}`).innerHTML = this.todo()
-            }
-            this.render()
-
             this.setState = function(nextData) {
-                this.data = nextData
+                loadTodoList(nextData, name)
+            }
+
+            const loadTodoList = (data, name) => {
+                this.data = data;
+
+                this.dataCheck = function() {
+                    if (!data || !Array.isArray(data)) {
+                        throw new Error('배열이 아닙니다')
+                    } else if (!(this instanceof TodoList)) {
+                        throw new Error('new 키워드 안 붙이면 에러 발생')
+                    }
+                }
+
+                this.dataCheck()
+
+                this.todo = function() {
+                    return this.data.map(({
+                            text,
+                            isCompleted
+                        }) =>
+                        isCompleted ? `<div><s>${text}</s></div>` : `<div>${text}</div>`).join('')
+                }
+                this.render = function() {
+                    document.querySelector(`#${name}`).innerHTML = this.todo()
+                }
                 this.render()
             }
+
+            loadTodoList(data, name)
+
+            // this.setState = function(nextData) {
+            //     this.data = nextData
+            //     this.dataCheck(nextData)
+            //     this.render()
+            // }
 
         }
 
