@@ -35,6 +35,14 @@
             isCompleted: false
         }]
 
+        var next = [{
+            text: '일찍 자기',
+            isCompleted: false
+        }, {
+            text: '일찍 일어나기',
+            isCompleted: false
+        }]
+
         function TodoList(data, name) {
             this.data = data;
 
@@ -48,24 +56,29 @@
 
             dataCheck()
 
-            const todo = this.data.map(({
-                    text,
-                    isCompleted
-                }) =>
-                isCompleted ? `<div><s>${text}</s></div>` : `<div>${text}</div>`).join('')
-
-            this.render = function() {
-                document.querySelector(`#${name}`).innerHTML = todo
+            this.todo = function() {
+                return this.data.map(({
+                        text,
+                        isCompleted
+                    }) =>
+                    isCompleted ? `<div><s>${text}</s></div>` : `<div>${text}</div>`).join('')
             }
+            this.render = function() {
+                document.querySelector(`#${name}`).innerHTML = this.todo()
+            }
+            this.render()
+
+            this.setState = function(nextData) {
+                this.data = nextData
+                this.render()
+            }
+
         }
 
         var todoList = new TodoList(data, 'todo-list');
         var programList = new TodoList(program, 'program-list');
         var exerciseList = new TodoList(exercise, 'exercise-list');
-
-        todoList.render();
-        programList.render();
-        exerciseList.render();
+        todoList.setState(next);
     </script>
 </body>
 
