@@ -7,6 +7,9 @@
 
 <body>
     <div id="todo-list"></div>
+    <div id="program-list"></div>
+    <div id="exercise-list"></div>
+
     <script>
         var data = [{
             text: 'JS 공부하기'
@@ -14,7 +17,19 @@
             text: 'JS 복습하기'
         }]
 
-        function TodoList(data) {
+        var program = [{
+            text: 'JS 스터디 과제하기'
+        }, {
+            text: 'vue로 날씨 앱 만들기'
+        }]
+
+        var exercise = [{
+            text: '산책하기'
+        }, {
+            text: '스트레칭하기'
+        }]
+
+        function TodoList(data, name) {
             this.data = data;
 
             const dataCheck = () => {
@@ -32,13 +47,17 @@
             }) => `<div>${text}</div>`).join('')
 
             this.render = function() {
-                document.querySelector('#todo-list').innerHTML = todo
+                document.querySelector(`#${name}`).innerHTML = todo
             }
         }
 
-        var todoList = new TodoList(data);
+        var todoList = new TodoList(data, 'todo-list');
+        var programList = new TodoList(program, 'program-list');
+        var exerciseList = new TodoList(exercise, 'exercise-list');
 
         todoList.render();
+        programList.render();
+        exerciseList.render();
     </script>
 </body>
 
