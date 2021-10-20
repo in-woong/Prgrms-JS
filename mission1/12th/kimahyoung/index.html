@@ -11,7 +11,7 @@
     <div id="exercise-list"></div>
 
     <script>
-        var data = [{
+        const data = [{
             text: 'JS 공부하기',
             isCompleted: false
         }, {
@@ -19,7 +19,7 @@
             isCompleted: false
         }]
 
-        var program = [{
+        const program = [{
             text: 'JS 스터디 과제하기',
             isCompleted: true
         }, {
@@ -27,7 +27,7 @@
             isCompleted: false
         }]
 
-        var exercise = [{
+        const exercise = [{
             text: '산책하기',
             isCompleted: true
         }, {
@@ -35,7 +35,7 @@
             isCompleted: false
         }]
 
-        var next = [{
+        const next = [{
             text: '일찍 자기',
             isCompleted: false
         }, {
@@ -48,13 +48,15 @@
                 loadTodoList(nextData, name)
             }
 
+
             const loadTodoList = (data, name) => {
                 this.data = data;
 
                 this.dataCheck = function() {
-                    if (!data || !Array.isArray(data)) {
+                    if (!Array.isArray(data)) {
                         throw new Error('배열이 아닙니다')
-                    } else if (!(this instanceof TodoList)) {
+                    }
+                    if (!(this instanceof TodoList)) {
                         throw new Error('new 키워드 안 붙이면 에러 발생')
                     }
                 }
