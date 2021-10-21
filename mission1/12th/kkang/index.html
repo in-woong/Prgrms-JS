@@ -149,6 +149,7 @@
 
           $target.innerHTML = `<ul>${todoListHTMLString}</ul>`
         }
+				this.render();
       }
 
       const todoList = new TodoList($('#todo-list'), data);
@@ -156,10 +157,6 @@
       const todoList2 = new TodoList($('#todo-list2'), data2);
       const todoList3 = new TodoList($('#todo-list3'), data3);
 
-      todoList.render();
-      todoList1.render();
-      todoList2.render();
-      todoList3.render();
       todoList3.setState([{text:'setState', isCompleted:true}])
     </script>
   </body>
