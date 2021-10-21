@@ -54,7 +54,6 @@
         },
       ]
 
-
       const $ = (selector, scope = document) => scope.querySelector(selector);
 
       const isEmptyValue = (data) => {
@@ -84,7 +83,14 @@
 				return filteredDataArray.some((dataArray) => dataArray.length !== 0)
 			}
 			
+			const isFalsyPrimitiveValue = (data) => {
+				return data.some(item => item === null || item === undefined);
+			}
+
 			const checkDataProperties = (data) => {
+				if (isFalsyPrimitiveValue(data)) {
+					throw new Error(`주어진 data에 [null] 또는 [undefined] 타입의 값이 있습니다.`);
+				}
 				if (isUnintendedProperty(data)) {
 					throw new Error('주어진 data에 data, isCompleted 이외의 속성이 있습니다.');
 				}
