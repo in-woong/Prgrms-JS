@@ -73,13 +73,12 @@
 
         return Object.values(data).some(isNotBoolean);
       }
-
 			const isUnintendedProperty = (data) => {
 				const filteredDataArray = data.map((element) =>
-					Object.getOwnPropertyNames(element).
-						filter((prop) => prop !== 'text' && prop !== 'isCompleted')
+				  Object.getOwnPropertyNames(element).
+					  filter((prop) => prop !== 'text' && prop !== 'isCompleted')
 				);
-				
+
 				return filteredDataArray.some((dataArray) => dataArray.length !== 0)
 			}
 			
@@ -95,25 +94,25 @@
 					throw new Error('주어진 data에 data, isCompleted 이외의 속성이 있습니다.');
 				}
 				if (!data.every((item) => item.hasOwnProperty('text'))) {
-      	 	throw new Error('주어진 data에 text 속성이 없습니다.');
+					throw new Error('주어진 data에 text 속성이 없습니다.');
 				}
 				if (!data.every((item) => item.hasOwnProperty('isCompleted'))) {
-      	 	throw new Error('주어진 data에 isCompleted 속성이 없습니다.');
+					throw new Error('주어진 data에 isCompleted 속성이 없습니다.');
 				}
 				if (isEmptyValue(data)) {
-          throw new Error('주어진 data에 value가 빈 원소가 있습니다.')
-        }
-        if (isTextNotStringType(data)) {
-          throw new Error('주어진 data에 text 속성의 value가 string이 아닌 원소가 있습니다.')
-        }
-        if (isCompletedNotBooleanType(data)) {
-          throw new Error('주어진 data에 completed 속성의 value가 boolean이 아닌 원소가 있습니다.')
-        }
+					throw new Error('주어진 data에 value가 빈 원소가 있습니다.')
+				}
+				if (isTextNotStringType(data)) {
+					throw new Error('주어진 data에 text 속성의 value가 string이 아닌 원소가 있습니다.')
+				}
+				if (isCompletedNotBooleanType(data)) {
+					throw new Error('주어진 data에 completed 속성의 value가 boolean이 아닌 원소가 있습니다.')
+				}
 			}
 
-     	const isEmptyArray = (data) => {
-        return data.length === 0;
-      }
+			const isEmptyArray = (data) => {
+				return data.length === 0;
+			}
 
       const checkErrorInputData = (data) => {
         if (data === null || data === undefined) {
@@ -122,51 +121,51 @@
         if (!Array.isArray(data)) {
           throw new Error('주어진 data가 Array가 아닙니다.')
         }
-        if (isEmptyArray(data)) {
-          throw new Error('주어진 data가 빈 array입니다.')
-        }
+				if (isEmptyArray(data)) {
+					throw new Error('주어진 data가 빈 array입니다.')
+				}
 				checkDataProperties(data);
-      }
+			}
 
-      const TodoList = function($target, data) {
-        if (this === window) {
-          throw new Error('new 키워드를 이용해 TodoList를 생성하세요');
-        }
+			const TodoList = function($target, data) {
+				if (this === window) {
+					throw new Error('new 키워드를 이용해 TodoList를 생성하세요');
+				}
 
-        this.render = function () {
-          const todoListHTMLString = this.state.map(({ text, isCompleted }) =>
-            isCompleted ? `<li><s>${text}</s></li>` : `<li>${text}</li>`
-          ).join('');
+				this.render = function () {
+					const todoListHTMLString = this.state.map(({ text, isCompleted }) =>
+					  isCompleted ? `<li><s>${text}</s></li>` : `<li>${text}</li>`
+				  ).join('');
 
-          $target.innerHTML = `<ul>${todoListHTMLString}</ul>`
-        }
+					$target.innerHTML = `<ul>${todoListHTMLString}</ul>`
+				}
 
-        this.setState = (nextData) => {
-          try {
-            checkErrorInputData(nextData);
-            this.state = [...nextData];
-            this.render();
-          } catch (e) {
-            console.error(e);
-          }
-        }
+				this.setState = (nextData) => {
+					try {
+						checkErrorInputData(nextData);
+						this.state = [...nextData];
+						this.render();
+					} catch (e) {
+						console.error(e);
+					}
+				}
 				
-        try {
-          checkErrorInputData(data)
-   	 	    this.state = data;
+				try {
+					checkErrorInputData(data)
+					this.state = data;
 					this.render();
-        } catch (e) {
-          console.error(e);
-        }
-      }
+				} catch (e) {
+					console.error(e);
+				}
+			}
 
-      const todoList = new TodoList($('#todo-list'), data);
-      const todoList1 = new TodoList($('#todo-list1'), data1);
-      const todoList2 = new TodoList($('#todo-list2'), data2);
-      const todoList3 = new TodoList($('#todo-list3'), data3);
-			
+			const todoList = new TodoList($('#todo-list'), data);
+			const todoList1 = new TodoList($('#todo-list1'), data1);
+			const todoList2 = new TodoList($('#todo-list2'), data2);
+			const todoList3 = new TodoList($('#todo-list3'), data3);
+
 			setTimeout(() => {
-     		todoList3.setState([{text:'setState', isCompleted:true}])
+				todoList3.setState([{text:'setState', isCompleted:true}])
 			}, 3000)
 		</script>
   </body>
