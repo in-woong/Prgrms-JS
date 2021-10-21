@@ -128,15 +128,11 @@
           console.error(e);
         }
 
-        this.state = data;
-
         this.setState = (nextData) => {
           try {
-            setTimeout(() => {
               checkErrorInputData(nextData);
               this.state = [...nextData];
               this.render();
-            }, 3000)
           } catch (e) {
             console.error(e);
           }
@@ -149,6 +145,8 @@
 
           $target.innerHTML = `<ul>${todoListHTMLString}</ul>`
         }
+
+        this.state = data;
 				this.render();
       }
 
@@ -156,8 +154,10 @@
       const todoList1 = new TodoList($('#todo-list1'), data1);
       const todoList2 = new TodoList($('#todo-list2'), data2);
       const todoList3 = new TodoList($('#todo-list3'), data3);
-
-      todoList3.setState([{text:'setState', isCompleted:true}])
+			
+			setTimeout(() => {
+     		todoList3.setState([{text:'setState', isCompleted:true}])
+			}, 3000)
     </script>
   </body>
 </html>
