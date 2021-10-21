@@ -66,7 +66,7 @@
       const isTextNotStringType = (data) => {
         const isNotString = ({text}) => (typeof(text) !== 'string') && !(text instanceof String);
 
-        return (Object.values(data).some(isNotString));
+        return Object.values(data).some(isNotString);
       }
 
       const isCompletedNotBooleanType = (data) => {
@@ -75,8 +75,26 @@
         return Object.values(data).some(isNotBoolean);
       }
 
-      const checkValues = (data) => {
-        if (isEmptyValue(data)) {
+			const isUnintendedProperty = (data) => {
+				const filteredDataArray = data.map((element) =>
+					Object.getOwnPropertyNames(element).
+						filter((prop) => prop !== 'text' && prop !== 'isCompleted')
+				);
+				
+				return filteredDataArray.some((dataArray) => dataArray.length !== 0)
+			}
+			
+			const checkDataProperties = (data) => {
+				if (isUnintendedProperty(data)) {
+					throw new Error('주어진 data에 data, isCompleted 이외의 속성이 있습니다.');
+				}
+				if (!data.every((item) => item.hasOwnProperty('text'))) {
+      	 	throw new Error('주어진 data에 text 속성이 없습니다.');
+				}
+				if (!data.every((item) => item.hasOwnProperty('isCompleted'))) {
+      	 	throw new Error('주어진 data에 isCompleted 속성이 없습니다.');
+				}
+				if (isEmptyValue(data)) {
           throw new Error('주어진 data에 value가 빈 원소가 있습니다.')
         }
         if (isTextNotStringType(data)) {
@@ -85,23 +103,9 @@
         if (isCompletedNotBooleanType(data)) {
           throw new Error('주어진 data에 completed 속성의 value가 boolean이 아닌 원소가 있습니다.')
         }
-      }
+			}
 
-      const checkKeys = (data) => {
-        const keyFormat = ['text', 'isCompleted'];
-        const condition = (value) => JSON.stringify(Object.keys(value)) !== JSON.stringify(keyFormat);
-
-        if (Object.values(data).some(condition)) {
-          throw new Error('주어진 data엔 {text, isComplete} 형태로 이루어지지 않은 원소가 있습니다.');
-        }
-      }
-
-      const checkDataArrayFormat = (data) => {
-        checkKeys(data)
-        checkValues(data);
-      }
-
-      const isEmptyArray = (data) => {
+     	const isEmptyArray = (data) => {
         return data.length === 0;
       }
 
@@ -115,7 +119,7 @@
         if (isEmptyArray(data)) {
           throw new Error('주어진 data가 빈 array입니다.')
         }
-        checkDataArrayFormat(data);
+				checkDataProperties(data);
       }
 
       const TodoList = function($target, data) {
@@ -158,6 +162,6 @@
 			setTimeout(() => {
      		todoList3.setState([{text:'setState', isCompleted:true}])
 			}, 3000)
-    </script>
+		</script>
   </body>
 </html>
