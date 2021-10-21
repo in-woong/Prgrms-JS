@@ -73,18 +73,17 @@
 
         return Object.values(data).some(isNotBoolean);
       }
-			const isUnintendedProperty = (data) => {
+      const isUnintendedProperty = (data) => {
 				const filteredDataArray = data.map((element) =>
-				  Object.getOwnPropertyNames(element).
-					  filter((prop) => prop !== 'text' && prop !== 'isCompleted')
-				);
-
+          Object.getOwnPropertyNames(element).
+            filter((prop) => prop !== 'text' && prop !== 'isCompleted')
+          );
 				return filteredDataArray.some((dataArray) => dataArray.length !== 0)
-			}
+      }
 			
-			const isFalsyPrimitiveValue = (data) => {
+      const isFalsyPrimitiveValue = (data) => {
 				return data.some(item => item === null || item === undefined);
-			}
+      }
 
 			const checkDataProperties = (data) => {
 				if (isFalsyPrimitiveValue(data)) {
