@@ -122,21 +122,6 @@
         if (this === window) {
           throw new Error('new 키워드를 이용해 TodoList를 생성하세요');
         }
-        try {
-          checkErrorInputData(data)
-        } catch (e) {
-          console.error(e);
-        }
-
-        this.setState = (nextData) => {
-          try {
-              checkErrorInputData(nextData);
-              this.state = [...nextData];
-              this.render();
-          } catch (e) {
-            console.error(e);
-          }
-        }
 
         this.render = function () {
           const todoListHTMLString = this.state.map(({ text, isCompleted }) =>
@@ -146,8 +131,23 @@
           $target.innerHTML = `<ul>${todoListHTMLString}</ul>`
         }
 
-        this.state = data;
-				this.render();
+        this.setState = (nextData) => {
+          try {
+            checkErrorInputData(nextData);
+            this.state = [...nextData];
+            this.render();
+          } catch (e) {
+            console.error(e);
+          }
+        }
+				
+        try {
+          checkErrorInputData(data)
+   	 	    this.state = data;
+					this.render();
+        } catch (e) {
+          console.error(e);
+        }
       }
 
       const todoList = new TodoList($('#todo-list'), data);
