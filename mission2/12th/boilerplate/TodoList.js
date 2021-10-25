@@ -4,7 +4,7 @@ function TodoList($target, data) {
 
   this.render = function() {
     this.$target.innerHTML = this.data
-      .map(todo => `<div>${todo.text}</div>`)
+      .map(todo => `<div class="todoItem {completed: todo.isCompleted}">${todo.text}</div>`)
       .join('')
   }
 

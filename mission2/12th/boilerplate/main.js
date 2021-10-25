@@ -21,10 +21,23 @@ const addTodo = () => {
   document.getElementById('todoInput').value = ''
 }
 
-const checkTodo = () => {
-  const index = this.data.findIndex(i => i.text == 'dd')
+const checkTodo = (index) => {
+  console.log(index)
   this.data[index].isCompleted = !this.data[index].isCompleted
+  console.log(this.data[index].isCompleted)
+  todoList.setState(this.data)
 }
+
+const todoItem = document.querySelectorAll(".todoItem");
+
+for (var i = 0; i < todoItem.length; i++){
+  todoItem[i].addEventListener('click', e => {
+    const index = e.target.parentNode.dataset.id;
+    checkTodo(index)
+  })
+}
+
+
 
 const deleteTodo = () => {
 
