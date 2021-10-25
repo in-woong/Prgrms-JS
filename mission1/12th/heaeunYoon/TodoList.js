@@ -8,7 +8,7 @@ function createError({ type }) {
 }
 
 class TodoList {
-  constructor({ selector, data }) {
+  constructor({ selector, data, handleDeleteButton }) {
     this.data = data
     this.selector = selector
 
@@ -39,12 +39,27 @@ class TodoList {
     this.checkParameter(data)
 
     document.querySelector(selector).innerHTML = data
-      .map(({ text, isCompleted }) => {
+      .map(({ text, isCompleted, id }) => {
         this.checkTextType(text)
 
-        return `<li>${isCompleted ? `<s>${text}</s>` : `${text}`}</li>`
+        return `<li>
+          <span>${isCompleted ? `<s>${text}</s>` : `${text}`}</span>
+          <button class="remove-button" type="button" value="${id}"}>삭제</button>
+        </li>`
       })
       .join('')
+
+    document.querySelector(selector).addEventListener('click', ({ target }) => {
+      const removeButton = target.closest('.remove-button')
+
+      if (removeButton) {
+        const updateTodos = this.data.filter(
+          (todo) => todo.id !== removeButton.value
+        )
+
+        this.setState(updateTodos)
+      }
+    })
   }
 }
 
