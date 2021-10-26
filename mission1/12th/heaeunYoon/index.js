@@ -1,7 +1,5 @@
 import TodoList from './TodoList.js'
 
-const ENTER = 13
-
 let todos = [
   {
     id: '1',
@@ -48,10 +46,16 @@ const addTodo = () => {
   input.value = ''
 }
 
-input.addEventListener('keydown', ({ keyCode }) => {
-  if (keyCode === ENTER) {
-    addTodo()
+input.addEventListener('keydown', ({ key, isComposing }) => {
+  if (isComposing) {
+    return
   }
+
+  if (key !== 'Enter') {
+    return
+  }
+
+  addTodo()
 })
 
 button.addEventListener('click', () => {
