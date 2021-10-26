@@ -1,5 +1,7 @@
 import TodoList from './TodoList.js'
 
+const ENTER = 13
+
 let todos = [
   {
     id: '1',
@@ -41,13 +43,13 @@ const addTodo = () => {
 
   todoListOne.setState([newTodo, ...todos])
 
-  input.value = ''
-
   focusInput()
+
+  input.value = ''
 }
 
-input.addEventListener('keypress', ({ key }) => {
-  if (key === 'Enter') {
+input.addEventListener('keydown', ({ keyCode }) => {
+  if (keyCode === ENTER) {
     addTodo()
   }
 })
