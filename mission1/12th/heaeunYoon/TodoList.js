@@ -42,19 +42,31 @@ class TodoList {
       .map(({ text, isCompleted, id }) => {
         this.checkTextType(text)
 
-        return `<li>
-          <span>${isCompleted ? `<s>${text}</s>` : `${text}`}</span>
-          <button class="remove-button" type="button" value="${id}"}>삭제</button>
+        return `<li data-todo-id="${id}">
+          <span class="todo-text">${
+            isCompleted ? `<s>${text}</s>` : `${text}`
+          }</span>
+          <button class="remove-button" type="button"}>삭제</button>
         </li>`
       })
       .join('')
 
     document.querySelector(selector).addEventListener('click', ({ target }) => {
+      const todo = target.closest('.todo-text')
       const removeButton = target.closest('.remove-button')
+
+      if (todo) {
+        const updateTodos = this.data.map((todo) => ({
+          ...todo,
+          isCompleted: todo.id === target.closest('li').dataset.todoId,
+        }))
+
+        this.setState(updateTodos)
+      }
 
       if (removeButton) {
         const updateTodos = this.data.filter(
-          (todo) => todo.id !== removeButton.value
+          (todo) => todo.id !== target.closest('li').dataset.todoId
         )
 
         this.setState(updateTodos)
