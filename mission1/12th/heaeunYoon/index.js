@@ -57,3 +57,5 @@ input.addEventListener('keydown', ({ keyCode }) => {
 button.addEventListener('click', () => {
   addTodo()
 })
+
+focusInput()
