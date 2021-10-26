@@ -1,5 +1,7 @@
 import TodoList from './TodoList.js'
 import TodoInput from './TodoInput.js'
+import TodoCount from './TodoCount.js'
+import { getCompletedTodosCount, getTodosCount } from './utils/getCount.js'
 
 const $app = document.querySelector('#root')
 
@@ -30,7 +32,12 @@ function App({ todos }) {
       ...this.state,
       [key]: value,
     }
-    todoList.setState(this.state.todos)
+
+    const { todos } = this.state
+
+    todoList.setState(todos)
+    allCount.setState(getTodosCount({ todos }))
+    completedCount.setState(getCompletedTodosCount({ todos }))
   }
 
   this.handleDeleteTodoButtonClick = ({ clickedTodoId }) => {
@@ -45,7 +52,9 @@ function App({ todos }) {
   }
 
   this.handleTodoClick = ({ clickedTodoId }) => {
-    const updateTodos = this.state.todos.map((todo) => {
+    const { todos } = this.state
+
+    const updateTodos = todos.map((todo) => {
       const { id, isCompleted } = todo
 
       const updateCompleted = id === clickedTodoId ? !isCompleted : isCompleted
@@ -70,6 +79,18 @@ function App({ todos }) {
     state: this.state.todos,
     onDeleteTodoButtonClick: this.handleDeleteTodoButtonClick,
     onTodoClick: this.handleTodoClick,
+  })
+
+  const allCount = new TodoCount({
+    $app,
+    title: '전체 TODO',
+    state: getTodosCount({ todos: this.state.todos }),
+  })
+
+  const completedCount = new TodoCount({
+    $app,
+    title: '완료된 TODO',
+    state: getCompletedTodosCount({ todos: this.state.todos }),
   })
 }
 
