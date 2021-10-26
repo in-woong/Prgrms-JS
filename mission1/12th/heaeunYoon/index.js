@@ -1,6 +1,6 @@
-import TodoList from './TodoList.js'
+import App from './App.js'
 
-let todos = [
+const TODOS = [
   {
     id: '1',
     text: 'todo text',
@@ -8,58 +8,4 @@ let todos = [
   },
 ]
 
-const todoListOne = new TodoList({
-  selector: '#todo-list-one',
-  data: todos,
-})
-
-const input = document.querySelector('#inputBox input')
-const button = document.querySelector('#inputBox button')
-
-const getMaxId = (todos) => {
-  return Math.max(...todos.map((todo) => todo.id))
-}
-
-const focusInput = () => {
-  input.focus()
-}
-
-const addTodo = () => {
-  const { data: todos } = todoListOne
-
-  if (input.value === '') {
-    alert('할일을 입력해주세요 ! ')
-    focusInput()
-    return
-  }
-
-  const newTodo = {
-    id: `${getMaxId(todos) + 1}`,
-    text: input.value,
-    isCompleted: false,
-  }
-
-  todoListOne.setState([newTodo, ...todos])
-
-  focusInput()
-
-  input.value = ''
-}
-
-input.addEventListener('keydown', ({ key, isComposing }) => {
-  if (isComposing) {
-    return
-  }
-
-  if (key !== 'Enter') {
-    return
-  }
-
-  addTodo()
-})
-
-button.addEventListener('click', () => {
-  addTodo()
-})
-
-focusInput()
+new App({ todos: TODOS })

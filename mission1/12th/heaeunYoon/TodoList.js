@@ -8,46 +8,30 @@ function createError({ type }) {
 }
 
 class TodoList {
-  constructor({ selector, data }) {
-    this.data = data
-    this.selector = selector
+  constructor({ $app, state, onDeleteTodoButtonClick, onTodoClick }) {
+    this.state = state
+    this.$app = $app
 
-    document.querySelector(selector).addEventListener('click', ({ target }) => {
+    this.$target = document.createElement('ul')
+    this.$app.appendChild(this.$target)
+
+    this.$target.addEventListener('click', ({ target }) => {
       const clickedTodoId = target.closest('li').dataset.todoId
-      const todoText = target.closest('.todo-text')
-      const removeButton = target.closest('.remove-button')
 
-      if (todoText) {
-        const updateTodos = this.data.map((currentTodo) => {
-          const currentTodoCompleted = currentTodo.isCompleted
-          const isCompleted =
-            currentTodo.id === clickedTodoId
-              ? !currentTodoCompleted
-              : currentTodoCompleted
-
-          return {
-            ...currentTodo,
-            isCompleted,
-          }
-        })
-
-        this.setState(updateTodos)
+      if (target.closest('.todo-text')) {
+        onTodoClick({ clickedTodoId })
       }
 
-      if (removeButton) {
-        const updateTodos = this.data.filter(
-          (todo) => todo.id !== clickedTodoId
-        )
-
-        this.setState(updateTodos)
+      if (target.closest('.remove-button')) {
+        onDeleteTodoButtonClick({ clickedTodoId })
       }
     })
 
     this.render()
   }
 
-  setState(data) {
-    this.data = data
+  setState(nextState) {
+    this.state = nextState
 
     this.render()
   }
@@ -65,11 +49,11 @@ class TodoList {
   }
 
   render() {
-    const { selector, data } = this
+    const { state } = this
 
-    this.checkParameter(data)
+    this.checkParameter(state)
 
-    document.querySelector(selector).innerHTML = data
+    this.$target.innerHTML = state
       .map(({ text, isCompleted, id }) => {
         this.checkTextType(text)
 
