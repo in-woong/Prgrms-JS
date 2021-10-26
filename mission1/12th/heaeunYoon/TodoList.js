@@ -8,9 +8,40 @@ function createError({ type }) {
 }
 
 class TodoList {
-  constructor({ selector, data, handleDeleteButton }) {
+  constructor({ selector, data }) {
     this.data = data
     this.selector = selector
+
+    document.querySelector(selector).addEventListener('click', ({ target }) => {
+      const clickedTodoId = target.closest('li').dataset.todoId
+      const todoText = target.closest('.todo-text')
+      const removeButton = target.closest('.remove-button')
+
+      if (todoText) {
+        const updateTodos = this.data.map((currentTodo) => {
+          const currentTodoCompleted = currentTodo.isCompleted
+          const isCompleted =
+            currentTodo.id === clickedTodoId
+              ? !currentTodoCompleted
+              : currentTodoCompleted
+
+          return {
+            ...currentTodo,
+            isCompleted,
+          }
+        })
+
+        this.setState(updateTodos)
+      }
+
+      if (removeButton) {
+        const updateTodos = this.data.filter(
+          (todo) => todo.id !== clickedTodoId
+        )
+
+        this.setState(updateTodos)
+      }
+    })
 
     this.render()
   }
@@ -50,28 +81,6 @@ class TodoList {
         </li>`
       })
       .join('')
-
-    document.querySelector(selector).addEventListener('click', ({ target }) => {
-      const todo = target.closest('.todo-text')
-      const removeButton = target.closest('.remove-button')
-
-      if (todo) {
-        const updateTodos = this.data.map((todo) => ({
-          ...todo,
-          isCompleted: todo.id === target.closest('li').dataset.todoId,
-        }))
-
-        this.setState(updateTodos)
-      }
-
-      if (removeButton) {
-        const updateTodos = this.data.filter(
-          (todo) => todo.id !== target.closest('li').dataset.todoId
-        )
-
-        this.setState(updateTodos)
-      }
-    })
   }
 }
 
