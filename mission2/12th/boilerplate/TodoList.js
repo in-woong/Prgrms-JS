@@ -5,11 +5,18 @@ const TodoList = function({state, $target}) {
 
   $target.appendChild(this.$todoList);
 
-
   this.render = function() {
-      this.$todoList.innerHTML = `<ol>${this.state.map(task => task.isCompleted ? `<li><s>${task.text}</s></li>` : `<li>${task.text}</li>`).join('')}</ol>`;
+      this.$todoList.innerHTML = `<ol>${this.state.map(({text, isCompleted}, idx) => `<li idx=${idx}>${isCompleted ? `<s>${text}</s>` : text}<button idx=${idx} id="remove-btn">삭제</button></li>`).join('')}</ol>`;
+//// 구현중      
+      const $items = document.querySelectorAll('li');
+      $items.forEach(item => item.addEventListener('click', (e) => {
+        console.log(e.target);
+        let idx = item.getAttribute("idx");
+        this.state[idx].isCompleted = !this.state[idx].isCompleted;
+        this.setState(this.state);
+      }));
     };   // 렌더링을 this.data 기준으로
-
+///
   this.setState = function(nextState) {
     this.state = nextState;     // data 업데이트     유효성 검사와 리렌더링 모두 this.data가 기준, 바뀐 this.data에 맞추어 다시 검사하고 그리는 작업 수행
     this.validate();     //  data 유효성 검사
