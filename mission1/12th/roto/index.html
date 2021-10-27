@@ -1,0 +1,93 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <main id="app"></main>
+  <script>
+    const data = [
+      {
+        text: 'JS 공부하기',
+        isCompleted: false
+      },
+      {
+        text: 'JS 복습하기',
+        isCompleted: false
+      }
+    ]
+
+    const data2 = [
+      {
+        text: '합주 가기',
+        isCompleted: true
+      },
+      {
+        text: '루카스 에디한테 커피 사기',
+        isCompleted: true
+      }
+    ]
+
+    const data3 = [
+      {
+        text: '잠자기',
+        isCompleted: true
+      },
+      {
+        text: '일어나기',
+        isCompleted: true
+      }
+    ]
+
+    function TodoList({ $target, initialState }) {
+      this.state = initialState
+      this.$todoList = document.createElement('div')
+
+      $target.appendChild(this.$todoList)
+
+      this.setState = (nextState) => {
+        this.state = nextState
+        this.render()
+      }
+
+      this.render = () => {
+        this.$todoList.innerHTML = `
+          <ul>
+            ${this.state.map(({ text, isCompleted }) => `
+              <li>${isCompleted ? `<s>${text}</s>` : text}</li>
+            `).join('')}
+          </ul>`
+      }
+      this.render()
+    }
+
+    const todoList1 = new TodoList({
+      $target: document.querySelector('#app'),
+      initialState: data
+    })
+
+    const todoList2 = new TodoList({
+      $target: document.querySelector('#app'),
+      initialState: data2
+    })
+
+
+    const todoList3 = new TodoList({
+      $target: document.querySelector('#app'),
+      initialState: data3
+    })
+
+    todoList3.setState([
+        ...data3,
+        {
+          text: '일정 추가하기',
+          isCompleted: true
+        }
+    ])
+
+
+  </script>
+</body>
+</html>
