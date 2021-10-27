@@ -9,7 +9,7 @@ export default function TodoInput({ $target, onAddTodo }) {
     $todoInput.innerHTML = `
       <input type="text">
       <button>Add Todo</button>
-      <button class="remove-all-button">Remove All</button>
+      <button class="remove-all-button" type="button">Remove All</button>
     `
   }
 
