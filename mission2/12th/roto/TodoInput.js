@@ -1,4 +1,4 @@
-function TodoInput({ $target, onAddTodo }) {
+export default function TodoInput({ $target, onAddTodo }) {
   const $todoInput = document.createElement('form')
 
   $target.appendChild($todoInput)

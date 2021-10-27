@@ -1,4 +1,4 @@
-function TodoCount({ $target, initialState }) {
+export default function TodoCount({ $target, initialState }) {
   this.state = initialState
   const $todoCount = document.createElement('div')
 

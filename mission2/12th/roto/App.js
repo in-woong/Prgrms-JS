@@ -1,4 +1,9 @@
-function App({ $target }){
+import storage from './localStorage.js'
+import TodoInput from './TodoInput.js'
+import TodoList from './TodoList.js'
+import TodoCount from './TodoCount.js'
+
+export default function App({ $target }){
   this.state = storage.getItem('todos', [])
 
   this.setState = nextState => {

@@ -1,4 +1,4 @@
-function TodoList({$target, initialState, onTodoClick, onRemove }) {
+export default function TodoList({$target, initialState, onTodoClick, onRemove }) {
   const $todoList = document.createElement('div')
   $target.appendChild($todoList)
 
