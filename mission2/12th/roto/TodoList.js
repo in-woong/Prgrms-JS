@@ -9,23 +9,9 @@ function TodoList({$target, initialState, onTodoClick, onRemove }) {
 
   this.render = function() {
     $todoList.innerHTML = `<ul>${this.state
-      .map(({ text, isCompleted }) => `<li>${isCompleted ? `<s>${text}</s>` : text} <button>x</button></li>`)
+      .map(({ text, isCompleted }, index) => `<li class="TodoList__item" data-index="${index}">${isCompleted ? `<s>${text}</s>` : text} <button>x</button></li>`)
       .join('')
     }</ul>`
-
-    $todoList.querySelectorAll('li').forEach(($li, i) => {
-      $li.addEventListener('click', () => {
-        onTodoClick(i)
-      })
-    })
-
-    $todoList.querySelectorAll('button').forEach(($button, i) => {
-      $button.addEventListener('click', (e) => {
-        e.stopPropagation()
-        onRemove(i)
-      })
-    })
-
   }
 
   this.setState = function(nextState) {
@@ -35,4 +21,11 @@ function TodoList({$target, initialState, onTodoClick, onRemove }) {
 
   this.render()
 
+  $todoList.addEventListener('click', (e) => {
+    const $li = e.target.closest('.TodoList__item')
+
+    const { index: indexString } = $li.dataset
+    const index = parseInt(indexString)
+    e.target.nodeName === 'BUTTON' ? onRemove(index) : onTodoClick(index)
+  })
 }
