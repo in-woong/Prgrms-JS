@@ -1,14 +1,5 @@
 function App({ $target }){
-  this.state = [
-    {
-      text: 'JS 공부하기',
-      isCompleted: false
-    },
-    {
-      text: 'JS 복습하기',
-      isCompleted: false
-    },
-  ]
+  this.state = storage.getItem('todos', [])
 
   this.setState = nextState => {
     this.state = nextState
@@ -17,6 +8,8 @@ function App({ $target }){
       totalCount: this.state.length,
       completedCount: this.state.filter(todo => todo.isCompleted).length
     })
+
+    storage.setItem('todos', this.state)
   }
 
   const todoInput = new TodoInput({
@@ -31,6 +24,7 @@ function App({ $target }){
       ])
     }
   })
+
   const todoList = new TodoList({
     $target,
     initialState: this.state,
@@ -49,4 +43,8 @@ function App({ $target }){
     totalCount: this.state.length,
     completedCount: this.state.filter(todo => todo.isCompleted).length
   }})
+
+  window.addEventListener('remove-all-todos', () => {
+    this.setState([])
+  })
 }

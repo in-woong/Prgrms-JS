@@ -9,6 +9,7 @@ function TodoInput({ $target, onAddTodo }) {
     $todoInput.innerHTML = `
       <input type="text">
       <button>Add Todo</button>
+      <button class="remove-all-button">Remove All</button>
     `
   }
 
@@ -23,6 +24,12 @@ function TodoInput({ $target, onAddTodo }) {
     if (value.length > 0) {
       this.onAddTodo(value)
       $input.value = ''
+    }
+  })
+
+  $todoInput.addEventListener('click', (e) => {
+    if (e.target.className === 'remove-all-button') {
+      window.dispatchEvent(new CustomEvent('remove-all-todos'))
     }
   })
 }
