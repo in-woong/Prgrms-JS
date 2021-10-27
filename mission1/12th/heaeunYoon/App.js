@@ -14,6 +14,10 @@ function App({ todos }) {
     todos,
   }
 
+  $app.addEventListener('removeAll', () => {
+    this.handleRemoveAll()
+  })
+
   this.addTodo = ({ todo }) => {
     const newTodo = {
       id: `${getMaxId(this.state.todos) + 1}`,
@@ -66,6 +70,10 @@ function App({ todos }) {
     })
 
     this.setState({ key: 'todos', value: updateTodos })
+  }
+
+  this.handleRemoveAll = () => {
+    this.setState({ key: 'todos', value: [] })
   }
 
   new TodoInput({

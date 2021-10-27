@@ -1,3 +1,7 @@
+const removeAllEvent = new MouseEvent('removeAll', {
+  bubbles: true,
+})
+
 function TodoInput({ $app, addTodo }) {
   this.state = ''
   this.$target = document.createElement('div')
@@ -12,8 +16,11 @@ function TodoInput({ $app, addTodo }) {
 
   this.render = () => {
     this.$target.innerHTML = `
-      <input type="text" value="${this.state}" id="todo-input" />
-      <button type="button" id="add-button">추가</button>
+      <p>
+        <input type="text" value="${this.state}" id="todo-input" />
+        <button type="button" id="add-button">추가</button>
+      </p>
+      <button type="button" id="remove-all-button">모든 할일 삭제</button>
     `
   }
 
@@ -25,6 +32,11 @@ function TodoInput({ $app, addTodo }) {
     })
 
     this.$input = document.querySelector('#todo-input')
+
+    this.$removeAllButton = document.querySelector('#remove-all-button')
+    this.$removeAllButton.addEventListener('click', () => {
+      this.$removeAllButton.dispatchEvent(removeAllEvent)
+    })
 
     this.$target.addEventListener('keydown', ({ target, key, isComposing }) => {
       if (!target.closest('#todo-input')) {
