@@ -13,6 +13,10 @@ function App({ $target }){
   this.setState = nextState => {
     this.state = nextState
     todoList.setState(this.state)
+    todoCount.setState({
+      totalCount: this.state.length,
+      completedCount: this.state.filter(todo => todo.isCompleted).length
+    })
   }
 
   const todoInput = new TodoInput({
@@ -27,5 +31,22 @@ function App({ $target }){
       ])
     }
   })
-  const todoList = new TodoList({ $target, initialState: this.state })
+  const todoList = new TodoList({
+    $target,
+    initialState: this.state,
+    onTodoClick: (index) => {
+      const nextState = [...this.state]
+      nextState[index].isCompleted = !nextState[index].isCompleted
+      this.setState(nextState)
+    },
+    onRemove: (index) => {
+      const nextState = [...this.state]
+      nextState.splice(index, 1)
+      this.setState(nextState)
+    }
+  })
+  const todoCount = new TodoCount({ $target, initialState: {
+    totalCount: this.state.length,
+    completedCount: this.state.filter(todo => todo.isCompleted).length
+  }})
 }
