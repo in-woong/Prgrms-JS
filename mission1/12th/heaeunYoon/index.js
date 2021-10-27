@@ -1,11 +1,10 @@
 import App from './App.js'
 
-const TODOS = [
-  {
-    id: '1',
-    text: 'todo text',
-    isCompleted: false,
-  },
-]
+import { getStorage } from './utils/storage.js'
 
-new App({ todos: TODOS })
+const initialState = {
+  todos: [],
+}
+const store = getStorage({ key: 'store' }) || initialState
+
+new App(store)

@@ -3,10 +3,12 @@ import TodoInput from './TodoInput.js'
 import TodoCount from './TodoCount.js'
 import { getCompletedTodosCount, getTodosCount } from './utils/getCount.js'
 
+import { setStorage } from './utils/storage.js'
+
 const $app = document.querySelector('#root')
 
 const getMaxId = (todos) => {
-  return Math.max(...todos.map((todo) => todo.id))
+  return todos.length === 0 ? 0 : Math?.max(...todos.map((todo) => todo.id))
 }
 
 function App({ todos }) {
@@ -42,6 +44,8 @@ function App({ todos }) {
     todoList.setState(todos)
     allCount.setState(getTodosCount({ todos }))
     completedCount.setState(getCompletedTodosCount({ todos }))
+
+    setStorage({ key: 'store', value: this.state })
   }
 
   this.handleDeleteTodoButtonClick = ({ clickedTodoId }) => {
