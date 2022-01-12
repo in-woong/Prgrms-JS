@@ -1,0 +1,14 @@
+#app {
+  margin: 1rem 1.5rem;
+}
+
+ul {
+  padding: 0 0.5rem;
+  list-style: none;
+}
+
+p {
+  width: 15rem;
+  padding: 0.1rem 1rem;
+  border-top: 1px dotted #9ca3af;
+}
