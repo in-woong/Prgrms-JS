@@ -1,0 +1,105 @@
+<html>
+    <head>
+        <title>Mission 1</title>
+        <meta charset="utf-8" />
+    </head>
+    <body>
+        <ul id="todo-list"></ul>
+        <ul id="todo-fitness"></ul>
+        <ul id="todo-book"></ul>
+        <script>
+            const data = [
+                {
+                    text: 'JS 공부하기',
+                    isCompleted: true
+                },
+                {
+                    text: 'JS 복습하기',
+                    isCompleted: false
+                }
+            ];
+
+            const fitnessData = [
+                {
+                    text: '러닝',
+                    isCompleted: true
+                },
+                {
+                    text: '스트레칭',
+                    isCompleted: false
+                }
+            ];
+
+            const bookData = [
+                {
+                    text: 'Clean Code',
+                    isCompleted: true
+                },
+                {
+                    text: 'Javascript The Good Parts',
+                    isCompleted: true
+                },
+                {
+                    text: 'You Don\'t Know JS',
+                    isCompleted: false
+                }
+            ];
+
+            function TodoList(data, id) {
+                if (!(this instanceof TodoList)) {
+                    throw new Error('new 키워드 없이 호출되었습니다.');
+                }
+                validateTodoData(data);
+
+                this.root = document.getElementById(id);
+                this.data = data;
+
+                this.render = function () {
+                    this.root.innerHTML = this.data.map(item => getItemHTML(item)).join('');
+                }
+
+                this.setState = function (nextData) {
+                    validateTodoData(nextData);
+                    this.data = nextData;
+                    this.render();
+                }
+
+                function getItemHTML(item) {
+                    validateTodoItem(item);
+                    if (item.isCompleted) {
+                        return `<li><s>${item.text}</s></li>`
+                    }
+                    return `<li>${item.text}</li>`
+                }
+
+                function validateTodoData(data) {
+                    if (data === null || data === undefined) {
+                        throw new Error('data가 정의되지 않았습니다.');
+                    }
+                    if (!Array.isArray(data)) {
+                        throw new Error('data가 배열이 아닙니다.');
+                    }
+                }
+
+                function validateTodoItem(item) {
+                    if (typeof item.text !== 'string' || typeof item.isCompleted !== 'boolean') {
+                        throw new Error('data 형식이 올바르지 않습니다.');
+                    }
+                }
+            }
+
+            const todoList = new TodoList(data, 'todo-list');
+            const fitnessList = new TodoList(fitnessData, 'todo-fitness');
+            const bookList = new TodoList(bookData, 'todo-book');
+            todoList.render();
+            fitnessList.render();
+            bookList.render();
+
+            todoList.setState([{
+                text: '스터디 과제 수행 및 PR',
+                isCompleted: true
+            }]);
+
+        </script>
+    </body>
+</html>
