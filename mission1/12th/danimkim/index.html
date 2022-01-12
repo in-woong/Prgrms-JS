@@ -1,0 +1,78 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list"></div>
+  <div id="todo-list-workout"></div>
+  <div id="todo-list-reading"></div>
+  <script>
+    var data = [
+      {
+        text: 'JS 공부하기'
+      },
+      {
+        text: 'JS 복습하기'
+      }
+    ]
+    
+    var exercise = [
+      {
+        text: '조깅'
+      },
+      {
+        text: '홈트'
+      }
+    ]
+
+    var book = [
+      {
+        text: '클린코드'
+      },
+      {
+        text: '소프트웨어 장인'
+      }
+    ]
+
+
+	// 이곳에서 코딩을 시작하세요!
+
+    function TodoList(data){
+      
+      this.data = data;
+      
+      this.render = function(){
+        if(data === null || data === undefined){
+          throw new Error("data가 null 혹은 undefined 입니다.");
+          console.log('null');
+        }
+  
+        if(!Array.isArray(data)){
+          throw new Error("data가 배열이 아닙니다.");
+        }
+        const todoList = document.querySelector("#todo-list");
+        var html = '';
+        for(let i=0;i<data.length;i++){
+          html += `<div>${data[i].text}</div>`;
+        }
+        document.querySelector("#todo-list").innerHTML = html;
+      }
+    }
+    
+    var todoList = new TodoList(data);
+
+    if(!(todoList instanceof TodoList)){
+      throw new Error("new 키워드 없이 함수가 실행되었습니다.");
+    } // 잘 실행됨..!
+
+    todoList.render();
+
+
+
+
+  </script>
+</body>
+</html> 
