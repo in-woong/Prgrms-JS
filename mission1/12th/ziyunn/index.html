@@ -1,0 +1,90 @@
+<html>
+<head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <div id="todoList1"></div>
+    <div id="todoList2"></div>
+    <div id="todoList3"></div>
+    <script>
+        const data1 = [
+            {
+                text: 'CSS 공부하기',
+                isCompleted: true,
+            },
+            {
+                text: 'CSS 복습하기',
+                isCompleted: false,
+            },
+        ]
+        const data2 = [
+            {
+                text: 'JS 공부하기',
+                isCompleted: true,
+            },
+            {
+                text: 'JS 복습하기',
+                isCompleted: false,
+            },
+        ]
+        const data3 = [
+            {
+                text: '운동하기',
+                isCompleted: false,
+            },
+            {
+                text: '술마시기',
+                isCompleted: false,
+            },
+        ]
+        
+        const TodoList = function () {
+            this.todos = [];
+            this.setState = function(newTodos) {
+                this.todos = [ ...newTodos];
+            }
+            this.templete = function () {
+                return `
+                    <ul>
+                        ${this.todos.map(todo => 
+                            !todo.isCompleted ? `<li>${todo.text}</li>` : `<li><s>${todo.text}</s></li>`
+                        ).join('')}
+                    </ul>
+                `
+            }
+            this.render = function ($selector) {
+                $selector.innerHTML = this.templete();
+            }
+
+            // Error1. new 키워드로 함수의 인스턴스를 만들 때 올바른 파라메터가 넘어오지 않을 경우 에러 발생하게 하기
+            if(!(Array.isArray(this.todos))) {
+                throw new Error("올바른 파라메터가 넘어오지 않았습니다.");
+            }
+            // Error2. new 키워드 안 붙이고 함수 실행 시 에러 발생하게 하기
+            if(!(this instanceof TodoList)) {
+                throw new Error("new 키워드 안 붙이고 함수 실행 시 에러 발생하게 하기");
+            }
+        }
+
+        try {
+            //const todoList = new TodoList("Error 테스트 파라메터"); // Error1
+            //const todoList = TodoList(data); // Error2
+
+            const todoList1 = new TodoList();
+            const todoList2 = new TodoList();
+            const todoList3 = new TodoList();
+            
+            todoList1.setState(data1);
+            todoList2.setState(data2);
+            todoList3.setState(data3);
+            
+            todoList1.render(document.querySelector('#todoList1'));
+            todoList2.render(document.querySelector('#todoList2'));
+            todoList3.render(document.querySelector('#todoList3'));
+        } catch (err) {
+            console.log(err);
+        }
+    </script>
+</body>
+</html>
