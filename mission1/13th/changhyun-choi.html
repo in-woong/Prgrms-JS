@@ -1,22 +1,39 @@
 <html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
 
-<head>
-  <title>Mission 1</title>
-  <meta charset="utf-8" />
-</head>
+  <body>
+    <div id="todo-list"></div>
+    <script>
+      var data = [
+        {
+          text: 'JS 공부하기'
+        },
+        {
+          text: 'JS 복습하기'
+        }
+      ]
+      
+      var parent = document.querySelector('#todo-list');
+      parent.innerHTML = ``;
 
-<body>
-  <div id="todo-list"></div>
-  <script>
-    var data = [
-      {
-        text: 'JS 공부하기'
-      },
-      {
-        text: 'JS 복습하기'
+      function TodoList (data) {
+        this.data = data;
+        
+        this.render = function () {
+          for (var index = 0; index < data.length; index++) {
+            parent.append(document.createElement('p'))
+            parent.append(`${this.data[index].text}`)
+          }
+        }
       }
-    ]
-	// 이곳에서 코딩을 시작하세요!
-  </script>
-</body>
+      
+      var todoList = new TodoList(data);
+      
+      todoList.render();
+
+    </script>
+  </body>
 </html>
