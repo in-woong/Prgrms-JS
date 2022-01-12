@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="google=chrome">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="https://vjs.zencdn.net/6.6.3/video.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.14.1/videojs-contrib-hls.js"></script>
+    <script>
+        if (playerName === 'VideoJS') {
+            var playerElement = $('#videojs');
+            playerElement.show();
+            var player = videojs('videojs');
+            console.log('Created VideoJS Player');
+            player.src({
+                src: response.HLSStreamingSessionURL,
+                type: 'application/x-mpegURL'
+            });
+            console.log('Set player source');
+            player.play();
+            console.log('Starting playback');
+        }
+    </script>
+</body>
+
+</html>
