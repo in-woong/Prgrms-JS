@@ -1,0 +1,73 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <main id="app"></main>
+    <script>
+      const data = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false,
+        },
+      ]
+
+      
+      const data2 = [
+        {
+          text: 'JS 공부하기22',
+          isCompleted: false,
+        },
+        {
+          text: 'JS 복습하기22',
+          isCompleted: true,
+        },
+      ]
+
+      const errMsg = {
+        errInstance : 'new 키워드를 안붙이고 실행했습니다.',
+        errType : '파라미터의 값이 배열이 아닙니다.'
+      }
+
+      function TodoList({ $target, initialState }){
+        if(!(this instanceof TodoList)) throw new Error(errMsg.errInstance)
+        if(!Array.isArray(initialState)) throw new Error(errMsg.errType)
+
+        this.data = initialState;
+        this.$todoList = document.createElement('div')
+        $target.appendChild(this.$todoList)
+
+        this.setState = (nextState) => {
+          this.data = nextState;
+          this.render()
+        }
+
+        this.render = function(){
+          this.$todoList.innerHTML = `
+            <ul> 
+              ${this.data.map(({text, isCompleted}) => `
+                <li style='display: ${ isCompleted ? '' : 'none' } '> 
+                  ${ text } 
+                </li>
+                `).join('')} 
+            </ul>`
+        }
+        this.render();
+      }
+
+      var todoList1 = new TodoList({
+        $target: document.querySelector('#app'),
+        initialState: data
+      });
+
+      setTimeout(() => todoList1.setState(data2), 2000)
+
+    </script>
+  </body>
+</html>
