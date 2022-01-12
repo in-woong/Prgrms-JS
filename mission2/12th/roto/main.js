@@ -1,5 +1,5 @@
 import App from './App.js'
 
 new App({
-  $target: document.querySelector('#app')
+  $target: document.querySelector('#app'),
 })
