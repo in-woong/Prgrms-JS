@@ -1,0 +1,118 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <ul id="todo-list-1"></ul>
+  <ul id="todo-list-2"></ul>
+  <ul id="todo-list-3"></ul>
+
+  <script>
+    const data = [
+      {
+        text: 'JS 공부하기',
+        isCompleted: true,
+      },
+      {
+        text: 'JS 복습하기',
+        isCompleted: true,
+      },
+      {
+        text: 'TODO 리스트 만들기',
+        isCompleted: false,
+      },
+    ]
+  
+    const data2 = [
+      {
+        text: '새 블로그 작성하기',
+        isCompleted: false,
+      },
+      {
+        text: '커피 내려마시기',
+        isCompleted: true,
+      },
+      {
+        text: '휴가 즐기기',
+        isCompleted: true,
+      },
+    ]
+
+    const data3 = [
+      {
+        text: '노는게 제일 좋아',
+        isCompleted: false,
+      },
+      {
+        text: '떡볶이가 제일 좋아',
+        isCompleted: true,
+      },
+      {
+        text: '어느덧 겨울이다',
+        isCompleted: false,
+      },
+    ]
+	
+  function TodoList(data, id){
+    this.data = data;
+
+    if(!(this instanceof TodoList)) throw new Error('new 키워드를 사용해 호출해주세요!')
+
+    function checkData(data){
+      if(data === null || data === undefined 
+        || data.length === 0) throw new Error('데이터가 정의되지 않았습니다.')
+      if(!(Array.isArray(data))) throw new Error('데이터 타입이 Array가 아닙니다.')
+    }
+
+    function checkItem(item){
+      const {text, isCompleted} = item;
+      if(text === undefined || text === null 
+        || isCompleted === undefined || isCompleted === null) throw new Error('데이터가 입력되지 않았습니다.')
+      if(typeof text !== 'string' || 
+        typeof isCompleted !== 'boolean') throw new Error('데이터 형식이 올바르지 않습니다.')
+      if(text === '') throw new Error('투두를 입력하세요!')
+    }
+
+    this.setState = function (nextData){
+      setTimeout(() => {
+        checkData(nextData);
+        this.data = [...data, ...nextData];
+        this.render();
+      }, 2000);
+    }
+
+    function makeHTML(item){
+      checkItem(item);
+      if(item.isCompleted) return `<li>✅ <s><i>${item.text}</i></s></li>`
+      return `<li>🔜 ${item.text} </li>`
+    }
+
+    this.render = function (){
+      const todoList = document.getElementById(id);
+
+      const todos = this.data.map(item => makeHTML(item)).join('');
+      const idToTitle = id.toUpperCase()
+      todoList.innerHTML = `<h3>📍${idToTitle}</h3> ${todos}`;
+    }
+  }
+
+  const todoList = new TodoList(data, 'todo-list-1');
+  const todoList2 = new TodoList(data2, 'todo-list-2');
+  const todoList3 =  new TodoList(data3, 'todo-list-3');
+
+  const Lists = [todoList, todoList2, todoList3];
+  Lists.forEach(list => list.render());
+  
+  todoList2.setState([
+    {
+      text: '새로운 투두 추가 !!🎉',
+      isCompleted: false,
+    }
+  ]);
+
+  </script>
+</body>
+</html>
