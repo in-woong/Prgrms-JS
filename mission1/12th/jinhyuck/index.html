@@ -1,0 +1,100 @@
+<html>
+<head>
+  <title>Mission 1</title>
+  <meta charset='utf-8' />
+</head>
+
+<body>
+  <div id='todo-list0'></div>
+  <div id='todo-list1'></div>
+  <div id='todo-list2'></div>
+<script>
+  const data0 = [
+    {
+      text: 'HTML 공부하기',
+      isCompleted: true,
+    },
+    {
+      text: 'HTML 복습하기',
+      isCompleted: false,
+    },
+  ]
+
+  const data1 = [
+    {
+      text: 'CSS 공부하기',
+      isCompleted: true,
+    },
+    {
+      text: 'CSS 복습하기',
+      isCompleted: false,
+    },
+  ]
+
+  const data2 = [
+    {
+      text: 'JS 공부하기',
+      isCompleted: true,
+    },
+    {
+      text: 'JS 복습하기',
+      isCompleted: false,
+    },
+  ]
+
+  const data3 = [
+    {
+      text: 'TS 공부하기',
+      isCompleted: false,
+    },
+    {
+      text: 'TS 복습하기',
+      isCompleted: true,
+    },
+  ]
+
+  function TodoList(data, index) {
+    const isDataAndInstanceValid = () => {
+      const hasText = data.every(datum => typeof datum === 'object' && datum.hasOwnProperty('text'))
+      // data가 null 또는 undefined인 경우는 isArray에 종속됨.
+      return Array.isArray(data) && hasText && (this instanceof TodoList)
+    }
+
+    if (!isDataAndInstanceValid()) {
+      throw new Error('Error message')
+    }
+
+    this.data = data
+    this.index = index
+
+    this.render = function () {
+      const $todoList = document.querySelector(`#todo-list${this.index}`)
+      $todoList.innerHTML = this.data
+        .map(({ text, isCompleted }) => isCompleted ? `<div><s>${text}</s></div>` : `<div>${text}</div>`)
+        .join(' ')
+    }
+
+    this.setState = function(newData) {
+      this.data = newData
+      if (isDataAndInstanceValid()) {
+        this.render()
+      }
+    }
+  }
+
+  function init() {
+    const todoList0 = new TodoList(data0, 0)
+    const todoList1 = new TodoList(data1, 1)
+    const todoList2 = new TodoList(data2, 2)
+
+    todoList0.render()
+    todoList1.render()
+    todoList2.render()
+
+    todoList0.setState(data3)
+  }
+
+  init()
+</script>
+</body>
+</html>
