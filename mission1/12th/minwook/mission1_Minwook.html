@@ -1,0 +1,52 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list"></div>
+  <script>
+    const data = [{
+        text: 'JS 공부하기',
+        isCompleted: true,
+      },
+      {
+        text: 'JS 복습하기',
+        isCompleted: false,
+      },
+    ]
+
+    function TodoList({target, data}) {
+      this.data = data;
+
+      if (this === window) {
+        throw new Error('new를 쓰지 않아서 this가 window입니다!');
+      } 
+
+      function checkDataType() {
+      // comment 반영
+        if(data == undefined || !Array.isArray(data)){
+            throw new Error('유효하지 않은 데이터 값입니다. data를 확인해주세요!!')
+        }
+      }
+
+      this.render = function () { 
+        target.innerHTML =
+      `<ul>
+        ${this.data.reduce((acc,cur) => 
+        `${acc}<li>${cur.text}</li>`, ' ')}
+      </ul>`
+        }
+    }
+
+
+    const todoList = new TodoList({
+      target : document.getElementById("todo-list"),
+      data: data});
+    todoList.render();
+  </script>
+</body>
+
+</html>
