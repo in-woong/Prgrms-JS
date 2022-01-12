@@ -1,0 +1,119 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list"></div>
+    <div id="todo-list-a"></div>
+    <div id="todo-list-b"></div>
+
+    <script>
+      const data = [
+        {
+          text: "JS 공부하기",
+          isCompleted: true,
+        },
+        {
+          text: "JS 복습하기",
+          isCompleted: false,
+        },
+      ];
+      const dataA = [
+        {
+          text: "이디어츠 팬사인회 가기",
+          isCompleted: false,
+        },
+        {
+          text: "이디어츠에 팬레터 보내기",
+          isCompleted: false,
+        },
+      ];
+      const dataB = [
+        {
+          text: "왓챠 애니 감상",
+          isCompleted: false,
+        },
+        {
+          text: "왓챠 댓글로 키보드 배틀하기",
+          isCompleted: true,
+        },
+      ];
+      // 이곳에서 코딩을 시작하세요!
+      const dataErrorCheck = function (data) {
+        try {
+          if (data === null || data === undefined) {
+            throw new Error("님아; 왜 암것도 안줌;");
+          }
+          if (!Array.isArray(data)) {
+            throw new Error("님아; Array 아닌데여;");
+          }
+          data.forEach((todo) => {
+            if (
+              !("text" in todo) ||
+              typeof todo.text !== "string" ||
+              typeof todo.isCompleted !== "boolean"
+            )
+              throw new Error("님아; Array 이상함;");
+          });
+        } catch (e) {
+          alert("Error: " + e.message);
+        }
+      };
+      const todoListDiv = document.querySelector("#todo-list");
+
+      // 인자 조정
+      function TodoList({ targetEl, todoData }) {
+        this.data = todoData;
+
+        try {
+          if (!new.target) {
+            throw new Error("님아; new 붙이고 실행점;");
+          }
+        } catch (e) {
+          alert("Error: " + e.message);
+        }
+
+        dataErrorCheck(this.data);
+        this.render = function () {
+          const todo = this.data
+            .map(function (el) {
+              if (el.isCompleted) {
+                return `<li><s>${el.text}</s></li>`;
+              }
+              return `<li>${el.text}</li>`;
+            })
+            .join("");
+          // 타겟으로 조정
+          // todoListDiv.innerHTML = todo;
+          targetEl.innerHTML = "<ul>" + todo + "</ul>";
+        };
+        this.render()
+        this.setState = function (newTodoData) {
+          dataErrorCheck(newTodoData);
+          this.data = newTodoData;
+          this.render();
+        };
+      }
+
+      // 인자 조정
+      const todoList = new TodoList({
+        targetEl: document.getElementById("todo-list"),
+        todoData: data,
+      });
+      const todoListA = new TodoList({
+        targetEl: document.getElementById("todo-list-a"),
+        todoData: dataA,
+      });
+      const todoListB = new TodoList({
+        targetEl: document.getElementById("todo-list-b"),
+        todoData: dataB,
+      });
+      todoList.setState([
+        { text: "띠용~~", isCompleted: true },
+        { text: "호2", isCompleted: false },
+      ]);
+    </script>
+  </body>
+</html>
