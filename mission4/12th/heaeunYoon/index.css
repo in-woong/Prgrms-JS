@@ -1,0 +1,52 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.modal > div {
+  padding: 100px;
+  background: #fff;
+  border-radius: 50%;
+}
+
+.todo-wrap {
+  display: flex;
+}
+
+.todo-wrap ul {
+  min-width: 300px;
+  min-height: 500px;
+}
+
+.todo-wrap ul li {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  padding: 20px;
+  border: 10px solid #dcdcdc;
+  cursor: pointer;
+}
+
+.todo-wrap ul li + li {
+  margin-top: 10px;
+}
+
+.todo-wrap ul li.dragging {
+  opacity: 0.3;
+  border-style: dashed;
+}
+
+.todo-wrap ul li:hover {
+  border-color: #dcdcdc;
+}
+
+.todo-wrap ul li:active {
+  border-color: skyblue;
+}
