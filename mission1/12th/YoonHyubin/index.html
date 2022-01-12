@@ -1,0 +1,126 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list"></div>
+    <div id="homework-list"></div>
+    <div id="reservation-list"></div>
+
+    <script>
+      const data = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false,
+        },
+      ]
+      
+      const homeworks = [
+        {
+          text: 'TodoList 필수 사항 구현하기',
+          isCompleted: true,
+        },
+        {
+          text: '첫번째 보너스 미션',
+          isCompleted: true,
+        },
+        {
+          text: '두번째 보너스 미션',
+          isCompleted: false
+        }
+      ]
+
+      const reservations = [
+        {
+          text: '피부과',
+          isCompleted: true,
+        },
+        {
+          text: '애플스토어',
+          isCompleted: false,
+        },
+        {
+          text: '연습실',
+          isCompleted: false
+        }
+      ]
+
+      function TodoList(data, divId) {
+
+        /* TodoList 함수 정의 시작 */
+
+        this.validateData = function(data) {
+          if (Array.isArray(data) === false) throw new Error("data는 배열 객체여야만 합니다.");
+
+          data.forEach(todo => {
+            if (typeof(todo.text) !==  "string") throw new Error("data엔 text 항목이 String으로 정의되어야 함니다.");
+            if (typeof(todo.isCompleted) !== "boolean") throw new Error("data엔 isCompleted 항목이 Boolean으로 정의되어야 함니다.");
+          });
+        }
+
+        this.setRenderingDivisionById = function(divId) {
+          const renderingDivision = document.querySelector('#' + divId);
+          if (renderingDivision === null) throw new Error("입력한 id에 해당하는 div가 없습니다.");
+          if (renderingDivision.tagName !== "DIV") throw new Error("입력한 id로 찾은 element가 div가 아닙니다.");
+          this.renderingDivision = renderingDivision;
+        }
+
+        this.setState = function(nextData) {
+          this.validateData(data);
+          this.data = data;
+          this.render();
+        }
+
+        this.render = function() {
+          this.renderingDivision.innerHTML = `
+            <ul>
+              ${this.data.map(({text, isCompleted}) => `<li>${isCompleted ? `<s>${text}</s>` : text}</li>`).join('')}
+            </ul>
+          `;
+        }
+
+        /* TodoList 함수 정의 끝 */
+
+        if (this instanceof TodoList === false) throw new Error("TodoList는 new 키워드를 통해 호출하여야 합니다.");
+        if (typeof(divId) !== "string") throw new Error("divId 값은 문자열이어야만 합니다.");
+
+        this.setRenderingDivisionById(divId);
+        this.setState(data);
+      }
+
+      function completeAllWorks(data) {
+        if (Array.isArray(data) === false) throw new Error("completeAllWorks 함수는 배열 객체를 입력값으로 받아야 합니다.");
+        return data.map(todo => {
+          if (todo !== null) todo.isCompleted = true;
+          return todo;
+        })
+      }
+
+      try {
+        const todoList = new TodoList(data, 'todo-list');
+        todoList.render();
+        setTimeout(function(){
+          todoList.setState(completeAllWorks(data))
+        }, 3000);
+
+        const homeworkList = new TodoList(homeworks, 'homework-list');
+        homeworkList.render();
+        
+        const reservationList = new TodoList(reservations, 'reservation-list');
+        reservationList.render();
+        
+      } 
+      catch (err) {
+        alert(err);
+      }
+
+    </script>
+  </body>
+</html>
+
