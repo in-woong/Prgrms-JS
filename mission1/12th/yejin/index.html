@@ -1,0 +1,81 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list"></div>
+    <div id="todo-list1"></div>
+    <div id="todo-list2"></div>
+    
+    <script>
+      const data = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false,
+        },
+      ]
+      const myTodoList1 = [
+          { 
+              text: 'JavaScript 정복하기', 
+              isCompleted: false
+          },
+          {
+              text: '미라클 모닝 하기',
+              isCompleted: false
+          }
+      ] 
+      const myTodoList2 = [ 
+          {
+              text: '잠 6시간 이상 자기', 
+              isCompleted: true
+          },
+          {
+              text: '하루에 한시간 책 읽기', 
+              isCompleted: false
+          },
+      ]
+
+      function TodoList(list, id){ 
+          if(!list || !Array.isArray(list)){ 
+              throw new Error("error message"); 
+          }
+          this.data = list; 
+          this.render = function(){ 
+            const result = this.data.map(element => {
+                if(!element.isCompleted){
+                    return `<div>${element.text}</div>`;
+                }else{ 
+                    return `<div><s>${element.text}</s></div>`;
+                } 
+            }).join('');
+            document.querySelector(`#${id}`).innerHTML = result; 
+          },
+          this.setState = function(nextData){ 
+            nextData = this.data; 
+            this.render(); 
+          }
+      }
+
+
+      try{ 
+        const todoList = new TodoList(data, 'todo-list');
+        const todoList1 = new TodoList(myTodoList1, 'todo-list1');
+        const todoList2 = new TodoList(myTodoList2, 'todo-list2');
+        todoList.setState();  
+        todoList1.setState();  
+        todoList2.setState();  
+        console.log("업로드 비교")
+
+      }catch(e){ 
+          throw new Error("error", e); 
+      }
+
+    </script>
+  </body>
+</html>
