@@ -1,0 +1,107 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list"></div>
+    <div id="travel-list"></div>
+    <div id="food-list"></div>
+    <script>
+      var todo = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false,
+        },
+      ]
+      var travel = [
+        {
+          text: '몽골',
+          isCompleted: false,
+        },
+        {
+          text: '쿠바',
+          isCompleted: true,
+        },
+      ]
+      var food = [
+        {
+          text: '곱창전골',
+          isCompleted: true,
+        },
+        {
+          text: '삼겹살',
+          isCompleted: true,
+        },
+      ]
+      var nextTodo = [
+        {
+          text: 'TS 공부하기',
+          isCompleted: false,
+        },
+        {
+          text: 'TS 복습하기',
+          isCompleted: true,
+        },
+      ]
+
+      // 인자값 에러 체크
+      const dataCheck = data => {
+        if (!data || !Array.isArray(data)) {
+          // !data => data 값이 null | undefined 일 경우 true를 리턴
+          // data가 배열이 아닌 다른 원시값일 경우 에러 발생
+          throw new Error('error message')
+        }
+
+        data.forEach(obj => {
+          if (!obj.hasOwnProperty('text')) {
+            // 키값이 text 존재하는지 확인
+            throw new Error('error message')
+          } else if (typeof obj.text !== 'string') {
+            // text 값이 string인지 확인
+            throw new Error('error message')
+          }
+        })
+      }
+      // TodoList 컴포넌트 생성 함수
+      function TodoList(data, name) {
+        if (!(this instanceof TodoList)) {
+          // new 키워드 안 붙이고 함수 실행시 에러 발생
+          throw new Error('error message')
+        }
+        // parameter data 값이 올바른지 체크하는 함수
+        dataCheck(data)
+
+        this.data = data
+        // 렌더링 함수
+        this.render = function() {
+          // string => html string 변환 함수
+          const html = this.data
+            .map(({ text, isCompleted }) =>
+              // isCompleted가 true일 경우 삭천처리를 해준다
+              isCompleted ? `<div><s>${text}</s></div>` : `<div>${text}</div>`
+            )
+            .join('')
+          document.querySelector(`#${name}-list`).innerHTML = html
+        }
+        // setState 함수
+        this.setState = function(nextData) {
+          dataCheck(nextData)
+          this.data = nextData
+        }
+        this.render()
+      }
+
+      const todoList = new TodoList(todo, 'todo')
+      const travelList = new TodoList(travel, 'travel')
+      const foodList = new TodoList(food, 'food')
+
+      todoList.setState(nextTodo)
+    </script>
+  </body>
+</html>
