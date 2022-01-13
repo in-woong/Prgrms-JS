@@ -16,21 +16,26 @@
         }
       ]
       
-      var parent = document.querySelector('#todo-list');
-      parent.innerHTML = ``;
 
-      function TodoList (data) {
+      function TodoList (targetId,data) {
         this.data = data;
+        this.target = document.getElementById(targetId)
         
-        this.render = function () {
-          for (var index = 0; index < data.length; index++) {
-            parent.append(document.createElement('p'))
-            parent.append(`${this.data[index].text}`)
-          }
+        function getElement(data) {
+          return data.map(({text}) => `<div>${text}</div>`).join('');
         }
+
+        this.render = function () {
+            const element = getElement(this.data)
+            
+            this.target.innerHTML = element
+        }
+        
+        this.render()
       }
+
       
-      var todoList = new TodoList(data);
+      var todoList = new TodoList("todo-list", data);
       
       todoList.render();
 
