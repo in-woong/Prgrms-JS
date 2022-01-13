@@ -1,0 +1,38 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list"></div>
+  <script>
+    // TodoList 생성자 함수
+    function TodoList(data) {
+      this.data = data;
+
+      this.render = function() {
+        const $todoListEl = document.querySelector('#todo-list');
+        const texts = this.data.map(obj => `<li>${obj.text}</li>`).join('');
+
+        $todoListEl.innerHTML = texts;
+      }
+    }
+
+    // 데이터
+    const data = [
+      {
+        text: 'JS 공부하기'
+      },
+      {
+        text: 'JS 복습하기'
+      }
+    ]
+
+    // TodoList 인스턴스 생성
+    const todoList = new TodoList(data);
+    todoList.render();
+  </script>
+</body>
+</html>
