@@ -6,33 +6,12 @@
 </head>
 
 <body>
-  <div id="todo-list"></div>
+  <div id="todo-list__1"></div>
+  <div id="todo-list__2"></div>
+  <div id="todo-list__3"></div>
+  
   <script>
-    function TodoList(data) {
-      // 인스턴스 생성시 new 키워드를 사용하지 않은 경우 -> 에러 발생
-      if(!new.target) {
-        throw new Error('new 키워드를 사용해서 인스턴스를 생성하세요.');
-      } 
-      // 파라미터 데이터가 배열 형태(요소가 있는)가 아닌 경우 -> 에러 발생
-      if(!Array.isArray(data) || data.length === 0) {
-        throw new Error('데이터는 길이가 1 이상인 배열 형태이어야 합니다.')
-      } 
-      // 파라미터 데이터 내 text 데이터가 없는 경우 -> 에러 발생
-      if(!data.every(obj => 'text' in obj)) {
-        throw new Error('데이터 내에 text 테스트가 없습니다.');
-      }
-      
-      this.data = data;
-
-      this.render = function() {
-        const $todoListEl = document.querySelector('#todo-list');
-        const texts = this.data.map(obj => `<li>${obj.text}</li>`).join('');
-
-        $todoListEl.innerHTML = texts;
-      }
-    }
-
-    const data = [
+     const data1 = [
       {
         text: 'JS 공부하기'
       },
@@ -40,14 +19,67 @@
         text: 'JS 복습하기'
       }
     ];
+    const data2 = [
+      {
+        text: '줄넘기'
+      },
+      {
+        text: '라이딩'
+      },
+      {
+        text: '책 읽기'
+      }
+    ]
+    const data3 = [
+      {
+        text: '점심 먹기',
+        text: '저녁 먹기',
+      }
+    ]
 
-    const todoList =  new TodoList(data);
-    todoList.render();
+    function TodoList(data, id) {
 
-    // 에러 체크 테스트
-    // const a = new TodoList('text');                     // Uncaught Error: 데이터는 길이가 1 이상인 배열 형태이어야 합니다.
-    // const b = new TodoList([]);                         // Uncaught Error: 데이터는 길이가 1 이상인 배열 형태이어야 합니다.
-    // const c = new TodoList([{ data : 'JS 고수되기' }])  // Uncaught Error: 데이터 내에 text 테스트가 없습니다.
+      if(!new.target) {
+        throw new Error('new 키워드를 사용해서 인스턴스를 생성하세요.');
+      }
+
+      if(!Array.isArray(data) || data.length === 0) {
+        throw new Error('데이터는 길이가 1 이상인 배열 형태이어야 합니다.')
+      } 
+
+      if(!data.every(obj => 'text' in obj)) {
+        throw new Error('데이터 내에 text 테스트가 없습니다.');
+      }
+
+      this.id = id;
+      this.data = data;
+      
+      this.render = function() {
+        /**
+         * div 박스 id 를 "todo-list__인덱스" 형태로 지정
+         * 생성자 함수의 id 프로퍼티를 추가, 파라미터로 전달
+         * template literal 형태로 this 의 id 프로퍼티를 활용
+         */
+
+        // ❓ id 프로퍼티가 추가되어 의존성이 부여된 것 같은데 더 좋은 방법이 없을까 ?         
+        const $todoListEl = document.querySelector(`#todo-list__${this.id}`);
+        const texts = this.data.map(obj => `<li>${obj.text}</li>`).join('');
+
+        $todoListEl.innerHTML = texts;
+      }
+    }
+
+   
+    const todoList1 =  new TodoList(data1, 1);
+    todoList1.render();
+
+    const todoList2 =  new TodoList(data2, 2);
+    todoList2.render();
+
+    const todoList3 =  new TodoList(data3, 3);
+    todoList3.render();
+
+    
   </script>
 </body>
 </html>
