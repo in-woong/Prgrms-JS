@@ -84,28 +84,19 @@
 
       /**
        * setState 메서드를 정의
-       * render 메서드를 내부에서 재호출하는 방식이 아니라했기 때문에 고민
-       * 결국, 내부에서 this.data 를 인수로 전달받은 nextData 로 재할당 이후
-       * 나머지 작업은 render 메서드와 동일하게 작성되었다.. 
+       * 인수로 전달받은 next 데이터를 this.data 에 재할당
+       * 이후, 리렌더링을 위해 this.render 메서드 호출 ( 업데이트 된 데이터를 기준으로 렌더링 )
        */ 
-
-      // ❓ 재사용성이라곤 찾아볼 수 없는 구현방식이 아닌가..찝찝하다.
-      // ❓ 이 메서드 구현의 진짜 의도를 파악 못한 것 같다.
       this.setState = function(nextData) {
         this.data = nextData;
-        const $todoListEl = document.querySelector(`#todo-list__${this.id}`);
-        const texts = this.data.map(obj => { 
-          return obj.isCompleted ? `<li><s>${obj.text}</s></li>` : `<li>${obj.text}</li>`; 
-        } ).join('');
-
-        $todoListEl.innerHTML = texts;
+        this.render();
       }
     }
 
     
     const todoList1 =  new TodoList(data1, 1);
     todoList1.render();
-    
+
     // setState 메서드 적용
     // 변화를 확인하기 위해 타이머 함수 setTimeout 비동기 함수 적용
     setTimeout(() => { todoList1.setState(nextData1) }, 1000);
