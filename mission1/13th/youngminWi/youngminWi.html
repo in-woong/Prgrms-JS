@@ -13,27 +13,36 @@
   <script>
      const data1 = [
       {
-        text: 'JS 공부하기'
+        text: 'JS 공부하기',
+        isCompleted: true
       },
       {
-        text: 'JS 복습하기'
+        text: 'JS 복습하기',
+        isCompleted: true
       }
     ];
     const data2 = [
       {
-        text: '줄넘기'
+        text: '줄넘기',
+        isCompleted: true
       },
       {
-        text: '라이딩'
+        text: '라이딩',
+        isCompleted: false,
       },
       {
-        text: '책 읽기'
+        text: '책 읽기',
+        isCompleted: false,
       }
     ]
     const data3 = [
       {
         text: '점심 먹기',
+        isCompleted: true,
+      },
+      {
         text: '저녁 먹기',
+        isCompleted: true,
       }
     ]
 
@@ -55,15 +64,12 @@
       this.data = data;
       
       this.render = function() {
-        /**
-         * div 박스 id 를 "todo-list__인덱스" 형태로 지정
-         * 생성자 함수의 id 프로퍼티를 추가, 파라미터로 전달
-         * template literal 형태로 this 의 id 프로퍼티를 활용
-         */
-
-        // ❓ id 프로퍼티가 추가되어 의존성이 부여된 것 같은데 더 좋은 방법이 없을까 ?         
         const $todoListEl = document.querySelector(`#todo-list__${this.id}`);
-        const texts = this.data.map(obj => `<li>${obj.text}</li>`).join('');
+        
+        // 렌더링 할 텍스트 요소 = 삼항 연산자(ternary operator) 로 구분
+        const texts = this.data.map(obj => { 
+          return obj.isCompleted ? `<li><s>${obj.text}</s></li>` : `<li>${obj.text}</li>`; 
+        } ).join('');
 
         $todoListEl.innerHTML = texts;
       }
