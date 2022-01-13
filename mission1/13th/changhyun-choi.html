@@ -18,6 +18,10 @@
       
 
       function TodoList (targetId,data) {
+        if (!new.target) {
+          throw Error;
+        }
+
         this.data = data;
         this.target = document.getElementById(targetId)
         
@@ -37,7 +41,6 @@
       
       var todoList = new TodoList("todo-list", data);
       
-      todoList.render();
 
     </script>
   </body>
