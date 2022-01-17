@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list"></div>
+    <script>
+      const data = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false,
+        },
+      ];
+      function TodoList(todoData){
+        // check for invalid input
+        if(todoData === null | todoData === undefined) {
+          throw new Error("Null or undefined data");
+        }
+        else if(!Array.isArray(todoData)) {
+          throw new Error("Data is not an array");
+        }
+        else {
+          todoData.forEach(todo => {
+            if(!(todo.hasOwnProperty('text')) || typeof todo.text !== 'string' || (todo.text === null) || (todo.text === undefined))
+              throw new Error("Todo data is invalid")
+          })
+        }
+        // check if function is not made with new
+        if(new.target === undefined) throw new Error("Function not made with new");
+        
+        this.data = todoData;
+        this.render = function(){
+          const todoDiv = document.getElementById("todo-list");
+          const todoUL = document.createElement("ul")
+          this.data.forEach(todo => {
+            const newTodo = document.createElement('li');
+            newTodo.innerHTML = todo.text;
+            todoUL.appendChild(newTodo);
+          })
+          todoDiv.appendChild(todoUL);
+        };
+      }
+      const todoList = new TodoList(data);
+      todoList.render();
+    </script>
+  </body>
+</html>

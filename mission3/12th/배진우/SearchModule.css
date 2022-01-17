@@ -1,0 +1,27 @@
+#input {
+    height: 1.8em;
+    width: 220px;
+    padding: 0 10px;
+    box-shadow: 3px 3px 10px #566270;
+    outline: none;
+    border: none;
+    color: #4F86C6;
+}
+
+#history {
+    margin-top: 1px;
+    position: absolute;
+    background: white;
+    padding: 0 10px;
+}
+
+#history-item {
+    list-style: none;
+    height: 1.8em;
+    width: 220px;
+    outline: none;
+}
+
+.invisible {
+    display: none;
+}

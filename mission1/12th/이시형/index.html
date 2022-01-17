@@ -1,0 +1,81 @@
+<html>
+<head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+</head>
+
+<body>
+    <div id="todo-list"></div>
+    <div id="todo-list2"></div>
+    <div id="todo-list3"></div>
+    <script>
+        const data = [
+            {
+                text: 'JS 공부하기',
+                isCompleted: true,
+            },
+            {
+                text: 'JS 복습하기',
+                isCompleted: false,
+            },
+        ]
+        const data2 = [
+            {
+                text: '운동하기',
+                isCompleted: true,
+            },
+            {
+                text: 'JS 공부하기',
+                isCompleted: true,
+            },
+        ]
+        const data3 = [
+            {
+                text: '과제 하기',
+                isCompleted: true,
+            },
+            {
+                text: '기말 공부하기',
+                isCompleted: false,
+            },
+        ]
+
+        // 이곳에서 코딩을 시작하세요!
+        
+        function checkValidation(data){
+            if(!data) throw new Error('data가 null 또는 undefined입니다')
+            if(!Array.isArray(data)) throw new Error('data가 array가 아닙니다.')
+            data.forEach(todoItem=>{
+                if(!todoItem.hasOwnProperty('text') || !todoItem.hasOwnProperty('isCompleted')) throw new Error('받아온 파라미터가 잘못됬습니다.')
+                if(typeof todoItem.text !== 'string' || typeof todoItem.isCompleted !== 'boolean' )  throw new Error('data의 타입이 잘못됬습니다.')
+                if(!todoItem.text)throw new Error('data가 비어있습니다.')
+            })
+        }
+
+        function TodoList(data,listId){
+            if(!(this instanceof TodoList)) throw new Error('new 키워드를 추가해주세요.')
+            checkValidation(data)
+            this.data = data
+            this.select = document.querySelector(`#${listId}`)
+            this.render = function(){
+                const todoItemList = this.data.map(todoItem=>{
+                    if(todoItem.isCompleted) return `<li><s>${todoItem.text}</s></li>`
+                    return `<li>${todoItem.text}</li>`
+                }).join('')
+                this.select.innerHTML=`<ul>${todoItemList}</ul>`
+            }
+            this.setState = function(nextData){
+                checkValidation(nextData)
+                this.data = nextData
+                this.render()
+            }
+            this.render()
+        }
+
+        const todoList = new TodoList(data,'todo-list')
+        const todoList2 = new TodoList(data2,'todo-list2')
+        const todoList3 = new TodoList(data3,'todo-list3')
+    </script>
+</body>
+</html>
+

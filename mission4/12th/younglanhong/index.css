@@ -1,0 +1,28 @@
+#app {
+  margin: 1rem 1.5rem;
+}
+
+ul {
+  padding: 0 0.5rem;
+}
+
+li {
+  list-style: none;
+}
+
+p {
+  width: 15rem;
+  padding: 0.1rem 1rem;
+  border-top: 1px dotted #9ca3af;
+}
+
+#user-list {
+  height: 35vh;
+  margin: 0 0 3rem;
+  overflow: auto;
+}
+
+#user-list li:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}

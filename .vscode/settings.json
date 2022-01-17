@@ -1,4 +1,6 @@
 {
-    "liveServer.settings.port": 5501,
-    "prettier.endOfLine": "auto"
+  "liveServer.settings.port": 5501,
+  "prettier.endOfLine": "auto"
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
 }
+

@@ -1,0 +1,13 @@
+.user-list__user {
+  display: inline-block;
+  background-color: #86f7ee;
+  margin: 1px;
+  padding: 5px;
+}
+
+.user-list__user:hover,
+.user-list__user.selected {
+  background-color: #152442;
+  cursor: pointer;
+  color: #ffffff;
+}

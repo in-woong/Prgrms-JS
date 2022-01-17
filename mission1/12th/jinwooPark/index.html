@@ -1,0 +1,127 @@
+<html>
+<head>
+  <title>Mission 1</title>
+  <meta charset='utf-8' />
+</head>
+
+<body>
+<div id='todo-list'></div>
+<div id='todo-list2'></div>
+<div id='todo-list3'></div>
+<script>
+  const data = [
+    {
+      text: 'JS 공부하기',
+      isCompleted: true,
+    },
+    {
+      text: 'JS 복습하기',
+      isCompleted: true,
+    },
+  ]
+
+  const data2 = [
+    {
+      text: 'mission1 완수하기',
+      isCompleted: false,
+    },
+    {
+      text: '일찍 잠자기',
+      isCompleted: true,
+    },
+  ]
+
+  const data3 = [
+    {
+      text: 'vanilla JS 수료하기',
+      isCompleted: true,
+    },
+    {
+      text: '회사가기',
+      isCompleted: false,
+    },
+  ]
+
+  class TodoList {
+
+    data
+    $target
+
+    constructor(target, data) {
+      this.validate(data);
+      this.data = data;
+      this.$target = target;
+    }
+
+    setState(nextData) {
+      if (JSON.stringify(nextData) !== JSON.stringify(this.data)) {
+        this.validate(nextData)
+        this.data = nextData;
+        this.render()
+      }
+    }
+
+    checkType(value) {
+      if (value === null || value === undefined) {
+        throw new Error('null 또는 undefined 값입니다.');
+      }
+
+      if (!Array.isArray(value)) {
+        throw new Error('배열 형태의 데이터가 아닙니다.');
+      }
+    }
+
+    checkData(value) {
+      value.forEach((item) => {
+        if(item === null || undefined) {
+          throw new Error('올바른 데이터의 형태가 아닙니다.')
+        }
+        if (!item.hasOwnProperty('text') || !item.hasOwnProperty('isCompleted')) {
+          throw new Error('key값이 올바르지 않습니다.');
+        }
+
+        if (typeof item.text !== 'string' || typeof item.isCompleted !== 'boolean') {
+          throw new Error('올바른 타입값이 아닙니다.');
+        }
+      })
+    }
+
+    validate(value){
+      this.checkType(value);
+      this.checkData(value);
+    }
+
+    render() {
+      const template = this.data.reduce((prev, cur) => {
+        if (cur.isCompleted) {
+          prev += `<li><s>${cur.text}</s></li>`;
+        } else {
+          prev += `<li>${cur.text}</li>`;
+        }
+        return prev;
+      },"")
+
+      this.$target.innerHTML = `<ul>${template}</ul>`;
+    }
+  }
+
+  const $todo = document.querySelector('#todo-list');
+  const $todo2 = document.querySelector('#todo-list2');
+  const $todo3 = document.querySelector('#todo-list3');
+
+
+  const todo = new TodoList($todo, data);
+  const todo2 = new TodoList($todo2, data2);
+  const todo3 = new TodoList($todo3, data3);
+
+  todo.render();
+  todo2.render();
+  todo3.render();
+
+  setTimeout(() => {
+    todo.setState(data2);
+  }, 2000)
+
+</script>
+</body>
+</html>

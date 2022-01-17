@@ -1,0 +1,67 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <main id="app"></main>
+
+    <script type="module">
+      import { data1, data2, data3 } from './assets/data.js'
+
+      import { validateInstance, checkDataError } from './utils/validation.js'
+
+      import { $ } from './utils/dom.js'
+
+      function TodoList(initialState, $target = $('#app')) {
+        if (validateInstance(this, TodoList)) return
+        const init = () => {
+          this.$todoList = document.createElement('div')
+          $target.appendChild(this.$todoList)
+          this.state = checkDataError(initialState) && initialState
+          render()
+        }
+
+        this.setState = (nextState) => {
+          this.state = checkDataError(nextState) && nextState
+          render()
+        }
+
+        const render = () => {
+          const template = `<ul>${
+            this.state &&
+            this.state
+              .map(
+                ({ text, isCompleted }) =>
+                  `<li>${isCompleted ? `<s>${text}</s>` : text}</li>`
+              )
+              .join('')
+          }</ul>`
+          this.$todoList.innerHTML = template
+        }
+        init()
+      }
+
+      const todoList1 = new TodoList(data1)
+      const todoList2 = new TodoList(data2)
+      const todoList3 = new TodoList(data3)
+
+      /* setState Test
+      // validData
+      setTimeout(() => {
+        todoList1.setState([
+          { text: 'TS 공부하기', isCompleted: true },
+          { text: 'TS 복습하기', isCompleted: false },
+        ])
+      }, 3000)
+      // invalidData
+      setTimeout(() => {
+        todoList3.setState([
+          { text: '컴퓨터구조 공부하기', isCompleted: 'true' },
+          { test: '컴퓨터구조 공부하기', isCompleted: false },
+        ])
+      }, 4000) */
+    </script>
+  </body>
+</html>

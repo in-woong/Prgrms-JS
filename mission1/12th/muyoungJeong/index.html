@@ -1,0 +1,114 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list"></div><br>
+    <div id="twodo-list"></div><br>
+    <div id="threedo-list"></div><br>
+
+    <script>
+      const data = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false,
+        },
+      ]
+
+      const data2 = [
+        {
+          text: '필수 구현사항 구현하기',
+          isCompleted: true,
+        },
+        {
+          text: '보너스 구현사항 전부 구현하기',
+          isCompleted: false,
+        }
+      ]
+
+      const data3 = [
+        {
+          text: '양치하기',
+          isCompleted: true,
+        },
+        {
+          text: '샤워하기',
+          isCompleted: false,
+        },
+        {
+          text: '잠자기',
+          isCompleted: false,
+        }
+      ]
+
+      // 이곳에서 코딩을 시작하세요!
+      function checkIsTodoListDataFine(data) {
+        if (!Array.isArray(data)) {
+          throw new Error("data는 Array 타입입니다.")
+        }
+
+        const hasWeirdAttribute = data.some(item => 
+          typeof item.text !== 'string' || typeof item.isCompleted !== 'boolean'
+        )
+
+        if (hasWeirdAttribute) {
+          throw new Error("올바른 데이터를 넣어주세요.")
+        }
+      }
+
+      renderTodoText = (text, isCompleted) => 
+        isCompleted ? `<s>${text}</s>` : `<span>${text}</span>`
+      
+
+      function TodoList(data, targetElemId) {
+        if (!(this instanceof TodoList)) {
+          throw new Error("new 키워드써서 쓰세요.")
+        }
+
+        checkIsTodoListDataFine(data)
+
+        this.data = data
+        this.targetElemId = targetElemId
+
+        this.render = () => {
+          const todoListDom = this.data.reduce((result, todo) => (
+            result + (`
+            <div>
+              ${renderTodoText(todo.text, todo.isCompleted)}
+              <span>${todo.isCompleted ? '✅' : '📃'}</span>
+            </div>
+          `)), '')
+
+          const $root = document.getElementById(this.targetElemId)
+          $root.innerHTML = todoListDom
+        }
+        
+        this.setState = (data) => {
+          checkIsTodoListDataFine(data)
+
+          this.data = data
+          this.render()
+        }
+      }
+
+      const todoList = new TodoList(data, "todo-list")
+      todoList.render()
+
+      const twodoList = new TodoList(data2, "twodo-list")
+      twodoList.render()
+      setTimeout(() => {
+        data2[1].isCompleted = true
+        twodoList.setState(data2)
+      }, 2000)
+
+      const threedoList = new TodoList(data3, "threedo-list")
+      threedoList.render()
+    </script>
+  </body>
+</html>

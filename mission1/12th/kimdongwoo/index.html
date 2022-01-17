@@ -1,0 +1,128 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list1"></div>
+    <div id="todo-list2"></div>
+    <div id="todo-list3"></div>
+    <script>
+      const data1 = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false,
+        },
+      ];
+
+      const data2 = [
+        {
+          text: '아무것도 안하기',
+          isCompleted: true,
+        },
+        {
+          text: '정말 아무것도 안하기',
+          isCompleted: false,
+        },
+      ];
+
+      const data3 = [
+        {
+          text: '독서하기',
+          isCompleted: true,
+        },
+        {
+          text: '글쓰기',
+          isCompleted: false,
+        },
+      ];
+      // 이곳에서 코딩을 시작하세요!
+      function validationFor(tasks) {
+        if(!Array.isArray(tasks)) {
+          throw new Error('tasks의 값이 올바르지 않습니다.');
+        }
+
+        tasks.forEach((task) => {
+          if(!task.hasOwnProperty('text')) {
+            throw new Error('task에 text값은 필수입니다.');
+          }
+
+          if(!task.hasOwnProperty('isCompleted')) {
+            throw new Error('task에 isCompleted값은 필수입니다.');
+          }
+        });
+      }
+
+      class TodoList {
+        state = {}
+
+        constructor({ $element, tasks }){
+          if(!($element instanceof HTMLElement)) {
+            throw new Error('$element의 값이 올바르지 않습니다.');
+          }
+
+          validationFor(tasks);
+
+          this.$element = $element;
+          this.state.tasks = tasks;
+          
+          this.render();
+        }
+        
+        setState(newState){
+          this.state = { ...this.state, ...newState };
+          
+          validationFor(this.state.tasks);
+
+          this.render();
+        }
+
+        render(){
+          this.$element.innerHTML = `
+            ${this.state.tasks.map(({ text, isCompleted }) => `
+              <ul>
+                ${isCompleted ? `<li><s>${text}</s></li>` : `<li>text</li>`}
+              </ul>
+            `).join('')}
+          `
+        }
+      }
+
+      try {
+        new TodoList({
+          $element: document.querySelector('#todo-list1'),
+          tasks: data1,
+        });
+      } catch (error) {
+        document.querySelector('#todo-list1').textContent = `data1의 ${error.message}`;
+        console.error('data1', error);
+      }
+      
+      
+      try {
+        new TodoList({
+          $element: document.querySelector('#todo-list2'),
+          tasks: data2,
+        });
+      } catch (error) {
+        document.querySelector('#todo-list2').textContent = `data2의 ${error.message}`;
+        console.error('data2', error);
+      }
+
+      try {
+        new TodoList({
+          $element: document.querySelector('#todo-list3'),
+          tasks: data3,
+        });
+      } catch (error) {
+        document.querySelector('#todo-list3').textContent = `data3의 ${error.message}`;
+        console.error('data3', error);
+      }
+    </script>
+  </body>
+</html>

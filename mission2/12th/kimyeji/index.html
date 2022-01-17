@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script type="module" src='./src/index.js' defer></script>
+  <link rel="stylesheet" href="./style.css">
+  <title>TodoList</title>
+  <script src="https://kit.fontawesome.com/d1f0f5669b.js" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gaegu&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="wrapper">
+    <header class="header">
+      <h1 class="title">TODO LIST</h1>
+    </header>
+    <section class="section">
+      <div id="todo-list1"></div>
+      <ul class="items">
+
+      </ul>
+    </section>
+    <footer class="footer">
+      <form class="new_todo">
+        <div class='footer_wrap'>
+          <input class="footer_input" type="text" placeholder="To do...">
+          <button class="footer_btn" type="submit"> <!--button 클릭했을 때, input의 모든 값들이 submit처리됨(form안에서 button은 기본적으로 submit default)-->
+            <i class="fas fa-plus"></i>
+            <span class="blind">추가하기 버튼</span>
+          </button>
+        </div>
+      </form>
+    </footer>
+  </div>
+</body>
+</html>

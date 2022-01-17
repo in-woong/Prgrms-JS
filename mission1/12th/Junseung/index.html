@@ -1,0 +1,138 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list1"></div>
+  <div id="todo-list2"></div>
+  <div id="todo-list3"></div>
+  <script>
+    
+    // -------------------------- input data ------------------------
+    const data1 = [
+        {
+            text: 'JS 공부하기1',
+            isCompleted : true
+        },
+        {
+            text: 'JS 복습하기1',
+            isCompleted : false
+        }
+    ]
+
+    const data2 = [
+        {
+            text: 'JS 공부하기2',
+            isCompleted : true
+        },
+        {
+            text: 'JS 복습하기2',
+            isCompleted : false
+        }
+    ]
+
+    const data3 = [
+        {
+            text: 'JS 공부하기3',
+            isCompleted : true
+        },
+        {
+            text: 'JS 복습하기3',
+            isCompleted : false
+        }
+    ]
+
+    const newData = [
+        {
+            text: 'React 공부하기',
+            isCompleted : true
+        }
+    ]
+
+    // ------------------ test data(보너스 구현사항 에러처리) ------------------
+    // 1. 올바른 파라미터 형식이 아닐때 : 객체의 key값이 text값이 아닐 때
+    const test1 = [
+        {
+            txt: 'JS 공부하기',
+            isCompleted : true
+        },
+        {
+            txt: 'JS 복습하기',
+            isCompleted : true
+        }
+    ]
+
+    // 2. 올바른 파라미터 형식이 아닐때 : data 값이 array 형식이 아닐 때
+    const test2 = { text : 'js 하기' }
+
+    // 3. 올바른 파라미터 형식이 아닐때 : data 값이 null 이거나 undefined일 때
+    const test3 = null;
+
+    const test4 = undefined;
+
+    class TodoList{
+        constructor(data, id){
+            this.testError(data);
+            this.component = this.makeComponent(data);
+            this.target = document.querySelector(id);
+        }
+
+        // 올바른 파라미터가 넘어왔는지 체크하는 함수
+        testError(data){
+            if (!Array.isArray(data)) throw new Error("입력한 데이터가 array형식이 아닙니다.");
+            data.forEach((dataItem) => {
+                if (!dataItem.hasOwnProperty("text") || !dataItem.hasOwnProperty("isCompleted")){
+                    throw new Error("올바른 파라미터가 넘어오지 않았습니다!!");
+                } 
+            })
+        }
+
+        // data의 text 항목을 html로 변환하는 함수
+        makeComponent(data){
+            const html = data.map((dataItem) => {
+                return ( 
+                    (dataItem.isCompleted) 
+                    ? `<li><s>${dataItem.text}</s></li>` 
+                    : `<li>${dataItem.text}</li>`
+                )
+            }).join("")
+            
+            return `<ul>${html}</ul>`; 
+        }
+
+        setState(newData){    
+            this.testError(newData);
+            this.component = this.makeComponent(newData);
+            this.render();
+        }
+
+        render(){
+            this.target.innerHTML = this.component;
+        }
+    }
+
+    try{
+        // 다중 컴포넌트 todoListInstances 배열 객체에 담기
+        const todoListInstances = [data1,data2,data3].map((data,idx) => {
+            return new TodoList(data,`#todo-list${idx+1}`);
+        })
+        
+        // 실행
+        todoListInstances.forEach(obj => obj.render())
+
+        // 첫번째 객체(data1)를 newData로 변경하기 
+        setTimeout(()=> {
+            todoListInstances[0].setState(newData);
+        },2000);
+
+    }catch (e){
+        console.log(e); // new 키워드 입력 안될 시 발생하는 에러 포함
+    }
+    
+
+  </script>
+</body>
+</html>

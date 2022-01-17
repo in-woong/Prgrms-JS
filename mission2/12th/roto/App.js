@@ -5,7 +5,7 @@ import TodoCount from './TodoCount.js'
 
 export default function App({ $target }){
   this.state = storage.getItem('todos', [])
-
+  
   this.setState = nextState => {
     this.state = nextState
     todoList.setState(this.state)

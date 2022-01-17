@@ -1,0 +1,102 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <div id="todo-list1"></div>
+    <div id="todo-list2"></div>
+    <div id="todo-list3"></div>
+    <script>
+      'use strict';
+
+      const data1 = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false
+        }
+      ];
+
+      const data2 = [
+        {
+          text: 'Javascript this MDN reference 읽기',
+          isCompleted: true
+        },
+        {
+          text: '모던 Javascript deep dive 정독하기',
+          isCompleted: false
+        },
+        {
+          text: 'javascript 강의 듣기 ',
+          isCompleted: false
+        }
+      ];
+
+      const data3 = [
+        {
+          text: '알고리즘 10문제 풀기',
+          isCompleted: true
+        },
+        {
+          text: '블로그에 푼 문제 정리하기',
+          isCompleted: true
+        }
+      ];
+
+      class TodoList {
+        constructor(data, id) {
+          this.data = data;
+          this.$target=id;
+          this.parameterValidation();
+          this.render();
+        }
+
+        parameterValidation() {
+          if(!this.data ||  Array.isArray(this.data) === false) throw new Error('The parameter \'Data\' is incorrect. Please check.');
+
+          for(const item of this.data) {
+            if(typeof item.text !== 'string') throw new Error('Data type error. Please check.');
+          }
+        }
+
+        setState(nextData) {
+          this.data = nextData;
+          this.parameterValidation(); 
+          this.render(); 
+        }
+        
+        render() {
+          this.$target.innerHTML = 
+          `<ul>
+            ${this.data.map(({ text, isCompleted }) =>`
+              <li>${isCompleted ? `<s>${text}</s>` : text}</li>
+            `).join('')}
+          </ul>`
+        }
+      }
+        
+
+      const todoList1 = new TodoList(data1, document.querySelector('#todo-list1'));
+      const todoList2 = new TodoList(data2, document.querySelector('#todo-list2'));
+      const todoList3 = new TodoList(data3, document.querySelector('#todo-list3'));
+      setTimeout(() => {
+        todoList3.setState([
+          ...data3,
+          {
+            text: '미션1 마무리하기',
+            isCompleted: true
+          }, 
+          {
+            text: '미션2 시작',
+            isCompleted: false
+          }
+        ])
+      }, 3000);
+
+    </script>
+  </body>
+</html>

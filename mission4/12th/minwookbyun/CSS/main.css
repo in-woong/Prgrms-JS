@@ -1,0 +1,51 @@
+* {
+    box-sizing: border-box;
+    list-style: none;
+    overflow-x: hidden;
+    background-color: #e9defa;
+    margin: 0;
+    font-size: 14px;
+    padding: 1em 2em;
+    
+}
+
+/* 유저리스트 */
+.user_name {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+
+.list_users {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.list_users li {
+    display: flexbox;
+    margin: 5px;
+    border: 2px solid white;
+    padding: 0.5em;
+    border-radius: 4px;
+}
+
+.list_users li:hover{
+    background-color: white;
+    transition: 0.075, 0.82, 0.165, 1;
+}
+
+
+.input_userinput{
+    display: block;
+    width: 200rem;
+    border-radius: 4px;
+    background-color: white;
+    border:1px solid white;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.btn-remove{
+    display: inline-block;
+    border-style: none;
+}

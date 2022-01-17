@@ -1,0 +1,19 @@
+* {
+  box-sizing: border-box;
+}
+
+#search-history {
+  display: flex;
+  flex-direction: row;
+  padding: 0.2rem;
+}
+#search-history li {
+  height: 1.5rem;
+  margin: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  color: #ffffff;
+  list-style: none;
+  cursor: pointer;
+  background-color: #afafaf;
+  border-radius: 0.5rem;
+}
