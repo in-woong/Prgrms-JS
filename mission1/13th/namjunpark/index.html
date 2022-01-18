@@ -1,0 +1,76 @@
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list"></div>
+  <script>
+    var data = [
+      {
+        text: 'JS 공부하기'
+      },
+      {
+        text: 'JS 복습하기'
+      }
+    ]
+	// 이곳에서 코딩을 시작하세요!
+  function TodoList(data) { 
+      const div = document.getElementById("todo-list");
+      const form = document.createElement('form');
+      const input = document.createElement("input");
+      const button = document.createElement("button");
+      const buttonText = document.createTextNode("할 일 추가하기");
+      const ol = document.createElement("ol");
+      button.appendChild(buttonText);
+      div.appendChild(form);
+      div.appendChild(ol);
+      form.appendChild(input);
+      form.appendChild(button);
+      
+      const checkUsingNewKeyword = (() => { 
+        if(!new.target) { 
+          throw Error("new keyword 사용하세요.");
+        }
+      })();
+
+      const checkTypeParameter = ((data) => { 
+        if(!Array.isArray(data)){
+          throw new Error('array가 아닌 형태의 데이터입니다.')
+        }
+      })(data);
+      
+      const initData = ((data) => { 
+        this.list = data;
+      })(data);
+
+      const initList = () => { 
+        if(this.list.length !== 0) { 
+          this.list.forEach((el) => { 
+            const li = document.createElement("li");
+            li.textContent = el.text;
+            ol.appendChild(li);
+          })
+        }
+      }
+      
+      this.render = function(){ 
+        initList();
+        form.addEventListener("submit", (e) => { 
+          e.preventDefault();
+          if(input.value.length !== 0){  
+            const li = document.createElement("li");
+            li.textContent = input.value;
+            ol.appendChild(li);
+            input.value = ""; 
+          }
+        })
+      }       
+    };
+    
+    const todoList = new TodoList(data);
+    todoList.render();
+    
+  </script>
+</body>
+</html>
