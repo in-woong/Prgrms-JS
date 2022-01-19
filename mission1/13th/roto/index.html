@@ -1,0 +1,61 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list"></div>
+    <form class="todo-form">
+      <input type="text" name="todo" />
+      <button>추가</button>
+    </form>
+
+    <script>
+      var data = [
+        {
+          text: 'JS 공부하기',
+        },
+        {
+          text: 'JS 복습하기',
+        },
+      ]
+
+      function TodoList({ initialState, $target }) {
+        this.state = initialState
+
+        this.render = () => {
+          $target.innerHTML = `
+            ${this.state.map((todo) => `<li>${todo.text}</li>`).join('')}
+          `
+        }
+
+        this.setState = (nextState) => {
+          this.state = nextState
+          this.render()
+        }
+        this.render()
+      }
+
+      const todoList = new TodoList({
+        initialState: data,
+        $target: document.querySelector('#todo-list'),
+      })
+
+      document.querySelector('.todo-form').addEventListener('submit', (e) => {
+        e.preventDefault()
+
+        const $input = e.target.querySelector('input[name=todo]')
+
+        todoList.setState([
+          ...todoList.state,
+          {
+            text: $input.value,
+          },
+        ])
+
+        $input.value = ''
+      })
+    </script>
+  </body>
+</html>
