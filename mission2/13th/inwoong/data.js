@@ -1,5 +1,4 @@
-'use strict'
-let data = [
+export let data = [
   {
     text: 'JS 공부하기',
     isCompleted: true,
@@ -10,7 +9,7 @@ let data = [
   },
 ]
 
-let done = [
+export let done = [
   {
     text: 'wow',
     isCompleted: true,
@@ -21,7 +20,7 @@ let done = [
   },
 ]
 
-let buy = [
+export let buy = [
   {
     text: 'Macbook',
     isCompleted: false,

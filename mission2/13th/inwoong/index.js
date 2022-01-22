@@ -1,3 +1,5 @@
+import * as DataRepository from './data.js'
+
 function isNill(data) {
   return data == null
 }
@@ -71,7 +73,7 @@ function TodoList(items, target) {
   this.render()
 }
 
-const todolist = new TodoList(data, 'todo-list')
-const donelist = new TodoList(done, 'done-list')
-const buylist = new TodoList(buy, 'buy-list')
+const todolist = new TodoList(DataRepository.data, 'todo-list')
+const donelist = new TodoList(DataRepository.done, 'done-list')
+const buylist = new TodoList(DataRepository.buy, 'buy-list')
 todolist.setState([{ text: 'nothig', isCompleted: true }])
