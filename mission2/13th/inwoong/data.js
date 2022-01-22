@@ -5,7 +5,7 @@ export let data = [
   },
   {
     text: 'JS 복습하기',
-    isCompleted: false,
+    isCompleted: true,
   },
 ]
 
