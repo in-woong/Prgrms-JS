@@ -1,25 +1,21 @@
-export default function TodoInput(list, $target) {
-  this.list = list
+export default function TodoInput(data, $target, onSubmit) {
+  this.data = data
   this.$target = $target
+  const h2 = document.querySelector(`#${$target}`)
+  const form = document.createElement('form')
+  form.addEventListener('submit', (e) => {
+    e.preventDefault()
+    const $input = form.querySelector('input')
+    $input.value && onSubmit($input.value)
+    form.reset()
+  })
+  h2.prepend(form)
 
   this.render = () => {
-    const input = document.createElement('input')
-    input.setAttribute('type', 'text')
-    const button = document.createElement('button')
-    button.innerText = 'Submit'
-    button.addEventListener('click', this.handleSubmit)
-    const h2 = document.querySelector(`#${$target}`)
-    h2.prepend(input, button)
+    form.innerHTML = `
+    <input type="text"/>
+    <input type="submit" value="submit"/>
+    `
   }
-
-  this.handleSubmit = (e) => {
-    let inputNode = e.path[1].childNodes[0]
-    if (!inputNode.value) {
-      return
-    }
-    this.list.setState([{ text: `${inputNode.value}`, isCompleted: false }])
-    inputNode.value = ''
-  }
-
   this.render()
 }
