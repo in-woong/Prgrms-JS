@@ -2,10 +2,14 @@ import * as DataRepository from './src/data.js'
 import TodoList from './src/Todolist.js'
 import TodoInput from './src/TodoInput.js'
 import TodoCount from './src/TodoCount.js'
+import Storage from './src/storage.js'
+
+const DB = new Storage()
 
 export default function App() {
-  this.state = DataRepository.data
+  // this.state = DataRepository.data
 
+  this.state = [DB.getItem()][0]
   const event = new CustomEvent('RemoveAll')
   const App = document.querySelector('.App')
   const btn = document.createElement('button')
@@ -16,6 +20,7 @@ export default function App() {
   App.appendChild(btn)
   App.addEventListener('RemoveAll', () => {
     this.state = ''
+    DB.clear()
     this.render()
   })
 
@@ -35,6 +40,8 @@ export default function App() {
 
   this.setState = function (nextState) {
     this.state = nextState
+    DB.setItem(this.state)
+    //여기서 DB.setItem(this.state)와 DB.setItem(nextState)가 다른데 이유가 무엇일까
     this.render()
   }
 
