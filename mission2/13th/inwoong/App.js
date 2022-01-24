@@ -6,6 +6,19 @@ import TodoCount from './src/TodoCount.js'
 export default function App() {
   this.state = DataRepository.data
 
+  const event = new CustomEvent('RemoveAll')
+  const App = document.querySelector('.App')
+  const btn = document.createElement('button')
+  btn.innerText = 'Remove'
+  btn.addEventListener('click', () => {
+    App.dispatchEvent(event)
+  })
+  App.appendChild(btn)
+  App.addEventListener('RemoveAll', () => {
+    this.state = ''
+    this.render()
+  })
+
   this.onComplete = (index) => {
     const nextState = [...this.state]
     nextState[index].isCompleted = !nextState[index].isCompleted
@@ -17,8 +30,8 @@ export default function App() {
   }
 
   const todolist = new TodoList(this.state, 'todo-list', this.onComplete)
-  const todoinput = new TodoInput(this.state, 'todo-list', this.onSubmit)
   const todocount = new TodoCount(this.state, 'todo-list')
+  const todoinput = new TodoInput(this.state, 'todo-list', this.onSubmit, event)
 
   this.setState = function (nextState) {
     this.state = nextState

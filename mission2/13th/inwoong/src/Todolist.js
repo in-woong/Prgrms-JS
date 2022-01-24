@@ -6,7 +6,7 @@ export default function TodoList(data, $target, onComplete) {
     throw new Error('Please use constructor function')
   }
 
-  validData(data)
+  // validData(data)
   this.data = data
 
   const h2 = document.querySelector(`#${$target}`)
@@ -21,19 +21,20 @@ export default function TodoList(data, $target, onComplete) {
   h2.appendChild(ul)
 
   this.render = function () {
-    console.log('render')
-    ul.innerHTML = this.data
-      .map(
-        ({ text, isCompleted }, index) =>
-          `<li data-index="${index}">${
-            isCompleted ? `<s>${text}</s>` : text
-          }</li>`
-      )
-      .join('')
+    ul.innerHTML =
+      this.data &&
+      this.data
+        .map(
+          ({ text, isCompleted }, index) =>
+            `<li data-index="${index}">${
+              isCompleted ? `<s>${text}</s>` : text
+            }</li>`
+        )
+        .join('')
   }
 
   this.setState = function (newData) {
-    validData(newData)
+    // validData(newData)
     this.data = newData
     this.render()
   }

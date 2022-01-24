@@ -7,14 +7,15 @@ export default function TodoCount(data, $target) {
 
   this.render = () => {
     this.count = 0
-    this.data.forEach((item) => {
-      if (!item.isCompleted) {
-        this.count += 1
-      }
-    })
+    this.data &&
+      this.data.forEach((item) => {
+        if (!item.isCompleted) {
+          this.count += 1
+        }
+      })
     div.innerHTML = `<span>Todo : ${this.count}</span>`
   }
-  
+
   this.setState = (newData) => {
     this.data = newData
     this.render()

@@ -1,4 +1,4 @@
-export default function TodoInput(data, $target, onSubmit) {
+export default function TodoInput(data, $target, onSubmit, event) {
   this.data = data
   this.$target = $target
   const h2 = document.querySelector(`#${$target}`)
@@ -9,6 +9,7 @@ export default function TodoInput(data, $target, onSubmit) {
     $input.value && onSubmit($input.value)
     form.reset()
   })
+
   h2.prepend(form)
 
   this.render = () => {
