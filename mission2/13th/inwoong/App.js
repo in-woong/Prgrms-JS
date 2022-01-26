@@ -8,7 +8,6 @@ const DB = new Storage()
 
 export default function App() {
   // this.state = DataRepository.data
-
   this.state = [DB.getItem()][0]
   const event = new CustomEvent('RemoveAll')
   const App = document.querySelector('.App')
@@ -19,7 +18,7 @@ export default function App() {
   })
   App.appendChild(btn)
   App.addEventListener('RemoveAll', () => {
-    this.state = ''
+    this.state = []
     DB.clear()
     this.render()
   })

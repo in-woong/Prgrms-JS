@@ -1,46 +1,25 @@
-export default function TodoList({
-  $target,
-  initialState,
-  onTodoClick,
-  onTodoRemove,
-}) {
-  // initialState에 대한 검증
+export default function TodoList({ $target, initialData }) {
+  this.$target = $target
+  this.state = initialData
+  this.$list = document.createElement('ul')
+  this.$list.addEventListener('click', (e) => {
+    console.log(e.target.dataset.index)
+  })
+  $target.appendChild(this.$list)
 
-  this.$todoList = document.createElement('ul')
-
-  $target.appendChild(this.$todoList)
-
-  this.state = initialState
-
-  this.render = function () {
-    if (Array.isArray(this.state)) {
-      this.$todoList.innerHTML = this.state
-        .map(
-          ({ text, isCompleted }, index) =>
-            `<li data-index="${index}">${
-              isCompleted ? `<s>${text}</s>` : text
-            } <button>x</button></li>`
-        )
-        .join('')
-    }
+  this.render = () => {
+    this.$list.innerHTML = this.state
+      .map((item, index) => {
+        return item.isCompleted
+          ? `<li data-index=${index}><s>${item.text}</s></li>`
+          : `<li data-index=${index}>${item.text}</li>`
+      })
+      .join('')
   }
-
-  this.setState = (nextState) => {
-    // nextState에 대한 검증
-    this.state = nextState
+  this.setState = (newData) => {
+    console.log(newData)
+    this.state = [...newData, ...this.state]
     this.render()
   }
-
-  this.$todoList.addEventListener('click', (e) => {
-    const $li = e.target.closest('li')
-    const index = Number($li.dataset.index)
-
-    if (e.target.tagName === 'LI') {
-      onTodoClick(index)
-    } else if (e.target.tagName === 'BUTTON') {
-      onTodoRemove(index)
-    }
-  })
-
   this.render()
 }
