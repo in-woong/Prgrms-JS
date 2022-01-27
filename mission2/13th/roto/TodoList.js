@@ -1,24 +1,39 @@
-export default function TodoList({ $target, initialData }) {
+export default function TodoList({
+  $target,
+  initialData,
+  onTodoClick,
+  onTodoRemove,
+}) {
   this.$target = $target
   this.state = initialData
-  this.$list = document.createElement('ul')
-  this.$list.addEventListener('click', (e) => {
-    console.log(e.target.dataset.index)
+  this.$todolist = document.createElement('ul')
+  $target.appendChild(this.$todolist)
+
+  this.$todolist.addEventListener('click', (e) => {
+    const $list = e.target.closest('li')
+    const index = parseInt($list.dataset.index)
+
+    if (e.target.tagName == 'BUTTON') {
+      onTodoRemove(index)
+    } else {
+      onTodoClick(index)
+    }
+    this.render()
   })
-  $target.appendChild(this.$list)
 
   this.render = () => {
-    this.$list.innerHTML = this.state
+    this.$todolist.innerHTML = this.state
       .map((item, index) => {
-        return item.isCompleted
-          ? `<li data-index=${index}><s>${item.text}</s></li>`
-          : `<li data-index=${index}>${item.text}</li>`
+        return `<li data-index=${index}> ${
+          item.isCompleted ? `<s>${item.text}</s>` : item.text
+        }<button>X</button></li>`
       })
       .join('')
   }
+
   this.setState = (newData) => {
-    console.log(newData)
-    this.state = [...newData, ...this.state]
+    this.state = newData
+    console.log(this.state)
     this.render()
   }
   this.render()

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import storage from './storage.js'
 import TodoList from './TodoList.js'
 import TodoInput from './TodoInput.js'
@@ -7,26 +6,51 @@ import TodoCount from './TodoCount.js'
 const TODOS_STORAGE_KEY = 'todos'
 
 export default function App({ $target }) {
+  this.data = [
+    { id: 1, text: 'JS 공부하기', isCompleted: false },
+    { id: 2, text: 'JS 복습하기', isCompleted: false },
+  ]
   this.$target = $target
 
-  this.state = storage.getItem(TODOS_STORAGE_KEY, [])
-
-  const todoInput = new TodoInput({
-    $target,
-    onAddTodo: (text) => {
-      this.setState([
-        ...this.state,
-        {
-          text,
-          isCompleted: false,
-        },
-      ])
-    },
+  window.addEventListener('RemoveAll', () => {
+    const newData = []
+    this.setState(newData)
   })
 
-  window.addEventListener('removeAll', () => {
-    this.setState([])
-  })
+  this.render = () => {
+    this.todoinput = new TodoInput({
+      $target,
+      onAddTodo: ($input) => {
+        this.setState([
+          {
+            id: Date.now().toString(),
+            text: $input.value,
+            isCompleted: false,
+          },
+          ...this.data,
+        ])
+      },
+    })
+    this.todolist = new TodoList({
+      $target,
+      initialData: this.data,
+      onTodoClick: (index) => {
+        const newData = [...this.data]
+        newData[index].isCompleted = !this.data[index].isCompleted
+        this.setState(newData)
+      },
+      onTodoRemove: (index) => {
+        const newData = this.data.filter((_, i) => i != index)
+        this.setState(newData)
+      },
+    })
+    this.todocount = new TodoCount()
+  }
+  this.setState = (newData) => {
+    this.data = newData
+    this.todolist.setState(newData)
+    // this.todoCount.setState(newData)
+  }
 
   const todoList = new TodoList({
     $target,
