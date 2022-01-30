@@ -22,6 +22,7 @@ export default function TodoList({
   })
 
   this.render = () => {
+    console.log('TodoList Render')
     this.$todolist.innerHTML = this.state
       .map((item, index) => {
         return `<li data-index=${index}> ${
@@ -32,8 +33,8 @@ export default function TodoList({
   }
 
   this.setState = (newData) => {
+    console.log('TodoList SetState')
     this.state = newData
-    console.log(this.state)
     this.render()
   }
   this.render()

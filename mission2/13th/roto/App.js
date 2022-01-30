@@ -1,15 +1,14 @@
 import storage from './storage.js'
-import TodoList from './TodoList.js'
+import TodoCount from './TodoCount.js'
 import TodoInput from './TodoInput.js'
 import TodoCount from './TodoCount.js'
 
 const TODOS_STORAGE_KEY = 'todos'
 
+const TODOLIST = 'todo'
+
 export default function App({ $target }) {
-  this.data = [
-    { id: 1, text: 'JS 공부하기', isCompleted: false },
-    { id: 2, text: 'JS 복습하기', isCompleted: false },
-  ]
+  this.data = storage.getItem(TODOLIST, [])
   this.$target = $target
 
   window.addEventListener('RemoveAll', () => {
@@ -44,12 +43,23 @@ export default function App({ $target }) {
         this.setState(newData)
       },
     })
-    this.todocount = new TodoCount()
+    this.todoCount = new TodoCount({
+      $target,
+      initialData: {
+        totalCount: this.data,
+        completedCount: this.data.filter((item) => item.isCompleted).length,
+      },
+    })
   }
   this.setState = (newData) => {
+    storage.setItem(TODOLIST, newData)
+    console.log(storage.getItem(TODOLIST, []))
     this.data = newData
     this.todolist.setState(newData)
-    // this.todoCount.setState(newData)
+    this.todoCount.setState({
+      totalCount: newData,
+      completedCount: newData.filter((item) => item.isCompleted).length,
+    })
   }
 
   const todoList = new TodoList({

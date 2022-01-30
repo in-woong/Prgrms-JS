@@ -1,31 +1,22 @@
-import { dispatchRemoveAllEvent } from './customEvent.js'
-
-export default function TodoCount({ $target, initialState }) {
-  this.$todoCount = document.createElement('div')
-  $target.appendChild(this.$todoCount)
-  this.state = initialState
+export default function TodoCount({ $target, initialData }) {
+  this.state = initialData
+  this.$count = document.createElement('div')
+  $target.appendChild(this.$count)
 
   this.render = () => {
+    console.log('ToDoCount Render')
     const { totalCount, completedCount } = this.state
-
-    this.$todoCount.innerHTML = `
-      <div>
-        <span>Total: ${totalCount}</span>
-        </span>Completed: ${completedCount}</span>
-        <button>remove all</button>
-      </div>`
+    this.$count.innerHTML = `
+      <span>TotalCount : ${totalCount.length}</span>
+      <span>CompletedCount : ${completedCount}</span>
+    `
   }
 
-  this.setState = (nextState) => {
-    this.state = nextState
+  this.setState = (newData) => {
+    console.log('ToDoCount SetState')
+    this.state = newData
     this.render()
   }
-
-  this.$todoCount.addEventListener('click', (e) => {
-    if (e.target.tagName === 'BUTTON') {
-      dispatchRemoveAllEvent()
-    }
-  })
 
   this.render()
 }

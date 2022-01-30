@@ -17,6 +17,7 @@ export default function TodoInput({ $target, onAddTodo }) {
   this.$button.addEventListener('click', RemoveAll)
 
   this.render = () => {
+    console.log("TodoInput Render")
     this.$form.innerHTML = `
       <input type="text" placeholder="입력하세요"/>
       <input type="submit" value="SUBMIT"/>
