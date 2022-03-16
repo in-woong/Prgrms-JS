@@ -3,8 +3,15 @@
 - [학습 참고 공간 10기](https://school.programmers.co.kr/courses/11203)
 - [학습 참고 공간 11기](https://school.programmers.co.kr/courses/11708)
 - [학습 참고 공간 12기](https://school.programmers.co.kr/app/courses/12816)
+- [학습 참고 공간 13기](https://school.programmers.co.kr/app/courses/13208)
+- [학습 참고 공간 14기](https://school.programmers.co.kr/app/courses/13544)
 
 
+### 14기
+- 2022-03-16(수) ~ 04-13(수) 총 4주
+
+### 13기
+- 2022-01-12(수) ~ 02-16(수) 총 4주
 
 ### 12기
 - 2021-10-13(수) ~ 11-10(수) 총 4주
