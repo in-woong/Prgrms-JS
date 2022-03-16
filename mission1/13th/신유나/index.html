@@ -1,0 +1,146 @@
+<html lang="ko">
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #f3f3f4;
+      }
+      p {
+        margin: 0;
+      }
+      #schedule-wrapper {
+        display: flex;
+        gap: 20px;
+        padding: 20px;
+      }
+      #schedule-wrapper > div {
+        flex: 1;
+      }
+      .list__items {
+        min-height: 55px;
+        padding: 10px;
+        margin-bottom: 20px;
+        border-radius: 10px;
+        background-color: #fff;
+      }
+      .list__items > .list__item {
+        padding: 15px;
+        border-radius: 10px;
+      }
+      .list__items > .list__item + .list__item {
+        margin-top: 10px;
+      }
+      #todo-list > .list__items > .list__item {
+        color: #0d0c22;
+        background-color: #f3f3f4;
+      }
+      #in-progress-list > .list__items > .list__item {
+        color: #ff7800;
+        background-color: #ffe1d0;
+      }
+      #done-list > .list__items > .list__item {
+        color: #0052cc;
+        background-color: #e0edfe;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="schedule-wrapper">
+      <div id="todo-list"></div>
+      <div id="in-progress-list"></div>
+      <div id="done-list"></div>
+    </div>
+
+    <script>
+      const todo = [
+        { text: 'JS 공부하기', isCompleted: false },
+        { text: 'JS 복습하기', isCompleted: false },
+      ]
+      const inProgress = [{ text: '보너스 미션하기 ⭐', isCompleted: false }]
+      const done = [
+        { text: '필수 미션하기', isCompleted: true },
+        { text: '피드백 받기', isCompleted: true },
+      ]
+      const ERR_MSG = {
+        NO_DATA: '데이터가 존재하지 않습니다.',
+        NO_ELEMENT: '엘리먼트가 존재하지 않습니다.',
+        INVAILD_DATA: '데이터 형식이 올바르지 않습니다.',
+      }
+
+      // 이곳에서 코딩을 시작하세요!
+
+      class TodoList {
+        $state
+        constructor($target, todos) {
+          this.$target = this.verifyTarget($target)
+          this.$state = todos
+          this.render()
+        }
+
+        template() {
+          return `<div class="list__items">
+            ${
+              this.$state
+                ? this.$state
+                    .map((todo) =>
+                      todo.isCompleted
+                        ? `<div class='list__item'><p class='list__item__text'><s>${todo.text}</s></p></div>`
+                        : `<div class='list__item'><p class='list__item__text'>${todo.text}</p></div>`
+                    )
+                    .join('')
+                : `<div class='list__item'><p class='list__item__text'>No Data</p></div>`
+            }
+          </div>`
+        }
+
+        verifyData(data) {
+          if (!data) {
+            throw new Error(ERR_MSG.NO_DATA)
+          }
+          if (!Array.isArray(data)) {
+            throw new Error(ERR_MSG.INVAILD_DATA)
+          }
+          data.forEach((data) => {
+            if ('text' in data && 'isCompleted' in data) {
+              if (
+                typeof data.text === 'string' &&
+                typeof data.isCompleted === 'boolean'
+              ) {
+                return data
+              }
+            }
+            throw new Error(ERR_MSG.INVAILD_DATA)
+          })
+          return data
+        }
+
+        verifyTarget($target) {
+          if ($target === document.body || !document.body.contains($target)) {
+            throw new Error(ERR_MSG.NO_ELEMENT)
+          }
+          return $target
+        }
+
+        setState(newState) {
+          this.$state = this.verifyData(newState)
+          this.render()
+        }
+
+        render() {
+          this.$target.innerHTML = this.template()
+        }
+      }
+
+      const todoList = new TodoList(document.getElementById('todo-list'), todo)
+      const inProgressList = new TodoList(
+        document.getElementById('in-progress-list'),
+        inProgress
+      )
+      const doneList = new TodoList(document.getElementById('done-list'), done)
+      doneList.setState([...done, { text: '미션1', isCompleted: true }])
+    </script>
+  </body>
+</html>
