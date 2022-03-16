@@ -1,31 +1,27 @@
-import { dispatchRemoveAllEvent } from './customEvent.js'
+import { RemoveAll } from "./customEvent.js"
 
 export default function TodoInput({ $target, onAddTodo }) {
-  this.$todoInput = document.createElement('div')
-  this.$removeAllButton = document.createElement('button')
-  this.$removeAllButton.innerText = 'Remove All'
+  this.$target = $target
+  this.$form = document.createElement('form')
+  this.$button = document.createElement('button')
+  this.$button.innerText = 'RemoveAll'
+  $target.append(this.$form, this.$button)
 
-  $target.appendChild(this.$todoInput)
-  $target.appendChild(this.$removeAllButton)
+  this.$form.addEventListener('submit', (e) => {
+    e.preventDefault()
+    this.$input = this.$target.querySelector('input')
+    onAddTodo(this.$input)
+    this.$input.value = ''
+  })
+
+  this.$button.addEventListener('click', RemoveAll)
 
   this.render = () => {
-    this.$todoInput.innerHTML = `
-      <form>
-        <input type="text" placeholder="할 일을 입력해주세요"><button>입력하기</button>
-      </form>`
+    console.log("TodoInput Render")
+    this.$form.innerHTML = `
+      <input type="text" placeholder="입력하세요"/>
+      <input type="submit" value="SUBMIT"/>
+    `
   }
-
-  this.$todoInput.addEventListener('submit', (e) => {
-    e.preventDefault()
-    const $input = this.$todoInput.querySelector('input')
-    console.log($input)
-    onAddTodo($input.value)
-    $input.value = ''
-  })
-
-  this.$removeAllButton.addEventListener('click', (e) => {
-    dispatchRemoveAllEvent()
-  })
-
   this.render()
 }

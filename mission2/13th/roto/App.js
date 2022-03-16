@@ -1,31 +1,66 @@
 import storage from './storage.js'
-import TodoList from './TodoList.js'
+import TodoCount from './TodoCount.js'
 import TodoInput from './TodoInput.js'
 import TodoCount from './TodoCount.js'
 
 const TODOS_STORAGE_KEY = 'todos'
 
+const TODOLIST = 'todo'
+
 export default function App({ $target }) {
+  this.data = storage.getItem(TODOLIST, [])
   this.$target = $target
 
-  this.state = storage.getItem(TODOS_STORAGE_KEY, [])
-
-  const todoInput = new TodoInput({
-    $target,
-    onAddTodo: (text) => {
-      this.setState([
-        ...this.state,
-        {
-          text,
-          isCompleted: false,
-        },
-      ])
-    },
+  window.addEventListener('RemoveAll', () => {
+    const newData = []
+    this.setState(newData)
   })
 
-  window.addEventListener('removeAll', () => {
-    this.setState([])
-  })
+  this.render = () => {
+    this.todoinput = new TodoInput({
+      $target,
+      onAddTodo: ($input) => {
+        this.setState([
+          {
+            id: Date.now().toString(),
+            text: $input.value,
+            isCompleted: false,
+          },
+          ...this.data,
+        ])
+      },
+    })
+    this.todolist = new TodoList({
+      $target,
+      initialData: this.data,
+      onTodoClick: (index) => {
+        const newData = [...this.data]
+        newData[index].isCompleted = !this.data[index].isCompleted
+        this.setState(newData)
+      },
+      onTodoRemove: (index) => {
+        const newData = this.data.filter((_, i) => i != index)
+        this.setState(newData)
+      },
+    })
+    this.todoCount = new TodoCount({
+      $target,
+      initialData: {
+        totalCount: this.data,
+        completedCount: this.data.filter((item) => item.isCompleted).length,
+      },
+    })
+  }
+  this.setState = (newData) => {
+    storage.setItem(TODOLIST, newData)
+    console.log(storage.getItem(TODOLIST, []))
+    this.data = newData
+    this.todolist.setState(newData)
+    this.todoCount.setState({
+      totalCount: newData,
+      completedCount: newData.filter((item) => item.isCompleted).length,
+    })
+  }
 
   const todoList = new TodoList({
     $target,

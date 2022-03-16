@@ -9,11 +9,9 @@ const storage = {
   getItem: (key, defaultValue) => {
     try {
       const storedValue = localStorage.getItem(key)
-
       if (storedValue) {
         return JSON.parse(storedValue)
       }
-
       return defaultValue
     } catch (e) {
       return defaultValue
