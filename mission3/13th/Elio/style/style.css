@@ -1,0 +1,10 @@
+.search-results {
+  list-style: none;
+}
+.search-history {
+  display: inline-block;
+  margin: 8px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
