@@ -1,0 +1,31 @@
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.draggable {
+  cursor: move;
+  font-size: 30px;
+  background: hsl(0, 0%, 74%);
+}
+
+.container {
+  display: flex;
+}
+
+.complete-container {
+  height: 600px;
+  width: 400px;
+  border: 1px solid red;
+}
+
+.not-complete-container {
+  height: 600px;
+  width: 400px;
+  border: 1px solid red;
+}
+
+.draggable.dragging {
+  opacity: 0.5;
+}
