@@ -1,0 +1,18 @@
+{
+  "CREATE": {
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  },
+  "READ": {},
+  "UPDATE": {
+    "method": "PUT",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  },
+  "DELETE": {
+    "method": "DELETE"
+  }
+}

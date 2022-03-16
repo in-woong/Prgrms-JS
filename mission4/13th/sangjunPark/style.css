@@ -1,0 +1,42 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 10px;
+}
+
+#todo-list {
+  display: flex;
+  gap: 30px;
+
+  margin: 0 auto;
+  padding: 30px;
+  background-color: aquamarine;
+  height: auto;
+  width: 100%;
+}
+
+#todo-list div {
+  height: 100%;
+}
+
+#todo-list-input {
+  display: block;
+  margin: 30px auto;
+  width: 100%;
+}
+
+#completed-todo-list {
+  display: block;
+  height: 100%;
+  background-color: orange;
+}
+
+#not-completed-todo-list {
+  display: block;
+  height: 100%;
+  background-color: mintcream;
+}
