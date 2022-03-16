@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mission2</title>
+  </head>
+  <body>
+    <h1>할 일 목록</h1>
+    <hr />
+    <form class="todo-form">
+      <input
+        type="text"
+        name="todo"
+        required
+        placeholder="할 일을 입력해 주세요."
+      />
+      <button>등록</button>
+    </form>
+    <br />
+    <div id="todo-list"></div>
+
+    <script>
+      const data = [
+        {
+          id: '1',
+          text: '복습하기', // 할 일 이름
+          isCompleted: false, // 완료 여부
+        },
+        {
+          id: '2',
+          text: '미션 수행하기', // 할 일 이름
+          isCompleted: false, // 완료 여부
+        },
+      ]
+
+      function validateTarget($target) {
+        if (!$target) {
+          throw new Error('해당 id에 대한 element가 없습니다.')
+        }
+
+        if (!($target instanceof Element)) {
+          throw new Error('target 파라미터는 Dom Element 여야 합니다.')
+        }
+      }
+
+      function validateState(state) {
+        if (!state) {
+          throw new Error('data를 입력해주세요.')
+        }
+
+        if (!Array.isArray(state)) {
+          throw new Error('입력 값은 배열이어야 합니다.')
+        }
+
+        state.forEach(({ text, isCompleted }) => {
+          if (!text) {
+            throw new Error('text가 없습니다.')
+          }
+
+          if (!('' + isCompleted)) {
+            throw new Error('isCompleted가 없습니다.')
+          }
+        })
+      }
+
+      function TodoList({ initialState, $target }) {
+        try {
+          if (!new.target) {
+            throw new Error('new 연산자를 사용해 호출해주세요.')
+          }
+
+          validateTarget($target)
+
+          validateState(initialState)
+        } catch (error) {
+          console.error(error)
+        }
+
+        this.state = initialState
+
+        this.render = () => {
+          $target.innerHTML = `
+            <ul>
+              ${this.state
+                .map((todo) => {
+                  return `
+                <li data-id=${todo.id}>
+                  <span>
+                    ${
+                      todo.isCompleted
+                        ? '<span class="item-checkbox">✅</span>'
+                        : '<span class="item-checkbox">⬜</span>'
+                    }
+                    <span class="list-item">
+                      ${todo.text}
+                    </span>
+                  </span>
+                  <button class="delete-button">
+                    삭제
+                  </button>
+                </li>
+              `
+                })
+                .join('')}
+            </ul>
+          `
+        }
+
+        this.setState = (nextState) => {
+          validateState(nextState)
+
+          this.state = nextState
+
+          this.render()
+        }
+
+        this.render()
+      }
+
+      const todoList = new TodoList({
+        initialState: data,
+        $target: document.querySelector('#todo-list'),
+      })
+
+      document
+        .querySelector('.todo-form')
+        .addEventListener('submit', (event) => {
+          event.preventDefault()
+
+          const $input = event.target.querySelector('input[name=todo]')
+
+          todoList.setState([
+            ...todoList.state,
+            {
+              id: '' + Date.now(),
+              text: $input.value,
+              isCompleted: false,
+            },
+          ])
+
+          $input.value = ''
+        })
+
+      document
+        .querySelector('#todo-list')
+        .addEventListener('click', ({ target }) => {
+          const isDeleteButton = target.classList.contains('delete-button')
+          const isListItem = target.classList.contains('item-checkbox')
+          const targetId = target.closest('[data-id]').dataset.id
+
+          if (isDeleteButton) {
+            todoList.setState(
+              todoList.state.filter(({ id }) => id !== targetId)
+            )
+          }
+
+          if (isListItem) {
+            const index = todoList.state.findIndex(({ id }) => id === targetId)
+
+            const newTodoList = [...todoList.state]
+
+            newTodoList[index] = {
+              ...newTodoList[index],
+              isCompleted: !newTodoList[index].isCompleted,
+            }
+
+            todoList.setState(newTodoList)
+          }
+        })
+    </script>
+  </body>
+</html>
