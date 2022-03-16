@@ -1,0 +1,105 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list"></div>
+  <div id="todo-list-custom1"></div>
+  <div id="todo-list-custom2"></div>
+
+  <script>
+    const checkObjectKey = (data) =>
+      data.every((value) =>
+        value?.hasOwnProperty('text') && value?.hasOwnProperty('isCompleted'))
+
+    const checkDataValidation = (data) => {
+      switch (true) {
+        case !data:
+        case data?.length < 1:
+        case !Array.isArray(data):
+        case !checkObjectKey(data):
+          return false;
+        default: return true;
+      }
+    }
+  </script>
+  <script>
+    const data = [
+      {
+        text: 'JS 공부하기',
+        isCompleted: true
+      },
+      {
+        text: 'JS 복습하기',
+        isCompleted: false
+      }
+    ];
+    const customData1 = [
+      {
+        text: 'TS 공부하기',
+        isCompleted: false
+      },
+      {
+        text: 'TS 복습하기',
+        isCompleted: true,
+      }
+    ]
+    const customData2 = [
+      {
+        text: '면접 준비하기',
+        isCompleted: false,
+      },
+      {
+        text: '과제 열심히하기',
+        isCompleted: false,
+      }
+    ]
+
+    function ToDoList(_data, $element) {
+      if (!new.target) throw new Error('Using new Keword!')
+      if (!checkDataValidation(_data)) throw new Error('Data Invalid!')
+      if (!$element) throw new Error('Element Invalid!')
+
+      this._data = _data;
+
+      this.setState = (nextData = []) => {
+        if (!checkDataValidation(nextData)) throw new Error('Data Invalid!')
+        this._data = nextData;
+        this.render();
+      }
+
+      this.render = () => {
+        const _list = this._data.map((row) => {
+          const { text = "", isCompleted } = row;
+
+          if (isCompleted) return `<li><s>${text}</s></li>`;
+          return `<li>${text}</li>`
+        });
+        $element.innerHTML = `<ul>${_list.join('')}</ul>`;
+      }
+      this.render();
+    }
+
+    const renderList = [
+      { element: document.getElementById('todo-list'), data },
+      { element: document.getElementById('todo-list-custom1'), data: customData1 },
+      { element: document.getElementById('todo-list-custom2'), data: customData2 }
+    ];
+    renderList.forEach((value, index) => {
+      const { element, data } = value;
+      const todoList = new ToDoList(data, element);
+
+      //세개의 ToDoList 컴포넌트의 setState를 랜덤으로 실행하기 위한 코드
+      setTimeout(() => {
+        todoList.setState([{ text: `데이터 변경 ${index}`, isCompleted: false, }])
+      }, ((Math.floor(Math.random() * 7)) + 1) * 1000
+      );
+    })
+
+  </script>
+</body>
+
+</html>
