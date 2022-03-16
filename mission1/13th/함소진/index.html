@@ -1,0 +1,101 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list"></div>
+  <div id="today-list"></div>
+  <div id="tomorrow-list"></div>
+  <script>
+    const data = [
+      {
+        text: 'JS 공부하기',
+        isComplated: true
+      },
+      {
+        text: 'JS 복습하기',
+        isComplated: false
+      }
+    ];
+
+    const data2 = [
+      {
+        text: '미션 수행하기',
+        isComplated: true
+      },
+      {
+        text: '미션 커밋하기',
+        isComplated: false
+      }
+    ];
+
+    const data3 = [
+      {
+        text: '미션1 끝내기',
+        isComplated: false
+      },
+      {
+        text: '미션1 복습하기',
+        isComplated: true
+      }
+    ];
+
+
+    function TodoList(data, elementId){
+
+        // Error
+        if(!new.target){
+            throw new Error("new 키워드를 사용해야 합니다.");
+        }
+        if(!Array.isArray(data) || !data.length ){
+            throw new Error("데이터 타입이 Array가 아니거나 비어있습니다.");
+        }
+        
+        data.forEach(el => {
+            if(typeof el !== "object"){
+                throw new Error("데이터 타입이 Object가 아닙니다.");
+            }
+            if(!el.hasOwnProperty("text") || !el.hasOwnProperty("isComplated")) {
+                throw new Error("Object에 지정한 것과 다른 property가 있습니다.");
+            }
+            if(Object.values(el).some(value => value === null || value === '')){
+                throw new Error("Object에 비어있는 value가 있습니다.");
+            }       
+        });
+
+        this.data = data;
+        this.elementId = elementId;
+        this.setState = function(nextData){
+            this.data = nextData;
+            render();
+        }
+
+
+        const render = () => {
+            document.getElementById(elementId).innerHTML = this.data.map((todo) => {
+                if(todo.isComplated){
+                    return `<s> ${todo.text}</s>`;
+                } else {
+                    return `<div>${todo.text}</div>`;
+                }
+                
+            }).join('');
+                
+        };
+        render();
+
+    }
+
+	const todoList = new TodoList(data, "todo-list");
+	const todoList2 = new TodoList(data2, "today-list");
+	const todoList3 = new TodoList(data3, "tomorrow-list");
+    
+
+    todoList.setState(data2);
+
+  </script>
+</body>
+</html>
