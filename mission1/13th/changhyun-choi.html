@@ -1,0 +1,138 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list"></div>
+    <div id="home-todo-list"></div>
+    <div id="work-todo-list"></div>
+    <script>
+      const todoListData = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false
+        }
+      ]
+
+      const homeTodoListData = [
+        {
+          text: '이번달 물 사기',
+          isCompleted: false
+        },
+        {
+          text: 'KTX 예매하기',
+          isCompleted: true
+        }
+      ]
+
+      const workToDoListData = [
+        {
+          text: '휴가 신청',
+          isCompleted: false
+        },
+        {
+          text: '1차 개발 진행',
+          isCompleted: false
+        }
+      ]
+
+      function checkIdValidation(id) {
+        try {
+          if (typeof id !== 'string' || !(id.trim())) {
+            throw new Error("올바른 파라메터가 아닙니다.: {id}")  
+          }
+        } catch (error) {
+          console.error(error.message)
+        }
+      }
+
+      function checkDataValidation(data) {
+        try {
+          if ( !Array.isArray(data) ) {
+            throw new Error("Array가 아닙니다.")  
+          }
+
+          data.forEach(item => {
+            if (typeof item.text !== 'string' ) {
+              throw new SyntaxError("올바른 파라메터가 아닙니다.: {text}");
+            }
+            
+            if (typeof item.isCompleted !== "boolean") {
+              throw new SyntaxError("올바른 파라메터가 아닙니다.: {isCompleted}");
+            }
+          })
+
+        } catch (error) {
+          console.error(error.message)
+        }
+        
+        
+      }
+
+      function TodoList ({targetId='', data=[]}) {
+        if (!new.target) {
+          throw new Error("new 키워드 안 붙이고 함수 실행")
+        }
+        
+        checkIdValidation(targetId)
+
+        checkDataValidation(data)
+
+        if (!targetId || !data?.length) {
+          throw new Error("올바른 파라메터가 아닙니다.")
+        } 
+
+        this.data = data;
+        this.target = document.getElementById(targetId)
+        
+        function createElement(data) {
+          return data.map(({text, isCompleted}) => {
+            if (!text) {
+              return;
+            }
+            
+              return `<li>${isCompleted ? '<s>' : ''}${text}</li>`
+            }
+          ).join('');
+        }
+
+        this.setState = function(nextData) {
+          checkDataValidation(nextData)
+
+          this.data = nextData;
+          this.render()
+        }
+
+        this.render = function () {
+            const element = createElement(this.data)
+            
+            this.target.innerHTML = `<ul>${element}</ul>`
+        }
+        
+        this.render()
+      }
+
+      
+      const todoList = new TodoList({targetId: "todo-list", data: todoListData});
+      const homeToDoList = new TodoList({targetId: "home-todo-list", data: homeTodoListData});
+      const workToDoList = new TodoList({targetId: "work-todo-list", data: workToDoListData});
+
+      todoList.setState(
+        [
+          {
+            text: '미션 수행하기',
+            isCompleted: true
+          }
+        ]
+      )
+      
+
+    </script>
+  </body>
+</html>
