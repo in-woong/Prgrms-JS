@@ -1,0 +1,9 @@
+html {
+  font-size: 18px;
+}
+#todo__list li {
+  font-size: 1rem;
+}
+#todo__list .todo.done {
+  text-decoration: line-through red 4px;
+}
