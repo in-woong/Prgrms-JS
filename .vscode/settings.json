@@ -1,9 +1,8 @@
 {
   "liveServer.settings.port": 5501,
-  "prettier.endOfLine": "auto"
-  "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "prettier.endOfLine": "auto",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 }
-
