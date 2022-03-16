@@ -3,15 +3,15 @@ import TodoInput from './TodoInput.js'
 import TodoList from './TodoList.js'
 import TodoCount from './TodoCount.js'
 
-export default function App({ $target }){
+export default function App({ $target }) {
   this.state = storage.getItem('todos', [])
-  
-  this.setState = nextState => {
+
+  this.setState = (nextState) => {
     this.state = nextState
     todoList.setState(this.state)
     todoCount.setState({
       totalCount: this.state.length,
-      completedCount: this.state.filter(todo => todo.isCompleted).length
+      completedCount: this.state.filter((todo) => todo.isCompleted).length,
     })
 
     storage.setItem('todos', this.state)
@@ -24,10 +24,10 @@ export default function App({ $target }){
         ...this.state,
         {
           text,
-          isCompleted: false
-        }
+          isCompleted: false,
+        },
       ])
-    }
+    },
   })
 
   const todoList = new TodoList({
@@ -42,12 +42,15 @@ export default function App({ $target }){
       const nextState = [...this.state]
       nextState.splice(index, 1)
       this.setState(nextState)
-    }
+    },
   })
-  const todoCount = new TodoCount({ $target, initialState: {
-    totalCount: this.state.length,
-    completedCount: this.state.filter(todo => todo.isCompleted).length
-  }})
+  const todoCount = new TodoCount({
+    $target,
+    initialState: {
+      totalCount: this.state.length,
+      completedCount: this.state.filter((todo) => todo.isCompleted).length,
+    },
+  })
 
   window.addEventListener('remove-all-todos', () => {
     this.setState([])
