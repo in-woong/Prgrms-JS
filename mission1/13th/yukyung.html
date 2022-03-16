@@ -1,0 +1,123 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <ul id="todo-list_1"></ul>
+    <ul id="todo-list_2"></ul>
+    <ul id="todo-list_3"></ul>
+
+    <script>
+      const todoData1 = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false,
+        },
+      ]
+
+      const todoData2 = [
+        {
+          text: '영어숙제하기',
+          isCompleted: true,
+        },
+        {
+          text: '숨쉬기',
+          isCompleted: true,
+        },
+      ]
+
+      const todoData3 = [
+        {
+          text: '잠잘자기',
+          isCompleted: false,
+        },
+        {
+          text: '샐러드먹기',
+          isCompleted: false,
+        },
+      ]
+
+      const newTodoData = [
+        ...todoData3,
+        {
+          text: '칼퇴하기',
+          isCompleted: true,
+        },
+        {
+          text: 'Day1 영어단어 외우기',
+          isCompleted: false,
+        },
+      ]
+
+      const $ = (el) => document.querySelector(el)
+
+      function isValidData(data) {
+        if (!data.text) {
+          throw new Error('할 일을 입력해 주세요.')
+        }
+
+        if (typeof data.text !== 'string') {
+          throw new Error('할 일은 문자만 입력 가능합니다.')
+        }
+
+        if (typeof data.isCompleted !== 'boolean') {
+          throw new Error('할 일 완료의 값은 true/false만 가능합니다.')
+        }
+      }
+
+      function checkDataType(data) {
+        if (!Array.isArray(data)) {
+          throw new Error('유효하지 않은 데이터 타입입니다.')
+        }
+
+        data.every(isValidData)
+      }
+
+      function TodoList(data, target) {
+        if (!new.target) {
+          throw new Error('인스턴스가 생성되지 않았습니다.')
+        }
+        checkDataType(data)
+
+        this.data = data
+        this.target = $(target)
+
+        this.setState = function (nextData) {
+          checkDataType(nextData)
+          this.data = nextData
+          this.render()
+        }
+
+        this.render = function () {
+          this.target.innerHTML = `
+            ${this.data
+              .map((item) =>
+                item.isCompleted
+                  ? `<li><s>${item.text}</s></li>`
+                  : `<li>${item.text}</li>`
+              )
+              .join('')}
+          `
+        }
+      }
+
+      const TODO_PREFIX = '#todo-list'
+
+      const todoList1 = new TodoList(todoData1, `${TODO_PREFIX}_1`)
+      todoList1.render()
+
+      const todoList2 = new TodoList(todoData2, `${TODO_PREFIX}_2`)
+      todoList2.render()
+
+      const todoList3 = new TodoList(todoData3, `${TODO_PREFIX}_3`)
+      todoList3.render()
+      todoList3.setState(newTodoData)
+    </script>
+  </body>
+</html>
