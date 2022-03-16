@@ -1,0 +1,77 @@
+<html lang="ko">
+
+<head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+</head>
+
+<body>
+    <div id="todo-list"></div>
+    <div id="todo-list1"></div>
+    <div id="todo-list2"></div>
+    <script>
+        const data = [
+            {
+                text: '코딩하기',
+                isCompleted: true,
+            },
+            {
+                text: '집안 청소하기',
+                isCompleted: true,
+            },
+        ]
+        const data1 = [
+            ...data,
+            {
+                text: '책 보기',
+                isCompleted: false,
+            },
+        ]
+        const data2 = [
+            ...data,
+            {
+                text: '티비 보기',
+                isCompleted: false,
+            },
+        ]
+
+        const ToDoList = function (todos, id) {
+            if (!new.target) throw new Error('인스턴스 생성시 new를 붙혀주세요.')
+            this.todos = todos
+            this.$todoList = document.querySelector(id);
+            this.setState = function (nextData) {
+                checkArrayType(nextData)
+                this.todos = nextData
+                this.render()
+            }
+
+            this.render = function () {
+                this.$todoList.innerHTML = `<ul>${this.todos
+                    .map((todo) =>
+                        todo.isCompleted === true
+                            ? `<li><s>${todo.text}</s></li>`
+                            : `<li>${todo.text}</li>`
+                    )
+                    .join('')}</ul>`
+            }
+        }
+
+        const checkArrayType = function (data) {
+            if (!Array.isArray(data)) throw new Error('데이터의 타입이 배열이 아닙니다..')
+            if (data.every(({ text }) => typeof text !== "string")) throw new Error('text 값이 존재하지 않습니다.')
+            if (data.every(({ isCompleted }) => typeof isCompleted !== "boolean")) throw new Error('isCompleted 값이 존재하지 않습니다.')
+            if (typeof data.text === "string") throw new Error('text 데이터의 타입이 맞지않습니다.')
+            if (typeof data.isCompleted === "boolean") throw new Error('isCompleted 데이터의 타입이 맞지않습니다.')
+        }
+
+        const todoList = new ToDoList(data, '#todo-list')
+        todoList.render()
+        const todoList1 = new ToDoList(data1, '#todo-list1')
+        todoList1.render()
+        const todoList2 = new ToDoList(data2, '#todo-list2')
+
+        todoList2.setState(data2)
+    </script>
+</body>
+
+</html>
