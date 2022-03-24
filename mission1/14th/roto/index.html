@@ -1,0 +1,96 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <main class="App"></main>
+    <script>
+      const data = [
+        {
+          text: 'JS 공부하기',
+        },
+        {
+          text: 'JS 복습하기',
+        },
+      ];
+
+      function TodoList({ $target, initialState }) {
+        this.state = initialState;
+
+        this.$element = document.createElement('div');
+
+        $target.appendChild(this.$element);
+
+        this.setState = (nextState) => {
+          this.state = nextState;
+          this.render();
+        };
+
+        this.render = () => {
+          this.$element.innerHTML = `<ul>${this.state
+            .map(
+              ({ text, isCompleted }) =>
+                `<li>${isCompleted ? `<s>${text}</s>` : text}</li>`
+            )
+            .join('')}</ul>`;
+        };
+
+        this.render();
+      }
+
+      const $target = document.querySelector('.App');
+      const todoList = new TodoList({
+        $target,
+        initialState: data,
+      });
+
+      const todoList2 = new TodoList({
+        $target,
+        initialState: [
+          {
+            text: 'HTML 공부하기',
+            isCompleted: true,
+          },
+          {
+            text: 'HTML 복습하기',
+            isCompleted: false,
+          },
+        ],
+      });
+
+      const todoList3 = new TodoList({
+        $target,
+        initialState: [
+          {
+            text: 'CSS 공부하기',
+            isCompleted: false,
+          },
+          {
+            text: 'CSS 복습하기',
+            isCompleted: false,
+          },
+        ],
+      });
+      const todoList4 = new TodoList({
+        $target,
+        initialState: [
+          {
+            text: 'TypeScript 공부하기',
+            isCompleted: true,
+          },
+        ],
+      });
+
+      setTimeout(() => {
+        todoList4.setState([
+          {
+            text: 'TypeScript 공부하기',
+            isCompleted: false,
+          },
+        ]);
+      }, 3000);
+    </script>
+  </body>
+</html>
