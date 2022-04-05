@@ -6,34 +6,23 @@
  * 
 */
 
-export default function SearchInput({ $target, initialState }) {
+export default function SearchInput({ $target, onKeyup }) {
     this.$element = document.createElement('input');
-    this.state = initialState;
-
+    this.$element.setAttribute("id", "search-keyword");
+    
     $target.appendChild(this.$element);
 
     this.render = () => {
-
+        // this.$element.setAttribute("id", "search-keyword");
     }
 
-    this.setState = (nextState) => {
+    this.$element.addEventListener('keyup', (e) => {
+        e.preventDefault();
 
-    }
+        if (e.target.value !== null) {
+            onKeyup(e.target);
+        }
+    })
+
+    this.render();
 }
-
-
-;(function () {
-    document
-      .querySelector('#search-keyword')
-      .addEventListener('keyup', function (e) {
-        fetch(`https://jjalbot.com/api/jjals?text=${e.target.value}`)
-          .then((x) => x.json())
-          .then((data) => {
-            console.log(JSON.stringify(data, null, 2))
-            const htmlString = `${data
-              .map((d) => `<img src="${d.imageUrl}">`)
-              .join('')}`
-            document.querySelector('#search-result').innerHTML = htmlString
-          })
-      })
-  })()
