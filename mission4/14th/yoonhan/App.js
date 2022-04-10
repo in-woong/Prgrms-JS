@@ -2,6 +2,7 @@
 
 import TodoList from './components/TodoList.js';
 import errorMessages from './errorMessages.js';
+import { fetchTodoListData } from './api.js';
 
 export default function App($target) {
   // new keyword 동반하여 호출했는지 체크
@@ -15,13 +16,39 @@ export default function App($target) {
   }
 
   this.todoListComponents = [];
+  this.state = {
+    allTodoItems: [],
+    completedTodoItems: [],
+    incompletedTodoItems: [],
+  };
+  this.setState = function (nextState) {
+    this.state = nextState;
+  };
   this.render = function () {
+    this.setTodoListData();
     this.todoListComponents.push(
-      new TodoList($target, [], this.todoListComponents.length)
+      // 완료된 Todo List
+      new TodoList(
+        $target,
+        this.state.completedTodoItems,
+        this.todoListComponents.length
+      )
     );
     this.todoListComponents.push(
-      new TodoList($target, [], this.todoListComponents.length)
+      // 미완료된 Todo List
+      new TodoList(
+        $target,
+        this.state.incompletedTodoItems,
+        this.todoListComponents.length
+      )
     );
+  };
+
+  this.setTodoListData = async function () {
+    const data = await fetchTodoListData();
+    this.allTodoItems = data;
+    this.completedTodoItems = data.map((todoItem) => todoItem.isCompleted);
+    this.incompletedTodoItems = data.map((todoItem) => !todoItem.isCompleted);
   };
 
   this.attachEventHandler = function () {
