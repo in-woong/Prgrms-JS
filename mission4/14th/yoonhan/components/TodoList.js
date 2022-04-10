@@ -4,7 +4,6 @@ import TodoInput from './TodoInput.js';
 import TodoCount from './TodoCount.js';
 import { isValidData } from '../validate.js';
 import errorMessages from '../errorMessages.js';
-import { addTodoItem } from '../api.js';
 
 export default function TodoList($target, data, order) {
   // new keyword 동반하여 호출했는지 체크
@@ -19,10 +18,10 @@ export default function TodoList($target, data, order) {
 
   this.data = data;
   this.order = order;
-  this.todoInputText = '';
   this.keyTypeObject = {
-    text: 'string',
+    content: 'string',
     isCompleted: 'boolean',
+    _id: 'string',
   };
   this.$todoListContainer = document.createElement('div');
   this.$todoList = document.createElement('ul');
@@ -40,7 +39,7 @@ export default function TodoList($target, data, order) {
   // state 세팅 method
   this.setState = function (nextData) {
     if (!isValidData(nextData, this.keyTypeObject)) {
-      throw new Error('[setState error]: 유효한 data 인지 확인해 주세요');
+      throw new Error(errorMessages.VALID_DATA);
     }
     this.data = nextData;
     this.render();
@@ -57,7 +56,7 @@ export default function TodoList($target, data, order) {
             ✔️
             <s>
               <span data-todo-index="${idx}" class="cursor-pointer">
-                ${item.text}
+                ${item.content}
               </span>
             </s>
             <button data-todo-index="${idx}">삭제</button>
@@ -67,7 +66,7 @@ export default function TodoList($target, data, order) {
           return `
           <li>
             <span data-todo-index="${idx}" class="cursor-pointer">
-              ${item.text}
+              ${item.content}
             </span>
             <button data-todo-index="${idx}">삭제</button>
           </li>
@@ -111,10 +110,8 @@ export default function TodoList($target, data, order) {
   };
 
   // 데이터 유효성 체크
-  if (!isValidData(data, this.keyTypeObject)) {
-    throw new Error(
-      '[component data setting error]: 유효한 data 인지 확인해주세요'
-    );
+  if (!isValidData(this.data, this.keyTypeObject)) {
+    throw new Error(errorMessages.VALID_DATA);
   }
 
   // 렌더링

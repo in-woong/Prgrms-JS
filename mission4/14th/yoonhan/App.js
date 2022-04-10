@@ -24,8 +24,8 @@ export default function App($target) {
   this.setState = function (nextState) {
     this.state = nextState;
   };
-  this.render = function () {
-    this.setTodoListData();
+  this.render = async function () {
+    await this.setTodoListData();
     this.todoListComponents.push(
       // 완료된 Todo List
       new TodoList(
@@ -46,9 +46,9 @@ export default function App($target) {
 
   this.setTodoListData = async function () {
     const data = await fetchTodoListData();
-    this.allTodoItems = data;
-    this.completedTodoItems = data.map((todoItem) => todoItem.isCompleted);
-    this.incompletedTodoItems = data.map((todoItem) => !todoItem.isCompleted);
+    this.state.allTodoItems = data;
+    this.state.completedTodoItems = data.filter((todoItem) => todoItem.isCompleted);
+    this.state.incompletedTodoItems = data.filter((todoItem) => !todoItem.isCompleted);
   };
 
   this.attachEventHandler = function () {

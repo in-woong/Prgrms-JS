@@ -1,5 +1,6 @@
 'use strict';
 
+import { addTodoItem } from '../api.js';
 import errorMessages from '../errorMessages.js';
 
 export default function TodoInput($target, { removeAllButtonText, parent }) {
@@ -25,7 +26,7 @@ export default function TodoInput($target, { removeAllButtonText, parent }) {
   };
 
   // Todo 추가
-  this.addTodoItem = function () {
+  this.addTodoItem = async function () {
     const inputElem = this.$todoInputContainer.querySelector('input');
     const todoInputText = inputElem.value;
 
@@ -34,6 +35,8 @@ export default function TodoInput($target, { removeAllButtonText, parent }) {
       return;
     }
 
+    const response = await addTodoItem(todoInputText);
+    console.log(response);
     parent.setState([
       ...parent.data,
       {
