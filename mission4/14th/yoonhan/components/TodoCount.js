@@ -1,4 +1,4 @@
-import errorMessages from '../errorMessages';
+import errorMessages from '../errorMessages.js';
 
 export default function TodoCount($target, todoListData) {
   // new keyword 동반하여 호출했는지 체크

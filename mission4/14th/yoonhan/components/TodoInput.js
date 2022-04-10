@@ -1,6 +1,6 @@
 'use strict';
 
-import errorMessages from '../errorMessages';
+import errorMessages from '../errorMessages.js';
 
 export default function TodoInput($target, { removeAllButtonText, parent }) {
   // new keyword 동반하여 호출했는지 체크
