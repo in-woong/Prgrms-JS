@@ -44,7 +44,6 @@ export default function TodoList($target, data, order) {
     this.data = nextData;
     this.render();
     this.todoCount.setState(this.data);
-    this.storeData();
   };
 
   // 렌더링
@@ -76,31 +75,6 @@ export default function TodoList($target, data, order) {
       })
       .join('');
     this.$todoList.innerHTML = liTagsString;
-  };
-
-  this.storeData = function () {
-    try {
-      const storedData = JSON.stringify(this.data);
-      window.localStorage.setItem(`todo-list-data-${order}`, storedData);
-    } catch {
-      window.localStorage.setItem(`todo-list-data-${order}`, []);
-    }
-  };
-
-  this.restoreData = function () {
-    const stringifiedData = window.localStorage.getItem(
-      `todo-list-data-${order}`
-    );
-    if (stringifiedData === null) {
-      return;
-    }
-
-    try {
-      const parsedData = JSON.parse(stringifiedData);
-      this.setState(parsedData);
-    } catch {
-      this.setState([]);
-    }
   };
 
   this.clearAllTodo = function () {
@@ -141,9 +115,6 @@ export default function TodoList($target, data, order) {
       '[component data setting error]: 유효한 data 인지 확인해주세요'
     );
   }
-
-  // Todo 데이터 복원
-  this.restoreData();
 
   // 렌더링
   this.render();
