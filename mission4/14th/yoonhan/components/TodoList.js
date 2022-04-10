@@ -4,7 +4,7 @@ import TodoInput from './TodoInput.js';
 import TodoCount from './TodoCount.js';
 import { isValidData } from '../validate.js';
 import errorMessages from '../errorMessages.js';
-import { deleteTodoItem } from '../api.js'
+import { DELETE_TODO_ITEM } from '../customEventTypes.js';
 
 export default function TodoList($target, data, order) {
   // new keyword 동반하여 호출했는지 체크
@@ -83,8 +83,14 @@ export default function TodoList($target, data, order) {
   };
 
   this.removeTodoItem = async function (clickedIndex) {
-    const clickedTodoItem = this.data.find((todoItem, idx) => clickedIndex === idx);
-    await deleteTodoItem(clickedTodoItem._id)
+    const clickedTodoItem = this.data.find((_, idx) => clickedIndex === idx);
+    const deleteTodoItemEvent = new CustomEvent(DELETE_TODO_ITEM, {
+      detail: {
+        todoItemId: clickedTodoItem._id,
+      },
+      bubbles: true,
+    });
+    this.$todoListContainer.dispatchEvent(deleteTodoItemEvent);
   };
 
   this.attachEventListener = function () {

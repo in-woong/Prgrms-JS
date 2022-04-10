@@ -2,8 +2,8 @@
 
 import TodoList from './components/TodoList.js';
 import errorMessages from './errorMessages.js';
-import { REMOVE_ALL, ADD_TODO_ITEM } from './customEventTypes.js';
-import { fetchTodoListData, addTodoItem } from './api.js';
+import { REMOVE_ALL, ADD_TODO_ITEM, DELETE_TODO_ITEM } from './customEventTypes.js';
+import { fetchTodoListData, addTodoItem, deleteTodoItem } from './api.js';
 
 export default function App($target) {
   // new keyword 동반하여 호출했는지 체크
@@ -83,9 +83,15 @@ export default function App($target) {
       } = e;
       this.addTodo(todoInputText);
     });
+
+    $target.addEventListener(DELETE_TODO_ITEM, async (e) => {
+      const {
+        detail: { todoItemId },
+      } = e;
+      await deleteTodoItem(todoItemId);
+      this.setTodoListData();
+    })
   };
-
-
 
   this.render();
 
