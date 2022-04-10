@@ -78,10 +78,6 @@ export default function TodoList($target, data, order) {
     this.$todoList.innerHTML = liTagsString;
   };
 
-  this.clearAllTodo = function () {
-    this.setState([]);
-  };
-
   this.removeTodoItem = async function (clickedIndex) {
     const clickedTodoItem = this.data.find((_, idx) => clickedIndex === idx);
     const deleteTodoItemEvent = new CustomEvent(DELETE_TODO_ITEM, {

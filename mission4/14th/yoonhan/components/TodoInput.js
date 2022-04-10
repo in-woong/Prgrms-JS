@@ -1,6 +1,6 @@
 'use strict';
 
-import { REMOVE_ALL, ADD_TODO_ITEM } from '../customEventTypes.js';
+import { DELETE_ALL_TODO_ITEM, ADD_TODO_ITEM } from '../customEventTypes.js';
 import errorMessages from '../errorMessages.js';
 
 export default function TodoInput($target, { removeAllButtonText, parent }) {
@@ -39,12 +39,7 @@ export default function TodoInput($target, { removeAllButtonText, parent }) {
     );
 
     removeAllTodoButtonElem.addEventListener('click', () => {
-      const removAllTodoEvent = new CustomEvent(REMOVE_ALL, {
-        detail: {
-          targetIdx: parent.order,
-        },
-        bubbles: true,
-      });
+      const removAllTodoEvent = new CustomEvent(DELETE_ALL_TODO_ITEM, { bubbles: true });
       this.$todoInputContainer.dispatchEvent(removAllTodoEvent);
     });
 
