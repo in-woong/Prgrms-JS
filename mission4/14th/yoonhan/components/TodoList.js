@@ -4,6 +4,7 @@ import TodoInput from './TodoInput.js';
 import TodoCount from './TodoCount.js';
 import { isValidData } from '../validate.js';
 import errorMessages from '../errorMessages.js';
+import { addTodoItem } from '../api.js';
 
 export default function TodoList($target, data, order) {
   // new keyword 동반하여 호출했는지 체크
