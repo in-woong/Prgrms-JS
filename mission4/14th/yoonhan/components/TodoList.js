@@ -3,20 +3,17 @@
 import TodoInput from './TodoInput.js';
 import TodoCount from './TodoCount.js';
 import { isValidData } from '../validate.js';
+import errorMessages from '../errorMessages.js';
 
 export default function TodoList($target, data, order) {
   // new keyword 동반하여 호출했는지 체크
-  if (!(this instanceof TodoList)) {
-    throw new Error(
-      '[without new keyword error]: new 키워드를 사용해 호출해 주세요'
-    );
+  if (!new.target) {
+    throw new Error(errorMessages.WITHOUT_NEW);
   }
 
   // target 유효성 체크
   if ($target === null) {
-    throw new Error(
-      '[target error]: 올바른 DOM target 을 인자로 전달해 주세요'
-    );
+    throw new Error(errorMessages.DOM_TARGET_ERROR);
   }
 
   this.data = data;
