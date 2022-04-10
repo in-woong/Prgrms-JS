@@ -72,8 +72,8 @@ export async function deleteAllTodoItem() {
   });
 }
 
-export async function toggleTodoItem() {
-  return await fetch(API_BASE_URL, {
+export async function toggleTodoItem(todoId) {
+  return await fetch(`${API_BASE_URL}/${todoId}/toggle`, {
     method: 'PUT',
   }).then((res) => {
     if (!res.ok) {

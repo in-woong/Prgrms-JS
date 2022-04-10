@@ -32,35 +32,42 @@ export default function TodoInput($target, { removeAllButtonText, parent }) {
     inputElem.focus();
   };
 
+  this.emitRemoveAllTodoItemEvent = function () {
+    const removAllTodoEvent = new CustomEvent(DELETE_ALL_TODO_ITEM, { bubbles: true });
+    this.$todoInputContainer.dispatchEvent(removAllTodoEvent);
+  }
+
+  this.emitAddTodoItemEvent = function () {
+    const inputElem = this.$todoInputContainer.querySelector('input');
+    const todoInputText = inputElem.value;
+    const addTodoItemEvent = new CustomEvent(ADD_TODO_ITEM, {
+      detail: {
+        todoInputText,
+      },
+      bubbles: true,
+    })
+    this.$todoInputContainer.dispatchEvent(addTodoItemEvent);
+  }
+
   // event 리스너 부착(event delegation 구현)
   this.attachEventListener = function () {
     const removeAllTodoButtonElem = this.$todoInputContainer.querySelector(
       'button.removeAllTodo'
     );
-
     removeAllTodoButtonElem.addEventListener('click', () => {
-      const removAllTodoEvent = new CustomEvent(DELETE_ALL_TODO_ITEM, { bubbles: true });
-      this.$todoInputContainer.dispatchEvent(removAllTodoEvent);
+      this.emitRemoveAllTodoItemEvent();
     });
 
     this.$todoInputContainer.addEventListener('submit', (e) => {
       e.preventDefault();
       e.stopPropagation();
 
-      const inputElem = this.$todoInputContainer.querySelector('input');
-      const todoInputText = inputElem.value;
-      const addTodoItemEvent = new CustomEvent(ADD_TODO_ITEM, {
-        detail: {
-          todoInputText,
-        },
-        bubbles: true,
-      })
-      this.$todoInputContainer.dispatchEvent(addTodoItemEvent);
-
+      this.emitAddTodoItemEvent();
       this.clearInputValue();
     });
   };
 
+  // 렌더링
   this.render();
 
   // 이벤트 리스너 부착

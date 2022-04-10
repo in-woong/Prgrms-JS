@@ -2,8 +2,14 @@
 
 import TodoList from './components/TodoList.js';
 import errorMessages from './errorMessages.js';
-import { DELETE_ALL_TODO_ITEM, ADD_TODO_ITEM, DELETE_TODO_ITEM } from './customEventTypes.js';
-import { fetchTodoListData, addTodoItem, deleteTodoItem, deleteAllTodoItem } from './api.js';
+import { DELETE_ALL_TODO_ITEM, ADD_TODO_ITEM, DELETE_TODO_ITEM, TOGGLE_TODO_ITEM } from './customEventTypes.js';
+import { 
+  fetchTodoListData,
+  addTodoItem,
+  deleteTodoItem,
+  deleteAllTodoItem,
+  toggleTodoItem
+} from './api.js';
 
 export default function App($target) {
   // new keyword 동반하여 호출했는지 체크
@@ -84,9 +90,18 @@ export default function App($target) {
 
     $target.addEventListener(DELETE_TODO_ITEM, async (e) => {
       const {
-        detail: { todoItemId },
+        detail: { todoId },
       } = e;
-      await deleteTodoItem(todoItemId);
+      await deleteTodoItem(todoId);
+      await this.setTodoListData();
+    });
+
+    $target.addEventListener(TOGGLE_TODO_ITEM, async (e) => {
+      const {
+        detail: { todoId },
+      } = e;
+      console.log(todoId);
+      await toggleTodoItem(todoId);
       await this.setTodoListData();
     })
   };

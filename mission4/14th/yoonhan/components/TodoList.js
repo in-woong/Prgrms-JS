@@ -4,7 +4,7 @@ import TodoInput from './TodoInput.js';
 import TodoCount from './TodoCount.js';
 import { isValidData } from '../validate.js';
 import errorMessages from '../errorMessages.js';
-import { DELETE_TODO_ITEM } from '../customEventTypes.js';
+import { DELETE_TODO_ITEM, TOGGLE_TODO_ITEM } from '../customEventTypes.js';
 
 export default function TodoList($target, data, order) {
   // new keyword 동반하여 호출했는지 체크
@@ -50,26 +50,26 @@ export default function TodoList($target, data, order) {
   // 렌더링
   this.render = function () {
     const liTagsString = this.data
-      .map((item, idx) => {
+      .map(item => {
         if (item.isCompleted) {
           return `
           <li>
             ✔️
             <s>
-              <span data-todo-index="${idx}" class="cursor-pointer">
+              <span data-todo-id="${item._id}" class="cursor-pointer" role="button">
                 ${item.content}
               </span>
             </s>
-            <button data-todo-index="${idx}">삭제</button>
+            <button data-todo-id="${item._id}">삭제</button>
           </li>
         `;
         } else {
           return `
           <li>
-            <span data-todo-index="${idx}" class="cursor-pointer">
+            <span data-todo-id="${item._id}" class="cursor-pointer" role="button">
               ${item.content}
             </span>
-            <button data-todo-index="${idx}">삭제</button>
+            <button data-todo-id="${item._id}">삭제</button>
           </li>
         `;
         }
@@ -78,36 +78,40 @@ export default function TodoList($target, data, order) {
     this.$todoList.innerHTML = liTagsString;
   };
 
-  this.removeTodoItem = async function (clickedIndex) {
-    const clickedTodoItem = this.data.find((_, idx) => clickedIndex === idx);
+  this.emitRemoveTodoItem = async function (todoId) {
+    // const clickedTodoItem = this.data.find((_, idx) => clickedIndex === idx);
     const deleteTodoItemEvent = new CustomEvent(DELETE_TODO_ITEM, {
       detail: {
-        todoItemId: clickedTodoItem._id,
+        todoId,
       },
       bubbles: true,
     });
     this.$todoListContainer.dispatchEvent(deleteTodoItemEvent);
   };
 
+  this.emitToggleTodoItem = async function (todoId) {
+    const toggleTodoItemEvent = new CustomEvent(TOGGLE_TODO_ITEM, {
+      detail: {
+        todoId,
+      },
+      bubbles: true,
+    });
+    this.$todoListContainer.dispatchEvent(toggleTodoItemEvent);
+  }
+
   this.attachEventListener = function () {
     this.$todoList.addEventListener('click', (e) => {
       const {
         tagName,
-        dataset: { todoIndex },
+        dataset: { todoId },
       } = e.target;
 
       if (tagName === 'SPAN') {
-        const nextState = this.data.map((item, idx) => {
-          if (idx === parseInt(todoIndex, 10)) {
-            item.isCompleted = true;
-          }
-          return item;
-        });
-        this.setState(nextState);
+        this.emitToggleTodoItem(todoId);
       }
 
       if (tagName === 'BUTTON') {
-        this.removeTodoItem(parseInt(todoIndex, 10));
+        this.emitRemoveTodoItem(todoId);
       }
     });
   };
