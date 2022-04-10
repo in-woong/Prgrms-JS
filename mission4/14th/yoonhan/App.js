@@ -2,7 +2,8 @@
 
 import TodoList from './components/TodoList.js';
 import errorMessages from './errorMessages.js';
-import { fetchTodoListData } from './api.js';
+import { REMOVE_ALL, ADD_TODO_ITEM } from './customEventTypes.js';
+import { fetchTodoListData, addTodoItem } from './api.js';
 
 export default function App($target) {
   // new keyword 동반하여 호출했는지 체크
@@ -21,11 +22,14 @@ export default function App($target) {
     completedTodoItems: [],
     incompletedTodoItems: [],
   };
+
   this.setState = function (nextState) {
     this.state = nextState;
+    this.todoListComponents[0].setState(this.state.completedTodoItems)
+    this.todoListComponents[1].setState(this.state.incompletedTodoItems)
   };
+
   this.render = async function () {
-    await this.setTodoListData();
     this.todoListComponents.push(
       // 완료된 Todo List
       new TodoList(
@@ -42,23 +46,46 @@ export default function App($target) {
         this.todoListComponents.length
       )
     );
+    await this.setTodoListData();
+  };
+
+  // Todo 추가
+  this.addTodo = async function (todoInputText) {
+    if (todoInputText === '') {
+      window.alert('할 일 텍스트를 입력해주세요!');
+      return;
+    }
+
+    await addTodoItem(todoInputText);
+    await this.setTodoListData();
   };
 
   this.setTodoListData = async function () {
     const data = await fetchTodoListData();
-    this.state.allTodoItems = data;
-    this.state.completedTodoItems = data.filter((todoItem) => todoItem.isCompleted);
-    this.state.incompletedTodoItems = data.filter((todoItem) => !todoItem.isCompleted);
+    this.setState({
+      allTodoItems: data,
+      completedTodoItems: data.filter((todoItem) => todoItem.isCompleted),
+      incompletedTodoItems: data.filter((todoItem) => !todoItem.isCompleted),
+    });
   };
 
   this.attachEventHandler = function () {
-    $target.addEventListener('removeAll', (e) => {
+    $target.addEventListener(REMOVE_ALL, (e) => {
       const {
         detail: { targetIdx },
       } = e;
       this.todoListComponents[targetIdx].clearAllTodo();
     });
+
+    $target.addEventListener(ADD_TODO_ITEM, (e) => {
+      const {
+        detail: { todoInputText },
+      } = e;
+      this.addTodo(todoInputText);
+    });
   };
+
+
 
   this.render();
 

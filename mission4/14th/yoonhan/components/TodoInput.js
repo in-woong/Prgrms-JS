@@ -1,6 +1,6 @@
 'use strict';
 
-import { addTodoItem } from '../api.js';
+import { REMOVE_ALL, ADD_TODO_ITEM } from '../customEventTypes.js';
 import errorMessages from '../errorMessages.js';
 
 export default function TodoInput($target, { removeAllButtonText, parent }) {
@@ -25,29 +25,8 @@ export default function TodoInput($target, { removeAllButtonText, parent }) {
     `;
   };
 
-  // Todo 추가
-  this.addTodoItem = async function () {
-    const inputElem = this.$todoInputContainer.querySelector('input');
-    const todoInputText = inputElem.value;
-
-    if (todoInputText === '') {
-      window.alert('할 일 텍스트를 입력해주세요!');
-      return;
-    }
-
-    const response = await addTodoItem(todoInputText);
-    console.log(response);
-    parent.setState([
-      ...parent.data,
-      {
-        text: todoInputText,
-        isCompleted: false,
-      },
-    ]);
-  };
-
   // 입력값 초기화
-  this.clear = function () {
+  this.clearInputValue = function () {
     const inputElem = this.$todoInputContainer.querySelector('input');
     inputElem.value = '';
     inputElem.focus();
@@ -60,7 +39,7 @@ export default function TodoInput($target, { removeAllButtonText, parent }) {
     );
 
     removeAllTodoButtonElem.addEventListener('click', () => {
-      const removAllTodoEvent = new CustomEvent('removeAll', {
+      const removAllTodoEvent = new CustomEvent(REMOVE_ALL, {
         detail: {
           targetIdx: parent.order,
         },
@@ -72,8 +51,18 @@ export default function TodoInput($target, { removeAllButtonText, parent }) {
     this.$todoInputContainer.addEventListener('submit', (e) => {
       e.preventDefault();
       e.stopPropagation();
-      this.addTodoItem();
-      this.clear();
+
+      const inputElem = this.$todoInputContainer.querySelector('input');
+      const todoInputText = inputElem.value;
+      const addTodoItemEvent = new CustomEvent(ADD_TODO_ITEM, {
+        detail: {
+          todoInputText,
+        },
+        bubbles: true,
+      })
+      this.$todoInputContainer.dispatchEvent(addTodoItemEvent);
+
+      this.clearInputValue();
     });
   };
 

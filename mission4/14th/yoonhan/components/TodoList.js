@@ -4,6 +4,7 @@ import TodoInput from './TodoInput.js';
 import TodoCount from './TodoCount.js';
 import { isValidData } from '../validate.js';
 import errorMessages from '../errorMessages.js';
+import { deleteTodoItem } from '../api.js'
 
 export default function TodoList($target, data, order) {
   // new keyword 동반하여 호출했는지 체크
@@ -81,9 +82,9 @@ export default function TodoList($target, data, order) {
     this.setState([]);
   };
 
-  this.removeTodoItem = function (clickedIndex) {
-    const nextState = this.data.filter((_, idx) => clickedIndex !== idx);
-    this.setState(nextState);
+  this.removeTodoItem = async function (clickedIndex) {
+    const clickedTodoItem = this.data.find((todoItem, idx) => clickedIndex === idx);
+    await deleteTodoItem(clickedTodoItem._id)
   };
 
   this.attachEventListener = function () {
