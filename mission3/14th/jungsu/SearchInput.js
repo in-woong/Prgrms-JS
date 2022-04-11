@@ -6,23 +6,23 @@
  * 
 */
 
-export default function SearchInput({ $target, onKeyup }) {
+import debounce from "./utils.js";
+
+export default function SearchInput({ $target, onChange }) {
     this.$element = document.createElement('input');
     this.$element.setAttribute("id", "search-keyword");
-    
+
     $target.appendChild(this.$element);
 
     this.render = () => {
-        // this.$element.setAttribute("id", "search-keyword");
+
     }
 
-    this.$element.addEventListener('keyup', (e) => {
-        e.preventDefault();
-
-        if (e.target.value !== null) {
-            onKeyup(e.target);
-        }
+    const debounceHandleKeyup = debounce((e) => {
+        onChange(e.target.value)
     })
+
+    this.$element.addEventListener('keyup', debounceHandleKeyup)
 
     this.render();
 }
