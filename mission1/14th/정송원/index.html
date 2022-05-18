@@ -1,0 +1,93 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list"></div>
+    <div id="todo-weekly-list"></div>
+    <div id="todo-monthly-list"></div>
+    <script>
+      const data = [
+        {
+          text: 'JS 공부하기',
+          isCompleted : true
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted : false
+        },
+      ];
+      const dataWeekly = [
+        {
+          text: '월 운동 가기',
+          isCompleted : false
+        },
+        {
+          text: '수 프로그래머스 스터디',
+          isCompleted : true
+        },
+      ];
+      const dataMonthly = [
+        {
+          text: '월급날',
+          isCompleted : false
+        },
+        {
+          text: '친구생일',
+          isCompleted : true
+        },
+      ];
+
+      function TodoList(data, id) {
+
+        //에러처리
+        if (!new.target) {
+          throw new Error('new 키워드가 필요합니다');
+        }
+        if (!data || !Array.isArray(data)) {
+          throw new Error('올바른 LIST가 필요합니다');
+        }
+        data.forEach((todo, i) => {
+          if (typeof todo !== 'object' || !todo['text'] || typeof todo['isCompleted'] !=='boolean') {
+            throw new Error(`올바른 DATA가 필요합니다 - ${id} ( INDEX: ${i} )`);
+          }
+        });
+
+        this.todos = data;
+        this.id = id;
+        this.render = function () {
+          document.querySelector(`#${this.id}`).innerHTML = 
+          `<h2>${this.id}</h2>
+            <ul>
+            ${this.todos.map((todo) => `<li>${todo.isCompleted? `<s>${todo.text}</s>`:todo.text}</li>`).join('')}
+            </ul>`;
+        };
+
+        this.setState = function(nextData){
+          this.todos = nextData; //nextData로 다시 세팅
+          this.render(); //다시 렌딩
+        }
+      }
+
+
+      try{
+
+        const todoList = new TodoList(data, 'todo-list');
+        todoList.render();
+        todoList.setState([...data, {text:'JS 과제하기', isCompleted :false}]);
+
+        const todoWeeklyList = new TodoList(dataWeekly, 'todo-weekly-list');
+        todoWeeklyList.render();
+
+        const todoMonthlyList = new TodoList(dataMonthly, 'todo-monthly-list');
+        todoMonthlyList.render();
+
+
+      }catch(err){
+        alert(err)
+      }
+    </script>
+  </body>
+</html>
