@@ -1,0 +1,83 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list"></div>
+    <div id="routine-list"></div>
+    <div id="event-list"></div>
+    <script>
+      var data = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: true,
+        },
+      ];
+      const routineTodo = [
+        {
+          text: '개발서적 독서 60뷴',
+          isCompleted: false,
+        },
+        {
+          text: '걷기 30분',
+          isCompleted: true,
+        },
+      ];
+      const eventTodo = [
+        {
+          text: '용리단길 저녁약속',
+          isCompleted: true,
+        },
+        {
+          text: '달이 미용 10시',
+          isCompleted: false,
+        },
+      ];
+      // 이곳에서 코딩을 시작하세요!
+
+      function getViewContainer(divisionId) {
+        return document.querySelector('#' + divisionId);
+      }
+      function checkDataFomat(data) {
+        if (!Array.isArray(data)) {
+          throw new TypeError('ERROR: TYPE ERROR');
+        }
+      }
+      function TodoList(data, divisionId) {
+        if (!new.target) {
+          throw new Error('ERROR : NOT USED NEW KEYWORD');
+        }
+        const todoData = data;
+        const todoContainer = getViewContainer(divisionId);
+        checkDataFomat(todoData);
+        this.render = function (paramData) {
+          const dataList = paramData || todoData;
+          todoContainer.innerHTML = `
+            <ul>${dataList
+              .map((index) =>
+                index.isCompleted
+                  ? `<li><s>${index.text}</s></li>`
+                  : `<li>${index.text}</li>`
+              )
+              .join('')}</ul>
+          `;
+        };
+        this.setState = function (nextData) {
+          checkDataFomat(nextData);
+          this.render(nextData);
+        };
+
+        this.render(todoData);
+      }
+      const todoList = new TodoList(data, 'todo-list');
+      todoList.setState(eventTodo);
+      const routineList = new TodoList(routineTodo, 'routine-list');
+    </script>
+  </body>
+</html>
