@@ -1,0 +1,136 @@
+<html>
+
+<head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+</head>
+
+<body>
+    <div id="todo-list"></div>
+    <div id="todo-list__sect1"></div>
+    <div id="todo-list__sect2"></div>
+<script>
+var data = [
+    {
+        text: 'JS 공부하기',
+        isCompleted: true,
+    },
+    {
+        text: 'JS 복습하기',
+        isCompleted: false,
+    }
+];
+
+// 이곳에서 코딩을 시작하세요!
+
+
+var data1 = [
+    {
+        text: 'FE 이직하기',
+        isCompleted: false,
+    },
+    {
+        text: 'Side Project 작업',
+        isCompleted: true,
+    }
+]
+
+var data2 = [
+    {
+        text: 'Netflix 시청',
+        isCompleted: false,
+    },
+    {
+        text: 'Youtube 시청',
+        isCompleted: true,
+    }
+]
+
+var wrongData = {
+    todo : 'Enjoy studying Javascript'
+}
+
+
+var nextData = [
+    {
+        text: '갱신데이터',
+        isCompleted: true,
+    },
+    {
+        text: '갱신데이터2',
+        isCompleted: false,
+    }
+]
+
+
+
+function TodoList(info, id) {
+
+    if(!Array.isArray(info)) {
+        throw new Error('데이터의 형식이 배열이 아닙니다!')
+    }
+
+    this.data = info;
+    this.$el = document.getElementById(id);
+
+    this.render = function() {
+
+        if(!new.target) throw new Error('new 키워드가 안보여요!')
+
+        for(let i = 0; i < this.data.length; i++) {
+
+            let eachData = this.data[i];
+            let finish = eachData.isCompleted;
+            let template = '';
+
+            if(finish) {
+                template = `<div><s>${eachData.text}</s></div>`
+            }else {
+                template = `<div>${eachData.text}</div>`;
+            }
+
+            this.$el.insertAdjacentHTML('beforeend', template);
+        }
+
+    }
+    this.setState = function(newData) {
+
+        this.data = newData;
+
+        this.render(this.data);
+        
+    }
+
+}
+
+let todoList = new TodoList(data, 'todo-list');
+let todoList1 = new TodoList(data1, 'todo-list__sect1');
+let todoList2 = new TodoList(data2, 'todo-list__sect2');
+
+
+todoList.render()
+todoList1.render()
+todoList2.render()
+
+todoList2.setState(nextData)
+
+
+
+
+
+
+
+/************************************************
+* ^ Bulletin Board
+**********************************************/
+
+/**
+ * ? new 와 함께 생성자 함수를 호출시 내부적으로 수행되는 것들
+ * * 빈객체가 생성, 이 객체는 this를 사용
+ * * this로 참조되는 객체에 프로퍼티와 메소드를 추가
+ * * 만약 리턴값에 다른 객체를 명시하지 않으면 this로 참조된 객체가 리턴
+*/
+
+</script>
+</body>
+</html>
