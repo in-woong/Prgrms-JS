@@ -1,0 +1,25 @@
+@charset "utf-8";
+@import 'reset.css';
+
+.screen-reader-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  word-wrap: normal;
+  border: 0;
+}
+
+#root {
+  width: 50%;
+  height: 100%;
+  padding-top: 50px;
+
+  margin: 0 auto;
+}
+
+.todo-form {
+  display: flex;
+}
