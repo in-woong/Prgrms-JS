@@ -1,0 +1,115 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list"></div>
+    <div id="plan-list"></div>
+    <div id="interest-list"></div>
+    <script>
+      const todo = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false,
+        },
+      ];
+
+      const plan = [
+        {
+          text: '개발 서적 읽기',
+          isCompleted: true,
+        },
+        {
+          text: '개발 외 서적 읽기',
+          isCompleted: true,
+        },
+      ];
+
+      const interests = [
+        {
+          text: 'CS 지식',
+          isCompleted: false,
+        },
+        {
+          text: '알고리즘',
+          isCompleted: false,
+        },
+        {
+          text: '자료구조',
+          isCompleted: false,
+        },
+      ];
+
+      function getType(data) {
+        // Type 구분
+        return Object.prototype.toString.call(data).slice(8, -1);
+      }
+
+      // 이곳에서 코딩을 시작하세요!
+      function updateList(data, id) {
+        // 에러
+        if (!new.target) {
+          throw new Error('updateList must be called with new');
+        }
+
+        if (getType(data) === 'Undefined') {
+          throw new Error(
+            'Undefined Error, 데이터에 값이 할당되지 않았습니다.'
+          );
+        }
+
+        if (!data.length) {
+          throw new Error('NULL Error, 빈 배열 입니다.');
+        }
+
+        if (!Array.isArray(data)) {
+          throw new Error('데이터 타입이 Array가 아닙니다.');
+        }
+
+        for (let value of data) {
+          if (value.text === '') {
+            throw new Error('text 값이 비어있습니다.');
+          }
+          if (getType(value.text) !== 'String') {
+            throw new Error('text의 타입이 올바르지 않습니다.');
+          }
+        }
+
+        const querySelector = document.querySelector(id);
+        if (!querySelector) {
+          throw new Error('잘못된 선택자입니다.');
+        }
+
+        this.data = data;
+
+        this.render = () => {
+          querySelector.innerHTML = `<ul>${this.data
+            .map((element) =>
+              element.isCompleted
+                ? `<li>${element.text}</li>`
+                : `<li><s>${element.text}</s></li>`
+            )
+            .join('')}</ul>`;
+        };
+        this.render();
+
+        this.setState = (nextData) => {
+          this.data = nextData;
+          this.render();
+        };
+      }
+
+      const todoList = new updateList(todo, '#todo-list');
+      const listOfPlan = new updateList(plan, '#plan-list');
+      const interestList = new updateList(interests, '#interest-list');
+
+      todoList.setState(interests);
+    </script>
+  </body>
+</html>
