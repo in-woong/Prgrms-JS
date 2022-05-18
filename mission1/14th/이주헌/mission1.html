@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="todo-list"></div>
+    <div id="todo-list2"></div>
+    <div id="todo-list3"></div>
+    <div id="todo-list4"></div>
+    <script src="TodoList.js"></script>
+    <script>
+      const data = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false
+        }
+      ];
+      const programmersTodo=[{
+        text:'Mission1 수행하기',
+        isCompleted: true
+      },{
+        text:'GitHub 공부하기',
+        isCompleted: false
+      }];
+      const myTodo=[{
+        text:'회사가서 일하기',
+        isCompleted: true
+      },{
+        text:'집에가서 공부하기',
+        isCompleted: true
+      }];
+      // 이곳에서 코딩을 시작하세요!
+      
+      new TodoList(document.querySelector('#todo-list')).setState([{
+        text:'CSS공부하기',
+        isCompleted:false
+      }]);
+      
+      new TodoList(document.querySelector('#todo-list2')).setState([{
+        text:'Mission 1주차 과제하기',
+        isCompleted:true
+      },{
+        text:'알고리즘 문제 1개라도 풀기',
+        isCompleted:false
+      },{
+        text:'회사 입사지원서 1개라도 써보기',
+        isCompleted:false
+      }])
+      
+      new TodoList(document.querySelector('#todo-list3')).setState([{
+        text:'업무지원',
+        isCompleted:false
+      },{
+        text:'출근준비하기',
+        isCompleted:true
+      }])
+    </script>
+  </body>
+</html>
