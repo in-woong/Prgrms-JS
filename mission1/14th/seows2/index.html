@@ -1,0 +1,148 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list-first"></div>
+    <div id="todo-list-second"></div>
+    <div id="todo-list-third"></div>
+    <script>
+      const data1 = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false,
+        },
+      ];
+      const data2 = [
+        {
+          text: '리액트 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: '리액트 복습하기',
+          isCompleted: false,
+        },
+      ];
+      const data3 = [
+        {
+          text: '개발서적 읽기',
+          isCompleted: false,
+        },
+        {
+          text: '두번 읽기',
+          isCompleted: true,
+        },
+      ];
+
+      const ERROR_MESSAGES = {
+        MUST_CALL_NEW: 'new를 이용해 생성한 인스턴스가 아닙니다.',
+        NOT_AN_ARRAY: '배열 형태의 데이터가 아닙니다.',
+        INVALID_DATA: '잘못된 형식의 데이터가 포함되어 있습니다.',
+        NO_CONTAINER: '컨테이너가 존재하지 않습니다.',
+      };
+
+      class Template {
+        getEmptyMessage() {
+          return `
+            <div>데이터가 없습니다.</div>
+          `;
+        }
+
+        getList(datas = []) {
+          return `
+            <ul class="list">
+              ${datas.map(this._getItem).join('')}
+            </ul>
+          `;
+        }
+
+        _getItem({ text, isCompleted }) {
+          return `
+            <li>
+              <p>${isCompleted ? text : `<s>${text}</s>`}</p>
+            </li>
+          `;
+        }
+      }
+
+      const checkValidTodos = (todos) => {
+        if (!Array.isArray(todos)) throw new Error(ERROR_MESSAGES.NOT_AN_ARRAY);
+        if (
+          !todos.every(
+            (todo) =>
+              typeof todo?.text === 'string' &&
+              typeof todo?.isCompleted === 'boolean'
+          )
+        )
+          throw new Error(ERROR_MESSAGES.INVALID_DATA);
+
+        return true;
+      };
+
+      const querySelector = (selector, scope = document) => {
+        const $container = scope.querySelector(selector);
+
+        if (!$container) throw new Error(ERROR_MESSAGES.NO_CONTAINER);
+
+        return $container;
+      };
+
+      function TodoList(todos, selector) {
+        const $container = querySelector(selector);
+
+        const init = () => {
+          if (!new.target) throw new Error(ERROR_MESSAGES.MUST_CALL_NEW);
+          checkValidTodos(todos);
+
+          this.todos = todos;
+          this.template = new Template();
+
+          this.render();
+        };
+
+        this.render = () => {
+          $container.innerHTML =
+            this.todos.length > 0
+              ? this.template.getList(this.todos)
+              : this.template.getEmptyMessage();
+        };
+
+        this.setState = (nextTodos) => {
+          checkValidTodos(nextTodos);
+          this.todos = nextTodos;
+          this.render();
+        };
+
+        init();
+      }
+
+      const todoList_1 = new TodoList(data1, '#todo-list-first');
+      const todoList_2 = new TodoList(data2, '#todo-list-second');
+      const todoList_3 = new TodoList(data3, '#todo-list-third');
+
+      setTimeout(
+        () =>
+          todoList_1.setState([
+            ...data1,
+            { text: '추가된 데이타1', isCompleted: true },
+          ]),
+        1000
+      );
+      setTimeout(() => todoList_2.setState([...data2, null]), 2000);
+      setTimeout(
+        () =>
+          todoList_3.setState([
+            ...data3,
+            { text: '추가된 데이타3', isCompleted: true },
+          ]),
+        3000
+      );
+    </script>
+  </body>
+</html>
