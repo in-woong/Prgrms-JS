@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <title>Mission 2</title>
+    <meta charset="utf-8" />
+    <style>
+      body {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+      .input--form {
+        margin: 0 auto;
+      }
+      .todo--list {
+        display: flex;
+        align-items: center;
+      }
+      .todo--list > .todo--btn {
+        width: 50px;
+        height: 20px;
+        margin: 0 auto;
+      }
+      p {
+        width: 50px;
+        margin-right: 40px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <form class="input--form">
+      <input
+        class="input--todo"
+        type="text"
+        placeholder="할일을 입력해 주세요"
+      />
+      <button class="input--btn">입력</button>
+      <button class="removeAll--btn">전부 삭제</button>
+    </form>
+    <div id="todo-list"></div>
+    <footer class="count--box"></footer>
+    <script type="module" src="./controller/App.js"></script>
+  </body>
+</html>
