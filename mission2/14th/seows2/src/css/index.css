@@ -1,0 +1,64 @@
+body,
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style: none;
+}
+
+#app {
+  margin: 0 15px 0 15px;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: 100%;
+  vertical-align: baseline;
+  font-family: inherit;
+  font-weight: inherit;
+  color: inherit;
+  appearance: none;
+}
+
+button:focus,
+button:hover {
+  cursor: pointer;
+}
+
+.btn-remove::before {
+  content: 'X';
+}
+
+.btn-remove {
+  align-self: center;
+  border-radius: 50%;
+  background-color: skyblue;
+  color: white;
+  padding: 2px 5px;
+}
+
+.todo-list li {
+  display: flex;
+  font-size: 24px;
+  margin-bottom: 12px;
+}
+
+.todo-list li:last-child {
+  margin-bottom: 0;
+}
+
+.todo-list li p {
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+}
+
+.todo-list li.completed p {
+  color: red;
+  text-decoration: line-through;
+}
