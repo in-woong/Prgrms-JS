@@ -19,6 +19,7 @@
       // 이곳에서 코딩을 시작하세요!
       class TodoList {
         constructor(data) {
+          validateData(data);
           this.data = data;
         }
 
@@ -26,11 +27,35 @@
           const todoList = document.querySelector('#todo-list');
           todoList.innerHTML = `
             <ul>
-              ${data.map(({ text }) => `<li>${text}</li>`).join('')}
+              ${this.data.map(({ text }) => `<li>${text}</li>`).join('')}
             </ul>
           `;
         }
       }
+
+      /**
+       * TodoList의 data값의 유효성을 체크하는 함수입니다.
+       *
+       * @param {Object[]} data - todo 객체
+       * @param {string} data[].text - 할 일에 대한 내용
+       */
+      const validateData = (data) => {
+        if (!data) {
+          throw new Error('TodoList를 생성할 때 data는 필수값입니다.');
+        }
+
+        if (!Array.isArray(data)) {
+          throw new Error('data는 array 타입이여야 합니다.');
+        }
+
+        for (const _data of data) {
+          if (!('text' in _data)) {
+            throw new Error(
+              '데이터의 형식을 다시 확인해주세요. 올바른 형식: [{text: string}]'
+            );
+          }
+        }
+      };
 
       const todoList = new TodoList(data);
       todoList.render();
