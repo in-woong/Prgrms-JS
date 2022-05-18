@@ -1,0 +1,78 @@
+li,
+s,
+button {
+  cursor: pointer;
+}
+
+body {
+  max-width: 100vw;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+main {
+  display: flex;
+}
+
+.loader {
+  display: none;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 50px;
+  height: 50px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.todo--list__left,
+.todo--list__done {
+  padding: 0 10px;
+}
+
+.user--list {
+  overflow: scroll;
+  max-height: 100vh;
+
+  padding: 10px 0;
+}
+.user--list ul {
+  z-index: 5;
+}
+
+.todo--list-container {
+  width: fit-content;
+  height: fit-content;
+
+  display: flex;
+}
+
+.todo--list__left.over,
+.todo--list__done.over {
+  border: 2px solid skyblue;
+}

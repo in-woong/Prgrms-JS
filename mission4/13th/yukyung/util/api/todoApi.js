@@ -40,4 +40,4 @@ const todoApi = {
   },
 }
 
-export default todoApi
+export default todoApi;
