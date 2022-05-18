@@ -1,0 +1,121 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  [완료]
+  <div id="todo-list-post"></div>
+  [진행]
+  <div id="todo-list-ing"></div>
+  [대기]
+  <div id="todo-list-pre"></div>
+  <script>
+    const dataPost = [
+      {
+        text: '필수 구현사항 구현하기',
+        isCompleted: true
+      },
+      {
+        text: '필수 구현사항 관련 링크 읽기',
+        isCompleted: true
+      }
+    ]
+    const dataIng = [
+      {
+        text: 'JS 공부하기',
+        isCompleted: true
+      },
+      {
+        text: 'JS 복습하기',
+        isCompleted: false
+      }
+    ]
+    const dataPre = [
+      {
+        text: '보너스 구현사항 구현하기',
+        isCompleted: false
+      },
+      {
+        text: '보너스 구현사항 관련 링크 읽기',
+        isCompleted: false
+      }
+    ]
+    const newData = [
+      {
+        text: '코드리뷰 얌전히 기다리며 공부하기',
+        isCompleted: false
+      },
+      {
+        text: '다른 분 코드보며 감탄하기',
+        isCompleted: true
+      }
+    ]
+
+  function TodoList(datas, tag) {
+    this.items = datas;
+    this.tag = tag;
+
+    // 올바른 파라미터인지 확인 (datas) #50
+    this.checkDatas = () => {
+      if(!Array.isArray(this.items)) {
+        throw new Error(`error message: 배열이 아닙니다`);
+      }
+      this.items.forEach(({text, isCompleted}) => {
+        if(text === undefined) throw new Error("error message: text 속성이 없는 원소가 있습니다.");
+        if(isCompleted === undefined) throw new Error("error message: isCompleted 속성이 없는 원소가 있습니다.");
+      })
+      return true;
+    }
+
+    // 올바른 파라미터인지 확인 (tag) #50
+    this.checkHtml = () => {
+      if(document.querySelector(`#${this.tag}`) !== null) return true;
+      return false;
+    }
+
+    // innerHTMl에 넣을 코드 작성
+    this.makeHtml = () => {
+      let str = '<ul>';
+      this.items.forEach(({text, isCompleted}) => {
+        // 삼항연산자를 이용한 isCompleted 처리 #66
+        str += (isCompleted ? `<li><s>${text}</s></li>` : `<li><div>${text}</div></li>`);
+      });
+      str += '</ul>';
+      return str;
+    }
+
+    // render 함수 #49
+    this.render = () => {
+      // new로 호출되었는가 #50
+      if(!new.target) throw new Error("error message: new로 호출하지 않았습니다.");
+      if(this.checkDatas() && this.checkHtml()) {
+        document.querySelector(`#${this.tag}`).innerHTML = this.makeHtml();
+      }
+    }
+
+    // setState 함수 #67
+    this.setState = (nextData = this.items, nextTag = this.tag) => {
+      this.items = nextData;
+      this.tag = nextTag;
+      this.render();
+    }
+  }
+
+  try {
+    // 다중 컴포넌트 #57
+    const todoListPost = new TodoList(dataPost, 'todo-list-post');
+    const todoListIng = new TodoList(dataIng, 'todo-list-ing');
+    const todoListPre = new TodoList(dataPre, 'todo-list-pre');
+    todoListPost.render();
+    todoListIng.render();
+    todoListPre.render();
+    todoListIng.setState(newData);
+  } catch (error) {
+    console.log(error);
+  }
+  </script>
+</body>
+</html>
