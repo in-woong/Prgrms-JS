@@ -1,0 +1,15 @@
+.todo-list {
+  list-style: none;
+}
+
+.todo-list > .todo {
+  cursor: move;
+}
+
+.todo-list > .completed {
+  text-decoration: line-through;
+}
+
+.todo-list > .todo button {
+  cursor: pointer;
+}
