@@ -1,0 +1,106 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list-original"></div>
+    <div id="todo-list-algorithm"></div>
+    <div id="todo-list-framework"></div>
+
+    <script>
+      const $ = (selector) => document.querySelector(selector);
+      const todoListFirst = $('#todo-list-first');
+
+      const myData = {
+        original: [
+          { text: 'JS 공부하기', isCompleted: true },
+          { text: 'JS 복습하기', isCompleted: false },
+        ],
+        algorithm: [
+          { text: '백준 풀기', isCompleted: true },
+          { text: '프로그래머스 풀기', isCompleted: false },
+        ],
+        framework: [{ text: 'React 공부하기', isCompleted: true }],
+      };
+
+      const myNewData = {
+        algorithm: [{ text: '릿코드 풀기', isCompleted: false }],
+        framework: [{ text: 'Vue 공부하기', isCompleted: true }],
+      };
+
+      const errorMessages = {
+        EMPTY_DATA: '데이터가 비어있습니다.',
+        INVALID_TYPE: '올바른 형식을 입력해주세요.',
+        INVALID_ARRAY: '파라미터는 배열이여야만 합니다.',
+        INVALID_NEW: '반드시 new를 사용해주세요.',
+        INCORRENT_DATA: '올바르지 않은 데이터입니다.',
+      };
+
+      const dataCategories = {
+        ORIGINAL: 'original',
+        ALGORITHM: 'algorithm',
+        FRAMEWORK: 'framework',
+      };
+
+      const {
+        EMPTY_DATA,
+        INVALID_TYPE,
+        INVALID_ARRAY,
+        INVALID_NEW,
+        INCORRENT_DATA,
+      } = errorMessages;
+
+      const { ORIGINAL, ALGORITHM, FRAMEWORK } = dataCategories;
+
+      const validateNew = ($this) => {
+        if (!($this instanceof TodoList)) throw new Error(INVALID_NEW);
+      };
+
+      const validateText = (text) => {
+        if (!text) throw new Error(INCORRENT_DATA);
+      };
+
+      const validateData = (data) => {
+        if (!Array.isArray(data)) throw new Error(INVALID_ARRAY);
+        if (data.some((item) => !item.text)) throw new Error(INVALID_TYPE);
+        if (!data.length) throw new Error(EMPTY_DATA);
+      };
+
+      function TodoList(category, data) {
+        validateNew(this);
+        validateData(data);
+        this.data = data;
+        this.render = () => {
+          const todoList = $(`#todo-list-${category}`);
+          const template = this.data.reduce((acc, item) => {
+            validateText(item.text);
+            return item.isCompleted
+              ? `${acc}<li><s>${item.text}</s></li>`
+              : `${acc}<li>${item.text}</li>`;
+          }, '');
+          todoList.innerHTML = template;
+        };
+
+        this.setState = (nextData) => {
+          if (this.data === nextData) return;
+          validateData(nextData);
+          this.data = nextData;
+          this.render();
+        };
+      }
+
+      const originalTodoList = new TodoList(ORIGINAL, myData[ORIGINAL]);
+      originalTodoList.render();
+
+      const algorithmTodoList = new TodoList(ALGORITHM, myData[ALGORITHM]);
+      algorithmTodoList.render();
+      algorithmTodoList.setState(myNewData[ALGORITHM]);
+
+      const frameworkTodoList = new TodoList(FRAMEWORK, myData[FRAMEWORK]);
+      frameworkTodoList.render();
+      frameworkTodoList.setState(myNewData[FRAMEWORK]);
+    </script>
+  </body>
+</html>
