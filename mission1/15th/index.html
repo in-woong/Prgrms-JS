@@ -13,37 +13,44 @@
       const data = [
         {
           text: 'JS 공부하기',
+          isCompleted: true,
         },
         {
           text: 'JS 복습하기',
+          isCompleted: false,
         },
       ];
       const data2 = [
         {
           text: 'HTML 견고하게 만들기👩‍💻',
+          isCompleted: false,
         },
       ];
       const data3 = [
         {
           text: 'CSS 스타일링 💄',
+          isCompleted: true,
         },
         {
           text: 'JS 제대로 하기 🎯',
+          isCompleted: false,
         },
       ];
 
       // 이곳에서 코딩을 시작하세요!
       class TodoList {
-        constructor(todoItem, selector) {
-          validateTodoItem(todoItem);
+        constructor(data, selector) {
+          validatedata(data);
 
-          this.todoItem = todoItem;
+          this.data = data;
           this.todoList = document.querySelector(selector);
         }
 
         render() {
-          this.todoList.innerHTML = this.todoItem
-            .map(({ text }) => `<li>${text}</li>`)
+          this.todoList.innerHTML = this.data
+            .map(({ text, isCompleted }) =>
+              isCompleted ? `<li><s>${text}</s></li>` : `<li>${text}</li>`
+            )
             .join('');
         }
       }
@@ -53,8 +60,9 @@
        *
        * @param {Object[]} data - todo 객체
        * @param {string} data[].text - 할 일에 대한 내용
+       * @param {string} data[].isCompleted - 할 일 완료여부
        */
-      const validateTodoItem = (data) => {
+      const validatedata = (data) => {
         if (!data) {
           throw new Error('TodoList를 생성할 때 data는 필수값입니다.');
         }
@@ -63,11 +71,9 @@
           throw new Error('data는 array 타입이여야 합니다.');
         }
 
-        for (const _data of data) {
-          if (!('text' in _data)) {
-            throw new Error(
-              '데이터의 형식을 다시 확인해주세요. 올바른 형식: [{text: string}]'
-            );
+        for (const todo of data) {
+          if (!('text' in todo) || !('isCompleted' in todo)) {
+            throw new Error('데이터의 형식을 다시 확인해주세요.');
           }
         }
       };
