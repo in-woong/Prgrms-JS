@@ -5,7 +5,10 @@
   </head>
 
   <body>
-    <div id="todo-list"></div>
+    <ul id="todo-list"></ul>
+    <ul id="todo-list-2"></ul>
+    <ul id="todo-list-3"></ul>
+
     <script>
       const data = [
         {
@@ -15,21 +18,33 @@
           text: 'JS 복습하기',
         },
       ];
+      const data2 = [
+        {
+          text: 'HTML 견고하게 만들기👩‍💻',
+        },
+      ];
+      const data3 = [
+        {
+          text: 'CSS 스타일링 💄',
+        },
+        {
+          text: 'JS 제대로 하기 🎯',
+        },
+      ];
 
       // 이곳에서 코딩을 시작하세요!
       class TodoList {
-        constructor(data) {
-          validateData(data);
-          this.data = data;
+        constructor(todoItem, selector) {
+          validateTodoItem(todoItem);
+
+          this.todoItem = todoItem;
+          this.todoList = document.querySelector(selector);
         }
 
         render() {
-          const todoList = document.querySelector('#todo-list');
-          todoList.innerHTML = `
-            <ul>
-              ${this.data.map(({ text }) => `<li>${text}</li>`).join('')}
-            </ul>
-          `;
+          this.todoList.innerHTML = this.todoItem
+            .map(({ text }) => `<li>${text}</li>`)
+            .join('');
         }
       }
 
@@ -39,7 +54,7 @@
        * @param {Object[]} data - todo 객체
        * @param {string} data[].text - 할 일에 대한 내용
        */
-      const validateData = (data) => {
+      const validateTodoItem = (data) => {
         if (!data) {
           throw new Error('TodoList를 생성할 때 data는 필수값입니다.');
         }
@@ -57,8 +72,14 @@
         }
       };
 
-      const todoList = new TodoList(data);
-      todoList.render();
+      window.addEventListener('DOMContentLoaded', () => {
+        const todoList = new TodoList(data, '#todo-list');
+        todoList.render();
+        const todoList2 = new TodoList(data2, '#todo-list-2');
+        todoList2.render();
+        const todoList3 = new TodoList(data3, '#todo-list-3');
+        todoList3.render();
+      });
     </script>
   </body>
 </html>
