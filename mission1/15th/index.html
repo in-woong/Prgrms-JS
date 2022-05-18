@@ -41,7 +41,6 @@
       class TodoList {
         constructor(data, selector) {
           validatedata(data);
-
           this.data = data;
           this.todoList = document.querySelector(selector);
         }
@@ -52,6 +51,12 @@
               isCompleted ? `<li><s>${text}</s></li>` : `<li>${text}</li>`
             )
             .join('');
+        }
+
+        setState(nextData) {
+          validatedata(nextData);
+          this.data = nextData;
+          this.render();
         }
       }
 
@@ -81,10 +86,14 @@
       window.addEventListener('DOMContentLoaded', () => {
         const todoList = new TodoList(data, '#todo-list');
         todoList.render();
+        todoList.setState(data3);
+
         const todoList2 = new TodoList(data2, '#todo-list-2');
         todoList2.render();
+
         const todoList3 = new TodoList(data3, '#todo-list-3');
         todoList3.render();
+        todoList3.setState(data);
       });
     </script>
   </body>
