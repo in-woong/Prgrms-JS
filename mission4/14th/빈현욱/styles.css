@@ -1,0 +1,112 @@
+.App {
+    position: relative;
+    margin: auto;
+    padding-left: 210px;
+    width: 90%;
+    max-width: 1300px;
+}
+.todo-add {
+    width: 100%;
+}
+.todo-list {
+    display: inline-block;
+    width: calc(50% - 53px);
+    min-height: 200px;
+    margin-left: 20px;
+    padding: 10px;
+    vertical-align: top;
+    border: 1px solid #333;
+}
+.todo-list:nth-child(2) {
+    margin-left: 0;
+}
+.todo-list > ul {
+    margin: auto;
+    padding-left: 1.125em;
+}
+.todo-list  > ul > li {
+    position: relative;
+    margin: 1em auto;
+    padding: 0.35em 0;
+    list-style-type: auto;
+}
+.todo-list > ul > li > button {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.todo-count {
+    margin: 1em auto;
+    width: 100%;
+}
+#todo-add-input {
+    padding: 0.25em;
+    font-size: 1.125em;
+    width: calc(100% - 190px);
+}
+button {
+    padding: 0.5em 1em;
+    border: 1px solid #333;
+    background-color: #fff;
+}
+.users-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 180px;
+}
+.users-wrap > ul {
+    margin: auto;
+    padding: 0;
+    list-style: none;
+    border: 1px solid #555;
+}
+.users-wrap > ul > li {
+    text-align: center;
+    line-height: 2.5em;
+    border-bottom: 1px solid #555;
+    cursor: pointer;
+}
+.users-wrap > ul > li:last-child {
+    border-bottom: 0px;
+}
+.user-checked {
+    background-color: rgb(55, 74, 247);
+    color: #fff;
+}
+.loading-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.7;
+}
+.loading-bar {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    top: calc(50% - 40px);
+    left: calc(50% - 40px);
+    border: 6px solid #bceffd;
+    border-radius: 50%;
+    border-top: 6px solid #3498db;
+    -webkit-animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite;
+    z-index:2002;
+}
+.loading-text {
+    position: absolute;
+    top: calc(50% - 7px);
+    left: calc(50% - 27px);
+}
+  
+  @-webkit-keyframes spin {
+      0% { -webkit-transform: rotate(0deg); }
+      100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+  }
