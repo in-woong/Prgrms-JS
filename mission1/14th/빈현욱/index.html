@@ -1,0 +1,119 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+    <div id="todo-list"></div>
+    <div id="todo-list2"></div>
+    <div id="todo-list3"></div>
+  <script>
+    var data = [
+      {
+        text: 'JS 공부하기',
+        isCompleted: true
+
+      },
+      {
+        text: 'JS 복습하기',
+        isCompleted: false
+
+      }
+    ]
+    var data2 = [
+    {
+        text: '재취업(이직) 성공하기',
+        isCompleted: true
+      },
+      {
+        text: '괜찮은 회사 들어가기',
+        isCompleted: true
+      }
+    ]
+    var data3 = [
+    {
+        text: '이력서 통과하기',
+        isCompleted: false
+      },
+      {
+        text: '면접 통과하기',
+        isCompleted: true
+      }
+    ]
+    // 이곳에서 코딩을 시작하세요!
+
+    function TodoList({$app, initialState}){
+        this.state = initialState;
+
+        if(!new.target) { //보너스: new 키워드 안 붙이고 함수 실행 시 에러 발생하게 하기
+            throw new Error('new 키워드를 사용해주세요!');
+        }
+        if(!CheckParam(this.state)){
+            throw new Error('올바른 데이터가 아닙니다.');
+        }
+
+        //보너스 문제 setState 새롭게 렌더링
+        this.setState = (nextData) => {
+          if(!CheckParam(this.state)){ //nextData도 데이터 체크
+              throw new Error('올바른 데이터가 아닙니다.');
+          }
+          this.state = nextData;
+          this.render();
+        }
+
+        this.render = () => {
+            $app.innerHTML = this.state.map(data => {
+                return `<ul>
+                          <li>${data.isCompleted? `${data.text? data.text: ''}` : 
+                            `<s>${data.text? data.text: ''}</s>`}
+                          </li>
+                        </ul>`
+                }).join('');
+        }
+
+        this.render();
+    }
+
+
+
+    //보너스: 올바른 파라메터가 아닐경우 체크용
+    function CheckParam(value){
+        if(value === null || !Array.isArray(value) || value === undefined || value === ''){
+            return false;
+        }
+        for(const {text, isCompleted} of value){
+            if(typeof text !== 'string' || typeof isCompleted !== 'boolean'){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    //컴포넌트 실행용
+      const todoList = new TodoList({
+          $app: document.querySelector('#todo-list'),
+          initialState: data
+      });
+      const todoList2 = new TodoList({
+          $app: document.querySelector('#todo-list2'),
+          initialState: data2
+      });
+      const todoList3 = new TodoList({
+          $app: document.querySelector('#todo-list3'),
+          initialState: data3
+      });
+      
+      //보너스 문제 setState 새롭게 렌더링
+      todoList.setState([
+          {
+              text: '과연 좋은 회사 취직했나요?',
+              isCompleted: true
+          }
+      ]);
+
+
+  </script>
+</body>
+</html>
