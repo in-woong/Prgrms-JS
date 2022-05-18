@@ -1,0 +1,77 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list"></div>
+  <div id="my-list1"></div>
+  <div id="my-list2"></div>
+  <script>
+    var data = [
+      {
+        text: 'JS 공부하기',
+        isCompleted: true,
+      },
+      {
+        text: 'JS 복습하기',
+        isCompleted: false,
+      }
+    ]
+
+    function TodoList(data, container) {
+      if (!new.target) throw new Error('This function should be called as "new" constructor.')
+      if (!isValidData(data)) throw new Error('Invalid data.')
+      if (!isValidContainer(container)) throw new Error('Invalid container')
+
+      this.data = data
+      this.render = function() {
+        var items = this.data
+          .map(({text, isCompleted}) => `${isCompleted ? `<s>${text}</s>` : text}`)
+          .map((item) => `<li>${item}</li>`)
+          .join('')
+        container.innerHTML = `<ul>${items}</ul>`
+      }
+      this.setState = function(nextData) {
+        this.data = nextData
+        this.render()
+      }
+
+      this.render()
+    }
+    function isValidData(data) {
+      if (!data) return false
+      if (!Array.isArray(data)) return false
+      if (data.some(datum => !datum.text)) return false
+      return true
+    }
+    function isValidContainer(container) {
+      if (!container) return false
+      if (!container instanceof Element) return false
+      return true
+    }
+
+    var todoList = new TodoList(data, document.querySelector('#todo-list'))
+
+    var myTodoList1 = new TodoList(
+      [{text: 'AAA', isCompleted: false}, {text: 'BBB', isCompleted: true}],
+      document.querySelector('#my-list1')
+    )
+
+    var myTodoList2 = new TodoList(
+      [{text: 'aaa', isCompleted: true}, {text: 'bbb', isCompleted: true}],
+      document.querySelector('#my-list2')
+    )
+
+    setTimeout(() => {
+      myTodoList2.setState([
+        {text: '가나다', isCompleted: true},
+        {text: '라마바사', isCompleted: true},
+        {text: '아자차', isCompleted: false},
+      ])
+    }, 2000)
+  </script>
+</body>
+</html>
