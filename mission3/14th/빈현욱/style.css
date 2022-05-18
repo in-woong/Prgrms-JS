@@ -1,0 +1,24 @@
+.search-history {
+    display: flex;
+    margin: auto;
+    padding: 1em;
+    list-style: none;
+}
+.search-history > li {
+    margin-right: 0.5em;
+    padding: 0.5em;
+    border: 1px solid #333;
+}
+#search-keyword {
+    margin-bottom: 1em;
+    padding: 0.5em 1em;
+}
+.search-result-list {
+    margin: auto;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
