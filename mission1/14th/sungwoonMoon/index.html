@@ -1,0 +1,65 @@
+<html>
+  <head>
+    <title>Mission 1 - 문성운</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list"></div>
+    <script>
+      const data = [
+        {
+          text: '공부1',
+          isCompleted: true,
+        },
+        {
+          text: '공부2',
+          isCompleted: false,
+        },
+        {
+          text: '공부3',
+          isCompleted: true,
+        },
+        {
+          text: '공부4',
+          isCompleted: false,
+        },
+      ];
+
+      function TodoList(data) {
+        if (!new.target) throw new Error('error new 키워드 확인');
+        if (!data) throw new Error('error data null 혹은 undeifned');
+        if (!Array.isArray(data)) throw new Error('error data array 아님');
+
+        for (const todo of data) {
+          if (
+            !todo.hasOwnProperty('text') ||
+            !todo.hasOwnProperty('isCompleted')
+          ) {
+            throw new Error('error data 이상함');
+          }
+        }
+
+        this.data = data;
+        this.render = function () {
+          const div = document.getElementById('todo-list');
+          const todos = data
+            .map((todo) => {
+              const li = `<li>${todo.text}</li>`;
+              return todo.isCompleted ? `<s>${li}</s>` : li;
+            })
+            .join('');
+          div.innerHTML = `<ul>${todos}</ul>`;
+        };
+
+        this.setState = function (newData) {
+          this.data = newData;
+          this.render();
+        };
+      }
+
+      const todoList = new TodoList(data);
+      todoList.setState(data);
+    </script>
+  </body>
+</html>
