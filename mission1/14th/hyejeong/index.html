@@ -1,0 +1,111 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list"></div>
+  <div id="year-todo-list"></div>
+  <div id="today-todo-list"></div>
+  <script>
+    const data = [
+      {
+        text: 'JS 공부하기',
+        isCompleted: true
+      },
+      {
+        text: 'JS 복습하기',
+        isCompleted: true
+      }
+    ]
+
+    const yearTodo = [
+      {
+        text: '월 1회 블로그 포스팅하기',
+        isCompleted: false
+      },
+      {
+        text: '개발 서적 5권 이상 읽기',
+        isCompleted: false
+      }
+    ]
+
+    const todayTodo = [
+      {
+        text: '1주차 미션 완료하기',
+        isCompleted: true
+      },
+      {
+        text: '코드리뷰 하기',
+        isCompleted: false
+      }
+    ]
+
+    const ERROR_MESSAGE = {
+      NOT_ARRAY_DATA: 'Array 타입이 아닙니다. Array 타입으로 넘겨주세요',
+      NOT_USED_NEW: 'new 키워드를 사용하여 생성하지 않았습니다. new 키워드를 사용해주세요',
+      INVALID_DATA_PROPERTY: '유효하지 않은 데이터 형식입니다.'
+    }
+
+    const checkTodoDataValidation = (list) => {
+      if (!Array.isArray(list)) {
+        throw new Error(ERROR_MESSAGE.NOT_ARRAY_DATA);
+      }
+      list.forEach(item => {
+        if (!item.hasOwnProperty('text')) throw new Error(ERROR_MESSAGE.INVALID_DATA_PROPERTY);
+        if (!item.hasOwnProperty('isCompleted')) throw new Error(ERROR_MESSAGE.INVALID_DATA_PROPERTY);
+      })
+    }
+
+    function TodoList(selector, list) {
+      if (!(this instanceof TodoList)) throw new Error(ERROR_MESSAGE.NOT_USED_NEW);
+      checkTodoDataValidation(list);
+      this.list = list;
+
+      this.render = () => {
+        const todoListElement = document.querySelector(selector);
+        todoListElement.innerHTML = `
+          <ul>
+            ${
+              this.list.reduce((acc, cur) => ` ${ acc }
+                <li>
+                  ${ cur.isCompleted ? `<s>${ cur.text }</s>` : cur.text }
+                </li>
+              `, [])
+            }
+          </ul>
+        `
+      }
+
+      this.setState = (nextData) => {
+        checkTodoDataValidation(nextData);
+        this.list = nextData;
+        
+        this.render();
+      }
+    }
+
+    const todoList = new TodoList('#todo-list', data);
+    todoList.render();
+
+    const yearTodoList = new TodoList('#year-todo-list', yearTodo);
+    yearTodoList.render();
+
+    const todayTodoList = new TodoList('#today-todo-list', todayTodo);
+    todayTodoList.render();
+
+    todoList.setState([
+    {
+        text: '커피 내리기',
+        isCompleted: false
+      },
+      {
+        text: '커피 마시기',
+        isCompleted: true
+      }
+    ]);
+  </script>
+</body>
+</html>
