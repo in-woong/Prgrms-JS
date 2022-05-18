@@ -1,0 +1,93 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <ul id="todo-list-1"></ul>
+    <ul id="todo-list-2"></ul>
+    <ul id="todo-list-3"></ul>
+    <script>
+      const dataOne = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false,
+        },
+      ];
+
+      const dataTwo = [
+        {
+          text: 'TS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'TS 복습하기',
+          isCompleted: false,
+        },
+      ];
+
+      const dataThree = [
+        {
+          text: '테스트 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: '테스트 복습하기',
+          isCompleted: false,
+        },
+      ];
+
+      function checkDataValid(data) {
+        if (!Array.isArray(data)) {
+          throw Error('유효한 데이터가 아닙니다');
+        }
+      }
+
+      function TodoList(data, wrapperId) {
+        if (this === window) {
+          throw Error('new 키워드를 포함해서 인스턴스를 생성해주세요.');
+        }
+
+        checkDataValid(data);
+
+        this.data = data;
+        this.wrapperElement = document.getElementById(wrapperId);
+
+        this.render = function () {
+          const elementTemplate = this.data.reduce(
+            (acc, { text, isCompleted }) =>
+              (acc += `<li>${isCompleted ? `<s>${text}</s>` : text}</li>`),
+            ''
+          );
+
+          this.wrapperElement.innerHTML = elementTemplate;
+        };
+
+        this.setState = function (data) {
+          checkDataValid(data);
+
+          this.data = data;
+          this.render();
+        };
+
+        this.render();
+      }
+
+      const todoListOne = new TodoList(dataOne, 'todo-list-1');
+      const todoListTwo = new TodoList(dataTwo, 'todo-list-2');
+      const todoListThree = new TodoList(dataThree, 'todo-list-3');
+
+      const myTodo = [
+        { text: '1주차 미션 완료하기', isCompleted: false },
+        { text: '1주차 보너스 미션 완료하기', isCompleted: true },
+      ];
+
+      setTimeout(() => todoListThree.setState(myTodo), 3000);
+    </script>
+  </body>
+</html>
