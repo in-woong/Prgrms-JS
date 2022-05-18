@@ -1,0 +1,103 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list"></div>
+    <div id="todo-list2"></div>
+    <div id="todo-list3"></div>
+    <script>
+      var data = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: false,
+        },
+      ];
+      var reSet = [
+        {
+          text: '영화보기',
+          isCompleted: true,
+        },
+        {
+          text: '축구하기',
+          isCompleted: false,
+        },
+      ];
+
+      var data2 = [
+        {
+          text: 'JS 연습하기',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 쳐보기',
+          isCompleted: false,
+        },
+      ];
+
+      var data3 = [
+        {
+          text: '청소하기',
+          isCompleted: false,
+        },
+        {
+          text: '빨래하기',
+          isCompleted: true,
+        },
+      ];
+      // 이곳에서 코딩을 시작하세요!
+
+      class TodoList {
+        constructor(data, elId) {
+          this.dataValidation(data);
+          this.data = data;
+          this.divEl = document.querySelector(elId);
+          this.render();
+        }
+
+        render() {
+          const ulEl = document.createElement('ul');
+          this.data.forEach(({ text, isCompleted }) => {
+            const todo = isCompleted
+              ? document.createElement('s')
+              : document.createElement('li');
+            todo.setAttribute('class', 'todo');
+            todo.innerText = text;
+            ulEl.appendChild(todo);
+          });
+          this.divEl.appendChild(ulEl);
+        }
+
+        set setState(state) {
+          this.dataValidation(state);
+          this.data = state;
+          this.divEl.innerHTML = '';
+          this.render();
+        }
+
+        dataValidation(data) {
+          if (!data) throw new Error('Need input data');
+          if (!Array.isArray(data)) throw new Error('Data must be an array');
+
+          data.forEach(({ text, isCompleted }) => {
+            if (typeof text !== 'string')
+              throw new Error('text must be a string');
+            if (typeof isCompleted !== 'boolean')
+              throw new Error('isCompleted must be true or false');
+          });
+        }
+      }
+
+      const todos = new TodoList(data, '#todo-list');
+      const todos2 = new TodoList(data2, '#todo-list2');
+      const todos3 = new TodoList(data3, '#todo-list3');
+      todos.setState = reSet;
+    </script>
+  </body>
+</html>
