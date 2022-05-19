@@ -25,12 +25,13 @@
         },
       ];
       function TodoList(data) {
-        let html = '';
-        data.forEach((e) => {
-          html = html + e.text + '<br/>';
-        });
         this.render = function () {
-          document.getElementById('todo-list').innerHTML = html;
+          data.forEach((e) => {
+            let html = document.createElement('div');
+            let content = document.createTextNode(e.text);
+            html.append(content);
+            document.getElementById('todo-list').appendChild(html);
+          });
         };
       }
       const todoList = new TodoList(data);
