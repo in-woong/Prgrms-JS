@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list"></div>
+    <script>
+      var data = [
+        {
+          text: 'JS 공부하기',
+        },
+        {
+          text: 'JS 복습하기',
+        },
+      ];
+      // 이곳에서 코딩을 시작하세요!
+      const $ = (selector) => document.querySelector(selector);
+      function TodoList(data) {
+        this.list = data;
+        this.render = function () {
+          //string으로 붙여야 하기에 join으로 배열을 합침
+          const template = this.list
+            .map((item, idx) => {
+              return `<li id=${idx}>${item.text}</li>`;
+            })
+            .join('');
+
+          //ul과 ul의 id를 붙임
+          const ulElement = document.createElement('ul');
+          ulElement.setAttribute('id', 'ulElement');
+
+          $('#todo-list').appendChild(ulElement);
+          $('#ulElement').innerHTML = template;
+        };
+      }
+      const todoList = new TodoList(data);
+      todoList.render();
+    </script>
+  </body>
+</html>
