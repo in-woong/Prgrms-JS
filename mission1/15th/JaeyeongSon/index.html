@@ -24,10 +24,11 @@
       // 이곳에서 코딩을 시작하세요!
 
       function TodoList(data) {
+        if (this === window) {
+          throw new Error(ERROR_MESSAGE.NEW_KEYWORD);
+        }
+
         const validateData = (data) => {
-          if (this === window) {
-            throw new Error(ERROR_MESSAGE.NEW_KEYWORD);
-          }
           if (!Array.isArray(data)) {
             throw new Error(`${ERROR_MESSAGE.DATA_TYPE} ${data} `);
           }
@@ -38,14 +39,14 @@
           }
         };
 
-        validateData(data);
-
         const $target = document.querySelector('#todo-list');
         const $todoDiv = document.createElement('div');
 
         this.data = data;
 
         this.render = () => {
+          validateData(data);
+
           $todoDiv.innerHTML = `
           ${this.data
             .map((item) => {
