@@ -27,8 +27,20 @@
       function TodoList(data) {
         this.render = function () {
           data.forEach((e) => {
-            let html = document.createElement('div');
-            let content = document.createTextNode(e.text);
+            let html = document.createElement('ul');
+            let chkbox = document.createElement('input');
+            chkbox.setAttribute('type', 'checkbox');
+            let text = document.createTextNode(e.text);
+            let content = document.createElement('li');
+
+            chkbox.addEventListener('click', () => {
+              content.style.textDecoration === 'line-through'
+                ? (content.style.textDecoration = 'none')
+                : (content.style.textDecoration = 'line-through');
+            });
+
+            content.appendChild(text);
+            content.appendChild(chkbox);
             html.append(content);
             document.getElementById('todo-list').appendChild(html);
           });
