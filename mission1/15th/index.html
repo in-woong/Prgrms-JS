@@ -47,7 +47,7 @@
         /**
          * @param {Object[]} data - 할당할 data
          * @param {string} data[].text - 할 일에 대한 내용
-         * @param {string} data[].isCompleted - 할 일 완료여부
+         * @param {boolean} data[].isCompleted - 할 일 완료여부
          */
         set data(data) {
           if (!data) {
@@ -88,7 +88,7 @@
         /**
          * @param {Object[]} nextData
          * @param {string} nextData[].text - 할 일에 대한 내용
-         * @param {string} nextData[].isCompleted - 할 일 완료여부
+         * @param {boolean} nextData[].isCompleted - 할 일 완료여부
          */
         setState(nextData) {
           this.data = nextData;
