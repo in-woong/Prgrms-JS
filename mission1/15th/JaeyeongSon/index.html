@@ -1,0 +1,64 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list"></div>
+    <script>
+      const ERROR_MESSAGE = {
+        NEW_KEYWORD: "You should use 'new' keyword when calling this function",
+        DATA_TYPE: `Invalid data type in 'data' parameter. This should be array: `,
+        DATA_CONTENT: `all items in 'data' parameter should have key 'text'`,
+      };
+
+      var data = [
+        {
+          text: 'JS 공부하기',
+        },
+        {
+          text: 'JS 복습하기',
+        },
+      ];
+      // 이곳에서 코딩을 시작하세요!
+
+      function TodoList(data) {
+        const validateData = (data) => {
+          if (this === window) {
+            throw new Error(ERROR_MESSAGE.NEW_KEYWORD);
+          }
+          if (!Array.isArray(data)) {
+            throw new Error(`${ERROR_MESSAGE.DATA_TYPE} ${data} `);
+          }
+          const hasText = data.every((item) => item.text !== undefined);
+
+          if (!hasText || !data.length) {
+            throw new Error(`${ERROR_MESSAGE.DATA_CONTENT}`);
+          }
+        };
+
+        validateData(data);
+
+        const $target = document.querySelector('#todo-list');
+        const $todoDiv = document.createElement('div');
+
+        this.data = data;
+
+        this.render = () => {
+          $todoDiv.innerHTML = `
+          ${this.data
+            .map((item) => {
+              return `<div>${item.text}</div>`;
+            })
+            .join('')}
+          `;
+        };
+        $target.appendChild($todoDiv);
+      }
+
+      const firstTodo = new TodoList(data);
+      firstTodo.render();
+    </script>
+  </body>
+</html>
