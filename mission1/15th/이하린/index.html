@@ -16,7 +16,29 @@
         },
       ];
 
+      const checkDataValidation = (data) => {
+        if (!data) {
+          throw new Error('Data를 확인해주세요');
+        }
+        if (!Array.isArray(data)) {
+          throw new Error('배열 타입의 data를 입력하세요');
+        }
+
+        const dataValue = data.filter((item) => {
+          typeof item.text !== 'string';
+        });
+
+        if (!dataValue) {
+          throw new Error('데이터의 내용을 확인해주세요');
+        }
+      };
+
       function TodoList(data) {
+        if (!new.target) {
+          throw new Error('New 키워드를 추가해주세요');
+        }
+        checkDataValidation(data);
+
         this.data = data;
 
         this.render = () => {
