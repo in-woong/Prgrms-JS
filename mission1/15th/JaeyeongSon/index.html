@@ -71,8 +71,13 @@
 
         this.data = data;
 
+        this.setState = (nextData) => {
+          this.data = nextData;
+          this.render();
+        };
+
         this.render = () => {
-          validateData(data);
+          validateData(this.data);
 
           $todoDiv.innerHTML = `
           ${this.data
@@ -104,6 +109,8 @@
       firstTodo.render();
       secondTodo.render();
       thirdTodo.render();
+
+      secondTodo.setState(data1);
     </script>
   </body>
 </html>
