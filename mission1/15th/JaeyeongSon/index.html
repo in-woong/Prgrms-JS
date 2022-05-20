@@ -74,7 +74,7 @@
         this.data = data;
 
         this.setState = (nextData) => {
-          validateData(this.data);
+          validateData(nextData);
 
           this.data = nextData;
           this.render();
