@@ -44,36 +44,47 @@
         }
 
         /**
-         * @param {Object[]} data - 할당할 data
-         * @param {string} data[].text - 할 일에 대한 내용
-         * @param {boolean} data[].isCompleted - 할 일 완료여부
+         * @param {Object[]} newData - 할당할 data
+         * @param {string} newData[].text - 할 일에 대한 내용
+         * @param {boolean} newData[].isCompleted - 할 일 완료여부
          */
-        set data(data) {
-          if (!data) {
+        set data(newData) {
+          if (!newData) {
             throw new Error('TodoList를 생성할 때 data는 필수값입니다.');
           }
 
-          if (!Array.isArray(data)) {
+          if (!Array.isArray(newData)) {
             throw new Error('data는 array 타입이여야 합니다.');
           }
 
-          for (const todo of data) {
-            if (!('text' in todo) || !('isCompleted' in todo)) {
-              throw new Error('데이터의 형식을 다시 확인해주세요.');
+          newData.forEach((todo) => {
+            if (typeof todo !== 'object') {
+              throw new Error('data의 element는 object타입이어야 합니다.');
+              //
+            } else if (Object.keys(todo).length === 0) {
+              throw new Error('data의 element로 빈 객체를 할당할 수 없습니다');
             }
 
-            if (typeof todo.text !== 'string') {
-              throw new Error('text 프로퍼티의 type은 string이여야 합니다.');
+            if (!todo.text) {
+              throw new Error('text 프로퍼티가 존재하지 않습니다.');
+
+              if (typeof todo.text !== 'string') {
+                throw new Error('text 프로퍼티의 type은 string이여야 합니다.');
+              }
             }
 
-            if (typeof todo.isCompleted !== 'boolean') {
-              throw new Error(
-                'isCompleted 프로퍼티의 type은 boolean이여야 합니다.'
-              );
-            }
-          }
+            if (!('isCompleted' in todo)) {
+              throw new Error('isCompleted 프로퍼티가 존재하지 않습니다.');
 
-          this._data = data;
+              if (typeof todo.isCompleted !== 'boolean') {
+                throw new Error(
+                  'isCompleted 프로퍼티의 type은 boolean이여야 합니다.'
+                );
+              }
+            }
+          });
+
+          this._data = newData;
         }
 
         /**
