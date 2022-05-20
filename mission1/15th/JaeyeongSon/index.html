@@ -18,28 +18,35 @@
       var data1 = [
         {
           text: 'JS 공부하기',
+          isCompleted: true,
         },
         {
           text: 'JS 복습하기',
+          isCompleted: true,
         },
       ];
       var data2 = [
         {
           text: '저녁 메뉴 정하기',
+          isCompleted: false,
         },
         {
           text: '빨래하기',
+          isCompleted: false,
         },
         {
           text: '1시간 운동하기',
+          isCompleted: true,
         },
       ];
       var data3 = [
         {
           text: '코드리뷰하기',
+          isCompleted: false,
         },
         {
           text: '포트폴리오 만들기',
+          isCompleted: true,
         },
       ];
       // 이곳에서 코딩을 시작하세요!
@@ -70,7 +77,10 @@
           $todoDiv.innerHTML = `
           ${this.data
             .map((item) => {
-              return `<div>${item.text}</div>`;
+              let { text, isCompleted } = item;
+              return isCompleted
+                ? `<div><s>${text}</s></div>`
+                : `<div>${text}</div>`;
             })
             .join('')}
           `;
