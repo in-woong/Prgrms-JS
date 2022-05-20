@@ -37,7 +37,6 @@
         },
       ];
 
-      // 이곳에서 코딩을 시작하세요!
       class TodoList {
         constructor(data, selector) {
           this.data = data;
@@ -108,18 +107,16 @@
         }
       }
 
-      window.addEventListener('DOMContentLoaded', () => {
-        const todoList = new TodoList(data, '#todo-list');
-        todoList.render();
-        todoList.setState(data3);
+      const todoList = new TodoList(data, '#todo-list');
+      todoList.render();
+      todoList.setState(data3);
 
-        const todoList2 = new TodoList(data2, '#todo-list-2');
-        todoList2.render();
+      const todoList2 = new TodoList(data2, '#todo-list-2');
+      todoList2.render();
 
-        const todoList3 = new TodoList(data3, '#todo-list-3');
-        todoList3.render();
-        todoList3.setState(data);
-      });
+      const todoList3 = new TodoList(data3, '#todo-list-3');
+      todoList3.render();
+      todoList3.setState(data);
     </script>
   </body>
 </html>
