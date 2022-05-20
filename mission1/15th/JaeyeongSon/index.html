@@ -5,7 +5,9 @@
   </head>
 
   <body>
-    <div id="todo-list"></div>
+    <div id="todo-list-1"></div>
+    <div id="todo-list-2"></div>
+    <div id="todo-list-3"></div>
     <script>
       const ERROR_MESSAGE = {
         NEW_KEYWORD: "You should use 'new' keyword when calling this function",
@@ -13,7 +15,7 @@
         DATA_CONTENT: `all items in 'data' parameter should have key 'text'`,
       };
 
-      var data = [
+      var data1 = [
         {
           text: 'JS 공부하기',
         },
@@ -21,9 +23,28 @@
           text: 'JS 복습하기',
         },
       ];
+      var data2 = [
+        {
+          text: '저녁 메뉴 정하기',
+        },
+        {
+          text: '빨래하기',
+        },
+        {
+          text: '1시간 운동하기',
+        },
+      ];
+      var data3 = [
+        {
+          text: '코드리뷰하기',
+        },
+        {
+          text: '포트폴리오 만들기',
+        },
+      ];
       // 이곳에서 코딩을 시작하세요!
 
-      function TodoList(data) {
+      function TodoList($target, data) {
         if (this === window) {
           throw new Error(ERROR_MESSAGE.NEW_KEYWORD);
         }
@@ -39,7 +60,6 @@
           }
         };
 
-        const $target = document.querySelector('#todo-list');
         const $todoDiv = document.createElement('div');
 
         this.data = data;
@@ -58,8 +78,22 @@
         $target.appendChild($todoDiv);
       }
 
-      const firstTodo = new TodoList(data);
+      const firstTodo = new TodoList(
+        document.querySelector('#todo-list-1'),
+        data1
+      );
+      const secondTodo = new TodoList(
+        document.querySelector('#todo-list-2'),
+        data2
+      );
+      const thirdTodo = new TodoList(
+        document.querySelector('#todo-list-3'),
+        data3
+      );
+
       firstTodo.render();
+      secondTodo.render();
+      thirdTodo.render();
     </script>
   </body>
 </html>
