@@ -12,26 +12,32 @@
       var data = [
         {
           text: 'JS 공부하기',
+          isCompleted: false,
         },
         {
           text: 'JS 복습하기',
+          isCompleted: true,
         },
       ];
 
       var proceeding = [
         {
           text: 'mission1 보너스 구현사항',
+          isCompleted: true,
         },
         {
           text: '다중 컴포넌트 만들기',
+          isCompleted: false,
         },
       ];
       var done = [
         {
           text: 'mission1 필수 구현사항',
+          isCompleted: false,
         },
         {
           text: '알고리즘 문제풀기',
+          isCompleted: true,
         },
       ];
       // 이곳에서 코딩을 시작하세요!
@@ -50,13 +56,23 @@
             typeof item.text === 'string' &&
             item.text !== ''
         );
+
+        //완료된 리스트 삭선 긋기
+        const iscomplete = () => {
+          const todoArr = this.list.map((item, idx) => {
+            if (item.isCompleted) {
+              return `<li id=${idx}><s>${item.text}</s></li>`;
+            } else {
+              return `<li id=${idx}>${item.text}</li>`;
+            }
+          });
+
+          return todoArr.join('');
+        };
+
         this.render = function () {
           //string으로 붙여야 하기에 join으로 배열을 합침
-          const template = this.list
-            .map((item, idx) => {
-              return `<li id=${idx}>${item.text}</li>`;
-            })
-            .join('');
+          const template = iscomplete();
 
           //ul과 ul의 id를 붙임
           const ulElement = document.createElement('ul');
