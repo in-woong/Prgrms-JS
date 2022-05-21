@@ -9,7 +9,7 @@
     <div id="hero-wod-zeus"></div>
     <div id="todo-0521"></div>
     <script>
-      var data = [
+      let data = [
         {
           text: 'JS 공부하기',
           isCompleted: true,
@@ -20,7 +20,7 @@
         },
       ];
 
-      var zeus = [
+      let zeus = [
         {
           text: '3 Rounds For Time',
           isCompleted: false,
@@ -55,7 +55,7 @@
         },
       ];
 
-      var data_0521 = [
+      let data_0521 = [
         {
           text: '아침 닭가슴살, 샐러드',
           isCompleted: true,
@@ -82,23 +82,16 @@
         },
       ];
 
-      function makeElement(id, el) {
-        let html = document.createElement('ul');
-        let chkbox = document.createElement('input');
-        chkbox.setAttribute('type', 'checkbox');
-        let text = document.createTextNode(el.text);
-        let content = document.createElement('li');
-
-        chkbox.addEventListener('click', () => {
-          content.style.textDecoration === 'line-through'
-            ? (content.style.textDecoration = 'none')
-            : (content.style.textDecoration = 'line-through');
-        });
-
-        content.appendChild(text);
-        content.appendChild(chkbox);
-        html.append(content);
-        document.getElementById(id).appendChild(html);
+      function printList(id, data) {
+        document.getElementById(id).innerHTML = `
+        <ul>
+          ${data
+            .map(
+              ({ text, isCompleted }) =>
+                `<li>${isCompleted ? `<s>${text}</s>` : text}</li>`
+            )
+            .join('')}
+        </ul>`;
       }
 
       function TodoList(id, data) {
@@ -108,13 +101,18 @@
         if (Object.prototype.toString.call(data).slice(8, -1) !== 'Array') {
           throw new Error('Exceptional Parameter!!!');
         }
+
+        this.state = data;
+
         this.render = function () {
-          data.forEach((e) => makeElement(id, e));
+          printList(id, this.state);
+        };
+
+        this.setState = function (nextData) {
+          this.state = nextData;
+          this.render();
         };
       }
-
-      // let undefEx = undefined;
-      // let funcEx = function () {};
 
       const todoList = new TodoList('todo-list', data);
       const hero_wod_zeus = new TodoList('hero-wod-zeus', zeus);
@@ -123,9 +121,18 @@
       hero_wod_zeus.render();
       todo_0521.render();
 
-      // 추가기능 구현할때 if(!new.target){} 사용하는거 알아보기
-      // const todoList2 = TodoList(data);
-      // todoList2.render();
+      setTimeout(() => {
+        todoList.setState([
+          {
+            text: 'JS 공부하기',
+            isCompleted: true,
+          },
+          {
+            text: 'JS 복습하기',
+            isCompleted: true,
+          },
+        ]);
+      }, 2000);
     </script>
   </body>
 </html>
