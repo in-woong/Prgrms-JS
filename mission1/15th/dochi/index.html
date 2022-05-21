@@ -17,6 +17,10 @@
       ];
 
       function TodoList(data) {
+        if (!new.target) {
+          throw new Error('new 키워드를 사용해주세요');
+        }
+
         const $todoList = document.querySelector('#todo-list');
 
         const todoTemplate = (todo) => `
@@ -34,6 +38,9 @@
 
       const sample = new TodoList(data);
       sample.render();
+
+      const error = TodoList(data);
+      error.render();
     </script>
   </body>
 </html>
