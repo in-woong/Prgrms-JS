@@ -45,13 +45,10 @@
           throw new Error('배열 타입의 data를 입력하세요');
         }
 
-        const dataValue = data.filter((item) => {
-          typeof item.text !== 'string';
+        data.forEach(({ text, isCompleted }) => {
+          if (typeof text !== 'string' || typeof isCompleted !== 'boolean')
+            throw new Error('데이터의 내용을 확인해주세요');
         });
-
-        if (!dataValue) {
-          throw new Error('데이터의 내용을 확인해주세요');
-        }
       };
 
       function TodoList(id, data) {
