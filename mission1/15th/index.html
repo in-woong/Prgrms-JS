@@ -11,16 +11,30 @@
     const $selector = ($target) => document.querySelector($target);
     const $creator = ($target) => document.createElement($target);
 
+    const ERROR_MESSAGE = {
+      CONSTRUCTOR: 'new 키워드를 사용해 생성자 함수로 호출해 주세요.',
+      TYPE: '유효한 입력값이 아닙니다. 입력값은 배열 형태만 가능합니다.',
+      CONTENT: '텍스트 컨텐츠가 존재하지 않거나 유효하지 않습니다. 텍스트 컨텐츠를 확인해 주세요.',
+      FALSY: '입력한 값이 없습니다. 입력한 값이 있는지 확인해 주세요.'
+    }
+
     const data = [
       {
         text: 'JS 공부하기'
       },
       {
         text: 'JS 복습하기'
-      }
+      },
     ]
 
     function TodoList(todos) {
+      if (!new.target) throw new Error(ERROR_MESSAGE.CONSTRUCTOR);
+      if (!todos || !todos.length) throw new Error(ERROR_MESSAGE.FALSY);
+      if (!Array.isArray(todos)) throw new Error(ERROR_MESSAGE.TYPE);
+      const invalidContent = todos.every(({ text }) => !!text);
+      if (!invalidContent) throw new Error(ERROR_MESSAGE.CONTENT);
+
+
       this.todos = todos;
 
       this.render = () => {
