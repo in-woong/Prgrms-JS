@@ -21,7 +21,15 @@
         if (!Array.isArray(data)) {
           throw new Error('error message');
         }
-        this.list = data;
+        //data 값이 text라는 프로퍼티를 가지고 있으면서
+        // text의 타입이 string이어야 한다.
+        //빈값도 막기
+        this.list = data.filter(
+          (item) =>
+            item.hasOwnProperty('text') &&
+            typeof item.text === 'string' &&
+            item.text !== ''
+        );
         this.render = function () {
           //string으로 붙여야 하기에 join으로 배열을 합침
           const template = this.list
