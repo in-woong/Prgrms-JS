@@ -1,42 +1,40 @@
 <html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
 
-<head>
-  <title>Mission 1</title>
-  <meta charset="utf-8" />
-</head>
+  <body>
+    <div id="todo-list"></div>
+    <script>
+      var data = [
+        {
+          text: 'JS 공부하기',
+        },
+        {
+          text: 'JS 복습하기',
+        },
+      ];
+      // 이곳에서 코딩을 시작하세요!
 
-<body>
-  <div id="todo-list"></div>
-  <script>
-    var data = [
-      {
-        text: 'JS 공부하기'
-      },
-      {
-        text: 'JS 복습하기'
+      class TodoList {
+        constructor(data) {
+          this.data = data;
+        }
+
+        render() {
+          const divTodoList = document.getElementById('todo-list');
+
+          this.data
+            .map((item) => '<div>' + item.text + '</div>')
+            .forEach((item) => {
+              divTodoList.innerHTML += item;
+            });
+        }
       }
-    ]
-	// 이곳에서 코딩을 시작하세요!
 
-    class TodoList{
-        constructor(data){
-            this.data = data;
-
-        }
-
-        render(){
-            
-            const divTodoList = document.getElementById('todo-list');
-
-            this.data.map((item)=>'<div>'+item.text+'</div>').forEach((item)=>{divTodoList.innerHTML+=item})
-        
-        }
-
-    }
-
-    //var todoList = new TodoList(data);
-    //todoList.render();
-
-  </script>
-</body>
+      //var todoList = new TodoList(data);
+      //todoList.render();
+    </script>
+  </body>
 </html>
