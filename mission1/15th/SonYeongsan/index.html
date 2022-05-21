@@ -84,15 +84,13 @@
       }
 
       this.makeTodo = ({ text, isCompleted }) => isCompleted ? `<li><s>${text}</s></li>` : `<li>${text}</li>`
+
+      this.render();
     }
 
     const studyTodoList = new TodoList(study, '#component-1');
     const workTodoList = new TodoList(work, '#component-2');
     const hobbyTodoList = new TodoList(hobby, '#component-3');
-
-    studyTodoList.render();
-    workTodoList.render();
-    hobbyTodoList.render();
 
     studyTodoList.setState(work);
     studyTodoList.setState(hobby);
