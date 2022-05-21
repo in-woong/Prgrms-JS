@@ -43,21 +43,43 @@
       // 이곳에서 코딩을 시작하세요!
       const $ = (selector) => document.querySelector(selector);
 
-      function TodoList(data, target) {
-        if (!Array.isArray(data)) {
-          throw new Error('error message');
-        }
-        //data 값이 text라는 프로퍼티를 가지고 있으면서
-        // text의 타입이 string이어야 한다.
-        //빈값도 막기
-        this.list = data.filter(
+      //data 값이 text라는 프로퍼티를 가지고 있으면서
+      // text의 타입이 string이어야 한다.
+      //빈값도 막기
+      const validation = (array) => {
+        return array.filter(
           (item) =>
             item.hasOwnProperty('text') &&
             typeof item.text === 'string' &&
             item.text !== ''
         );
+      };
+
+      function TodoList(data, target) {
+        if (!Array.isArray(data)) {
+          throw new Error('error message');
+        }
+
+        this.list = validation(data);
+
+        this.setState = (nextData) => {
+          this.list = validation(nextData);
+
+          this.render();
+        };
 
         //완료된 리스트 삭선 긋기
+        this.render = function () {
+          //string으로 붙여야 하기에 join으로 배열을 합침
+          const template = iscomplete();
+
+          //ul과 ul의 id를 붙임
+          // const ulElement = document.createElement('ul');
+          // ulElement.setAttribute('id', 'ulElement');
+          //해당 DOM을 넘겨서 재사용성 늘리기
+          target.querySelector('#list-container').innerHTML = template;
+        };
+
         const iscomplete = () => {
           const todoArr = this.list.map((item, idx) => {
             if (item.isCompleted) {
