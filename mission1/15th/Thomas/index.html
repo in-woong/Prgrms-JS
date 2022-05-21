@@ -5,9 +5,15 @@
   </head>
 
   <body>
-    <div id="todo-list"></div>
-    <div id="proceeding-list"></div>
-    <div id="done-list"></div>
+    <div id="todo-list">
+      <ul id="list-container"></ul>
+    </div>
+    <div id="proceeding-list">
+      <ul id="list-container"></ul>
+    </div>
+    <div id="done-list">
+      <ul id="list-container"></ul>
+    </div>
     <script>
       var data = [
         {
@@ -91,19 +97,8 @@
 
           return todoArr.join('');
         };
-
-        this.render = function () {
-          //string으로 붙여야 하기에 join으로 배열을 합침
-          const template = iscomplete();
-
-          //ul과 ul의 id를 붙임
-          const ulElement = document.createElement('ul');
-          ulElement.setAttribute('id', 'ulElement');
-
-          //해당 DOM을 넘겨서 재사용성 늘리기
-          target.appendChild(ulElement).innerHTML = template;
-        };
       }
+
       const todoList = new TodoList(data, $('#todo-list'));
       const proceedingList = new TodoList(proceeding, $('#proceeding-list'));
       const doneList = new TodoList(done, $('#done-list'));
@@ -117,6 +112,21 @@
       // } catch (error) {
       //   throw new Error('error message');
       // }
+
+      todoList.setState([
+        {
+          text: 'JS 공부하기',
+          isCompleted: false,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: true,
+        },
+        {
+          text: 'setState 만들기',
+          isCompleted: false,
+        },
+      ]);
     </script>
   </body>
 </html>
