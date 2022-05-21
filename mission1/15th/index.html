@@ -6,9 +6,12 @@
 </head>
 
 <body>
-  <div id="todo-list"></div>
+  <div id="component-1"></div>
   <script>
-    var data = [
+    const $selector = ($target) => document.querySelector($target);
+    const $creator = ($target) => document.createElement($target);
+
+    const data = [
       {
         text: 'JS 공부하기'
       },
@@ -16,7 +19,23 @@
         text: 'JS 복습하기'
       }
     ]
-    // 이곳에서 코딩을 시작하세요!
+
+    function TodoList(todos) {
+      this.todos = todos;
+
+      this.render = () => {
+        const $list = $creator('ul');
+        $list.innerHTML = this.todos.map((todo) => this.makeTodo(todo.text)).join('');
+
+        $selector('#component-1').appendChild($list);
+      }
+
+      this.makeTodo = (text) => `<li>${text}</li>`
+    }
+
+    const todoList = new TodoList(data);
+    todoList.render();
   </script>
 </body>
+
 </html>
