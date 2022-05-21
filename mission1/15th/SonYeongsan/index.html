@@ -53,17 +53,24 @@
     ]
 
     function TodoList(todos, $target) {
-      if (!new.target) throw new Error(ERROR_MESSAGE.CONSTRUCTOR);
-      if (!todos || !todos.length) throw new Error(ERROR_MESSAGE.FALSY);
-      if (!Array.isArray(todos)) throw new Error(ERROR_MESSAGE.TYPE);
-      const invalidContent = todos.every(({ text }) => !!text);
-      if (!invalidContent) throw new Error(ERROR_MESSAGE.CONTENT);
 
+      const validateData = (data, target) => {
+        const invalidContent = data.every(({ text }) => !!text);
+        if (!new.target) throw new Error(ERROR_MESSAGE.CONSTRUCTOR);
+        if (!data || !data.length) throw new Error(ERROR_MESSAGE.FALSY);
+        if (!Array.isArray(data)) throw new Error(ERROR_MESSAGE.TYPE);
+        if (!invalidContent) throw new Error(ERROR_MESSAGE.CONTENT);
+        if (!target) throw new Error(ERROR_MESSAGE.TARGET);
+      }
+
+      validateData(todos, $target);
 
       this.todos = todos;
 
       this.setState = (newTodos) => {
         this.todos = newTodos;
+
+        validateData(this.todos, $target);
         this.render();
       }
 
@@ -71,7 +78,8 @@
         const $list = $creator('ul');
         $list.innerHTML = this.todos.map((todo) => this.makeTodo(todo)).join('');
 
-        if (!$target) throw new Error(ERROR_MESSAGE.TARGET);
+
+        validateData(this.todos, $target);
         $selector($target).appendChild($list);
       }
 
