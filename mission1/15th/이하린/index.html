@@ -56,7 +56,6 @@
           throw new Error('New 키워드를 추가해주세요');
         }
         checkDataValidation(data);
-
         this.data = data;
 
         this.render = () => {
@@ -74,10 +73,16 @@
 
           listDiv.innerHTML = listItem;
         };
+
+        this.setState = (nextData) => {
+          this.data = nextData;
+          this.render();
+        };
       }
 
       const todoList = new TodoList('todo-list', todoData);
       todoList.render();
+      // todoList.setState(weeklyData);
 
       const weeklyList = new TodoList('weekly-list', weeklyData);
       weeklyList.render();
