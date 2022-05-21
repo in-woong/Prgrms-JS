@@ -19,7 +19,22 @@
 
       class TodoList {
         constructor(data) {
+          this.checkData(data);
+
           this.data = data;
+        }
+
+        /* #50 */
+        checkData(data) {
+          if (data === null || data === undefined || !Array.isArray(data)) {
+            throw new Error('invalid data');
+          }
+
+          data.forEach((item) => {
+            if (!item.hasOwnProperty('text') || typeof item.text !== 'string') {
+              throw new Error('no text(string) in data');
+            }
+          });
         }
 
         render() {
@@ -33,8 +48,8 @@
         }
       }
 
-      //var todoList = new TodoList(data);
-      //todoList.render();
+      var todoList = new TodoList(data);
+      todoList.render();
     </script>
   </body>
 </html>
