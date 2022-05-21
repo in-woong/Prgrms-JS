@@ -6,6 +6,8 @@
 
   <body>
     <div id="todo-list"></div>
+    <div id="proceeding-list"></div>
+    <div id="done-list"></div>
     <script>
       var data = [
         {
@@ -15,9 +17,27 @@
           text: 'JS 복습하기',
         },
       ];
+
+      var proceeding = [
+        {
+          text: 'mission1 보너스 구현사항',
+        },
+        {
+          text: '다중 컴포넌트 만들기',
+        },
+      ];
+      var done = [
+        {
+          text: 'mission1 필수 구현사항',
+        },
+        {
+          text: '알고리즘 문제풀기',
+        },
+      ];
       // 이곳에서 코딩을 시작하세요!
       const $ = (selector) => document.querySelector(selector);
-      function TodoList(data) {
+
+      function TodoList(data, target) {
         if (!Array.isArray(data)) {
           throw new Error('error message');
         }
@@ -42,12 +62,17 @@
           const ulElement = document.createElement('ul');
           ulElement.setAttribute('id', 'ulElement');
 
-          $('#todo-list').appendChild(ulElement);
-          $('#ulElement').innerHTML = template;
+          //해당 DOM을 넘겨서 재사용성 늘리기
+          target.appendChild(ulElement).innerHTML = template;
         };
       }
-      const todoList = new TodoList(data);
+      const todoList = new TodoList(data, $('#todo-list'));
+      const proceedingList = new TodoList(proceeding, $('#proceeding-list'));
+      const doneList = new TodoList(done, $('#done-list'));
+
       todoList.render();
+      proceedingList.render();
+      doneList.render();
       // try {
       //   const todoList = TodoList(data);
       //   todoList.render();
