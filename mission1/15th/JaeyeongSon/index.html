@@ -50,7 +50,9 @@
         },
       ];
 
-      function TodoList(target, data) {
+      const $ = (selector) => document.querySelector(selector);
+
+      function TodoList($target, data) {
         if (!new.target) {
           throw new Error(ERROR_MESSAGE.NEW_KEYWORD);
         }
@@ -68,7 +70,6 @@
 
         validateData(data);
 
-        const $target = document.querySelector(target);
         const $todoList = document.createElement('ul');
 
         this.data = data;
@@ -96,15 +97,13 @@
           `;
         };
         $target.appendChild($todoList);
+
+        this.render();
       }
 
-      const firstTodo = new TodoList('#todo-list-1', data1);
-      const secondTodo = new TodoList('#todo-list-2', data2);
-      const thirdTodo = new TodoList('#todo-list-3', data3);
-
-      firstTodo.render();
-      secondTodo.render();
-      thirdTodo.render();
+      const firstTodo = new TodoList($('#todo-list-1'), data1);
+      const secondTodo = new TodoList($('#todo-list-2'), data2);
+      const thirdTodo = new TodoList($('#todo-list-3'), data3);
 
       secondTodo.setState(data1);
     </script>
