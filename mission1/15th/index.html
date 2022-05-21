@@ -23,26 +23,32 @@
 
     const study = [
       {
-        text: 'JS 공부하기'
+        text: 'JS 공부하기',
+        isCompleted: true,
       },
       {
-        text: 'JS 복습하기'
+        text: 'JS 복습하기',
+        isCompleted: true,
       },
     ]
     const work = [
       {
-        text: '기존 프로젝트 유지보수'
+        text: '기존 프로젝트 유지보수',
+        isCompleted: false
       },
       {
-        text: '신규 프로젝트 진행'
+        text: '신규 프로젝트 진행',
+        isCompleted: true,
       }
     ]
     const hobby = [
       {
-        text: '풋살 레슨 참가'
+        text: '풋살 레슨 참가',
+        isCompleted: true,
       },
       {
-        text: '런데이 러닝 대회 참가'
+        text: '런데이 러닝 대회 참가',
+        isCompleted: false
       }
     ]
 
@@ -58,13 +64,13 @@
 
       this.render = () => {
         const $list = $creator('ul');
-        $list.innerHTML = this.todos.map((todo) => this.makeTodo(todo.text)).join('');
+        $list.innerHTML = this.todos.map((todo) => this.makeTodo(todo)).join('');
 
         if (!$target) throw new Error(ERROR_MESSAGE.TARGET);
         $selector($target).appendChild($list);
       }
 
-      this.makeTodo = (text) => `<li>${text}</li>`
+      this.makeTodo = ({ text, isCompleted }) => isCompleted ? `<li><s>${text}</s></li>` : `<li>${text}</li>`
     }
 
     const studyTodoList = new TodoList(study, '#component-1');
