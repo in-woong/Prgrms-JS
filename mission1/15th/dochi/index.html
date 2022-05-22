@@ -12,27 +12,33 @@
       const data = [
         {
           text: 'JS 공부하기',
+          isCompleted: true,
         },
         {
           text: 'JS 복습하기',
+          isCompleted: false,
         },
       ];
 
       const data2 = [
         {
           text: 'JAVA 공부하기',
+          isCompleted: true,
         },
         {
           text: 'JAVA 복습하기',
+          isCompleted: true,
         },
       ];
 
       const data3 = [
         {
           text: 'C 공부하기',
+          isCompleted: false,
         },
         {
           text: 'C 복습하기',
+          isCompleted: false,
         },
       ];
 
@@ -57,9 +63,10 @@
           throw new Error('new 키워드를 사용해주세요');
         }
 
-        const todoTemplate = (todo) => `
-          <li>${todo.text}</li>
-        `;
+        const todoTemplate = (todo) =>
+          todo.isCompleted
+            ? `<li><s>${todo.text}</s></li>`
+            : `<li>${todo.text}</li>`;
 
         this.data = data;
         this.render = function () {
