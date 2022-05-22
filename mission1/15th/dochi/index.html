@@ -69,7 +69,7 @@
 
         const _drawTodos = () => {
           const todos = this.data.map((todo) => todoTemplate(todo)).join('');
-          container.innerHTML = `<ul>${todos}</ul>`;
+          this.container.innerHTML = `<ul>${todos}</ul>`;
         };
 
         const _validateData = (data) => {
@@ -86,7 +86,14 @@
           }
         };
 
+        const _validateContainer = (container) => {
+          if (container.tagName !== 'DIV') {
+            throw new Error('<div> 태그를 컨테이너로 사용해주세요');
+          }
+        };
+
         this.data = data;
+        this.container = container;
         this.render = function () {
           _drawTodos();
         };
@@ -97,6 +104,7 @@
         };
 
         _validateData(data);
+        _validateContainer(container);
         this.render();
       }
 
