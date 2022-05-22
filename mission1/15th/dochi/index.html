@@ -42,6 +42,17 @@
         },
       ];
 
+      const data4 = [
+        {
+          text: 'Rust 공부하기',
+          isCompleted: false,
+        },
+        {
+          text: 'Rust 복습하기',
+          isCompleted: false,
+        },
+      ];
+
       const $todoList = document.querySelector('#todo-list');
       const $todoList2 = document.querySelector('#todo-list-2');
       const $todoList3 = document.querySelector('#todo-list-3');
@@ -71,9 +82,12 @@
         this.data = data;
         this.render = function () {
           const todos = this.data.map((todo) => todoTemplate(todo)).join('');
-          const $todos = document.createElement('ul');
-          $todos.innerHTML = todos;
-          container.appendChild($todos);
+          container.innerHTML = `<ul>${todos}</ul>`;
+        };
+        this.setState = function (nextData) {
+          this.data = nextData;
+          const todos = this.data.map((todo) => todoTemplate(todo)).join('');
+          container.innerHTML = `<ul>${todos}</ul>`;
         };
       }
 
@@ -85,6 +99,7 @@
 
       const todoList3 = new TodoList(data3, $todoList3);
       todoList3.render();
+      todoList3.setState(data4);
     </script>
   </body>
 </html>
