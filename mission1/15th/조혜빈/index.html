@@ -42,6 +42,25 @@
         },
       ];
 
+      var newData = [
+        {
+          text: 'JS 공부하기',
+          isCompleted: true,
+        },
+        {
+          text: 'JS 복습하기',
+          isCompleted: true,
+        },
+        {
+          text: '스터디 미션1',
+          isCompleted: false,
+        },
+        {
+          text: '스터디미션2',
+          isCompleted: false,
+        },
+      ];
+
       class TodoList {
         constructor(listId, data) {
           this.$list = document.querySelector(`#${listId}`);
@@ -75,6 +94,13 @@
             this.$list.appendChild($todo);
           });
         }
+
+        setState(nextData) {
+          this.validate(nextData);
+          this.data = nextData;
+          this.$list.innerHTML = null;
+          this.render();
+        }
       }
 
       const todoList = new TodoList('todo-list', data);
@@ -85,6 +111,8 @@
 
       const todoListMonthly = new TodoList('todo-list-monthly', dataMonthly);
       todoListMonthly.render();
+
+      todoList.setState(newData);
     </script>
   </body>
 </html>
