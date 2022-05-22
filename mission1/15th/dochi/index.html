@@ -75,7 +75,9 @@
             !data.length ||
             !data.every(
               (value) =>
-                typeof value === 'object' && Object.keys(value).includes('text')
+                typeof value === 'object' &&
+                Object.keys(value).includes('text') &&
+                Object.keys(value).includes('isCompleted')
             )
           ) {
             throw new Error('올바른 데이터를 넣어주세요');
