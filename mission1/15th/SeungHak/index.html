@@ -8,6 +8,12 @@
     <div id="todo-list"></div>
     <div id="hero-wod-zeus"></div>
     <div id="todo-0521"></div>
+    <style>
+      ul {
+        list-style: none;
+        padding-left: 0px;
+      }
+    </style>
     <script>
       let data = [
         {
@@ -88,19 +94,33 @@
           ${data
             .map(
               ({ text, isCompleted }) =>
-                `<li>${isCompleted ? `<s>${text}</s>` : text}</li>`
+                `<li><input type="checkbox">${
+                  isCompleted ? `<s>${text}</s>` : text
+                }</li>`
             )
             .join('')}
         </ul>`;
       }
 
+      function checkValidity(id, data, isNew) {
+        if (!isNew) {
+          throw new Error('Function must be declared with "new" keyword!!!');
+        }
+        if (!Array.isArray(data)) {
+          throw new Error('Data type is not an Array!!!');
+        }
+        data.map((data) => {
+          if (
+            typeof data.text !== 'string' ||
+            typeof data.isCompleted !== 'boolean'
+          ) {
+            throw new Error('Invalid Data!!!');
+          }
+        });
+      }
+
       function TodoList(id, data) {
-        if (!new.target) {
-          throw new Error('Function must be declared with "new" keyword');
-        }
-        if (Object.prototype.toString.call(data).slice(8, -1) !== 'Array') {
-          throw new Error('Exceptional Parameter!!!');
-        }
+        checkValidity(id, data, new.target);
 
         this.state = data;
 
@@ -130,6 +150,10 @@
           {
             text: 'JS 복습하기',
             isCompleted: true,
+          },
+          {
+            text: 'PR 올리기',
+            isCompleted: false,
           },
         ]);
       }, 2000);
