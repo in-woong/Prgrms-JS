@@ -79,15 +79,18 @@
             ? `<li><s>${todo.text}</s></li>`
             : `<li>${todo.text}</li>`;
 
-        this.data = data;
-        this.render = function () {
+        const _drawTodos = () => {
           const todos = this.data.map((todo) => todoTemplate(todo)).join('');
           container.innerHTML = `<ul>${todos}</ul>`;
         };
+
+        this.data = data;
+        this.render = function () {
+          _drawTodos();
+        };
         this.setState = function (nextData) {
           this.data = nextData;
-          const todos = this.data.map((todo) => todoTemplate(todo)).join('');
-          container.innerHTML = `<ul>${todos}</ul>`;
+          _drawTodos();
         };
       }
 
