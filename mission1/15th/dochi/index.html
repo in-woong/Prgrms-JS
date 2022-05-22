@@ -17,6 +17,18 @@
       ];
 
       function TodoList(data) {
+        if (
+          !data ||
+          !Array.isArray(data) ||
+          !data.length ||
+          !data.every(
+            (value) =>
+              typeof value === 'object' && Object.keys(value).includes('text')
+          )
+        ) {
+          throw new Error('올바른 데이터를 넣어주세요');
+        }
+
         if (!new.target) {
           throw new Error('new 키워드를 사용해주세요');
         }
@@ -39,7 +51,7 @@
       const sample = new TodoList(data);
       sample.render();
 
-      const error = TodoList(data);
+      const error = new TodoList([undefined, null]);
       error.render();
     </script>
   </body>
