@@ -58,18 +58,6 @@
       const $todoList3 = document.querySelector('#todo-list-3');
 
       function TodoList(data, container) {
-        if (
-          !data ||
-          !Array.isArray(data) ||
-          !data.length ||
-          !data.every(
-            (value) =>
-              typeof value === 'object' && Object.keys(value).includes('text')
-          )
-        ) {
-          throw new Error('올바른 데이터를 넣어주세요');
-        }
-
         if (!new.target) {
           throw new Error('new 키워드를 사용해주세요');
         }
@@ -84,24 +72,39 @@
           container.innerHTML = `<ul>${todos}</ul>`;
         };
 
+        const _validateData = (data) => {
+          if (
+            !data ||
+            !Array.isArray(data) ||
+            !data.length ||
+            !data.every(
+              (value) =>
+                typeof value === 'object' && Object.keys(value).includes('text')
+            )
+          ) {
+            throw new Error('올바른 데이터를 넣어주세요');
+          }
+        };
+
         this.data = data;
         this.render = function () {
           _drawTodos();
         };
         this.setState = function (nextData) {
+          _validateData(nextData);
           this.data = nextData;
           _drawTodos();
         };
+
+        _validateData(data);
+        this.render();
       }
 
       const todoList = new TodoList(data, $todoList);
-      todoList.render();
 
       const todoList2 = new TodoList(data2, $todoList2);
-      todoList2.render();
 
       const todoList3 = new TodoList(data3, $todoList3);
-      todoList3.render();
       todoList3.setState(data4);
     </script>
   </body>
