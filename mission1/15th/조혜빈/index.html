@@ -12,27 +12,33 @@
       var data = [
         {
           text: 'JS 공부하기',
+          isCompleted: true,
         },
         {
           text: 'JS 복습하기',
+          isCompleted: false,
         },
       ];
 
       var dataWeekly = [
         {
           text: '방청소',
+          isCompleted: true,
         },
         {
           text: '운동',
+          isCompleted: false,
         },
       ];
 
       var dataMonthly = [
         {
           text: 'TS 공부하기',
+          isCompleted: false,
         },
         {
           text: 'React 복습하기',
+          isCompleted: true,
         },
       ];
 
@@ -63,7 +69,9 @@
         render() {
           this.data.forEach((todo) => {
             const $todo = document.createElement('div');
-            $todo.innerHTML = todo.text;
+            $todo.innerHTML = todo.isCompleted
+              ? todo.text
+              : `<s>${todo.text}</s>`;
             this.$list.appendChild($todo);
           });
         }
