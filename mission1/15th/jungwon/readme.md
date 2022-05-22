@@ -26,16 +26,20 @@
     - 각 프로퍼티의 type이 올바른지 확인
 
     ```js
-    newData.forEach((todo) => {
-      //  todo의 타입이 object인지, todo가 nullable 할 때의 검증 추가
-      if (typeof todo !== 'object') {
-        throw new Error('data의 element는 object타입이어야 합니다.');
-        //
-      } else if (Object.keys(todo).length === 0) {
-        throw new Error('data의 element로 빈 객체를 할당할 수 없습니다');
-      }
+    // 📌 newData의 element 검사
+    // todo의 타입이 object인지, todo가 nullable 할 때의 검증 추가
+    const hasAllObject = newData.every((todo) => typeof todo === 'object');
+    if (!hasAllObject) {
+      throw new Error('data의 element는 object타입이어야 합니다.');
+    }
+    const hasEmpty = newData.some((todo) => Object.keys(todo).length === 0);
+    if (hasEmpty) {
+      throw new Error('data의 element로 빈 객체를 할당할 수 없습니다');
+    }
 
-      //  각 프로퍼티가 존재하는지 + 타입은 무엇인지 관심사로 묶어서 검증
+    // 📌 newData의 element의 프로퍼티 검사
+    // 각 프로퍼티가 존재하는지 + 타입은 무엇인지 관심사로 묶어서 검증
+    newData.forEach((todo) => {
       //  → text 프로퍼티 검증
       if (!todo.text) {
         throw new Error('text 프로퍼티가 존재하지 않습니다.');
@@ -58,7 +62,7 @@
     });
     ```
 
-  - ❓ 해당 구현사항을 `validateData`함수로 묶어서 클래스 외부에서 선언했는데, 혹시 이를 <span style="background-color: #fff5b1">클래스 내부로 구현할 수 있는 방법이 있을까요? </span>
+  - ❓<s> 해당 구현사항을 `validateData`함수로 묶어서 클래스 외부에서 선언했는데, 혹시 이를 <span style="background-color: #fff5b1">클래스 내부로 구현할 수 있는 방법이 있을까요? </span></s>
 
     - [x] setter, getter사용으로 해결했습니다. ✨
 
