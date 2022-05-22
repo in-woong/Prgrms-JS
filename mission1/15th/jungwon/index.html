@@ -44,27 +44,38 @@
         }
 
         /**
+         * 📌 data에 대한 setter입니다.
+         *
          * @param {Object[]} newData - 할당할 data
          * @param {string} newData[].text - 할 일에 대한 내용
          * @param {boolean} newData[].isCompleted - 할 일 완료여부
          */
         set data(newData) {
+          // newData 검사
           if (!newData) {
             throw new Error('TodoList를 생성할 때 data는 필수값입니다.');
           }
-
           if (!Array.isArray(newData)) {
             throw new Error('data는 array 타입이여야 합니다.');
           }
 
-          newData.forEach((todo) => {
-            if (typeof todo !== 'object') {
-              throw new Error('data의 element는 object타입이어야 합니다.');
-              //
-            } else if (Object.keys(todo).length === 0) {
-              throw new Error('data의 element로 빈 객체를 할당할 수 없습니다');
-            }
+          // newData의 element 검사
+          const hasAllObject = newData.every(
+            (todo) => typeof todo === 'object'
+          );
+          if (!hasAllObject) {
+            throw new Error('data의 element는 object타입이어야 합니다.');
+          }
 
+          const hasEmpty = newData.some(
+            (todo) => Object.keys(todo).length === 0
+          );
+          if (hasEmpty) {
+            throw new Error('data의 element로 빈 객체를 할당할 수 없습니다');
+          }
+
+          // newData의 element의 프로퍼티 검사
+          newData.forEach((todo) => {
             if (!todo.text) {
               throw new Error('text 프로퍼티가 존재하지 않습니다.');
 
@@ -88,6 +99,8 @@
         }
 
         /**
+         * 📌 data에 대한 getter입니다.
+         *
          * @return {Object[]} data - todo
          */
         get data() {
@@ -95,7 +108,7 @@
         }
 
         /**
-         * todoList를 렌더하는 메소드입니다.
+         * 📌 todoList를 렌더하는 메소드입니다.
          */
         render() {
           this.$todoList.innerHTML = this.data
@@ -106,7 +119,7 @@
         }
 
         /**
-         * 새로운 데이터인 nextData를 받아서 다시 렌더링하는 메소드입니다.
+         * 📌 새로운 데이터인 nextData를 받아서 다시 렌더링하는 메소드입니다.
          *
          * @param {Object[]} nextData
          * @param {string} nextData[].text - 할 일에 대한 내용
