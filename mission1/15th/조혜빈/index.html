@@ -1,0 +1,82 @@
+<html>
+  <head>
+    <title>Mission 1</title>
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="todo-list"></div>
+    <div id="todo-list-weekly"></div>
+    <div id="todo-list-monthly"></div>
+    <script>
+      var data = [
+        {
+          text: 'JS 공부하기',
+        },
+        {
+          text: 'JS 복습하기',
+        },
+      ];
+
+      var dataWeekly = [
+        {
+          text: '방청소',
+        },
+        {
+          text: '운동',
+        },
+      ];
+
+      var dataMonthly = [
+        {
+          text: 'TS 공부하기',
+        },
+        {
+          text: 'React 복습하기',
+        },
+      ];
+
+      class TodoList {
+        constructor(listId, data) {
+          this.$list = document.querySelector(`#${listId}`);
+          this.validate(data);
+          this.data = data;
+        }
+
+        validate(data) {
+          if (!data) {
+            throw new Error('data does not exist');
+            return;
+          } else if (!Array.isArray(data)) {
+            throw new Error('data must be array');
+            return;
+          } else if (
+            !data.every(
+              (todo) => todo instanceof Object && todo.hasOwnProperty('text')
+            )
+          ) {
+            throw new Error('data is invalid');
+            return;
+          }
+        }
+
+        render() {
+          this.data.forEach((todo) => {
+            const $todo = document.createElement('div');
+            $todo.innerHTML = todo.text;
+            this.$list.appendChild($todo);
+          });
+        }
+      }
+
+      const todoList = new TodoList('todo-list', data);
+      todoList.render();
+
+      const todoListWeekly = new TodoList('todo-list-weekly', dataWeekly);
+      todoListWeekly.render();
+
+      const todoListMonthly = new TodoList('todo-list-monthly', dataMonthly);
+      todoListMonthly.render();
+    </script>
+  </body>
+</html>
