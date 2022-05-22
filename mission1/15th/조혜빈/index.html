@@ -70,8 +70,8 @@
           this.data.forEach((todo) => {
             const $todo = document.createElement('div');
             $todo.innerHTML = todo.isCompleted
-              ? todo.text
-              : `<s>${todo.text}</s>`;
+              ? `<s>${todo.text}</s>`
+              : todo.text;
             this.$list.appendChild($todo);
           });
         }
