@@ -68,18 +68,18 @@
       this.todos = todos;
 
       this.setState = (newTodos) => {
+        validateData(this.todos, $target);
         this.todos = newTodos;
 
-        validateData(this.todos, $target);
         this.render();
       }
 
       this.render = () => {
+        validateData(this.todos, $target);
+
         const $list = $creator('ul');
         $list.innerHTML = this.todos.map((todo) => this.makeTodo(todo)).join('');
 
-
-        validateData(this.todos, $target);
         $selector($target).appendChild($list);
       }
 
