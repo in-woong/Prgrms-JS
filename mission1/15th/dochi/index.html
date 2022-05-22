@@ -58,10 +58,6 @@
       const $todoList3 = document.querySelector('#todo-list-3');
 
       function TodoList(data, container) {
-        if (!new.target) {
-          throw new Error('new 키워드를 사용해주세요');
-        }
-
         const todoTemplate = (todo) =>
           todo.isCompleted
             ? `<li><s>${todo.text}</s></li>`
@@ -92,6 +88,12 @@
           }
         };
 
+        const _isCalledByNew = () => {
+          if (!new.target) {
+            throw new Error('new 키워드를 사용해주세요');
+          }
+        };
+
         this.data = data;
         this.container = container;
         this.render = function () {
@@ -103,6 +105,7 @@
           _drawTodos();
         };
 
+        _isCalledByNew();
         _validateData(data);
         _validateContainer(container);
         this.render();
