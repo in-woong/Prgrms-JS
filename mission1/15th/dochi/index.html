@@ -63,12 +63,12 @@
             ? `<li><s>${todo.text}</s></li>`
             : `<li>${todo.text}</li>`;
 
-        const _drawTodos = () => {
+        const drawTodos = () => {
           const todos = this.data.map((todo) => todoTemplate(todo)).join('');
           this.container.innerHTML = `<ul>${todos}</ul>`;
         };
 
-        const _validateData = (data) => {
+        const validateData = (data) => {
           if (
             !data ||
             !Array.isArray(data) ||
@@ -84,13 +84,13 @@
           }
         };
 
-        const _validateContainer = (container) => {
+        const validateContainer = (container) => {
           if (container.tagName !== 'DIV') {
             throw new Error('<div> 태그를 컨테이너로 사용해주세요');
           }
         };
 
-        const _isCalledByNew = () => {
+        const isCalledByNew = () => {
           if (!new.target) {
             throw new Error('new 키워드를 사용해주세요');
           }
@@ -99,17 +99,17 @@
         this.data = data;
         this.container = container;
         this.render = function () {
-          _drawTodos();
+          drawTodos();
         };
         this.setState = function (nextData) {
-          _validateData(nextData);
+          validateData(nextData);
           this.data = nextData;
-          _drawTodos();
+          drawTodos();
         };
 
-        _isCalledByNew();
-        _validateData(data);
-        _validateContainer(container);
+        isCalledByNew();
+        validateData(data);
+        validateContainer(container);
         this.render();
       }
 
