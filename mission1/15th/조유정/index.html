@@ -1,0 +1,89 @@
+<html>
+
+<head>
+  <title>Mission 1</title>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div id="todo-list"></div>
+  <div id="todo-list2"></div>
+  <div id="todo-list3"></div>
+  <script>
+    const data = [
+      {
+        text: 'JS 공부하기',
+        isCompleted: true
+      },
+      {
+        text: 'JS 복습하기',
+        isCompleted: false
+      }
+    ]
+
+    const data2 = [
+      {
+        text: 'TodoList 컴포넌트 작성하기',
+        isCompleted: true
+      },
+      {
+        text: '보너스 구현사항 도전하기',
+        isCompleted: false
+      }
+    ]
+
+    const data3 = [
+      {
+        text: '멋있게 숨쉬기',
+        isCompleted: false
+      },
+      {
+        text: '노련하게 숨쉬기',
+        isCompleted: true
+      }
+    ]
+
+    const validateData = (datas) => {
+      if (datas!=null && typeof(datas)!=="undefined" && Array.isArray(datas) && datas.length!=0) {
+        return datas
+      } else {throw Error('error message')}
+    }
+  
+    function TodoList(todo, id) {
+      if (!new.target) {
+        throw Error('error')
+      }
+
+      this.todo = validateData(todo);
+
+      this.id = id;
+      this.render = function(){
+        const $id = document.querySelector(id);
+        const $ul = document.createElement('ul');
+        $id.appendChild($ul);
+        this.todo.forEach((item) => {
+          if (item.isCompleted == true) {
+            $ul.insertAdjacentHTML('beforeend', `<li><s>${item.text}</s></li>`);}
+          else {$ul.insertAdjacentHTML('beforeend', `<li>${item.text}</li>`);}
+        })
+      };
+      this.setState = function(nextTodo){
+        this.todo = nextTodo;
+        this.render();
+      }
+    }
+
+    const todoList = new TodoList(data, '#todo-list');
+    const todoList2 = new TodoList(data2, '#todo-list2');
+    const todoList3 = new TodoList(data3, '#todo-list3');
+
+    todoList.render();
+    todoList2.render();
+    todoList3.render();
+
+    todoList.setState(data);
+    todoList2.setState(data2);
+    todoList3.setState(data3);
+  </script>
+</body>
+</html>
